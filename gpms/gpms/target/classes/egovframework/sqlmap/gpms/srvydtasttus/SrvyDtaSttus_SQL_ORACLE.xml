@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="srvyDtaSttusDAO">
+
+	<typeAlias alias="egovMap"
+		type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="srvyDtaSttusSerarchVO"
+		type="kr.go.gg.gpms.srvydtasttus.service.model.SrvyDtaSttusDefaultVO" />
+	<typeAlias alias="srvyDtaSttusVO"
+		type="kr.go.gg.gpms.srvydtasttus.service.model.SrvyDtaSttusVO" />
+
+	<resultMap id="srvyDtaSttus.resultMap" class="srvyDtaSttusVO">
+		<result property="DTA_STTUS_NO" column="DTA_STTUS_NO"
+			columnIndex="1" /> <!-- 조사_자료_현황.자료_현황_번호 -->
+		<result property="SRVY_YEAR" column="SRVY_YEAR" columnIndex="2" /> <!-- 조사_자료_현황.조사_년도 -->
+		<result property="ROUTE_CODE" column="ROUTE_CODE" columnIndex="3" /> <!-- 조사_자료_현황.노선_코드 -->
+		<result property="DIRECT_CODE" column="DIRECT_CODE" columnIndex="4" /> <!-- 조사_자료_현황.행선_코드 -->
+		<result property="TRACK" column="TRACK" columnIndex="5" /> <!-- 조사_자료_현황.차로 -->
+		<result property="STRTPT" column="STRTPT" columnIndex="6" /> <!-- 조사_자료_현황.시점 -->
+		<result property="ENDPT" column="ENDPT" columnIndex="7" /> <!-- 조사_자료_현황.종점 -->
+		<result property="SRVY_KND" column="SRVY_KND" columnIndex="8" /> <!-- 조사_자료_현황.조사_종류 -->
+		<result property="SRVY_MT" column="SRVY_MT" columnIndex="9" /> <!-- 조사_자료_현황.조사_월 -->
+		<result property="EXCEL_DTA_SEQ" column="EXCEL_DTA_SEQ"
+			columnIndex="10" /> <!-- 조사_자료_현황.엑셀_자료_SEQ -->
+		<result property="SRVY_NO" column="SRVY_NO" columnIndex="11" /> <!-- 조사_자료_현황.조사_번호 -->
+		<result property="SM_PROCESS_AT" column="SM_PROCESS_AT"
+			columnIndex="12" /> <!-- 조사_자료_현황.집계_구간_산출_여부 -->
+		<result property="PRDTMDL_PROCESS_AT" column="PRDTMDL_PROCESS_AT"
+			columnIndex="13" /> <!-- 조사_자료_현황.예측_모델_적용_여부 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="14" /> <!-- 조사_자료_현황.삭제_여부 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="15" /> <!-- 조사_자료_현황.사용_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="16" /> <!-- 조사_자료_현황.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="17" /> <!-- 조사_자료_현황.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="18" /> <!-- 조사_자료_현황.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="19" /> <!-- 조사_자료_현황.수정_일시 -->
+		<result property="DTA_NO" column="DTA_NO" columnIndex="20" /> <!-- 조사_자료_현황.자료_번호 -->
+	</resultMap>
+
+	<insert id="srvyDtaSttusDAO.insertSrvyDtaSttus">
+		<selectKey resultClass="String" keyProperty="DTA_STTUS_NO">
+  <![CDATA[
+  select SEQ_TN_SRVY_DTA_STTUS.NEXTVAL from dual
+  ]]>
+		</selectKey>
+	<![CDATA[ 
+		/* srvyDtaSttusDAO.insertSrvyDtaSttus */
+		/* 조사_자료_현황 등록 */		
+		INSERT INTO TN_SRVY_DTA_STTUS (
+			DTA_STTUS_NO /* 조사_자료_현황.자료_현황_번호 */
+			, SRVY_YEAR /* 조사_자료_현황.조사_년도 */
+			, ROUTE_CODE /* 조사_자료_현황.노선_코드 */
+			, DIRECT_CODE /* 조사_자료_현황.행선_코드 */
+			, TRACK /* 조사_자료_현황.차로 */
+			, STRTPT /* 조사_자료_현황.시점 */
+			, ENDPT /* 조사_자료_현황.종점 */
+			, SRVY_KND /* 조사_자료_현황.조사_종류 */
+			, SRVY_MT /* 조사_자료_현황.조사_월 */
+			, EXCEL_DTA_SEQ /* 조사_자료_현황.엑셀_자료_SEQ */
+			, SRVY_NO /* 조사_자료_현황.조사_번호 */
+			, SM_PROCESS_AT /* 조사_자료_현황.집계_구간_산출_여부 */
+			, PRDTMDL_PROCESS_AT /* 조사_자료_현황.예측_모델_적용_여부 */
+			, DELETE_AT /* 조사_자료_현황.삭제_여부 */
+			, USE_AT /* 조사_자료_현황.사용_여부 */
+			, CRTR_NO /* 조사_자료_현황.생성자_번호 */
+			, CREAT_DT /* 조사_자료_현황.생성_일시 */
+			, UPDUSR_NO /* 조사_자료_현황.수정자_번호 */
+			, UPDT_DT /* 조사_자료_현황.수정_일시 */
+			, DTA_NO /* 조사_자료_현황.자료_번호 */
+		) VALUES (
+			#DTA_STTUS_NO# /* 조사_자료_현황.자료_현황_번호 */
+			, #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
+			, #ROUTE_CODE# /* 조사_자료_현황.노선_코드 */
+			, #DIRECT_CODE# /* 조사_자료_현황.행선_코드 */
+			, #TRACK# /* 조사_자료_현황.차로 */
+			, #STRTPT# /* 조사_자료_현황.시점 */
+			, #ENDPT# /* 조사_자료_현황.종점 */
+			, #SRVY_KND# /* 조사_자료_현황.조사_종류 */
+			, #SRVY_MT# /* 조사_자료_현황.조사_월 */
+			, #EXCEL_DTA_SEQ# /* 조사_자료_현황.엑셀_자료_SEQ */
+			, #SRVY_NO# /* 조사_자료_현황.조사_번호 */
+			, #SM_PROCESS_AT# /* 조사_자료_현황.집계_구간_산출_여부 */
+			, #PRDTMDL_PROCESS_AT# /* 조사_자료_현황.예측_모델_적용_여부 */
+			, #DELETE_AT# /* 조사_자료_현황.삭제_여부 */
+			, #USE_AT# /* 조사_자료_현황.사용_여부 */
+			, #CRTR_NO# /* 조사_자료_현황.생성자_번호 */
+			, SYSDATE /* 조사_자료_현황.생성_일시 */
+			, #UPDUSR_NO# /* 조사_자료_현황.수정자_번호 */
+			, SYSDATE /* 조사_자료_현황.수정_일시 */
+			, #DTA_NO# /* 조사_자료_현황.자료_번호 */
+		)
+]]>
+	</insert>
+
+	<update id="srvyDtaSttusDAO.updateSrvyDtaSttus">
+	<![CDATA[ 
+		/* srvyDtaSttusDAO.updateSrvyDtaSttus */
+		/* 조사_자료_현황 수정 */
+		UPDATE TN_SRVY_DTA_STTUS SET
+
+
+
+SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
+			
+
+, ROUTE_CODE = #ROUTE_CODE# /* 조사_자료_현황.노선_코드 */
+			
+
+, DIRECT_CODE = #DIRECT_CODE# /* 조사_자료_현황.행선_코드 */
+			
+
+, TRACK = #TRACK# /* 조사_자료_현황.차로 */
+			
+
+, STRTPT = #STRTPT# /* 조사_자료_현황.시점 */
+			
+
+, ENDPT = #ENDPT# /* 조사_자료_현황.종점 */
+			
+
+, SRVY_KND = #SRVY_KND# /* 조사_자료_현황.조사_종류 */
+			
+
+, SRVY_MT = #SRVY_MT# /* 조사_자료_현황.조사_월 */
+			
+
+, EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ# /* 조사_자료_현황.엑셀_자료_SEQ */
+			
+
+, SRVY_NO = #SRVY_NO# /* 조사_자료_현황.조사_번호 */
+			
+
+, SM_PROCESS_AT = #SM_PROCESS_AT# /* 조사_자료_현황.집계_구간_산출_여부 */
+			
+
+, PRDTMDL_PROCESS_AT = #PRDTMDL_PROCESS_AT# /* 조사_자료_현황.예측_모델_적용_여부 */
+			
+
+, DELETE_AT = #DELETE_AT# /* 조사_자료_현황.삭제_여부 */
+			
+
+, USE_AT = #USE_AT# /* 조사_자료_현황.사용_여부 */
+			
+
+, CRTR_NO = #CRTR_NO# /* 조사_자료_현황.생성자_번호 */
+			
+
+, CREAT_DT = SYSDATE /* 조사_자료_현황.생성_일시 */
+			
+
+, UPDUSR_NO = #UPDUSR_NO# /* 조사_자료_현황.수정자_번호 */
+			
+
+, UPDT_DT = SYSDATE /* 조사_자료_현황.수정_일시 */
+
+, DTA_NO = #DTA_NO# /* 조사_자료_현황.자료_번호 */
+			
+		WHERE 1 = 1
+		AND DTA_STTUS_NO = #DTA_STTUS_NO# /* 조사_자료_현황.자료_현황_번호 */
+]]>
+	</update>
+
+	<delete id="srvyDtaSttusDAO.deleteSrvyDtaSttus">
+	<![CDATA[ 
+		/* srvyDtaSttusDAO.deleteSrvyDtaSttus */
+		/* 조사_자료_현황 삭제 */
+		DELETE FROM TN_SRVY_DTA_STTUS 
+		WHERE 1 = 1
+		AND DTA_STTUS_NO = #DTA_STTUS_NO# /* 조사_자료_현황.자료_현황_번호 */
+]]>
+	</delete>
+
+	<select id="srvyDtaSttusDAO.selectSrvyDtaSttus" resultClass="srvyDtaSttusVO">
+	<![CDATA[ 
+		/* srvyDtaSttusDAO.selectSrvyDtaSttus */
+		/* 조사_자료_현황 조회 */
+		SELECT
+			tnsrvydtasttus.DTA_STTUS_NO /* 조사_자료_현황.자료_현황_번호 */
+			, tnsrvydtasttus.SRVY_YEAR /* 조사_자료_현황.조사_년도 */
+			, tnsrvydtasttus.ROUTE_CODE /* 조사_자료_현황.노선_코드 */
+			, tnsrvydtasttus.DIRECT_CODE /* 조사_자료_현황.행선_코드 */
+			, tnsrvydtasttus.TRACK /* 조사_자료_현황.차로 */
+			, tnsrvydtasttus.STRTPT /* 조사_자료_현황.시점 */
+			, tnsrvydtasttus.ENDPT /* 조사_자료_현황.종점 */
+			, tnsrvydtasttus.SRVY_KND /* 조사_자료_현황.조사_종류 */
+			, tnsrvydtasttus.SRVY_MT /* 조사_자료_현황.조사_월 */
+			, tnsrvydtasttus.EXCEL_DTA_SEQ /* 조사_자료_현황.엑셀_자료_SEQ */
+			, tnsrvydtasttus.SRVY_NO /* 조사_자료_현황.조사_번호 */
+			, tnsrvydtasttus.SM_PROCESS_AT /* 조사_자료_현황.집계_구간_산출_여부 */
+			, tnsrvydtasttus.PRDTMDL_PROCESS_AT /* 조사_자료_현황.예측_모델_적용_여부 */
+			, tnsrvydtasttus.DELETE_AT /* 조사_자료_현황.삭제_여부 */
+			, tnsrvydtasttus.USE_AT /* 조사_자료_현황.사용_여부 */
+			, tnsrvydtasttus.CRTR_NO /* 조사_자료_현황.생성자_번호 */
+			, tnsrvydtasttus.CREAT_DT /* 조사_자료_현황.생성_일시 */
+			, tnsrvydtasttus.UPDUSR_NO /* 조사_자료_현황.수정자_번호 */
+			, tnsrvydtasttus.UPDT_DT /* 조사_자료_현황.수정_일시 */
+			, tnsrvydtasttus.DTA_NO /* 조사_자료_현황.자료_번호 */
+		FROM TN_SRVY_DTA_STTUS tnsrvydtasttus
+		WHERE 1 = 1
+		AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO# /* 조사_자료_현황.자료_현황_번호 */
+]]>
+	</select>
+
+
+	<select id="srvyDtaSttusDAO.selectSrvyDtaSttusNotPRDCTN_AT"
+		resultClass="srvyDtaSttusVO">
+	<![CDATA[ 
+		/* srvyDtaSttusDAO.selectSrvyDtaSttusNotPRDCTN_AT 미집계구간 조회  */
+		SELECT 
+		       tnrouteinfo.ROAD_NO ROUTE_CODE    /* 노선_정보.노선_코드 */
+		     , tnrouteinfo.ROAD_NAME ROUTE_NM    /* 노선_정보.노선_명 */
+		     , tnrouteinfo.ST_POINT STRTPT_NM    /* 노선_정보.시점_명 */
+		     , tnrouteinfo.ED_POINT ENDPT_NM    /* 노선_정보.종점_명 */
+		     , tnrouteinfo.ROAD_LEN_CMPT TOT_LEN    /* 노선_정보.총_연장 */
+		     , tnsrvydtasttus.SRVY_YEAR    /* 조사_자료_현황.조사_년도 */
+		     , tnsrvydtasttus.SRVY_MT    /* 조사_자료_현황.조사_월 */
+		     , tnsrvydtasttus.DIRECT_CODE    /* 조사_자료_현황.행선_코드 */
+		     , tnsrvydtasttus.TRACK    /* 조사_자료_현황.차로 */
+		     , CASE tnsrvydtasttus.DIRECT_CODE WHEN 'S' THEN tnrouteinfo.ST_POINT WHEN 'E' THEN tnrouteinfo.ED_POINT END ROWLN_NM
+		  FROM TN_ROUTE_INFO  tnrouteinfo  /*** 노선_정보 테이블 ***/
+		  INNER JOIN (
+		  SELECT /* tnSrvyDtaSttus.select leehb */
+		       tnsrvydtasttus.SRVY_YEAR    /* 조사_자료_현황.조사_년도 */
+		     , tnsrvydtasttus.SRVY_MT    /* 조사_자료_현황.조사_월 */
+		     , tnsrvydtasttus.ROUTE_CODE    /* 조사_자료_현황.노선_코드 */
+		     , tnsrvydtasttus.DIRECT_CODE    /* 조사_자료_현황.행선_코드 */
+		     , tnsrvydtasttus.TRACK    /* 조사_자료_현황.차로 */
+		  FROM TN_SRVY_DTA_STTUS  tnsrvydtasttus  /*** 조사_자료_현황 테이블 ***/
+		 WHERE 1=1                               /* 조사_자료_현황.자료_현황_번호 */
+		   AND tnsrvydtasttus.SRVY_YEAR = #SRVY_YEAR#                                  /* 조사_자료_현황.조사_년도 */
+		   AND tnsrvydtasttus.SRVY_MT  = #SRVY_MT#   /* 조사_자료_현황.조사_월 */
+		   AND tnsrvydtasttus.SM_PROCESS_AT = 'N'                      /* 조사_자료_현황.집계_구간_산출_여부 */
+		   AND tnsrvydtasttus.DELETE_AT = 'N'                                      /* 조사_자료_현황.삭제_여부 */
+		   AND tnsrvydtasttus.USE_AT = 'Y'                                            /* 조사_자료_현황.사용_여부 */
+		   GROUP BY tnsrvydtasttus.SRVY_YEAR    /* 조사_자료_현황.조사_년도 */
+		     , tnsrvydtasttus.SRVY_MT    /* 조사_자료_현황.조사_월 */
+		     , tnsrvydtasttus.ROUTE_CODE    /* 조사_자료_현황.노선_코드 */
+		     , tnsrvydtasttus.DIRECT_CODE    /* 조사_자료_현황.행선_코드 */
+		     , tnsrvydtasttus.TRACK    /* 조사_자료_현황.차로 */     
+		     ) tnsrvydtasttus
+		 ON tnrouteinfo.ROAD_NO = tnsrvydtasttus.ROUTE_CODE                        /* 노선_정보.노선_코드 */
+		
+		
+]]>
+	</select>
+
+
+	<sql id="srvyDtaSttusDAO.selectSrvyDtaSttusList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND
+			tnsrvydtasttus.DTA_STTUS_NO = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND
+			tnsrvydtasttus.SRVY_YEAR LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="DTA_STTUS_NO"><![CDATA[ /* 조사_자료_현황.자료_현황_번호 */ AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_YEAR"><![CDATA[ /* 조사_자료_현황.조사_년도 */ AND tnsrvydtasttus.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
+		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 조사_자료_현황.노선_코드 */ AND tnsrvydtasttus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 조사_자료_현황.행선_코드 */ AND tnsrvydtasttus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK"><![CDATA[ /* 조사_자료_현황.차로 */ AND tnsrvydtasttus.TRACK = #TRACK# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 조사_자료_현황.시점 */ AND tnsrvydtasttus.STRTPT = #STRTPT# ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 조사_자료_현황.종점 */ AND tnsrvydtasttus.ENDPT = #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_KND"><![CDATA[ /* 조사_자료_현황.조사_종류 */ AND tnsrvydtasttus.SRVY_KND = #SRVY_KND# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_MT"><![CDATA[ /* 조사_자료_현황.조사_월 */ AND tnsrvydtasttus.SRVY_MT = #SRVY_MT# ]]></isNotEmpty>
+		<isNotEmpty property="EXCEL_DTA_SEQ"><![CDATA[ /* 조사_자료_현황.엑셀_자료_SEQ */ AND tnsrvydtasttus.EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_NO"><![CDATA[ /* 조사_자료_현황.조사_번호 */ AND tnsrvydtasttus.SRVY_NO = #SRVY_NO# ]]></isNotEmpty>
+		<isNotEmpty property="SM_PROCESS_AT"><![CDATA[ /* 조사_자료_현황.집계_구간_산출_여부 */ AND tnsrvydtasttus.SM_PROCESS_AT = #SM_PROCESS_AT# ]]></isNotEmpty>
+		<isNotEmpty property="PRDTMDL_PROCESS_AT"><![CDATA[ /* 조사_자료_현황.예측_모델_적용_여부 */ AND tnsrvydtasttus.PRDTMDL_PROCESS_AT = #PRDTMDL_PROCESS_AT# ]]></isNotEmpty>
+		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 조사_자료_현황.삭제_여부 */ AND tnsrvydtasttus.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="USE_AT"><![CDATA[ /* 조사_자료_현황.사용_여부 */ AND tnsrvydtasttus.USE_AT = #USE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 조사_자료_현황.생성자_번호 */ AND tnsrvydtasttus.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 조사_자료_현황.생성_일시 */ AND tnsrvydtasttus.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 조사_자료_현황.수정자_번호 */ AND tnsrvydtasttus.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 조사_자료_현황.수정_일시 */ AND tnsrvydtasttus.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="DTA_NO"><![CDATA[ /* 조사_자료_현황.자료_번호 */ AND tnsrvydtasttus.DTA_NO  = #DTA_NO# ]]></isNotEmpty>
+	</sql>
+
+	<select id="srvyDtaSttusDAO.selectSrvyDtaSttusListPage"
+		parameterClass="srvyDtaSttusVO" resultClass="srvyDtaSttusVO">
+<![CDATA[ 		
+		/* srvyDtaSttusDAO.selectSrvyDtaSttusListPage */
+		/* 조사_자료_현황 조회(페이징) */
+		WITH tnsrvydtasttus AS
+		(
+		SELECT	
+				tnsrvydtasttus.DTA_STTUS_NO /* 조사_자료_현황.자료_현황_번호 */
+				, tnsrvydtasttus.SRVY_YEAR /* 조사_자료_현황.조사_년도 */
+				, tnsrvydtasttus.ROUTE_CODE /* 조사_자료_현황.노선_코드 */
+				, tnsrvydtasttus.DIRECT_CODE /* 조사_자료_현황.행선_코드 */
+				, tnsrvydtasttus.TRACK /* 조사_자료_현황.차로 */
+				, tnsrvydtasttus.STRTPT /* 조사_자료_현황.시점 */
+				, tnsrvydtasttus.ENDPT /* 조사_자료_현황.종점 */
+				, tnsrvydtasttus.SRVY_KND /* 조사_자료_현황.조사_종류 */
+				, tnsrvydtasttus.SRVY_MT /* 조사_자료_현황.조사_월 */
+				, tnsrvydtasttus.EXCEL_DTA_SEQ /* 조사_자료_현황.엑셀_자료_SEQ */
+				, tnsrvydtasttus.SRVY_NO /* 조사_자료_현황.조사_번호 */
+				, tnsrvydtasttus.SM_PROCESS_AT /* 조사_자료_현황.집계_구간_산출_여부 */
+				, tnsrvydtasttus.PRDTMDL_PROCESS_AT /* 조사_자료_현황.예측_모델_적용_여부 */
+				, tnsrvydtasttus.DELETE_AT /* 조사_자료_현황.삭제_여부 */
+				, tnsrvydtasttus.USE_AT /* 조사_자료_현황.사용_여부 */
+				, tnsrvydtasttus.CRTR_NO /* 조사_자료_현황.생성자_번호 */
+				, tnsrvydtasttus.CREAT_DT /* 조사_자료_현황.생성_일시 */
+				, tnsrvydtasttus.UPDUSR_NO /* 조사_자료_현황.수정자_번호 */
+				, tnsrvydtasttus.UPDT_DT /* 조사_자료_현황.수정_일시 */
+				, tnsrvydtasttus.DTA_NO /* 조사_자료_현황.자료_번호 */
+			
+			FROM TN_SRVY_DTA_STTUS tnsrvydtasttus
+]]>
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND
+			tnsrvydtasttus.DTA_STTUS_NO = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND
+			tnsrvydtasttus.SRVY_YEAR LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+
+		<isNotEmpty property="DTA_STTUS_NO">
+				<![CDATA[
+					/* 조사_자료_현황.자료_현황_번호 */
+					AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="SRVY_YEAR">
+				<![CDATA[
+					/* 조사_자료_현황.조사_년도 */
+					AND tnsrvydtasttus.SRVY_YEAR = #SRVY_YEAR#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="ROUTE_CODE">
+				<![CDATA[
+					/* 조사_자료_현황.노선_코드 */
+					AND tnsrvydtasttus.ROUTE_CODE = #ROUTE_CODE#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="DIRECT_CODE">
+				<![CDATA[
+					/* 조사_자료_현황.행선_코드 */
+					AND tnsrvydtasttus.DIRECT_CODE = #DIRECT_CODE#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="TRACK">
+				<![CDATA[
+					/* 조사_자료_현황.차로 */
+					AND tnsrvydtasttus.TRACK = #TRACK#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="STRTPT">
+				<![CDATA[
+					/* 조사_자료_현황.시점 */
+					AND tnsrvydtasttus.STRTPT = #STRTPT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="ENDPT">
+				<![CDATA[
+					/* 조사_자료_현황.종점 */
+					AND tnsrvydtasttus.ENDPT = #ENDPT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="SRVY_KND">
+				<![CDATA[
+					/* 조사_자료_현황.조사_종류 */
+					AND tnsrvydtasttus.SRVY_KND = #SRVY_KND#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="SRVY_MT">
+				<![CDATA[
+					/* 조사_자료_현황.조사_월 */
+					AND tnsrvydtasttus.SRVY_MT = #SRVY_MT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="EXCEL_DTA_SEQ">
+				<![CDATA[
+					/* 조사_자료_현황.엑셀_자료_SEQ */
+					AND tnsrvydtasttus.EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="SRVY_NO">
+				<![CDATA[
+					/* 조사_자료_현황.조사_번호 */
+					AND tnsrvydtasttus.SRVY_NO = #SRVY_NO#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="SM_PROCESS_AT">
+				<![CDATA[
+					/* 조사_자료_현황.집계_구간_산출_여부 */
+					AND tnsrvydtasttus.SM_PROCESS_AT = #SM_PROCESS_AT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="PRDTMDL_PROCESS_AT">
+				<![CDATA[
+					/* 조사_자료_현황.예측_모델_적용_여부 */
+					AND tnsrvydtasttus.PRDTMDL_PROCESS_AT = #PRDTMDL_PROCESS_AT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 조사_자료_현황.삭제_여부 */
+					AND tnsrvydtasttus.DELETE_AT = #DELETE_AT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 조사_자료_현황.사용_여부 */
+					AND tnsrvydtasttus.USE_AT = #USE_AT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 조사_자료_현황.생성자_번호 */
+					AND tnsrvydtasttus.CRTR_NO = #CRTR_NO#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 조사_자료_현황.생성_일시 */
+					AND tnsrvydtasttus.CREAT_DT = #CREAT_DT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 조사_자료_현황.수정자_번호 */
+					AND tnsrvydtasttus.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 조사_자료_현황.수정_일시 */
+					AND tnsrvydtasttus.UPDT_DT = #UPDT_DT#
+				]]>
+		</isNotEmpty>
+
+		<isNotEmpty property="DTA_NO">
+				<![CDATA[
+					/* 조사_자료_현황.자료_번호 */
+					AND tnsrvydtasttus.DTA_NO = #DTA_NO#
+				]]>
+		</isNotEmpty>
+				 
+	<![CDATA[		
+		)
+		SELECT tnsrvydtasttus.* FROM
+		(
+		SELECT 
+										tnsrvydtasttus.DTA_STTUS_NO /* 조사_자료_현황.자료_현황_번호 */
+											, tnsrvydtasttus.SRVY_YEAR /* 조사_자료_현황.조사_년도 */
+											, tnsrvydtasttus.ROUTE_CODE /* 조사_자료_현황.노선_코드 */
+											, tnsrvydtasttus.DIRECT_CODE /* 조사_자료_현황.행선_코드 */
+											, tnsrvydtasttus.TRACK /* 조사_자료_현황.차로 */
+											, tnsrvydtasttus.STRTPT /* 조사_자료_현황.시점 */
+											, tnsrvydtasttus.ENDPT /* 조사_자료_현황.종점 */
+											, tnsrvydtasttus.SRVY_KND /* 조사_자료_현황.조사_종류 */
+											, tnsrvydtasttus.SRVY_MT /* 조사_자료_현황.조사_월 */
+											, tnsrvydtasttus.EXCEL_DTA_SEQ /* 조사_자료_현황.엑셀_자료_SEQ */
+											, tnsrvydtasttus.SRVY_NO /* 조사_자료_현황.조사_번호 */
+											, tnsrvydtasttus.SM_PROCESS_AT /* 조사_자료_현황.집계_구간_산출_여부 */
+											, tnsrvydtasttus.PRDTMDL_PROCESS_AT /* 조사_자료_현황.예측_모델_적용_여부 */
+											, tnsrvydtasttus.DELETE_AT /* 조사_자료_현황.삭제_여부 */
+											, tnsrvydtasttus.USE_AT /* 조사_자료_현황.사용_여부 */
+											, tnsrvydtasttus.CRTR_NO /* 조사_자료_현황.생성자_번호 */
+											, tnsrvydtasttus.CREAT_DT /* 조사_자료_현황.생성_일시 */
+											, tnsrvydtasttus.UPDUSR_NO /* 조사_자료_현황.수정자_번호 */
+											, tnsrvydtasttus.UPDT_DT /* 조사_자료_현황.수정_일시 */
+											, tnsrvydtasttus.DTA_NO /* 조사_자료_현황.자료_번호 */
+						/* 조사_자료_현황.자료_현황_번호 */
+			/* 조사_자료_현황.조사_년도 */
+			, ROW_NUMBER() OVER( ORDER BY tnsrvydtasttus.DTA_STTUS_NO ASC, tnsrvydtasttus.SRVY_YEAR DESC )  ROW_NO
+			FROM  tnsrvydtasttus
+			WHERE 1=1
+		)  tnsrvydtasttus
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tnsrvydtasttus.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tnsrvydtasttus.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>
+
+
+	</select>
+
+
+	<select id="srvyDtaSttusDAO.selectSrvyDtaSttusList"
+		parameterClass="srvyDtaSttusVO" resultClass="srvyDtaSttusVO">
+<![CDATA[ 		
+		/* srvyDtaSttusDAO.selectSrvyDtaSttusList */
+		/* 조사_자료_현황 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tnsrvydtasttus.DTA_STTUS_NO /* 조사_자료_현황.자료_현황_번호 */
+				, tnsrvydtasttus.SRVY_YEAR /* 조사_자료_현황.조사_년도 */
+				, tnsrvydtasttus.ROUTE_CODE /* 조사_자료_현황.노선_코드 */
+				, tnsrvydtasttus.DIRECT_CODE /* 조사_자료_현황.행선_코드 */
+				, tnsrvydtasttus.TRACK /* 조사_자료_현황.차로 */
+				, tnsrvydtasttus.STRTPT /* 조사_자료_현황.시점 */
+				, tnsrvydtasttus.ENDPT /* 조사_자료_현황.종점 */
+				, tnsrvydtasttus.SRVY_KND /* 조사_자료_현황.조사_종류 */
+				, tnsrvydtasttus.SRVY_MT /* 조사_자료_현황.조사_월 */
+				, tnsrvydtasttus.EXCEL_DTA_SEQ /* 조사_자료_현황.엑셀_자료_SEQ */
+				, tnsrvydtasttus.SRVY_NO /* 조사_자료_현황.조사_번호 */
+				, tnsrvydtasttus.SM_PROCESS_AT /* 조사_자료_현황.집계_구간_산출_여부 */
+				, tnsrvydtasttus.PRDTMDL_PROCESS_AT /* 조사_자료_현황.예측_모델_적용_여부 */
+				, tnsrvydtasttus.DELETE_AT /* 조사_자료_현황.삭제_여부 */
+				, tnsrvydtasttus.USE_AT /* 조사_자료_현황.사용_여부 */
+				, tnsrvydtasttus.CRTR_NO /* 조사_자료_현황.생성자_번호 */
+				, tnsrvydtasttus.CREAT_DT /* 조사_자료_현황.생성_일시 */
+				, tnsrvydtasttus.UPDUSR_NO /* 조사_자료_현황.수정자_번호 */
+				, tnsrvydtasttus.UPDT_DT /* 조사_자료_현황.수정_일시 */
+				, tnsrvydtasttus.DTA_NO /* 조사_자료_현황.자료_번호 */
+			FROM TN_SRVY_DTA_STTUS tnsrvydtasttus
+]]>
+		<include refid="srvyDtaSttusDAO.selectSrvyDtaSttusList.where" />	
+<![CDATA[
+		ORDER BY 
+				tnsrvydtasttus.DTA_STTUS_NO DESC /* 조사_자료_현황.자료_현황_번호 */  
+		) tb) tnsrvydtasttus  WHERE 1=1
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+		</isEqual>
+
+	</select>
+
+
+	<select id="srvyDtaSttusDAO.selectSrvyDtaSttusListTotalCount"
+		parameterClass="srvyDtaSttusVO" resultClass="int">
+<![CDATA[ 		
+		/* srvyDtaSttusDAO.selectSrvyDtaSttusListTotalCount */
+		/* 조사_자료_현황 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_SRVY_DTA_STTUS tnsrvydtasttus
+]]>
+		<include refid="srvyDtaSttusDAO.selectSrvyDtaSttusList.where" />
+<![CDATA[		
+]]>
+	</select>
+
+
+	<select id="srvyDtaSttusDAO.selectSrvyDtaAnalTrgetList"
+		parameterClass="srvyDtaSttusVO" resultClass="srvyDtaSttusVO">
+<![CDATA[ 		
+		/* srvyDtaSttusDAO.selectSrvyDtaAnalTrgetList */
+		/* 조사_자료_분석대상 목록 조회 */
+		SELECT * FROM (
+			SELECT  ROW_NUMBER() OVER ( ORDER BY tnsrvydtasttus.SRVY_YEAR, tnsrvydtasttus.SRVY_MT ASC ) rn
+				  , tnsrvydtasttus.SRVY_YEAR
+      			  , tnsrvydtasttus.SRVY_MT
+			      , tnsrvydtasttus.SRVY_YEAR ||'년 ' || tnsrvydtasttus.SRVY_MT || '월' AS SRVY_DT
+			      , COUNT(*) AS DTA_CNT
+			 FROM TN_SRVY_DTA_STTUS tnsrvydtasttus
+			 WHERE tnsrvydtasttus.SM_PROCESS_AT = 'N'
+		  	   AND tnsrvydtasttus.USE_AT = 'Y'
+			   AND tnsrvydtasttus.DELETE_AT = 'N'
+			 GROUP BY tnsrvydtasttus.SRVY_YEAR, tnsrvydtasttus.SRVY_MT
+		) tnsrvydtasttus  WHERE 1=1
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+		</isEqual>
+	</select>
+
+	<select id="srvyDtaSttusDAO.selectSrvyDtaAnalTrgetListTotalCount"
+		parameterClass="srvyDtaSttusVO" resultClass="int">
+<![CDATA[ 		
+		/* srvyDtaSttusDAO.selectSrvyDtaAnalTrgetListTotalCount */
+		/* 조사_자료_분석대상 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt FROM (
+			SELECT tnsrvydtasttus.SRVY_YEAR, tnsrvydtasttus.SRVY_MT
+			  FROM TN_SRVY_DTA_STTUS tnsrvydtasttus
+			 WHERE tnsrvydtasttus.SM_PROCESS_AT = 'N'
+			   AND tnsrvydtasttus.USE_AT = 'Y'
+			   AND tnsrvydtasttus.DELETE_AT = 'N'
+			 GROUP BY tnsrvydtasttus.SRVY_YEAR, tnsrvydtasttus.SRVY_MT
+		) tnsrvydtasttus
+]]>		
+<![CDATA[		
+]]>
+	</select>
+
+	<update id="srvyDtaSttusDAO.deleteSrvyDtaAnalTrget">
+<![CDATA[
+		/* srvyDtaSttusDAO.deleteSrvyDtaAnalTrget */
+		/* 조사_자료_분석대상 목록 개수 조회  */
+		UPDATE TN_SRVY_DTA_STTUS
+		   SET USE_AT = 'N'
+		   	 , DELETE_AT = 'Y'
+		   	 , UPDUSR_NO = #UPDUSR_NO#
+		   	 , UPDT_DT = SYSDATE
+		 WHERE SM_PROCESS_AT = 'N'
+		   AND SRVY_YEAR = #SRVY_YEAR#
+		   AND SRVY_MT = #SRVY_MT#
+]]>
+	</update>
+
+</sqlMap>

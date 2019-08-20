@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="addressDAO">
+
+    <typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+    <typeAlias alias="sttemntVO" type="kr.go.gg.gpms.pothole.sttemnt.service.model.SttemntVO" />
+
+    <resultMap id="sttemntVO.resultMap"  class="sttemntVO">
+        <result property="PTH_RG_NO"          column="PTH_RG_NO"              columnIndex="1"  />
+        <result property="CRDNT_X"            column="CRDNT_X"                columnIndex="2"  />
+        <result property="CRDNT_Y"            column="CRDNT_Y"                columnIndex="3"  />
+        <result property="CORTN_X"            column="CORTN_X"                columnIndex="4"  />
+        <result property="CORTN_Y"            column="CORTN_Y"                columnIndex="5"  />
+        <result property="TM_X"               column="TM_X"                   columnIndex="6"  />
+        <result property="TM_Y"               column="TM_Y"                   columnIndex="7"  />
+        <result property="HEADG"              column="HEADG"                  columnIndex="8"  />
+        <result property="APLCNT_TELNO"       column="APLCNT_TELNO"           columnIndex="9"  />
+        <result property="BSNM_NM"            column="BSNM_NM"                columnIndex="10"  />
+        <result property="VHCLE_NO"           column="VHCLE_NO"               columnIndex="11"  />
+        <result property="RCEPT_CN"           column="RCEPT_CN"               columnIndex="12"  />
+        <result property="VHCLE_TYPE"         column="VHCLE_TYPE"             columnIndex="13"  />
+        <result property="STTEMNT_DT"         column="STTEMNT_DT"             columnIndex="14"  />
+        <result property="RN_ADRES"           column="RN_ADRES"               columnIndex="15"  />
+        <result property="LNM_ADRES"          column="LNM_ADRES"              columnIndex="16"  />
+        <result property="RCEPT_DT"           column="RCEPT_DT"               columnIndex="17"  />
+        <result property="RPAIR_DT"           column="RPAIR_DT"               columnIndex="18"  />
+        <result property="DEPT_CODE"          column="DEPT_CODE"              columnIndex="19" />
+        <result property="EDEPT_CODE"         column="EDEPT_CODE"             columnIndex="20" />
+        <result property="PRCS_TYPE"          column="PRCS_TYPE"              columnIndex="21" />
+        <result property="PRCS_STTUS"         column="PRCS_STTUS"             columnIndex="22" />
+        <result property="CORTN_AT"           column="CORTN_AT"               columnIndex="23" />
+        <result property="DPLCT_STTEMNT_AT"   column="DPLCT_STTEMNT_AT"       columnIndex="24" />
+        <result property="DSM_RP_NO"          column="DSM_RP_NO"              columnIndex="25" />
+        <result property="SMS_SNDNG_AT"       column="SMS_SNDNG_AT"           columnIndex="26" />
+        <result property="CPT_MNG_NO"         column="CPT_MNG_NO"             columnIndex="27" />
+        <result property="STTEMNT_DT_START"   column="STTEMNT_DT_START"       columnIndex="28" />
+        <result property="STTEMNT_DT_END"     column="STTEMNT_DT_END"         columnIndex="29" />
+        <result property="RPAIR_DT_START"     column="RPAIR_DT_START"         columnIndex="30" />
+        <result property="RPAIR_DT_END"       column="RPAIR_DT_END"           columnIndex="31" />
+        <result property="DMG_TYPE"           column="DMG_TYPE"               columnIndex="32" />
+        <result property="RM"                 column="RM"                     columnIndex="33" />
+        <result property="LOWEST_DEPT_NM"     column="LOWEST_DEPT_NM"         columnIndex="34" />
+
+        <result property="paramArr"           column="paramArr"               columnIndex="35" />
+        <result property="paramList"          column="paramList"              columnIndex="36" />
+    </resultMap>
+
+    <!-- 보정 후 조회 -->
+    <select id="addressDAO.selectCortnLonLat" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        /* addressDAO.selectCortnLonLat */
+        /* 보정 후 보정좌표 조회 */
+        SELECT
+            tnpotholesttemnt.PTH_RG_NO
+            , tnpotholesttemnt.CORTN_X
+            , tnpotholesttemnt.CORTN_Y
+        FROM TN_POTHOLE_STTEMNT tnpotholesttemnt
+        WHERE 1 = 1
+            AND tnpotholesttemnt.PTH_RG_NO = #PTH_RG_NO#
+    ]]>
+    </select>
+
+    <!-- 신고보정 프로시저 수행 -->
+    <parameterMap id="prc_pth_param" class="java.util.Map">
+        <parameter property="p_PTH_RG_NO"   javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_CRDNT_X"     javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_CRDNT_Y"     javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_HEADG"       javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_APCT_TELNO"  javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_BSNM_NM"     javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_VHCLE_NO"    javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_RCEPT_CN"    javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_VHCLE_TYPE"  javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_STTEMNT_DT"  javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+    </parameterMap>
+    <procedure id="addressDAO.PRC_PTH_CRDNT_CORTN" parameterMap="prc_pth_param">
+        { call PRC_PTH_CRDNT_CORTN(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+
+    <!-- 주소 Update 프로시저 수행 -->
+    <parameterMap id="prc_pth_udt_param" class="java.util.Map">
+        <parameter property="p_PTH_RG_NO"   javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_RN_ADRES"    javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_LNM_ADRES"   javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+    </parameterMap>
+    <procedure id="addressDAO.PRC_PTH_UDT_STTMNT" parameterMap="prc_pth_udt_param">
+        { call PRC_PTH_UDT_STTMNT(?, ?, ?) }
+    </procedure>
+
+</sqlMap>

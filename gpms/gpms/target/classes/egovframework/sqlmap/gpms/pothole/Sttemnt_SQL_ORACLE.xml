@@ -1,0 +1,1856 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sttemntDAO">
+
+    <typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+    <typeAlias alias="sttemntVO" type="kr.go.gg.gpms.pothole.sttemnt.service.model.SttemntVO" />
+
+    <resultMap id="sttemntVO.resultMap"  class="sttemntVO">
+        <result property="PTH_RG_NO"          column="PTH_RG_NO"              columnIndex="1"  />
+        <result property="CRDNT_X"            column="CRDNT_X"                columnIndex="2"  />
+        <result property="CRDNT_Y"            column="CRDNT_Y"                columnIndex="3"  />
+        <result property="CORTN_X"            column="CORTN_X"                columnIndex="4"  />
+        <result property="CORTN_Y"            column="CORTN_Y"                columnIndex="5"  />
+        <result property="TM_X"               column="TM_X"                   columnIndex="6"  />
+        <result property="TM_Y"               column="TM_Y"                   columnIndex="7"  />
+        <result property="HEADG"              column="HEADG"                  columnIndex="8"  />
+        <result property="APLCNT_TELNO"       column="APLCNT_TELNO"           columnIndex="9"  />
+        <result property="BSNM_NM"            column="BSNM_NM"                columnIndex="10" />
+        <result property="VHCLE_NO"           column="VHCLE_NO"               columnIndex="11" />
+        <result property="RCEPT_CN"           column="RCEPT_CN"               columnIndex="12" />
+        <result property="VHCLE_TYPE"         column="VHCLE_TYPE"             columnIndex="13" />
+        <result property="STTEMNT_DT"         column="STTEMNT_DT"             columnIndex="14" />
+        <result property="RN_ADRES"           column="RN_ADRES"               columnIndex="15" />
+        <result property="LNM_ADRES"          column="LNM_ADRES"              columnIndex="16" />
+        <result property="RCEPT_DT"           column="RCEPT_DT"               columnIndex="17" />
+        <result property="RPAIR_DT"           column="RPAIR_DT"               columnIndex="18" />
+        <result property="DEPT_CODE"          column="DEPT_CODE"              columnIndex="19" />
+        <result property="EDEPT_CODE"         column="EDEPT_CODE"             columnIndex="20" />
+        <result property="PRCS_TYPE"          column="PRCS_TYPE"              columnIndex="21" />
+        <result property="PRCS_STTUS"         column="PRCS_STTUS"             columnIndex="22" />
+        <result property="CORTN_AT"           column="CORTN_AT"               columnIndex="23" />
+        <result property="DPLCT_STTEMNT_AT"   column="DPLCT_STTEMNT_AT"       columnIndex="24" />
+        <result property="DSM_RP_NO"          column="DSM_RP_NO"              columnIndex="25" />
+        <result property="SMS_SNDNG_AT"       column="SMS_SNDNG_AT"           columnIndex="26" />
+        <result property="CPT_MNG_NO"         column="CPT_MNG_NO"             columnIndex="27" />
+        <result property="STTEMNT_DT_START"   column="STTEMNT_DT_START"       columnIndex="28" />
+        <result property="STTEMNT_DT_END"     column="STTEMNT_DT_END"         columnIndex="29" />
+        <result property="RPAIR_DT_START"     column="RPAIR_DT_START"         columnIndex="30" />
+        <result property="RPAIR_DT_END"       column="RPAIR_DT_END"           columnIndex="31" />
+        <result property="DMG_TYPE"           column="DMG_TYPE"               columnIndex="32" />
+        <result property="RM"                 column="RM"                     columnIndex="33" />
+        <result property="LOWEST_DEPT_NM"     column="LOWEST_DEPT_NM"         columnIndex="34" />
+        <result property="LCDO"               column="LCDO"                   columnIndex="35" />
+        <result property="pthmode"            column="pthmode"                columnIndex="36" />
+        <result property="imode"              column="imode"                  columnIndex="37" />
+        <result property="GG_ID"              column="GG_ID"                  columnIndex="38" />
+        <result property="RCPT_ROUTE"         column="RCPT_ROUTE"             columnIndex="39" />
+        <result property="RPRDTLS_MNG_NO"     column="RPRDTLS_MNG_NO"         columnIndex="40" />
+    </resultMap>
+
+    <!--
+	 2019년 고도화 사업 - 포트홀_신고관리 접수경로 구분 (스마트카드, 국토부, 시군관리)
+	 pthmode - 접수경로별 테이블명 구분
+	 T(default) : 스마트카드
+	 M : 국토부 신고앱
+	 C : 시군관리
+	-->
+    <sql id="sttemntDAO.pthmode.pthmnt">
+	    <isEqual property="pthmode" compareValue="C">
+	        PTH_CTSMNT
+	    </isEqual>
+	    <isEqual property="pthmode" compareValue="M">
+	        PTH_MLTMNT
+	    </isEqual>
+	    <isEqual property="pthmode" compareValue="T">
+	        PTH_STTMNT
+	    </isEqual>
+    </sql>
+
+    <sql id="sttemntDAO.pthmode.tnPthmnt">
+        <isEqual property="pthmode" compareValue="C">
+            TN_POTHOLE_CTSEMNT
+        </isEqual>
+        <isEqual property="pthmode" compareValue="M">
+            TN_POTHOLE_MLTEMNT
+        </isEqual>
+        <isEqual property="pthmode" compareValue="T">
+            TN_POTHOLE_STTEMNT
+        </isEqual>
+    </sql>
+
+    <sql id="sttemntDAO.pthmode.rpair">
+        <isEqual property="pthmode" compareValue="C">
+            TN_POTHOLE_CTSRPAIR
+        </isEqual>
+        <isEqual property="pthmode" compareValue="M">
+            TN_POTHOLE_MLTRPAIR
+        </isEqual>
+        <isEqual property="pthmode" compareValue="T">
+            TN_POTHOLE_RPAIR
+        </isEqual>
+    </sql>
+
+    <!-- 포트홀_신고_내역 (TN_POTHOLE_STTEMNT) -->
+    <update id="sttemntDAO.updatePthSttmnt">
+        UPDATE <include refid="sttemntDAO.pthmode.pthmnt" /> SET
+    <![CDATA[
+            RPAIR_DT = TO_DATE(#RPAIR_DT#, 'YYYY-MM-DD hh24:mi:ss')             /* 포트홀_신고_내역.보수_일시 */
+            , DEPT_CODE = #DEPT_CODE#           /* 포트홀_신고_내역.부서_코드 */
+            , EDEPT_CODE = #EDEPT_CODE#         /* 포트홀_신고_내역.기타_부서_코드 */
+            , PRCS_STTUS = #PRCS_STTUS#         /* 포트홀_신고_내역.처리_상태 */
+            , LNM_ADRES = #LNM_ADRES#           /* 포트홀_신고_내역.지번_주소 */
+            , RN_ADRES = #RN_ADRES#             /* 포트홀_신고_내역.도로명_주소 */
+
+    ]]>
+    <isNotEmpty property="CORTN_X">
+    <![CDATA[
+            , CORTN_X = #CORTN_X#                /* 포트홀_신고_내역.보정_X */
+    ]]>
+    </isNotEmpty>
+    <isNotEmpty property="CORTN_Y">
+    <![CDATA[
+            , CORTN_Y = #CORTN_Y#               /* 포트홀_신고_내역.보정_Y */
+    ]]>
+    </isNotEmpty>
+    <isEqual property="imode" compareValue="ADD">
+    <![CDATA[
+            , BSNM_NM = #BSNM_NM#
+            , CTSEMNT_DT = TO_DATE(#STTEMNT_DT#, 'YYYY-MM-DD hh24:mi:ss')
+    ]]>
+    </isEqual>
+
+    <!-- 위치보정 시 공간데이터 편집 -->
+    <isNotEmpty property="TM_X">
+    <![CDATA[
+        , G2_SPATIAL = SDO_GEOMETRY(2001, 5181, SDO_POINT_TYPE( #TM_X#, #TM_Y#, NULL), NULL, NULL)
+        , G2_XMIN = TRUNC( TO_NUMBER( #TM_X# ) * 1000 )
+        , G2_XMAX = TRUNC( TO_NUMBER( #TM_X# ) * 1000 )
+    ]]>
+    </isNotEmpty>
+    <isNotEmpty property="TM_Y">
+    <![CDATA[
+        , G2_YMIN = TRUNC( TO_NUMBER( #TM_Y# ) * 1000 )
+        , G2_YMAX = TRUNC( TO_NUMBER( #TM_Y# ) * 1000 )
+    ]]>
+    </isNotEmpty>
+    <isEqual property="imode" compareValue="ADD">
+    <![CDATA[
+        , PTH_RG_NO = ( select CASE WHEN NVL(max(PTH_RG_NO),1) < (TO_CHAR(sysdate,'yyyymmdd') || '000001')
+                THEN TO_CHAR(sysdate,'yyyymmdd') || '000001'
+                ELSE TO_CHAR(sysdate,'yyyymmdd') || LPAD(TO_CHAR(NVL(TO_NUMBER(SUBSTR(max(PTH_RG_NO),9,6)+1),1)),6,'0')
+                END PTH_RG_NO
+    ]]>
+                from <include refid="sttemntDAO.pthmode.pthmnt" /> )
+    </isEqual>
+    <isNotEqual property="imode" compareValue="ADD">
+    <![CDATA[
+        WHERE 1 = 1
+            AND PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')
+    ]]>
+    </isNotEqual>
+    <isEqual property="imode" compareValue="ADD">
+    <![CDATA[
+        WHERE 1 = 1
+            AND G2_ID = #GG_ID#
+    ]]>
+    </isEqual>
+    </update>
+
+
+    <!-- 2018.11.12 수정시 null 값 수정안되는 문제 처리 : isNotEmpty 삭제 -->
+    <update id="sttemntDAO.updatePotholeSttemnt">
+         UPDATE <include refid="sttemntDAO.pthmode.tnPthmnt" /> SET
+         <isNotEmpty property="CORTN_X"><![CDATA[  CORTN_X = #CORTN_X# ,                /* 포트홀_신고_내역.보정_X */           ]]></isNotEmpty>
+         <isNotEmpty property="CORTN_Y"><![CDATA[   CORTN_Y = #CORTN_Y# ,              /* 포트홀_신고_내역.보정_Y */         ]]></isNotEmpty>
+         <isNotEmpty property="TM_X"><![CDATA[   TM_X = #TM_X# ,                    /* 포트홀_신고_내역.TM_X */         ]]></isNotEmpty>
+         <isNotEmpty property="TM_Y"><![CDATA[   TM_Y = #TM_Y# ,                    /* 포트홀_신고_내역.TM_Y */         ]]></isNotEmpty>
+         <isNotEmpty property="PRCS_STTUS"><![CDATA[   PRCS_STTUS = #PRCS_STTUS# ,        /* 포트홀_신고_내역.처리_상태 */        ]]></isNotEmpty>
+         <isNotEmpty property="DEPT_CODE"><![CDATA[   DEPT_CODE = #DEPT_CODE# ,          /* 포트홀_신고_내역.부서_코드 */        ]]></isNotEmpty>
+         <isNotEmpty property="EDEPT_CODE"><![CDATA[   EDEPT_CODE = #EDEPT_CODE# ,        /* 포트홀_신고_내역.기타_부서_코드 */     ]]></isNotEmpty>
+         <![CDATA[   RN_ADRES = #RN_ADRES# ,             /* 포트홀_신고_내역.도로명_주소 */        ]]>
+         <![CDATA[   LNM_ADRES = #LNM_ADRES# ,           /* 포트홀_신고_내역.지번_주소 */        ]]>
+         <isNotEmpty property="CTTPC"><![CDATA[   CTTPC = #CTTPC# ,                   /* 포트홀_신고_내역.연락처 */        ]]></isNotEmpty>
+         <isNotEmpty property="RPAIR_DT"><![CDATA[   RPAIR_DT = TO_DATE(#RPAIR_DT#, 'YYYY-MM-DD hh24:mi:ss'),            /* 포트홀_신고_내역.보수_일시 */        ]]></isNotEmpty>
+         <isNotEmpty property="DPLCT_STTEMNT_AT"><![CDATA[   DPLCT_STTEMNT_AT = #DPLCT_STTEMNT_AT# ,        /* 포트홀_신고_내역.중복_신고_여부 */        ]]></isNotEmpty>
+         <isNotEmpty property="DSM_RP_NO"><![CDATA[   DSM_RP_NO = #DSM_RP_NO# ,        /* 포트홀_신고_내역.마스터_등록_번호 */        ]]></isNotEmpty>
+         <isNotEmpty property="CPT_MNG_NO"><![CDATA[   CPT_MNG_NO = #CPT_MNG_NO# ,        /* 포트홀_신고_내역.노선_관리_번호 */        ]]></isNotEmpty>
+         <isNotEmpty property="SMS_SNDNG_AT"><![CDATA[ SMS_SNDNG_AT = #SMS_SNDNG_AT# ,    /* 포트홀_신고_내역.SMS_발송_여부 */ ]]></isNotEmpty>
+         <isNotEmpty property="USE_AT"><![CDATA[   USE_AT = #USE_AT#    ,             /* 포트홀_신고_내역.사용_여부 */        ]]></isNotEmpty>
+         <isNotEmpty property="DELETE_AT"><![CDATA[   DELETE_AT = #DELETE_AT# ,          /* 포트홀_신고_내역.삭제_여부 */        ]]></isNotEmpty>
+         <isNotEmpty property="UPDUSR_NO"><![CDATA[   UPDUSR_NO = #UPDUSR_NO# ,          /* 포트홀_신고_내역.수정자_번호 */       ]]></isNotEmpty>
+
+        <![CDATA[
+            CHARGER_NM = #CHARGER_NM# ,                                 /* 포트홀_신고_내역.담당자_명 */
+            LCDO = #LCDO# ,                                             /* 포트홀_신고_내역.수정_일자 */
+            UPDT_DE = SYSDATE                                           /* 포트홀_신고_내역.수정_일자 */
+
+            WHERE 1 = 1
+                AND PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')
+        ]]>
+    </update>
+
+    <insert id="sttemntDAO.insertPotholeSttemnt">
+         INSERT INTO <include refid="sttemntDAO.pthmode.tnPthmnt" /> (
+         <isNotEmpty property="PRCS_STTUS">PRCS_STTUS,          /* 포트홀_신고_내역.처리_상태 */        </isNotEmpty>
+         <isNotEmpty property="DEPT_CODE">DEPT_CODE,            /* 포트홀_신고_내역.부서_코드 */        </isNotEmpty>
+         <isNotEmpty property="EDEPT_CODE">EDEPT_CODE,          /* 포트홀_신고_내역.기타_부서_코드 */     </isNotEmpty>
+         <isNotEmpty property="CTTPC">CTTPC,                    /* 포트홀_신고_내역.연락처 */          </isNotEmpty>
+         <isNotEmpty property="RPAIR_DT">RPAIR_DT,              /* 포트홀_신고_내역.보수_일시 */        </isNotEmpty>
+         <isNotEmpty property="DSM_RP_NO">DSM_RP_NO,            /* 포트홀_신고_내역.마스터_등록_번호 */        </isNotEmpty>
+         <isNotEmpty property="CPT_MNG_NO">CPT_MNG_NO,          /* 포트홀_신고_내역.노선_관리_번호 */        </isNotEmpty>
+         <isNotEmpty property="SMS_SNDNG_AT">SMS_SNDNG_AT,      /* 포트홀_신고_내역.SMS_발송_여부 */ </isNotEmpty>
+         <isNotEmpty property="UPDUSR_NO">CRTR_NO,              /* 포트홀_신고_내역.사용자_번호 */       </isNotEmpty>
+            CRDNT_X, CRDNT_Y, CORTN_X, CORTN_Y, TM_X, TM_Y,
+            HEADG, RCEPT_CN, BSNM_NM, STTEMNT_DT,
+            USE_AT, DELETE_AT, DPLCT_STTEMNT_AT, RN_ADRES, LNM_ADRES, CHARGER_NM, LCDO, CREAT_DE, PTH_RG_NO,
+            VHCLE_TYPE
+         )
+         SELECT
+         <isNotEmpty property="PRCS_STTUS">#PRCS_STTUS# ,        /* 포트홀_신고_내역.처리_상태 */      </isNotEmpty>
+         <isNotEmpty property="DEPT_CODE">#DEPT_CODE# ,          /* 포트홀_신고_내역.부서_코드 */      </isNotEmpty>
+         <isNotEmpty property="EDEPT_CODE">#EDEPT_CODE# ,        /* 포트홀_신고_내역.기타_부서_코드 */   </isNotEmpty>
+         <isNotEmpty property="CTTPC">#CTTPC# ,                   /* 포트홀_신고_내역.연락처 */      </isNotEmpty>
+         <isNotEmpty property="RPAIR_DT">TO_DATE(#RPAIR_DT#, 'YYYY-MM-DD hh24:mi:ss'),            /* 포트홀_신고_내역.보수_일시 */      </isNotEmpty>
+         <isNotEmpty property="DSM_RP_NO">#DSM_RP_NO# ,        /* 포트홀_신고_내역.마스터_등록_번호 */      </isNotEmpty>
+         <isNotEmpty property="CPT_MNG_NO">#CPT_MNG_NO# ,        /* 포트홀_신고_내역.노선_관리_번호 */      </isNotEmpty>
+         <isNotEmpty property="SMS_SNDNG_AT">#SMS_SNDNG_AT# ,    /* 포트홀_신고_내역.SMS_발송_여부 */  </isNotEmpty>
+         <isNotEmpty property="UPDUSR_NO">#UPDUSR_NO# ,          /* 포트홀_신고_내역.수정자_번호 */     </isNotEmpty>
+
+         <![CDATA[
+            CRDNT_X, CRDNT_Y, CORTN_X, CORTN_Y, (TO_NUMBER( G2_XMIN ) / 1000) AS TM_X, (TO_NUMBER( G2_YMIN ) / 1000) AS TM_Y,
+            HEADG, RCEPT_CN, BSNM_NM, CTSEMNT_DT,
+            'Y', 'N', 'N',
+            #RN_ADRES# ,             /* 포트홀_신고_내역.도로명_주소 */
+            #LNM_ADRES# ,             /* 포트홀_신고_내역.지번_주소 */
+            #CHARGER_NM# ,           /* 포트홀_신고_내역.담당자_명 */
+            #LCDO# ,                 /* 포트홀_신고_내역.위치도 */
+            SYSDATE ,                /* 포트홀_신고_내역.생성_일자 */
+            SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0'),              /* 포트홀_신고_내역.관리_번호 */
+            'C'         /* 포트홀_신고_내역.접수경로 구분코드 */
+         FROM
+         ]]>
+                <include refid="sttemntDAO.pthmode.pthmnt" />
+         <![CDATA[
+                WHERE PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')
+         ]]>
+    </insert>
+
+    <update id="sttemntDAO.deletePotholeSttemntAll">
+        UPDATE <include refid="sttemntDAO.pthmode.tnPthmnt" /> SET
+    <![CDATA[
+        /* sttemntDAO.deletePotholeSttemntAll */
+        /* 포트홀_신고_내역 삭제 */
+            USE_AT = 'N'                             /* 포트홀_신고_내역.삭제_여부 */
+            , DELETE_AT = 'Y'                        /* 포트홀_신고_내역.삭제_여부 */
+            , UPDUSR_NO = #UPDUSR_NO#                /* 포트홀_신고_내역.수정자_번호 */
+            , DELETE_DE = SYSDATE                    /* 포트홀_신고_내역.삭제_일자 */
+        WHERE 1 = 1
+            AND PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')    /* 포트홀_신고_내역.관리_번호 */
+    ]]>
+    </update>
+
+    <update id="sttemntDAO.updatePotholeXY">
+        UPDATE <include refid="sttemntDAO.pthmode.tnPthmnt" /> SET
+    <![CDATA[
+        /* sttemntDAO.updatePotholeXY */
+        /* 포트홀_신고_내역 좌표정보 수정 */
+            CORTN_AT = 'Y'                           /* 포트홀_신고_내역.보정_여부 */
+            , CORTN_X = #CORTN_X#                    /* 포트홀_신고_내역.보정_X */
+            , CORTN_Y = #CORTN_Y#                    /* 포트홀_신고_내역.보정_Y */
+            , TM_X = #TM_X#                          /* 포트홀_신고_내역.TM_X */
+            , TM_Y = #TM_Y#                          /* 포트홀_신고_내역.TM_Y */
+        WHERE 1 = 1
+            AND PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')    /* 포트홀_신고_내역.관리_번호 */
+    ]]>
+    </update>
+
+    <update id="sttemntDAO.updateDplctSttemntAt">
+    <![CDATA[
+        /* sttemntDAO.updateDplctSttemntAt */
+        /* 포트홀_신고_내역 중복건 처리상태 수정 */
+    ]]>
+        UPDATE <include refid="sttemntDAO.pthmode.tnPthmnt" /> SET
+    <![CDATA[
+            PRCS_STTUS = #PRCS_STTUS#
+        WHERE 1=1
+            AND DPLCT_STTEMNT_AT = 'Y'
+            AND DSM_RP_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')
+    ]]>
+    </update>
+
+    <delete id="sttemntDAO.deletePotholeSttemnt">
+    <![CDATA[
+        /* sttemntDAO.deletePotholeSttemnt */
+        /* 포트홀_신고_내역 담당자, 연락처 삭제 */
+    ]]>
+        UPDATE <include refid="sttemntDAO.pthmode.tnPthmnt" /> SET
+    <![CDATA[
+            CHARGER_NM = ''                 /* 포트홀_신고_내역.담당자_명 */
+            , CTTPC = ''                    /* 포트홀_신고_내역.연락처 */
+        WHERE 1 = 1
+            AND PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')
+    ]]>
+    </delete>
+
+    <!-- 2018. 01. 10. JOY. -->
+    <sql id="sttemntDAO.selectPotholeSttemntList.where">
+
+        <isEqual property="searchCondition" compareValue="0">
+        <![CDATA[
+            AND tnpotholesttemnt.PTH_RG_NO = #searchKeyword#
+        ]]>
+        </isEqual>
+        <isEqual property="searchCondition" compareValue="1">
+        <![CDATA[
+            AND tnpotholesttemnt.CREAT_DE LIKE '%' || #searchKeyword# || '%'
+        ]]>
+        </isEqual>
+
+        <isNotEmpty property="PTH_RG_NO">
+        <![CDATA[
+            AND   tnpotholesttemnt.PTH_RG_NO LIKE '%' || #PTH_RG_NO# || '%' /* 포트홀_신고_내역.포트홀_등록_번호 */
+        ]]>
+        </isNotEmpty>
+        <isNotEmpty property="CRDNT_X"><![CDATA[ AND tnpotholesttemnt.CRDNT_X = #CRDNT_X# /* 포트홀_신고_내역.좌표_X */ ]]></isNotEmpty>
+        <isNotEmpty property="CRDNT_Y"><![CDATA[ AND tnpotholesttemnt.CRDNT_Y = #CRDNT_Y# /* 포트홀_신고_내역.좌표_Y */ ]]></isNotEmpty>
+        <isNotEmpty property="CORTN_X"><![CDATA[ AND tnpotholesttemnt.CORTN_X = #CORTN_X# /* 포트홀_신고_내역.보정_X */ ]]></isNotEmpty>
+        <isNotEmpty property="CORTN_Y"><![CDATA[ AND tnpotholesttemnt.CORTN_Y = #CORTN_Y# /* 포트홀_신고_내역.보정_Y */ ]]></isNotEmpty>
+        <isNotEmpty property="TM_X"><![CDATA[ AND tnpotholesttemnt.TM_X = #TM_X# /* 포트홀_신고_내역.TM_X */ ]]></isNotEmpty>
+        <isNotEmpty property="TM_Y"><![CDATA[ AND tnpotholesttemnt.TM_Y = #TM_Y# /* 포트홀_신고_내역.TM_Y */ ]]></isNotEmpty>
+        <isNotEmpty property="HEADG"><![CDATA[ AND tnpotholesttemnt.HEADG = #HEADG# /* 포트홀_신고_내역.헤딩 */ ]]></isNotEmpty>
+        <isNotEmpty property="APLCNT_TELNO"><![CDATA[ AND tnpotholesttemnt.APLCNT_TELNO = #APLCNT_TELNO# /* 포트홀_신고_내역.신고자_전화번호 */ ]]></isNotEmpty>
+        <isNotEmpty property="BSNM_NM"><![CDATA[ AND tnpotholesttemnt.BSNM_NM LIKE '%' || #BSNM_NM# || '%' /* 포트홀_신고_내역.사업자_명 */ ]]></isNotEmpty>
+        <isNotEmpty property="VHCLE_NO"><![CDATA[ AND tnpotholesttemnt.VHCLE_NO LIKE '%' || #VHCLE_NO# || '%' /* 포트홀_신고_내역.차량_번호 */ ]]></isNotEmpty>
+        <isNotEmpty property="RCEPT_CN"><![CDATA[ AND tnpotholesttemnt.RCEPT_CN LIKE '%' || #RCEPT_CN# || '%' /* 포트홀_신고_내역.접수_내용 */ ]]></isNotEmpty>
+        <isNotEmpty property="VHCLE_TYPE"><![CDATA[ AND tnpotholesttemnt.VHCLE_TYPE = #VHCLE_TYPE# /* 포트홀_신고_내역.차량_유형 */ ]]></isNotEmpty>
+        <isNotEmpty property="STTEMNT_DT"><![CDATA[ AND tnpotholesttemnt.STTEMNT_DT = #STTEMNT_DT# /* 포트홀_신고_내역.신고_일시 */ ]]></isNotEmpty>
+        <isNotEmpty property="RN_ADRES"><![CDATA[ AND tnpotholesttemnt.RN_ADRES LIKE '%' || #RN_ADRES# || '%' /* 포트홀_신고_내역.도로명_주소 */ ]]></isNotEmpty>
+        <isNotEmpty property="LNM_ADRES"><![CDATA[ AND tnpotholesttemnt.LNM_ADRES LIKE '%' || #LNM_ADRES# || '%' * 포트홀_신고_내역.지번_주소v ]]></isNotEmpty>
+        <isNotEmpty property="RCEPT_DT"><![CDATA[ AND tnpotholesttemnt.RCEPT_DT = #RCEPT_DT# /* 포트홀_신고_내역.접수_일시 */ ]]></isNotEmpty>
+        <isNotEmpty property="LCDO"><![CDATA[ AND tnpotholesttemnt.LCDO <= #LCDO# /* 포트홀_신고_내역.위치도번호 */ ]]></isNotEmpty>
+
+        <isNotEmpty property="RPAIR_DT"><![CDATA[ AND tnpotholerpair.RPAIR_DT = #RPAIR_DT#            /* 포트홀_신고_내역.보수_일시 */ ]]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE">
+        <![CDATA[   /* YYK 7000300 으로 조회했을 경우 */
+                    AND ((#DEPT_CODE# = '7000300' AND tnpotholesttemnt.DEPT_CODE >= '7000300' AND tnpotholesttemnt.DEPT_CODE < '7000400')
+                         /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                         OR (#DEPT_CODE# = '3740000' AND tnpotholesttemnt.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                         OR (#DEPT_CODE# = '3940000' AND tnpotholesttemnt.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                         OR (#DEPT_CODE# = '4050000' AND tnpotholesttemnt.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                         OR (#DEPT_CODE# = '3780000' AND tnpotholesttemnt.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                         OR (#DEPT_CODE# = '3930000' AND tnpotholesttemnt.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                         OR (#DEPT_CODE# = '3830000' AND tnpotholesttemnt.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                         OR (#DEPT_CODE# = '5530000' AND tnpotholesttemnt.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                         OR (#DEPT_CODE# = '3910000' AND tnpotholesttemnt.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                         OR (#DEPT_CODE# != '7000300' AND tnpotholesttemnt.DEPT_CODE = #DEPT_CODE# ))
+        ]]>
+        </isNotEmpty>
+        <isNotEmpty property="EDEPT_CODE"><![CDATA[ AND tnpotholesttemnt.EDEPT_CODE = #EDEPT_CODE# /* 포트홀_신고_내역.기타_부서_코드 */ ]]></isNotEmpty>
+        <isNotEmpty property="PRCS_TYPE"><![CDATA[ AND tnpotholesttemnt.PRCS_TYPE = #PRCS_TYPE# /* 포트홀_신고_내역.처리_유형 */ ]]></isNotEmpty>
+        <isNotEmpty property="PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS# /* 포트홀_신고_내역.처리_상태 */ ]]></isNotEmpty>
+        <isNotEmpty property="CORTN_AT"><![CDATA[ AND tnpotholesttemnt.CORTN_AT = #CORTN_AT# /* 포트홀_신고_내역.보정_여부 */ ]]></isNotEmpty>
+        <!-- <isNotEmpty property="DPLCT_STTEMNT_AT"><![CDATA[ AND tnpotholesttemnt.DPLCT_STTEMNT_AT = #DPLCT_STTEMNT_AT# /* 포트홀_신고_내역.중복_신고_여부 */ ]]></isNotEmpty> -->
+        <isNotEmpty property="DSM_RP_NO"><![CDATA[ AND tnpotholesttemnt.DSM_RP_NO = #DSM_RP_NO# /* 포트홀_신고_내역.마스터_등록_번호 */ ]]></isNotEmpty>
+        <isNotEmpty property="SMS_SNDNG_AT"><![CDATA[ AND tnpotholesttemnt.SMS_SNDNG_AT = #SMS_SNDNG_AT# /* 포트홀_신고_내역.SMS_발송_여부 */ ]]></isNotEmpty>
+        <isNotEmpty property="CPT_MNG_NO"><![CDATA[ AND tnpotholesttemnt.CPT_MNG_NO = #CPT_MNG_NO# /* 포트홀_신고_내역.노선_관리_번호 */ ]]></isNotEmpty>
+        <isNotEmpty property="DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #DMG_TYPE# /* 포트홀_신고_내역.노선_관리_번호 */ ]]></isNotEmpty>
+
+        <isNotEmpty property="SCH_PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #SCH_PRCS_STTUS# ]]></isNotEmpty>
+        <isNotEmpty property="SCH_DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #SCH_DMG_TYPE# ]]></isNotEmpty>
+
+        <!-- 날짜 범위검색 -->
+        <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND tnpotholesttemnt.STTEMNT_DT >= #STTEMNT_DT_START# /* 포트홀_신고_내역.신고_일시_시작 */ ]]></isNotEmpty>
+        <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND tnpotholesttemnt.STTEMNT_DT < TO_DATE(#STTEMNT_DT_END#) + 1 /* 포트홀_신고_내역.신고_일시_종료 */ ]]></isNotEmpty>
+        <isNotEmpty property="RPAIR_DT_START"><![CDATA[ AND tnpotholerpair.RPAIR_DT >= #RPAIR_DT_START# /* 포트홀_보수_내역.보수_일시_시작 */ ]]></isNotEmpty>
+        <isNotEmpty property="RPAIR_DT_END"><![CDATA[ AND tnpotholerpair.RPAIR_DT < TO_DATE(#RPAIR_DT_END#) + 1 /* 포트홀_보수_내역.보수_일시_종료 */ ]]></isNotEmpty>
+
+    </sql>
+
+    <select id="sttemntDAO.selectPotholeRgNo" parameterClass="sttemntVO" resultClass="sttemntVO">
+        /* sttemntDAO.selectPotholeRgNo */
+        /* 포트홀_신고_관리번호  조회 */
+        SELECT SUBSTR(PTH_RG_NO, 0, 8) || '-' || TO_NUMBER(SUBSTR(PTH_RG_NO, 9)) AS PTH_RG_NO
+        FROM <include refid="sttemntDAO.pthmode.pthmnt" />
+        <![CDATA[
+            WHERE G2_ID = #GG_ID#
+        ]]>
+    </select>
+
+    <select id="sttemntDAO.selectPotholeLAdres" parameterClass="sttemntVO" resultClass="sttemntVO">
+        /* sttemntDAO.selectPotholeLAdres */
+        /* 위치 주소  조회 */
+        SELECT
+    <![CDATA[
+            (SELECT B.SD_NM || ' ' || B.SGG_NM || ' ' || B.DL_NM || ' ' || SUBSTR(A.JIBUN, 0, LENGTH(A.JIBUN) - 1)
+             FROM LSMD_CONT_LDREG A
+             LEFT JOIN (SELECT SD_NM, SGG_NM, DL_NM, BJD_CD FROM KIK_CD
+                            GROUP BY SD_NM, SGG_NM, DL_NM, BJD_CD ) B ON B.BJD_CD = SUBSTR(A.PNU, 0, 10)
+             WHERE SDO_RELATE ( A.G2_SPATIAL,
+                 (SELECT G2_SPATIAL FROM pth_ctsmnt WHERE G2_ID=#GG_ID#), 'mask=ANYINTERACT' ) = 'TRUE'
+            ) LNM_ADRES
+        FROM
+    ]]>
+           <include refid="sttemntDAO.pthmode.pthmnt" />
+    <![CDATA[
+        WHERE G2_ID=#GG_ID#
+    ]]>
+    </select>
+
+    <!-- 2018. 01. 10. JOY. -->
+    <select id="sttemntDAO.selectPotholeSttemnt" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectPotholeSttemnt */
+        /* 포트홀_신고_내역  조회 */
+        SELECT
+            SUBSTR(tnpotholesttemnt.PTH_RG_NO, 0, 8) || '-' || TO_NUMBER(SUBSTR(tnpotholesttemnt.PTH_RG_NO, 9)) AS PTH_RG_NO          /* 포트홀_신고_내역.포트홀_등록_번호 */
+            , tnpotholesttemnt.CRDNT_X           /* 포트홀_신고_내역.좌표_X */
+            , tnpotholesttemnt.CRDNT_Y           /* 포트홀_신고_내역.좌표_Y */
+            , tnpotholesttemnt.CORTN_X           /* 포트홀_신고_내역.보정_X */
+            , tnpotholesttemnt.CORTN_Y           /* 포트홀_신고_내역.보정_Y */
+            , tnpotholesttemnt.TM_X              /* 포트홀_신고_내역.TM_X */
+            , tnpotholesttemnt.TM_Y              /* 포트홀_신고_내역.TM_Y */
+            , tnpotholesttemnt.HEADG             /* 포트홀_신고_내역.헤딩 */
+            , tnpotholesttemnt.APLCNT_TELNO      /* 포트홀_신고_내역.신고자_전화번호 */
+            , tnpotholesttemnt.BSNM_NM           /* 포트홀_신고_내역.사업자_명 */
+            , tnpotholesttemnt.VHCLE_NO          /* 포트홀_신고_내역.차량_번호 */
+            , tnpotholesttemnt.RCEPT_CN          /* 포트홀_신고_내역.접수_내용 */
+            , tnpotholesttemnt.VHCLE_TYPE        /* 포트홀_신고_내역.차량_유형 */
+            , TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY-MM-DD hh24:mi:ss') AS STTEMNT_DT  /* 포트홀_신고_내역.신고_일시 */
+            , tnpotholesttemnt.RN_ADRES          /* 포트홀_신고_내역.도로명_주소 */
+            , tnpotholesttemnt.LNM_ADRES         /* 포트홀_신고_내역.지번_주소 */
+            , TO_CHAR(tnpotholesttemnt.RCEPT_DT, 'YYYY-MM-DD hh24:mi:ss') AS RCEPT_DT      /* 포트홀_신고_내역.접수_일시 */
+            , TO_CHAR(tnpotholerpair.RPAIR_DT, 'YYYY-MM-DD') AS RPAIR_DT      /* 포트홀_신고_내역.보수_일시 */
+            , (CASE
+                   WHEN tnpotholesttemnt.PRCS_STTUS != 'PRCS0003'
+                   THEN NULL
+                   ELSE TO_CHAR(tnpotholerpair.UPDT_DE, 'YYYY-MM-DD hh24:mi:ss')
+               END) AS PROCESS_DT       /* 포트홀_신고_내역.처리_일시 */
+            , (CASE
+                   WHEN tnpotholesttemnt.PRCS_STTUS != 'PRCS0003'
+                   THEN NULL
+                   ELSE tnpotholerpair.DAYCNT
+               END) AS DAYCNT       /* 포트홀_신고_내역.처리_일수 */
+            , ( SELECT (CASE WHEN (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || tcdept.LOWEST_DEPT_NM
+                        WHEN (tcdept.DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || tcdept.LOWEST_DEPT_NM
+                        WHEN (tcdept.DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || tcdept.LOWEST_DEPT_NM
+                        WHEN (tcdept.DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || tcdept.LOWEST_DEPT_NM
+                        WHEN (tcdept.DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || tcdept.LOWEST_DEPT_NM
+                        WHEN (tcdept.DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || tcdept.LOWEST_DEPT_NM
+                        WHEN (tcdept.DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || tcdept.LOWEST_DEPT_NM
+                        WHEN (tcdept.DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || tcdept.LOWEST_DEPT_NM
+                        ELSE tcdept.LOWEST_DEPT_NM
+                     END) AS LOWEST_DEPT_NM
+                FROM TC_DEPT tcdept
+                WHERE tcdept.DEPT_CODE = tnpotholesttemnt.DEPT_CODE
+            ) AS LOWEST_DEPT_NM                  /* 포트홀_신고_내역.부서_코드_명 */
+            , tnpotholesttemnt.DEPT_CODE         /* 포트홀_신고_내역.부서_코드 */
+            , tnpotholesttemnt.EDEPT_CODE        /* 포트홀_신고_내역.기타_부서_코드 */
+            , ( SELECT tccode.CODE_NM
+                FROM TC_CODE tccode
+                WHERE tccode.CODE_VAL = tnpotholesttemnt.PRCS_TYPE
+            ) AS PRCS_TYPE_NM                    /* 포트홀_신고_내역.처리_유형_이름 */
+            , tnpotholesttemnt.PRCS_TYPE         /* 포트홀_신고_내역.처리_유형 */
+            , ( SELECT tccode.CODE_NM
+                FROM TC_CODE tccode
+                WHERE tccode.CODE_VAL = tnpotholesttemnt.PRCS_STTUS
+            ) AS PRCS_STTUS_NM                   /* 포트홀_신고_내역.처리_상태_이름 */
+            , tnpotholesttemnt.PRCS_STTUS        /* 포트홀_신고_내역.처리_상태 */
+            , tnpotholesttemnt.CORTN_AT          /* 포트홀_신고_내역.보정_여부 */
+            , tnpotholesttemnt.DPLCT_STTEMNT_AT  /* 포트홀_신고_내역.중복_신고_여부 */
+            , tnpotholesttemnt.DSM_RP_NO       /* 포트홀_신고_내역.마스터_등록_번호 */
+            , tnpotholesttemnt.SMS_SNDNG_AT      /* 포트홀_신고_내역.SMS_발송_여부 */
+            , tnpotholesttemnt.CPT_MNG_NO        /* 포트홀_신고_내역.노선_관리_번호 */
+            , tnpotholesttemnt.USE_AT            /* 포트홀_신고_내역.사용_여부 */
+            , tnpotholesttemnt.DELETE_AT         /* 포트홀_신고_내역.삭제_여부 */
+            , tnpotholesttemnt.CRTR_NO           /* 포트홀_신고_내역.생성자_번호 */
+            , TO_CHAR(tnpotholesttemnt.CREAT_DE, 'YYYY-MM-DD hh24:mi:ss') AS CREAT_DE      /* 포트홀_신고_내역.생성_일자 */
+            , tnpotholesttemnt.UPDUSR_NO         /* 포트홀_신고_내역.수정자_번호 */
+            , TO_CHAR(tnpotholesttemnt.UPDT_DE, 'YYYY-MM-DD hh24:mi:ss') AS UPDT_DE        /* 포트홀_신고_내역.수정_일자 */
+            , tnpotholesttemnt.CHARGER_NM        /* 포트홀_신고_내역.담당자_명 */
+            , tnpotholesttemnt.CTTPC             /* 포트홀_신고_내역.연락처 */
+            , tnpotholesttemnt.LCDO             /* 포트홀_신고_내역.위치도파일_번호 */
+            , tnpotholerpair.RPRDTLS_MNG_NO      /* 포트홀_보수_내역.보수_관리번호 */
+            , TO_CHAR(tnpotholerpair.CNFIRM_DT, 'YYYY-MM-DD') AS CNFIRM_DT      /* 포트홀_수리_내역.확인일자 */
+            , TO_CHAR(tnpotholerpair.RPAIR_DT, 'YYYY-MM-DD') AS RPAIR_DT        /* 포트홀_수리_내역.보수일자 */
+            , NVL(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
+            , ( SELECT tccode.CODE_NM
+                FROM TC_CODE tccode
+                WHERE tccode.CODE_VAL = NVL(tnpotholerpair.DMG_TYPE, '')
+            ) AS DMG_TYPE_NM                     /* 포트홀_보수_내역.파손_유형_이름 */
+            , NVL(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
+            , tnpotholerpair.RPRDTLS_MNG_NO      /* 포트홀_보수_내역.보수_관리번호 */
+            , tnpotholesttemnt.VHCLE_TYPE AS pthmode    /* 포트홀_신고_내역.접수경로 구분값 */
+            , ( SELECT tccode.CODE_NM
+               FROM TC_CODE tccode
+               WHERE tccode.CL_CODE='PRRT' AND tccode.CODE_VAL = NVL(tnpotholesttemnt.VHCLE_TYPE, '')
+            ) AS RCPT_ROUTE                             /* 포트홀_신고_내역.접수경로 */
+		    , tnpotholesttemnt.PTH_PHOTO AS PTH_PHOTO
+		    , (tcsmstime.STIME_HH || ':' || tcsmstime.STIME_MM || ':' || tcsmstime.STIME_SS) SMS_TIME_START
+            , (tcsmstime.ETIME_HH || ':' || tcsmstime.ETIME_MM || ':' || tcsmstime.ETIME_SS) SMS_TIME_END
+	  ]]>
+
+        FROM <include refid="sttemntDAO.pthmode.pthmnt" /> pthsttmnt
+			LEFT OUTER JOIN <include refid="sttemntDAO.pthmode.tnPthmnt" /> tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+			LEFT OUTER JOIN <include refid="sttemntDAO.pthmode.rpair" /> tnpotholerpair
+	<![CDATA[
+				ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				AND tnpotholerpair.USE_AT = 'Y'
+				AND tnpotholerpair.DELETE_AT = 'N'
+			LEFT OUTER JOIN TC_SMS_TIME tcsmstime on tcsmstime.SEQ_NO=1 AND tcsmstime.USE_AT='Y'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.USE_AT = 'Y'
+            AND tnpotholesttemnt.DELETE_AT = 'N'
+            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+            AND tnpotholesttemnt.PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')
+    ]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+            LEFT OUTER JOIN
+                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                AND USE_AT = 'Y'
+                AND DELETE_AT = 'N'  -->
+
+    <!-- 2018. 01. 10. JOY. -->
+    <select id="sttemntDAO.selectPotholeSttemntListTEST" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        select * from
+    ]]>
+        <include refid="sttemntDAO.pthmode.tnPthmnt" />
+        where lnm_adres is null
+    </select>
+
+    <sql id="sttemntDAO.selectPotholeSttemntList.select">
+    <![CDATA[
+	       tnpotholesttemnt.PTH_RG_NO             /* 포트홀_신고_내역.포트홀_등록_번호 */
+	       , tnpotholesttemnt.CRDNT_X           /* 포트홀_신고_내역.좌표_X */
+	       , tnpotholesttemnt.CRDNT_Y           /* 포트홀_신고_내역.좌표_Y */
+	       , tnpotholesttemnt.CORTN_X           /* 포트홀_신고_내역.보정_X */
+	       , tnpotholesttemnt.CORTN_Y           /* 포트홀_신고_내역.보정_Y */
+	       , tnpotholesttemnt.TM_X              /* 포트홀_신고_내역.TM_X */
+	       , tnpotholesttemnt.TM_Y              /* 포트홀_신고_내역.TM_Y */
+	       , tnpotholesttemnt.HEADG             /* 포트홀_신고_내역.헤딩 */
+	       , tnpotholesttemnt.APLCNT_TELNO      /* 포트홀_신고_내역.신고자_전화번호 */
+	       , tnpotholesttemnt.BSNM_NM           /* 포트홀_신고_내역.사업자_명 */
+	       , tnpotholesttemnt.VHCLE_NO          /* 포트홀_신고_내역.차량_번호 */
+	       , tnpotholesttemnt.RCEPT_CN          /* 포트홀_신고_내역.접수_내용 */
+	       , tnpotholesttemnt.VHCLE_TYPE        /* 포트홀_신고_내역.차량_유형 */
+	       , TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY-MM-DD hh24:mi:ss') AS STTEMNT_DT      /* 포트홀_신고_내역.신고_일시 */
+	       , tnpotholesttemnt.RN_ADRES          /* 포트홀_신고_내역.도로명_주소 */
+	       , tnpotholesttemnt.LNM_ADRES         /* 포트홀_신고_내역.지번_주소 */
+	       , TO_CHAR(tnpotholesttemnt.RCEPT_DT, 'YYYY-MM-DD hh24:mi:ss') AS RCEPT_DT      /* 포트홀_신고_내역.접수_일시 */
+	       , TO_CHAR(tnpotholerpair.RPAIR_DT, 'YYYY-MM-DD') AS RPAIR_DT      /* 포트홀_신고_내역.보수_일시 */
+	       , ( SELECT LOWEST_DEPT_NM
+	           FROM TC_DEPT
+	           WHERE DEPT_CODE = tnpotholesttemnt.DEPT_CODE
+	       ) AS LOWEST_DEPT_NM
+	       , TO_CHAR(tnpotholerpair.UPDT_DE, 'YYYY-MM-DD hh24:mi:ss') AS PROCESS_DT     /* 포트홀_보수_내역.처리_일시 */
+	       , tnpotholerpair.DAYCNT              /* 포트홀_보수_내역.처리_일수 */
+	       , tnpotholesttemnt.DEPT_CODE         /* 포트홀_신고_내역.부서_코드 */
+	       , tnpotholesttemnt.EDEPT_CODE        /* 포트홀_신고_내역.기타_부서_코드 */
+	       , ( SELECT tccode.CODE_NM
+	           FROM TC_CODE tccode
+	           WHERE tccode.CODE_VAL = tnpotholesttemnt.PRCS_TYPE
+	       ) AS PRCS_TYPE_NM                    /* 포트홀_신고_내역.처리_유형_이름 */
+	       , tnpotholesttemnt.PRCS_TYPE         /* 포트홀_신고_내역.처리_유형 */
+	       , ( SELECT tccode.CODE_NM
+	           FROM TC_CODE tccode
+	           WHERE tccode.CODE_VAL = tnpotholesttemnt.PRCS_STTUS
+	       ) AS PRCS_STTUS_NM                   /* 포트홀_신고_내역.처리_상태_이름 */
+	       , tnpotholesttemnt.PRCS_STTUS        /* 포트홀_신고_내역.처리_상태 */
+	       , tnpotholesttemnt.CORTN_AT          /* 포트홀_신고_내역.보정_여부 */
+	       , tnpotholesttemnt.DPLCT_STTEMNT_AT  /* 포트홀_신고_내역.중복_신고_여부 */
+	       , tnpotholesttemnt.DSM_RP_NO       /* 포트홀_신고_내역.마스터_등록_번호 */
+	       , tnpotholesttemnt.SMS_SNDNG_AT      /* 포트홀_신고_내역.SMS_발송_여부 */
+	       , tnpotholesttemnt.CPT_MNG_NO        /* 포트홀_신고_내역.노선_관리_번호 */
+	       , tnpotholesttemnt.USE_AT            /* 포트홀_신고_내역.사용_여부 */
+	       , tnpotholesttemnt.DELETE_AT         /* 포트홀_신고_내역.삭제_여부 */
+	       , tnpotholesttemnt.CRTR_NO           /* 포트홀_신고_내역.생성자_번호 */
+	       , TO_CHAR(tnpotholesttemnt.CREAT_DE, 'YYYY-MM-DD hh24:mi:ss') AS CREAT_DE      /* 포트홀_신고_내역.생성_일자 */
+	       , tnpotholesttemnt.UPDUSR_NO         /* 포트홀_신고_내역.수정자_번호 */
+	       , TO_CHAR(tnpotholesttemnt.UPDT_DE, 'YYYY-MM-DD hh24:mi:ss') AS UPDT_DE        /* 포트홀_신고_내역.수정_일자 */
+	       , NVL(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
+	       , ( SELECT tccode.CODE_NM
+	           FROM TC_CODE tccode
+	           WHERE tccode.CODE_VAL = NVL(tnpotholerpair.DMG_TYPE, '')
+	       ) AS DMG_TYPE_NM                     /* 포트홀_보수_내역.파손_유형_이름 */
+	       , NVL(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
+	       , tnpotholerpair.RPRDTLS_MNG_NO      /* 포트홀_보수_내역.보수_관리번호 */
+	       , tnpotholesttemnt.VHCLE_TYPE AS pthmode    /* 포트홀_신고_내역.접수경로 구분값 */
+	       , ( SELECT tccode.CODE_NM
+               FROM TC_CODE tccode
+               WHERE tccode.CL_CODE='PRRT' AND tccode.CODE_VAL = NVL(tnpotholesttemnt.VHCLE_TYPE, '')
+           ) AS RCPT_ROUTE                             /* 포트홀_신고_내역.접수경로 */
+    ]]>
+    </sql>
+
+    <sql id="sttemntDAO.selectPotholeSttemntList.from">
+        <isEmpty property="pthmode">
+	        SELECT
+	                    <include refid="sttemntDAO.selectPotholeSttemntList.select" />
+	        <![CDATA[
+	                FROM PTH_STTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                        AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+	                UNION ALL
+	                SELECT
+	                    <include refid="sttemntDAO.selectPotholeSttemntList.select" />
+	        <![CDATA[
+	                FROM PTH_MLTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                        AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+	                UNION ALL
+	                SELECT
+	                    <include refid="sttemntDAO.selectPotholeSttemntList.select" />
+	        <![CDATA[
+	                FROM PTH_CTSMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                        AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEmpty>
+        <isEqual property="pthmode" compareValue="T">
+	        SELECT
+	                    <include refid="sttemntDAO.selectPotholeSttemntList.select" />
+	        <![CDATA[
+	                FROM PTH_STTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                        AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+        <isEqual property="pthmode" compareValue="M">
+            SELECT
+                        <include refid="sttemntDAO.selectPotholeSttemntList.select" />
+            <![CDATA[
+                    FROM PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                            AND tnpotholerpair.USE_AT = 'Y'
+                            AND tnpotholerpair.DELETE_AT = 'N'
+            ]]>
+                    WHERE 1 = 1
+                       <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+        <isEqual property="pthmode" compareValue="C">
+            SELECT
+                        <include refid="sttemntDAO.selectPotholeSttemntList.select" />
+            <![CDATA[
+                    FROM PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                            AND tnpotholerpair.USE_AT = 'Y'
+                            AND tnpotholerpair.DELETE_AT = 'N'
+            ]]>
+                    WHERE 1 = 1
+                       <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+    </sql>
+
+    <sql id="sttemntDAO.selectPotholeSttemntList.where.sub">
+    <![CDATA[
+                    AND tnpotholesttemnt.USE_AT = 'Y'
+                    AND tnpotholesttemnt.DELETE_AT = 'N'
+                    AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ]]>
+        <isNotEmpty property="PTH_RG_NO_LAYER">
+            <![CDATA[   AND (tnpotholesttemnt.VHCLE_TYPE || '_' || tnpotholesttemnt.PTH_RG_NO) IN   ]]>
+        <iterate open="(" close=")" property="PTH_RG_NO_LAYER" conjunction=",">
+            <![CDATA[   SUBSTR(#PTH_RG_NO_LAYER[]#, 0, 10) || LPAD(SUBSTR(#PTH_RG_NO_LAYER[]#, 12), 6, '0')   ]]>
+        </iterate>
+        </isNotEmpty>
+
+        <include refid="sttemntDAO.selectPotholeSttemntList.where" />
+    </sql>
+
+    <select id="sttemntDAO.selectPotholeSttemntList" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+    /* sttemntDAO.selectPotholeSttemntList */
+    /* 포트홀_신고_내역 목록 조회 */
+    SELECT *
+      FROM (
+        SELECT
+            tb.*
+         FROM (
+            SELECT
+                SUBSTR(tb.PTH_RG_NO, 0, 8) || '-' || TO_NUMBER(SUBSTR(tb.PTH_RG_NO, 9)) AS PTH_RG_NO          /* 포트홀_신고_내역.포트홀_등록_번호 */
+                , tb.CRDNT_X            /* 포트홀_신고_내역.좌표_X */
+                , tb.CRDNT_Y            /* 포트홀_신고_내역.좌표_Y */
+                , tb.CORTN_X            /* 포트홀_신고_내역.보정_X */
+                , tb.CORTN_Y            /* 포트홀_신고_내역.보정_Y */
+                , tb.TM_X               /* 포트홀_신고_내역.TM_X */
+                , tb.TM_Y               /* 포트홀_신고_내역.TM_Y */
+                , tb.HEADG              /* 포트홀_신고_내역.헤딩 */
+                , tb.APLCNT_TELNO       /* 포트홀_신고_내역.신고자_전화번호 */
+                , tb.BSNM_NM            /* 포트홀_신고_내역.사업자_명 */
+                , tb.VHCLE_NO           /* 포트홀_신고_내역.차량_번호 */
+                , tb.RCEPT_CN           /* 포트홀_신고_내역.접수_내용 */
+                , tb.VHCLE_TYPE         /* 포트홀_신고_내역.차량_유형 */
+                , tb.STTEMNT_DT         /* 포트홀_신고_내역.신고_일시 */
+                , tb.RN_ADRES           /* 포트홀_신고_내역.도로명_주소 */
+                , tb.LNM_ADRES          /* 포트홀_신고_내역.지번_주소 */
+                , (CASE
+                       WHEN tb.PRCS_STTUS != 'PRCS0003'
+                       THEN NULL
+                       ELSE tb.PROCESS_DT
+                   END) AS PROCESS_DT       /* 포트홀_신고_내역.처리_일시 */
+                , tb.RCEPT_DT           /* 포트홀_신고_내역.접수_일시 */
+                , (CASE
+                        WHEN tb.PRCS_STTUS != 'PRCS0003'
+                        THEN NULL
+                        ELSE tb.DAYCNT
+                   END) AS DAYCNT       /* 포트홀_신고_내역.처리_일수 */
+                , tb.RPAIR_DT           /* 포트홀_신고_내역.보수_일시 */
+                , tb.DEPT_CODE          /* 포트홀_신고_내역.부서_코드 */
+                , tb.EDEPT_CODE         /* 포트홀_신고_내역.기타_부서_코드 */
+                , tb.PRCS_TYPE_NM       /* 포트홀_신고_내역.처리_유형_이름 */
+                , tb.PRCS_TYPE          /* 포트홀_신고_내역.처리_유형 */
+                , tb.PRCS_STTUS_NM      /* 포트홀_신고_내역.처리_상태_이름 */
+                , tb.PRCS_STTUS         /* 포트홀_신고_내역.처리_상태 */
+                , tb.CORTN_AT           /* 포트홀_신고_내역.보정_여부 */
+                , tb.DPLCT_STTEMNT_AT   /* 포트홀_신고_내역.중복_신고_여부 */
+                , tb.DSM_RP_NO          /* 포트홀_신고_내역.마스터_등록_번호 */
+                , tb.SMS_SNDNG_AT       /* 포트홀_신고_내역.SMS_발송_여부 */
+                , tb.CPT_MNG_NO         /* 포트홀_신고_내역.노선_관리_번호 */
+                , tb.USE_AT             /* 포트홀_신고_내역.사용_여부 */
+                , tb.DELETE_AT          /* 포트홀_신고_내역.삭제_여부 */
+                , tb.CRTR_NO            /* 포트홀_신고_내역.생성자_번호 */
+                , tb.CREAT_DE           /* 포트홀_신고_내역.생성_일자 */
+                , tb.UPDUSR_NO          /* 포트홀_신고_내역.수정자_번호 */
+                , tb.UPDT_DE            /* 포트홀_신고_내역.수정_일자 */
+                , tb.RM                 /* 포트홀_보수_내역.비고 */
+                , tb.DMG_TYPE_NM        /* 포트홀_보수_내역.파손_유형_이름 */
+                , tb.DMG_TYPE           /* 포트홀_보수_내역.파손_유형 */
+                , tb.RPRDTLS_MNG_NO     /* 포트홀_보수_내역.보수_관리번호 */
+                , (CASE WHEN tb.DEPT_CODE > '7000300'  AND tb.DEPT_CODE  < '7000400'
+                        THEN CONCAT( '민자도로사업자',  ' ('|| tb.LOWEST_DEPT_NM || ')' )
+                        WHEN (tb.DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || tb.LOWEST_DEPT_NM
+                        ELSE tb.LOWEST_DEPT_NM
+                    END) AS LOWEST_DEPT_NM       /* 포트홀_신고_내역.부서_코드_이름*/
+                , ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+                , tb.pthmode
+                , tb.RCPT_ROUTE
+            FROM (
+    ]]>
+            <include refid="sttemntDAO.selectPotholeSttemntList.from" />
+
+    <![CDATA[
+            ) tb
+        )tb
+    ) WHERE 1 = 1
+    ]]>
+
+    <isEqual prepend="  " property="usePage" compareValue="true">
+    <![CDATA[
+        AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+    ]]>
+    </isEqual>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+                    LEFT OUTER JOIN
+                     ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                        AND tnmntrngmbr.ENTRST_AT = 'Y'
+                        AND USE_AT = 'Y'
+                        AND DELETE_AT = 'N' -->
+
+    <!-- 2018. 01. 10. JOY. -->
+    <select id="sttemntDAO.selectPotholeSttemntListCount" parameterClass="sttemntVO" resultClass="int">
+    <![CDATA[
+        /* sttemntDAO.selectPotholeSttemntListCount */
+        /* 포트홀_신고_내역 목록 개수 조회 */
+        SELECT COUNT(*) AS totCnt FROM (
+    ]]>
+        <isEmpty property="pthmode">
+                SELECT tnpotholesttemnt.PTH_RG_NO
+                FROM PTH_STTMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+                UNION ALL
+                SELECT tnpotholesttemnt.PTH_RG_NO
+                FROM PTH_MLTMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+                UNION ALL
+                SELECT tnpotholesttemnt.PTH_RG_NO
+                FROM PTH_CTSMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEmpty>
+        <isEqual property="pthmode" compareValue="T">
+	        SELECT tnpotholesttemnt.PTH_RG_NO
+	                FROM PTH_STTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+        <isEqual property="pthmode" compareValue="M">
+	        SELECT tnpotholesttemnt.PTH_RG_NO
+	                FROM PTH_MLTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+        <isEqual property="pthmode" compareValue="C">
+	        SELECT tnpotholesttemnt.PTH_RG_NO
+	                FROM PTH_CTSMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+
+        ) tb
+
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+            LEFT OUTER JOIN
+                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                AND USE_AT = 'Y'
+                AND DELETE_AT = 'N' -->
+
+    <sql id="sttemntDAO.selectPotholeSttemntListPrcsCount.select">
+    <![CDATA[
+	      COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'  AND tnpotholesttemnt.USE_AT = 'Y' AND tnpotholesttemnt.DELETE_AT = 'N' AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                   THEN 0 END ) AS PRCS_STTUS1  /* 포트홀_통계.처리_상태1 신고 */
+	      ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0002'  AND tnpotholesttemnt.USE_AT = 'Y' AND tnpotholesttemnt.DELETE_AT = 'N' AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                   THEN 0 END ) AS PRCS_STTUS2  /* 포트홀_통계.처리_상태2 접수 */
+	      ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0003'  AND tnpotholesttemnt.USE_AT = 'Y' AND tnpotholesttemnt.DELETE_AT = 'N' AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                   THEN 0 END ) AS PRCS_STTUS3  /* 포트홀_통계.처리_상태3 처리완료 */
+	      ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0004'  AND tnpotholesttemnt.USE_AT = 'Y' AND tnpotholesttemnt.DELETE_AT = 'N' AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                   THEN 0 END ) AS PRCS_STTUS4  /* 포트홀_통계.처리_상태4 보수예정 */
+	      ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0005'  AND tnpotholesttemnt.USE_AT = 'Y' AND tnpotholesttemnt.DELETE_AT = 'N' AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                   THEN 0 END ) AS PRCS_STTUS5  /* 포트홀_통계.처리_상태5 재배정요청 */
+	      ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0006'  AND tnpotholesttemnt.USE_AT = 'Y' AND tnpotholesttemnt.DELETE_AT = 'N' AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                   THEN 0 END ) AS PRCS_STTUS6  /* 포트홀_통계.처리_상태6 기타 */
+	      ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0007'  AND tnpotholesttemnt.USE_AT = 'Y' AND tnpotholesttemnt.DELETE_AT = 'N' AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                   THEN 0 END ) AS PRCS_STTUS7  /* 포트홀_통계.처리_상태7 좌표오류 */
+	      /* 2019년 고도화 사업 - 처리상태 코드 취하완료 추가 */
+	      ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0008'  AND tnpotholesttemnt.USE_AT = 'Y' AND tnpotholesttemnt.DELETE_AT = 'N' AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                       THEN 0 END ) AS PRCS_STTUS8  /* 포트홀_통계.처리_상태8 취하완료 */
+	]]>
+    </sql>
+
+    <!-- 2018.02.11 YYK -->
+    <select id="sttemntDAO.selectPotholeSttemntListPrcsCount" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectPotholeSttemntListPrcsCount */
+        /* 포트홀_신고_내역 목록 중 처리상태별 총 개수 조회 */
+        SELECT tb.*
+               /* ,( PRCS_STTUS1+PRCS_STTUS2+PRCS_STTUS3+PRCS_STTUS4+PRCS_STTUS5+PRCS_STTUS6+PRCS_STTUS7+PRCS_STTUS8) AS PRCS_SUM */
+          FROM (
+     ]]>
+            SELECT
+                SUM( tb.PRCS_STTUS1 ) AS PRCS_STTUS1  /* 포트홀_통계.처리_상태1 신고 */
+		        ,SUM( tb.PRCS_STTUS2 ) AS PRCS_STTUS2  /* 포트홀_통계.처리_상태2 접수 */
+		        ,SUM( tb.PRCS_STTUS3 ) AS PRCS_STTUS3  /* 포트홀_통계.처리_상태3 처리완료 */
+		        ,SUM( tb.PRCS_STTUS4 ) AS PRCS_STTUS4  /* 포트홀_통계.처리_상태4 보수예정 */
+		        ,SUM( tb.PRCS_STTUS5 ) AS PRCS_STTUS5  /* 포트홀_통계.처리_상태5 재배정요청 */
+		        ,SUM( tb.PRCS_STTUS6 ) AS PRCS_STTUS6  /* 포트홀_통계.처리_상태6 기타 */
+		        ,SUM( tb.PRCS_STTUS7 ) AS PRCS_STTUS7  /* 포트홀_통계.처리_상태7 좌표오류 */
+		        /* 2019년 고도화 사업 - 처리상태 코드 취하완료 추가 */
+		        ,SUM( tb.PRCS_STTUS8 ) AS PRCS_STTUS8  /* 포트홀_통계.처리_상태8 취하완료 */
+		    FROM (
+        <isEmpty property="pthmode">
+                SELECT
+                   <include refid="sttemntDAO.selectPotholeSttemntListPrcsCount.select" />
+                FROM PTH_STTMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+                UNION ALL
+                SELECT
+                   <include refid="sttemntDAO.selectPotholeSttemntListPrcsCount.select" />
+                FROM PTH_MLTMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+                UNION ALL
+                SELECT
+                   <include refid="sttemntDAO.selectPotholeSttemntListPrcsCount.select" />
+                FROM PTH_CTSMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEmpty>
+        <isEqual property="pthmode" compareValue="T">
+            SELECT
+	                   <include refid="sttemntDAO.selectPotholeSttemntListPrcsCount.select" />
+	                FROM PTH_STTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+        <isEqual property="pthmode" compareValue="M">
+            SELECT
+	                   <include refid="sttemntDAO.selectPotholeSttemntListPrcsCount.select" />
+	                FROM PTH_MLTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+        <isEqual property="pthmode" compareValue="C">
+            SELECT
+	                   <include refid="sttemntDAO.selectPotholeSttemntListPrcsCount.select" />
+	                FROM PTH_CTSMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+
+            ) tb
+        ) tb
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+                    LEFT OUTER JOIN
+                        ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                        AND tnmntrngmbr.ENTRST_AT = 'Y'
+                        AND USE_AT = 'Y'
+                        AND DELETE_AT = 'N' -->
+
+    <sql id="sttemntDAO.selectSttemntListExcel.select">
+    <![CDATA[
+         tnpotholesttemnt.PTH_RG_NO             /* 포트홀_신고_내역.포트홀_등록_번호 */
+         , tnpotholesttemnt.CRDNT_X           /* 포트홀_신고_내역.좌표_X */
+         , tnpotholesttemnt.CRDNT_Y           /* 포트홀_신고_내역.좌표_Y */
+         , tnpotholesttemnt.CORTN_X           /* 포트홀_신고_내역.보정_X */
+         , tnpotholesttemnt.CORTN_Y           /* 포트홀_신고_내역.보정_Y */
+         , tnpotholesttemnt.TM_X              /* 포트홀_신고_내역.TM_X */
+         , tnpotholesttemnt.TM_Y              /* 포트홀_신고_내역.TM_Y */
+         , tnpotholesttemnt.HEADG             /* 포트홀_신고_내역.헤딩 */
+         , tnpotholesttemnt.APLCNT_TELNO      /* 포트홀_신고_내역.신고자_전화번호 */
+         , tnpotholesttemnt.BSNM_NM           /* 포트홀_신고_내역.사업자_명 */
+         , tnpotholesttemnt.VHCLE_NO          /* 포트홀_신고_내역.차량_번호 */
+         , tnpotholesttemnt.RCEPT_CN          /* 포트홀_신고_내역.접수_내용 */
+         , tnpotholesttemnt.VHCLE_TYPE        /* 포트홀_신고_내역.차량_유형 */
+         , TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY-MM-DD hh24:mi:ss') AS STTEMNT_DT      /* 포트홀_신고_내역.신고_일시 */
+         , tnpotholesttemnt.RN_ADRES          /* 포트홀_신고_내역.도로명_주소 */
+         , tnpotholesttemnt.LNM_ADRES         /* 포트홀_신고_내역.지번_주소 */
+         , TO_CHAR(tnpotholesttemnt.RCEPT_DT, 'YYYY-MM-DD hh24:mi:ss') AS RCEPT_DT      /* 포트홀_신고_내역.접수_일시 */
+         , TO_CHAR(tnpotholerpair.UPDT_DE, 'YYYY-MM-DD hh24:mi:ss') AS PROCESS_DT           /* 포트홀_신고_내역.처리_일수 */
+         , tnpotholerpair.DAYCNT            /* 포트홀_신고_내역.처리_일수 */
+         , TO_CHAR(tnpotholerpair.RPAIR_DT, 'YYYY-MM-DD') AS RPAIR_DT      /* 포트홀_신고_내역.보수_일시 */
+         , ( SELECT LOWEST_DEPT_NM
+             FROM TC_DEPT
+             WHERE DEPT_CODE = tnpotholesttemnt.DEPT_CODE
+         ) AS LOWEST_DEPT_NM
+         , tnpotholesttemnt.DEPT_CODE         /* 포트홀_신고_내역.부서_코드 */
+         , tnpotholesttemnt.EDEPT_CODE     /* 포트홀_신고_내역.기타_부서_코드 */
+         , ( SELECT tccode.CODE_NM
+             FROM TC_CODE tccode
+             WHERE tccode.CODE_VAL = tnpotholesttemnt.PRCS_TYPE
+         ) AS PRCS_TYPE_NM                    /* 포트홀_신고_내역.처리_유형_이름 */
+         , tnpotholesttemnt.PRCS_TYPE         /* 포트홀_신고_내역.처리_유형 */
+         , ( SELECT tccode.CODE_NM
+             FROM TC_CODE tccode
+             WHERE tccode.CODE_VAL = tnpotholesttemnt.PRCS_STTUS
+         ) AS PRCS_STTUS_NM                   /* 포트홀_신고_내역.처리_상태_이름 */
+         , tnpotholesttemnt.PRCS_STTUS        /* 포트홀_신고_내역.처리_상태 */
+         , tnpotholesttemnt.CORTN_AT          /* 포트홀_신고_내역.보정_여부 */
+         , tnpotholesttemnt.DPLCT_STTEMNT_AT  /* 포트홀_신고_내역.중복_신고_여부 */
+         , tnpotholesttemnt.DSM_RP_NO       /* 포트홀_신고_내역.마스터_등록_번호 */
+         , tnpotholesttemnt.SMS_SNDNG_AT      /* 포트홀_신고_내역.SMS_발송_여부 */
+         , tnpotholesttemnt.CPT_MNG_NO        /* 포트홀_신고_내역.노선_관리_번호 */
+         , tnpotholesttemnt.USE_AT            /* 포트홀_신고_내역.사용_여부 */
+         , tnpotholesttemnt.DELETE_AT         /* 포트홀_신고_내역.삭제_여부 */
+         , tnpotholesttemnt.CRTR_NO           /* 포트홀_신고_내역.생성자_번호 */
+         , TO_CHAR(tnpotholesttemnt.CREAT_DE, 'YYYY-MM-DD hh24:mi:ss') AS CREAT_DE      /* 포트홀_신고_내역.생성_일자 */
+         , tnpotholesttemnt.UPDUSR_NO         /* 포트홀_신고_내역.수정자_번호 */
+         , TO_CHAR(tnpotholesttemnt.UPDT_DE, 'YYYY-MM-DD hh24:mi:ss') AS UPDT_DE        /* 포트홀_신고_내역.수정_일자 */
+         , NVL(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
+         , ( SELECT tccode.CODE_NM
+             FROM TC_CODE tccode
+             WHERE tccode.CODE_VAL = NVL(tnpotholerpair.DMG_TYPE, '')
+         ) AS DMG_TYPE_NM                     /* 포트홀_보수_내역.파손_유형_이름 */
+         , NVL(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
+         , tnpotholerpair.RPRDTLS_MNG_NO      /* 포트홀_보수_내역.보수_관리번호 */
+         , tnpotholesttemnt.VHCLE_TYPE AS pthmode
+    ]]>
+    </sql>
+
+    <!-- YYK 20180114 엑셀저장 -->
+    <select id="sttemntDAO.selectSttemntListExcel" parameterClass="sttemntVO" resultClass="hashmap">
+    <![CDATA[
+        /* sttemntDAO.selectSttemntListExcel */
+        /* 포트홀_신고 목록을 엑셀로 저장 */
+        SELECT *
+      FROM (
+        SELECT
+            tb.*
+         FROM (
+            SELECT
+                SUBSTR(tb.PTH_RG_NO, 0, 8) || '-' || TO_NUMBER(SUBSTR(tb.PTH_RG_NO, 9)) AS PTH_RG_NO          /* 포트홀_신고_내역.포트홀_등록_번호 */
+                , tb.CRDNT_X            /* 포트홀_신고_내역.좌표_X */
+                , tb.CRDNT_Y            /* 포트홀_신고_내역.좌표_Y */
+                , tb.CORTN_X            /* 포트홀_신고_내역.보정_X */
+                , tb.CORTN_Y            /* 포트홀_신고_내역.보정_Y */
+                , tb.TM_X               /* 포트홀_신고_내역.TM_X */
+                , tb.TM_Y               /* 포트홀_신고_내역.TM_Y */
+                , tb.HEADG              /* 포트홀_신고_내역.헤딩 */
+                , tb.APLCNT_TELNO       /* 포트홀_신고_내역.신고자_전화번호 */
+                , tb.BSNM_NM            /* 포트홀_신고_내역.사업자_명 */
+                , tb.VHCLE_NO           /* 포트홀_신고_내역.차량_번호 */
+                , tb.RCEPT_CN           /* 포트홀_신고_내역.접수_내용 */
+                , tb.VHCLE_TYPE         /* 포트홀_신고_내역.차량_유형 */
+                , tb.STTEMNT_DT         /* 포트홀_신고_내역.신고_일시 */
+                , tb.RN_ADRES           /* 포트홀_신고_내역.도로명_주소 */
+                , tb.LNM_ADRES          /* 포트홀_신고_내역.지번_주소 */
+                , tb.RCEPT_DT           /* 포트홀_신고_내역.접수_일시 */
+                , tb.RPAIR_DT           /* 포트홀_신고_내역.보수_일시 */
+                , (CASE
+                       WHEN tb.PRCS_STTUS != 'PRCS0003'
+                       THEN NULL
+                       ELSE tb.PROCESS_DT
+                   END) AS PROCESS_DT       /* 포트홀_신고_내역.처리_일시 */
+                , (CASE
+                        WHEN tb.PRCS_STTUS != 'PRCS0003'
+                        THEN NULL
+                        ELSE tb.DAYCNT
+                   END) AS DAYCNT       /* 포트홀_신고_내역.처리_일수 */
+                , tb.DEPT_CODE          /* 포트홀_신고_내역.부서_코드 */
+                , tb.EDEPT_CODE         /* 포트홀_신고_내역.기타_부서_코드 */
+                , tb.PRCS_TYPE_NM       /* 포트홀_신고_내역.처리_유형_이름 */
+                , tb.PRCS_TYPE          /* 포트홀_신고_내역.처리_유형 */
+                , tb.PRCS_STTUS_NM      /* 포트홀_신고_내역.처리_상태_이름 */
+                , tb.PRCS_STTUS         /* 포트홀_신고_내역.처리_상태 */
+                , tb.CORTN_AT           /* 포트홀_신고_내역.보정_여부 */
+                , tb.DPLCT_STTEMNT_AT   /* 포트홀_신고_내역.중복_신고_여부 */
+                , tb.DSM_RP_NO          /* 포트홀_신고_내역.마스터_등록_번호 */
+                , tb.SMS_SNDNG_AT       /* 포트홀_신고_내역.SMS_발송_여부 */
+                , tb.CPT_MNG_NO         /* 포트홀_신고_내역.노선_관리_번호 */
+                , tb.USE_AT             /* 포트홀_신고_내역.사용_여부 */
+                , tb.DELETE_AT          /* 포트홀_신고_내역.삭제_여부 */
+                , tb.CRTR_NO            /* 포트홀_신고_내역.생성자_번호 */
+                , tb.CREAT_DE           /* 포트홀_신고_내역.생성_일자 */
+                , tb.UPDUSR_NO          /* 포트홀_신고_내역.수정자_번호 */
+                , tb.UPDT_DE            /* 포트홀_신고_내역.수정_일자 */
+                , tb.RM                 /* 포트홀_보수_내역.비고 */
+                , tb.DMG_TYPE_NM        /* 포트홀_보수_내역.파손_유형_이름 */
+                , tb.DMG_TYPE           /* 포트홀_보수_내역.파손_유형 */
+                , tb.RPRDTLS_MNG_NO     /* 포트홀_보수_내역.보수_관리번호 */
+                , (CASE WHEN tb.DEPT_CODE > '7000300'  AND tb.DEPT_CODE  < '7000400'
+                        THEN CONCAT( '민자도로사업자',  ' ('|| tb.LOWEST_DEPT_NM || ')' )
+                        WHEN (tb.DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || tb.LOWEST_DEPT_NM
+                        WHEN (tb.DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || tb.LOWEST_DEPT_NM
+                        ELSE tb.LOWEST_DEPT_NM
+                    END) AS LOWEST_DEPT_NM       /* 포트홀_신고_내역.부서_코드_이름*/
+                , tb.pthmode
+                , ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+
+            FROM (
+    ]]>
+
+            <isEmpty property="pthmode">
+                SELECT
+                   <include refid="sttemntDAO.selectSttemntListExcel.select" />
+                FROM PTH_STTMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+                UNION ALL
+                SELECT
+                   <include refid="sttemntDAO.selectSttemntListExcel.select" />
+                FROM PTH_MLTMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+                UNION ALL
+                SELECT
+                   <include refid="sttemntDAO.selectSttemntListExcel.select" />
+                FROM PTH_CTSMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+        ]]>
+                WHERE 1 = 1
+                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEmpty>
+        <isEqual property="pthmode" compareValue="T">
+	        SELECT
+	                   <include refid="sttemntDAO.selectSttemntListExcel.select" />
+	                FROM PTH_STTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+        <isEqual property="pthmode" compareValue="M">
+	        SELECT
+	                   <include refid="sttemntDAO.selectSttemntListExcel.select" />
+	                FROM PTH_MLTMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+        <isEqual property="pthmode" compareValue="C">
+            SELECT
+	                   <include refid="sttemntDAO.selectSttemntListExcel.select" />
+	                FROM PTH_CTSMNT pthsttmnt
+	                    LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+	                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                    LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+	                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        <![CDATA[       AND tnpotholerpair.USE_AT = 'Y'
+	                        AND tnpotholerpair.DELETE_AT = 'N'
+	        ]]>
+	                WHERE 1 = 1
+	                   <include refid="sttemntDAO.selectPotholeSttemntList.where.sub" />
+        </isEqual>
+
+    <![CDATA[
+            ) tb
+        ) tb
+    ) WHERE 1 = 1
+    ]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+                    LEFT OUTER JOIN
+ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                        AND tnmntrngmbr.ENTRST_AT = 'Y'
+                        AND USE_AT = 'Y'
+                        AND DELETE_AT = 'N' -->
+
+
+
+<!-- ========= YYK map, layer 레이어 생성 부분 ================== -->
+<!-- ============================================================ -->
+
+    <!-- 2018. 02. 12. YYK. -->
+    <select id="sttemntDAO.selectPotholeSttemntLayer" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectPotholeSttemntLayer */
+        /* 포트홀_신고_내역 레이어 조회 */
+        SELECT SUBSTR(PTH_RG_NO, 0, 8) || '-' || TO_NUMBER(SUBSTR(PTH_RG_NO, 9)) AS PTH_RG_NO, TM_X, TM_Y, HEADG
+    ]]>
+        FROM <include refid="sttemntDAO.pthmode.tnPthmnt" />
+        WHERE 1=1
+    </select>
+
+    <sql id="sttemntDAO.selectPrcsSttusList.select">
+    <![CDATA[
+        tnpotholesttemnt.pth_rg_no, tnpotholesttemnt.crdnt_x, tnpotholesttemnt.crdnt_y, tnpotholesttemnt.cortn_x,
+        tnpotholesttemnt.cortn_y, tnpotholesttemnt.tm_x, tnpotholesttemnt.tm_y, tnpotholesttemnt.headg,
+        tnpotholesttemnt.APLCNT_TELNO, tnpotholesttemnt.bsnm_nm, tnpotholesttemnt.vhcle_no, tnpotholesttemnt.vhcle_type,
+        tnpotholesttemnt.rcept_cn, tnpotholesttemnt.sttemnt_dt, tnpotholesttemnt.rn_adres, tnpotholesttemnt.lnm_adres,
+        tnpotholesttemnt.rcept_dt, tnpotholesttemnt.rpair_dt, tnpotholesttemnt.dept_code, tnpotholesttemnt.edept_code,
+        tnpotholesttemnt.prcs_type, tnpotholesttemnt.prcs_sttus, tnpotholesttemnt.lcdo, tnpotholesttemnt.cortn_at,
+        tnpotholesttemnt.dplct_sttemnt_at, tnpotholesttemnt.dsm_rp_no, tnpotholesttemnt.sms_sndng_at,
+        tnpotholesttemnt.cpt_mng_no, tnpotholesttemnt.charger_nm, tnpotholesttemnt.cttpc, tnpotholesttemnt.use_at,
+        tnpotholesttemnt.delete_at, tnpotholesttemnt.crtr_no, tnpotholesttemnt.creat_de, tnpotholesttemnt.updusr_no,
+        tnpotholesttemnt.updt_de, pthsttmnt.G2_ID GG_ID, tnpotholerpair.RPRDTLS_MNG_NO,
+        tnpotholesttemnt.vhcle_type as pthmode
+    ]]>
+    </sql>
+
+    <sql id="sttemntDAO.selectPrcsSttusList.where">
+    <![CDATA[
+            AND tnpotholesttemnt.USE_AT = 'Y'
+            AND tnpotholesttemnt.DELETE_AT = 'N'
+            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ]]>
+
+        <isNotEmpty property="PTH_RG_NO">
+        <![CDATA[
+            AND tnpotholesttemnt.PTH_RG_NO LIKE '%'|| #PTH_RG_NO# ||'%' /* 포트홀_신고_내역.포트홀_등록_번호 */
+        ]]>
+        </isNotEmpty>
+        <isNotEmpty property="BSNM_NM"><![CDATA[ AND tnpotholesttemnt.BSNM_NM LIKE '%' || #BSNM_NM# || '%' /* 포트홀_신고_내역.사업자_명 */ ]]></isNotEmpty>
+        <isNotEmpty property="VHCLE_NO"><![CDATA[ AND tnpotholesttemnt.VHCLE_NO LIKE '%' || #VHCLE_NO# || '%' /* 포트홀_신고_내역.차량_번호 */ ]]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE">
+        <![CDATA[   /* YYK 7000300 으로 조회했을 경우 */
+                    AND ((#DEPT_CODE# = '7000300' AND tnpotholesttemnt.DEPT_CODE > '7000300' AND tnpotholesttemnt.DEPT_CODE < '7000400')
+                         /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                         OR (#DEPT_CODE# = '3740000' AND tnpotholesttemnt.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                         OR (#DEPT_CODE# = '3940000' AND tnpotholesttemnt.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                         OR (#DEPT_CODE# = '4050000' AND tnpotholesttemnt.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                         OR (#DEPT_CODE# = '3780000' AND tnpotholesttemnt.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                         OR (#DEPT_CODE# = '3930000' AND tnpotholesttemnt.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                         OR (#DEPT_CODE# = '3830000' AND tnpotholesttemnt.DEPT_CODE in ('3840000','3850000'))
+                         OR (#DEPT_CODE# = '5530000' AND tnpotholesttemnt.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                         OR (#DEPT_CODE# = '3910000' AND tnpotholesttemnt.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                         OR (#DEPT_CODE# != '7000300' AND tnpotholesttemnt.DEPT_CODE = #DEPT_CODE# ))
+        ]]>
+        </isNotEmpty>
+        <isNotEmpty property="SCH_PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #SCH_PRCS_STTUS# /* 포트홀_신고_내역.처리_상태 */ ]]></isNotEmpty>
+        <isNotEmpty property="SCH_DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #SCH_DMG_TYPE# /* 포트홀_신고_내역.노선_관리_번호 */ ]]></isNotEmpty>
+        <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# || ' 00:00:00' ]]></isNotEmpty>
+        <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+        <isNotEmpty property="RPAIR_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.RPAIR_DT),'YYYY-MM-DD hh24:mi:ss') >= #RPAIR_DT_START# || ' 00:00:00' ]]></isNotEmpty>
+        <isNotEmpty property="RPAIR_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.RPAIR_DT),'YYYY-MM-DD hh24:mi:ss') <= #RPAIR_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    </sql>
+
+    <!-- 2018. 02. 19. JOY -->
+    <select id="sttemntDAO.selectPrcsSttusList" parameterClass="sttemntVO" resultClass="SttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectPrcsSttusList */
+        /* 지도 - 처리상태 별 데이터 조회 */
+    SELECT tb.* FROM (
+    ]]>
+    <isEmpty property="pthmode">
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+        FROM PTH_STTMNT pthsttmnt
+	        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	<![CDATA[
+	            AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+    ]]>
+        WHERE 1 = 1
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS# ]]></isNotEmpty>
+        UNION ALL
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+        FROM PTH_MLTMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+    ]]>
+        WHERE 1 = 1
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS# ]]></isNotEmpty>
+        UNION ALL
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+        FROM PTH_CTSMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+    ]]>
+        WHERE 1 = 1
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS# ]]></isNotEmpty>
+    </isEmpty>
+    <isEqual property="pthmode" compareValue="T">
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+        FROM PTH_STTMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+    ]]>
+        WHERE 1 = 1
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS# ]]></isNotEmpty>
+    </isEqual>
+    <isEqual property="pthmode" compareValue="M">
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+        FROM PTH_MLTMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+    ]]>
+        WHERE 1 = 1
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS# ]]></isNotEmpty>
+    </isEqual>
+    <isEqual property="pthmode" compareValue="C">
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+        FROM PTH_CTSMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+    ]]>
+        WHERE 1 = 1
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS# ]]></isNotEmpty>
+    </isEqual>
+
+    ) tb
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+            LEFT OUTER JOIN
+
+                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                AND USE_AT = 'Y'
+                AND DELETE_AT = 'N' -->
+
+    <!-- 2018. 02. 26. JOY -->
+    <select id="sttemntDAO.selectDmgTypeList" parameterClass="sttemntVO" resultClass="SttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectDmgTypeList */
+        /* 지도 - 파손유형 별 데이터 조회 */
+    SELECT tb.* FROM (
+    ]]>
+
+        <isEmpty property="pthmode">
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+    <![CDATA[
+              , tnpotholerpair.DMG_TYPE
+    ]]>
+        FROM PTH_STTMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+		        AND tnpotholerpair.DELETE_AT = 'N'
+		WHERE 1 = 1
+            AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0003' /* 처리완료 상태인 것만 조회 */
+    ]]>
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #DMG_TYPE# ]]></isNotEmpty>
+        UNION ALL
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+    <![CDATA[
+              , tnpotholerpair.DMG_TYPE
+    ]]>
+        FROM PTH_MLTMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0003' /* 처리완료 상태인 것만 조회 */
+    ]]>
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #DMG_TYPE# ]]></isNotEmpty>
+        UNION
+        SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+    <![CDATA[
+              , tnpotholerpair.DMG_TYPE
+    ]]>
+        FROM PTH_CTSMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0003' /* 처리완료 상태인 것만 조회 */
+    ]]>
+            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+            <isNotEmpty property="DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #DMG_TYPE# ]]></isNotEmpty>
+       </isEmpty>
+       <isEqual property="pthmode" compareValue="T">
+            SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+	    <![CDATA[
+	              , tnpotholerpair.DMG_TYPE
+	    ]]>
+	        FROM PTH_STTMNT pthsttmnt
+	            LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	            LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	    <![CDATA[
+	                AND tnpotholerpair.USE_AT = 'Y'
+	                AND tnpotholerpair.DELETE_AT = 'N'
+	        WHERE 1 = 1
+	            AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0003' /* 처리완료 상태인 것만 조회 */
+	    ]]>
+	            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+	            <isNotEmpty property="DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #DMG_TYPE# ]]></isNotEmpty>
+       </isEqual>
+       <isEqual property="pthmode" compareValue="M">
+            SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+	    <![CDATA[
+	              , tnpotholerpair.DMG_TYPE
+	    ]]>
+	        FROM PTH_MLTMNT pthsttmnt
+	            LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+	                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	            LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+	                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	    <![CDATA[
+	                AND tnpotholerpair.USE_AT = 'Y'
+	                AND tnpotholerpair.DELETE_AT = 'N'
+	        WHERE 1 = 1
+	            AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0003' /* 처리완료 상태인 것만 조회 */
+	    ]]>
+	            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+	            <isNotEmpty property="DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #DMG_TYPE# ]]></isNotEmpty>
+       </isEqual>
+       <isEqual property="pthmode" compareValue="C">
+            SELECT <include refid="sttemntDAO.selectPrcsSttusList.select" />
+	    <![CDATA[
+	              , tnpotholerpair.DMG_TYPE
+	    ]]>
+	        FROM PTH_CTSMNT pthsttmnt
+	            LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+	                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	            LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+	                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	    <![CDATA[
+	                AND tnpotholerpair.USE_AT = 'Y'
+	                AND tnpotholerpair.DELETE_AT = 'N'
+	        WHERE 1 = 1
+	            AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0003' /* 처리완료 상태인 것만 조회 */
+	    ]]>
+	            <include refid="sttemntDAO.selectPrcsSttusList.where" />
+	            <isNotEmpty property="DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #DMG_TYPE# ]]></isNotEmpty>
+       </isEqual>
+
+    ) tb
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+            LEFT OUTER JOIN
+                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                AND USE_AT = 'Y'
+                AND DELETE_AT = 'N' -->
+
+    <!-- 2018. 02. 19. JOY -->
+    <select id="sttemntDAO.selectPrvRdOprtCount" parameterClass="sttemntVO" resultClass="int">
+    <![CDATA[
+        /* sttemntDAO.selectPrvRdOprtCount */
+        /* 지도 - 민자도로사업자 신고 건 조회 */
+        SELECT
+            COUNT( * ) AS PRV_RD_OPRT
+    ]]>
+        FROM PTH_STTMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.USE_AT = 'Y'
+            AND tnpotholesttemnt.DELETE_AT = 'N'
+            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+            AND (tnpotholesttemnt.DEPT_CODE > '7000300' AND
+                 tnpotholesttemnt.DEPT_CODE < '7000400' )
+    ]]>
+
+        <isNotEmpty property="PTH_RG_NO">
+        <![CDATA[
+        AND tnpotholesttemnt.PTH_RG_NO LIKE '%'|| #PTH_RG_NO# ||'%' /* 포트홀_신고_내역.포트홀_등록_번호 */
+        ]]>
+        </isNotEmpty>
+        <isNotEmpty property="BSNM_NM"><![CDATA[ AND tnpotholesttemnt.BSNM_NM LIKE '%' || #BSNM_NM# || '%' /* 포트홀_신고_내역.사업자_명 */ ]]></isNotEmpty>
+        <isNotEmpty property="VHCLE_NO"><![CDATA[ AND tnpotholesttemnt.VHCLE_NO LIKE '%' || #VHCLE_NO# || '%' /* 포트홀_신고_내역.차량_번호 */ ]]></isNotEmpty>
+        <isNotEmpty property="SCH_PRCS_STTUS"><![CDATA[ AND tnpotholesttemnt.PRCS_STTUS = #SCH_PRCS_STTUS# /* 포트홀_신고_내역.처리_상태 */ ]]></isNotEmpty>
+        <isNotEmpty property="SCH_DMG_TYPE"><![CDATA[ AND tnpotholerpair.DMG_TYPE = #SCH_DMG_TYPE# /* 포트홀_신고_내역.노선_관리_번호 */ ]]></isNotEmpty>
+        <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# || ' 00:00:00' ]]></isNotEmpty>
+        <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+        <isNotEmpty property="RPAIR_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.RPAIR_DT),'YYYY-MM-DD hh24:mi:ss') >= #"RPAIR_DT_START"# || ' 00:00:00' ]]></isNotEmpty>
+        <isNotEmpty property="RPAIR_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.RPAIR_DT),'YYYY-MM-DD hh24:mi:ss') <= #RPAIR_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+            LEFT OUTER JOIN
+                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                AND USE_AT = 'Y'
+                AND DELETE_AT = 'N' -->
+
+    <!-- 2018. 03. 07. JOY. -->
+    <select id="sttemntDAO.selectOverlapSttemnt" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectOverlapSttemnt */
+        /* 포트홀_신고_내역 중복 목록 조회 */
+        SELECT tnpotholesttemnt.*
+	]]>
+		FROM <include refid="sttemntDAO.pthmode.pthmnt" /> pthsttmnt
+            LEFT OUTER JOIN <include refid="sttemntDAO.pthmode.tnPthmnt" /> tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN <include refid="sttemntDAO.pthmode.rpair" /> tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.USE_AT = 'Y'
+            AND tnpotholesttemnt.DELETE_AT = 'N'
+            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'Y'
+		    AND tnpotholesttemnt.DSM_RP_NO = SUBSTR(#DSM_RP_NO#, 0, 8) || LPAD(SUBSTR(#DSM_RP_NO#, 10), 6, '0')
+	]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+            LEFT OUTER JOIN
+                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                AND USE_AT = 'Y'
+                AND DELETE_AT = 'N' -->
+
+    <select id="sttemntDAO.selectOverlapCnt" parameterClass="sttemntVO" resultClass="int">
+    <![CDATA[
+        /* sttemntDAO.selectOverlapCnt */
+        /* 포트홀_신고_내역 중복 목록 개수 조회 */
+        SELECT COUNT(*)
+    ]]>
+        FROM <include refid="sttemntDAO.pthmode.pthmnt" /> pthsttmnt
+            LEFT OUTER JOIN <include refid="sttemntDAO.pthmode.tnPthmnt" /> tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN <include refid="sttemntDAO.pthmode.rpair" /> tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+    <![CDATA[
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.USE_AT = 'Y'
+            AND tnpotholesttemnt.DELETE_AT = 'N'
+            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'Y'
+            AND tnpotholesttemnt.DSM_RP_NO = SUBSTR(#DSM_RP_NO#, 0, 8) || LPAD(SUBSTR(#DSM_RP_NO#, 10), 6, '0')
+    ]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+            LEFT OUTER JOIN
+                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                AND USE_AT = 'Y'
+                AND DELETE_AT = 'N' -->
+
+    <!-- 보정한 위치의 경위도 값을 조회한다. -->
+    <select id="sttemntDAO.selectLatLon" parameterClass="sttemntVO" resultClass="hashmap">
+    <![CDATA[
+        /* sttemntDAO.selectLatLon */
+        /* 보정한 위치의 경위도 값 조회 */
+        SELECT
+            ROUND(t.X, 6) AS X, ROUND(t.Y, 6) AS Y
+        FROM
+            ( SELECT SDO_CS.TRANSFORM(SDO_GEOMETRY(2001, 5181, SDO_POINT_TYPE( #TM_X#, #TM_Y#, NULL), NULL, NULL), 4326) AS G2_LONLAT FROM DUAL ) a
+            , TABLE( SDO_UTIL.GETVERTICES( a.G2_LONLAT ) ) t
+    ]]>
+    </select>
+
+    <select id="sttemntDAO.selectHighDeptCode" parameterClass="sttemntVO" resultClass="String">
+    <![CDATA[
+        /* sttemntDAO.selectHighDeptCode */
+        /* 사용자의 상위 부서 조회 */
+	    SELECT
+		    CASE
+		        WHEN ( SELECT ODR FROM TC_DEPT WHERE DEPT_CODE = #DEPT_CODE# ) = 3 AND #DEPT_CODE# != '6411399' AND #DEPT_CODE# != '6411799'
+		            THEN ( SELECT SEHIGH_DEPT_CODE FROM TC_DEPT WHERE DEPT_CODE = #DEPT_CODE# )
+		        WHEN ( SELECT ODR FROM TC_DEPT WHERE DEPT_CODE = #DEPT_CODE# ) = 4
+		            THEN ( SELECT SEHIGH_DEPT_CODE FROM TC_DEPT WHERE DEPT_CODE = ( SELECT SEHIGH_DEPT_CODE FROM TC_DEPT WHERE DEPT_CODE = #DEPT_CODE# ) )
+		        ELSE #DEPT_CODE#
+		    END AS DEPT_CODE
+		FROM DUAL
+    ]]>
+    </select>
+
+    <select id="sttemntDAO.selectPotholeSMSTime" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectPotholeSMSTime */
+        /* 포트홀 신고정보 SMS 전송 설정 시간 조회 */
+        SELECT
+            (STIME_SS || ' ' || STIME_MM || ' ' || STIME_HH || ' ' || STIME_DOMONTH || ' ' || STIME_MONTH || ' ' || STIME_DOWEEK) AS SMS_TIME_CRON
+            , (STIME_HH || ':' || STIME_MM || ':' || STIME_SS) SMS_TIME_START
+            , (ETIME_HH || ':' || ETIME_MM || ':' || ETIME_SS) SMS_TIME_END
+            , USE_AT
+        FROM TC_SMS_TIME
+        WHERE SEQ_NO=1
+    ]]>
+    </select>
+
+    <select id="sttemntDAO.selectPotholeSttemntGrpCount" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectPotholeSttemntGrpCount */
+        /* 문자제한시간에 등록된 관할구역별 신고내역 등록 건수 조회 */
+        SELECT count(*) as PTH_RG_NO, DEPT_CODE, LOWEST_DEPT_NM, CHARGER_NM, CTTPC  FROM (
+                SELECT tnpotholesttemnt.PTH_RG_NO, tnpotholesttemnt.STTEMNT_DT
+                    , tnpotholesttemnt.LNM_ADRES, tnpotholesttemnt.DEPT_CODE
+                    , ( SELECT LOWEST_DEPT_NM
+                           FROM TC_DEPT
+                           WHERE DEPT_CODE = tnpotholesttemnt.DEPT_CODE
+                      ) AS LOWEST_DEPT_NM
+                    , tnpotholesttemnt.CHARGER_NM, tnpotholesttemnt.CTTPC
+                FROM PTH_STTMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+               AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+
+                WHERE 1 = 1
+                    AND tnpotholesttemnt.USE_AT = 'Y'
+                    AND tnpotholesttemnt.DELETE_AT = 'N'
+                    AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                    AND tnpotholesttemnt.SMS_SNDNG_AT = 'N'         /* SMS발송여부 : N */
+                    AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'    /* 처리상태 : 신고 */
+                    AND TO_CHAR(TO_DATE(tnpotholesttemnt.CREAT_DE),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# || ' 00:00:00'
+                    AND TO_CHAR(TO_DATE(tnpotholesttemnt.CREAT_DE),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END#
+
+                UNION ALL
+                SELECT tnpotholesttemnt.PTH_RG_NO, tnpotholesttemnt.STTEMNT_DT
+                    , tnpotholesttemnt.LNM_ADRES, tnpotholesttemnt.DEPT_CODE
+                    , ( SELECT LOWEST_DEPT_NM
+                           FROM TC_DEPT
+                           WHERE DEPT_CODE = tnpotholesttemnt.DEPT_CODE
+                      ) AS LOWEST_DEPT_NM
+                    , tnpotholesttemnt.CHARGER_NM, tnpotholesttemnt.CTTPC
+                FROM PTH_MLTMNT pthsttmnt
+                    LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                        ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                    LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                        ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+              AND tnpotholerpair.USE_AT = 'Y'
+                        AND tnpotholerpair.DELETE_AT = 'N'
+
+                WHERE 1 = 1
+                    AND tnpotholesttemnt.USE_AT = 'Y'
+                    AND tnpotholesttemnt.DELETE_AT = 'N'
+                    AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                    AND tnpotholesttemnt.SMS_SNDNG_AT = 'N'         /* SMS발송여부 : N */
+                    AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'    /* 처리상태 : 신고 */
+                    AND TO_CHAR(TO_DATE(tnpotholesttemnt.CREAT_DE),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# || ' 00:00:00'
+                    AND TO_CHAR(TO_DATE(tnpotholesttemnt.CREAT_DE),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END#
+
+                /* 시군 자체 관리 SMS 전송 여부 확인 후 추가 */
+
+        ) tb
+        WHERE NVL(tb.CTTPC, '0') <> '0'
+        group by tb.DEPT_CODE, tb.LOWEST_DEPT_NM, tb.CHARGER_NM, tb.CTTPC
+    ]]>
+    </select>
+
+    <select id="sttemntDAO.selectPotholeSttemntGrpList" parameterClass="sttemntVO" resultClass="sttemntVO">
+    <![CDATA[
+        /* sttemntDAO.selectPotholeSttemntGrpList */
+        /* 문자제한시간에 등록된 관할구역별 신고내역 등록 건수 조회 */
+        SELECT PTH_RG_NO, pthmode  FROM (
+                SELECT tnpotholesttemnt.PTH_RG_NO, tnpotholesttemnt.VHCLE_TYPE AS pthmode, CTTPC
+                FROM TN_POTHOLE_STTEMNT tnpotholesttemnt
+                WHERE 1 = 1
+                    AND tnpotholesttemnt.USE_AT = 'Y'
+                    AND tnpotholesttemnt.DELETE_AT = 'N'
+                    AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                    AND tnpotholesttemnt.SMS_SNDNG_AT = 'N'         /* SMS발송여부 : N */
+                    AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'    /* 처리상태 : 신고 */
+                    AND TO_CHAR(TO_DATE(tnpotholesttemnt.CREAT_DE),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# || ' 00:00:00'
+                    AND TO_CHAR(TO_DATE(tnpotholesttemnt.CREAT_DE),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END#
+
+                UNION ALL
+                SELECT tnpotholesttemnt.PTH_RG_NO, tnpotholesttemnt.VHCLE_TYPE AS pthmode, CTTPC
+                FROM TN_POTHOLE_MLTEMNT tnpotholesttemnt
+
+                WHERE 1 = 1
+                    AND tnpotholesttemnt.USE_AT = 'Y'
+                    AND tnpotholesttemnt.DELETE_AT = 'N'
+                    AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                    AND tnpotholesttemnt.SMS_SNDNG_AT = 'N'         /* SMS발송여부 : N */
+                    AND tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'    /* 처리상태 : 신고 */
+                    AND TO_CHAR(TO_DATE(tnpotholesttemnt.CREAT_DE),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# || ' 00:00:00'
+                    AND TO_CHAR(TO_DATE(tnpotholesttemnt.CREAT_DE),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END#
+
+                /* 시군 자체 관리 SMS 전송 여부 확인 후 추가 */
+
+        ) tb
+        WHERE NVL(tb.CTTPC, '0') <> '0'
+
+    ]]>
+    </select>
+
+    <update id="sttemntDAO.updatePthSttmntSttus">
+        UPDATE <include refid="sttemntDAO.pthmode.pthmnt" /> SET
+    <![CDATA[
+            PRCS_STTUS = #PRCS_STTUS#         /* 포트홀_신고_내역.처리_상태 */
+            WHERE 1 = 1
+            AND PTH_RG_NO = #PTH_RG_NO#
+    ]]>
+    </update>
+
+    <update id="sttemntDAO.updatePotholeSttemntSttus">
+         UPDATE <include refid="sttemntDAO.pthmode.tnPthmnt" /> SET
+    <![CDATA[
+            PRCS_STTUS = #PRCS_STTUS# ,        /* 포트홀_신고_내역.처리_상태 */
+            SMS_SNDNG_AT = #SMS_SNDNG_AT# ,    /* 포트홀_신고_내역.SMS_발송_여부 */
+            UPDT_DE = SYSDATE                  /* 포트홀_신고_내역.수정_일자 */
+            WHERE 1 = 1
+            AND PTH_RG_NO = #PTH_RG_NO#
+        ]]>
+    </update>
+
+    <!-- 보정한 위치로 좌표보정 및 관할구역 맵핑 -->
+    <parameterMap id="prc_pth_cortn_loc_param" class="hashmap">
+        <parameter property="p_PTH_RG_NO"           javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_TM_X"                javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_TM_Y"                javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_STTEMNT_DT"          javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="p_VHCLE_NO"            javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="o_RESULT"              javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+
+        <parameter property="o_DEPT_CODE"           javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_CORTN_X"             javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_CORTN_Y"             javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_TM_X"                javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_TM_Y"                javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_LNM_ADRES"           javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_DPLCT_STTEMNT_AT"    javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_DSM_RP_NO"           javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_CPT_MNG_NO"          javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_CHARGER_NM"          javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+        <parameter property="o_CTTPC"               javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+    </parameterMap>
+    <procedure id="sttemntDAO.PRC_PTH_CORTN_LOC" parameterMap="prc_pth_cortn_loc_param">
+        { call PRC_PTH_CORTN_LOC(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+    <procedure id="sttemntDAO.PRC_PTH_CORTN_LOC_CTS" parameterMap="prc_pth_cortn_loc_param">
+        { call PRC_PTH_CORTN_LOC_CTS(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }
+    </procedure>
+
+</sqlMap>

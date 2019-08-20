@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="userConnectDAO">
+
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="userConnectSerarchVO" type="kr.go.gg.gpms.userconnect.service.model.UserConnectDefaultVO"/>
+	<typeAlias alias="userConnectVO"	type="kr.go.gg.gpms.userconnect.service.model.UserConnectVO" />
+
+	<resultMap id="userConnect.resultMap"
+		class="userConnectVO">
+		<result property="CONECT_LOG_NO" column="CONECT_LOG_NO" columnIndex="1" /> <!-- 사용자접속로그.접속_로그_번호 -->
+		<result property="USER_NO" column="USER_NO" columnIndex="2" /> <!-- 사용자접속로그.사용자_번호 -->
+		<result property="SESION_ID" column="SESION_ID" columnIndex="3" /> <!-- 사용자접속로그.세션_ID -->
+		<result property="CONECT_BEGIN_DT" column="CONECT_BEGIN_DT" columnIndex="4" /> <!-- 사용자접속로그.접속_시작_일시 -->
+		<result property="CONECT_END_DT" column="CONECT_END_DT" columnIndex="5" /> <!-- 사용자접속로그.접속_종료_일시 -->
+	</resultMap>
+
+	<insert id="userConnectDAO.insertUserConnect">
+	<selectKey resultClass="String" keyProperty="CONECT_LOG_NO">
+  	<![CDATA[
+ 		select SEQ_TL_USER_CONNECT.NEXTVAL from dual
+  	]]>
+  	</selectKey>
+	<![CDATA[
+		/* userConnectDAO.insertUserConnect */
+		/* 사용자접속로그 등록 */
+
+		INSERT INTO TL_USER_CONNECT (
+			CONECT_LOG_NO /* 사용자접속로그.접속_로그_번호 */
+			, USER_NO /* 사용자접속로그.사용자_번호 */
+			, SESION_ID /* 사용자접속로그.세션_ID */
+			, CONECT_BEGIN_DT /* 사용자접속로그.접속_시작_일시 */
+			, CONECT_END_DT /* 사용자접속로그.접속_종료_일시 */
+		) VALUES (
+			#CONECT_LOG_NO# /* 사용자접속로그.접속_로그_번호 */
+			, #USER_NO# /* 사용자접속로그.사용자_번호 */
+			, #SESION_ID# /* 사용자접속로그.세션_ID */
+			, SYSDATE /* 사용자접속로그.접속_시작_일시 */
+			, #CONECT_END_DT# /* 사용자접속로그.접속_종료_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="userConnectDAO.updateUserConnect">
+	<![CDATA[
+		/* userConnectDAO.updateUserConnect */
+		/* 사용자접속로그 수정 */
+		UPDATE TL_USER_CONNECT SET
+			CONECT_END_DT = SYSDATE /* 사용자접속로그.접속_종료_일시 */
+		WHERE 1 = 1
+			AND USER_NO = #USER_NO# /* 사용자접속로그.사용자_번호 */
+			AND SESION_ID = #SESION_ID# /* 사용자접속로그.세션_ID */
+]]>
+	</update>
+
+	<delete id="userConnectDAO.deleteUserConnect">
+	<![CDATA[
+		/* userConnectDAO.deleteUserConnect */
+		/* 사용자접속로그 삭제 */
+		DELETE FROM TL_USER_CONNECT
+		WHERE 1 = 1
+		AND CONECT_LOG_NO = #CONECT_LOG_NO# /* 사용자접속로그.접속_로그_번호 */
+]]>
+	</delete>
+
+	<select id="userConnectDAO.selectUserConnect"
+		resultMap="userConnect.resultMap">
+	<![CDATA[
+		/* userConnectDAO.selectUserConnect */
+		/* 사용자접속로그 조회 */
+		SELECT
+			tluserconnect.CONECT_LOG_NO /* 사용자접속로그.접속_로그_번호 */
+			, tluserconnect.USER_NO /* 사용자접속로그.사용자_번호 */
+			, tluserconnect.SESION_ID /* 사용자접속로그.세션_ID */
+			, tluserconnect.CONECT_BEGIN_DT /* 사용자접속로그.접속_시작_일시 */
+			, tluserconnect.CONECT_END_DT /* 사용자접속로그.접속_종료_일시 */
+		FROM TL_USER_CONNECT tluserconnect
+		WHERE 1 = 1
+		AND tluserconnect.CONECT_LOG_NO = #CONECT_LOG_NO# /* 사용자접속로그.접속_로그_번호 */
+]]>
+	</select>
+
+	<sql id="userConnectDAO.selectUserConnectList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			<![CDATA[
+				AND tluserconnect.CONECT_LOG_NO = #searchKeyword#
+			]]>
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			<![CDATA[
+				AND tluserconnect.USER_NO LIKE '%' || #searchKeyword# || '%'
+			]]>
+		</isEqual>
+		<isNotEmpty property="CONECT_LOG_NO"><![CDATA[ /* 사용자접속로그.접속_로그_번호 */ AND tluserconnect.CONECT_LOG_NO = #CONECT_LOG_NO# ]]></isNotEmpty>
+		<isNotEmpty property="USER_NO"><![CDATA[ /* 사용자접속로그.사용자_번호 */ AND tluserconnect.USER_NO = #USER_NO# ]]></isNotEmpty>
+		<isNotEmpty property="SESION_ID"><![CDATA[ /* 사용자접속로그.세션_ID */ AND tluserconnect.SESION_ID = #SESION_ID# ]]></isNotEmpty>
+		<isNotEmpty property="CONECT_BEGIN_DT"><![CDATA[ /* 사용자접속로그.접속_시작_일시 */ AND tluserconnect.CONECT_BEGIN_DT = #CONECT_BEGIN_DT# ]]></isNotEmpty>
+		<isNotEmpty property="CONECT_END_DT"><![CDATA[ /* 사용자접속로그.접속_종료_일시 */ AND tluserconnect.CONECT_END_DT = #CONECT_END_DT# ]]></isNotEmpty>
+	</sql>
+
+	<select id="userConnectDAO.selectUserConnectList"
+		parameterClass="userConnectVO"
+		resultClass="userConnectVO">
+<![CDATA[
+		/* userConnectDAO.selectUserConnectList */
+		/* 사용자접속로그 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tluserconnect.CONECT_LOG_NO /* 사용자접속로그.접속_로그_번호 */
+				, tluserconnect.USER_NO /* 사용자접속로그.사용자_번호 */
+				, tluserconnect.SESION_ID /* 사용자접속로그.세션_ID */
+				, tluserconnect.CONECT_BEGIN_DT /* 사용자접속로그.접속_시작_일시 */
+				, tluserconnect.CONECT_END_DT /* 사용자접속로그.접속_종료_일시 */
+			FROM TL_USER_CONNECT tluserconnect
+]]>
+
+		<include refid="userConnectDAO.selectUserConnectList.where" />
+
+<![CDATA[
+
+		ORDER BY
+
+				tluserconnect.CONECT_LOG_NO DESC /* 사용자접속로그.접속_로그_번호 */
+
+
+
+		) tb) WHERE 1=1
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+		<![CDATA[
+			AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>
+		</isEqual>
+<![CDATA[
+]]>
+	</select>
+
+
+	<select id="userConnectDAO.selectUserConnectListTotalCount"
+		parameterClass="userConnectVO"
+		resultClass="int">
+<![CDATA[
+		/* userConnectDAO.selectUserConnectListTotalCount */
+		/* 사용자접속로그 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TL_USER_CONNECT tluserconnect
+]]>
+		<include refid="userConnectDAO.selectUserConnectList.where" />
+<![CDATA[
+]]>
+	</select>
+
+</sqlMap>

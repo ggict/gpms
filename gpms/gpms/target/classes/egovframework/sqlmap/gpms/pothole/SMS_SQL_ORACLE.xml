@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="smsDAO">
+
+    <typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+    <typeAlias alias="sttemntVO" type="kr.go.gg.gpms.pothole.sttemnt.service.model.SttemntVO" />
+
+    <resultMap id="sttemntVO.resultMap"  class="sttemntVO">
+        <result property="PTH_RG_NO"          column="PTH_RG_NO"              columnIndex="1"  />
+        <result property="CRDNT_X"            column="CRDNT_X"                columnIndex="2"  />
+        <result property="CRDNT_Y"            column="CRDNT_Y"                columnIndex="3"  />
+        <result property="CORTN_X"            column="CORTN_X"                columnIndex="4"  />
+        <result property="CORTN_Y"            column="CORTN_Y"                columnIndex="5"  />
+        <result property="TM_X"               column="TM_X"                   columnIndex="6"  />
+        <result property="TM_Y"               column="TM_Y"                   columnIndex="7"  />
+        <result property="HEADG"              column="HEADG"                  columnIndex="8"  />
+        <result property="APLCNT_TELNO"       column="APLCNT_TELNO"           columnIndex="9"  />
+        <result property="BSNM_NM"            column="BSNM_NM"                columnIndex="10" />
+        <result property="VHCLE_NO"           column="VHCLE_NO"               columnIndex="11" />
+        <result property="RCEPT_CN"           column="RCEPT_CN"               columnIndex="12" />
+        <result property="VHCLE_TYPE"         column="VHCLE_TYPE"             columnIndex="13" />
+        <result property="STTEMNT_DT"         column="STTEMNT_DT"             columnIndex="14" />
+        <result property="RN_ADRES"           column="RN_ADRES"               columnIndex="15" />
+        <result property="LNM_ADRES"          column="LNM_ADRES"              columnIndex="16" />
+        <result property="RCEPT_DT"           column="RCEPT_DT"               columnIndex="17" />
+        <result property="RPAIR_DT"           column="RPAIR_DT"               columnIndex="18" />
+        <result property="DEPT_CODE"          column="DEPT_CODE"              columnIndex="19" />
+        <result property="EDEPT_CODE"         column="EDEPT_CODE"             columnIndex="20" />
+        <result property="PRCS_TYPE"          column="PRCS_TYPE"              columnIndex="21" />
+        <result property="PRCS_STTUS"         column="PRCS_STTUS"             columnIndex="22" />
+        <result property="CORTN_AT"           column="CORTN_AT"               columnIndex="23" />
+        <result property="DPLCT_STTEMNT_AT"   column="DPLCT_STTEMNT_AT"       columnIndex="24" />
+        <result property="DSM_RP_NO"          column="DSM_RP_NO"              columnIndex="25" />
+        <result property="SMS_SNDNG_AT"       column="SMS_SNDNG_AT"           columnIndex="26" />
+        <result property="CPT_MNG_NO"         column="CPT_MNG_NO"             columnIndex="27" />
+        <result property="STTEMNT_DT_START"   column="STTEMNT_DT_START"       columnIndex="28" />
+        <result property="STTEMNT_DT_END"     column="STTEMNT_DT_END"         columnIndex="29" />
+        <result property="RPAIR_DT_START"     column="RPAIR_DT_START"         columnIndex="30" />
+        <result property="RPAIR_DT_END"       column="RPAIR_DT_END"           columnIndex="31" />
+        <result property="DMG_TYPE"           column="DMG_TYPE"               columnIndex="32" />
+        <result property="RM"                 column="RM"                     columnIndex="33" />
+        <result property="LOWEST_DEPT_NM"     column="LOWEST_DEPT_NM"         columnIndex="34" />
+    </resultMap>
+
+    <!-- 포트홀_신고_내역 (TN_POTHOLE_STTEMNT) -->
+    <insert id="smsDAO.sendSMS">
+    <![CDATA[
+        INSERT INTO MONO_SEND (
+            USER_ID
+            , SUBJECT
+            , MSG
+            , NOW_DATE
+            , SEND_DATE
+            , CALLBACK
+            , ADDR_CNT
+            , ADDR_INFO
+            , MSG_TYPE
+        )
+        VALUES (
+            'ggmonitoring'
+            , '포트홀 신고'
+            , CONCAT( '[포트홀신고]\n신고일시 : ', IFNULL(#STTEMNT_DT#, ''), '\n지번주소 : ', IFNULL(#LNM_ADRES#, ''), '\n관할기관 : ', IFNULL(#LOWEST_DEPT_NM#, ''), '\n\n경기도로 모니터링단 시스템에서 신고 정보를 확인하고 처리 결과를 입력하여 주시기 바랍니다.' )
+            , DATE_FORMAT( NOW(),'%Y%m%d%H%i%s' )
+            , DATE_FORMAT( NOW(),'%Y%m%d%H%i%s' )
+            , '03180303974'
+            , 1
+            , CONCAT(IFNULL(#CHARGER_NM#, ''), '^', REPLACE(IFNULL(#CTTPC#, ''), '-', ''))
+            , '1'
+        )
+    ]]>
+    </insert>
+
+    <!-- 포트홀_신고_내역 (TN_POTHOLE_STTEMNT) -->
+    <insert id="smsDAO.sendStartSMS">
+    <![CDATA[
+        INSERT INTO MONO_SEND (
+            USER_ID
+        , SUBJECT
+            , MSG
+            , NOW_DATE
+            , SEND_DATE
+            , CALLBACK
+            , ADDR_CNT
+            , ADDR_INFO
+            , MSG_TYPE
+        )
+        VALUES (
+            'ggmonitoring'
+            , '포트홀 신고'
+            , CONCAT( '[포트홀신고]\n문자전송 제한시간 중 \n', IFNULL(#PTH_RG_NO#, ''), '건 등록되었습니다.\n관할기관 : ', IFNULL(#LOWEST_DEPT_NM#, ''), '\n\n경기도로 모니터링단 시스템에서 신고 정보를 확인하고 처리 결과를 입력하여 주시기 바랍니다.' )
+            , DATE_FORMAT( NOW(),'%Y%m%d%H%i%s' )
+            , DATE_FORMAT( NOW(),'%Y%m%d%H%i%s' )
+            , '03180303974'
+            , 1
+            , CONCAT(IFNULL(#CHARGER_NM#, ''), '^', REPLACE(IFNULL(#CTTPC#, ''), '-', ''))
+            , '1'
+        )
+    ]]>
+    </insert>
+
+    <!-- 포트홀_신고_내역_취하 (TN_POTHOLE_STTEMNT) -->
+    <insert id="smsDAO.sendDropSMS">
+    <![CDATA[
+        INSERT INTO MONO_SEND (
+            USER_ID
+        , SUBJECT
+            , MSG
+            , NOW_DATE
+            , SEND_DATE
+            , CALLBACK
+            , ADDR_CNT
+            , ADDR_INFO
+            , MSG_TYPE
+        )
+        VALUES (
+            'ggmonitoring'
+            , '포트홀 신고'
+            , CONCAT( '[포트홀신고취하]\n신고일시 : ', IFNULL(#STTEMNT_DT#, ''), '\n지번주소 : ', IFNULL(#LNM_ADRES#, ''), '\n관할기관 : ', IFNULL(#LOWEST_DEPT_NM#, ''), '\n\n해당 접수 건은 민원인 요청에 의해 취하되었습니다.' )
+            , DATE_FORMAT( NOW(),'%Y%m%d%H%i%s' )
+            , DATE_FORMAT( NOW(),'%Y%m%d%H%i%s' )
+            , '03180303974'
+            , 1
+            , CONCAT(IFNULL(#CHARGER_NM#, ''), '^', REPLACE(IFNULL(#CTTPC#, ''), '-', ''))
+            , '1'
+        )
+    ]]>
+    </insert>
+
+</sqlMap>

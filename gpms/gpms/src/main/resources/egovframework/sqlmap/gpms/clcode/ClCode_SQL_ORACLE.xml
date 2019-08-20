@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="clCodeDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="clCodeSerarchVO" type="kr.go.gg.gpms.clcode.service.model.ClCodeDefaultVO"/>
+	<typeAlias alias="clCodeVO"	type="kr.go.gg.gpms.clcode.service.model.ClCodeVO" />
+
+	<resultMap id="clCode.resultMap"
+		class="clCodeVO">
+		<result property="CL_CODE" column="CL_CODE" columnIndex="1" /> <!-- 분류코드.분류_코드 -->
+		<result property="PRIOR_RANK" column="PRIOR_RANK" columnIndex="2" /> <!-- 분류코드.우선_순위 -->
+		<result property="CL_CODE_NM" column="CL_CODE_NM" columnIndex="3" /> <!-- 분류코드.분류_코드_명 -->
+		<result property="CN" column="CN" columnIndex="4" /> <!-- 분류코드.내용 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="5" /> <!-- 분류코드.사용_여부 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="6" /> <!-- 분류코드.삭제_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="7" /> <!-- 분류코드.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="8" /> <!-- 분류코드.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="9" /> <!-- 분류코드.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="10" /> <!-- 분류코드.수정_일시 -->
+	</resultMap>
+
+	<insert id="clCodeDAO.insertClCode">
+	<![CDATA[ 
+		/* clCodeDAO.insertClCode */
+		/* 분류코드 등록 */		
+		INSERT INTO TC_CL_CODE (
+			CL_CODE /* 분류코드.분류_코드 */
+			, PRIOR_RANK /* 분류코드.우선_순위 */
+			, CL_CODE_NM /* 분류코드.분류_코드_명 */
+			, CN /* 분류코드.내용 */
+			, USE_AT /* 분류코드.사용_여부 */
+			, DELETE_AT /* 분류코드.삭제_여부 */
+			, CRTR_NO /* 분류코드.생성자_번호 */
+			, CREAT_DT /* 분류코드.생성_일시 */
+			, UPDUSR_NO /* 분류코드.수정자_번호 */
+			, UPDT_DT /* 분류코드.수정_일시 */
+		) VALUES (
+			#CL_CODE# /* 분류코드.분류_코드 */
+			, #PRIOR_RANK# /* 분류코드.우선_순위 */
+			, #CL_CODE_NM# /* 분류코드.분류_코드_명 */
+			, #CN# /* 분류코드.내용 */
+			, #USE_AT# /* 분류코드.사용_여부 */
+			, 'N' /* 분류코드.삭제_여부 */
+			, #CRTR_NO# /* 분류코드.생성자_번호 */
+			, SYSDATE /* 분류코드.생성_일시 */
+			, #UPDUSR_NO# /* 분류코드.수정자_번호 */
+			, SYSDATE /* 분류코드.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="clCodeDAO.updateClCode">
+	<![CDATA[ 
+		/* clCodeDAO.updateClCode */
+		/* 분류코드 수정 */
+		UPDATE TC_CL_CODE SET
+		
+PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */			
+
+, CL_CODE_NM = #CL_CODE_NM# /* 분류코드.분류_코드_명 */		
+
+, CN = #CN# /* 분류코드.내용 */		
+
+, USE_AT = #USE_AT# /* 분류코드.사용_여부 */
+
+, UPDUSR_NO = #UPDUSR_NO# /* 분류코드.수정자_번호 */			
+
+, UPDT_DT = SYSDATE /* 분류코드.수정_일시 */			
+		WHERE 1 = 1
+		AND CL_CODE = #CL_CODE# /* 분류코드.분류_코드 */
+]]>
+	</update>
+
+	<delete id="clCodeDAO.deleteClCode">
+	<![CDATA[ 
+		/* clCodeDAO.deleteClCode */
+		/* 분류코드 삭제 */
+		DELETE FROM TC_CL_CODE 	
+		WHERE 1 = 1
+		AND CL_CODE = #CL_CODE# /* 분류코드.분류_코드 */
+]]>
+	</delete>
+
+	<select id="clCodeDAO.selectClCode"
+		resultClass="clCodeVO">
+	<![CDATA[ 
+		/* clCodeDAO.selectClCode */
+		/* 분류코드 조회 */
+		SELECT
+			tcclcode.CL_CODE /* 분류코드.분류_코드 */
+			, tcclcode.PRIOR_RANK /* 분류코드.우선_순위 */
+			, tcclcode.CL_CODE_NM /* 분류코드.분류_코드_명 */
+			, tcclcode.CN /* 분류코드.내용 */
+			, tcclcode.USE_AT /* 분류코드.사용_여부 */
+			, tcclcode.DELETE_AT /* 분류코드.삭제_여부 */
+			, tcclcode.CRTR_NO /* 분류코드.생성자_번호 */
+			, tcclcode.CREAT_DT /* 분류코드.생성_일시 */
+			, tcclcode.UPDUSR_NO /* 분류코드.수정자_번호 */
+			, tcclcode.UPDT_DT /* 분류코드.수정_일시 */
+			, (SELECT tnsysuser.USER_ID /* 시스템사용자.사용자_ID */ FROM TN_SYS_USER tnsysuser WHERE 1 = 1 AND tnsysuser.USER_NO = tcclcode.UPDUSR_NO /* 시스템사용자.사용자_번호 */ 
+			AND tnsysuser.USE_AT = 'Y' AND tnsysuser.CONFM_AT = 'Y' AND tnsysuser.DELETE_AT = 'N' )	UPDUSR_ID
+		FROM TC_CL_CODE tcclcode
+		WHERE 1 = 1
+		AND tcclcode.CL_CODE = #CL_CODE# /* 분류코드.분류_코드 */
+		AND tcclcode.DELETE_AT = 'N'
+]]>
+	</select>
+
+	<sql id="clCodeDAO.selectClCodeList.where">
+		WHERE 1 = 1
+		AND tcclcode.DELETE_AT = 'N'
+		<isEqual property="searchCondition" compareValue="0">
+			AND tcclcode.CL_CODE = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tcclcode.PRIOR_RANK LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="CL_CODE"><![CDATA[ /* 분류코드.분류_코드 */ AND tcclcode.CL_CODE = #CL_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="PRIOR_RANK"><![CDATA[ /* 분류코드.우선_순위 */ AND tcclcode.PRIOR_RANK = #PRIOR_RANK# ]]></isNotEmpty>
+		<isNotEmpty property="CL_CODE_NM"><![CDATA[ /* 분류코드.분류_코드_명 */ AND tcclcode.CL_CODE_NM LIKE '%' || #CL_CODE_NM# || '%' ]]></isNotEmpty>
+		<isNotEmpty property="CN"><![CDATA[ /* 분류코드.내용 */ AND tcclcode.CN = #CN# ]]></isNotEmpty>
+		<isNotEmpty property="USE_AT"><![CDATA[ /* 분류코드.사용_여부 */ AND tcclcode.USE_AT = #USE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 분류코드.삭제_여부 */ AND tcclcode.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 분류코드.생성자_번호 */ AND tcclcode.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 분류코드.생성_일시 */ AND tcclcode.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 분류코드.수정자_번호 */ AND tcclcode.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 분류코드.수정_일시 */ AND tcclcode.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="clCodeDAO.selectClCodeListPage"
+		parameterClass="clCodeVO"
+		resultClass="clCodeVO">
+<![CDATA[ 		
+		/* clCodeDAO.selectClCodeListPage */
+		/* 분류코드 조회(페이징) */
+		WITH tcclcode AS
+		(
+		SELECT	
+				tcclcode.CL_CODE /* 분류코드.분류_코드 */
+				, tcclcode.PRIOR_RANK /* 분류코드.우선_순위 */
+				, tcclcode.CL_CODE_NM /* 분류코드.분류_코드_명 */
+				, tcclcode.CN /* 분류코드.내용 */
+				, tcclcode.USE_AT /* 분류코드.사용_여부 */
+				, tcclcode.DELETE_AT /* 분류코드.삭제_여부 */
+				, tcclcode.CRTR_NO /* 분류코드.생성자_번호 */
+				, tcclcode.CREAT_DT /* 분류코드.생성_일시 */
+				, tcclcode.UPDUSR_NO /* 분류코드.수정자_번호 */
+				, tcclcode.UPDT_DT /* 분류코드.수정_일시 */
+			
+			FROM TC_CL_CODE tcclcode
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tcclcode.CL_CODE = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tcclcode.PRIOR_RANK LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="CL_CODE">
+				<![CDATA[
+					/* 분류코드.분류_코드 */
+					AND tcclcode.CL_CODE = #CL_CODE#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="PRIOR_RANK">
+				<![CDATA[
+					/* 분류코드.우선_순위 */
+					AND tcclcode.PRIOR_RANK = #PRIOR_RANK#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CL_CODE_NM">
+				<![CDATA[
+					/* 분류코드.분류_코드_명 */
+					AND tcclcode.CL_CODE_NM = #CL_CODE_NM#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CN">
+				<![CDATA[
+					/* 분류코드.내용 */
+					AND tcclcode.CN = #CN#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 분류코드.사용_여부 */
+					AND tcclcode.USE_AT = #USE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 분류코드.삭제_여부 */
+					AND tcclcode.DELETE_AT = #DELETE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 분류코드.생성자_번호 */
+					AND tcclcode.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 분류코드.생성_일시 */
+					AND tcclcode.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 분류코드.수정자_번호 */
+					AND tcclcode.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 분류코드.수정_일시 */
+					AND tcclcode.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tcclcode.*
+		, (SELECT tnsysuser.USER_ID /* 시스템사용자.사용자_ID */ FROM TN_SYS_USER tnsysuser WHERE 1 = 1 AND tnsysuser.USER_NO = tcclcode.UPDUSR_NO /* 시스템사용자.사용자_번호 */ 
+			AND tnsysuser.USE_AT = 'Y' AND tnsysuser.CONFM_AT = 'Y' AND tnsysuser.DELETE_AT = 'N' )	UPDUSR_ID
+		 FROM
+		(
+		SELECT 
+										tcclcode.CL_CODE /* 분류코드.분류_코드 */
+											, tcclcode.PRIOR_RANK /* 분류코드.우선_순위 */
+											, tcclcode.CL_CODE_NM /* 분류코드.분류_코드_명 */
+											, tcclcode.CN /* 분류코드.내용 */
+											, tcclcode.USE_AT /* 분류코드.사용_여부 */
+											, tcclcode.DELETE_AT /* 분류코드.삭제_여부 */
+											, tcclcode.CRTR_NO /* 분류코드.생성자_번호 */
+											, tcclcode.CREAT_DT /* 분류코드.생성_일시 */
+											, tcclcode.UPDUSR_NO /* 분류코드.수정자_번호 */
+											, tcclcode.UPDT_DT /* 분류코드.수정_일시 */
+						/* 분류코드.분류_코드 */
+			/* 분류코드.우선_순위 */
+			, ROW_NUMBER() OVER( ORDER BY tcclcode.CL_CODE_NM ASC, tcclcode.PRIOR_RANK ASC )  ROW_NO
+			FROM  tcclcode
+			WHERE 1=1
+		)  tcclcode
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tcclcode.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tcclcode.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="clCodeDAO.selectClCodeList"
+		parameterClass="clCodeVO"
+		resultClass="clCodeVO">
+<![CDATA[ 		
+		/* clCodeDAO.selectClCodeList */
+		/* 분류코드 조회 */
+		SELECT tcclcode.*
+		, (SELECT tnsysuser.USER_ID /* 시스템사용자.사용자_ID */ FROM TN_SYS_USER tnsysuser WHERE 1 = 1 AND tnsysuser.USER_NO = tcclcode.UPDUSR_NO /* 시스템사용자.사용자_번호 */ 
+			AND tnsysuser.USE_AT = 'Y' AND tnsysuser.CONFM_AT = 'Y' AND tnsysuser.DELETE_AT = 'N' )	UPDUSR_ID
+		 FROM (SELECT 
+ ]]>
+ 
+ 		<isEmpty property="sidx">
+ 		<![CDATA[ 
+ 			ROWNUM AS rn, 
+ 		 ]]>
+ 		</isEmpty>
+ 		<isNotEmpty property="sidx">
+ 		<![CDATA[ 
+ 			ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) rn, 
+ 		 ]]>
+ 		</isNotEmpty>
+ 		
+<![CDATA[
+		  		tb.*
+	  		FROM (
+			SELECT
+				tcclcode.CL_CODE /* 분류코드.분류_코드 */
+				, tcclcode.PRIOR_RANK /* 분류코드.우선_순위 */
+				, tcclcode.CL_CODE_NM /* 분류코드.분류_코드_명 */
+				, tcclcode.CN /* 분류코드.내용 */
+				, tcclcode.USE_AT /* 분류코드.사용_여부 */
+				, tcclcode.DELETE_AT /* 분류코드.삭제_여부 */
+				, tcclcode.CRTR_NO /* 분류코드.생성자_번호 */
+				, tcclcode.CREAT_DT /* 분류코드.생성_일시 */
+				, tcclcode.UPDUSR_NO /* 분류코드.수정자_번호 */
+				, tcclcode.UPDT_DT /* 분류코드.수정_일시 */
+			FROM TC_CL_CODE tcclcode
+]]>
+	<include refid="clCodeDAO.selectClCodeList.where" />	
+<![CDATA[
+		ORDER BY 
+				tcclcode.CL_CODE_NM ASC, tcclcode.PRIOR_RANK ASC /* 분류코드.분류_코드 */  
+		) tb) tcclcode  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="clCodeDAO.selectClCodeListTotalCount"
+		parameterClass="clCodeVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* clCodeDAO.selectClCodeListTotalCount */
+		/* 분류코드 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TC_CL_CODE tcclcode
+]]>		
+		<include refid="clCodeDAO.selectClCodeList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>

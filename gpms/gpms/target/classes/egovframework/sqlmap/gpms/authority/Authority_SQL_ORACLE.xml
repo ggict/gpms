@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="authorityDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="authoritySerarchVO" type="kr.go.gg.gpms.authority.service.model.AuthorityDefaultVO"/>
+	<typeAlias alias="authorityVO"	type="kr.go.gg.gpms.authority.service.model.AuthorityVO" />
+
+	<resultMap id="authority.resultMap"
+		class="authorityVO">
+		<result property="AUTHOR_ID" column="AUTHOR_ID" columnIndex="1" /> <!-- 권한그룹.권한_ID -->
+		<result property="AUTHOR_NM" column="AUTHOR_NM" columnIndex="2" /> <!-- 권한그룹.권한_명칭 -->
+		<result property="DC" column="DC" columnIndex="3" /> <!-- 권한그룹.설명 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="4" /> <!-- 권한그룹.사용_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="5" /> <!-- 권한그룹.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="6" /> <!-- 권한그룹.생성_일시 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="7" /> <!-- 권한그룹.삭제_여부 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="8" /> <!-- 권한그룹.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="9" /> <!-- 권한그룹.수정_일시 -->
+	</resultMap>
+
+	<insert id="authorityDAO.insertAuthority">
+	<![CDATA[ 
+		/* authorityDAO.insertAuthority */
+		/* 권한그룹 등록 */		
+		INSERT INTO TN_AUTHORITY (
+			AUTHOR_ID /* 권한그룹.권한_ID */
+			, AUTHOR_NM /* 권한그룹.권한_명칭 */
+			, DC /* 권한그룹.설명 */
+			, USE_AT /* 권한그룹.사용_여부 */
+			, CRTR_NO /* 권한그룹.생성자_번호 */
+			, CREAT_DT /* 권한그룹.생성_일시 */
+			, DELETE_AT /* 권한그룹.삭제_여부 */
+			, UPDUSR_NO /* 권한그룹.수정자_번호 */
+			, UPDT_DT /* 권한그룹.수정_일시 */
+		) VALUES (
+			#AUTHOR_ID# /* 권한그룹.권한_ID */
+			, #AUTHOR_NM# /* 권한그룹.권한_명칭 */
+			, #DC# /* 권한그룹.설명 */
+			, #USE_AT# /* 권한그룹.사용_여부 */
+			, #CRTR_NO# /* 권한그룹.생성자_번호 */
+			, SYSDATE /* 권한그룹.생성_일시 */
+			, #DELETE_AT# /* 권한그룹.삭제_여부 */
+			, #UPDUSR_NO# /* 권한그룹.수정자_번호 */
+			, SYSDATE /* 권한그룹.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="authorityDAO.updateAuthority">
+	<![CDATA[ 
+		/* authorityDAO.updateAuthority */
+		/* 권한그룹 수정 */
+		UPDATE TN_AUTHORITY SET
+
+
+
+AUTHOR_NM = #AUTHOR_NM# /* 권한그룹.권한_명칭 */
+			
+
+, DC = #DC# /* 권한그룹.설명 */
+			
+
+, USE_AT = #USE_AT# /* 권한그룹.사용_여부 */
+			
+
+, CRTR_NO = #CRTR_NO# /* 권한그룹.생성자_번호 */
+			
+
+, CREAT_DT = SYSDATE /* 권한그룹.생성_일시 */
+			
+
+, DELETE_AT = #DELETE_AT# /* 권한그룹.삭제_여부 */
+			
+
+, UPDUSR_NO = #UPDUSR_NO# /* 권한그룹.수정자_번호 */
+			
+
+, UPDT_DT = SYSDATE /* 권한그룹.수정_일시 */
+			
+		WHERE 1 = 1
+		AND AUTHOR_ID = #AUTHOR_ID# /* 권한그룹.권한_ID */
+]]>
+	</update>
+
+	<delete id="authorityDAO.deleteAuthority">
+	<![CDATA[ 
+		/* authorityDAO.deleteAuthority */
+		/* 권한그룹 삭제 */
+		DELETE FROM TN_AUTHORITY 
+		WHERE 1 = 1
+		AND AUTHOR_ID = #AUTHOR_ID# /* 권한그룹.권한_ID */
+]]>
+	</delete>
+
+	<select id="authorityDAO.selectAuthority"
+		resultMap="authority.resultMap">
+	<![CDATA[ 
+		/* authorityDAO.selectAuthority */
+		/* 권한그룹 조회 */
+		SELECT
+			tnauthority.AUTHOR_ID /* 권한그룹.권한_ID */
+			, tnauthority.AUTHOR_NM /* 권한그룹.권한_명칭 */
+			, tnauthority.DC /* 권한그룹.설명 */
+			, tnauthority.USE_AT /* 권한그룹.사용_여부 */
+			, tnauthority.CRTR_NO /* 권한그룹.생성자_번호 */
+			, tnauthority.CREAT_DT /* 권한그룹.생성_일시 */
+			, tnauthority.DELETE_AT /* 권한그룹.삭제_여부 */
+			, tnauthority.UPDUSR_NO /* 권한그룹.수정자_번호 */
+			, tnauthority.UPDT_DT /* 권한그룹.수정_일시 */
+		FROM TN_AUTHORITY tnauthority
+		WHERE 1 = 1
+		AND tnauthority.AUTHOR_ID = #AUTHOR_ID# /* 권한그룹.권한_ID */
+]]>
+	</select>
+
+	<sql id="authorityDAO.selectAuthorityList.where">
+		WHERE 1 = 1
+			 AND tnauthority.USE_AT = 'Y' AND tnauthority.DELETE_AT = 'N'
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnauthority.AUTHOR_ID = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnauthority.AUTHOR_NM LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="AUTHOR_ID"><![CDATA[ /* 권한그룹.권한_ID */ AND tnauthority.AUTHOR_ID = #AUTHOR_ID# ]]></isNotEmpty>
+		<isNotEmpty property="AUTHOR_NM"><![CDATA[ /* 권한그룹.권한_명칭 */ AND tnauthority.AUTHOR_NM = #AUTHOR_NM# ]]></isNotEmpty>
+		<isNotEmpty property="DC"><![CDATA[ /* 권한그룹.설명 */ AND tnauthority.DC = #DC# ]]></isNotEmpty>
+		<!-- <isNotEmpty property="USE_AT"><![CDATA[ /* 권한그룹.사용_여부 */ AND tnauthority.USE_AT = #USE_AT# ]]></isNotEmpty> -->
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 권한그룹.생성자_번호 */ AND tnauthority.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 권한그룹.생성_일시 */ AND tnauthority.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<!-- <isNotEmpty property="DELETE_AT"><![CDATA[ /* 권한그룹.삭제_여부 */ AND tnauthority.DELETE_AT = #DELETE_AT# ]]></isNotEmpty> -->
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 권한그룹.수정자_번호 */ AND tnauthority.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 권한그룹.수정_일시 */ AND tnauthority.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="authorityDAO.selectAuthorityListPage"
+		parameterClass="authorityVO"
+		resultClass="authorityVO">
+<![CDATA[ 		
+		/* authorityDAO.selectAuthorityListPage */
+		/* 권한그룹 조회(페이징) */
+		WITH tnauthority AS
+		(
+		SELECT	
+				tnauthority.AUTHOR_ID /* 권한그룹.권한_ID */
+				, tnauthority.AUTHOR_NM /* 권한그룹.권한_명칭 */
+				, tnauthority.DC /* 권한그룹.설명 */
+				, tnauthority.USE_AT /* 권한그룹.사용_여부 */
+				, tnauthority.CRTR_NO /* 권한그룹.생성자_번호 */
+				, tnauthority.CREAT_DT /* 권한그룹.생성_일시 */
+				, tnauthority.DELETE_AT /* 권한그룹.삭제_여부 */
+				, tnauthority.UPDUSR_NO /* 권한그룹.수정자_번호 */
+				, tnauthority.UPDT_DT /* 권한그룹.수정_일시 */
+			
+			FROM TN_AUTHORITY tnauthority
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnauthority.AUTHOR_ID = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnauthority.AUTHOR_NM LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="AUTHOR_ID">
+				<![CDATA[
+					/* 권한그룹.권한_ID */
+					AND tnauthority.AUTHOR_ID = #AUTHOR_ID#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="AUTHOR_NM">
+				<![CDATA[
+					/* 권한그룹.권한_명칭 */
+					AND tnauthority.AUTHOR_NM = #AUTHOR_NM#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DC">
+				<![CDATA[
+					/* 권한그룹.설명 */
+					AND tnauthority.DC = #DC#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 권한그룹.사용_여부 */
+					AND tnauthority.USE_AT = #USE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 권한그룹.생성자_번호 */
+					AND tnauthority.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 권한그룹.생성_일시 */
+					AND tnauthority.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 권한그룹.삭제_여부 */
+					AND tnauthority.DELETE_AT = #DELETE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 권한그룹.수정자_번호 */
+					AND tnauthority.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 권한그룹.수정_일시 */
+					AND tnauthority.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tnauthority.* FROM
+		(
+		SELECT 
+										tnauthority.AUTHOR_ID /* 권한그룹.권한_ID */
+											, tnauthority.AUTHOR_NM /* 권한그룹.권한_명칭 */
+											, tnauthority.DC /* 권한그룹.설명 */
+											, tnauthority.USE_AT /* 권한그룹.사용_여부 */
+											, tnauthority.CRTR_NO /* 권한그룹.생성자_번호 */
+											, tnauthority.CREAT_DT /* 권한그룹.생성_일시 */
+											, tnauthority.DELETE_AT /* 권한그룹.삭제_여부 */
+											, tnauthority.UPDUSR_NO /* 권한그룹.수정자_번호 */
+											, tnauthority.UPDT_DT /* 권한그룹.수정_일시 */
+						/* 권한그룹.권한_ID */
+			/* 권한그룹.권한_명칭 */
+			, ROW_NUMBER() OVER( ORDER BY tnauthority.AUTHOR_ID ASC, tnauthority.AUTHOR_NM DESC )  ROW_NO
+			FROM  tnauthority
+			WHERE 1=1
+		)  tnauthority
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tnauthority.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tnauthority.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="authorityDAO.selectAuthorityList"
+		parameterClass="authorityVO"
+		resultClass="authorityVO">
+<![CDATA[ 		
+		/* authorityDAO.selectAuthorityList */
+		/* 권한그룹 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tnauthority.AUTHOR_ID /* 권한그룹.권한_ID */
+				, tnauthority.AUTHOR_NM /* 권한그룹.권한_명칭 */
+				, tnauthority.DC /* 권한그룹.설명 */
+				, tnauthority.USE_AT /* 권한그룹.사용_여부 */
+				, tnauthority.CRTR_NO /* 권한그룹.생성자_번호 */
+				, tnauthority.CREAT_DT /* 권한그룹.생성_일시 */
+				, tnauthority.DELETE_AT /* 권한그룹.삭제_여부 */
+				, tnauthority.UPDUSR_NO /* 권한그룹.수정자_번호 */
+				, tnauthority.UPDT_DT /* 권한그룹.수정_일시 */
+			FROM TN_AUTHORITY tnauthority
+]]>
+	<include refid="authorityDAO.selectAuthorityList.where" />	
+	<isEqual prepend=" " property="userGroup" compareValue="true">
+		<![CDATA[
+			AND tnauthority.AUTHOR_ID IN ('ROLE_ADMIN', 'ROLE_USER', 'ROLE_USER_SGG')
+		]]>		
+	</isEqual>
+	<isEqual prepend=" " property="menuAuth" compareValue="true">
+		<![CDATA[
+			AND tnauthority.AUTHOR_ID NOT IN ('ROLE_ADMIN', 'ROLE_USER', 'ROLE_USER_SGG') 
+		]]>	
+	</isEqual>
+<![CDATA[
+		ORDER BY 
+				tnauthority.AUTHOR_ID DESC /* 권한그룹.권한_ID */  
+		) tb) tnauthority  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="authorityDAO.selectAuthorityListTotalCount"
+		parameterClass="authorityVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* authorityDAO.selectAuthorityListTotalCount */
+		/* 권한그룹 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_AUTHORITY tnauthority
+]]>		
+		<include refid="authorityDAO.selectAuthorityList.where" />
+		<isEqual prepend=" " property="userGroup" compareValue="true">
+			<![CDATA[
+				AND tnauthority.AUTHOR_ID IN ('ROLE_ADMIN', 'ROLE_USER', 'ROLE_USER_SGG')
+			]]>		
+		</isEqual>
+		<isEqual prepend=" " property="userGroup" compareValue="false">
+			<![CDATA[
+				AND tnauthority.AUTHOR_ID NOT IN ('ROLE_ADMIN', 'ROLE_USER', 'ROLE_USER_SGG') 
+			]]>	
+		</isEqual>
+<![CDATA[		
+]]>		
+	</select>
+
+	
+	<select id="authorityDAO.selectAuthList" resultClass="authorityVO">
+<![CDATA[
+		/* authorityDAO.selectAuthList */
+		/* 내부외부 구분하여 권한을 조회한다. */
+			SELECT
+				  tnauthority.AUTHOR_ID /* 권한그룹.권한_ID */
+				, tnauthority.AUTHOR_NM /* 권한그룹.권한_명칭 */
+				, CASE tnauthority.AUTHOR_NM
+		            WHEN '관리자'       THEN 'URSE0001'
+		            WHEN '도청 사용자'    THEN 'URSE0001'
+		            WHEN '시군구 사용자'   THEN 'URSE0001'
+		            WHEN '업체 사용자'   THEN 'URSE0002'
+		        END AS USER_SE/* 사용자구분(URSE0001:내부,URSE0002:외부) */
+			 FROM TN_AUTHORITY tnauthority
+]]>
+	</select>	
+	
+</sqlMap>

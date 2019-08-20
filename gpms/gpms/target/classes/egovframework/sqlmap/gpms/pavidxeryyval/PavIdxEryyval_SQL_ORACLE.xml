@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="pavIdxEryyvalDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="pavIdxEryyvalSerarchVO" type="kr.go.gg.gpms.pavidxeryyval.service.model.PavIdxEryyvalDefaultVO"/>
+	<typeAlias alias="pavIdxEryyvalVO"	type="kr.go.gg.gpms.pavidxeryyval.service.model.PavIdxEryyvalVO" />
+
+	<resultMap id="pavIdxEryyval.resultMap"
+		class="pavIdxEryyvalVO">
+		<result property="INITVAL_CR" column="INITVAL_CR" columnIndex="1" /> <!-- 포장_지수_초기값.초기값_CR -->
+		<result property="INITVAL_RD" column="INITVAL_RD" columnIndex="2" /> <!-- 포장_지수_초기값.초기값_RD -->
+		<result property="INITVAL_IRI" column="INITVAL_IRI" columnIndex="3" /> <!-- 포장_지수_초기값.초기값_IRI -->
+		<result property="STDR_DFECT_CR" column="STDR_DFECT_CR" columnIndex="4" /> <!-- 포장_지수_초기값.기준_결함_CR -->
+		<result property="STDR_DFECT_RD" column="STDR_DFECT_RD" columnIndex="5" /> <!-- 포장_지수_초기값.기준_결함_RD -->
+		<result property="STDR_DFECT_IRI" column="STDR_DFECT_IRI" columnIndex="6" /> <!-- 포장_지수_초기값.기준_결함_IRI -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="7" /> <!-- 포장_지수_초기값.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="8" /> <!-- 포장_지수_초기값.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="9" /> <!-- 포장_지수_초기값.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="10" /> <!-- 포장_지수_초기값.수정_일시 -->
+	</resultMap>
+
+	<insert id="pavIdxEryyvalDAO.insertPavIdxEryyval">				
+	<![CDATA[ 
+		/* pavIdxEryyvalDAO.insertPavIdxEryyval */
+		/* 포장_지수_초기값 등록 */		
+		INSERT INTO TN_PAV_IDX_INITVAL (
+			INITVAL_CR /* 포장_지수_초기값.초기값_CR */
+			, INITVAL_RD /* 포장_지수_초기값.초기값_RD */
+			, INITVAL_IRI /* 포장_지수_초기값.초기값_IRI */
+			, STDR_DFECT_CR /* 포장_지수_초기값.기준_결함_CR */
+			, STDR_DFECT_RD /* 포장_지수_초기값.기준_결함_RD */
+			, STDR_DFECT_IRI /* 포장_지수_초기값.기준_결함_IRI */
+			, CRTR_NO /* 포장_지수_초기값.생성자_번호 */
+			, CREAT_DT /* 포장_지수_초기값.생성_일시 */
+			, UPDUSR_NO /* 포장_지수_초기값.수정자_번호 */
+			, UPDT_DT /* 포장_지수_초기값.수정_일시 */
+		) VALUES (
+			#INITVAL_CR# /* 포장_지수_초기값.초기값_CR */
+			, #INITVAL_RD# /* 포장_지수_초기값.초기값_RD */
+			, #INITVAL_IRI# /* 포장_지수_초기값.초기값_IRI */
+			, #STDR_DFECT_CR# /* 포장_지수_초기값.기준_결함_CR */
+			, #STDR_DFECT_RD# /* 포장_지수_초기값.기준_결함_RD */
+			, #STDR_DFECT_IRI# /* 포장_지수_초기값.기준_결함_IRI */
+			, #CRTR_NO# /* 포장_지수_초기값.생성자_번호 */
+			, SYSDATE /* 포장_지수_초기값.생성_일시 */
+			, #UPDUSR_NO# /* 포장_지수_초기값.수정자_번호 */
+			, SYSDATE /* 포장_지수_초기값.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="pavIdxEryyvalDAO.updatePavIdxEryyval">
+	<![CDATA[ 
+		/* pavIdxEryyvalDAO.updatePavIdxEryyval */
+		/* 포장_지수_초기값 수정 */
+		UPDATE TN_PAV_IDX_INITVAL SET
+
+
+
+INITVAL_CR = #INITVAL_CR# /* 포장_지수_초기값.초기값_CR */
+			
+
+, INITVAL_RD = #INITVAL_RD# /* 포장_지수_초기값.초기값_RD */
+			
+
+, INITVAL_IRI = #INITVAL_IRI# /* 포장_지수_초기값.초기값_IRI */
+			
+
+, STDR_DFECT_CR = #STDR_DFECT_CR# /* 포장_지수_초기값.기준_결함_CR */
+			
+
+, STDR_DFECT_RD = #STDR_DFECT_RD# /* 포장_지수_초기값.기준_결함_RD */
+			
+
+, STDR_DFECT_IRI = #STDR_DFECT_IRI# /* 포장_지수_초기값.기준_결함_IRI */
+			
+
+, CRTR_NO = #CRTR_NO# /* 포장_지수_초기값.생성자_번호 */
+			
+
+, CREAT_DT = SYSDATE /* 포장_지수_초기값.생성_일시 */
+			
+
+, UPDUSR_NO = #UPDUSR_NO# /* 포장_지수_초기값.수정자_번호 */
+			
+
+, UPDT_DT = SYSDATE /* 포장_지수_초기값.수정_일시 */
+			
+]]>
+	</update>
+
+	<delete id="pavIdxEryyvalDAO.deletePavIdxEryyval">
+	<![CDATA[ 
+		/* pavIdxEryyvalDAO.deletePavIdxEryyval */
+		/* 포장_지수_초기값 삭제 */
+		DELETE FROM TN_PAV_IDX_INITVAL 
+]]>
+	</delete>
+
+	<select id="pavIdxEryyvalDAO.selectPavIdxEryyval" resultClass="pavIdxEryyvalVO">
+	<![CDATA[ 
+		/* pavIdxEryyvalDAO.selectPavIdxEryyval */
+		/* 포장_지수_초기값 조회 */
+		SELECT
+			tnpavidxeryyval.INITVAL_CR /* 포장_지수_초기값.초기값_CR */
+			, tnpavidxeryyval.INITVAL_RD /* 포장_지수_초기값.초기값_RD */
+			, tnpavidxeryyval.INITVAL_IRI /* 포장_지수_초기값.초기값_IRI */
+			, tnpavidxeryyval.STDR_DFECT_CR /* 포장_지수_초기값.기준_결함_CR */
+			, tnpavidxeryyval.STDR_DFECT_RD /* 포장_지수_초기값.기준_결함_RD */
+			, tnpavidxeryyval.STDR_DFECT_IRI /* 포장_지수_초기값.기준_결함_IRI */
+			, tnpavidxeryyval.CRTR_NO /* 포장_지수_초기값.생성자_번호 */
+			, tnpavidxeryyval.CREAT_DT /* 포장_지수_초기값.생성_일시 */
+			, tnpavidxeryyval.UPDUSR_NO /* 포장_지수_초기값.수정자_번호 */
+			, tnpavidxeryyval.UPDT_DT /* 포장_지수_초기값.수정_일시 */
+		FROM TN_PAV_IDX_INITVAL tnpavidxeryyval
+]]>
+	</select>
+
+	<sql id="pavIdxEryyvalDAO.selectPavIdxEryyvalList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnpavidxeryyval.INITVAL_CR = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnpavidxeryyval.INITVAL_RD LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="INITVAL_CR"><![CDATA[ /* 포장_지수_초기값.초기값_CR */ AND tnpavidxeryyval.INITVAL_CR = #INITVAL_CR# ]]></isNotEmpty>
+		<isNotEmpty property="INITVAL_RD"><![CDATA[ /* 포장_지수_초기값.초기값_RD */ AND tnpavidxeryyval.INITVAL_RD = #INITVAL_RD# ]]></isNotEmpty>
+		<isNotEmpty property="INITVAL_IRI"><![CDATA[ /* 포장_지수_초기값.초기값_IRI */ AND tnpavidxeryyval.INITVAL_IRI = #INITVAL_IRI# ]]></isNotEmpty>
+		<isNotEmpty property="STDR_DFECT_CR"><![CDATA[ /* 포장_지수_초기값.기준_결함_CR */ AND tnpavidxeryyval.STDR_DFECT_CR = #STDR_DFECT_CR# ]]></isNotEmpty>
+		<isNotEmpty property="STDR_DFECT_RD"><![CDATA[ /* 포장_지수_초기값.기준_결함_RD */ AND tnpavidxeryyval.STDR_DFECT_RD = #STDR_DFECT_RD# ]]></isNotEmpty>
+		<isNotEmpty property="STDR_DFECT_IRI"><![CDATA[ /* 포장_지수_초기값.기준_결함_IRI */ AND tnpavidxeryyval.STDR_DFECT_IRI = #STDR_DFECT_IRI# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장_지수_초기값.생성자_번호 */ AND tnpavidxeryyval.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 포장_지수_초기값.생성_일시 */ AND tnpavidxeryyval.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장_지수_초기값.수정자_번호 */ AND tnpavidxeryyval.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 포장_지수_초기값.수정_일시 */ AND tnpavidxeryyval.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="pavIdxEryyvalDAO.selectPavIdxEryyvalListPage"
+		parameterClass="pavIdxEryyvalVO"
+		resultClass="pavIdxEryyvalVO">
+<![CDATA[ 		
+		/* pavIdxEryyvalDAO.selectPavIdxEryyvalListPage */
+		/* 포장_지수_초기값 조회(페이징) */
+		WITH tnpavidxeryyval AS
+		(
+		SELECT	
+				tnpavidxeryyval.INITVAL_CR /* 포장_지수_초기값.초기값_CR */
+				, tnpavidxeryyval.INITVAL_RD /* 포장_지수_초기값.초기값_RD */
+				, tnpavidxeryyval.INITVAL_IRI /* 포장_지수_초기값.초기값_IRI */
+				, tnpavidxeryyval.STDR_DFECT_CR /* 포장_지수_초기값.기준_결함_CR */
+				, tnpavidxeryyval.STDR_DFECT_RD /* 포장_지수_초기값.기준_결함_RD */
+				, tnpavidxeryyval.STDR_DFECT_IRI /* 포장_지수_초기값.기준_결함_IRI */
+				, tnpavidxeryyval.CRTR_NO /* 포장_지수_초기값.생성자_번호 */
+				, tnpavidxeryyval.CREAT_DT /* 포장_지수_초기값.생성_일시 */
+				, tnpavidxeryyval.UPDUSR_NO /* 포장_지수_초기값.수정자_번호 */
+				, tnpavidxeryyval.UPDT_DT /* 포장_지수_초기값.수정_일시 */
+			
+			FROM TN_PAV_IDX_INITVAL tnpavidxeryyval
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnpavidxeryyval.INITVAL_CR = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnpavidxeryyval.INITVAL_RD LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="INITVAL_CR">
+				<![CDATA[
+					/* 포장_지수_초기값.초기값_CR */
+					AND tnpavidxeryyval.INITVAL_CR = #INITVAL_CR#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="INITVAL_RD">
+				<![CDATA[
+					/* 포장_지수_초기값.초기값_RD */
+					AND tnpavidxeryyval.INITVAL_RD = #INITVAL_RD#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="INITVAL_IRI">
+				<![CDATA[
+					/* 포장_지수_초기값.초기값_IRI */
+					AND tnpavidxeryyval.INITVAL_IRI = #INITVAL_IRI#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="STDR_DFECT_CR">
+				<![CDATA[
+					/* 포장_지수_초기값.기준_결함_CR */
+					AND tnpavidxeryyval.STDR_DFECT_CR = #STDR_DFECT_CR#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="STDR_DFECT_RD">
+				<![CDATA[
+					/* 포장_지수_초기값.기준_결함_RD */
+					AND tnpavidxeryyval.STDR_DFECT_RD = #STDR_DFECT_RD#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="STDR_DFECT_IRI">
+				<![CDATA[
+					/* 포장_지수_초기값.기준_결함_IRI */
+					AND tnpavidxeryyval.STDR_DFECT_IRI = #STDR_DFECT_IRI#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 포장_지수_초기값.생성자_번호 */
+					AND tnpavidxeryyval.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 포장_지수_초기값.생성_일시 */
+					AND tnpavidxeryyval.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 포장_지수_초기값.수정자_번호 */
+					AND tnpavidxeryyval.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 포장_지수_초기값.수정_일시 */
+					AND tnpavidxeryyval.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tnpavidxeryyval.* FROM
+		(
+		SELECT 
+										tnpavidxeryyval.INITVAL_CR /* 포장_지수_초기값.초기값_CR */
+											, tnpavidxeryyval.INITVAL_RD /* 포장_지수_초기값.초기값_RD */
+											, tnpavidxeryyval.INITVAL_IRI /* 포장_지수_초기값.초기값_IRI */
+											, tnpavidxeryyval.STDR_DFECT_CR /* 포장_지수_초기값.기준_결함_CR */
+											, tnpavidxeryyval.STDR_DFECT_RD /* 포장_지수_초기값.기준_결함_RD */
+											, tnpavidxeryyval.STDR_DFECT_IRI /* 포장_지수_초기값.기준_결함_IRI */
+											, tnpavidxeryyval.CRTR_NO /* 포장_지수_초기값.생성자_번호 */
+											, tnpavidxeryyval.CREAT_DT /* 포장_지수_초기값.생성_일시 */
+											, tnpavidxeryyval.UPDUSR_NO /* 포장_지수_초기값.수정자_번호 */
+											, tnpavidxeryyval.UPDT_DT /* 포장_지수_초기값.수정_일시 */
+						/* 포장_지수_초기값.초기값_CR */
+			/* 포장_지수_초기값.초기값_RD */
+			, ROW_NUMBER() OVER( ORDER BY tnpavidxeryyval.INITVAL_CR ASC, tnpavidxeryyval.INITVAL_RD DESC )  ROW_NO
+			FROM  tnpavidxeryyval
+			WHERE 1=1
+		)  tnpavidxeryyval
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tnpavidxeryyval.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tnpavidxeryyval.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="pavIdxEryyvalDAO.selectPavIdxEryyvalList"
+		parameterClass="pavIdxEryyvalVO"
+		resultClass="pavIdxEryyvalVO">
+<![CDATA[ 		
+		/* pavIdxEryyvalDAO.selectPavIdxEryyvalList */
+		/* 포장_지수_초기값 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tnpavidxeryyval.INITVAL_CR /* 포장_지수_초기값.초기값_CR */
+				, tnpavidxeryyval.INITVAL_RD /* 포장_지수_초기값.초기값_RD */
+				, tnpavidxeryyval.INITVAL_IRI /* 포장_지수_초기값.초기값_IRI */
+				, tnpavidxeryyval.STDR_DFECT_CR /* 포장_지수_초기값.기준_결함_CR */
+				, tnpavidxeryyval.STDR_DFECT_RD /* 포장_지수_초기값.기준_결함_RD */
+				, tnpavidxeryyval.STDR_DFECT_IRI /* 포장_지수_초기값.기준_결함_IRI */
+				, tnpavidxeryyval.CRTR_NO /* 포장_지수_초기값.생성자_번호 */
+				, tnpavidxeryyval.CREAT_DT /* 포장_지수_초기값.생성_일시 */
+				, tnpavidxeryyval.UPDUSR_NO /* 포장_지수_초기값.수정자_번호 */
+				, tnpavidxeryyval.UPDT_DT /* 포장_지수_초기값.수정_일시 */
+			FROM TN_PAV_IDX_INITVAL tnpavidxeryyval
+]]>
+	<include refid="pavIdxEryyvalDAO.selectPavIdxEryyvalList.where" />	
+<![CDATA[
+		) tb) tnpavidxeryyval  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="pavIdxEryyvalDAO.selectPavIdxEryyvalListTotalCount"
+		parameterClass="pavIdxEryyvalVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* pavIdxEryyvalDAO.selectPavIdxEryyvalListTotalCount */
+		/* 포장_지수_초기값 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_PAV_IDX_INITVAL tnpavidxeryyval
+]]>		
+		<include refid="pavIdxEryyvalDAO.selectPavIdxEryyvalList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>

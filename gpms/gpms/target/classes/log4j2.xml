@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d %5p [%c] %m%n" />
+        </Console>
+        
+        <RollingRandomAccessFile name="RollingRandomAccessFile" 
+         fileName="/logs/app.log" filePattern="/logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd}-%i.log.zip">
+         <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n" />
+         <Policies>
+            <TimeBasedTriggeringPolicy />
+            <SizeBasedTriggeringPolicy size="50 MB" />
+         </Policies>
+      </RollingRandomAccessFile>
+      
+    </Appenders>
+    <Loggers>
+    <!-- 
+        <Logger name="java.sql.Connection" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+         <Logger name="java.sql.PreparedStatement" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        -->
+        
+        <!-- log SQL (pre-execution) plus exceptions caused by SQL -->
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="INFO" />
+		<appender-ref ref="console" />
+		<appender-ref ref="rollingFile"/>
+	</logger>
+	
+        <!-- 
+         <Logger name="java.sql" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+         -->
+        <Logger name="egovframework" level="INFO" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+          <!-- log SQL with timing information, post execution -->
+        <Logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Root level="DEBUG">
+            <AppenderRef ref="console" />
+            <AppenderRef ref="RollingRandomAccessFile"  />
+        </Root>
+    </Loggers>
+</Configuration>

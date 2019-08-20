@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="attachFileDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="attachFileSerarchVO" type="kr.go.gg.gpms.attachfile.service.model.AttachFileDefaultVO"/>
+	<typeAlias alias="attachFileVO"	type="kr.go.gg.gpms.attachfile.service.model.AttachFileVO" />
+
+	<resultMap id="attachFile.resultMap"
+		class="attachFileVO">
+		<result property="FILE_NO" column="FILE_NO" columnIndex="1" /> <!-- 공통첨부파일.파일_번호 -->
+		<result property="FILE_NM" column="FILE_NM" columnIndex="2" /> <!-- 공통첨부파일.파일_명 -->
+		<result property="ORGINL_FILE_NM" column="ORGINL_FILE_NM" columnIndex="3" /> <!-- 공통첨부파일.원본_파일_명 -->
+		<result property="FILE_COURS" column="FILE_COURS" columnIndex="4" /> <!-- 공통첨부파일.파일_경로 -->
+		<result property="FILE_SIZE" column="FILE_SIZE" columnIndex="5" /> <!-- 공통첨부파일.파일_크기 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="6" /> <!-- 공통첨부파일.사용_여부 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="7" /> <!-- 공통첨부파일.삭제_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="8" /> <!-- 공통첨부파일.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="9" /> <!-- 공통첨부파일.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="10" /> <!-- 공통첨부파일.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="11" /> <!-- 공통첨부파일.수정_일시 -->
+	</resultMap>
+
+	<insert id="attachFileDAO.insertAttachFile">
+	<selectKey resultClass="String" keyProperty="FILE_NO">
+  <![CDATA[
+  select SEQ_TN_ATTACH_FILE.NEXTVAL from dual
+  ]]>
+  </selectKey>
+	<![CDATA[ 
+		/* attachFileDAO.insertAttachFile */
+		/* 공통첨부파일 등록 */		
+		INSERT INTO TN_ATTACH_FILE (
+			FILE_NO /* 공통첨부파일.파일_번호 */
+			, FILE_NM /* 공통첨부파일.파일_명 */
+			, ORGINL_FILE_NM /* 공통첨부파일.원본_파일_명 */
+			, FILE_COURS /* 공통첨부파일.파일_경로 */
+			, FILE_SIZE /* 공통첨부파일.파일_크기 */
+			, USE_AT /* 공통첨부파일.사용_여부 */
+			, DELETE_AT /* 공통첨부파일.삭제_여부 */
+			, CRTR_NO /* 공통첨부파일.생성자_번호 */
+			, CREAT_DT /* 공통첨부파일.생성_일시 */
+			, UPDUSR_NO /* 공통첨부파일.수정자_번호 */
+			, UPDT_DT /* 공통첨부파일.수정_일시 */
+		) VALUES (
+			#FILE_NO# /* 공통첨부파일.파일_번호 */
+			, #FILE_NM# /* 공통첨부파일.파일_명 */
+			, #ORGINL_FILE_NM# /* 공통첨부파일.원본_파일_명 */
+			, #FILE_COURS# /* 공통첨부파일.파일_경로 */
+			, #FILE_SIZE# /* 공통첨부파일.파일_크기 */
+			, #USE_AT# /* 공통첨부파일.사용_여부 */
+			, #DELETE_AT# /* 공통첨부파일.삭제_여부 */
+			, #CRTR_NO# /* 공통첨부파일.생성자_번호 */
+			, SYSDATE /* 공통첨부파일.생성_일시 */
+			, #UPDUSR_NO# /* 공통첨부파일.수정자_번호 */
+			, SYSDATE /* 공통첨부파일.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="attachFileDAO.updateAttachFile">
+	<![CDATA[ 
+		/* attachFileDAO.updateAttachFile */
+		/* 공통첨부파일 수정 */
+		UPDATE TN_ATTACH_FILE SET
+
+
+
+FILE_NM = #FILE_NM# /* 공통첨부파일.파일_명 */
+			
+
+, ORGINL_FILE_NM = #ORGINL_FILE_NM# /* 공통첨부파일.원본_파일_명 */
+			
+
+, FILE_COURS = #FILE_COURS# /* 공통첨부파일.파일_경로 */
+			
+
+, FILE_SIZE = #FILE_SIZE# /* 공통첨부파일.파일_크기 */
+			
+
+, USE_AT = #USE_AT# /* 공통첨부파일.사용_여부 */
+			
+
+, DELETE_AT = #DELETE_AT# /* 공통첨부파일.삭제_여부 */
+			
+
+, CRTR_NO = #CRTR_NO# /* 공통첨부파일.생성자_번호 */
+			
+
+, CREAT_DT = SYSDATE /* 공통첨부파일.생성_일시 */
+			
+
+, UPDUSR_NO = #UPDUSR_NO# /* 공통첨부파일.수정자_번호 */
+			
+
+, UPDT_DT = SYSDATE /* 공통첨부파일.수정_일시 */
+			
+		WHERE 1 = 1
+		AND FILE_NO = #FILE_NO# /* 공통첨부파일.파일_번호 */
+]]>
+	</update>
+
+	<delete id="attachFileDAO.deleteAttachFile">
+	<![CDATA[ 
+		/* attachFileDAO.deleteAttachFile */
+		/* 공통첨부파일 삭제 */
+		DELETE FROM TN_ATTACH_FILE 
+		WHERE 1 = 1
+		AND FILE_NO = #FILE_NO# /* 공통첨부파일.파일_번호 */
+]]>
+	</delete>
+
+	<select id="attachFileDAO.selectAttachFile"
+		resultMap="attachFile.resultMap">
+	<![CDATA[ 
+		/* attachFileDAO.selectAttachFile */
+		/* 공통첨부파일 조회 */
+		SELECT
+			tnattachfile.FILE_NO /* 공통첨부파일.파일_번호 */
+			, tnattachfile.FILE_NM /* 공통첨부파일.파일_명 */
+			, tnattachfile.ORGINL_FILE_NM /* 공통첨부파일.원본_파일_명 */
+			, tnattachfile.FILE_COURS /* 공통첨부파일.파일_경로 */
+			, tnattachfile.FILE_SIZE /* 공통첨부파일.파일_크기 */
+			, tnattachfile.USE_AT /* 공통첨부파일.사용_여부 */
+			, tnattachfile.DELETE_AT /* 공통첨부파일.삭제_여부 */
+			, tnattachfile.CRTR_NO /* 공통첨부파일.생성자_번호 */
+			, tnattachfile.CREAT_DT /* 공통첨부파일.생성_일시 */
+			, tnattachfile.UPDUSR_NO /* 공통첨부파일.수정자_번호 */
+			, tnattachfile.UPDT_DT /* 공통첨부파일.수정_일시 */
+		FROM TN_ATTACH_FILE tnattachfile
+		WHERE 1 = 1
+		AND tnattachfile.FILE_NO = #FILE_NO# /* 공통첨부파일.파일_번호 */
+]]>
+	</select>
+
+	<sql id="attachFileDAO.selectAttachFileList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnattachfile.FILE_NO = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnattachfile.FILE_NM LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="FILE_NO"><![CDATA[ /* 공통첨부파일.파일_번호 */ AND tnattachfile.FILE_NO = #FILE_NO# ]]></isNotEmpty>
+		<isNotEmpty property="FILE_NM"><![CDATA[ /* 공통첨부파일.파일_명 */ AND tnattachfile.FILE_NM = #FILE_NM# ]]></isNotEmpty>
+		<isNotEmpty property="ORGINL_FILE_NM"><![CDATA[ /* 공통첨부파일.원본_파일_명 */ AND tnattachfile.ORGINL_FILE_NM = #ORGINL_FILE_NM# ]]></isNotEmpty>
+		<isNotEmpty property="FILE_COURS"><![CDATA[ /* 공통첨부파일.파일_경로 */ AND tnattachfile.FILE_COURS = #FILE_COURS# ]]></isNotEmpty>
+		<isNotEmpty property="FILE_SIZE"><![CDATA[ /* 공통첨부파일.파일_크기 */ AND tnattachfile.FILE_SIZE = #FILE_SIZE# ]]></isNotEmpty>
+		<isNotEmpty property="USE_AT"><![CDATA[ /* 공통첨부파일.사용_여부 */ AND tnattachfile.USE_AT = #USE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 공통첨부파일.삭제_여부 */ AND tnattachfile.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공통첨부파일.생성자_번호 */ AND tnattachfile.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 공통첨부파일.생성_일시 */ AND tnattachfile.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공통첨부파일.수정자_번호 */ AND tnattachfile.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 공통첨부파일.수정_일시 */ AND tnattachfile.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="attachFileDAO.selectAttachFileListPage"
+		parameterClass="attachFileVO"
+		resultClass="attachFileVO">
+<![CDATA[ 		
+		/* attachFileDAO.selectAttachFileListPage */
+		/* 공통첨부파일 조회(페이징) */
+		WITH tnattachfile AS
+		(
+		SELECT	
+				tnattachfile.FILE_NO /* 공통첨부파일.파일_번호 */
+				, tnattachfile.FILE_NM /* 공통첨부파일.파일_명 */
+				, tnattachfile.ORGINL_FILE_NM /* 공통첨부파일.원본_파일_명 */
+				, tnattachfile.FILE_COURS /* 공통첨부파일.파일_경로 */
+				, tnattachfile.FILE_SIZE /* 공통첨부파일.파일_크기 */
+				, tnattachfile.USE_AT /* 공통첨부파일.사용_여부 */
+				, tnattachfile.DELETE_AT /* 공통첨부파일.삭제_여부 */
+				, tnattachfile.CRTR_NO /* 공통첨부파일.생성자_번호 */
+				, tnattachfile.CREAT_DT /* 공통첨부파일.생성_일시 */
+				, tnattachfile.UPDUSR_NO /* 공통첨부파일.수정자_번호 */
+				, tnattachfile.UPDT_DT /* 공통첨부파일.수정_일시 */
+			
+			FROM TN_ATTACH_FILE tnattachfile
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnattachfile.FILE_NO = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnattachfile.FILE_NM LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="FILE_NO">
+				<![CDATA[
+					/* 공통첨부파일.파일_번호 */
+					AND tnattachfile.FILE_NO = #FILE_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="FILE_NM">
+				<![CDATA[
+					/* 공통첨부파일.파일_명 */
+					AND tnattachfile.FILE_NM = #FILE_NM#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="ORGINL_FILE_NM">
+				<![CDATA[
+					/* 공통첨부파일.원본_파일_명 */
+					AND tnattachfile.ORGINL_FILE_NM = #ORGINL_FILE_NM#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="FILE_COURS">
+				<![CDATA[
+					/* 공통첨부파일.파일_경로 */
+					AND tnattachfile.FILE_COURS = #FILE_COURS#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="FILE_SIZE">
+				<![CDATA[
+					/* 공통첨부파일.파일_크기 */
+					AND tnattachfile.FILE_SIZE = #FILE_SIZE#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 공통첨부파일.사용_여부 */
+					AND tnattachfile.USE_AT = #USE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 공통첨부파일.삭제_여부 */
+					AND tnattachfile.DELETE_AT = #DELETE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 공통첨부파일.생성자_번호 */
+					AND tnattachfile.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 공통첨부파일.생성_일시 */
+					AND tnattachfile.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 공통첨부파일.수정자_번호 */
+					AND tnattachfile.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 공통첨부파일.수정_일시 */
+					AND tnattachfile.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tnattachfile.* FROM
+		(
+		SELECT 
+										tnattachfile.FILE_NO /* 공통첨부파일.파일_번호 */
+											, tnattachfile.FILE_NM /* 공통첨부파일.파일_명 */
+											, tnattachfile.ORGINL_FILE_NM /* 공통첨부파일.원본_파일_명 */
+											, tnattachfile.FILE_COURS /* 공통첨부파일.파일_경로 */
+											, tnattachfile.FILE_SIZE /* 공통첨부파일.파일_크기 */
+											, tnattachfile.USE_AT /* 공통첨부파일.사용_여부 */
+											, tnattachfile.DELETE_AT /* 공통첨부파일.삭제_여부 */
+											, tnattachfile.CRTR_NO /* 공통첨부파일.생성자_번호 */
+											, tnattachfile.CREAT_DT /* 공통첨부파일.생성_일시 */
+											, tnattachfile.UPDUSR_NO /* 공통첨부파일.수정자_번호 */
+											, tnattachfile.UPDT_DT /* 공통첨부파일.수정_일시 */
+						/* 공통첨부파일.파일_번호 */
+			/* 공통첨부파일.파일_명 */
+			, ROW_NUMBER() OVER( ORDER BY tnattachfile.FILE_NO ASC, tnattachfile.FILE_NM DESC )  ROW_NO
+			FROM  tnattachfile
+			WHERE 1=1
+		)  tnattachfile
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tnattachfile.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tnattachfile.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="attachFileDAO.selectAttachFileList"
+		parameterClass="attachFileVO"
+		resultClass="attachFileVO">
+<![CDATA[ 		
+		/* attachFileDAO.selectAttachFileList */
+		/* 공통첨부파일 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tnattachfile.FILE_NO /* 공통첨부파일.파일_번호 */
+				, tnattachfile.FILE_NM /* 공통첨부파일.파일_명 */
+				, tnattachfile.ORGINL_FILE_NM /* 공통첨부파일.원본_파일_명 */
+				, tnattachfile.FILE_COURS /* 공통첨부파일.파일_경로 */
+				, tnattachfile.FILE_SIZE /* 공통첨부파일.파일_크기 */
+				, tnattachfile.USE_AT /* 공통첨부파일.사용_여부 */
+				, tnattachfile.DELETE_AT /* 공통첨부파일.삭제_여부 */
+				, tnattachfile.CRTR_NO /* 공통첨부파일.생성자_번호 */
+				, tnattachfile.CREAT_DT /* 공통첨부파일.생성_일시 */
+				, tnattachfile.UPDUSR_NO /* 공통첨부파일.수정자_번호 */
+				, tnattachfile.UPDT_DT /* 공통첨부파일.수정_일시 */
+			FROM TN_ATTACH_FILE tnattachfile
+]]>
+	<include refid="attachFileDAO.selectAttachFileList.where" />	
+<![CDATA[
+		ORDER BY 
+				tnattachfile.FILE_NO DESC /* 공통첨부파일.파일_번호 */  
+		) tb) tnattachfile  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="attachFileDAO.selectAttachFileListTotalCount"
+		parameterClass="attachFileVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* attachFileDAO.selectAttachFileListTotalCount */
+		/* 공통첨부파일 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_ATTACH_FILE tnattachfile
+]]>		
+		<include refid="attachFileDAO.selectAttachFileList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="mcalstDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="mcalstVO"	type="kr.go.gg.gpms.mcalst.service.model.MCalsTVO" />
+
+	<!-- <sql id="mcalstDAO.selectMCalsTList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			<![CDATA[
+				AND cellsect.G2_ID = #searchKeyword#
+			]]>
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			<![CDATA[
+				AND cellsect.G2_DATASETID LIKE '%' || #searchKeyword# || '%'
+			]]>
+		</isEqual>
+		<isNotEmpty property="G2_ID"><![CDATA[ /* CELL_SECT.G2_ID */ AND cellsect.G2_ID = #G2_ID# ]]></isNotEmpty>
+		<isNotEmpty property="G2_DATASETID"><![CDATA[ /* CELL_SECT.G2_DATASETID */ AND cellsect.G2_DATASETID = #G2_DATASETID# ]]></isNotEmpty>
+		<isNotEmpty property="G2_SPATIALTYPE"><![CDATA[ /* CELL_SECT.G2_SPATIALTYPE */ AND cellsect.G2_SPATIALTYPE = #G2_SPATIALTYPE# ]]></isNotEmpty>
+		<isNotEmpty property="G2_XMIN"><![CDATA[ /* CELL_SECT.G2_XMIN */ AND cellsect.G2_XMIN = #G2_XMIN# ]]></isNotEmpty>
+		<isNotEmpty property="G2_YMIN"><![CDATA[ /* CELL_SECT.G2_YMIN */ AND cellsect.G2_YMIN = #G2_YMIN# ]]></isNotEmpty>
+		<isNotEmpty property="G2_XMAX"><![CDATA[ /* CELL_SECT.G2_XMAX */ AND cellsect.G2_XMAX = #G2_XMAX# ]]></isNotEmpty>
+		<isNotEmpty property="G2_YMAX"><![CDATA[ /* CELL_SECT.G2_YMAX */ AND cellsect.G2_YMAX = #G2_YMAX# ]]></isNotEmpty>
+		<isNotEmpty property="OBJECT_ID"><![CDATA[ /* CELL_SECT.OBJECT_ID */ AND cellsect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* CELL_SECT.ROUTE_CODE */ AND cellsect.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* CELL_SECT.DIRECT_CODE */ AND cellsect.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK"><![CDATA[ /* CELL_SECT.TRACK */ AND cellsect.TRACK = #TRACK# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* CELL_SECT.STRTPT */ AND cellsect.STRTPT >= #STRTPT# ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* CELL_SECT.ENDPT */ AND cellsect.ENDPT <= #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ /* CELL_SECT.DEPT_CODE */ AND cellsect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="SECT_SE"><![CDATA[ /* CELL_SECT.SECT_SE */ AND cellsect.SECT_SE = #SECT_SE# ]]></isNotEmpty>
+		<isNotEmpty property="VMTC_GRAD"><![CDATA[ /* CELL_SECT.VMTC_GRAD */ AND cellsect.VMTC_GRAD = #VMTC_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_GRAD"><![CDATA[ /* CELL_SECT.ROAD_GRAD */ AND cellsect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="ADM_CODE"><![CDATA[ /* CELL_SECT.ADM_CODE */ AND (cellsect.ADM_CODE || '00000') = #ADM_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* CELL_SECT.CREAT_DT */ AND cellsect.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* CELL_SECT.UPDUSR_NO */ AND cellsect.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* CELL_SECT.UPDT_DT */ AND cellsect.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+	</sql> -->
+	
+	<select id="mcalstDAO.selectMCalsTList"	parameterClass="mcalstVO" resultClass="mcalstVO">
+		<![CDATA[
+		/* mcalstDAO.selectMCalsTList */
+		/* 교량정보(M_CALS_T) 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				mcalst.BRDG_SEQ,/*교량정보.BMS코드*/
+				mcalst.BRDG_NAME,/*교량정보.교량명*/
+				mcalst.ROAD_NAME,/*교량정보.노선명*/
+				mcalst.TYPE_NAME,/*교량정보.관할구분명*/
+				mcalst.BRDG_TYPENM,/*교량정보.교량유형명*/
+				mcalst.BJNAME,/*교량정보.법정동명*/
+				TO_NUMBER(MIN(mbrggt.SPAN_NUM))||'~'||TO_NUMBER(MAX(mbrggt.SPAN_NUM)) AS SPAN_NUM,/*교량구조.경간번호*/
+				mbrggt.DECK_PAVTY_NAME,/*교량구조.바닥판포장명*/
+				mbrggt.DECK_PAV/*교량구조.바닥판포장두께*/
+			FROM M_CALS_T mcalst LEFT OUTER JOIN M_BRGG_T mbrggt ON mbrggt.BRDG_SEQ =  mcalst.BRDG_SEQ
+		]]>			
+		<!-- 	<include refid="cellSectDAO.selectCellSectList.where" /> -->
+		<![CDATA[
+				WHERE 1=1 AND mcalst.BRDG_SEQ IN ($BRDG_SEQ$)
+				GROUP BY mcalst.BRDG_SEQ,mcalst.BRDG_NAME,mcalst.ROAD_NAME,mcalst.TYPE_NAME,mcalst.BRDG_TYPENM,mcalst.BJNAME,mbrggt.DECK_PAVTY_NAME,mbrggt.DECK_PAV
+		]]>
+		<isNotEmpty property="orderByColumn">
+			ORDER BY $orderByColumn$ $orderByType$
+		</isNotEmpty>
+		<![CDATA[
+				) tb) WHERE 1=1 
+		]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+			<![CDATA[
+				AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+			]]>
+		</isEqual>
+	</select>		
+ 
+	<select id="mcalstDAO.selectMCalsTListTotalCount" parameterClass="mcalstVO" resultClass="int">
+	<![CDATA[
+		/* mcalstDAO.selectMCalsTListTotalCount */
+		/* M_CALS_T 조회 수 */
+		SELECT COUNT(*) FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				mcalst.BRDG_SEQ,/*교량정보.BMS코드*/
+				mcalst.BRDG_NAME,/*교량정보.교량명*/
+				mcalst.ROAD_NAME,/*교량정보.노선명*/
+				mcalst.TYPE_NAME,/*교량정보.관할구분명*/
+				mcalst.BRDG_TYPENM,/*교량정보.교량유형명*/
+				mcalst.BJNAME,/*교량정보.법정동명*/
+				TO_NUMBER(MIN(mbrggt.SPAN_NUM))||'~'||TO_NUMBER(MAX(mbrggt.SPAN_NUM)) AS SPAN_NUM,/*교량구조.경간번호*/
+				mbrggt.DECK_PAVTY_NAME,/*교량구조.바닥판포장명*/
+				mbrggt.DECK_PAV/*교량구조.바닥판포장두께*/
+			FROM M_CALS_T mcalst LEFT OUTER JOIN M_BRGG_T mbrggt ON mbrggt.BRDG_SEQ =  mcalst.BRDG_SEQ
+		]]>			
+		<!-- 	<include refid="cellSectDAO.selectCellSectList.where" /> -->
+		<![CDATA[
+				WHERE 1=1 AND mcalst.BRDG_SEQ IN ($BRDG_SEQ$)
+				GROUP BY mcalst.BRDG_SEQ,mcalst.BRDG_NAME,mcalst.ROAD_NAME,mcalst.TYPE_NAME,mcalst.BRDG_TYPENM,mcalst.BJNAME,mbrggt.DECK_PAVTY_NAME,mbrggt.DECK_PAV
+		]]>
+		<![CDATA[
+				) tb)
+		]]>
+	</select>
+
+</sqlMap>

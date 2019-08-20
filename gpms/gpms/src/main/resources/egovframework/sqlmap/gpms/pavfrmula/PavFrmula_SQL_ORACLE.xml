@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="pavFrmulaDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="pavFrmulaSerarchVO" type="kr.go.gg.gpms.pavfrmula.service.model.PavFrmulaDefaultVO"/>
+	<typeAlias alias="pavFrmulaVO"	type="kr.go.gg.gpms.pavfrmula.service.model.PavFrmulaVO" />
+
+	<resultMap id="pavFrmula.resultMap"
+		class="pavFrmulaVO">
+		<result property="FRMULA_NO" column="FRMULA_NO" columnIndex="1" /> <!-- 포장_수식.수식_번호 -->
+		<result property="PARNTS_FRMULA_NO" column="PARNTS_FRMULA_NO" columnIndex="2" /> <!-- 포장_수식.부모_수식_번호 -->
+		<result property="FRMULA_NM" column="FRMULA_NM" columnIndex="3" /> <!-- 포장_수식.수식_명 -->
+		<result property="ARITH_FRMLA" column="ARITH_FRMLA" columnIndex="4" /> <!-- 포장_수식.산술_식 -->
+		<result property="DC" column="DC" columnIndex="5" /> <!-- 포장_수식.설명 -->
+		<result property="ARITH_SN" column="ARITH_SN" columnIndex="6" /> <!-- 포장_수식.산술_순번 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="7" /> <!-- 포장_수식.삭제_여부 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="8" /> <!-- 포장_수식.사용_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="9" /> <!-- 포장_수식.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="10" /> <!-- 포장_수식.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="11" /> <!-- 포장_수식.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="12" /> <!-- 포장_수식.수정_일시 -->
+	</resultMap>
+
+	<insert id="pavFrmulaDAO.insertPavFrmula">
+		<selectKey resultClass="String" keyProperty="FRMULA_NO">
+  <![CDATA[
+  select SEQ_TN_PAV_FRMULA.NEXTVAL from dual
+  ]]>
+  </selectKey>
+	<![CDATA[ 
+		/* pavFrmulaDAO.insertPavFrmula */
+		/* 포장_수식 등록 */		
+		INSERT INTO TN_PAV_FRMULA (
+			FRMULA_NO /* 포장_수식.수식_번호 */
+			, PARNTS_FRMULA_NO /* 포장_수식.부모_수식_번호 */
+			, FRMULA_NM /* 포장_수식.수식_명 */
+			, ARITH_FRMLA /* 포장_수식.산술_식 */
+			, DC /* 포장_수식.설명 */
+			, ARITH_SN /* 포장_수식.산술_순번 */
+			, DELETE_AT /* 포장_수식.삭제_여부 */
+			, USE_AT /* 포장_수식.사용_여부 */
+			, CRTR_NO /* 포장_수식.생성자_번호 */
+			, CREAT_DT /* 포장_수식.생성_일시 */
+			, UPDUSR_NO /* 포장_수식.수정자_번호 */
+			, UPDT_DT /* 포장_수식.수정_일시 */
+		) VALUES (
+			#FRMULA_NO# /* 포장_수식.수식_번호 */
+			, #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
+			, #FRMULA_NM# /* 포장_수식.수식_명 */
+			, #ARITH_FRMLA# /* 포장_수식.산술_식 */
+			, #DC# /* 포장_수식.설명 */
+			, #ARITH_SN# /* 포장_수식.산술_순번 */
+			, #DELETE_AT# /* 포장_수식.삭제_여부 */
+			, #USE_AT# /* 포장_수식.사용_여부 */
+			, #CRTR_NO# /* 포장_수식.생성자_번호 */
+			, SYSDATE /* 포장_수식.생성_일시 */
+			, #UPDUSR_NO# /* 포장_수식.수정자_번호 */
+			, SYSDATE /* 포장_수식.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="pavFrmulaDAO.updatePavFrmula">
+	<![CDATA[ 
+		/* pavFrmulaDAO.updatePavFrmula */
+		/* 포장_수식 수정 */
+		UPDATE TN_PAV_FRMULA SET
+
+
+
+PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
+			
+
+, FRMULA_NM = #FRMULA_NM# /* 포장_수식.수식_명 */
+			
+
+, ARITH_FRMLA = #ARITH_FRMLA# /* 포장_수식.산술_식 */
+			
+
+, DC = #DC# /* 포장_수식.설명 */
+			
+
+, ARITH_SN = #ARITH_SN# /* 포장_수식.산술_순번 */
+			
+
+, DELETE_AT = #DELETE_AT# /* 포장_수식.삭제_여부 */
+			
+
+, USE_AT = #USE_AT# /* 포장_수식.사용_여부 */
+			
+
+, CRTR_NO = #CRTR_NO# /* 포장_수식.생성자_번호 */
+			
+
+, CREAT_DT = SYSDATE /* 포장_수식.생성_일시 */
+			
+
+, UPDUSR_NO = #UPDUSR_NO# /* 포장_수식.수정자_번호 */
+			
+
+, UPDT_DT = SYSDATE /* 포장_수식.수정_일시 */
+			
+		WHERE 1 = 1
+		AND FRMULA_NO = #FRMULA_NO# /* 포장_수식.수식_번호 */
+]]>
+	</update>
+
+	<delete id="pavFrmulaDAO.deletePavFrmula">
+	<![CDATA[ 
+		/* pavFrmulaDAO.deletePavFrmula */
+		/* 포장_수식 삭제 */
+		DELETE FROM TN_PAV_FRMULA 
+		WHERE 1 = 1
+		AND FRMULA_NO = #FRMULA_NO# /* 포장_수식.수식_번호 */
+]]>
+	</delete>
+
+	<select id="pavFrmulaDAO.selectPavFrmula" resultClass="pavFrmulaVO">
+	<![CDATA[ 
+		/* pavFrmulaDAO.selectPavFrmula */
+		/* 포장_수식 조회 */
+		SELECT
+			tnpavfrmula.FRMULA_NO /* 포장_수식.수식_번호 */
+			, tnpavfrmula.PARNTS_FRMULA_NO /* 포장_수식.부모_수식_번호 */
+			, tnpavfrmula.FRMULA_NM /* 포장_수식.수식_명 */
+			, tnpavfrmula.ARITH_FRMLA /* 포장_수식.산술_식 */
+			, tnpavfrmula.DC /* 포장_수식.설명 */
+			, tnpavfrmula.ARITH_SN /* 포장_수식.산술_순번 */
+			, tnpavfrmula.DELETE_AT /* 포장_수식.삭제_여부 */
+			, tnpavfrmula.USE_AT /* 포장_수식.사용_여부 */
+			, tnpavfrmula.CRTR_NO /* 포장_수식.생성자_번호 */
+			, tnpavfrmula.CREAT_DT /* 포장_수식.생성_일시 */
+			, tnpavfrmula.UPDUSR_NO /* 포장_수식.수정자_번호 */
+			, tnpavfrmula.UPDT_DT /* 포장_수식.수정_일시 */
+		FROM TN_PAV_FRMULA tnpavfrmula
+		WHERE 1 = 1
+]]>
+<isNotEmpty property="FRMULA_NO"><![CDATA[ /* 포장_수식.수식_번호 */ AND tnpavfrmula.FRMULA_NO = #FRMULA_NO# ]]></isNotEmpty>
+<isNotEmpty property="PARNTS_FRMULA_NO"><![CDATA[ /* 포장_수식.부모_수식_번호 */ AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# ]]></isNotEmpty>
+<isNotEmpty property="FRMULA_NM"><![CDATA[ /* 포장_수식.수식_명 */ AND tnpavfrmula.FRMULA_NM = #FRMULA_NM# ]]></isNotEmpty>
+<isNotEmpty property="DELETE_AT"><![CDATA[ /* 포장_수식.삭제_여부 */ AND tnpavfrmula.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+<isNotEmpty property="USE_AT"><![CDATA[ /* 포장_수식.사용_여부 */ AND tnpavfrmula.USE_AT = #USE_AT# ]]></isNotEmpty>
+	</select>
+
+	<sql id="pavFrmulaDAO.selectPavFrmulaList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnpavfrmula.FRMULA_NO = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnpavfrmula.PARNTS_FRMULA_NO LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="FRMULA_NO"><![CDATA[ /* 포장_수식.수식_번호 */ AND tnpavfrmula.FRMULA_NO = #FRMULA_NO# ]]></isNotEmpty>
+		<isNotEmpty property="PARNTS_FRMULA_NO"><![CDATA[ /* 포장_수식.부모_수식_번호 */ AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# ]]></isNotEmpty>
+		<isNotEmpty property="FRMULA_NM"><![CDATA[ /* 포장_수식.수식_명 */ AND tnpavfrmula.FRMULA_NM = #FRMULA_NM# ]]></isNotEmpty>
+		<isNotEmpty property="ARITH_FRMLA"><![CDATA[ /* 포장_수식.산술_식 */ AND tnpavfrmula.ARITH_FRMLA = #ARITH_FRMLA# ]]></isNotEmpty>
+		<isNotEmpty property="DC"><![CDATA[ /* 포장_수식.설명 */ AND tnpavfrmula.DC = #DC# ]]></isNotEmpty>
+		<isNotEmpty property="ARITH_SN"><![CDATA[ /* 포장_수식.산술_순번 */ AND tnpavfrmula.ARITH_SN = #ARITH_SN# ]]></isNotEmpty>
+		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 포장_수식.삭제_여부 */ AND tnpavfrmula.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="USE_AT"><![CDATA[ /* 포장_수식.사용_여부 */ AND tnpavfrmula.USE_AT = #USE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장_수식.생성자_번호 */ AND tnpavfrmula.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 포장_수식.생성_일시 */ AND tnpavfrmula.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장_수식.수정자_번호 */ AND tnpavfrmula.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 포장_수식.수정_일시 */ AND tnpavfrmula.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="pavFrmulaDAO.selectPavFrmulaListPage"
+		parameterClass="pavFrmulaVO"
+		resultClass="pavFrmulaVO">
+<![CDATA[ 		
+		/* pavFrmulaDAO.selectPavFrmulaListPage */
+		/* 포장_수식 조회(페이징) */
+		WITH tnpavfrmula AS
+		(
+		SELECT	
+				tnpavfrmula.FRMULA_NO /* 포장_수식.수식_번호 */
+				, tnpavfrmula.PARNTS_FRMULA_NO /* 포장_수식.부모_수식_번호 */
+				, tnpavfrmula.FRMULA_NM /* 포장_수식.수식_명 */
+				, tnpavfrmula.ARITH_FRMLA /* 포장_수식.산술_식 */
+				, tnpavfrmula.DC /* 포장_수식.설명 */
+				, tnpavfrmula.ARITH_SN /* 포장_수식.산술_순번 */
+				, tnpavfrmula.DELETE_AT /* 포장_수식.삭제_여부 */
+				, tnpavfrmula.USE_AT /* 포장_수식.사용_여부 */
+				, tnpavfrmula.CRTR_NO /* 포장_수식.생성자_번호 */
+				, tnpavfrmula.CREAT_DT /* 포장_수식.생성_일시 */
+				, tnpavfrmula.UPDUSR_NO /* 포장_수식.수정자_번호 */
+				, tnpavfrmula.UPDT_DT /* 포장_수식.수정_일시 */
+			
+			FROM TN_PAV_FRMULA tnpavfrmula
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnpavfrmula.FRMULA_NO = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnpavfrmula.PARNTS_FRMULA_NO LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="FRMULA_NO">
+				<![CDATA[
+					/* 포장_수식.수식_번호 */
+					AND tnpavfrmula.FRMULA_NO = #FRMULA_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="PARNTS_FRMULA_NO">
+				<![CDATA[
+					/* 포장_수식.부모_수식_번호 */
+					AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="FRMULA_NM">
+				<![CDATA[
+					/* 포장_수식.수식_명 */
+					AND tnpavfrmula.FRMULA_NM = #FRMULA_NM#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="ARITH_FRMLA">
+				<![CDATA[
+					/* 포장_수식.산술_식 */
+					AND tnpavfrmula.ARITH_FRMLA = #ARITH_FRMLA#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DC">
+				<![CDATA[
+					/* 포장_수식.설명 */
+					AND tnpavfrmula.DC = #DC#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="ARITH_SN">
+				<![CDATA[
+					/* 포장_수식.산술_순번 */
+					AND tnpavfrmula.ARITH_SN = #ARITH_SN#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 포장_수식.삭제_여부 */
+					AND tnpavfrmula.DELETE_AT = #DELETE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 포장_수식.사용_여부 */
+					AND tnpavfrmula.USE_AT = #USE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 포장_수식.생성자_번호 */
+					AND tnpavfrmula.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 포장_수식.생성_일시 */
+					AND tnpavfrmula.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 포장_수식.수정자_번호 */
+					AND tnpavfrmula.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 포장_수식.수정_일시 */
+					AND tnpavfrmula.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tnpavfrmula.* FROM
+		(
+		SELECT 
+										tnpavfrmula.FRMULA_NO /* 포장_수식.수식_번호 */
+											, tnpavfrmula.PARNTS_FRMULA_NO /* 포장_수식.부모_수식_번호 */
+											, tnpavfrmula.FRMULA_NM /* 포장_수식.수식_명 */
+											, tnpavfrmula.ARITH_FRMLA /* 포장_수식.산술_식 */
+											, tnpavfrmula.DC /* 포장_수식.설명 */
+											, tnpavfrmula.ARITH_SN /* 포장_수식.산술_순번 */
+											, tnpavfrmula.DELETE_AT /* 포장_수식.삭제_여부 */
+											, tnpavfrmula.USE_AT /* 포장_수식.사용_여부 */
+											, tnpavfrmula.CRTR_NO /* 포장_수식.생성자_번호 */
+											, tnpavfrmula.CREAT_DT /* 포장_수식.생성_일시 */
+											, tnpavfrmula.UPDUSR_NO /* 포장_수식.수정자_번호 */
+											, tnpavfrmula.UPDT_DT /* 포장_수식.수정_일시 */
+						/* 포장_수식.수식_번호 */
+			/* 포장_수식.부모_수식_번호 */
+			, ROW_NUMBER() OVER( ORDER BY tnpavfrmula.FRMULA_NO ASC, tnpavfrmula.PARNTS_FRMULA_NO DESC )  ROW_NO
+			FROM  tnpavfrmula
+			WHERE 1=1
+		)  tnpavfrmula
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tnpavfrmula.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tnpavfrmula.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="pavFrmulaDAO.selectPavFrmulaList"
+		parameterClass="pavFrmulaVO"
+		resultClass="pavFrmulaVO">
+<![CDATA[ 		
+		/* pavFrmulaDAO.selectPavFrmulaList */
+		/* 포장_수식 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tnpavfrmula.FRMULA_NO /* 포장_수식.수식_번호 */
+				, tnpavfrmula.PARNTS_FRMULA_NO /* 포장_수식.부모_수식_번호 */
+				, tnpavfrmula.FRMULA_NM /* 포장_수식.수식_명 */
+				, tnpavfrmula.ARITH_FRMLA /* 포장_수식.산술_식 */
+				, tnpavfrmula.DC /* 포장_수식.설명 */
+				, tnpavfrmula.ARITH_SN /* 포장_수식.산술_순번 */
+				, tnpavfrmula.DELETE_AT /* 포장_수식.삭제_여부 */
+				, tnpavfrmula.USE_AT /* 포장_수식.사용_여부 */
+				, tnpavfrmula.CRTR_NO /* 포장_수식.생성자_번호 */
+				, tnpavfrmula.CREAT_DT /* 포장_수식.생성_일시 */
+				, tnpavfrmula.UPDUSR_NO /* 포장_수식.수정자_번호 */
+				, tnpavfrmula.UPDT_DT /* 포장_수식.수정_일시 */
+			FROM TN_PAV_FRMULA tnpavfrmula
+]]>
+	<include refid="pavFrmulaDAO.selectPavFrmulaList.where" />	
+<![CDATA[
+		ORDER BY 
+				tnpavfrmula.FRMULA_NO DESC /* 포장_수식.수식_번호 */  
+		) tb) tnpavfrmula  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="pavFrmulaDAO.selectPavFrmulaListTotalCount"
+		parameterClass="pavFrmulaVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* pavFrmulaDAO.selectPavFrmulaListTotalCount */
+		/* 포장_수식 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_PAV_FRMULA tnpavfrmula
+]]>		
+		<include refid="pavFrmulaDAO.selectPavFrmulaList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>

@@ -1,0 +1,374 @@
+
+/**
+ * Edit Panel
+ */
+.olEditorControlEditorCustomPanel  {
+    -moz-border-radius:3px 3px 3px 3px !important;
+    background:none repeat scroll 0 0 #ccc;
+    border:1px solid #aaa;
+    height:20px;
+    position:absolute;
+    right:8px;
+    top:8px;
+    cursor: default;
+}
+.olEditorControlEditorCustomPanel > div {
+    background-repeat: no-repeat;
+    background-position: center;
+    height:20px;
+    margin:0 4px;
+    width:22px;
+    float:right;
+}
+
+.olEditorControlEditorCustomPanel .olControlSeparatorItemInactive {
+    width: 4px!important;
+    background-color: #aaa;
+    /*border: #888 2px dotted;*/
+}
+.olEditor .olControlLayerSwitcher {
+    top: 50px!important;
+}
+.olEditor .olControlLayerSwitcher .layersDiv {
+    color: #333;
+    background-color:  transparent!important;
+    background-image: url(img/bg-control.png);
+}
+
+.oleFadeMap {
+    width: 100%;
+    height: 100%;
+    background-image: url(img/bg-map.png);
+    z-index: 10000!important;
+    top:0;
+    left:0;
+    position: absolute;
+}
+.oleDialog {
+    background-color: #eee;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-decoration: none;
+    line-height: 25px;
+    cursor: auto;
+    background-color: white;
+    margin: auto;
+    position: relative;
+    width: 300px;
+    z-index: 11000;
+    padding: 10px 20px;
+    top: 50px;
+    max-height: 300px;
+    overflow: auto;
+    border:2px solid #999;
+}
+.oleDialog p:first-child {
+    margin-top:0;
+}
+.oleDialog p:last-child {
+    margin-bottom:0;
+}
+
+.oleDialog select, .oleDialog input {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    background-color: #eee;
+    color: #000;
+    height: 20px;
+}
+
+.oleDialog input[type=button] {
+    /*box-shadow:-1px 1px #aaa inset;*/
+    margin-right: 6px;
+    width: 52px;
+    border-color: #666;
+    border-top-color: #999;
+    border-right-color: #999;
+    /*text-transform:uppercase;*/
+}
+
+.oleDialog .oleDrawRegularIrregular {
+    float: right;
+}
+
+/**
+ * Active control
+ */
+.olEditorControlEditorCustomPanel .olControlNavigationItemActive,
+.olEditorControlEditorCustomPanel .olControlCustomModifyFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlSplitFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawRegularItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawPolygonItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawCustomPathItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawCustomPointItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawTextItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlSaveFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDeleteFeatureItemActive,
+.olEditorControlEditorCustomPanel .olControlSelectFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlSnappingSettingsItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlImportFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawHoleItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlMergeFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlCustomDragFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlCustomTransformFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlCADToolsItemActive,
+.olEditorControlEditorCustomPanel .olEditorParallelDrawingActive,
+.olEditorControlEditorCustomPanel .olEditorGuidedDrawingActive,
+.olEditorControlEditorCustomPanel .olEditorControlCleanFeatureItemActive {
+     background-color: #fff;
+}
+
+/**
+ * Disabled control
+ */
+.oleControlDisabled {
+    opacity: 0.5;
+}
+
+.olEditorControlEditorCustomPanel > div:not(.olControlSeparatorItemInactive):not(.oleControlDisabled) {
+    cursor: pointer;
+}
+
+/**
+ * Navigation
+ */
+.olEditorControlEditorCustomPanel .olControlNavigationItemActive,
+.olEditorControlEditorCustomPanel .olControlNavigationItemInactive {
+    background-image: url("img/navigation.png");
+}
+
+/**
+ * Modify Feature
+ */
+.olEditorControlEditorCustomPanel .olControlCustomModifyFeatureItemActive,
+.olEditorControlEditorCustomPanel .olControlCustomModifyFeatureItemInactive {
+    background-image: url("img/modifyFeature.png");
+}
+
+/**
+ * Split Features
+ */
+.olEditorControlEditorCustomPanel .olEditorControlSplitFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlSplitFeatureItemInactive {
+    background-image: url("img/splitFeature.png");
+}
+
+/**
+ * Draw Polygon
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDrawPolygonItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawPolygonItemInactive {
+    background-image: url("img/drawPolygon.png");
+}
+
+/**
+ * Draw Polygon
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDrawRegularItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawRegularItemInactive {
+    background-image: url("img/drawRegular.png");
+}
+
+.olEditorControlDrawCustomPointActive,
+.olEditorControlDrawCustomPathActive,
+.olEditorControlDrawRegularActive,
+.olEditorControlDrawPolygonActive {
+    cursor: crosshair;
+}
+
+/**
+ * Draw Path
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDrawCustomPathItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawCustomPathItemInactive {
+    background-image: url("img/drawPath.png");
+}
+
+/**
+ * Draw Point
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDrawCustomPointItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawCustomPointItemInactive {
+    background-image: url("img/drawPoint.png");
+}
+
+/**
+ * Draw Text
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDrawTextItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawTextItemInactive {
+    background-image: url("img/drawText.png");
+}
+
+/**
+ * Draw Text Popup
+ */
+.oleDrawTextPopup  {
+    background-color: #eee;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    text-decoration: none;
+    padding: 10px 10px;
+    margin: 6px;
+    line-height: 12px;
+}
+.olFramedCloudPopupContent {
+    overflow: hidden;
+}
+.oleDrawTextPopup #olLabelInput {
+    background-color: #dddddd;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    height: 20px;
+    border: #888 2px dotted;
+}
+
+/**
+ * Upload Features
+ */
+.olEditorControlEditorCustomPanel .olEditorControlUploadFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlUploadFeatureItemInactive {
+    background-image: url("img/uploadFeature.png");
+}
+
+/**
+ * Download Features
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDownloadFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDownloadFeatureItemInactive {
+    background-image: url("img/downloadFeature.png");
+}
+
+/**
+ * Save Features
+ */
+.olEditorControlEditorCustomPanel .olEditorControlSaveFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlSaveFeatureItemInactive {
+    background-image: url("img/saveFeature.png");
+}
+
+/**
+ * Drag Feature
+ */
+.olEditorControlEditorCustomPanel .olEditorControlCustomDragFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlCustomDragFeatureItemInactive {
+    background-image: url("img/dragFeature.png");
+}
+
+.olEditorControlCustomDragFeatureActive {
+    cursor: move;
+}
+
+/**
+ * Transform Feature
+ */
+.olEditorControlEditorCustomPanel .olEditorControlCustomTransformFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlCustomTransformFeatureItemInactive {
+    background-image: url("img/transformFeature.png");
+}
+
+/**
+ * Delete Feature
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDeleteFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDeleteFeatureItemInactive {
+    background-image: url("img/deleteFeature.png");
+}
+
+/**
+ * Delete all Features
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDeleteAllFeaturesItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDeleteAllFeaturesItemInactive {
+    background-image: url("img/deleteAllFeatures.png");
+}
+
+/**
+ * Select Feature
+ */
+.olEditorControlEditorCustomPanel .olControlSelectFeatureItemActive,
+.olEditorControlEditorCustomPanel .olControlSelectFeatureItemInactive {
+    background-image: url("img/selectFeature.png");
+}
+
+
+/**
+ *  Snapping Settings
+ */
+.olEditorControlEditorCustomPanel .olEditorControlSnappingSettingsItemActive {
+    background-image: url("img/snappingActive.png");
+}
+.olEditorControlEditorCustomPanel .olEditorControlSnappingSettingsItemInactive {
+    background-image: url("img/snappingInactive.png");
+}
+
+/**
+ *  Import Feature
+ */
+.olEditorControlEditorCustomPanel .olEditorControlImportFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlImportFeatureItemInactive {
+    background-image: url("img/importFeature.png");
+}
+
+/**
+ *  Draw Hole
+ */
+.olEditorControlEditorCustomPanel .olEditorControlDrawHoleItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlDrawHoleItemInactive {
+    background-image: url("img/drawHole.png");
+}
+
+/**
+ *  Merge Feature
+ */
+.olEditorControlEditorCustomPanel .olEditorControlMergeFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlMergeFeatureItemInactive {
+    background-image: url("img/mergeFeature.png");
+}
+
+/**
+ *  Clean Feature
+ */
+.olEditorControlEditorCustomPanel .olEditorControlCleanFeatureItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlCleanFeatureItemInactive {
+    background-image: url("img/cleanFeature.png");
+}
+
+/**
+ *  CAD Tools
+ */
+.olEditorControlEditorCustomPanel.olEditorCADToolsToolbar {
+    top: 10px;
+    right: 10px;
+    /** Use a fixed width to support IE7, IE9. Other browsers are correctly calculating the width anyway. */
+    width: 60px;
+}
+.olEditorControlEditorCustomPanel .olEditorControlCADToolsItemActive,
+.olEditorControlEditorCustomPanel .olEditorControlCADToolsItemInactive {
+    background-image: url("img/cadTools.png");
+}
+.oleDialog.oleDialogToolbar {
+    top:38px;
+    right:8px;
+    position:absolute;
+}
+
+/**
+ *  Parallel Drawing
+ */
+.olEditorControlEditorCustomPanel .olEditorParallelDrawingActive,
+.olEditorControlEditorCustomPanel .olEditorParallelDrawingInactive {
+    background-image: url("img/parallelDrawing.png");
+}
+
+/**
+ *  Guided Drawing
+ */
+.olEditorControlEditorCustomPanel .olEditorGuidedDrawingActive,
+.olEditorControlEditorCustomPanel .olEditorGuidedDrawingInactive {
+    background-image: url("img/guidedDrawing.png");
+}
+
+.olEditorWaiting {
+    cursor: wait !important;
+}

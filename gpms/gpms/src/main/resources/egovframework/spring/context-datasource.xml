@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd">
+
+	<!--
+	<jdbc:embedded-database id="dataSource" type="HSQL">
+		<jdbc:script location= "classpath:/db/sampledb.sql"/>
+	</jdbc:embedded-database>
+     -->
+
+     <!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${Globals.DriverClassName}"/>
+        <property name="url" value="${Globals.Url}"/>
+        <property name="username" value="${Globals.UserName}"/>
+        <property name="password" value="${Globals.Password}"/>
+    </bean> -->
+
+    <!-- JOY. 2018. 03. 14. MYSql 연결 -->
+    <bean id="dataSourceMySQL" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+        <property name ="driverClassName" value="com.mysql.jdbc.Driver" />
+        <!-- <property name ="url" value="jdbc:mysql://105.0.1.199/gyeonggiums" /> -->
+        <property name ="url" value="${Globals.smsUrl}" />
+        <property name ="username" value="${Globals.smsUserName}" />
+        <property name ="password" value="${Globals.smsPassword}" />
+    </bean>
+
+    <!-- ORACLE -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    destroy-method="close">
+    <property name="driverClassName" value="${Globals.DriverClassName}" />
+    <property name="url" value="${Globals.Url}" />
+    <property name="username" value="${Globals.UserName}" />
+    <property name="password" value="${Globals.Password}" />
+
+	<property name="defaultCatalog" value="GPMS" />
+
+    <property name="defaultAutoCommit" value="true" />
+    <property name="initialSize" value="10" />
+    <property name="maxActive" value="50" />
+    <property name="maxIdle" value="50" />
+    <property name="minIdle" value="50" />
+    <property name="maxWait" value="60000" />
+    <property name="validationQuery" value=" SELECT 1 RNO FROM DUAL" />
+    <property name="testOnBorrow" value="true" />
+    <property name="testOnReturn" value="false" />
+    <property name="testWhileIdle" value="true" />
+    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+    <property name="removeAbandonedTimeout" value="60" />
+    <property name="removeAbandoned" value="true" />
+    <property name="poolPreparedStatements" value="true" />
+    <property name="logAbandoned" value="true" />
+    <property name="connectionProperties" value="v$session.program=GPMS" />
+
+
+    </bean>
+
+</beans>

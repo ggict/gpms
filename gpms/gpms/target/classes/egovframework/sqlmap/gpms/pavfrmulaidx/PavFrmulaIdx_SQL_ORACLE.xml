@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="pavFrmulaIdxDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="pavFrmulaIdxSerarchVO" type="kr.go.gg.gpms.pavfrmulaidx.service.model.PavFrmulaIdxDefaultVO"/>
+	<typeAlias alias="pavFrmulaIdxVO"	type="kr.go.gg.gpms.pavfrmulaidx.service.model.PavFrmulaIdxVO" />
+
+	<resultMap id="pavFrmulaIdx.resultMap"
+		class="pavFrmulaIdxVO">
+		<result property="IDX_NO" column="IDX_NO" columnIndex="1" /> <!-- 포장_수식_지수.지수_번호 -->
+		<result property="FRMULA_NO" column="FRMULA_NO" columnIndex="2" /> <!-- 포장_수식_지수.수식_번호 -->
+		<result property="IDX_NM" column="IDX_NM" columnIndex="3" /> <!-- 포장_수식_지수.지수_명 -->
+		<result property="IDX_VAL" column="IDX_VAL" columnIndex="4" /> <!-- 포장_수식_지수.지수_값 -->
+		<result property="DC" column="DC" columnIndex="5" /> <!-- 포장_수식_지수.설명 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="6" /> <!-- 포장_수식_지수.삭제_여부 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="7" /> <!-- 포장_수식_지수.사용_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="8" /> <!-- 포장_수식_지수.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="9" /> <!-- 포장_수식_지수.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="10" /> <!-- 포장_수식_지수.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="11" /> <!-- 포장_수식_지수.수정_일시 -->
+	</resultMap>
+
+	<insert id="pavFrmulaIdxDAO.insertPavFrmulaIdx">
+			<selectKey resultClass="String" keyProperty="IDX_NO">
+  <![CDATA[
+  select SEQ_TN_PAV_FRMULA_IDX.NEXTVAL from dual
+  ]]>
+  </selectKey>
+	<![CDATA[ 
+		/* pavFrmulaIdxDAO.insertPavFrmulaIdx */
+		/* 포장_수식_지수 등록 */		
+		INSERT INTO TN_PAV_FRMULA_IDX (
+			IDX_NO /* 포장_수식_지수.지수_번호 */
+			, FRMULA_NO /* 포장_수식_지수.수식_번호 */
+			, IDX_NM /* 포장_수식_지수.지수_명 */
+			, IDX_VAL /* 포장_수식_지수.지수_값 */
+			, DC /* 포장_수식_지수.설명 */
+			, DELETE_AT /* 포장_수식_지수.삭제_여부 */
+			, USE_AT /* 포장_수식_지수.사용_여부 */
+			, CRTR_NO /* 포장_수식_지수.생성자_번호 */
+			, CREAT_DT /* 포장_수식_지수.생성_일시 */
+			, UPDUSR_NO /* 포장_수식_지수.수정자_번호 */
+			, UPDT_DT /* 포장_수식_지수.수정_일시 */
+		) VALUES (
+			#IDX_NO# /* 포장_수식_지수.지수_번호 */
+			, #FRMULA_NO# /* 포장_수식_지수.수식_번호 */
+			, #IDX_NM# /* 포장_수식_지수.지수_명 */
+			, #IDX_VAL# /* 포장_수식_지수.지수_값 */
+			, #DC# /* 포장_수식_지수.설명 */
+			, #DELETE_AT# /* 포장_수식_지수.삭제_여부 */
+			, #USE_AT# /* 포장_수식_지수.사용_여부 */
+			, #CRTR_NO# /* 포장_수식_지수.생성자_번호 */
+			, SYSDATE /* 포장_수식_지수.생성_일시 */
+			, #UPDUSR_NO# /* 포장_수식_지수.수정자_번호 */
+			, SYSDATE /* 포장_수식_지수.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="pavFrmulaIdxDAO.updatePavFrmulaIdx">
+	<![CDATA[ 
+		/* pavFrmulaIdxDAO.updatePavFrmulaIdx */
+		/* 포장_수식_지수 수정 */
+		UPDATE TN_PAV_FRMULA_IDX SET
+
+
+
+FRMULA_NO = #FRMULA_NO# /* 포장_수식_지수.수식_번호 */
+			
+
+, IDX_NM = #IDX_NM# /* 포장_수식_지수.지수_명 */
+			
+
+, IDX_VAL = #IDX_VAL# /* 포장_수식_지수.지수_값 */
+			
+
+, DC = #DC# /* 포장_수식_지수.설명 */
+			
+
+, DELETE_AT = #DELETE_AT# /* 포장_수식_지수.삭제_여부 */
+			
+
+, USE_AT = #USE_AT# /* 포장_수식_지수.사용_여부 */
+			
+
+, CRTR_NO = #CRTR_NO# /* 포장_수식_지수.생성자_번호 */
+			
+
+, CREAT_DT = SYSDATE /* 포장_수식_지수.생성_일시 */
+			
+
+, UPDUSR_NO = #UPDUSR_NO# /* 포장_수식_지수.수정자_번호 */
+			
+
+, UPDT_DT = SYSDATE /* 포장_수식_지수.수정_일시 */
+			
+		WHERE 1 = 1
+		AND IDX_NO = #IDX_NO# /* 포장_수식_지수.지수_번호 */
+]]>
+	</update>
+
+	<delete id="pavFrmulaIdxDAO.deletePavFrmulaIdx">
+	<![CDATA[ 
+		/* pavFrmulaIdxDAO.deletePavFrmulaIdx */
+		/* 포장_수식_지수 삭제 */
+		DELETE FROM TN_PAV_FRMULA_IDX 
+		WHERE 1 = 1
+		AND IDX_NO = #IDX_NO# /* 포장_수식_지수.지수_번호 */
+]]>
+	</delete>
+
+	<select id="pavFrmulaIdxDAO.selectPavFrmulaIdx" resultClass="pavFrmulaIdxVO">
+	<![CDATA[ 
+		/* pavFrmulaIdxDAO.selectPavFrmulaIdx */
+		/* 포장_수식_지수 조회 */
+		SELECT
+			tnpavfrmulaidx.IDX_NO /* 포장_수식_지수.지수_번호 */
+			, tnpavfrmulaidx.FRMULA_NO /* 포장_수식_지수.수식_번호 */
+			, tnpavfrmulaidx.IDX_NM /* 포장_수식_지수.지수_명 */
+			, tnpavfrmulaidx.IDX_VAL /* 포장_수식_지수.지수_값 */
+			, tnpavfrmulaidx.DC /* 포장_수식_지수.설명 */
+			, tnpavfrmulaidx.DELETE_AT /* 포장_수식_지수.삭제_여부 */
+			, tnpavfrmulaidx.USE_AT /* 포장_수식_지수.사용_여부 */
+			, tnpavfrmulaidx.CRTR_NO /* 포장_수식_지수.생성자_번호 */
+			, tnpavfrmulaidx.CREAT_DT /* 포장_수식_지수.생성_일시 */
+			, tnpavfrmulaidx.UPDUSR_NO /* 포장_수식_지수.수정자_번호 */
+			, tnpavfrmulaidx.UPDT_DT /* 포장_수식_지수.수정_일시 */
+		FROM TN_PAV_FRMULA_IDX tnpavfrmulaidx
+		WHERE 1 = 1
+		AND tnpavfrmulaidx.IDX_NO = #IDX_NO# /* 포장_수식_지수.지수_번호 */
+]]>
+	</select>
+
+	<sql id="pavFrmulaIdxDAO.selectPavFrmulaIdxList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnpavfrmulaidx.IDX_NO = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnpavfrmulaidx.FRMULA_NO LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="IDX_NO"><![CDATA[ /* 포장_수식_지수.지수_번호 */ AND tnpavfrmulaidx.IDX_NO = #IDX_NO# ]]></isNotEmpty>
+		<isNotEmpty property="FRMULA_NO"><![CDATA[ /* 포장_수식_지수.수식_번호 */ AND tnpavfrmulaidx.FRMULA_NO = #FRMULA_NO# ]]></isNotEmpty>
+		<isNotEmpty property="IDX_NM"><![CDATA[ /* 포장_수식_지수.지수_명 */ AND tnpavfrmulaidx.IDX_NM = #IDX_NM# ]]></isNotEmpty>
+		<isNotEmpty property="IDX_VAL"><![CDATA[ /* 포장_수식_지수.지수_값 */ AND tnpavfrmulaidx.IDX_VAL = #IDX_VAL# ]]></isNotEmpty>
+		<isNotEmpty property="DC"><![CDATA[ /* 포장_수식_지수.설명 */ AND tnpavfrmulaidx.DC = #DC# ]]></isNotEmpty>
+		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 포장_수식_지수.삭제_여부 */ AND tnpavfrmulaidx.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="USE_AT"><![CDATA[ /* 포장_수식_지수.사용_여부 */ AND tnpavfrmulaidx.USE_AT = #USE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장_수식_지수.생성자_번호 */ AND tnpavfrmulaidx.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 포장_수식_지수.생성_일시 */ AND tnpavfrmulaidx.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장_수식_지수.수정자_번호 */ AND tnpavfrmulaidx.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 포장_수식_지수.수정_일시 */ AND tnpavfrmulaidx.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="pavFrmulaIdxDAO.selectPavFrmulaIdxListPage"
+		parameterClass="pavFrmulaIdxVO"
+		resultClass="pavFrmulaIdxVO">
+<![CDATA[ 		
+		/* pavFrmulaIdxDAO.selectPavFrmulaIdxListPage */
+		/* 포장_수식_지수 조회(페이징) */
+		WITH tnpavfrmulaidx AS
+		(
+		SELECT	
+				tnpavfrmulaidx.IDX_NO /* 포장_수식_지수.지수_번호 */
+				, tnpavfrmulaidx.FRMULA_NO /* 포장_수식_지수.수식_번호 */
+				, tnpavfrmulaidx.IDX_NM /* 포장_수식_지수.지수_명 */
+				, tnpavfrmulaidx.IDX_VAL /* 포장_수식_지수.지수_값 */
+				, tnpavfrmulaidx.DC /* 포장_수식_지수.설명 */
+				, tnpavfrmulaidx.DELETE_AT /* 포장_수식_지수.삭제_여부 */
+				, tnpavfrmulaidx.USE_AT /* 포장_수식_지수.사용_여부 */
+				, tnpavfrmulaidx.CRTR_NO /* 포장_수식_지수.생성자_번호 */
+				, tnpavfrmulaidx.CREAT_DT /* 포장_수식_지수.생성_일시 */
+				, tnpavfrmulaidx.UPDUSR_NO /* 포장_수식_지수.수정자_번호 */
+				, tnpavfrmulaidx.UPDT_DT /* 포장_수식_지수.수정_일시 */
+			
+			FROM TN_PAV_FRMULA_IDX tnpavfrmulaidx
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tnpavfrmulaidx.IDX_NO = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tnpavfrmulaidx.FRMULA_NO LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="IDX_NO">
+				<![CDATA[
+					/* 포장_수식_지수.지수_번호 */
+					AND tnpavfrmulaidx.IDX_NO = #IDX_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="FRMULA_NO">
+				<![CDATA[
+					/* 포장_수식_지수.수식_번호 */
+					AND tnpavfrmulaidx.FRMULA_NO = #FRMULA_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="IDX_NM">
+				<![CDATA[
+					/* 포장_수식_지수.지수_명 */
+					AND tnpavfrmulaidx.IDX_NM = #IDX_NM#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="IDX_VAL">
+				<![CDATA[
+					/* 포장_수식_지수.지수_값 */
+					AND tnpavfrmulaidx.IDX_VAL = #IDX_VAL#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DC">
+				<![CDATA[
+					/* 포장_수식_지수.설명 */
+					AND tnpavfrmulaidx.DC = #DC#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 포장_수식_지수.삭제_여부 */
+					AND tnpavfrmulaidx.DELETE_AT = #DELETE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 포장_수식_지수.사용_여부 */
+					AND tnpavfrmulaidx.USE_AT = #USE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 포장_수식_지수.생성자_번호 */
+					AND tnpavfrmulaidx.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 포장_수식_지수.생성_일시 */
+					AND tnpavfrmulaidx.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 포장_수식_지수.수정자_번호 */
+					AND tnpavfrmulaidx.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 포장_수식_지수.수정_일시 */
+					AND tnpavfrmulaidx.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tnpavfrmulaidx.* FROM
+		(
+		SELECT 
+										tnpavfrmulaidx.IDX_NO /* 포장_수식_지수.지수_번호 */
+											, tnpavfrmulaidx.FRMULA_NO /* 포장_수식_지수.수식_번호 */
+											, tnpavfrmulaidx.IDX_NM /* 포장_수식_지수.지수_명 */
+											, tnpavfrmulaidx.IDX_VAL /* 포장_수식_지수.지수_값 */
+											, tnpavfrmulaidx.DC /* 포장_수식_지수.설명 */
+											, tnpavfrmulaidx.DELETE_AT /* 포장_수식_지수.삭제_여부 */
+											, tnpavfrmulaidx.USE_AT /* 포장_수식_지수.사용_여부 */
+											, tnpavfrmulaidx.CRTR_NO /* 포장_수식_지수.생성자_번호 */
+											, tnpavfrmulaidx.CREAT_DT /* 포장_수식_지수.생성_일시 */
+											, tnpavfrmulaidx.UPDUSR_NO /* 포장_수식_지수.수정자_번호 */
+											, tnpavfrmulaidx.UPDT_DT /* 포장_수식_지수.수정_일시 */
+						/* 포장_수식_지수.지수_번호 */
+			/* 포장_수식_지수.수식_번호 */
+			, ROW_NUMBER() OVER( ORDER BY tnpavfrmulaidx.IDX_NO ASC, tnpavfrmulaidx.FRMULA_NO DESC )  ROW_NO
+			FROM  tnpavfrmulaidx
+			WHERE 1=1
+		)  tnpavfrmulaidx
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tnpavfrmulaidx.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tnpavfrmulaidx.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="pavFrmulaIdxDAO.selectPavFrmulaIdxList"
+		parameterClass="pavFrmulaIdxVO"
+		resultClass="pavFrmulaIdxVO">
+<![CDATA[ 		
+		/* pavFrmulaIdxDAO.selectPavFrmulaIdxList */
+		/* 포장_수식_지수 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tnpavfrmulaidx.IDX_NO /* 포장_수식_지수.지수_번호 */
+				, tnpavfrmulaidx.FRMULA_NO /* 포장_수식_지수.수식_번호 */
+				, tnpavfrmulaidx.IDX_NM /* 포장_수식_지수.지수_명 */
+				, tnpavfrmulaidx.IDX_VAL /* 포장_수식_지수.지수_값 */
+				, tnpavfrmulaidx.DC /* 포장_수식_지수.설명 */
+				, tnpavfrmulaidx.DELETE_AT /* 포장_수식_지수.삭제_여부 */
+				, tnpavfrmulaidx.USE_AT /* 포장_수식_지수.사용_여부 */
+				, tnpavfrmulaidx.CRTR_NO /* 포장_수식_지수.생성자_번호 */
+				, tnpavfrmulaidx.CREAT_DT /* 포장_수식_지수.생성_일시 */
+				, tnpavfrmulaidx.UPDUSR_NO /* 포장_수식_지수.수정자_번호 */
+				, tnpavfrmulaidx.UPDT_DT /* 포장_수식_지수.수정_일시 */
+			FROM TN_PAV_FRMULA_IDX tnpavfrmulaidx
+]]>
+	<include refid="pavFrmulaIdxDAO.selectPavFrmulaIdxList.where" />	
+<![CDATA[
+		ORDER BY 
+				tnpavfrmulaidx.IDX_NO DESC /* 포장_수식_지수.지수_번호 */  
+		) tb) tnpavfrmulaidx  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="pavFrmulaIdxDAO.selectPavFrmulaIdxListTotalCount"
+		parameterClass="pavFrmulaIdxVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* pavFrmulaIdxDAO.selectPavFrmulaIdxListTotalCount */
+		/* 포장_수식_지수 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_PAV_FRMULA_IDX tnpavfrmulaidx
+]]>		
+		<include refid="pavFrmulaIdxDAO.selectPavFrmulaIdxList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>

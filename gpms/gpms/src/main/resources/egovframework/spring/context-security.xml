@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	<!--
+	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	 -->
+	<beans:bean id="passwordEncoder" class="egovframework.security.crypto.password.SHAPasswordEncoder">
+	<beans:constructor-arg  name="sha" value="512"></beans:constructor-arg>
+	<beans:property name="encodeHashAsBase64" value="true"></beans:property>
+	</beans:bean>
+
+	<beans:bean id="accessDeniedHandler"
+		class="egovframework.security.service.impl.CustomAccessDeniedHandler">
+		<beans:property name="accessDeniedUrl" value="/gpms/accessDenied.do" />
+	</beans:bean>
+
+	<beans:bean id="customAuthenticationProvider"
+		class="egovframework.security.service.impl.CustomAuthenticationProvider" />
+
+	<beans:bean id="customLogoutHandler"
+		class="egovframework.security.service.impl.CustomLogoutHandler">
+		<beans:property name="defaultTargetUrl" value="/logoutok.do" />
+	</beans:bean>
+
+	<beans:bean id="sessionRegistry"
+   		 class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+	<!-- -->
+	<http pattern="/css/**" security="none" />
+	<http pattern="/images/**" security="none" />
+	<http pattern="/js/**" security="none" />
+	<http pattern="/extLib/**" security="none" />
+	<http pattern="/template/**" security="none" />
+	<http pattern="/sessioncheck.do" security="none" />
+	<http pattern="/userauth/checkAuth.do" security="none" />
+
+	<http auto-config="true" use-expressions="true">
+		<form-login authentication-failure-url="/loginFail.do"
+			default-target-url="/loginSuccess.do" login-page="/main.do"
+			login-processing-url="/loginProcess.do" username-parameter="userid"
+			password-parameter="userpwd" />
+
+		<intercept-url pattern="/manage/*/*.do" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/manage/*/*.do" access="ROLE_ADMIN" />
+		<intercept-url pattern="/manage/*/*/*.do" access="ROLE_ADMIN" />
+		<intercept-url pattern="/manage/*.do" access="ROLE_ADMIN" />
+<!--
+
+ -->
+		<intercept-url pattern="/updateSampleView.do" access="ROLE_USER" />
+
+		<anonymous granted-authority="ANONYMOUS" />
+		<intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<logout logout-url="/logout.do" invalidate-session="false" success-handler-ref="customLogoutHandler" delete-cookies="JSESSIONID" />
+
+		<!-- <session-management>
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true"
+				expired-url="/login_duplicate.do" session-registry-alias="sessionRegistry" />
+		</session-management> -->
+
+		<access-denied-handler ref="accessDeniedHandler" />
+
+		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="filterSecurityInterceptor"/>
+		<!--  -->
+	</http>
+<!--
+	<beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+ -->
+
+	<authentication-manager>
+		<authentication-provider ref="customAuthenticationProvider" />
+		<!--  <password-encoder ref="bcryptPasswordEncoder" />
+		암호화 처리해야함.
+		-->
+	</authentication-manager>
+
+
+	<beans:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="org.springframework.security.authenticationManager" />
+		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+		<beans:property name="securityMetadataSource" ref="reloadableFilterInvocationSecurityMetadataSource" />
+	</beans:bean>
+
+
+	<beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<beans:constructor-arg>
+			<beans:list>
+				<beans:bean class="org.springframework.security.access.vote.RoleVoter">
+					<beans:property name="rolePrefix" value="" />
+				</beans:bean>
+			</beans:list>
+		</beans:constructor-arg>
+		<beans:property name="allowIfAllAbstainDecisions" value="false" />
+	</beans:bean>
+
+	<beans:bean id="reloadableFilterInvocationSecurityMetadataSource" class="egovframework.security.service.impl.ReloadableFilterInvocationSecurityMetadataSource">
+		<beans:constructor-arg ref="requestMap" />
+		<beans:property name="securedObjectService" ref="securedObjectService" />
+	</beans:bean>
+	<beans:bean id="securedObjectService" class="egovframework.security.service.impl.SecuredObjectServiceImpl">
+		<beans:property name="secureObjectDao" ref="securedObjectDao" />
+	</beans:bean>
+
+	<beans:bean id="securedObjectDao" class="egovframework.security.service.impl.SecuredObjectDao">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="sqlRolesAndUrl" value="
+			SELECT
+            tnauthority.AUTHOR_ID AS AUTHORITY
+            , LOWER(tnmenu.URL) URL
+        FROM TN_AUTHORITY tnauthority
+        INNER JOIN TN_ROLE_MENU tnrolemenu
+        ON tnrolemenu.AUTHOR_ID = tnauthority.AUTHOR_ID/* 권한역할메뉴.권한_ID */
+        AND tnrolemenu.DELETE_AT ='N' /* 권한그룹.삭제_여부 */
+        INNER JOIN TN_MENU tnmenu
+        ON tnmenu.MENU_ID = tnrolemenu.MENU_ID  /* 시스템메뉴.메뉴_ID */
+        AND tnmenu.USE_AT ='Y' /* 시스템메뉴.사용_여부 */
+        AND tnmenu.DELETE_AT ='N' /* 시스템메뉴.삭제_여부 */
+        WHERE 1 = 1
+        AND tnauthority.USE_AT ='Y' /* 권한그룹.사용_여부 */
+        AND tnauthority.DELETE_AT ='N' /* 권한그룹.삭제_여부 */
+        ORDER BY tnmenu.URL ASC
+    	" />
+	</beans:bean>
+	<beans:bean id="requestMap" class="egovframework.security.service.impl.UrlResourcesMapFactoryBean" init-method="init">
+		<beans:property name="securedObjectService" ref="securedObjectService" />
+	</beans:bean>
+	<beans:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+
+	<!-- <beans:bean
+		class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" /> -->
+</beans:beans>
+

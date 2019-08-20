@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="cmptncDAO">
+
+    <typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+    <typeAlias alias="cmptncVO" type="kr.go.gg.gpms.pothole.cmptnc.service.model.CmptncVO" />
+
+    <resultMap id="cmptncVO.resultMap" class="cmptncVO">
+        <result property="G2_ID"        column="G2_ID"         columnIndex="1"  /> <!-- G2_ID -->
+        <result property="CPT_MNG_NO"   column="CPT_MNG_NO"    columnIndex="2"  /> <!-- 노선_관리_번호 -->
+        <result property="ROAD_GRAD"    column="ROAD_GRAD"     columnIndex="3"  /> <!-- 도로_등급    -->
+        <result property="ROUTE_NO"     column="ROUTE_NO"      columnIndex="4"  /> <!-- 노선_번호    -->
+        <result property="ROUTE_NM"     column="ROUTE_NM"      columnIndex="5"  /> <!-- 노선_명     -->
+        <result property="STRTPT_NM"    column="STRTPT_NM"     columnIndex="6"  /> <!-- 시점_명     -->
+        <result property="ENDPT_NM"     column="ENDPT_NM"      columnIndex="7"  /> <!-- 종점_명     -->
+        <result property="DEPT_CODE"    column="DEPT_CODE"     columnIndex="8"  /> <!-- 관할_기관    -->
+        <result property="CHARGER_NM"   column="CHARGER_NM"    columnIndex="9"  /> <!-- 담당자_명    -->
+        <result property="CTTPC"        column="CTTPC"         columnIndex="10" /> <!-- 연락처      -->
+        <result property="LEN"          column="LEN"           columnIndex="11" /> <!-- 연장       -->
+        <result property="AR"           column="AR"            columnIndex="12" /> <!-- 면적       -->
+        <result property="POC_MNG_NO"   column="POC_MNG_NO"    columnIndex="13" /> <!-- 담당자_관리_번호      -->
+        <result property="LOWEST_DEPT_NM"   column="LOWEST_DEPT_NM"    columnIndex="14" /> <!-- 담당자_부서_명      -->
+    </resultMap>
+
+
+    <!-- YYK. 관할노선 목록 조회 -->
+    <select id="cmptncDAO.selectCmptncList" parameterClass="cmptncVO" resultClass="cmptncVO">
+    <![CDATA[
+    /* cmptncDAO.selectCmptncList */
+    /* 관할_노선 목록 조회 */
+    SELECT * FROM (
+	    SELECT tb.*
+	           ,ROW_NUMBER() OVER (ORDER BY $sidx$ $sord$) rnum
+	    FROM (
+	        SELECT tb.*
+	               ,FN_GET_LIST_G2_ID(DEPT_CODE) G2_ID
+	               ,rownum as deptnum
+	          FROM (
+	            SELECT
+	                dept.DEPT_CODE
+	                , (CASE WHEN dept.DEPT_CODE > '7000300'  AND dept.DEPT_CODE  < '7000400'
+	                        THEN CONCAT( '민자도로사업자',  ' ('|| dept.LOWEST_DEPT_NM || ')' )
+	                        WHEN (dept.DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || dept.LOWEST_DEPT_NM
+				            WHEN (dept.DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || dept.LOWEST_DEPT_NM
+				            WHEN (dept.DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || dept.LOWEST_DEPT_NM
+				            WHEN (dept.DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || dept.LOWEST_DEPT_NM
+				            WHEN (dept.DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || dept.LOWEST_DEPT_NM
+				            WHEN (dept.DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || dept.LOWEST_DEPT_NM
+				            WHEN (dept.DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || dept.LOWEST_DEPT_NM
+				            WHEN (dept.DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || dept.LOWEST_DEPT_NM
+	                        ELSE dept.LOWEST_DEPT_NM
+	                    END) AS LOWEST_DEPT_NM
+	                , cmptnczone.CHARGER_NM
+	                , cmptnczone.CTTPC
+	                , NVL(cmptnczone.AR, 0) AS AR
+	            FROM
+	                ( SELECT DEPT_CODE, LOWEST_DEPT_NM
+	                  FROM TC_DEPT
+	                  WHERE 1=1
+	                      AND ( DEPT_CODE > 7000000 AND DEPT_CODE != 7000300 )
+	                      OR ( DEPT_CODE < 6410000 AND ODR = 2 )
+	                      OR (DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+				              ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+	                      OR ( DEPT_CODE IN (6411399, 6411799))
+	                ) dept
+	                LEFT OUTER JOIN
+	                ( SELECT
+	                        cmptnczone.DEPT_CODE
+	                        , ( SELECT tcdept.LOWEST_DEPT_NM
+	                            FROM TC_DEPT tcdept
+	                            WHERE cmptnczone.DEPT_CODE = tcdept.DEPT_CODE
+	                        ) LOWEST_DEPT_NM
+	                        , cmptnczone.CHARGER_NM
+	                        , cmptnczone.CTTPC
+	                        , SUM(AR) AS AR
+	                    FROM CMPTNC_ZONE cmptnczone
+	                    WHERE 1=1
+	                    GROUP BY cmptnczone.DEPT_CODE, cmptnczone.CHARGER_NM, cmptnczone.CTTPC
+	                ) cmptnczone
+
+	                ON cmptnczone.DEPT_CODE = dept.DEPT_CODE
+	                WHERE 1=1
+	        ]]>
+	        <isNotEmpty property="DEPT_CODE">
+            <![CDATA[       /* 7000300 으로 조회했을 경우 */
+                            AND ((#DEPT_CODE# = '7000300' AND dept.DEPT_CODE > '7000300' AND dept.DEPT_CODE < '7000400')
+                                  /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+		                          OR (#DEPT_CODE# = '3740000' AND dept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+		                          OR (#DEPT_CODE# = '3940000' AND dept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+		                          OR (#DEPT_CODE# = '4050000' AND dept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+		                          OR (#DEPT_CODE# = '3780000' AND dept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+		                          OR (#DEPT_CODE# = '3930000' AND dept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+		                          OR (#DEPT_CODE# = '3830000' AND dept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+		                          OR (#DEPT_CODE# = '5530000' AND dept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+		                          OR (#DEPT_CODE# = '3910000' AND dept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+		                          OR (#DEPT_CODE# != '7000300' AND dept.DEPT_CODE = #DEPT_CODE# ) )
+            ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_CHARGER_NM"><![CDATA[   AND  cmptnczone.CHARGER_NM LIKE '%' || #SCH_CHARGER_NM# || '%'  ]]></isNotEmpty>
+            <![CDATA[
+	                ORDER BY DECODE(LOWEST_DEPT_NM
+	                            , '수원시', 1
+					            , '수원시 장안구', 2
+					            , '수원시 권선구', 3
+					            , '수원시 팔달구', 4
+					            , '수원시 영통구', 5
+					            , '고양시', 6
+					            , '고양시 덕양구', 7
+					            , '고양시 일산동구', 8
+					            , '고양시 일산서구', 9
+					            , '용인시', 10
+					            , '용인시 처인구', 11
+					            , '용인시 기흥구', 12
+					            , '용인시 수지구', 13
+					            , '성남시', 14
+					            , '성남시 수정구', 15
+					            , '성남시 중원구', 16
+					            , '성남시 분당구', 17
+					            , '부천시', 18
+					            , '안산시', 19
+					            , '안산시 상록구', 20
+					            , '안산시 단원구', 21
+					            , '화성시', 22
+					            , '화성시청', 23
+					            , '화성시 동부출장소', 24
+					            , '화성시 동탄출장소', 25
+					            , '남양주시', 26
+					            , '안양시', 27
+					            , '안양시 만안구', 28
+					            , '안양시 동안구', 29
+					            , '평택시', 30
+					            , '평택시청', 31
+					            , '평택시 송탄출장소', 32
+					            , '평택시 안중출장소', 33
+					            , '의정부시', 34
+					            , '파주시', 35
+					            , '시흥시', 36
+					            , '김포시', 37
+					            , '광명시', 38
+					            , '광주시', 39
+					            , '군포시', 40
+					            , '이천시', 41
+					            , '오산시', 42
+					            , '하남시', 43
+					            , '양주시', 44
+					            , '구리시', 45
+					            , '안성시', 46
+					            , '포천시', 47
+					            , '의왕시', 48
+					            , '여주시', 49
+					            , '양평군', 50
+					            , '동두천시',51
+					            , '과천시', 52
+					            , '가평군', 53
+					            , '연천군', 54
+	                       ), DEPT_CODE
+            ]]>
+    <isEqual prepend="  " property="usePage" compareValue="true">
+    <![CDATA[
+            ) tb
+        ) tb
+    ) tb
+    WHERE rnum BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+    ]]>
+    </isEqual>
+
+    </select>
+
+
+<!--
+SELECT *
+    FROM (
+            SELECT
+                ROW_NUMBER() OVER (ORDER BY $sidx$ $sord$) rnum
+                , tb.*
+            FROM (
+                SELECT
+                    cmptnczone.DEPT_CODE           /* 포트홀_관할구역검색.부서코드 */
+                    , (SELECT (CASE WHEN DEPT_CODE > '7000300'  AND DEPT_CODE  < '7000400'
+                                     THEN CONCAT('(민자도로사업자)  ', LOWEST_DEPT_NM)
+                                     ELSE LOWEST_DEPT_NM
+                                END)
+                         FROM TC_DEPT tcdept
+                        WHERE tcdept.DEPT_CODE = cmptnczone.DEPT_CODE
+                      ) AS LOWEST_DEPT_NM           /* 포트홀_관할구역검색.관할구역 */
+                    , cmptnczone.CHARGER_NM        /* 포트홀_관할구역검색.담당자 */
+                    , cmptnczone.CTTPC             /* 포트홀_관할구역검색.연락처 */
+                    , SUM(AR) AS AR                 /* 포트홀_관할구역검색.면적 */
+                FROM CMPTNC_ZONE cmptnczone
+                WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="DEPT_CODE">
+    <![CDATA[       /* 7000300 으로 조회했을 경우 */
+                    AND ((#DEPT_CODE# = '7000300' AND cmptnczone.DEPT_CODE > '7000300' AND cmptnczone.DEPT_CODE < '7000400')
+                          OR (#DEPT_CODE# != '7000300' AND cmptnczone.DEPT_CODE = #DEPT_CODE# ) )
+    ]]>
+    </isNotEmpty>
+
+    <isNotEmpty property="SCH_CHARGER_NM"><![CDATA[   AND  cmptnczone.CHARGER_NM LIKE '%' || #SCH_CHARGER_NM# || '%'  ]]></isNotEmpty>
+    <![CDATA[
+                GROUP BY
+                    cmptnczone.DEPT_CODE
+                    , cmptnczone.CHARGER_NM
+                    , cmptnczone.CTTPC
+            ) tb
+    )
+    ]]>
+    <isEqual prepend="  " property="usePage" compareValue="true">
+    <![CDATA[
+    WHERE rnum BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+    ]]>
+    </isEqual>
+ -->
+
+
+
+    <select id="cmptncDAO.selectCmptncListTotalCount" parameterClass="cmptncVO" resultClass="Integer">
+    <![CDATA[
+    /* cmptncDAO.selectCmptncListTotalCount */
+    /* 관할_노선 총 수를 조회 */
+    SELECT COUNT(*)
+    FROM (
+        SELECT tb.*
+               ,ROWNUM rnum
+          FROM (
+            SELECT
+                dept.DEPT_CODE
+                , (CASE WHEN dept.DEPT_CODE > '7000300'  AND dept.DEPT_CODE  < '7000400'
+                        THEN CONCAT( '민자도로사업자',  ' ('|| dept.LOWEST_DEPT_NM || ')' )
+                        WHEN (dept.DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || dept.LOWEST_DEPT_NM
+                        WHEN (dept.DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || dept.LOWEST_DEPT_NM
+                        WHEN (dept.DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || dept.LOWEST_DEPT_NM
+                        WHEN (dept.DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || dept.LOWEST_DEPT_NM
+                        WHEN (dept.DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || dept.LOWEST_DEPT_NM
+                        WHEN (dept.DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || dept.LOWEST_DEPT_NM
+                        WHEN (dept.DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || dept.LOWEST_DEPT_NM
+                        WHEN (dept.DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || dept.LOWEST_DEPT_NM
+                        ELSE dept.LOWEST_DEPT_NM
+                    END) AS LOWEST_DEPT_NM
+                , cmptnczone.CHARGER_NM
+                , cmptnczone.CTTPC
+                , NVL(cmptnczone.AR, 0) AS AR
+            FROM
+                ( SELECT DEPT_CODE, LOWEST_DEPT_NM
+                  FROM TC_DEPT
+                  WHERE 1=1
+                      AND ( DEPT_CODE > 7000000 AND DEPT_CODE != 7000300 )
+                      OR ( DEPT_CODE < 6410000 AND ODR = 2 )
+                      OR (DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+			              ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+			              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+			              ,'3850000','3840000'  /* 안양시 구 추가 */
+			              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+			              ,'5550000','5560000'  /* 안산시 구 추가 */
+			              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+			              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                      OR ( DEPT_CODE IN (6411399, 6411799))
+                ) dept
+                LEFT OUTER JOIN
+                ( SELECT
+                        cmptnczone.DEPT_CODE
+                        , ( SELECT tcdept.LOWEST_DEPT_NM
+                            FROM TC_DEPT tcdept
+                            WHERE cmptnczone.DEPT_CODE = tcdept.DEPT_CODE
+                        ) LOWEST_DEPT_NM
+                        , cmptnczone.CHARGER_NM
+                        , cmptnczone.CTTPC
+                        , SUM(AR) AS AR
+                    FROM CMPTNC_ZONE cmptnczone
+                    WHERE 1=1
+                    GROUP BY cmptnczone.DEPT_CODE, cmptnczone.CHARGER_NM, cmptnczone.CTTPC
+                    ORDER BY DEPT_CODE ASC
+                ) cmptnczone
+
+                ON cmptnczone.DEPT_CODE = dept.DEPT_CODE
+                WHERE 1=1
+            ]]>
+            <isNotEmpty property="DEPT_CODE">
+            <![CDATA[       /* 7000300 으로 조회했을 경우 */
+                            AND ((#DEPT_CODE# = '7000300' AND dept.DEPT_CODE > '7000300' AND dept.DEPT_CODE < '7000400')
+                                  /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+		                          OR (#DEPT_CODE# = '3740000' AND dept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+		                          OR (#DEPT_CODE# = '3940000' AND dept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+		                          OR (#DEPT_CODE# = '4050000' AND dept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+		                          OR (#DEPT_CODE# = '3780000' AND dept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+		                          OR (#DEPT_CODE# = '3930000' AND dept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+		                          OR (#DEPT_CODE# = '3830000' AND dept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+		                          OR (#DEPT_CODE# = '5530000' AND dept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                                  OR (#DEPT_CODE# = '3910000' AND dept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+		                          OR (#DEPT_CODE# != '7000300' AND dept.DEPT_CODE = #DEPT_CODE# ) )
+            ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_CHARGER_NM"><![CDATA[   AND  cmptnczone.CHARGER_NM LIKE '%' || #SCH_CHARGER_NM# || '%'  ]]></isNotEmpty>
+    <isEqual prepend="  " property="usePage" compareValue="true">
+    <![CDATA[
+            ) tb
+        ) tb
+    ]]>
+    </isEqual>
+
+
+    </select>
+
+    <!-- YYK. 천단위 콤마 추가 -->
+    <select id="cmptncDAO.selectCmptncListExcel" parameterClass="cmptncVO" resultClass="hashmap">
+    <![CDATA[
+    /* cmptncDAO.selectCmptncListExcel */
+    /* 관할_노선 목록을 엑셀로 저장 */
+    SELECT * FROM (
+        SELECT tb.*
+               ,ROW_NUMBER() OVER (ORDER BY $sidx$ $sord$) rnum
+        FROM (
+            SELECT tb.*
+                   ,FN_GET_LIST_G2_ID(DEPT_CODE) G2_ID
+                   ,rownum as deptnum
+              FROM (
+                SELECT
+                    dept.DEPT_CODE
+                    , (CASE WHEN dept.DEPT_CODE > '7000300'  AND dept.DEPT_CODE  < '7000400'
+                            THEN CONCAT( '민자도로사업자',  ' ('|| dept.LOWEST_DEPT_NM || ')' )
+                            WHEN (dept.DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || dept.LOWEST_DEPT_NM
+	                        WHEN (dept.DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || dept.LOWEST_DEPT_NM
+	                        WHEN (dept.DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || dept.LOWEST_DEPT_NM
+	                        WHEN (dept.DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || dept.LOWEST_DEPT_NM
+	                        WHEN (dept.DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || dept.LOWEST_DEPT_NM
+	                        WHEN (dept.DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || dept.LOWEST_DEPT_NM
+	                        WHEN (dept.DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || dept.LOWEST_DEPT_NM
+	                        WHEN (dept.DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || dept.LOWEST_DEPT_NM
+                            ELSE dept.LOWEST_DEPT_NM
+                        END) AS LOWEST_DEPT_NM
+                    , cmptnczone.CHARGER_NM
+                    , cmptnczone.CTTPC
+                    , NVL(cmptnczone.AR, 0) AS AR
+                FROM
+                    ( SELECT DEPT_CODE, LOWEST_DEPT_NM
+                      FROM TC_DEPT
+                      WHERE 1=1
+                          AND ( DEPT_CODE > 7000000 AND DEPT_CODE != 7000300 )
+                          OR ( DEPT_CODE < 6410000 AND ODR = 2 )
+                          OR (DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+				              ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+                              ,'5550000','5560000'  /* 안산시 구 추가 */
+                              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+                              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                          OR ( DEPT_CODE IN (6411399, 6411799))
+                    ) dept
+                    LEFT OUTER JOIN
+                    ( SELECT
+                            cmptnczone.DEPT_CODE
+                            , ( SELECT tcdept.LOWEST_DEPT_NM
+                                FROM TC_DEPT tcdept
+                                WHERE cmptnczone.DEPT_CODE = tcdept.DEPT_CODE
+                            ) LOWEST_DEPT_NM
+                            , cmptnczone.CHARGER_NM
+                            , cmptnczone.CTTPC
+                            , SUM(AR) AS AR
+                        FROM CMPTNC_ZONE cmptnczone
+                        WHERE 1=1
+                        GROUP BY cmptnczone.DEPT_CODE, cmptnczone.CHARGER_NM, cmptnczone.CTTPC
+                    ) cmptnczone
+
+                    ON cmptnczone.DEPT_CODE = dept.DEPT_CODE
+                    WHERE 1=1
+            ]]>
+            <isNotEmpty property="DEPT_CODE">
+            <![CDATA[       /* 7000300 으로 조회했을 경우 */
+                            AND ((#DEPT_CODE# = '7000300' AND dept.DEPT_CODE > '7000300' AND dept.DEPT_CODE < '7000400')
+                                  OR (#DEPT_CODE# != '7000300' AND dept.DEPT_CODE = #DEPT_CODE# ) )
+            ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_CHARGER_NM"><![CDATA[   AND  cmptnczone.CHARGER_NM LIKE '%' || #SCH_CHARGER_NM# || '%'  ]]></isNotEmpty>
+            <![CDATA[
+                    ORDER BY DECODE(LOWEST_DEPT_NM
+                                , '수원시', 1
+					            , '수원시 장안구', 2
+					            , '수원시 권선구', 3
+					            , '수원시 팔달구', 4
+					            , '수원시 영통구', 5
+					            , '고양시', 6
+					            , '고양시 덕양구', 7
+					            , '고양시 일산동구', 8
+					            , '고양시 일산서구', 9
+					            , '용인시', 10
+					            , '용인시 처인구', 11
+					            , '용인시 기흥구', 12
+					            , '용인시 수지구', 13
+					            , '성남시', 14
+					            , '성남시 수정구', 15
+					            , '성남시 중원구', 16
+					            , '성남시 분당구', 17
+					            , '부천시', 18
+					            , '안산시', 19
+					            , '안산시 상록구', 20
+					            , '안산시 단원구', 21
+					            , '화성시', 22
+					            , '화성시청', 23
+                                , '화성시 동부출장소', 24
+                                , '화성시 동탄출장소', 25
+                                , '남양주시', 26
+                                , '안양시', 27
+                                , '안양시 만안구', 28
+                                , '안양시 동안구', 29
+                                , '평택시', 30
+                                , '평택시청', 31
+                                , '평택시 송탄출장소', 32
+                                , '평택시 안중출장소', 33
+                                , '의정부시', 34
+                                , '파주시', 35
+                                , '시흥시', 36
+                                , '김포시', 37
+                                , '광명시', 38
+                                , '광주시', 39
+                                , '군포시', 40
+                                , '이천시', 41
+                                , '오산시', 42
+                                , '하남시', 43
+                                , '양주시', 44
+                                , '구리시', 45
+                                , '안성시', 46
+                                , '포천시', 47
+                                , '의왕시', 48
+                                , '여주시', 49
+                                , '양평군', 50
+                                , '동두천시',51
+                                , '과천시', 52
+                                , '가평군', 53
+                                , '연천군', 54
+                           ), DEPT_CODE
+    ]]>
+    <isEqual prepend="  " property="usePage" compareValue="true">
+    <![CDATA[
+            ) tb
+        ) tb
+    ) tb
+    ]]>
+    </isEqual>
+
+    </select>
+
+
+    <update id="cmptncDAO.updateCmptnc">
+    <![CDATA[
+    /* cmptncDAO.updateCmptncList */
+    /* 관할_노선 수정 */
+    UPDATE CMPTNC_ZONE SET
+        CHARGER_NM = #CHARGER_NM#
+        ,CTTPC = #CTTPC#
+    WHERE DEPT_CODE = #DEPT_CODE#
+    ]]>
+    </update>
+
+
+    <!-- 관할구역검색 로그 등록 -->
+    <insert id="cmptncDAO.insertCmptncLog">
+    <selectKey resultClass="String" keyProperty="HIST_MNG_NO">
+    <!-- /* SELECT SEQ_TH_CMPTNC_ZONE.NEXTVAL from dual */ -->
+    <![CDATA[
+        SELECT SEQ_TH_CMPTNC_ZONE.NEXTVAL from dual
+    ]]>
+    </selectKey>
+    <![CDATA[
+    /* cmptncDAO.insertCmptncLog */
+    /* 관할_노선 수정 로그 */
+    INSERT INTO TH_CMPTNC_ZONE
+           (
+            HIST_MNG_NO   /* 관할구역검색_로그.이력_관리_번호 */
+            ,CPT_MNG_NO   /* 관할구역검색_로그.노선_관리_번호 */
+            ,ROAD_GRAD    /* 관할구역검색_로그.도로_등급    */
+            ,DEPT_CODE    /* 관할구역검색_로그.부서_코드    */
+            ,CHARGER_NM   /* 관할구역검색_로그.담당자_명    */
+            ,CTTPC        /* 관할구역검색_로그.연락처      */
+            ,AR           /* 관할구역검색_로그.면적       */
+            ,USE_AT       /* 관할구역검색_로그.사용_여부    */
+            ,DELETE_AT    /* 관할구역검색_로그.삭제_여부    */
+            ,CRTR_NO      /* 관할구역검색_로그.생성자_번호   */
+            ,CREAT_DE     /* 관할구역검색_로그.생성_일자    */
+           )
+    SELECT
+            SEQ_TH_CMPTNC_ZONE.NEXTVAL  /* 관할구역검색_로그.이력_관리_번호 */
+            ,CPT_MNG_NO    /* 관할구역검색_로그.노선_관리_번호 */
+            ,ROAD_GRAD     /* 관할구역검색_로그.도로_등급    */
+            ,DEPT_CODE     /* 관할구역검색_로그.부서_코드    */
+            ,CHARGER_NM    /* 관할구역검색_로그.담당자_명    */
+            ,CTTPC         /* 관할구역검색_로그.연락처      */
+            ,AR            /* 관할구역검색_로그.면적       */
+            ,'Y'           /* 관할구역검색_로그.사용_여부    */
+            ,'N'           /* 관할구역검색_로그.삭제_여부    */
+            ,#CRTR_NO#     /* 관할구역검색_로그.생성자_번호   */
+            ,sysdate       /* 관할구역검색_로그.생성_일자    */
+      FROM CMPTNC_ZONE
+     WHERE DEPT_CODE = #LOWEST_DEPT_NM#
+    ]]>
+    </insert>
+
+    <!-- 담당자 연락처 조회 -->
+    <select id="cmptncDAO.selectChargerCttpc" parameterClass="cmptncVO" resultClass="cmptncVO">
+    <![CDATA[
+        SELECT *
+        FROM (
+            SELECT
+            DEPT_CODE
+            , CHARGER_NM
+            , CTTPC
+            , SUM(AR) AS AR
+            FROM CMPTNC_ZONE
+            WHERE CHARGER_NM = #CHARGER_NM#
+            GROUP BY DEPT_CODE, CHARGER_NM, CTTPC
+        )
+        WHERE ROWNUM = 1
+    ]]>
+    </select>
+
+    <!-- 담당자 조회 -->
+    <select id="cmptncDAO.selectChargerNm" parameterClass="cmptncVO" resultClass="cmptncVO">
+    <![CDATA[
+        SELECT *
+        FROM (
+            SELECT
+            DEPT_CODE
+            , CHARGER_NM
+            , CTTPC
+            , SUM(AR) AS AR
+            FROM CMPTNC_ZONE
+            WHERE DEPT_CODE = #DEPT_CODE#
+            GROUP BY DEPT_CODE, CHARGER_NM, CTTPC
+        )
+        WHERE ROWNUM = 1
+    ]]>
+    </select>
+
+    <!-- 포트홀_관할_구역_담당자 list 조회 -->
+    <select id="cmptncDAO.selectCmptncZonePocList" parameterClass="cmptncVO" resultClass="cmptncVO">
+    <![CDATA[
+        /* addressDAO.selectCmptncZonePocList */
+        /* 포트홀_관할_지역_담당자 list 조회 */
+        SELECT
+            tncmptnczonpoc.POC_MNG_NO
+            , tncmptnczonpoc.CPT_MNG_NO
+            , ( SELECT tcdept.LOWEST_DEPT_NM
+                FROM TC_DEPT tcdept
+                WHERE tcdept.DEPT_CODE = tncmptnczonpoc.DEPT_CODE
+            ) AS LOWEST_DEPT_NM                  /* 부서_코드_명 */
+            , tncmptnczonpoc.DEPT_CODE
+            , tncmptnczonpoc.PRIOR_RANK
+            , tncmptnczonpoc.CHARGER_NM
+            , tncmptnczonpoc.CTTPC
+        FROM TN_CMPTNC_ZONE_POC tncmptnczonpoc
+        WHERE 1 = 1
+            AND DEPT_CODE = #DEPT_CODE#
+    ]]>
+    </select>
+
+<!--
+    INSERT INTO TH_CMPTNC_ZONE
+           (
+            HIST_MNG_NO   /* 관할구역검색_로그.이력_관리_번호 */
+            ,CPT_MNG_NO   /* 관할구역검색_로그.노선_관리_번호 */
+            ,ROAD_GRAD    /* 관할구역검색_로그.도로_등급    */
+            ,DEPT_CODE    /* 관할구역검색_로그.부서_코드    */
+            ,CHARGER_NM   /* 관할구역검색_로그.담당자_명    */
+            ,CTTPC        /* 관할구역검색_로그.연락처      */
+            ,AR           /* 관할구역검색_로그.면적       */
+            ,USE_AT       /* 관할구역검색_로그.사용_여부    */
+            ,DELETE_AT    /* 관할구역검색_로그.삭제_여부    */
+            ,CRTR_NO      /* 관할구역검색_로그.생성자_번호   */
+            ,CREAT_DE     /* 관할구역검색_로그.생성_일자    */
+           )
+    VALUES
+           (
+            #HIST_MNG_NO#  /* 관할구역검색_로그.이력_관리_번호 */
+            ,#CPT_MNG_NO#  /* 관할구역검색_로그.노선_관리_번호 */
+            ,#ROAD_GRAD#   /* 관할구역검색_로그.도로_등급    */
+            ,#DEPT_CODE#   /* 관할구역검색_로그.부서_코드    */
+            ,#CHARGER_NM#  /* 관할구역검색_로그.담당자_명    */
+            ,#CTTPC#       /* 관할구역검색_로그.연락처      */
+            ,#AR#          /* 관할구역검색_로그.면적       */
+            ,'Y'           /* 관할구역검색_로그.사용_여부    */
+            ,'N'           /* 관할구역검색_로그.삭제_여부    */
+            ,#CRTR_NO#     /* 관할구역검색_로그.생성자_번호   */
+            ,sysdate       /* 관할구역검색_로그.생성_일자    */
+           )
+ -->
+
+</sqlMap>
