@@ -440,6 +440,27 @@
 			<artifactId>jdom2</artifactId>
 			<version>2.0.5</version>
 		</dependency>
+		
+		<!-- add_sdh -->
+		
+		<dependency>
+		  <groupId>org.lazyluke</groupId>
+		  <artifactId>log4jdbc-remix</artifactId>
+		  <version>0.2.4</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-log4j12</artifactId>
+		  <version>1.6.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901-1.jdbc4</version>
+			<!-- <version>9.4.1208</version> -->
+		</dependency>
 
 	</dependencies>
 
