@@ -53,9 +53,9 @@
 			, #USE_AT# /* 공통코드.사용_여부 */
 			, 'N' /* 공통코드.삭제_여부 */
 			, #UPDUSR_NO# /* 공통코드.수정자_번호 */
-			, SYSDATE /* 공통코드.수정_일시 */
+			, NOW() /* 공통코드.수정_일시 */
 			, #CRTR_NO# /* 공통코드.생성자_번호 */
-			, SYSDATE /* 공통코드.생성_일시 */
+			, NOW() /* 공통코드.생성_일시 */
 		)
 ]]>
 	</insert>
@@ -89,7 +89,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 , UPDUSR_NO = #UPDUSR_NO# /* 공통코드.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 공통코드.수정_일시 */
+, UPDT_DT = NOW() /* 공통코드.수정_일시 */
 
 		WHERE 1 = 1
 		AND CODE_VAL = #CODE_VAL# /* 공통코드.코드_값 */
@@ -104,7 +104,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 		DELETE_AT = 'Y' /* 공통코드.삭제_여부 */	
 		, USE_AT = 'N'
 		, UPDUSR_NO = #UPDUSR_NO# /* 공통코드.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 공통코드.수정_일시 */	
+		, UPDT_DT = NOW() /* 공통코드.수정_일시 */	
 		WHERE 1 = 1	
 ]]>
 	<isNotEmpty property="CL_CODE">
@@ -152,8 +152,8 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 		/* 공통코드 조회 */
 		SELECT
 		     tcclcode.CL_CODE /* 공통코드.분류_코드 */
-		    , tcclcode.CL_CODE || LPAD( TO_NUMBER( NVL(MAX(SUBSTR(tccode.CODE_VAL, 5)),'0') )+1, 4, '0') CODE_VAL /* 공통코드.코드_값 */
-		    , NVL(MAX(tccode.PRIOR_RANK),0)+1 PRIOR_RANK /* 공통코드.우선_순위 */
+		    , tcclcode.CL_CODE || LPAD( TO_NUMBER( COALESCE(MAX(SUBSTR(tccode.CODE_VAL, 5)),'0') )+1, 4, '0') CODE_VAL /* 공통코드.코드_값 */
+		    , COALESCE(MAX(tccode.PRIOR_RANK),0)+1 PRIOR_RANK /* 공통코드.우선_순위 */
 		    , MAX( tccode.ATRB_VAL ) ATRB_VAL /* 공통코드.속성_값 */
 		FROM TC_CL_CODE tcclcode
 		LEFT OUTER JOIN  TC_CODE tccode
@@ -368,7 +368,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
  
  		<isEmpty property="sidx">
  		<![CDATA[ 
- 			ROWNUM AS rn, 
+ 			ROW_NUMBER() OVER() AS rn, 
  		 ]]>
  		</isEmpty>
  		<isNotEmpty property="sidx">

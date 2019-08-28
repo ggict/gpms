@@ -96,15 +96,17 @@ public class MapController extends BaseController{
 	public String map(@ModelAttribute MemberInfo memberInfoVO, DeptVO deptVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 
 		//레이어 정보 조회
+		
+		/* 임시주석_sdh
 		List<EgovMap> layerInfoList = cmmnService.selectLaygerList(null);
 		List<EgovMap> layerInfoListTheme = cmmnService.selectLayerListTheme(null);
 		List<EgovMap> layerGroupInfoList = cmmnService.selectLyrGroupInfo(null);
-
+		 */
 		//노선 번호
 		RouteInfoVO routeInfoVO = new RouteInfoVO();
 		routeInfoVO.setUsePage(false);
 		routeInfoVO.setSidx("ROAD_NO");
-		List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+		//List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
 
 		//도로 등급
 		List<CodeVO> roadGradList = getCodeList("RDGD");
@@ -118,13 +120,15 @@ public class MapController extends BaseController{
 		Cell10VO cell10vo = new Cell10VO();
 		List<Cell10VO> statsYear = cell10Service.selectStatsYearList(cell10vo);
 
+		/* 임시주석_sdh
 		model.addAttribute("layerInfoList", layerInfoList);
 		model.addAttribute("layerInfoListTheme", layerInfoListTheme);
 		model.addAttribute("layerGroupInfoList", layerGroupInfoList);
-
+		*/
+		
 		//stats div(통계)에서 사용할 부서정보/노선코드/ 도로 등급조회
 		model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
-		model.addAttribute("roadNoList", roadNoList);
+		//model.addAttribute("roadNoList", roadNoList);
 		model.addAttribute("roadGradList", roadGradList);
 		model.addAttribute("RpairMthds", rpairMthdList);
 		model.addAttribute("statsYear",statsYear);

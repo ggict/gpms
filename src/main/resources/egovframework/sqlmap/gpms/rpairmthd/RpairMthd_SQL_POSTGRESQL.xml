@@ -41,9 +41,9 @@
 			, #DELETE_AT# /* 보수공법코드.삭제_여부 */
 			, #USE_AT# /* 보수공법코드.사용_여부 */
 			, #CRTR_NO# /* 보수공법코드.생성자_번호 */
-			, SYSDATE /* 보수공법코드.생성_일시 */
+			, NOW() /* 보수공법코드.생성_일시 */
 			, #UPDUSR_NO# /* 보수공법코드.수정자_번호 */
-			, SYSDATE /* 보수공법코드.수정_일시 */
+			, NOW() /* 보수공법코드.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -71,13 +71,13 @@ MSRC_CL_CODE = #MSRC_CL_CODE# /* 보수공법코드.공법_분류_코드 */
 , CRTR_NO = #CRTR_NO# /* 보수공법코드.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 보수공법코드.생성_일시 */
+, CREAT_DT = NOW() /* 보수공법코드.생성_일시 */
 			
 
 , UPDUSR_NO = #UPDUSR_NO# /* 보수공법코드.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 보수공법코드.수정_일시 */
+, UPDT_DT = NOW() /* 보수공법코드.수정_일시 */
 			
 		WHERE 1 = 1
 		AND RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# /* 보수공법코드.보수_공법_코드 */
@@ -278,7 +278,7 @@ MSRC_CL_CODE = #MSRC_CL_CODE# /* 보수공법코드.공법_분류_코드 */
 <![CDATA[ 		
 		/* rpairMthdDAO.selectRpairMthdList */
 		/* 보수공법코드 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tcrpairmthd.RPAIR_MTHD_CODE /* 보수공법코드.보수_공법_코드 */
 				, tcrpairmthd.MSRC_CL_CODE /* 보수공법코드.공법_분류_코드 */
