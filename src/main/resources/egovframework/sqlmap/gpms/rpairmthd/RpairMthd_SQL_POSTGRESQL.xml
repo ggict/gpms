@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="rpairMthdDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="rpairMthdSerarchVO" type="kr.go.gg.gpms.rpairmthd.service.model.RpairMthdDefaultVO"/>
+	<typeAlias alias="rpairMthdVO"	type="kr.go.gg.gpms.rpairmthd.service.model.RpairMthdVO" />
+
+	<resultMap id="rpairMthd.resultMap"
+		class="rpairMthdVO">
+		<result property="RPAIR_MTHD_CODE" column="RPAIR_MTHD_CODE" columnIndex="1" /> <!-- 보수공법코드.보수_공법_코드 -->
+		<result property="MSRC_CL_CODE" column="MSRC_CL_CODE" columnIndex="2" /> <!-- 보수공법코드.공법_분류_코드 -->
+		<result property="MSRC_NM" column="MSRC_NM" columnIndex="3" /> <!-- 보수공법코드.공법_명 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="4" /> <!-- 보수공법코드.삭제_여부 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="5" /> <!-- 보수공법코드.사용_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="6" /> <!-- 보수공법코드.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="7" /> <!-- 보수공법코드.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="8" /> <!-- 보수공법코드.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="9" /> <!-- 보수공법코드.수정_일시 -->
+	</resultMap>
+
+	<insert id="rpairMthdDAO.insertRpairMthd">
+	<![CDATA[ 
+		/* rpairMthdDAO.insertRpairMthd */
+		/* 보수공법코드 등록 */		
+		INSERT INTO TC_RPAIR_MTHD (
+			RPAIR_MTHD_CODE /* 보수공법코드.보수_공법_코드 */
+			, MSRC_CL_CODE /* 보수공법코드.공법_분류_코드 */
+			, MSRC_NM /* 보수공법코드.공법_명 */
+			, DELETE_AT /* 보수공법코드.삭제_여부 */
+			, USE_AT /* 보수공법코드.사용_여부 */
+			, CRTR_NO /* 보수공법코드.생성자_번호 */
+			, CREAT_DT /* 보수공법코드.생성_일시 */
+			, UPDUSR_NO /* 보수공법코드.수정자_번호 */
+			, UPDT_DT /* 보수공법코드.수정_일시 */
+		) VALUES (
+			#RPAIR_MTHD_CODE# /* 보수공법코드.보수_공법_코드 */
+			, #MSRC_CL_CODE# /* 보수공법코드.공법_분류_코드 */
+			, #MSRC_NM# /* 보수공법코드.공법_명 */
+			, #DELETE_AT# /* 보수공법코드.삭제_여부 */
+			, #USE_AT# /* 보수공법코드.사용_여부 */
+			, #CRTR_NO# /* 보수공법코드.생성자_번호 */
+			, SYSDATE /* 보수공법코드.생성_일시 */
+			, #UPDUSR_NO# /* 보수공법코드.수정자_번호 */
+			, SYSDATE /* 보수공법코드.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="rpairMthdDAO.updateRpairMthd">
+	<![CDATA[ 
+		/* rpairMthdDAO.updateRpairMthd */
+		/* 보수공법코드 수정 */
+		UPDATE TC_RPAIR_MTHD SET
+
+
+
+MSRC_CL_CODE = #MSRC_CL_CODE# /* 보수공법코드.공법_분류_코드 */
+			
+
+, MSRC_NM = #MSRC_NM# /* 보수공법코드.공법_명 */
+			
+
+, DELETE_AT = #DELETE_AT# /* 보수공법코드.삭제_여부 */
+			
+
+, USE_AT = #USE_AT# /* 보수공법코드.사용_여부 */
+			
+
+, CRTR_NO = #CRTR_NO# /* 보수공법코드.생성자_번호 */
+			
+
+, CREAT_DT = SYSDATE /* 보수공법코드.생성_일시 */
+			
+
+, UPDUSR_NO = #UPDUSR_NO# /* 보수공법코드.수정자_번호 */
+			
+
+, UPDT_DT = SYSDATE /* 보수공법코드.수정_일시 */
+			
+		WHERE 1 = 1
+		AND RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# /* 보수공법코드.보수_공법_코드 */
+]]>
+	</update>
+
+	<delete id="rpairMthdDAO.deleteRpairMthd">
+	<![CDATA[ 
+		/* rpairMthdDAO.deleteRpairMthd */
+		/* 보수공법코드 삭제 */
+		DELETE FROM TC_RPAIR_MTHD 
+		WHERE 1 = 1
+		AND RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# /* 보수공법코드.보수_공법_코드 */
+]]>
+	</delete>
+
+	<select id="rpairMthdDAO.selectRpairMthd" resultClass="rpairMthdVO">
+	<![CDATA[ 
+		/* rpairMthdDAO.selectRpairMthd */
+		/* 보수공법코드 조회 */
+		SELECT
+			tcrpairmthd.RPAIR_MTHD_CODE /* 보수공법코드.보수_공법_코드 */
+			, tcrpairmthd.MSRC_CL_CODE /* 보수공법코드.공법_분류_코드 */
+			, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSRC_CL_CODE  ) MSRC_CL_NM
+			, tcrpairmthd.MSRC_NM /* 보수공법코드.공법_명 */
+			, tcrpairmthd.DELETE_AT /* 보수공법코드.삭제_여부 */
+			, tcrpairmthd.USE_AT /* 보수공법코드.사용_여부 */
+			, tcrpairmthd.CRTR_NO /* 보수공법코드.생성자_번호 */
+			, tcrpairmthd.CREAT_DT /* 보수공법코드.생성_일시 */
+			, tcrpairmthd.UPDUSR_NO /* 보수공법코드.수정자_번호 */
+			, tcrpairmthd.UPDT_DT /* 보수공법코드.수정_일시 */
+			, tcrpairmthd.MSRC_CT    /* 보수공법코드.공법_비용 */
+			, tcrpairmthd.MSRC_LCLAS_CODE    /* 보수공법코드.공법_대분류_코드 */
+			, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSRC_LCLAS_CODE  ) MSRC_LCLAS_NM
+			, tcrpairmthd.MSR_DM_CODE    /* 보수공법코드.공법선정비율_결정방식_코드 */
+			, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE  ) MSR_DM_NM
+		FROM TC_RPAIR_MTHD tcrpairmthd
+		WHERE 1 = 1
+		AND tcrpairmthd.RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# /* 보수공법코드.보수_공법_코드 */
+]]>
+	</select>
+
+	<sql id="rpairMthdDAO.selectRpairMthdList.where">
+		WHERE 1 = 1
+			AND tcrpairmthd.DELETE_AT = 'N' AND tcrpairmthd.USE_AT = 'Y'
+		<isEqual property="searchCondition" compareValue="0">
+			AND tcrpairmthd.RPAIR_MTHD_CODE = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tcrpairmthd.MSRC_CL_CODE LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="RPAIR_MTHD_CODE"><![CDATA[ /* 보수공법코드.보수_공법_코드 */ AND tcrpairmthd.RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="MSRC_CL_CODE"><![CDATA[ /* 보수공법코드.공법_분류_코드 */ AND tcrpairmthd.MSRC_CL_CODE = #MSRC_CL_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="MSRC_NM"><![CDATA[ /* 보수공법코드.공법_명 */ AND tcrpairmthd.MSRC_NM = #MSRC_NM# ]]></isNotEmpty>
+		<!-- <isNotEmpty property="DELETE_AT"><![CDATA[ /* 보수공법코드.삭제_여부 */ AND tcrpairmthd.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="USE_AT"><![CDATA[ /* 보수공법코드.사용_여부 */ AND tcrpairmthd.USE_AT = #USE_AT# ]]></isNotEmpty> -->
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수공법코드.생성자_번호 */ AND tcrpairmthd.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 보수공법코드.생성_일시 */ AND tcrpairmthd.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수공법코드.수정자_번호 */ AND tcrpairmthd.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 보수공법코드.수정_일시 */ AND tcrpairmthd.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="rpairMthdDAO.selectRpairMthdListPage"
+		parameterClass="rpairMthdVO"
+		resultClass="rpairMthdVO">
+<![CDATA[ 		
+		/* rpairMthdDAO.selectRpairMthdListPage */
+		/* 보수공법코드 조회(페이징) */
+		WITH tcrpairmthd AS
+		(
+		SELECT	
+				tcrpairmthd.RPAIR_MTHD_CODE /* 보수공법코드.보수_공법_코드 */
+				, tcrpairmthd.MSRC_CL_CODE /* 보수공법코드.공법_분류_코드 */
+				, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSRC_CL_CODE  ) MSRC_CL_NM
+				, tcrpairmthd.MSRC_NM /* 보수공법코드.공법_명 */
+				, tcrpairmthd.DELETE_AT /* 보수공법코드.삭제_여부 */
+				, tcrpairmthd.USE_AT /* 보수공법코드.사용_여부 */
+				, tcrpairmthd.CRTR_NO /* 보수공법코드.생성자_번호 */
+				, tcrpairmthd.CREAT_DT /* 보수공법코드.생성_일시 */
+				, tcrpairmthd.UPDUSR_NO /* 보수공법코드.수정자_번호 */
+				, tcrpairmthd.UPDT_DT /* 보수공법코드.수정_일시 */
+				, tcrpairmthd.MSRC_CT    /* 보수공법코드.공법_비용 */
+				, tcrpairmthd.MSRC_LCLAS_CODE    /* 보수공법코드.공법_대분류_코드 */
+				, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSRC_LCLAS_CODE  ) MSRC_LCLAS_NM
+				, tcrpairmthd.MSR_DM_CODE    /* 보수공법코드.공법선정비율_결정방식_코드 */
+				, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE  ) MSR_DM_NM
+			
+			FROM TC_RPAIR_MTHD tcrpairmthd
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tcrpairmthd.RPAIR_MTHD_CODE = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tcrpairmthd.MSRC_CL_CODE LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="RPAIR_MTHD_CODE">
+				<![CDATA[
+					/* 보수공법코드.보수_공법_코드 */
+					AND tcrpairmthd.RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="MSRC_CL_CODE">
+				<![CDATA[
+					/* 보수공법코드.공법_분류_코드 */
+					AND tcrpairmthd.MSRC_CL_CODE = #MSRC_CL_CODE#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="MSRC_NM">
+				<![CDATA[
+					/* 보수공법코드.공법_명 */
+					AND tcrpairmthd.MSRC_NM = #MSRC_NM#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 보수공법코드.삭제_여부 */
+					AND tcrpairmthd.DELETE_AT = #DELETE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 보수공법코드.사용_여부 */
+					AND tcrpairmthd.USE_AT = #USE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 보수공법코드.생성자_번호 */
+					AND tcrpairmthd.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 보수공법코드.생성_일시 */
+					AND tcrpairmthd.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 보수공법코드.수정자_번호 */
+					AND tcrpairmthd.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 보수공법코드.수정_일시 */
+					AND tcrpairmthd.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tcrpairmthd.* FROM
+		(
+		SELECT 
+										tcrpairmthd.RPAIR_MTHD_CODE /* 보수공법코드.보수_공법_코드 */
+											, tcrpairmthd.MSRC_CL_CODE /* 보수공법코드.공법_분류_코드 */
+											, tcrpairmthd.MSRC_NM /* 보수공법코드.공법_명 */
+											, tcrpairmthd.DELETE_AT /* 보수공법코드.삭제_여부 */
+											, tcrpairmthd.USE_AT /* 보수공법코드.사용_여부 */
+											, tcrpairmthd.CRTR_NO /* 보수공법코드.생성자_번호 */
+											, tcrpairmthd.CREAT_DT /* 보수공법코드.생성_일시 */
+											, tcrpairmthd.UPDUSR_NO /* 보수공법코드.수정자_번호 */
+											, tcrpairmthd.UPDT_DT /* 보수공법코드.수정_일시 */
+						/* 보수공법코드.보수_공법_코드 */
+			/* 보수공법코드.공법_분류_코드 */
+			, ROW_NUMBER() OVER( ORDER BY tcrpairmthd.RPAIR_MTHD_CODE ASC, tcrpairmthd.MSRC_CL_CODE DESC )  ROW_NO
+			FROM  tcrpairmthd
+			WHERE 1=1
+		)  tcrpairmthd
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tcrpairmthd.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tcrpairmthd.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="rpairMthdDAO.selectRpairMthdList"
+		parameterClass="rpairMthdVO"
+		resultClass="rpairMthdVO">
+<![CDATA[ 		
+		/* rpairMthdDAO.selectRpairMthdList */
+		/* 보수공법코드 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tcrpairmthd.RPAIR_MTHD_CODE /* 보수공법코드.보수_공법_코드 */
+				, tcrpairmthd.MSRC_CL_CODE /* 보수공법코드.공법_분류_코드 */
+				, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSRC_CL_CODE  ) MSRC_CL_NM
+				, tcrpairmthd.MSRC_NM /* 보수공법코드.공법_명 */
+				, tcrpairmthd.DELETE_AT /* 보수공법코드.삭제_여부 */
+				, tcrpairmthd.USE_AT /* 보수공법코드.사용_여부 */
+				, tcrpairmthd.CRTR_NO /* 보수공법코드.생성자_번호 */
+				, tcrpairmthd.CREAT_DT /* 보수공법코드.생성_일시 */
+				, tcrpairmthd.UPDUSR_NO /* 보수공법코드.수정자_번호 */
+				, tcrpairmthd.UPDT_DT /* 보수공법코드.수정_일시 */
+				, tcrpairmthd.MSRC_CT    /* 보수공법코드.공법_비용 */
+				, tcrpairmthd.MSRC_LCLAS_CODE    /* 보수공법코드.공법_대분류_코드 */
+				, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSRC_LCLAS_CODE  ) MSRC_LCLAS_NM
+				, tcrpairmthd.MSR_DM_CODE    /* 보수공법코드.공법선정비율_결정방식_코드 */
+				, (SELECT tccode.CODE_NM    FROM TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE  ) MSR_DM_NM
+			FROM TC_RPAIR_MTHD tcrpairmthd
+]]>
+	<include refid="rpairMthdDAO.selectRpairMthdList.where" />	
+<![CDATA[
+		ORDER BY 
+				tcrpairmthd.RPAIR_MTHD_CODE DESC /* 보수공법코드.보수_공법_코드 */  
+		) tb) tcrpairmthd  WHERE 1=1 
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="rpairMthdDAO.selectRpairMthdListTotalCount"
+		parameterClass="rpairMthdVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* rpairMthdDAO.selectRpairMthdListTotalCount */
+		/* 보수공법코드 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TC_RPAIR_MTHD tcrpairmthd
+]]>		
+		<include refid="rpairMthdDAO.selectRpairMthdList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>

@@ -1,0 +1,2959 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sttstDAO">
+
+    <typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+    <typeAlias alias="sttstVO" type="kr.go.gg.gpms.pothole.sttst.service.model.SttstVO" />
+
+    <resultMap id="sttstVO.resultMap"  class="sttstVO">
+        <!-- 신고자기준 -->
+        <result property="DEPT_CODE"          column="DEPT_CODE"              columnIndex="1"  />
+        <result property="BSNM_NM"            column="BSNM_NM"                columnIndex="2"  />
+        <result property="VHCLE_NO"           column="VHCLE_NO"               columnIndex="3"  />
+        <result property="PRCS_STTUS1"        column="PRCS_STTUS1"            columnIndex="4"  />
+        <result property="PRCS_STTUS2"        column="PRCS_STTUS2"            columnIndex="5"  />
+        <result property="PRCS_STTUS3"        column="PRCS_STTUS3"            columnIndex="6"  />
+        <result property="PRCS_STTUS4"        column="PRCS_STTUS4"            columnIndex="7"  />
+        <result property="PRCS_STTUS5"        column="PRCS_STTUS5"            columnIndex="8"  />
+        <result property="PRCS_STTUS6"        column="PRCS_STTUS6"            columnIndex="9"  />
+        <result property="PRCS_STTUS7"        column="PRCS_STTUS7"            columnIndex="10"  />
+        <result property="PRCS_STTUS"         column="PRCS_STTUS"             columnIndex="11"  />
+    </resultMap>
+
+
+    <sql id="sttstDAO.selectDatePeriodListRest.select">
+		<![CDATA[
+		SELECT
+	                        tcdept.DEPT_CODE
+	                        , tcdept.LOWEST_DEPT_NM AS LOWEST_DEPT_NM_BF           /* 포트홀_통계.부서_코드 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'
+	    ]]>
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS1  /* 포트홀_통계.처리_유형1 신고 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0002'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS2  /* 포트홀_통계.처리_유형2 접수 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0003'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS3  /* 포트홀_통계.처리_유형3 처리완료 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0004'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS4  /* 포트홀_통계.처리_유형4 보수예정 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0005'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS5  /* 포트홀_통계.처리_유형5 재배정요청 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0006'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS6  /* 포트홀_통계.처리_유형6 기타 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0007'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS7  /* 포트홀_통계.처리_유형7 좌표오류 */
+	</sql>
+
+	<sql id="sttstDAO.selectDatePeriodListRest.where">
+	<![CDATA[
+	WHERE 1 = 1
+                      /* AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N' */
+                      AND ( tcdept.DEPT_CODE IN ('6411399','6411799', '7000100', '7000200', '7000500', '7000900', '9999999' )
+                      		OR (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+                                  ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                            OR (tcdept.DEPT_CODE < '6410000' AND tcdept.ODR = 2  )
+                            OR (tcdept.DEPT_CODE >= '7000300' AND tcdept.DEPT_CODE < '7000400' ) )
+    ]]>
+    <isEmpty property="DEPT_CODE"> /* OR tcdept.dept_code IS NULL */</isEmpty>
+    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함 */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+
+	    ]]>
+    </isNotEmpty>
+    				 GROUP BY
+                        tcdept.DEPT_CODE
+                        ,tcdept.LOWEST_DEPT_NM
+    </sql>
+
+    <!-- 2018. 01. 30. YYK.  -->
+    <!-- 2019. 07. 09. LHJ. 수정  -->
+    <select id="sttstDAO.selectDatePeriodListRest" parameterClass="sttstVO" resultClass="sttstVO">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRest */
+        /* 날짜 기준 처리현황 조회 */
+
+	WITH STTST ( DEPT_CODE, LOWEST_DEPT_NM_BF,
+	             PRCS_STTUS1, PRCS_STTUS2, PRCS_STTUS3, PRCS_STTUS4, PRCS_STTUS5, PRCS_STTUS6, PRCS_STTUS7,
+	             PRCS_SUM, LOWEST_DEPT_NM, /* DEPTNUM, */ PERCENT /* , RN */ )
+	AS (
+        SELECT tb.*
+              /* ,ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN */
+         FROM (
+            SELECT
+                tb.*
+                ,CASE
+                      WHEN (tb.PRCS_SUM <= 0 OR tb.PRCS_STTUS3 <= 0) then 0
+                      ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_SUM * 100), 2)
+                  END AS PERCENT
+            FROM (
+                SELECT
+                    tb.*
+                    ,NVL(tb.PRCS_STTUS1 + tb.PRCS_STTUS2 + tb.PRCS_STTUS3 + tb.PRCS_STTUS4 + tb.PRCS_STTUS5 + tb.PRCS_STTUS6 + tb.PRCS_STTUS7 , 0) AS PRCS_SUM
+                    ,(CASE WHEN tb.DEPT_CODE > '7000300'  AND tb.DEPT_CODE  < '7000400'
+                           THEN CONCAT( '민자도로사업자',  ' ('|| tb.LOWEST_DEPT_NM_BF || ')' )
+                             WHEN (DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || tb.LOWEST_DEPT_NM_BF
+				             WHEN (DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || tb.LOWEST_DEPT_NM_BF
+				             WHEN (DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || tb.LOWEST_DEPT_NM_BF
+				             WHEN (DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || tb.LOWEST_DEPT_NM_BF
+				             WHEN (DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || tb.LOWEST_DEPT_NM_BF
+				             WHEN (DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || tb.LOWEST_DEPT_NM_BF
+				             WHEN (DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || tb.LOWEST_DEPT_NM_BF
+				             WHEN (DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || tb.LOWEST_DEPT_NM_BF
+                             ELSE tb.LOWEST_DEPT_NM_BF
+                       END) AS LOWEST_DEPT_NM       /* 포트홀_신고_내역.부서_코드_이름*/
+                    /* ,ROWNUM deptnum */
+                FROM (
+    ]]>
+					    SELECT * FROM (
+					    <include refid="sttstDAO.selectDatePeriodListRest.select" />
+    <![CDATA[
+                    FROM
+	                    PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                               AND tnpotholesttemnt.dplct_sttemnt_at = 'N'
+                        LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+    ]]>
+                    	<include refid="sttstDAO.selectDatePeriodListRest.where" />
+
+        union all
+                    	<include refid="sttstDAO.selectDatePeriodListRest.select" />
+    <![CDATA[
+
+                    FROM
+	                    PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                               AND tnpotholesttemnt.dplct_sttemnt_at = 'N'
+                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+    ]]>
+                    <include refid="sttstDAO.selectDatePeriodListRest.where" />
+
+	    union all
+	    <include refid="sttstDAO.selectDatePeriodListRest.select" />
+    <![CDATA[
+
+                    FROM
+	                    PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                               AND tnpotholesttemnt.dplct_sttemnt_at = 'N'
+                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+    ]]>
+                    <include refid="sttstDAO.selectDatePeriodListRest.where" />
+
+    <![CDATA[
+    				) tb
+                ) tb
+            ) tb
+        ) tb
+        WHERE 1 = 1
+        )
+        SELECT * FROM
+            ( SELECT
+                    /* NVL(RN, 0) AS RN, */
+                    DEPT_CODE
+                    , ( CASE WHEN LOWEST_DEPT_NM IS NULL /* AND DEPTNUM IS NULL */ THEN '합계' ELSE LOWEST_DEPT_NM END
+                      ) AS LOWEST_DEPT_NM
+                    , LOWEST_DEPT_NM_BF
+                    /* , DEPTNUM */
+                    , SUM(PRCS_SUM) AS PRCS_SUM
+                    , SUM(PRCS_STTUS1) AS PRCS_STTUS1
+                    , SUM(PRCS_STTUS2) AS PRCS_STTUS2
+                    , SUM(PRCS_STTUS3) AS PRCS_STTUS3
+                    , SUM(PRCS_STTUS4) AS PRCS_STTUS4
+                    , SUM(PRCS_STTUS5) AS PRCS_STTUS5
+                    , SUM(PRCS_STTUS6) AS PRCS_STTUS6
+                    , SUM(PRCS_STTUS7) AS PRCS_STTUS7
+                    , ROUND( NVL( SUM(PRCS_STTUS3) / DECODE(SUM(PRCS_SUM),0, NULL, SUM(PRCS_SUM))*100 , 0) ,2) AS PERCENT
+            FROM STTST
+                GROUP BY ROLLUP ((/* RN, */ DEPT_CODE, /* DEPTNUM,*/ LOWEST_DEPT_NM, LOWEST_DEPT_NM_BF /*, PERCENT */))
+            )
+            /* ORDER BY RN ASC */
+            ORDER BY DECODE(LOWEST_DEPT_NM
+                                , '합계', 0
+                                , '수원시', 1
+                                , '수원시 장안구', 2
+                                , '수원시 권선구', 3
+                                , '수원시 팔달구', 4
+                                , '수원시 영통구', 5
+                                , '고양시', 6
+                                , '고양시 덕양구', 7
+                                , '고양시 일산동구', 8
+                                , '고양시 일산서구', 9
+                                , '용인시', 10
+                                , '용인시 처인구', 11
+                                , '용인시 기흥구', 12
+                                , '용인시 수지구', 13
+                                , '성남시', 14
+                                , '성남시 수정구', 15
+                                , '성남시 중원구', 16
+                                , '성남시 분당구', 17
+                                , '부천시', 18
+                                , '안산시', 19
+                                , '안산시 상록구', 20
+                                , '안산시 단원구', 21
+                                , '화성시', 22
+                                , '화성시청', 23
+                                , '화성시 동부출장소', 24
+                                , '화성시 동탄출장소', 25
+                                , '남양주시', 26
+                                , '안양시', 27
+                                , '안양시 만안구', 28
+                                , '안양시 동안구', 29
+                                , '평택시', 30
+                                , '평택시청', 31
+                                , '평택시 송탄출장소', 32
+                                , '평택시 안중출장소', 33
+                                , '의정부시', 34
+                                , '파주시', 35
+                                , '시흥시', 36
+                                , '김포시', 37
+                                , '광명시', 38
+                                , '광주시', 39
+                                , '군포시', 40
+                                , '이천시', 41
+                                , '오산시', 42
+                                , '하남시', 43
+                                , '양주시', 44
+                                , '구리시', 45
+                                , '안성시', 46
+                                , '포천시', 47
+                                , '의왕시', 48
+                                , '여주시', 49
+                                , '양평군', 50
+                                , '동두천시',51
+                                , '과천시', 52
+                                , '가평군', 53
+                                , '연천군', 54),
+                       DEPT_CODE
+    ]]>
+
+
+
+    </select>
+
+<!-- 모니터링단원 조인 해제
+TN_MNTRNG_MBR tnmntrngmbr
+                        LEFT OUTER JOIN PTH_STTMNT pthsttmnt           ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                        AND tnmntrngmbr.ENTRST_AT = 'Y'
+                        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt              ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair              ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        RIGHT OUTER JOIN TC_DEPT tcdept              ON tnpotholesttemnt.DEPT_CODE = tcdept.DEPT_CODE -->
+
+    <!-- 2018. 01. 30. YYK. -->
+    <select id="sttstDAO.selectDatePeriodListRestTotalCount" parameterClass="sttstVO" resultClass="int">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestTotalCount */
+        /* 날짜 기준 처리현황 조회 카운트 */
+        SELECT COUNT(*) FROM (
+            SELECT tcdept.DEPT_CODE
+                    , tcdept.LOWEST_DEPT_NM
+                  FROM
+                        PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt              ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair              ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        RIGHT OUTER JOIN TC_DEPT tcdept              ON tnpotholesttemnt.DEPT_CODE = tcdept.DEPT_CODE
+                    WHERE 1 = 1
+                      AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                      AND ( tcdept.DEPT_CODE IN ('6411399','6411799', '7000100', '7000200', '7000500', '7000900', '9999999' )
+                      		OR (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+                                  ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                            OR (tcdept.DEPT_CODE < '6410000' AND tcdept.ODR = 2  )
+                            OR (tcdept.DEPT_CODE >= '7000300' AND tcdept.DEPT_CODE < '7000400' ) )
+    ]]>
+    <isEmpty property="DEPT_CODE">OR tcdept.DEPT_CODE IS NULL</isEmpty>
+    <isNotEmpty property="DEPT_CODE">
+        <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+    </isNotEmpty>
+    <![CDATA[
+                    GROUP BY
+                            tcdept.DEPT_CODE
+                            , tcdept.LOWEST_DEPT_NM
+
+
+                            UNION ALL
+
+
+                 SELECT tcdept.DEPT_CODE
+                    , tcdept.LOWEST_DEPT_NM
+                  FROM
+                        PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt              ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair              ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        RIGHT OUTER JOIN TC_DEPT tcdept              ON tnpotholesttemnt.DEPT_CODE = tcdept.DEPT_CODE
+                    WHERE 1 = 1
+                      AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                      AND ( tcdept.DEPT_CODE IN ('6411399','6411799', '7000100', '7000200', '7000500', '7000900', '9999999' )
+                      		OR (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+                                  ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                            OR (tcdept.DEPT_CODE < '6410000' AND tcdept.ODR = 2  )
+                            OR (tcdept.DEPT_CODE >= '7000300' AND tcdept.DEPT_CODE < '7000400' ) )
+    ]]>
+    <isEmpty property="DEPT_CODE">OR tcdept.DEPT_CODE IS NULL</isEmpty>
+    <isNotEmpty property="DEPT_CODE">
+        <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+    </isNotEmpty>
+    <![CDATA[
+                    GROUP BY
+                            tcdept.DEPT_CODE
+                            , tcdept.LOWEST_DEPT_NM
+
+                            UNION ALL
+
+                            SELECT tcdept.DEPT_CODE
+                    , tcdept.LOWEST_DEPT_NM
+                  FROM
+                        PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt              ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair              ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        RIGHT OUTER JOIN TC_DEPT tcdept              ON tnpotholesttemnt.DEPT_CODE = tcdept.DEPT_CODE
+                    WHERE 1 = 1
+                      AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                      AND ( tcdept.DEPT_CODE IN ('6411399','6411799', '7000100', '7000200', '7000500', '7000900', '9999999' )
+                      		OR (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+                                  ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                            OR (tcdept.DEPT_CODE < '6410000' AND tcdept.ODR = 2  )
+                            OR (tcdept.DEPT_CODE >= '7000300' AND tcdept.DEPT_CODE < '7000400' ) )
+    ]]>
+    <isEmpty property="DEPT_CODE">OR tcdept.DEPT_CODE IS NULL</isEmpty>
+    <isNotEmpty property="DEPT_CODE">
+        <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+    </isNotEmpty>
+    <![CDATA[
+                    GROUP BY
+                            tcdept.DEPT_CODE
+                            , tcdept.LOWEST_DEPT_NM
+        ) WHERE 1 = 1
+    ]]>
+    </select>
+
+           <sql id="sttstDAO.selectDatePeriodListRestExcel.select">
+		<![CDATA[
+		SELECT
+	                        tcdept.DEPT_CODE
+	                        , tcdept.LOWEST_DEPT_NM AS LOWEST_DEPT_NM_BF           /* 포트홀_통계.부서_코드 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'
+	    ]]>
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS1  /* 포트홀_통계.처리_유형1 신고 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0002'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS2  /* 포트홀_통계.처리_유형2 접수 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0003'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS3  /* 포트홀_통계.처리_유형3 처리완료 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0004'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS4  /* 포트홀_통계.처리_유형4 보수예정 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0005'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS5  /* 포트홀_통계.처리_유형5 재배정요청 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0006'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS6  /* 포트홀_통계.처리_유형6 기타 */
+	                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0007'
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+	                                      THEN 0 END ) AS PRCS_STTUS7  /* 포트홀_통계.처리_유형7 좌표오류 */
+	</sql>
+
+	<sql id="sttstDAO.selectDatePeriodListRestExcel.where">
+	<![CDATA[
+	WHERE 1 = 1
+                      AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                      AND ( tcdept.DEPT_CODE IN ('6411399','6411799', '7000100', '7000200', '7000500', '7000900', '9999999' )
+                      		OR (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+                                  ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                            OR (tcdept.DEPT_CODE < '6410000' AND tcdept.ODR = 2  )
+                            OR (tcdept.DEPT_CODE >= '7000300' AND tcdept.DEPT_CODE < '7000400' ) )
+    ]]>
+    <isEmpty property="DEPT_CODE">OR tcdept.dept_code IS NULL</isEmpty>
+    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+	    ]]>
+    </isNotEmpty>
+    				 GROUP BY
+                        tcdept.DEPT_CODE
+                        ,tcdept.LOWEST_DEPT_NM
+    </sql>
+
+    <!-- 2018. 01. 30. YYK.  -->
+    <select id="sttstDAO.selectDatePeriodListRestExcel" parameterClass="sttstVO" resultClass="hashMap">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRest */
+        /* 날짜 기준 처리현황 조회 */
+
+	WITH STTST ( DEPT_CODE, LOWEST_DEPT_NM_BF, PRCS_STTUS1, PRCS_STTUS2, PRCS_STTUS3, PRCS_STTUS4, PRCS_STTUS5, PRCS_STTUS6, PRCS_STTUS7, PRCS_SUM, LOWEST_DEPT_NM, DEPTNUM, PERCENT, RN )
+	AS (
+        SELECT tb.*
+              ,ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+         FROM (
+            SELECT
+                tb.*
+                ,CASE
+                      WHEN (tb.PRCS_SUM <= 0 OR tb.PRCS_STTUS3 <= 0) then 0
+                      ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_SUM * 100), 2)
+                  END AS PERCENT
+            FROM (
+                SELECT
+                    tb.*
+                    ,NVL(tb.PRCS_STTUS1 + tb.PRCS_STTUS2 + tb.PRCS_STTUS3 + tb.PRCS_STTUS4 + tb.PRCS_STTUS5 + tb.PRCS_STTUS6 + tb.PRCS_STTUS7 , 0) AS PRCS_SUM
+                    ,(CASE WHEN tb.DEPT_CODE > '7000300'  AND tb.DEPT_CODE  < '7000400'
+                           THEN CONCAT( '민자도로사업자',  ' ('|| tb.LOWEST_DEPT_NM_BF || ')' )
+                           ELSE tb.LOWEST_DEPT_NM_BF
+                       END) AS LOWEST_DEPT_NM       /* 포트홀_신고_내역.부서_코드_이름*/
+                    ,ROWNUM deptnum
+                FROM (
+    ]]>
+					    SELECT * FROM (
+					    <include refid="sttstDAO.selectDatePeriodListRestExcel.select" />
+    <![CDATA[
+                    FROM
+	                    PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+    ]]>
+                    	<include refid="sttstDAO.selectDatePeriodListRestExcel.where" />
+
+        union all
+                    	<include refid="sttstDAO.selectDatePeriodListRestExcel.select" />
+    <![CDATA[
+
+                    FROM
+	                    PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+    ]]>
+                    <include refid="sttstDAO.selectDatePeriodListRestExcel.where" />
+
+	    union all
+	    <include refid="sttstDAO.selectDatePeriodListRestExcel.select" />
+    <![CDATA[
+
+                    FROM
+	                    PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+    ]]>
+                    <include refid="sttstDAO.selectDatePeriodListRestExcel.where" />
+
+    <![CDATA[
+    				) tb
+                    ORDER BY DECODE(LOWEST_DEPT_NM_BF
+                    			, '수원시', 1
+					            , '수원시 장안구', 2
+					            , '수원시 권선구', 3
+					            , '수원시 팔달구', 4
+					            , '수원시 영통구', 5
+					            , '고양시', 6
+					            , '고양시 덕양구', 7
+					            , '고양시 일산동구', 8
+					            , '고양시 일산서구', 9
+					            , '용인시', 10
+					            , '용인시 처인구', 11
+					            , '용인시 기흥구', 12
+					            , '용인시 수지구', 13
+					            , '성남시', 14
+					            , '성남시 수정구', 15
+					            , '성남시 중원구', 16
+					            , '성남시 분당구', 17
+					            , '부천시', 18
+					            , '안산시', 19
+					            , '안산시 상록구', 20
+					            , '안산시 단원구', 21
+					            , '화성시', 22
+					            , '화성시청', 23
+					            , '화성시 동부출장소', 24
+					            , '화성시 동탄출장소', 25
+					            , '남양주시', 26
+					            , '안양시', 27
+					            , '안양시 만안구', 28
+					            , '안양시 동안구', 29
+					            , '평택시', 30
+					            , '평택시청', 31
+					            , '평택시 송탄출장소', 32
+					            , '평택시 안중출장소', 33
+					            , '의정부시', 34
+					            , '파주시', 35
+					            , '시흥시', 36
+					            , '김포시', 37
+					            , '광명시', 38
+					            , '광주시', 39
+					            , '군포시', 40
+					            , '이천시', 41
+					            , '오산시', 42
+					            , '하남시', 43
+					            , '양주시', 44
+					            , '구리시', 45
+					            , '안성시', 46
+					            , '포천시', 47
+					            , '의왕시', 48
+					            , '여주시', 49
+					            , '양평군', 50
+					            , '동두천시',51
+					            , '과천시', 52
+					            , '가평군', 53
+					            , '연천군', 54),
+                       DEPT_CODE
+                ) tb
+            ) tb
+        ) tb
+        WHERE 1 = 1
+        )
+        SELECT * FROM
+            ( SELECT
+                    NVL(RN, 0) AS RN
+                    , DEPT_CODE
+                    , ( CASE WHEN LOWEST_DEPT_NM IS NULL AND DEPTNUM IS NULL THEN '합계' ELSE LOWEST_DEPT_NM END
+                      ) AS LOWEST_DEPT_NM
+                    , LOWEST_DEPT_NM_BF
+                    , DEPTNUM
+                    , SUM(PRCS_SUM) AS PRCS_SUM
+                    , SUM(PRCS_STTUS1) AS PRCS_STTUS1
+                    , SUM(PRCS_STTUS2) AS PRCS_STTUS2
+                    , SUM(PRCS_STTUS3) AS PRCS_STTUS3
+                    , SUM(PRCS_STTUS4) AS PRCS_STTUS4
+                    , SUM(PRCS_STTUS5) AS PRCS_STTUS5
+                    , SUM(PRCS_STTUS6) AS PRCS_STTUS6
+                    , SUM(PRCS_STTUS7) AS PRCS_STTUS7
+                    , ROUND( NVL( SUM(PRCS_STTUS3) / DECODE(SUM(PRCS_SUM),0, NULL, SUM(PRCS_SUM))*100 , 0) ,2) AS PERCENT
+            FROM STTST
+                GROUP BY ROLLUP ((RN, DEPT_CODE,DEPTNUM, LOWEST_DEPT_NM, LOWEST_DEPT_NM_BF, PERCENT))
+            )
+            ORDER BY RN ASC
+    ]]>
+
+
+
+    </select>
+
+
+    <!-- 2018. 02. 04. YYK.  -->
+    <select id="sttstDAO.selectDatePeriodListRestYear" parameterClass="sttstVO" resultClass="sttstVO">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestYear */
+        /* 날짜 기준 처리현황(연별) 조회 */
+
+		SELECT
+			    tnpotholesttemnt.YEAR AS STTEMNT_DT
+			    ,NVL( SUM( B.DATACNT ), 0) AS PRCS_COUNT
+	            ,SUM(CASE B.MONTH WHEN '01' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT1
+	            ,SUM(CASE B.MONTH WHEN '02' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT2
+	            ,SUM(CASE B.MONTH WHEN '03' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT3
+	            ,SUM(CASE B.MONTH WHEN '04' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT4
+	            ,SUM(CASE B.MONTH WHEN '05' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT5
+	            ,SUM(CASE B.MONTH WHEN '06' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT6
+	            ,SUM(CASE B.MONTH WHEN '07' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT7
+	            ,SUM(CASE B.MONTH WHEN '08' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT8
+	            ,SUM(CASE B.MONTH WHEN '09' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT9
+	            ,SUM(CASE B.MONTH WHEN '10' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT10
+	            ,SUM(CASE B.MONTH WHEN '11' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT11
+	            ,SUM(CASE B.MONTH WHEN '12' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT12
+		  FROM ( SELECT  TO_CHAR(ADD_MONTHS(YYMM,LEVEL-1),'YYYY') AS YEAR
+		                ,TO_CHAR(ADD_MONTHS(YYMM,LEVEL-1),'MM') AS MONTH
+		           FROM ( SELECT TO_DATE( TO_NUMBER(TO_CHAR((
+		           								  SELECT MIN(MIN) FROM (SELECT Min(C.sttemnt_dt) AS MIN
+                                                  FROM   tn_pothole_sttemnt C
+                                                  WHERE  C.use_at = 'Y'
+                                                         AND C.delete_at = 'N'
+                                                         UNION ALL
+                                                 SELECT Min(C.sttemnt_dt)  AS MIN
+                                                  FROM   tn_pothole_mltemnt C
+                                                  WHERE  C.use_at = 'Y'
+                                                         AND C.delete_at = 'N'
+                                                         UNION ALL
+                                                  SELECT Min(C.sttemnt_dt)  AS MIN
+                                                  FROM   tn_pothole_ctsemnt C
+                                                  WHERE  C.use_at = 'Y'
+                                                         AND C.delete_at = 'N')), 'YYYYMMDD')) , 'YYYYMMDD'
+		                                 ) YYMM
+		                    FROM DUAL
+		                )
+		                  CONNECT BY ADD_MONTHS(YYMM,LEVEL-1) < TO_DATE( TO_NUMBER(TO_CHAR((
+		                  			  SELECT MAX(MAX) FROM (SELECT Max(C.sttemnt_dt)  AS MAX
+                                      FROM   tn_pothole_sttemnt C
+                                      WHERE  C.use_at = 'Y'
+                                             AND C.delete_at = 'N'
+                                      UNION ALL
+                                      SELECT Max(C.sttemnt_dt)   AS MAX
+                                      FROM   tn_pothole_mltemnt C
+                                      WHERE  C.use_at = 'Y'
+                                             AND C.delete_at = 'N'
+                                      UNION ALL
+                                      SELECT Max(C.sttemnt_dt)   AS MAX
+                                      FROM   tn_pothole_ctsemnt C
+                                      WHERE  C.use_at = 'Y'
+                                             AND C.delete_at = 'N')), 'YYYYMMDD')) , 'YYYYMMDD'
+                                                                    )
+               ) tnpotholesttemnt
+		       ,(
+
+
+
+		       SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+		            AND tnpotholesttemnt.BSNM_NM IS NOT NULL
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	</isNotEmpty>
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+	<![CDATA[
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+
+
+		                   union all
+
+		                    SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+		            AND tnpotholesttemnt.BSNM_NM IS NOT NULL
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	</isNotEmpty>
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+	<![CDATA[
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+
+
+		        			union all
+
+		        		 SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+		            AND tnpotholesttemnt.BSNM_NM IS NOT NULL
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	</isNotEmpty>
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+	<![CDATA[
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+
+
+
+
+
+
+		        ) B
+		 WHERE tnpotholesttemnt.YEAR = B.YEAR (+)
+		   AND tnpotholesttemnt.MONTH = B.MONTH (+)
+	]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[  AND tnpotholesttemnt.YEAR = #STTEMNT_DT#  ]]></isNotEmpty>
+    <![CDATA[
+		 GROUP BY tnpotholesttemnt.YEAR
+		 ORDER BY $sidx$ $sord$
+    ]]>
+    </select>
+
+    <!-- 2019.07.16 LHJ -->
+    <!-- <select id="sttstDAO.selectDatePeriodListRestYear" parameterClass="sttstVO" resultClass="sttstVO">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestYear */
+        /* 날짜 기준 처리현황(연별) 조회 */
+
+		SELECT
+			    B.YEAR AS STTEMNT_DT
+			    ,NVL( SUM( B.DATACNT ), 0) AS PRCS_COUNT
+	            ,SUM(CASE B.MONTH WHEN '01' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT1
+	            ,SUM(CASE B.MONTH WHEN '02' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT2
+	            ,SUM(CASE B.MONTH WHEN '03' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT3
+	            ,SUM(CASE B.MONTH WHEN '04' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT4
+	            ,SUM(CASE B.MONTH WHEN '05' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT5
+	            ,SUM(CASE B.MONTH WHEN '06' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT6
+	            ,SUM(CASE B.MONTH WHEN '07' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT7
+	            ,SUM(CASE B.MONTH WHEN '08' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT8
+	            ,SUM(CASE B.MONTH WHEN '09' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT9
+	            ,SUM(CASE B.MONTH WHEN '10' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT10
+	            ,SUM(CASE B.MONTH WHEN '11' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT11
+	            ,SUM(CASE B.MONTH WHEN '12' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT12
+		  FROM ( SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+	AND ((#DEPT_CODE# = '7000300' AND tnpotholesttemnt.DEPT_CODE > '7000300' AND tnpotholesttemnt.DEPT_CODE < '7000400')
+                          OR ( #DEPT_CODE# != '7000300' AND tnpotholesttemnt.DEPT_CODE = #DEPT_CODE# ) )
+	]]>
+	</isNotEmpty>
+	<![CDATA[
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+
+                union all
+
+                SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+	AND ((#DEPT_CODE# = '7000300' AND tnpotholesttemnt.DEPT_CODE > '7000300' AND tnpotholesttemnt.DEPT_CODE < '7000400')
+                          OR ( #DEPT_CODE# != '7000300' AND tnpotholesttemnt.DEPT_CODE = #DEPT_CODE# ) )
+	]]>
+	</isNotEmpty>
+	<![CDATA[
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+
+                       union all
+
+                SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		          	AND tnpotholesttemnt.STTEMNT_DT IS NOT NULL
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+	AND ((#DEPT_CODE# = '7000300' AND tnpotholesttemnt.DEPT_CODE > '7000300' AND tnpotholesttemnt.DEPT_CODE < '7000400')
+                          OR ( #DEPT_CODE# != '7000300' AND tnpotholesttemnt.DEPT_CODE = #DEPT_CODE# ) )
+	]]>
+	</isNotEmpty>
+	<![CDATA[
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+
+
+		        ) B
+	]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[  WHERE B.YEAR = #STTEMNT_DT#  ]]></isNotEmpty>
+    <![CDATA[
+		 GROUP BY B.YEAR
+		 ORDER BY $sidx$ $sord$
+    ]]>
+    </select> -->
+
+
+    <!-- 2018. 02. 04. YYK. -->
+    <!-- 2019. 07. 15. LHJ. 수정 -->
+    <select id="sttstDAO.selectDatePeriodListRestYearTotalCount" parameterClass="sttstVO" resultClass="int">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestYearTotalCount */
+        /* 날짜 기준 처리현황 조회(연별) 카운트 */
+
+        SELECT COUNT(*) FROM (
+
+	        SELECT
+	               DISTINCT(TO_CHAR(STTEMNT_DT, 'YYYY')) AS STTEMNT_DT
+	               ,COUNT(DECODE(PRCS_STTUS, #PRCS_STTUS#, 1)) AS PRCS_STTUS
+	          FROM TN_POTHOLE_STTEMNT
+	         WHERE 1=1
+    ]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[ AND TO_CHAR(STTEMNT_DT, 'YYYY') = #STTEMNT_DT# ]]></isNotEmpty>
+    		<![CDATA[ GROUP BY TO_CHAR(STTEMNT_DT, 'YYYY') ]]>
+
+    union all
+
+	<![CDATA[
+	        SELECT
+	               DISTINCT(TO_CHAR(STTEMNT_DT, 'YYYY')) AS STTEMNT_DT
+	               ,COUNT(DECODE(PRCS_STTUS, #PRCS_STTUS#, 1)) AS PRCS_STTUS
+	          FROM TN_POTHOLE_MLTEMNT
+	         WHERE 1=1
+    ]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[ AND TO_CHAR(STTEMNT_DT, 'YYYY') = #STTEMNT_DT# ]]></isNotEmpty>
+    		<![CDATA[ GROUP BY TO_CHAR(STTEMNT_DT, 'YYYY') ]]>
+
+    union all
+
+	<![CDATA[
+	        SELECT
+	               DISTINCT(TO_CHAR(STTEMNT_DT, 'YYYY')) AS STTEMNT_DT
+	               ,COUNT(DECODE(PRCS_STTUS, #PRCS_STTUS#, 1)) AS PRCS_STTUS
+	          FROM TN_POTHOLE_CTSEMNT
+	         WHERE 1=1
+    ]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[ AND TO_CHAR(STTEMNT_DT, 'YYYY') = #STTEMNT_DT# ]]></isNotEmpty>
+    		<![CDATA[ GROUP BY TO_CHAR(STTEMNT_DT, 'YYYY') ]]>
+
+    <![CDATA[
+         )
+    ]]>
+    </select>
+
+    <sql id="sttstDAO.selectDatePeriodListRestYearExcel.select">
+    	<![CDATA[
+    	SELECT TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')  AS STTEMNT_DT
+	    ]]>
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS1  /* 포트홀_통계.처리_유형1 신고 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0002'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS2  /* 포트홀_통계.처리_유형2 접수 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0003'
+		<isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS3  /* 포트홀_통계.처리_유형3 처리완료 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0004'
+		<isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS4  /* 포트홀_통계.처리_유형4 보수예정 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0005'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS5  /* 포트홀_통계.처리_유형5 재배정요청 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0006'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS6  /* 포트홀_통계.처리_유형6 기타 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0007'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS7  /* 포트홀_통계.처리_유형7 좌표오류 */
+    </sql>
+
+    <sql id="sttstDAO.selectDatePeriodListRestYearExcel.where">
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59'  ]]></isNotEmpty>
+		<![CDATA[
+			        GROUP BY TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		]]>
+	</sql>
+
+    <!-- 2018. 02. 04. YYK. -->
+    <!-- 2019. 07. 16. LHJ. 수정 -->
+    <select id="sttstDAO.selectDatePeriodListRestYearExcel" parameterClass="sttstVO" resultClass="hashMap">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestYearExcel */
+        /* 날짜 기준 처리현황(연별) 엑셀저장 */
+
+    SELECT tb.*,
+           tb.PRCS_COUNT
+	  FROM (
+	    SELECT
+			 tb.STTEMNT_DT
+		    ,NVL(tb.PRCS_STTUS1 + tb.PRCS_STTUS2 + tb.PRCS_STTUS3 + tb.PRCS_STTUS4 + tb.PRCS_STTUS5 + tb.PRCS_STTUS6 + tb.PRCS_STTUS7 , 0) AS PRCS_COUNT
+			,tb.PRCS_STTUS1 AS PRCS_STTUS1
+			,tb.PRCS_STTUS2 AS PRCS_STTUS2
+			,tb.PRCS_STTUS3 AS PRCS_STTUS3
+			,tb.PRCS_STTUS4 AS PRCS_STTUS4
+			,tb.PRCS_STTUS5 AS PRCS_STTUS5
+			,tb.PRCS_STTUS6 AS PRCS_STTUS6
+			,tb.PRCS_STTUS7 AS PRCS_STTUS7
+		FROM (
+					]]>
+
+					<include refid="sttstDAO.selectDatePeriodListRestYearExcel.select" />
+			        <![CDATA[
+			        FROM
+    			        PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+			        WHERE  1=1
+	                  AND tnpotholesttemnt.USE_AT = 'Y'
+	                  AND tnpotholesttemnt.DELETE_AT = 'N'
+	                  AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	    			]]>
+	    			<include refid="sttstDAO.selectDatePeriodListRestYearExcel.where" />
+
+	    			union all
+
+	    			<include refid="sttstDAO.selectDatePeriodListRestYearExcel.select" />
+			        <![CDATA[
+			        FROM
+    			        PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+			        WHERE  1=1
+	                  AND tnpotholesttemnt.USE_AT = 'Y'
+	                  AND tnpotholesttemnt.DELETE_AT = 'N'
+	                  AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	    			]]>
+	    			<include refid="sttstDAO.selectDatePeriodListRestYearExcel.where" />
+
+	    			union all
+
+	    			<include refid="sttstDAO.selectDatePeriodListRestYearExcel.select" />
+			        <![CDATA[
+			        FROM
+    			        PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+			        WHERE  1=1
+	                  AND tnpotholesttemnt.USE_AT = 'Y'
+	                  AND tnpotholesttemnt.DELETE_AT = 'N'
+	                  AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	    			]]>
+	    			<include refid="sttstDAO.selectDatePeriodListRestYearExcel.where" />
+		<![CDATA[
+			        ) tb
+			    ORDER BY $sidx$ $sord$
+            ) tb
+	    ]]>
+
+    </select>
+
+    <!-- 최소, 최대 년도 조회 -->
+    <select id="sttstDAO.selectMinMaxYear" resultClass="sttstVO">
+    <![CDATA[
+        /* sttstDAO.selectMinMaxYear */
+        /* 데이터 최소, 최대 년도 조회 */
+          SELECT
+    TO_CHAR(MIN(MIN_YEAR), 'YYYYMMDD') AS MIN_YEAR
+		, TO_CHAR(MAX(MAX_YEAR), 'YYYYMMDD') AS MAX_YEAR
+    FROM (
+        SELECT
+		    MIN(tnpotholesttemnt.STTEMNT_DT) AS MIN_YEAR
+		    ,MAX(tnpotholesttemnt.STTEMNT_DT) AS MAX_YEAR
+		 FROM PTH_STTMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.USE_AT = 'Y'
+            AND tnpotholesttemnt.DELETE_AT = 'N'
+            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+
+            union all
+
+         SELECT
+		    MIN(tnpotholesttemnt.STTEMNT_DT) AS MIN_YEAR
+		    ,MAX(tnpotholesttemnt.STTEMNT_DT) AS MAX_YEAR
+		 FROM PTH_MLTMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.USE_AT = 'Y'
+            AND tnpotholesttemnt.DELETE_AT = 'N'
+            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+
+            union all
+
+         SELECT
+		    MIN(tnpotholesttemnt.STTEMNT_DT) AS MIN_YEAR
+		    ,MAX(tnpotholesttemnt.STTEMNT_DT) AS MAX_YEAR
+		 FROM PTH_CTSMNT pthsttmnt
+            LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt
+                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+            LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair
+                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                AND tnpotholerpair.USE_AT = 'Y'
+                AND tnpotholerpair.DELETE_AT = 'N'
+        WHERE 1 = 1
+            AND tnpotholesttemnt.USE_AT = 'Y'
+            AND tnpotholesttemnt.DELETE_AT = 'N'
+            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ) tb
+    ]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+            LEFT OUTER JOIN
+                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                AND USE_AT = 'Y'
+                AND DELETE_AT = 'N' -->
+
+    <!-- 2018. 01. 25. JOY. -->
+    <select id="sttstDAO.selectBsnmPeriodListRest" parameterClass="sttstVO" resultClass="sttstVO">
+    <![CDATA[
+        /* sttstDAO.selectBsnmPeriodListRest */
+        /* 신고자기준 신고현황 조회 */
+        WITH STTST ( RN, DEPT_CODE, LOWEST_DEPT_NM, BSNM_NM, VHCLE_NO, PRCS_STTUS, PRCS_STTUS1, PRCS_STTUS2, PRCS_STTUS3, PRCS_STTUS4, PRCS_STTUS5, PRCS_STTUS6, PRCS_STTUS7, PERCENT )
+        AS (
+	        SELECT
+			    ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+			    , tb.*
+			FROM (
+			    SELECT
+			        tb.*
+			        , CASE
+			            WHEN (tb.PRCS_STTUS <= 0 OR tb.PRCS_STTUS3 <= 0) THEN 0
+			            ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_STTUS * 100), 2 )
+			        END AS PERCENT
+			    FROM (
+			        SELECT
+			            tb.DEPT_CODE
+			            , ( SELECT tcdept.LOWEST_DEPT_NM
+	                        FROM TC_DEPT tcdept
+	                        WHERE tcdept.DEPT_CODE = tb.DEPT_CODE
+	                    ) AS LOWEST_DEPT_NM
+			            , tb.BSNM_NM
+			            , tb.VHCLE_NO
+			            , NVL(COUNT( tb.PRCS_STTUS ), 0) AS PRCS_STTUS
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0001', 1) ), 0) AS PRCS_STTUS1
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0002', 1) ), 0) AS PRCS_STTUS2
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0003', 1) ), 0) AS PRCS_STTUS3
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0004', 1) ), 0) AS PRCS_STTUS4
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0005', 1) ), 0) AS PRCS_STTUS5
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0006', 1) ), 0) AS PRCS_STTUS6
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0007', 1) ), 0) AS PRCS_STTUS7
+			        FROM (
+
+			            SELECT
+			                /* pthsttmnt.DEPT_CODE */
+                            ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+			                , pthsttmnt.BSNM_NM
+			                , tnpotholesttemnt.VHCLE_NO
+			                , tnpotholesttemnt.PTH_RG_NO
+			                , tnpotholesttemnt.PRCS_STTUS
+			                , tnpotholesttemnt.STTEMNT_DT
+			            FROM PTH_STTMNT pthsttmnt
+				            LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+				                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				            LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+				                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				                AND tnpotholerpair.USE_AT = 'Y'
+				                AND tnpotholerpair.DELETE_AT = 'N'
+				            WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+			                AND tnpotholesttemnt.USE_AT = 'Y'
+	                        AND tnpotholesttemnt.DELETE_AT = 'N'
+	                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	]]>
+
+	                     union all
+
+	<![CDATA[
+	                        SELECT
+			                /* pthsttmnt.DEPT_CODE */
+                            ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+			                , pthsttmnt.BSNM_NM
+			                , tnpotholesttemnt.VHCLE_NO
+			                , tnpotholesttemnt.PTH_RG_NO
+			                , tnpotholesttemnt.PRCS_STTUS
+			                , tnpotholesttemnt.STTEMNT_DT
+			            FROM PTH_MLTMNT pthsttmnt
+				            LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+				                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				            LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+				                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				                AND tnpotholerpair.USE_AT = 'Y'
+				                AND tnpotholerpair.DELETE_AT = 'N'
+				            WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+			                AND tnpotholesttemnt.USE_AT = 'Y'
+	                        AND tnpotholesttemnt.DELETE_AT = 'N'
+	                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+
+			            ) tb
+			        WHERE 1=1
+    ]]>
+
+    <isNotEmpty property="BSNM_NM"><![CDATA[ AND tb.BSNM_NM LIKE '%' || #BSNM_NM# || '%' ]]></isNotEmpty>
+
+    <![CDATA[
+			        GROUP BY tb.DEPT_CODE, tb.BSNM_NM, tb.VHCLE_NO
+			    ) tb
+			) tb
+		)
+
+		SELECT
+		  tb.*
+		FROM
+			(
+				SELECT
+				    NVL(RN, 0) AS RN
+				    , DEPT_CODE
+				    , LOWEST_DEPT_NM
+				    , NVL(BSNM_NM, '합계') AS BSNM_NM
+				    , VHCLE_NO
+				    , SUM(PRCS_STTUS) AS PRCS_STTUS
+				    , SUM(PRCS_STTUS1) AS PRCS_STTUS1
+				    , SUM(PRCS_STTUS2) AS PRCS_STTUS2
+				    , SUM(PRCS_STTUS3) AS PRCS_STTUS3
+				    , SUM(PRCS_STTUS4) AS PRCS_STTUS4
+				    , SUM(PRCS_STTUS5) AS PRCS_STTUS5
+				    , SUM(PRCS_STTUS6) AS PRCS_STTUS6
+				    , SUM(PRCS_STTUS7) AS PRCS_STTUS7
+				    , ROUND( NVL( SUM(PRCS_STTUS3) / DECODE(SUM(PRCS_STTUS),0, NULL, SUM(PRCS_STTUS))*100 , 0) ,2) AS PERCENT
+                FROM STTST
+                GROUP BY ROLLUP(( RN, DEPT_CODE, LOWEST_DEPT_NM, BSNM_NM, VHCLE_NO, PERCENT ))
+			) tb
+		ORDER BY tb.RN ASC
+    ]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+                            LEFT OUTER JOIN
+                                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                                AND USE_AT = 'Y'
+                                AND DELETE_AT = 'N' -->
+
+    <!-- 2018. 01. 25. JOY. -->
+    <select id="sttstDAO.selectBsnmPeriodListRestTotalCount" parameterClass="sttstVO" resultClass="int">
+    <![CDATA[
+        /* sttstDAO.selectBsnmPeriodListRestTotalCount */
+        /* 신고자기준 신고현황 조회 */
+        SELECT
+            COUNT(*)
+        FROM (
+            SELECT
+                tb.*
+                , CASE
+                    WHEN (tb.PRCS_STTUS <= 0 OR tb.PRCS_STTUS3 <= 0) THEN 0
+                    ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_STTUS * 100), 2 )
+                END AS PERCENT
+            FROM (
+                SELECT
+                    tb.DEPT_CODE
+                    , ( SELECT tcdept.LOWEST_DEPT_NM
+                        FROM TC_DEPT tcdept
+                        WHERE tcdept.DEPT_CODE = tb.DEPT_CODE
+                    ) AS LOWEST_DEPT_NM
+                    , tb.BSNM_NM
+                    , tb.VHCLE_NO
+                    , NVL(COUNT( tb.PRCS_STTUS ), 0) AS PRCS_STTUS
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0001', 1) ), 0) AS PRCS_STTUS1
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0002', 1) ), 0) AS PRCS_STTUS2
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0003', 1) ), 0) AS PRCS_STTUS3
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0004', 1) ), 0) AS PRCS_STTUS4
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0005', 1) ), 0) AS PRCS_STTUS5
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0006', 1) ), 0) AS PRCS_STTUS6
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0007', 1) ), 0) AS PRCS_STTUS7
+                FROM (
+                    SELECT
+                        /* pthsttmnt.DEPT_CODE */
+                        ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+                        , pthsttmnt.BSNM_NM
+                        , tnpotholesttemnt.VHCLE_NO
+                        , tnpotholesttemnt.PTH_RG_NO
+                        , tnpotholesttemnt.PRCS_STTUS
+                        , tnpotholesttemnt.STTEMNT_DT
+                    FROM PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                            AND tnpotholerpair.USE_AT = 'Y'
+                            AND tnpotholerpair.DELETE_AT = 'N'
+                      WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+                        AND tnpotholesttemnt.USE_AT = 'Y'
+                        AND tnpotholesttemnt.DELETE_AT = 'N'
+                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+
+                        union all
+
+                        SELECT
+                        /* pthsttmnt.DEPT_CODE */
+                        ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+                        , pthsttmnt.BSNM_NM
+                        , tnpotholesttemnt.VHCLE_NO
+                        , tnpotholesttemnt.PTH_RG_NO
+                        , tnpotholesttemnt.PRCS_STTUS
+                        , tnpotholesttemnt.STTEMNT_DT
+                    FROM PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                            AND tnpotholerpair.USE_AT = 'Y'
+                            AND tnpotholerpair.DELETE_AT = 'N'
+                      WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+                        AND tnpotholesttemnt.USE_AT = 'Y'
+                        AND tnpotholesttemnt.DELETE_AT = 'N'
+                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+
+                    ) tb
+                WHERE 1=1
+    ]]>
+
+    <isNotEmpty property="BSNM_NM"><![CDATA[ AND tb.BSNM_NM LIKE '%' || #BSNM_NM# || '%' ]]></isNotEmpty>
+
+    <![CDATA[
+                GROUP BY tb.DEPT_CODE, tb.BSNM_NM, tb.VHCLE_NO
+            ) tb
+        ) tb
+    ]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+                        LEFT OUTER JOIN
+                            ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                            AND tnmntrngmbr.ENTRST_AT = 'Y'
+                            AND USE_AT = 'Y'
+                            AND DELETE_AT = 'N' -->
+
+    <select id="sttstDAO.selectBsnmPeriodListRestExcel" parameterClass="sttstVO" resultClass="hashMap">
+    <![CDATA[
+        /* sttstDAO.selectBsnmPeriodListRest */
+        /* 신고자기준 신고현황 조회 */
+        WITH STTST ( RN, DEPT_CODE, LOWEST_DEPT_NM, BSNM_NM, VHCLE_NO, PRCS_STTUS, PRCS_STTUS1, PRCS_STTUS2, PRCS_STTUS3, PRCS_STTUS4, PRCS_STTUS5, PRCS_STTUS6, PRCS_STTUS7, PERCENT )
+        AS (
+	        SELECT
+	            ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+	            , tb.*
+	        FROM (
+	            SELECT
+	                tb.*
+	                , CASE
+	                    WHEN (tb.PRCS_STTUS <= 0 OR tb.PRCS_STTUS3 <= 0) THEN 0
+	                    ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_STTUS * 100), 2 )
+	                END AS PERCENT
+	            FROM (
+	                SELECT
+	                    tb.DEPT_CODE
+	                    , ( SELECT tcdept.LOWEST_DEPT_NM
+		                    FROM TC_DEPT tcdept
+		                    WHERE tcdept.DEPT_CODE = tb.DEPT_CODE
+	                    ) AS LOWEST_DEPT_NM
+	                    , tb.BSNM_NM
+	                    , tb.VHCLE_NO
+	                    , NVL(COUNT( tb.PRCS_STTUS ), 0) AS PRCS_STTUS
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0001', 1) ), 0) AS PRCS_STTUS1
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0002', 1) ), 0) AS PRCS_STTUS2
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0003', 1) ), 0) AS PRCS_STTUS3
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0004', 1) ), 0) AS PRCS_STTUS4
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0005', 1) ), 0) AS PRCS_STTUS5
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0006', 1) ), 0) AS PRCS_STTUS6
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0007', 1) ), 0) AS PRCS_STTUS7
+	                FROM (
+	                    SELECT
+	                        /* pthsttmnt.DEPT_CODE */
+                            ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+	                        , pthsttmnt.BSNM_NM
+	                        , tnpotholesttemnt.VHCLE_NO
+	                        , tnpotholesttemnt.PTH_RG_NO
+	                        , tnpotholesttemnt.PRCS_STTUS
+	                        , tnpotholesttemnt.STTEMNT_DT
+
+
+	                    FROM PTH_STTMNT pthsttmnt
+	                        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                            AND tnpotholerpair.USE_AT = 'Y'
+	                            AND tnpotholerpair.DELETE_AT = 'N'
+	                    WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+	                        AND tnpotholesttemnt.USE_AT = 'Y'
+	                        AND tnpotholesttemnt.DELETE_AT = 'N'
+	                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+
+
+	                        union all
+
+
+	                        SELECT
+	                        /* pthsttmnt.DEPT_CODE */
+                            ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+	                        , pthsttmnt.BSNM_NM
+	                        , tnpotholesttemnt.VHCLE_NO
+	                        , tnpotholesttemnt.PTH_RG_NO
+	                        , tnpotholesttemnt.PRCS_STTUS
+	                        , tnpotholesttemnt.STTEMNT_DT
+
+
+	                    FROM PTH_MLTMNT pthsttmnt
+	                        LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+	                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                        LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+	                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                            AND tnpotholerpair.USE_AT = 'Y'
+	                            AND tnpotholerpair.DELETE_AT = 'N'
+	                    WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+	                        AND tnpotholesttemnt.USE_AT = 'Y'
+	                        AND tnpotholesttemnt.DELETE_AT = 'N'
+	                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+
+	                    ) tb
+	                WHERE 1=1
+    ]]>
+
+    <isNotEmpty property="BSNM_NM"><![CDATA[ AND tb.BSNM_NM LIKE '%' || #BSNM_NM# || '%' ]]></isNotEmpty>
+
+    <![CDATA[
+	                GROUP BY tb.DEPT_CODE, tb.BSNM_NM, tb.VHCLE_NO
+	            ) tb
+	        ) tb
+        )
+
+        SELECT
+          tb.*
+        FROM
+            (
+                SELECT
+                    NVL(RN, 0) AS RN
+                    , DEPT_CODE
+                    , LOWEST_DEPT_NM
+                    , NVL(BSNM_NM, '합계') AS BSNM_NM
+                    , VHCLE_NO
+                    , SUM(PRCS_STTUS) AS PRCS_STTUS
+                    , SUM(PRCS_STTUS1) AS PRCS_STTUS1
+                    , SUM(PRCS_STTUS2) AS PRCS_STTUS2
+                    , SUM(PRCS_STTUS3) AS PRCS_STTUS3
+                    , SUM(PRCS_STTUS4) AS PRCS_STTUS4
+                    , SUM(PRCS_STTUS5) AS PRCS_STTUS5
+                    , SUM(PRCS_STTUS6) AS PRCS_STTUS6
+                    , SUM(PRCS_STTUS7) AS PRCS_STTUS7
+                    , ROUND( NVL( SUM(PRCS_STTUS3) / DECODE(SUM(PRCS_STTUS),0, NULL, SUM(PRCS_STTUS))*100 , 0) ,2) AS PERCENT
+                FROM STTST
+                GROUP BY ROLLUP(( RN, DEPT_CODE, LOWEST_DEPT_NM, BSNM_NM, VHCLE_NO, PERCENT ))
+            ) tb
+        ORDER BY tb.RN ASC
+    ]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+                            LEFT OUTER JOIN
+                                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                                AND USE_AT = 'Y'
+                                AND DELETE_AT = 'N' -->
+
+
+
+    <!-- 2019. 07. 11. LHJ.  -->
+    <select id="sttstDAO.selectDatePeriodListRestPthMode" parameterClass="sttstVO" resultClass="sttstVO">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRest1 */
+        /* 날짜 기준 처리현황 조회 */
+
+	WITH STTST ( DEPT_CODE, LOWEST_DEPT_NM_BF, PRCS_STTUS1, PRCS_STTUS2, PRCS_STTUS3, PRCS_STTUS4, PRCS_STTUS5, PRCS_STTUS6, PRCS_STTUS7, PRCS_SUM, LOWEST_DEPT_NM, DEPTNUM, PERCENT, RN )
+	AS (
+        SELECT tb.*
+              ,ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+         FROM (
+            SELECT
+                tb.*
+                ,CASE
+                      WHEN (tb.PRCS_SUM <= 0 OR tb.PRCS_STTUS3 <= 0) then 0
+                      ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_SUM * 100), 2)
+                  END AS PERCENT
+            FROM (
+                SELECT
+                    tb.*
+                    ,NVL(tb.PRCS_STTUS1 + tb.PRCS_STTUS2 + tb.PRCS_STTUS3 + tb.PRCS_STTUS4 + tb.PRCS_STTUS5 + tb.PRCS_STTUS6 + tb.PRCS_STTUS7 , 0) AS PRCS_SUM
+                    ,(CASE WHEN tb.DEPT_CODE > '7000300'  AND tb.DEPT_CODE  < '7000400'
+                           THEN CONCAT( '민자도로사업자',  ' ('|| tb.LOWEST_DEPT_NM_BF || ')' )
+                           WHEN (DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || tb.LOWEST_DEPT_NM_BF
+                           WHEN (DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || tb.LOWEST_DEPT_NM_BF
+                           WHEN (DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || tb.LOWEST_DEPT_NM_BF
+                           WHEN (DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || tb.LOWEST_DEPT_NM_BF
+                           WHEN (DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || tb.LOWEST_DEPT_NM_BF
+                           WHEN (DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || tb.LOWEST_DEPT_NM_BF
+                           WHEN (DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || tb.LOWEST_DEPT_NM_BF
+                           WHEN (DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || tb.LOWEST_DEPT_NM_BF
+                           ELSE tb.LOWEST_DEPT_NM_BF
+                       END) AS LOWEST_DEPT_NM       /* 포트홀_신고_내역.부서_코드_이름*/
+                    ,ROWNUM deptnum
+                FROM (
+                    SELECT
+                        tcdept.DEPT_CODE
+                        , tcdept.LOWEST_DEPT_NM AS LOWEST_DEPT_NM_BF           /* 포트홀_통계.부서_코드 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'
+    ]]>
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS1  /* 포트홀_통계.처리_유형1 신고 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0002'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS2  /* 포트홀_통계.처리_유형2 접수 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0003'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS3  /* 포트홀_통계.처리_유형3 처리완료 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0004'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS4  /* 포트홀_통계.처리_유형4 보수예정 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0005'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS5  /* 포트홀_통계.처리_유형5 재배정요청 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0006'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS6  /* 포트홀_통계.처리_유형6 기타 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0007'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS7  /* 포트홀_통계.처리_유형7 좌표오류 */
+
+	   	<isEqual property="PTHMODE" compareValue="T">
+			      	FROM
+				        PTH_STTMNT pthsttmnt
+				           LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+				                                                                  AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+				           LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+				                                                           AND tnpotholerpair.use_at = 'Y'
+				                                                           AND tnpotholerpair.delete_at = 'N'
+				           FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+	    </isEqual>
+
+	    <isEqual property="PTHMODE" compareValue="M">
+					FROM
+	                    PTH_MLTMNT pthsttmnt
+	                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+	                                                                               AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+	                                                                           AND tnpotholerpair.use_at = 'Y'
+	                                                                           AND tnpotholerpair.delete_at = 'N'
+	                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+	    </isEqual>
+
+	    <isEqual property="PTHMODE" compareValue="C">
+					FROM
+	                    PTH_CTSMNT pthsttmnt
+	                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+	                                                                               AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+	                                                                           AND tnpotholerpair.use_at = 'Y'
+	                                                                           AND tnpotholerpair.delete_at = 'N'
+	                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+	    </isEqual>
+	<![CDATA[
+	WHERE 1 = 1
+                      AND ( tcdept.DEPT_CODE IN ('6411399','6411799', '7000100', '7000200', '7000500', '7000900', '9999999' )
+                      		OR (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+                                  ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                            OR (tcdept.DEPT_CODE < '6410000' AND tcdept.ODR = 2  )
+                            OR (tcdept.DEPT_CODE >= '7000300' AND tcdept.DEPT_CODE < '7000400' ) )
+    ]]>
+    <isEmpty property="DEPT_CODE"> /* OR tcdept.dept_code IS NULL */ </isEmpty>
+    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                         /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+	    ]]>
+    </isNotEmpty>
+    <![CDATA[
+                    GROUP BY
+                        tcdept.DEPT_CODE
+                        ,tcdept.LOWEST_DEPT_NM
+                ) tb
+            ) tb
+        ) tb
+        WHERE 1 = 1
+        )
+        SELECT * FROM
+            ( SELECT
+                    NVL(RN, 0) AS RN
+                    , DEPT_CODE
+                    , ( CASE WHEN LOWEST_DEPT_NM IS NULL AND DEPTNUM IS NULL THEN '합계' ELSE LOWEST_DEPT_NM END
+                      ) AS LOWEST_DEPT_NM
+                    , LOWEST_DEPT_NM_BF
+                    , DEPTNUM
+                    , SUM(PRCS_SUM) AS PRCS_SUM
+                    , SUM(PRCS_STTUS1) AS PRCS_STTUS1
+                    , SUM(PRCS_STTUS2) AS PRCS_STTUS2
+                    , SUM(PRCS_STTUS3) AS PRCS_STTUS3
+                    , SUM(PRCS_STTUS4) AS PRCS_STTUS4
+                    , SUM(PRCS_STTUS5) AS PRCS_STTUS5
+                    , SUM(PRCS_STTUS6) AS PRCS_STTUS6
+                    , SUM(PRCS_STTUS7) AS PRCS_STTUS7
+                    , ROUND( NVL( SUM(PRCS_STTUS3) / DECODE(SUM(PRCS_SUM),0, NULL, SUM(PRCS_SUM))*100 , 0) ,2) AS PERCENT
+            FROM STTST
+                GROUP BY ROLLUP ((RN, DEPT_CODE,DEPTNUM, LOWEST_DEPT_NM, LOWEST_DEPT_NM_BF, PERCENT))
+            )
+            /* ORDER BY RN ASC */
+            ORDER BY DECODE(LOWEST_DEPT_NM
+                                , '합계', 0
+                                , '수원시', 1
+                                , '수원시 장안구', 2
+                                , '수원시 권선구', 3
+                                , '수원시 팔달구', 4
+                                , '수원시 영통구', 5
+                                , '고양시', 6
+                                , '고양시 덕양구', 7
+                                , '고양시 일산동구', 8
+                                , '고양시 일산서구', 9
+                                , '용인시', 10
+                                , '용인시 처인구', 11
+                                , '용인시 기흥구', 12
+                                , '용인시 수지구', 13
+                                , '성남시', 14
+                                , '성남시 수정구', 15
+                                , '성남시 중원구', 16
+                                , '성남시 분당구', 17
+                                , '부천시', 18
+                                , '안산시', 19
+                                , '안산시 상록구', 20
+                                , '안산시 단원구', 21
+                                , '화성시', 22
+                                , '화성시청', 23
+                                , '화성시 동부출장소', 24
+                                , '화성시 동탄출장소', 25
+                                , '남양주시', 26
+                                , '안양시', 27
+                                , '안양시 만안구', 28
+                                , '안양시 동안구', 29
+                                , '평택시', 30
+                                , '평택시청', 31
+                                , '평택시 송탄출장소', 32
+                                , '평택시 안중출장소', 33
+                                , '의정부시', 34
+                                , '파주시', 35
+                                , '시흥시', 36
+                                , '김포시', 37
+                                , '광명시', 38
+                                , '광주시', 39
+                                , '군포시', 40
+                                , '이천시', 41
+                                , '오산시', 42
+                                , '하남시', 43
+                                , '양주시', 44
+                                , '구리시', 45
+                                , '안성시', 46
+                                , '포천시', 47
+                                , '의왕시', 48
+                                , '여주시', 49
+                                , '양평군', 50
+                                , '동두천시',51
+                                , '과천시', 52
+                                , '가평군', 53
+                                , '연천군', 54), DEPT_CODE
+    ]]>
+
+
+
+    </select>
+
+<!-- 모니터링단원 조인 해제
+TN_MNTRNG_MBR tnmntrngmbr
+                        LEFT OUTER JOIN PTH_STTMNT pthsttmnt           ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                        AND tnmntrngmbr.ENTRST_AT = 'Y'
+                        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt              ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair              ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        RIGHT OUTER JOIN TC_DEPT tcdept              ON tnpotholesttemnt.DEPT_CODE = tcdept.DEPT_CODE -->
+
+    <!-- 2019. 07. 12. LHJ.  -->
+    <select id="sttstDAO.selectDatePeriodListRestPthModeTotalCount" parameterClass="sttstVO" resultClass="int">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestTotalCount */
+        /* 날짜 기준 처리현황 조회 카운트 */
+        SELECT COUNT(*) FROM (
+            SELECT tcdept.DEPT_CODE
+                    , tcdept.LOWEST_DEPT_NM
+    ]]>
+         <isEqual property="PTHMODE" compareValue="T">
+			      	FROM
+                        PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt              ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair              ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        RIGHT OUTER JOIN TC_DEPT tcdept              ON tnpotholesttemnt.DEPT_CODE = tcdept.DEPT_CODE
+	    </isEqual>
+
+	    <isEqual property="PTHMODE" compareValue="M">
+					FROM
+                        PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt              ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair              ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        RIGHT OUTER JOIN TC_DEPT tcdept              ON tnpotholesttemnt.DEPT_CODE = tcdept.DEPT_CODE
+	    </isEqual>
+
+	    <isEqual property="PTHMODE" compareValue="C">
+					FROM
+                        PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_CTSEMNT tnpotholesttemnt              ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_CTSRPAIR tnpotholerpair              ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        RIGHT OUTER JOIN TC_DEPT tcdept              ON tnpotholesttemnt.DEPT_CODE = tcdept.DEPT_CODE
+	    </isEqual>
+    <![CDATA[
+	WHERE 1 = 1
+                      AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                      AND ( tcdept.DEPT_CODE IN ('6411399','6411799', '7000100', '7000200', '7000500', '7000900', '9999999' )
+                      		OR (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+                                  ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                            OR (tcdept.DEPT_CODE < '6410000' AND tcdept.ODR = 2  )
+                            OR (tcdept.DEPT_CODE >= '7000300' AND tcdept.DEPT_CODE < '7000400' ) )
+    ]]>
+    <isEmpty property="DEPT_CODE">OR tcdept.DEPT_CODE IS NULL</isEmpty>
+    <isNotEmpty property="DEPT_CODE">
+        <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                         /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+    </isNotEmpty>
+    <![CDATA[
+                    GROUP BY
+                            tcdept.DEPT_CODE
+                            , tcdept.LOWEST_DEPT_NM
+        ) WHERE 1 = 1
+    ]]>
+    </select>
+
+
+    <!-- 2019. 07. 15. LHJ.  -->
+    <select id="sttstDAO.selectDatePeriodListRestExcelPthMode" parameterClass="sttstVO" resultClass="hashMap">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRest1 */
+        /* 날짜 기준 처리현황 조회 */
+
+	WITH STTST ( DEPT_CODE, LOWEST_DEPT_NM_BF, PRCS_STTUS1, PRCS_STTUS2, PRCS_STTUS3, PRCS_STTUS4, PRCS_STTUS5, PRCS_STTUS6, PRCS_STTUS7, PRCS_SUM, LOWEST_DEPT_NM, DEPTNUM, PERCENT, RN )
+	AS (
+        SELECT tb.*
+              ,ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+         FROM (
+            SELECT
+                tb.*
+                ,CASE
+                      WHEN (tb.PRCS_SUM <= 0 OR tb.PRCS_STTUS3 <= 0) then 0
+                      ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_SUM * 100), 2)
+                  END AS PERCENT
+            FROM (
+                SELECT
+                    tb.*
+                    ,NVL(tb.PRCS_STTUS1 + tb.PRCS_STTUS2 + tb.PRCS_STTUS3 + tb.PRCS_STTUS4 + tb.PRCS_STTUS5 + tb.PRCS_STTUS6 + tb.PRCS_STTUS7 , 0) AS PRCS_SUM
+                    ,(CASE WHEN tb.DEPT_CODE > '7000300'  AND tb.DEPT_CODE  < '7000400'
+                           THEN CONCAT( '민자도로사업자',  ' ('|| tb.LOWEST_DEPT_NM_BF || ')' )
+                           ELSE tb.LOWEST_DEPT_NM_BF
+                       END) AS LOWEST_DEPT_NM       /* 포트홀_신고_내역.부서_코드_이름*/
+                    ,ROWNUM deptnum
+                FROM (
+                    SELECT
+                        tcdept.DEPT_CODE
+                        , tcdept.LOWEST_DEPT_NM AS LOWEST_DEPT_NM_BF           /* 포트홀_통계.부서_코드 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'
+    ]]>
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS1  /* 포트홀_통계.처리_유형1 신고 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0002'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS2  /* 포트홀_통계.처리_유형2 접수 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0003'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS3  /* 포트홀_통계.처리_유형3 처리완료 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0004'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS4  /* 포트홀_통계.처리_유형4 보수예정 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0005'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS5  /* 포트홀_통계.처리_유형5 재배정요청 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0006'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS6  /* 포트홀_통계.처리_유형6 기타 */
+                        , COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0007'
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+                                      THEN 0 END ) AS PRCS_STTUS7  /* 포트홀_통계.처리_유형7 좌표오류 */
+
+	   	<isEqual property="PTHMODE" compareValue="T">
+			      	FROM
+				        PTH_STTMNT pthsttmnt
+				           LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+				           LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+				                                                           AND tnpotholerpair.use_at = 'Y'
+				                                                           AND tnpotholerpair.delete_at = 'N'
+				           FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+	    </isEqual>
+
+	    <isEqual property="PTHMODE" compareValue="M">
+					FROM
+	                    PTH_MLTMNT pthsttmnt
+	                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+	                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+	                                                                           AND tnpotholerpair.use_at = 'Y'
+	                                                                           AND tnpotholerpair.delete_at = 'N'
+	                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+	    </isEqual>
+
+	    <isEqual property="PTHMODE" compareValue="C">
+					FROM
+	                    PTH_CTSMNT pthsttmnt
+	                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+	                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+	                                                                           AND tnpotholerpair.use_at = 'Y'
+	                                                                           AND tnpotholerpair.delete_at = 'N'
+	                        FULL OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+	    </isEqual>
+	<![CDATA[
+	WHERE 1 = 1
+                      AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+                      AND ( tcdept.DEPT_CODE IN ('6411399','6411799', '7000100', '7000200', '7000500', '7000900', '9999999' )
+                      		OR (tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
+                                  ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
+				              ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
+				              ,'3850000','3840000'  /* 안양시 구 추가 */
+				              ,'3910019','3910029','3910038'  /* 평택시청, 출장소 추가 */
+				              ,'5550000','5560000'  /* 안산시 구 추가 */
+				              ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
+				              ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
+                            OR (tcdept.DEPT_CODE < '6410000' AND tcdept.ODR = 2  )
+                            OR (tcdept.DEPT_CODE >= '7000300' AND tcdept.DEPT_CODE < '7000400' ) )
+    ]]>
+    <isEmpty property="DEPT_CODE">OR tcdept.dept_code IS NULL</isEmpty>
+    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                         /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+	    ]]>
+    </isNotEmpty>
+    <![CDATA[
+                    GROUP BY
+                        tcdept.DEPT_CODE
+                        ,tcdept.LOWEST_DEPT_NM
+                    ORDER BY DECODE(LOWEST_DEPT_NM
+                    			, '수원시', 1
+					            , '수원시 장안구', 2
+					            , '수원시 권선구', 3
+					            , '수원시 팔달구', 4
+					            , '수원시 영통구', 5
+					            , '고양시', 6
+					            , '고양시 덕양구', 7
+					            , '고양시 일산동구', 8
+					            , '고양시 일산서구', 9
+					            , '용인시', 10
+					            , '용인시 처인구', 11
+					            , '용인시 기흥구', 12
+					            , '용인시 수지구', 13
+					            , '성남시', 14
+					            , '성남시 수정구', 15
+					            , '성남시 중원구', 16
+					            , '성남시 분당구', 17
+					            , '부천시', 18
+					            , '안산시', 19
+					            , '안산시 상록구', 20
+					            , '안산시 단원구', 21
+					            , '화성시', 22
+					            , '화성시청', 23
+					            , '화성시 동부출장소', 24
+					            , '화성시 동탄출장소', 25
+					            , '남양주시', 26
+					            , '안양시', 27
+					            , '안양시 만안구', 28
+					            , '안양시 동안구', 29
+					            , '평택시', 30
+					            , '평택시청', 31
+					            , '평택시 송탄출장소', 32
+					            , '평택시 안중출장소', 33
+					            , '의정부시', 34
+					            , '파주시', 35
+					            , '시흥시', 36
+					            , '김포시', 37
+					            , '광명시', 38
+					            , '광주시', 39
+					            , '군포시', 40
+					            , '이천시', 41
+					            , '오산시', 42
+					            , '하남시', 43
+					            , '양주시', 44
+					            , '구리시', 45
+					            , '안성시', 46
+					            , '포천시', 47
+					            , '의왕시', 48
+					            , '여주시', 49
+					            , '양평군', 50
+					            , '동두천시',51
+					            , '과천시', 52
+					            , '가평군', 53
+					            , '연천군', 54
+                           ), DEPT_CODE
+                ) tb
+            ) tb
+        ) tb
+        WHERE 1 = 1
+        )
+        SELECT * FROM
+            ( SELECT
+                    NVL(RN, 0) AS RN
+                    , DEPT_CODE
+                    , ( CASE WHEN LOWEST_DEPT_NM IS NULL AND DEPTNUM IS NULL THEN '합계' ELSE LOWEST_DEPT_NM END
+                      ) AS LOWEST_DEPT_NM
+                    , LOWEST_DEPT_NM_BF
+                    , DEPTNUM
+                    , SUM(PRCS_SUM) AS PRCS_SUM
+                    , SUM(PRCS_STTUS1) AS PRCS_STTUS1
+                    , SUM(PRCS_STTUS2) AS PRCS_STTUS2
+                    , SUM(PRCS_STTUS3) AS PRCS_STTUS3
+                    , SUM(PRCS_STTUS4) AS PRCS_STTUS4
+                    , SUM(PRCS_STTUS5) AS PRCS_STTUS5
+                    , SUM(PRCS_STTUS6) AS PRCS_STTUS6
+                    , SUM(PRCS_STTUS7) AS PRCS_STTUS7
+                    , ROUND( NVL( SUM(PRCS_STTUS3) / DECODE(SUM(PRCS_SUM),0, NULL, SUM(PRCS_SUM))*100 , 0) ,2) AS PERCENT
+            FROM STTST
+                GROUP BY ROLLUP ((RN, DEPT_CODE,DEPTNUM, LOWEST_DEPT_NM, LOWEST_DEPT_NM_BF, PERCENT))
+            )
+            ORDER BY RN ASC
+    ]]>
+
+
+
+    </select>
+
+
+    <!-- 2019. 07. 16. LHJ.  -->
+    <select id="sttstDAO.selectDatePeriodListRestPthModeYear" parameterClass="sttstVO" resultClass="sttstVO">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestPthModeYear */
+        /* 날짜 기준 처리현황(연별)접수경로별 조회 */
+
+		SELECT
+			    B.YEAR AS STTEMNT_DT
+			    ,NVL( SUM( B.DATACNT ), 0) AS PRCS_COUNT
+	            ,SUM(CASE B.MONTH WHEN '01' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT1
+	            ,SUM(CASE B.MONTH WHEN '02' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT2
+	            ,SUM(CASE B.MONTH WHEN '03' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT3
+	            ,SUM(CASE B.MONTH WHEN '04' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT4
+	            ,SUM(CASE B.MONTH WHEN '05' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT5
+	            ,SUM(CASE B.MONTH WHEN '06' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT6
+	            ,SUM(CASE B.MONTH WHEN '07' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT7
+	            ,SUM(CASE B.MONTH WHEN '08' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT8
+	            ,SUM(CASE B.MONTH WHEN '09' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT9
+	            ,SUM(CASE B.MONTH WHEN '10' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT10
+	            ,SUM(CASE B.MONTH WHEN '11' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT11
+	            ,SUM(CASE B.MONTH WHEN '12' THEN B.DATACNT ELSE 0 END) AS PRCS_COUNT12
+		  FROM (
+]]>
+<isEqual property="PTHMODE" compareValue="T">
+<![CDATA[
+		       SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	</isNotEmpty>
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+	<![CDATA[
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+]]>
+</isEqual>
+
+<isEqual property="PTHMODE" compareValue="M">
+<![CDATA[
+				SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	</isNotEmpty>
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+	<![CDATA[
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+]]>
+</isEqual>
+
+<isEqual property="PTHMODE" compareValue="C">
+<![CDATA[
+				SELECT  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY') AS YEAR
+				         ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM') AS MONTH
+				         ,COUNT(tnpotholesttemnt.PTH_RG_NO) AS DATACNT
+		           FROM
+						PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+		          WHERE 1=1
+		          	AND tnpotholesttemnt.BSNM_NM IS NOT NULL
+		            AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+    ]]>
+	<isNotEmpty property="PRCS_STTUS"><![CDATA[  AND tnpotholesttemnt.PRCS_STTUS = #PRCS_STTUS#  ]]></isNotEmpty>
+	<isNotEmpty property="DEPT_CODE">
+	<![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	</isNotEmpty>
+					AND tnpotholesttemnt.USE_AT = 'Y'
+				    AND tnpotholesttemnt.DELETE_AT = 'N'
+	<![CDATA[
+		          GROUP BY  TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+		                   ,TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'MM')
+]]>
+</isEqual>
+<![CDATA[
+		        ) B
+	WHERE 1=1
+	]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[  AND B.YEAR = #STTEMNT_DT#  ]]></isNotEmpty>
+    <![CDATA[
+		 GROUP BY B.YEAR
+		 ORDER BY $sidx$ $sord$
+    ]]>
+
+
+    </select>
+
+    <!-- 2019. 07. 16. LHJ.  -->
+    <select id="sttstDAO.selectDatePeriodListRestYearTotalPthModeCount" parameterClass="sttstVO" resultClass="int">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestYearTotalPthModeCount */
+        /* 날짜 기준 처리현황 조회(연별) 카운트 */
+
+        SELECT COUNT(*) FROM (
+    ]]>
+	<isEqual property="PTHMODE" compareValue="T">
+	<![CDATA[
+	        SELECT
+	               DISTINCT(TO_CHAR(STTEMNT_DT, 'YYYY')) AS STTEMNT_DT
+	               ,COUNT(DECODE(PRCS_STTUS, #PRCS_STTUS#, 1)) AS PRCS_STTUS
+	          FROM TN_POTHOLE_STTEMNT
+	         WHERE 1=1
+    ]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[ AND TO_CHAR(STTEMNT_DT, 'YYYY') = #STTEMNT_DT# ]]></isNotEmpty>
+	</isEqual>
+
+	<isEqual property="PTHMODE" compareValue="M">
+	<![CDATA[
+	        SELECT
+	               DISTINCT(TO_CHAR(STTEMNT_DT, 'YYYY')) AS STTEMNT_DT
+	               ,COUNT(DECODE(PRCS_STTUS, #PRCS_STTUS#, 1)) AS PRCS_STTUS
+	          FROM TN_POTHOLE_MLTEMNT
+	         WHERE 1=1
+    ]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[ AND TO_CHAR(STTEMNT_DT, 'YYYY') = #STTEMNT_DT# ]]></isNotEmpty>
+	</isEqual>
+
+	<isEqual property="PTHMODE" compareValue="C">
+	<![CDATA[
+	        SELECT
+	               DISTINCT(TO_CHAR(STTEMNT_DT, 'YYYY')) AS STTEMNT_DT
+	               ,COUNT(DECODE(PRCS_STTUS, #PRCS_STTUS#, 1)) AS PRCS_STTUS
+	          FROM TN_POTHOLE_CTSEMNT
+	         WHERE 1=1
+    ]]>
+    <isNotEmpty property="STTEMNT_DT"><![CDATA[ AND TO_CHAR(STTEMNT_DT, 'YYYY') = #STTEMNT_DT# ]]></isNotEmpty>
+	</isEqual>
+
+    <![CDATA[
+    GROUP BY TO_CHAR(STTEMNT_DT, 'YYYY')
+         )
+    ]]>
+    </select>
+
+    <!-- 2019. 07. 16. LHJ. -->
+    <select id="sttstDAO.selectDatePeriodListRestYearPthModeExcel" parameterClass="sttstVO" resultClass="hashMap">
+    <![CDATA[
+        /* sttstDAO.selectDatePeriodListRestYearExcel */
+        /* 날짜 기준 처리현황(연별) 접수경로별 엑셀저장 */
+
+    SELECT tb.*,
+           tb.PRCS_COUNT
+	  FROM (
+	    SELECT
+			 tb.STTEMNT_DT
+		    ,NVL(tb.PRCS_STTUS1 + tb.PRCS_STTUS2 + tb.PRCS_STTUS3 + tb.PRCS_STTUS4 + tb.PRCS_STTUS5 + tb.PRCS_STTUS6 + tb.PRCS_STTUS7 , 0) AS PRCS_COUNT
+			,tb.PRCS_STTUS1 AS PRCS_STTUS1
+			,tb.PRCS_STTUS2 AS PRCS_STTUS2
+			,tb.PRCS_STTUS3 AS PRCS_STTUS3
+			,tb.PRCS_STTUS4 AS PRCS_STTUS4
+			,tb.PRCS_STTUS5 AS PRCS_STTUS5
+			,tb.PRCS_STTUS6 AS PRCS_STTUS6
+			,tb.PRCS_STTUS7 AS PRCS_STTUS7
+		FROM (
+			        SELECT TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')  AS STTEMNT_DT
+	    ]]>
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0001'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS1  /* 포트홀_통계.처리_유형1 신고 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0002'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS2  /* 포트홀_통계.처리_유형2 접수 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0003'
+		<isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS3  /* 포트홀_통계.처리_유형3 처리완료 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0004'
+		<isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS4  /* 포트홀_통계.처리_유형4 보수예정 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0005'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS5  /* 포트홀_통계.처리_유형5 재배정요청 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0006'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS6  /* 포트홀_통계.처리_유형6 기타 */
+			            ,COUNT( CASE WHEN tnpotholesttemnt.PRCS_STTUS = 'PRCS0007'
+	    <isNotEmpty property="DEPT_CODE">
+	    <![CDATA[
+                    AND ((#DEPT_CODE# = '7000300' AND tcdept.DEPT_CODE > '7000300' AND tcdept.DEPT_CODE < '7000400')
+                    	 /* lsk 구가 존재하는 시로 조회했을 경우 - 시,구 모두 조회되도록 함.(평택시,화성시 제외) */
+                        OR (#DEPT_CODE# = '3740000' AND tcdept.DEPT_CODE in ('3750000','3760000','3770000','5610000'))   /* 수원시 */
+                        OR (#DEPT_CODE# = '3940000' AND tcdept.DEPT_CODE in ('3950000','3960100','4100100'))             /* 고양시 */
+                        OR (#DEPT_CODE# = '4050000' AND tcdept.DEPT_CODE in ('5620000','5630000','5640000'))             /* 용인시 */
+                        OR (#DEPT_CODE# = '3780000' AND tcdept.DEPT_CODE in ('3790000','3800000','3810000'))             /* 성남시 */
+                        OR (#DEPT_CODE# = '3930000' AND tcdept.DEPT_CODE in ('5550000','5560000'))                       /* 안산시 */
+                        OR (#DEPT_CODE# = '3830000' AND tcdept.DEPT_CODE in ('3840000','3850000'))                       /* 안양시 */
+                        OR (#DEPT_CODE# = '5530000' AND tcdept.DEPT_CODE in ('5530072','5530073','5530074'))             /* 화성시 */
+                        OR (#DEPT_CODE# = '3910000' AND tcdept.DEPT_CODE in ('3910019','3910029','3910038'))             /* 평택시 */
+                        OR (#DEPT_CODE# != '7000300' AND tcdept.DEPT_CODE = #DEPT_CODE# ) )
+        ]]>
+	    </isNotEmpty>
+			                          THEN 0 END ) AS PRCS_STTUS7  /* 포트홀_통계.처리_유형7 좌표오류 */
+
+	    <isEqual property="PTHMODE" compareValue="T">
+	    <![CDATA[
+			        FROM
+    			        PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_sttemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_rpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+         ]]>
+         </isEqual>
+
+         <isEqual property="PTHMODE" compareValue="M">
+         <![CDATA[
+			        FROM
+    			        PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_mltemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_mltrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+         ]]>
+         </isEqual>
+
+         <isEqual property="PTHMODE" compareValue="C">
+         <![CDATA[
+			        FROM
+    			        PTH_CTSMNT pthsttmnt
+                        LEFT OUTER JOIN tn_pothole_ctsemnt tnpotholesttemnt ON pthsttmnt.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                        LEFT OUTER JOIN tn_pothole_ctsrpair tnpotholerpair ON tnpotholerpair.pth_rg_no = tnpotholesttemnt.pth_rg_no
+                                                                           AND tnpotholerpair.use_at = 'Y'
+                                                                           AND tnpotholerpair.delete_at = 'N'
+                        LEFT OUTER JOIN tc_dept tcdept ON tnpotholesttemnt.dept_code = tcdept.dept_code
+         ]]>
+         </isEqual>
+
+         <![CDATA[
+			        WHERE  1=1
+	                  AND tnpotholesttemnt.USE_AT = 'Y'
+	                  AND tnpotholesttemnt.DELETE_AT = 'N'
+	                  AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	    ]]>
+	    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+	    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59'  ]]></isNotEmpty>
+		<![CDATA[
+			        GROUP BY TO_CHAR(tnpotholesttemnt.STTEMNT_DT, 'YYYY')
+
+			        ) tb
+			    ORDER BY $sidx$ $sord$
+            ) tb
+	    ]]>
+
+    </select>
+
+
+    <!-- 2019. 07. 16. LHJ. -->
+    <select id="sttstDAO.selectBsnmPeriodListPthModeRest" parameterClass="sttstVO" resultClass="sttstVO">
+    <![CDATA[
+        /* sttstDAO.selectBsnmPeriodListRest */
+        /* 신고자기준 신고현황 조회 */
+        WITH STTST ( RN, DEPT_CODE, LOWEST_DEPT_NM, BSNM_NM, VHCLE_NO, PRCS_STTUS, PRCS_STTUS1, PRCS_STTUS2, PRCS_STTUS3, PRCS_STTUS4, PRCS_STTUS5, PRCS_STTUS6, PRCS_STTUS7, PERCENT )
+        AS (
+	        SELECT
+			    ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+			    , tb.*
+			FROM (
+			    SELECT
+			        tb.*
+			        , CASE
+			            WHEN (tb.PRCS_STTUS <= 0 OR tb.PRCS_STTUS3 <= 0) THEN 0
+			            ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_STTUS * 100), 2 )
+			        END AS PERCENT
+			    FROM (
+			        SELECT
+			            tb.DEPT_CODE
+			            , ( SELECT tcdept.LOWEST_DEPT_NM
+	                        FROM TC_DEPT tcdept
+	                        WHERE tcdept.DEPT_CODE = tb.DEPT_CODE
+	                    ) AS LOWEST_DEPT_NM
+			            , tb.BSNM_NM
+			            , tb.VHCLE_NO
+			            , NVL(COUNT( tb.PRCS_STTUS ), 0) AS PRCS_STTUS
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0001', 1) ), 0) AS PRCS_STTUS1
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0002', 1) ), 0) AS PRCS_STTUS2
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0003', 1) ), 0) AS PRCS_STTUS3
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0004', 1) ), 0) AS PRCS_STTUS4
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0005', 1) ), 0) AS PRCS_STTUS5
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0006', 1) ), 0) AS PRCS_STTUS6
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0007', 1) ), 0) AS PRCS_STTUS7
+			        FROM (
+	]]>
+	<isEqual property="PTHMODE" compareValue="MTDT001">
+	<![CDATA[
+			            SELECT
+			                /* pthsttmnt.DEPT_CODE */
+                            ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+			                , pthsttmnt.BSNM_NM
+			                , tnpotholesttemnt.VHCLE_NO
+			                , tnpotholesttemnt.PTH_RG_NO
+			                , tnpotholesttemnt.PRCS_STTUS
+			                , tnpotholesttemnt.STTEMNT_DT
+			            FROM PTH_STTMNT pthsttmnt
+				            LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+				                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				            LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+				                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				                AND tnpotholerpair.USE_AT = 'Y'
+				                AND tnpotholerpair.DELETE_AT = 'N'
+				            WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+			                AND tnpotholesttemnt.USE_AT = 'Y'
+	                        AND tnpotholesttemnt.DELETE_AT = 'N'
+	                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	]]>
+	</isEqual>
+
+	<isEqual property="PTHMODE" compareValue="MTDT002">
+	<![CDATA[
+	                        SELECT
+			                /* pthsttmnt.DEPT_CODE */
+                            ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+			                , pthsttmnt.BSNM_NM
+			                , tnpotholesttemnt.VHCLE_NO
+			                , tnpotholesttemnt.PTH_RG_NO
+			                , tnpotholesttemnt.PRCS_STTUS
+			                , tnpotholesttemnt.STTEMNT_DT
+			            FROM PTH_MLTMNT pthsttmnt
+				            LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+				                ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				            LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+				                ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+				                AND tnpotholerpair.USE_AT = 'Y'
+				                AND tnpotholerpair.DELETE_AT = 'N'
+				            WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+			                AND tnpotholesttemnt.USE_AT = 'Y'
+	                        AND tnpotholesttemnt.DELETE_AT = 'N'
+	                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	]]>
+	</isEqual>
+			            ) tb
+			        WHERE 1=1
+    <isNotEmpty property="BSNM_NM"><![CDATA[ AND tb.BSNM_NM LIKE '%' || #BSNM_NM# || '%' ]]></isNotEmpty>
+
+    <![CDATA[
+			        GROUP BY tb.DEPT_CODE, tb.BSNM_NM, tb.VHCLE_NO
+			    ) tb
+			) tb
+		)
+
+		SELECT
+		  tb.*
+		FROM
+			(
+				SELECT
+				    NVL(RN, 0) AS RN
+				    , DEPT_CODE
+				    , LOWEST_DEPT_NM
+				    , NVL(BSNM_NM, '합계') AS BSNM_NM
+				    , VHCLE_NO
+				    , SUM(PRCS_STTUS) AS PRCS_STTUS
+				    , SUM(PRCS_STTUS1) AS PRCS_STTUS1
+				    , SUM(PRCS_STTUS2) AS PRCS_STTUS2
+				    , SUM(PRCS_STTUS3) AS PRCS_STTUS3
+				    , SUM(PRCS_STTUS4) AS PRCS_STTUS4
+				    , SUM(PRCS_STTUS5) AS PRCS_STTUS5
+				    , SUM(PRCS_STTUS6) AS PRCS_STTUS6
+				    , SUM(PRCS_STTUS7) AS PRCS_STTUS7
+				    , ROUND( NVL( SUM(PRCS_STTUS3) / DECODE(SUM(PRCS_STTUS),0, NULL, SUM(PRCS_STTUS))*100 , 0) ,2) AS PERCENT
+                FROM STTST
+                GROUP BY ROLLUP(( RN, DEPT_CODE, LOWEST_DEPT_NM, BSNM_NM, VHCLE_NO, PERCENT ))
+			) tb
+		ORDER BY tb.RN ASC
+    ]]>
+    </select>
+    <!-- TN_MNTRNG_MBR tnmntrngmbr
+                            LEFT OUTER JOIN
+                                ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
+                                AND tnmntrngmbr.ENTRST_AT = 'Y'
+                                AND USE_AT = 'Y'
+                                AND DELETE_AT = 'N' -->
+
+    <!-- 2019. 07. 16. LHJ. -->
+    <select id="sttstDAO.selectBsnmPeriodListRestTotalPthModeCount" parameterClass="sttstVO" resultClass="int">
+    <![CDATA[
+        /* sttstDAO.selectBsnmPeriodListRestTotalCount */
+        /* 신고자기준 신고현황 조회 */
+        SELECT
+            COUNT(*)
+        FROM (
+            SELECT
+                tb.*
+                , CASE
+                    WHEN (tb.PRCS_STTUS <= 0 OR tb.PRCS_STTUS3 <= 0) THEN 0
+                    ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_STTUS * 100), 2 )
+                END AS PERCENT
+            FROM (
+                SELECT
+                    tb.DEPT_CODE
+                    , ( SELECT tcdept.LOWEST_DEPT_NM
+                        FROM TC_DEPT tcdept
+                        WHERE tcdept.DEPT_CODE = tb.DEPT_CODE
+                    ) AS LOWEST_DEPT_NM
+                    , tb.BSNM_NM
+                    , tb.VHCLE_NO
+                    , NVL(COUNT( tb.PRCS_STTUS ), 0) AS PRCS_STTUS
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0001', 1) ), 0) AS PRCS_STTUS1
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0002', 1) ), 0) AS PRCS_STTUS2
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0003', 1) ), 0) AS PRCS_STTUS3
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0004', 1) ), 0) AS PRCS_STTUS4
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0005', 1) ), 0) AS PRCS_STTUS5
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0006', 1) ), 0) AS PRCS_STTUS6
+                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0007', 1) ), 0) AS PRCS_STTUS7
+                FROM (
+     ]]>
+     <isEqual property="PTHMODE" compareValue="MTDT001">
+	 <![CDATA[
+                    SELECT
+                        /* pthsttmnt.DEPT_CODE */
+                        ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+                        , pthsttmnt.BSNM_NM
+                        , tnpotholesttemnt.VHCLE_NO
+                        , tnpotholesttemnt.PTH_RG_NO
+                        , tnpotholesttemnt.PRCS_STTUS
+                        , tnpotholesttemnt.STTEMNT_DT
+                    FROM PTH_STTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                            AND tnpotholerpair.USE_AT = 'Y'
+                            AND tnpotholerpair.DELETE_AT = 'N'
+                      WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+                        AND tnpotholesttemnt.USE_AT = 'Y'
+                        AND tnpotholesttemnt.DELETE_AT = 'N'
+                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	]]>
+	</isEqual>
+	<isEqual property="PTHMODE" compareValue="MTDT002">
+	 <![CDATA[
+                        SELECT
+                        /* pthsttmnt.DEPT_CODE */
+                        ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+                        , pthsttmnt.BSNM_NM
+                        , tnpotholesttemnt.VHCLE_NO
+                        , tnpotholesttemnt.PTH_RG_NO
+                        , tnpotholesttemnt.PRCS_STTUS
+                        , tnpotholesttemnt.STTEMNT_DT
+                    FROM PTH_MLTMNT pthsttmnt
+                        LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                        LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+                            AND tnpotholerpair.USE_AT = 'Y'
+                            AND tnpotholerpair.DELETE_AT = 'N'
+                      WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+                        AND tnpotholesttemnt.USE_AT = 'Y'
+                        AND tnpotholesttemnt.DELETE_AT = 'N'
+                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	]]>
+	</isEqual>
+	<![CDATA[
+                    ) tb
+                WHERE 1=1
+    ]]>
+
+    <isNotEmpty property="BSNM_NM"><![CDATA[ AND tb.BSNM_NM LIKE '%' || #BSNM_NM# || '%' ]]></isNotEmpty>
+
+    <![CDATA[
+                GROUP BY tb.DEPT_CODE, tb.BSNM_NM, tb.VHCLE_NO
+            ) tb
+        ) tb
+    ]]>
+    </select>
+
+	<!-- 2019. 07. 16. LHJ. -->
+    <select id="sttstDAO.selectBsnmPeriodListRestPthModeExcel" parameterClass="sttstVO" resultClass="hashMap">
+    <![CDATA[
+        /* sttstDAO.selectBsnmPeriodListRest */
+        /* 신고자기준 신고현황 조회 */
+        WITH STTST ( RN, DEPT_CODE, LOWEST_DEPT_NM, BSNM_NM, VHCLE_NO, PRCS_STTUS, PRCS_STTUS1, PRCS_STTUS2, PRCS_STTUS3, PRCS_STTUS4, PRCS_STTUS5, PRCS_STTUS6, PRCS_STTUS7, PERCENT )
+        AS (
+	        SELECT
+	            ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN
+	            , tb.*
+	        FROM (
+	            SELECT
+	                tb.*
+	                , CASE
+	                    WHEN (tb.PRCS_STTUS <= 0 OR tb.PRCS_STTUS3 <= 0) THEN 0
+	                    ELSE ROUND( (tb.PRCS_STTUS3 / tb.PRCS_STTUS * 100), 2 )
+	                END AS PERCENT
+	            FROM (
+	                SELECT
+	                    tb.DEPT_CODE
+	                    , ( SELECT tcdept.LOWEST_DEPT_NM
+		                    FROM TC_DEPT tcdept
+		                    WHERE tcdept.DEPT_CODE = tb.DEPT_CODE
+	                    ) AS LOWEST_DEPT_NM
+	                    , tb.BSNM_NM
+	                    , tb.VHCLE_NO
+	                    , NVL(COUNT( tb.PRCS_STTUS ), 0) AS PRCS_STTUS
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0001', 1) ), 0) AS PRCS_STTUS1
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0002', 1) ), 0) AS PRCS_STTUS2
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0003', 1) ), 0) AS PRCS_STTUS3
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0004', 1) ), 0) AS PRCS_STTUS4
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0005', 1) ), 0) AS PRCS_STTUS5
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0006', 1) ), 0) AS PRCS_STTUS6
+	                    , NVL(COUNT( DECODE(tb.PRCS_STTUS, 'PRCS0007', 1) ), 0) AS PRCS_STTUS7
+	                FROM (
+	 ]]>
+	 <isEqual property="PTHMODE" compareValue="MTDT001">
+	 <![CDATA[
+	                    SELECT
+	                        /* pthsttmnt.DEPT_CODE */
+                            ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+	                        , pthsttmnt.BSNM_NM
+	                        , tnpotholesttemnt.VHCLE_NO
+	                        , tnpotholesttemnt.PTH_RG_NO
+	                        , tnpotholesttemnt.PRCS_STTUS
+	                        , tnpotholesttemnt.STTEMNT_DT
+	                    FROM PTH_STTMNT pthsttmnt
+	                        LEFT OUTER JOIN TN_POTHOLE_STTEMNT tnpotholesttemnt
+	                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                        LEFT OUTER JOIN TN_POTHOLE_RPAIR tnpotholerpair
+	                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                            AND tnpotholerpair.USE_AT = 'Y'
+	                            AND tnpotholerpair.DELETE_AT = 'N'
+	                    WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+	                        AND tnpotholesttemnt.USE_AT = 'Y'
+	                        AND tnpotholesttemnt.DELETE_AT = 'N'
+	                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	]]>
+	</isEqual>
+	<isEqual property="PTHMODE" compareValue="MTDT002">
+	<![CDATA[
+	                        SELECT
+	                        /* pthsttmnt.DEPT_CODE */
+                            ( SELECT DEPT_CODE FROM TN_MNTRNG_MBR WHERE VHCLE_NO = tnpotholesttemnt.VHCLE_NO) AS DEPT_CODE
+	                        , pthsttmnt.BSNM_NM
+	                        , tnpotholesttemnt.VHCLE_NO
+	                        , tnpotholesttemnt.PTH_RG_NO
+	                        , tnpotholesttemnt.PRCS_STTUS
+	                        , tnpotholesttemnt.STTEMNT_DT
+	                    FROM PTH_MLTMNT pthsttmnt
+	                        LEFT OUTER JOIN TN_POTHOLE_MLTEMNT tnpotholesttemnt
+	                            ON pthsttmnt.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                        LEFT OUTER JOIN TN_POTHOLE_MLTRPAIR tnpotholerpair
+	                            ON tnpotholerpair.PTH_RG_NO = tnpotholesttemnt.PTH_RG_NO
+	                            AND tnpotholerpair.USE_AT = 'Y'
+	                            AND tnpotholerpair.DELETE_AT = 'N'
+	                    WHERE 1 = 1
+    ]]>
+
+    <isNotEmpty property="STTEMNT_DT_START"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') >= #STTEMNT_DT_START# ]]></isNotEmpty>
+    <isNotEmpty property="STTEMNT_DT_END"><![CDATA[ AND TO_CHAR(TO_DATE(tnpotholesttemnt.STTEMNT_DT),'YYYY-MM-DD hh24:mi:ss') <= #STTEMNT_DT_END# || ' 23:59:59' ]]></isNotEmpty>
+
+    <![CDATA[
+	                        AND tnpotholesttemnt.USE_AT = 'Y'
+	                        AND tnpotholesttemnt.DELETE_AT = 'N'
+	                        AND tnpotholesttemnt.DPLCT_STTEMNT_AT = 'N'
+	]]>
+	</isEqual>
+	<![CDATA[
+	                    ) tb
+	                WHERE 1=1
+    ]]>
+
+    <isNotEmpty property="BSNM_NM"><![CDATA[ AND tb.BSNM_NM LIKE '%' || #BSNM_NM# || '%' ]]></isNotEmpty>
+
+    <![CDATA[
+	                GROUP BY tb.DEPT_CODE, tb.BSNM_NM, tb.VHCLE_NO
+	            ) tb
+	        ) tb
+        )
+
+        SELECT
+          tb.*
+        FROM
+            (
+                SELECT
+                    NVL(RN, 0) AS RN
+                    , DEPT_CODE
+                    , LOWEST_DEPT_NM
+                    , NVL(BSNM_NM, '합계') AS BSNM_NM
+                    , VHCLE_NO
+                    , SUM(PRCS_STTUS) AS PRCS_STTUS
+                    , SUM(PRCS_STTUS1) AS PRCS_STTUS1
+                    , SUM(PRCS_STTUS2) AS PRCS_STTUS2
+                    , SUM(PRCS_STTUS3) AS PRCS_STTUS3
+                    , SUM(PRCS_STTUS4) AS PRCS_STTUS4
+                    , SUM(PRCS_STTUS5) AS PRCS_STTUS5
+                    , SUM(PRCS_STTUS6) AS PRCS_STTUS6
+                    , SUM(PRCS_STTUS7) AS PRCS_STTUS7
+                    , ROUND( NVL( SUM(PRCS_STTUS3) / DECODE(SUM(PRCS_STTUS),0, NULL, SUM(PRCS_STTUS))*100 , 0) ,2) AS PERCENT
+                FROM STTST
+                GROUP BY ROLLUP(( RN, DEPT_CODE, LOWEST_DEPT_NM, BSNM_NM, VHCLE_NO, PERCENT ))
+            ) tb
+        ORDER BY tb.RN ASC
+    ]]>
+    </select>
+
+</sqlMap>

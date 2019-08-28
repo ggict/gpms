@@ -1,0 +1,1266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sysUserDAO">
+
+    <typeAlias alias="egovMap"
+        type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+    <typeAlias alias="sysUserSerarchVO"
+        type="kr.go.gg.gpms.sysuser.service.model.SysUserDefaultVO" />
+    <typeAlias alias="sysUserVO"
+        type="kr.go.gg.gpms.sysuser.service.model.SysUserVO" />
+
+    <resultMap id="sysUser.resultMap"
+        class="sysUserVO">
+        <result property="USER_NO" column="USER_NO" columnIndex="1" /> <!-- 시스템사용자.사용자_번호 -->
+        <result property="USER_NM" column="USER_NM" columnIndex="2" /> <!-- 시스템사용자.사용자_이름 -->
+        <result property="DEPT_CODE" column="DEPT_CODE" columnIndex="3" /> <!-- 시스템사용자.부서_코드 -->
+        <result property="SECRET_NO" column="SECRET_NO" columnIndex="4" /> <!-- 시스템사용자.비밀_번호 -->
+        <result property="USER_ID" column="USER_ID" columnIndex="5" /> <!-- 시스템사용자.사용자_ID -->
+        <result property="EMAIL" column="EMAIL" columnIndex="6" /> <!-- 시스템사용자.이메일 -->
+        <result property="CTTPC" column="CTTPC" columnIndex="7" /> <!-- 시스템사용자.연락처 -->
+        <result property="STPLAT_AGRE_AT" column="STPLAT_AGRE_AT" columnIndex="8" /> <!-- 시스템사용자.약관_동의_여부 -->
+        <result property="USE_AT" column="USE_AT" columnIndex="9" /> <!-- 시스템사용자.사용_여부 -->
+        <result property="DELETE_AT" column="DELETE_AT" columnIndex="10" /> <!-- 시스템사용자.삭제_여부 -->
+        <result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="11" /> <!-- 시스템사용자.수정자_번호 -->
+        <result property="UPDT_DT" column="UPDT_DT" columnIndex="12" /> <!-- 시스템사용자.수정_일시 -->
+        <result property="CRTR_NO" column="CRTR_NO" columnIndex="13" /> <!-- 시스템사용자.생성자_번호 -->
+        <result property="CREAT_DT" column="CREAT_DT" columnIndex="14" /> <!-- 시스템사용자.생성_일시 -->
+        <result property="PASSWORD_CHANGE_DT" column="PASSWORD_CHANGE_DT" columnIndex="15" /> <!-- 시스템사용자.암호_변경_일시 -->
+        <result property="DELETE_DT" column="DELETE_DT" columnIndex="16" /> <!-- 시스템사용자.삭제_일시 -->
+        <result property="USER_SE_CODE" column="USER_SE_CODE" columnIndex="17" /> <!-- 시스템사용자.사용자_구분_코드 -->
+        <result property="CONFM_AT" column="CONFM_AT" columnIndex="18" /> <!-- 시스템사용자.승인_여부 -->
+        <result property="CONFM_DT" column="CONFM_DT" columnIndex="19" /> <!-- 시스템사용자.승인_일시 -->
+        <result property="CO_NO" column="CO_NO" columnIndex="20" /> <!-- 시스템사용자.업체_번호 -->
+        <result property="STPLAT_AGRE_DT" column="STPLAT_AGRE_DT" columnIndex="21" /> <!-- 시스템사용자.약관_동의_일시 -->
+        <result property="RM" column="RM" columnIndex="22" /> <!-- 시스템사용자.비고 -->
+        <result property="CNTRCT_NM" column="CNTRCT_NM" columnIndex="23" /> <!-- 시스템사용자.계약_명 -->
+        <result property="CNTRCT_BEGIN_DE" column="CNTRCT_BEGIN_DE" columnIndex="24" /> <!-- 시스템사용자.계약_시작_일자 -->
+        <result property="CNTRCT_END_DE" column="CNTRCT_END_DE" columnIndex="25" /> <!-- 시스템사용자.계약_종료_일자 -->
+        <result property="CHRG_MANGR_NM" column="CHRG_MANGR_NM" columnIndex="26" /> <!-- 시스템사용자.담당_감독자_명 -->
+        <result property="CNTRWK_CO_NM" column="CNTRWK_CO_NM" columnIndex="27" /> <!-- 시스템사용자.공사_업체_명 -->
+        <result property="BRTHDY" column="BRTHDY" columnIndex="29" /> <!-- 시스템사용자.생년월일 -->
+        <result property="CHRG_JOB" column="CHRG_JOB" columnIndex="30" /> <!-- 시스템사용자.담당_업무 -->
+        <result property="REQ_USER_GRP" column="REQ_USER_GRP" columnIndex="31" /> <!-- 시스템사용자.신청_사용자_그룹 -->
+        <result property="REQ_MENUACC_ROLE" column="REQ_MENUACC_ROLE" columnIndex="32" /> <!-- 시스템사용자.신청_메뉴접근_권한 -->
+    </resultMap>
+
+    <insert id="sysUserDAO.insertSysUser">
+        <selectKey resultClass="int" keyProperty="USER_NO">
+  <![CDATA[
+  select nextval('SEQ_TN_SYS_USER')
+  ]]>
+        </selectKey>
+    <![CDATA[
+        /* sysUserDAO.insertSysUser */
+        /* 시스템사용자 등록 */
+        INSERT INTO TN_SYS_USER (
+            USER_NO /* 시스템사용자.사용자_번호 */
+            , USER_NM /* 시스템사용자.사용자_이름 */
+            , DEPT_CODE /* 시스템사용자.부서_코드 */
+            , USE_AT /* 시스템사용자.사용_여부 */
+            , SECRET_NO /* 시스템사용자.비밀_번호 */
+            , USER_ID /* 시스템사용자.사용자_ID */
+            , EMAIL /* 시스템사용자.이메일 */
+            , CTTPC /* 시스템사용자.연락처 */
+            , STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+            , USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+            , CONFM_AT /* 시스템사용자.승인_여부 */
+            , CONFM_DT /* 시스템사용자.승인_일시 */
+            , CO_NO /* 시스템사용자.업체_번호 */
+            , STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+            , RM /* 시스템사용자.비고 */
+            , CNTRCT_NM /* 시스템사용자.계약_명 */
+            , CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+            , CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+            , CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+            , CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+            , BRTHDY /* 시스템사용자.생년월일 */
+            , CHRG_JOB /* 시스템사용자.담당_업무 */
+            , DELETE_AT /* 시스템사용자.삭제_여부 */
+            , UPDUSR_NO /* 시스템사용자.수정자_번호 */
+            , UPDT_DT /* 시스템사용자.수정_일시 */
+            , CRTR_NO /* 시스템사용자.생성자_번호 */
+            , CREAT_DT /* 시스템사용자.생성_일시 */
+            , PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+            , DELETE_DT /* 시스템사용자.삭제_일시 */
+            , REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+            , REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+        ) VALUES (
+            #USER_NO# /* 시스템사용자.사용자_번호 */
+            , #USER_NM# /* 시스템사용자.사용자_이름 */
+            , #DEPT_CODE# /* 시스템사용자.부서_코드 */
+            , #USE_AT# /* 시스템사용자.사용_여부 */
+            , #SECRET_NO# /* 시스템사용자.비밀_번호 */
+            , #USER_ID# /* 시스템사용자.사용자_ID */
+            , #EMAIL# /* 시스템사용자.이메일 */
+            , #CTTPC# /* 시스템사용자.연락처 */
+            , #STPLAT_AGRE_AT# /* 시스템사용자.약관_동의_여부 */
+            , #USER_SE_CODE# /* 시스템사용자.사용자_구분_코드 */
+            , #CONFM_AT# /* 시스템사용자.승인_여부 */
+            , #CONFM_DT# /* 시스템사용자.승인_일시 */
+            , #CO_NO# /* 시스템사용자.업체_번호 */
+            , NOW() /* 시스템사용자.약관_동의_일시 */
+            , #RM# /* 시스템사용자.비고 */
+            , #CNTRCT_NM# /* 시스템사용자.계약_명 */
+            , #CNTRCT_BEGIN_DE# /* 시스템사용자.계약_시작_일자 */
+            , #CNTRCT_END_DE# /* 시스템사용자.계약_종료_일자 */
+            , #CHRG_MANGR_NM# /* 시스템사용자.담당_감독자_명 */
+            , #CNTRWK_CO_NM# /* 시스템사용자.공사_업체_명 */
+            , #BRTHDY# /* 시스템사용자.생년월일 */
+            , #CHRG_JOB# /* 시스템사용자.담당_업무 */
+            , 'N' /* 시스템사용자.삭제_여부 */
+            , #UPDUSR_NO# /* 시스템사용자.수정자_번호 */
+            , NOW() /* 시스템사용자.수정_일시 */
+            , #CRTR_NO# /* 시스템사용자.생성자_번호 */
+            , NOW() /* 시스템사용자.생성_일시 */
+            , #PASSWORD_CHANGE_DT# /* 시스템사용자.암호_변경_일시 */
+            , #DELETE_DT# /* 시스템사용자.삭제_일시 */
+            , #REQ_USER_GRP# /* 시스템사용자.신청_사용자_그룹 */
+            , #REQ_MENUACC_ROLE# /* 시스템사용자.신청_메뉴접근_권한 */
+        )
+]]>
+    </insert>
+
+    <insert id="sysUserDAO.insertSysUserChgAuth">
+    <![CDATA[
+        /* sysUserDAO.insertSysUserChgAuth */
+        /* 시스템사용자 권한변경 요청 */
+        INSERT INTO TN_SYS_USER_CHG_AUTH (
+            USER_NO /* 시스템사용자.사용자_번호 */
+            , USER_NM /* 시스템사용자.사용자_이름 */
+            , DEPT_CODE /* 시스템사용자.부서_코드 */
+            , USE_AT /* 시스템사용자.사용_여부 */
+            , SECRET_NO /* 시스템사용자.비밀_번호 */
+            , USER_ID /* 시스템사용자.사용자_ID */
+            , EMAIL /* 시스템사용자.이메일 */
+            , CTTPC /* 시스템사용자.연락처 */
+            , STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+            , USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+            , CONFM_AT /* 시스템사용자.승인_여부 */
+            , CONFM_DT /* 시스템사용자.승인_일시 */
+            , CO_NO /* 시스템사용자.업체_번호 */
+            , STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+            , RM /* 시스템사용자.비고 */
+            , CNTRCT_NM /* 시스템사용자.계약_명 */
+            , CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+            , CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+            , CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+            , CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+            , BRTHDY /* 시스템사용자.생년월일 */
+            , CHRG_JOB /* 시스템사용자.담당_업무 */
+            , DELETE_AT /* 시스템사용자.삭제_여부 */
+            , UPDUSR_NO /* 시스템사용자.수정자_번호 */
+            , UPDT_DT /* 시스템사용자.수정_일시 */
+            , CRTR_NO /* 시스템사용자.생성자_번호 */
+            , CREAT_DT /* 시스템사용자.생성_일시 */
+            , PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+            , DELETE_DT /* 시스템사용자.삭제_일시 */
+            , REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+            , REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+        ) VALUES (
+            #USER_NO# /* 시스템사용자.사용자_번호 */
+            , #USER_NM# /* 시스템사용자.사용자_이름 */
+            , #DEPT_CODE# /* 시스템사용자.부서_코드 */
+            , #USE_AT# /* 시스템사용자.사용_여부 */
+            , #SECRET_NO# /* 시스템사용자.비밀_번호 */
+            , #USER_ID# /* 시스템사용자.사용자_ID */
+            , #EMAIL# /* 시스템사용자.이메일 */
+            , #CTTPC# /* 시스템사용자.연락처 */
+            , #STPLAT_AGRE_AT# /* 시스템사용자.약관_동의_여부 */
+            , #USER_SE_CODE# /* 시스템사용자.사용자_구분_코드 */
+            , #CONFM_AT# /* 시스템사용자.승인_여부 */
+            , NOW() /* 시스템사용자.승인_일시 */
+            , #CO_NO# /* 시스템사용자.업체_번호 */
+            , #STPLAT_AGRE_DT# /* 시스템사용자.약관_동의_일시 */
+            , #RM# /* 시스템사용자.비고 */
+            , #CNTRCT_NM# /* 시스템사용자.계약_명 */
+            , #CNTRCT_BEGIN_DE# /* 시스템사용자.계약_시작_일자 */
+            , #CNTRCT_END_DE# /* 시스템사용자.계약_종료_일자 */
+            , #CHRG_MANGR_NM# /* 시스템사용자.담당_감독자_명 */
+            , #CNTRWK_CO_NM# /* 시스템사용자.공사_업체_명 */
+            , #BRTHDY# /* 시스템사용자.생년월일 */
+            , #CHRG_JOB# /* 시스템사용자.담당_업무 */
+            , 'N' /* 시스템사용자.삭제_여부 */
+            , #UPDUSR_NO# /* 시스템사용자.수정자_번호 */
+            , NOW() /* 시스템사용자.수정_일시 */
+            , #CRTR_NO# /* 시스템사용자.생성자_번호 */
+            , NOW() /* 시스템사용자.생성_일시 */
+            , NOW() /* 시스템사용자.암호_변경_일시 */
+            , NOW() /* 시스템사용자.삭제_일시 */
+            , #REQ_USER_GRP# /* 시스템사용자.신청_사용자_그룹 */
+            , #REQ_MENUACC_ROLE# /* 시스템사용자.신청_메뉴접근_권한 */
+        )
+]]>
+    </insert>
+
+    <update id="sysUserDAO.updateSysUser">
+<![CDATA[
+        /* sysUserDAO.updateSysUser */
+        /* 시스템사용자 수정 */
+        UPDATE TN_SYS_USER SET
+
+        UPDT_DT = NOW() /* 조사_자료_엑셀.수정_일시 */
+]]>
+        <isNotEmpty property="USER_NM">
+            , USER_NM = #USER_NM# /* 시스템사용자.사용자_이름 */
+        </isNotEmpty>
+        <isNotEmpty property="DEPT_CODE">
+            , DEPT_CODE = #DEPT_CODE# /* 시스템사용자.부서_코드 */
+            , CO_NO = '' /* 시스템사용자.업체_번호 */
+            , CNTRCT_NM = '' /* 시스템사용자.계약_명 */
+            , CNTRCT_BEGIN_DE = '' /* 시스템사용자.계약_시작_일자 */
+            , CNTRCT_END_DE = '' /* 시스템사용자.계약_종료_일자 */
+            , CHRG_MANGR_NM = '' /* 시스템사용자.담당_감독자_명 */
+            , CNTRWK_CO_NM = '' /* 시스템사용자.공사_업체_명 */
+        </isNotEmpty>
+        <isNotEmpty property="USE_AT">
+            , USE_AT = #USE_AT# /* 시스템사용자.사용_여부 */
+        </isNotEmpty>
+        <isNotEmpty property="SECRET_NO">
+            , SECRET_NO = #SECRET_NO# /* 시스템사용자.비밀_번호 */
+        </isNotEmpty>
+        <isNotEmpty property="USER_ID">
+            , USER_ID = #USER_ID# /* 시스템사용자.사용자_ID */
+        </isNotEmpty>
+        <isNotEmpty property="EMAIL">
+            , EMAIL = #EMAIL# /* 시스템사용자.이메일 */
+        </isNotEmpty>
+        <isNotEmpty property="CTTPC">
+            , CTTPC = #CTTPC# /* 시스템사용자.연락처 */
+        </isNotEmpty>
+        <isNotEmpty property="STPLAT_AGRE_AT">
+            , STPLAT_AGRE_AT = #STPLAT_AGRE_AT# /* 시스템사용자.약관_동의_여부 */
+        </isNotEmpty>
+        <isNotEmpty property="USER_SE_CODE">
+            , USER_SE_CODE = #USER_SE_CODE# /* 시스템사용자.사용자_구분_코드 */
+        </isNotEmpty>
+        <isNotEmpty property="CONFM_AT">
+            , CONFM_AT = #CONFM_AT# /* 시스템사용자.승인_여부 */
+        </isNotEmpty>
+        <isNotEmpty property="CONFM_DT">
+            , CONFM_DT = #CONFM_DT# /* 시스템사용자.승인_일시 */
+        </isNotEmpty>
+        <isNotEmpty property="CO_NO">
+            , CO_NO = #CO_NO# /* 시스템사용자.업체_번호 */
+            , DEPT_CODE = '' /* 시스템사용자.부서_코드 */
+            , CLSF_CODE = '' /* 시스템사용자.직급_코드 */
+            , CHRG_JOB = '' /* 시스템사용자.담당_업무 */
+        </isNotEmpty>
+        <isNotEmpty property="STPLAT_AGRE_DT">
+            , STPLAT_AGRE_DT = #STPLAT_AGRE_DT# /* 시스템사용자.약관_동의_일시 */
+        </isNotEmpty>
+        <isNotEmpty property="RM">
+            , RM = #RM# /* 시스템사용자.비고 */
+        </isNotEmpty>
+        <isNotEmpty property="CNTRCT_NM">
+            , CNTRCT_NM = #CNTRCT_NM# /* 시스템사용자.계약_명 */
+        </isNotEmpty>
+        <isNotEmpty property="CNTRCT_BEGIN_DE">
+            , CNTRCT_BEGIN_DE = #CNTRCT_BEGIN_DE# /* 시스템사용자.계약_시작_일자 */
+        </isNotEmpty>
+        <isNotEmpty property="CNTRCT_END_DE">
+            , CNTRCT_END_DE = #CNTRCT_END_DE# /* 시스템사용자.계약_종료_일자 */
+        </isNotEmpty>
+        <isNotEmpty property="CHRG_MANGR_NM">
+            , CHRG_MANGR_NM = #CHRG_MANGR_NM# /* 시스템사용자.담당_감독자_명 */
+        </isNotEmpty>
+        <isNotEmpty property="CNTRWK_CO_NM">
+            , CNTRWK_CO_NM = #CNTRWK_CO_NM# /* 시스템사용자.공사_업체_명 */
+        </isNotEmpty>
+        <isNotEmpty property="BRTHDY">
+            , BRTHDY = #BRTHDY# /* 시스템사용자.생년월일 */
+        </isNotEmpty>
+        <isNotEmpty property="BRTHDY">
+            , CHRG_JOB = #CHRG_JOB# /* 시스템사용자.담당_업무 */
+        </isNotEmpty>
+        <isNotEmpty property="UPDUSR_NO">
+            , UPDUSR_NO = #UPDUSR_NO# /* 시스템사용자.수정자_번호 */
+        </isNotEmpty>
+        <isNotEmpty property="PASSWORD_CHANGE_DT">
+            , PASSWORD_CHANGE_DT = #PASSWORD_CHANGE_DT# /* 시스템사용자.암호_변경_일시 */
+        </isNotEmpty>
+        <isNotEmpty property="REQ_USER_GRP">
+            , REQ_USER_GRP = #REQ_USER_GRP# /* 시스템사용자.신청_사용자_그룹 */
+        </isNotEmpty>
+        <isNotEmpty property="REQ_MENUACC_ROLE">
+            , REQ_MENUACC_ROLE = #REQ_MENUACC_ROLE# /* 시스템사용자.신청_메뉴접근_권한 */
+        </isNotEmpty>
+<![CDATA[
+        WHERE 1 = 1
+        AND USER_NO = #USER_NO# /* 시스템사용자.사용자_번호 */
+]]>
+    </update>
+
+    <update id="sysUserDAO.deleteSysUser">
+<![CDATA[
+        /* sysUserDAO.sysUserDAO.deleteSysUser */
+        /* 시스템사용자 삭제 */
+        UPDATE TN_SYS_USER SET
+          DELETE_AT = #DELETE_AT# /* 시스템사용자.삭제_여부 */
+        , DELETE_DT = NOW() /* 시스템사용자.삭제_일시 */
+        , UPDUSR_NO = #UPDUSR_NO# /* 시스템사용자.수정자_번호 */
+        , UPDT_DT = NOW() /* 조사_자료_엑셀.수정_일시 */
+        WHERE 1 = 1
+        AND USER_NO = #USER_NO# /* 시스템사용자.사용자_번호 */
+]]>
+    </update>
+
+    <select id="sysUserDAO.selectSysUser" resultClass="sysUserVO">
+    <![CDATA[
+        /* sysUserDAO.selectSysUser */
+        /* 시스템사용자 조회 */
+        SELECT
+            tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+            , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+            , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+            , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+            , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+            , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+            , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+            , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+            , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+            , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+            , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+            , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+            , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+            , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+            , tnsysuser.RM /* 시스템사용자.비고 */
+            , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+            , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+            , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+            , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+            , tnsysuser.CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+            , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+            , tnsysuser.CHRG_JOB /* 시스템사용자.담당_업무 */
+            , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+            , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+            , (SELECT USER_ID FROM TN_SYS_USER WHERE USE_AT = 'Y'  AND DELETE_AT = 'N' AND USER_NO = tnsysuser.UPDUSR_NO) UPDUSR_ID
+            , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+            , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+            , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+            , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+            , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+            , tcdept.DEPT_NM
+            , tccode.CODE_NM USER_SE_NM /* 시스템사용자.사용자_구분_명 */
+            , tnsysuser.REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+            , tnsysuser.REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+            , tnuserauth.AUTHOR_ID USER_GRP
+            , FN_GET_USER_MENU_AUTH(tnsysuser.USER_NO) MENUACC_ROLE
+        FROM TN_SYS_USER tnsysuser
+        LEFT OUTER JOIN TN_USER_AUTH tnuserauth
+           ON tnuserauth.USER_NO = tnsysuser.USER_NO
+          AND tnuserauth.AUTHOR_ID IN ('ROLE_USER_SGG', 'ROLE_ADMIN', 'ROLE_USER')
+        LEFT OUTER JOIN TC_DEPT tcdept
+            ON tnsysuser.DEPT_CODE = tcdept.DEPT_CODE
+           AND tcdept.USE_AT = 'Y'
+           AND tcdept.DELETE_AT = 'N'
+          LEFT OUTER JOIN TC_CODE tccode
+            ON tnsysuser.USER_SE_CODE = tccode.CODE_VAL
+           AND tccode.USE_AT = 'Y'
+           AND tccode.DELETE_AT = 'N'
+        WHERE 1 = 1
+        AND tnsysuser.USER_NO = #USER_NO# /* 시스템사용자.사용자_번호 */
+        AND tnsysuser.DELETE_AT = 'N'
+]]>
+    </select>
+
+
+    <select id="sysUserDAO.selectSysUserByID" resultClass="sysUserVO">
+    <![CDATA[
+        /* sysUserDAO.selectSysUser */
+        /* 시스템사용자 조회 */
+        SELECT
+            tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+            , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+            , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+            , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+            , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+            , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+            , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+            , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+            , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+            , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+            , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+            , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+            , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+            , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+            , tnsysuser.RM /* 시스템사용자.비고 */
+            , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+            , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+            , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+            , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+            , tnsysuser.CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+            , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+            , tnsysuser.CHRG_JOB /* 시스템사용자.담당_업무 */
+            , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+            , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+            , (SELECT USER_ID FROM TN_SYS_USER WHERE USE_AT = 'Y'  AND DELETE_AT = 'N' AND USER_NO = tnsysuser.UPDUSR_NO) UPDUSR_ID
+            , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+            , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+            , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+            , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+            , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+            , tnsysuser.REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+            , tnsysuser.REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+        FROM TN_SYS_USER tnsysuser
+        WHERE 1 = 1
+        AND tnsysuser.USER_ID = #USER_ID# /* 시스템사용자.사용자_번호 */
+        AND tnsysuser.USE_AT = 'Y'
+        AND tnsysuser.DELETE_AT = 'N'
+        AND tnsysuser.CONFM_AT = 'Y'
+]]>
+    </select>
+    <sql id="sysUserDAO.selectSysUserList.where">
+        WHERE 1 = 1
+
+        <isEqual property="searchCondition" compareValue="0">
+            AND
+            tnsysuser.USER_NO = #searchKeyword#
+        </isEqual>
+        <isEqual property="searchCondition" compareValue="1">
+            AND
+            tnsysuser.USER_NM LIKE '%' || #searchKeyword# || '%'
+        </isEqual>
+        <isNotEmpty property="USER_NO"><![CDATA[ /* 시스템사용자.사용자_번호 */ AND tnsysuser.USER_NO = #USER_NO# ]]></isNotEmpty>
+        <isNotEmpty property="USER_NM"><![CDATA[ /* 시스템사용자.사용자_이름 */ AND tnsysuser.USER_NM like '%'|| #USER_NM# || '%']]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE"><![CDATA[ /* 시스템사용자.부서_코드 */ AND (tnsysuser.DEPT_CODE = #DEPT_CODE# or tnsysuser.SEHIGH_DEPT_CODE = #DEPT_CODE# or tnsysuser.UPPER_SEHIGH_DEPT_CODE = #DEPT_CODE# ) ]]></isNotEmpty>
+        <isNotEmpty property="USE_AT"><![CDATA[ /* 시스템사용자.사용_여부 */ AND tnsysuser.USE_AT = #USE_AT# ]]></isNotEmpty>
+        <isNotEmpty property="SECRET_NO"><![CDATA[ /* 시스템사용자.비밀_번호 */ AND tnsysuser.SECRET_NO = #SECRET_NO# ]]></isNotEmpty>
+        <isNotEmpty property="USER_ID"><![CDATA[ /* 시스템사용자.사용자_ID */ AND tnsysuser.USER_ID = #USER_ID# ]]></isNotEmpty>
+        <isNotEmpty property="EMAIL"><![CDATA[ /* 시스템사용자.이메일 */ AND tnsysuser.EMAIL = #EMAIL# ]]></isNotEmpty>
+        <isNotEmpty property="CTTPC"><![CDATA[ /* 시스템사용자.연락처 */ AND tnsysuser.CTTPC = #CTTPC# ]]></isNotEmpty>
+        <isNotEmpty property="STPLAT_AGRE_AT"><![CDATA[ /* 시스템사용자.약관_동의_여부 */ AND tnsysuser.STPLAT_AGRE_AT = #STPLAT_AGRE_AT# ]]></isNotEmpty>
+        <isNotEmpty property="DELETE_AT"><![CDATA[ /* 시스템사용자.삭제_여부 */ AND tnsysuser.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+        <isNotEmpty property="USER_SE_CODE"><![CDATA[ /* 시스템사용자.사용자_구분_코드 */ AND tnsysuser.USER_SE_CODE = #USER_SE_CODE# ]]></isNotEmpty>
+        <isNotEmpty property="CONFM_AT"><![CDATA[ /* 시스템사용자.승인_여부 */ AND tnsysuser.CONFM_AT = #CONFM_AT# ]]></isNotEmpty>
+        <isNotEmpty property="CONFM_DT"><![CDATA[ /* 시스템사용자.승인_일시 */ AND tnsysuser.CONFM_DT = #CONFM_DT# ]]></isNotEmpty>
+        <isNotEmpty property="CO_NO"><![CDATA[ /* 시스템사용자.업체_번호 */ AND tnsysuser.CO_NO = #CO_NO# ]]></isNotEmpty>
+        <isNotEmpty property="STPLAT_AGRE_DT"><![CDATA[ /* 시스템사용자.약관_동의_일시 */ AND tnsysuser.STPLAT_AGRE_DT = #STPLAT_AGRE_DT# ]]></isNotEmpty>
+        <isNotEmpty property="RM"><![CDATA[ /* 시스템사용자.비고 */ AND tnsysuser.RM = #RM# ]]></isNotEmpty>
+        <isNotEmpty property="CNTRCT_NM"><![CDATA[ /* 시스템사용자.계약_명 */ AND tnsysuser.CNTRCT_NM like '%'|| #CNTRCT_NM#  || '%']]></isNotEmpty>
+        <isNotEmpty property="CNTRCT_BEGIN_DE"><![CDATA[ /* 시스템사용자.계약_시작_일자 */ AND tnsysuser.CNTRCT_BEGIN_DE = #CNTRCT_BEGIN_DE# ]]></isNotEmpty>
+        <isNotEmpty property="CNTRCT_END_DE"><![CDATA[ /* 시스템사용자.계약_종료_일자 */ AND tnsysuser.CNTRCT_END_DE = #CNTRCT_END_DE# ]]></isNotEmpty>
+        <isNotEmpty property="CHRG_MANGR_NM"><![CDATA[ /* 시스템사용자.담당_감독자_명 */ AND tnsysuser.CHRG_MANGR_NM = #CHRG_MANGR_NM# ]]></isNotEmpty>
+        <isNotEmpty property="CNTRWK_CO_NM"><![CDATA[ /* 시스템사용자.공사_업체_명 */ AND tnsysuser.CNTRWK_CO_NM like '%'|| #CNTRWK_CO_NM# || '%']]></isNotEmpty>
+        <isNotEmpty property="BRTHDY"><![CDATA[ /* 시스템사용자.생년월일 */ AND tnsysuser.BRTHDY = #BRTHDY# ]]></isNotEmpty>
+        <isNotEmpty property="CHRG_JOB"><![CDATA[/* 시스템사용자.담당_업무 */ AND tnsysuser.CHRG_JOB like '%' || #CHRG_JOB# || '%' ]]></isNotEmpty>
+        <isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 시스템사용자.수정자_번호 */ AND tnsysuser.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+        <isNotEmpty property="UPDT_DT"><![CDATA[ /* 시스템사용자.수정_일시 */ AND tnsysuser.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+        <isNotEmpty property="CRTR_NO"><![CDATA[ /* 시스템사용자.생성자_번호 */ AND tnsysuser.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+        <isNotEmpty property="CREAT_DT"><![CDATA[ /* 시스템사용자.생성_일시 */ AND tnsysuser.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+        <isNotEmpty property="PASSWORD_CHANGE_DT"><![CDATA[ /* 시스템사용자.암호_변경_일시 */ AND tnsysuser.PASSWORD_CHANGE_DT = #PASSWORD_CHANGE_DT# ]]></isNotEmpty>
+        <isNotEmpty property="DELETE_DT"><![CDATA[ /* 시스템사용자.삭제_일시 */ AND tnsysuser.DELETE_DT = #DELETE_DT# ]]></isNotEmpty>
+        <isNotEmpty property="USER_SE_NM"><![CDATA[ /* 사용자_구분_명 */ AND tnsysuser.USER_SE_NM = #USER_SE_NM# ]]></isNotEmpty>
+        <isNotEmpty property="DEPT_NM"><![CDATA[ /* 부서명 */ AND tnsysuser.DEPT_NM like '%'|| #DEPT_NM# || '%']]></isNotEmpty>
+        <isNotEmpty property="REQ_USER_GRP"><![CDATA[ /* 시스템사용자.신청_사용자_그룹 */ AND tnsysuser.REQ_USER_GRP = #REQ_USER_GRP# ]]></isNotEmpty>
+        <isNotEmpty property="REQ_MENUACC_ROLE"><![CDATA[ /* 시스템사용자.신청_메뉴접근_권한 */ AND tnsysuser.REQ_MENUACC_ROLE = #REQ_MENUACC_ROLE# ]]></isNotEmpty>
+    </sql>
+
+    <!-- JOY. -->
+    <delete id="sysUserDAO.deleteSysUserChg">
+    <![CDATA[
+       DELETE FROM TN_SYS_USER_CHG_AUTH
+       WHERE USER_NO = #USER_NO#
+    ]]>
+    </delete>
+
+    <select id="sysUserDAO.selectSysUserChg" resultClass="sysUserVO">
+    <![CDATA[
+        /* sysUserDAO.selectSysUserChg */
+        /* 시스템사용자 권한변경 요청자 조회 */
+        SELECT
+            tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+            , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+            , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+            , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+            , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+            , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+            , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+            , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+            , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+            , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+            , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+            , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+            , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+            , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+            , tnsysuser.RM /* 시스템사용자.비고 */
+            , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+            , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+            , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+            , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+            , tnsysuser.CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+            , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+            , tnsysuser.CHRG_JOB /* 시스템사용자.담당_업무 */
+            , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+            , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+            , (SELECT USER_ID FROM TN_SYS_USER WHERE USE_AT = 'Y'  AND DELETE_AT = 'N' AND USER_NO = tnsysuser.UPDUSR_NO) UPDUSR_ID
+            , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+            , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+            , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+            , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+            , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+            , tcdept.DEPT_NM
+            , tccode.CODE_NM USER_SE_NM /* 시스템사용자.사용자_구분_명 */
+            , tnsysuser.REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+            , tnsysuser.REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+            , tnuserauth.AUTHOR_ID USER_GRP
+            , FN_GET_USER_MENU_AUTH(tnsysuser.USER_NO) MENUACC_ROLE
+        FROM TN_SYS_USER_CHG_AUTH tnsysuser
+        LEFT OUTER JOIN TN_USER_AUTH tnuserauth
+           ON tnuserauth.USER_NO = tnsysuser.USER_NO
+          AND tnuserauth.AUTHOR_ID IN ('ROLE_ADMIN', 'ROLE_USER', 'ROLE_USER_SGG')
+        LEFT OUTER JOIN TC_DEPT tcdept
+            ON tnsysuser.DEPT_CODE = tcdept.DEPT_CODE
+           AND tcdept.USE_AT = 'Y'
+           AND tcdept.DELETE_AT = 'N'
+          LEFT OUTER JOIN TC_CODE tccode
+            ON tnsysuser.USER_SE_CODE = tccode.CODE_VAL
+           AND tccode.USE_AT = 'Y'
+           AND tccode.DELETE_AT = 'N'
+        WHERE 1 = 1
+        AND tnsysuser.USER_NO = #USER_NO# /* 시스템사용자.사용자_번호 */
+        AND tnsysuser.DELETE_AT = 'N'
+    ]]>
+    </select>
+
+    <select id="sysUserDAO.selectSysUserChgAuthList" parameterClass="sysUserVO" resultClass="sysUserVO">
+    <![CDATA[
+        SELECT 'C' AS USER_FLAG, tnsysuserchgauth.*
+        FROM TN_SYS_USER_CHG_AUTH tnsysuserchgauth
+        WHERE 1 = 1
+    ]]>
+    <isNotEmpty property="USER_NO"><![CDATA[ AND tnsysuserchgauth.USER_NO = #USER_NO# ]]></isNotEmpty>
+    </select>
+
+    <select id="sysUserDAO.selectSysUserChgAuthListCnt" parameterClass="sysUserVO" resultClass="int">
+    <![CDATA[
+        SELECT COUNT(*)
+        FROM TN_SYS_USER_CHG_AUTH tnsysuserchgauth
+        WHERE 1 = 1
+    ]]>
+    <isNotEmpty property="USER_NO"><![CDATA[ AND tnsysuserchgauth.USER_NO = #USER_NO# ]]></isNotEmpty>
+    </select>
+
+
+    <select id="sysUserDAO.selectSysUserListPage" parameterClass="sysUserVO"
+        resultClass="sysUserVO">
+<![CDATA[
+        /* sysUserDAO.selectSysUserListPage */
+        /* 시스템사용자 조회(페이징) */
+        WITH tnsysuser AS
+        (
+        SELECT
+                tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+                , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+                , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+                , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+                , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+                , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+                , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+                , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+                , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+                , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+                , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+                , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+                , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+                , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+                , tnsysuser.RM /* 시스템사용자.비고 */
+                , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+                , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+                , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+                , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+                , tnsysuser.CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+                , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+                , tnsysuser.CHRG_JOB /* 시스템사용자.담당_업무 */
+                , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+                , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+                , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+                , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+                , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+                , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+                , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+                , tnsysuser.REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+                , tnsysuser.REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+            FROM TN_SYS_USER tnsysuser
+]]>
+        WHERE 1 = 1
+
+        <isEqual property="searchCondition" compareValue="0">
+            AND
+            tnsysuser.USER_NO = #searchKeyword#
+        </isEqual>
+
+        <isEqual property="searchCondition" compareValue="1">
+            AND
+            tnsysuser.USER_NM LIKE '%' || #searchKeyword# || '%'
+        </isEqual>
+
+        <isNotEmpty property="USER_NO">
+                <![CDATA[
+                    /* 시스템사용자.사용자_번호 */
+                    AND tnsysuser.USER_NO = #USER_NO#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="USER_NM">
+                <![CDATA[
+                    /* 시스템사용자.사용자_이름 */
+                    AND tnsysuser.USER_NM = #USER_NM#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="DEPT_CODE">
+                <![CDATA[
+                    /* 시스템사용자.부서_코드 */
+                    AND tnsysuser.DEPT_CODE = #DEPT_CODE#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="USE_AT">
+                <![CDATA[
+                    /* 시스템사용자.사용_여부 */
+                    AND tnsysuser.USE_AT = #USE_AT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="SECRET_NO">
+                <![CDATA[
+                    /* 시스템사용자.비밀_번호 */
+                    AND tnsysuser.SECRET_NO = #SECRET_NO#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="USER_ID">
+                <![CDATA[
+                    /* 시스템사용자.사용자_ID */
+                    AND tnsysuser.USER_ID = #USER_ID#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="EMAIL">
+                <![CDATA[
+                    /* 시스템사용자.이메일 */
+                    AND tnsysuser.EMAIL = #EMAIL#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CTTPC">
+                <![CDATA[
+                    /* 시스템사용자.연락처 */
+                    AND tnsysuser.CTTPC = #CTTPC#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="STPLAT_AGRE_AT">
+                <![CDATA[
+                    /* 시스템사용자.약관_동의_여부 */
+                    AND tnsysuser.STPLAT_AGRE_AT = #STPLAT_AGRE_AT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="DELETE_AT">
+                <![CDATA[
+                    /* 시스템사용자.삭제_여부 */
+                    AND tnsysuser.DELETE_AT = #DELETE_AT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="UPDUSR_NO">
+                <![CDATA[
+                    /* 시스템사용자.수정자_번호 */
+                    AND tnsysuser.UPDUSR_NO = #UPDUSR_NO#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="UPDT_DT">
+                <![CDATA[
+                    /* 시스템사용자.수정_일시 */
+                    AND tnsysuser.UPDT_DT = #UPDT_DT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CRTR_NO">
+                <![CDATA[
+                    /* 시스템사용자.생성자_번호 */
+                    AND tnsysuser.CRTR_NO = #CRTR_NO#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CREAT_DT">
+                <![CDATA[
+                    /* 시스템사용자.생성_일시 */
+                    AND tnsysuser.CREAT_DT = #CREAT_DT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="PASSWORD_CHANGE_DT">
+                <![CDATA[
+                    /* 시스템사용자.암호_변경_일시 */
+                    AND tnsysuser.PASSWORD_CHANGE_DT = #PASSWORD_CHANGE_DT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="DELETE_DT">
+                <![CDATA[
+                    /* 시스템사용자.삭제_일시 */
+                    AND tnsysuser.DELETE_DT = #DELETE_DT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="USER_SE_CODE">
+                <![CDATA[
+                    /* 시스템사용자.사용자_구분_코드 */
+                    AND tnsysuser.USER_SE_CODE = #USER_SE_CODE#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CONFM_AT">
+                <![CDATA[
+                    /* 시스템사용자.승인_여부 */
+                    AND tnsysuser.CONFM_AT = #CONFM_AT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CONFM_DT">
+                <![CDATA[
+                    /* 시스템사용자.승인_일시 */
+                    AND tnsysuser.CONFM_DT = #CONFM_DT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CO_NO">
+                <![CDATA[
+                    /* 시스템사용자.업체_번호 */
+                    AND tnsysuser.CO_NO = #CO_NO#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="STPLAT_AGRE_DT">
+                <![CDATA[
+                    /* 시스템사용자.약관_동의_일시 */
+                    AND tnsysuser.STPLAT_AGRE_DT = #STPLAT_AGRE_DT#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="RM">
+                <![CDATA[
+                    /* 시스템사용자.비고 */
+                    AND tnsysuser.RM = #RM#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CNTRCT_NM">
+                <![CDATA[
+                    /* 시스템사용자.계약_명 */
+                    AND tnsysuser.CNTRCT_NM = #CNTRCT_NM#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CNTRCT_BEGIN_DE">
+                <![CDATA[
+                    /* 시스템사용자.계약_시작_일자 */
+                    AND tnsysuser.CNTRCT_BEGIN_DE = #CNTRCT_BEGIN_DE#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CNTRCT_END_DE">
+                <![CDATA[
+                    /* 시스템사용자.계약_종료_일자 */
+                    AND tnsysuser.CNTRCT_END_DE = #CNTRCT_END_DE#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CHRG_MANGR_NM">
+                <![CDATA[
+                    /* 시스템사용자.담당_감독자_명*/
+                    AND tnsysuser.CHRG_MANGR_NM = #CHRG_MANGR_NM#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CNTRWK_CO_NM">
+                <![CDATA[
+                    /* 시스템사용자.공사_업체_명 */
+                    AND tnsysuser.CNTRWK_CO_NM = #CNTRWK_CO_NM#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="BRTHDY">
+                <![CDATA[
+                    /* 시스템사용자.생년월일 */
+                    AND tnsysuser.BRTHDY = #BRTHDY#
+                ]]>
+        </isNotEmpty>
+
+        <isNotEmpty property="CHRG_JOB">
+                <![CDATA[
+                    /* 시스템사용자.담당_업무 */
+                    AND tnsysuser.CHRG_JOB like '%' || #CHRG_JOB# || '%'
+                ]]>
+        </isNotEmpty>
+
+    <![CDATA[
+        )
+        SELECT tnsysuser.* FROM
+        (
+        SELECT
+                                        tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+                                            , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+                                            , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+                                            , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+                                            , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+                                            , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+                                            , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+                                            , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+                                            , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+                                            , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+                                            , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+                                            , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+                                            , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+                                            , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+                                            , tnsysuser.RM /* 시스템사용자.비고 */
+                                            , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+                                            , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+                                            , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+                                            , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+                                            , tnsysuser.CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+                                            , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+                                            , tnsysuser.CHRG_JOB /* 시스템사용자.담당_업무 */
+                                            , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+                                            , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+                                            , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+                                            , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+                                            , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+                                            , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+                                            , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+                        /* 시스템사용자.사용자_번호 */
+            /* 시스템사용자.사용자_이름 */
+            , ROW_NUMBER() OVER( ORDER BY tnsysuser.USER_NO ASC, tnsysuser.USER_NM DESC )  ROW_NO
+            FROM  tnsysuser
+            WHERE 1=1
+        )  tnsysuser
+        WHERE 1=1
+]]>
+<![CDATA[
+        AND  tnsysuser.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>
+<![CDATA[
+        AND  tnsysuser.ROW_NO <= #lastIndex#    AND  ROW_NO > #firstIndex#
+]]>
+
+
+    </select>
+
+    <select id="sysUserDAO.selectSysUserList" parameterClass="sysUserVO" resultClass="sysUserVO">
+        <![CDATA[
+        /* sysUserDAO.selectSysUserList */
+        SELECT * FROM (
+            SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) rn, tnsysuser.*
+            FROM (
+                SELECT tnsysuser.* FROM (
+                    SELECT
+                        'N' AS USER_FLAG
+                        , tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+                        , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+                        , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+                        , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+                        , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+                        , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+                        , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+                        , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+                        , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+                        , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+                        , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+                        , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+                        , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+                        , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+                        , tnsysuser.RM /* 시스템사용자.비고 */
+                        , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+                        , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+                        , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+                        , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+                        , coalesce(tncompany.CO_NM, coalesce(tnsysuser.CNTRWK_CO_NM, 'N/A')) CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+                        , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+                        , coalesce(tnsysuser.CHRG_JOB, 'N/A') CHRG_JOB/* 시스템사용자.담당_업무 */
+                        , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+                        , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+                        , (SELECT USER_ID FROM TN_SYS_USER WHERE USE_AT = 'Y'  AND DELETE_AT = 'N' AND USER_NO = tnsysuser.UPDUSR_NO) UPDUSR_ID
+                        , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+                        , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+                        , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+                        , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+                        , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+                        , coalesce(tcdept.DEPT_NM, 'N/A') DEPT_NM /* 부서 명 */
+                        , tccode.CODE_NM USER_SE_NM /* 사용자 구분 명 */
+                        , tcdept.SEHIGH_DEPT_CODE
+                        , (SELECT subtcdept.SEHIGH_DEPT_CODE FROM TC_DEPT subtcdept WHERE subtcdept.DEPT_CODE = tcdept.SEHIGH_DEPT_CODE AND subtcdept.USE_AT='Y' AND subtcdept.DELETE_AT='N') AS UPPER_SEHIGH_DEPT_CODE
+                        , tnsysuser.REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+                        , tnsysuser.REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+                    FROM TN_SYS_USER tnsysuser
+                    LEFT OUTER JOIN TC_DEPT tcdept
+                        ON tcdept.DEPT_CODE = tnsysuser.DEPT_CODE
+                        AND tcdept.USE_AT = 'Y'
+                        AND tcdept.DELETE_AT = 'N'
+                    LEFT OUTER JOIN TN_COMPANY tncompany
+                        ON tncompany.CO_NO = tnsysuser.CO_NO
+                        AND tncompany.USE_AT = 'Y'
+                        AND tncompany.DELETE_AT = 'N'
+                    LEFT OUTER JOIN TC_CODE tccode
+                        ON tccode.CODE_VAL = tnsysuser.USER_SE_CODE
+                        AND tccode.USE_AT = 'Y'
+                        AND tccode.DELETE_AT = 'N'
+                ) tnsysuser
+        ]]>
+        <include refid="sysUserDAO.selectSysUserList.where" />
+
+        <!-- 2018. 03. 16. JOY. -->
+        <isEqual property="CONFM_AT" compareValue="N">
+        <![CDATA[
+                UNION ALL
+
+                SELECT tnsysuser.*
+                FROM (
+                    SELECT
+                        'C' AS USER_FLAG
+                        , tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+                        , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+                        , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+                        , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+                        , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+                        , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+                        , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+                        , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+                        , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+                        , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+                        , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+                        , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+                        , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+                        , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+                        , tnsysuser.RM /* 시스템사용자.비고 */
+                        , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+                        , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+                        , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+                        , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+                        , coalesce(tncompany.CO_NM, coalesce(tnsysuser.CNTRWK_CO_NM, 'N/A')) CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+                        , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+                        , coalesce(tnsysuser.CHRG_JOB, 'N/A') CHRG_JOB/* 시스템사용자.담당_업무 */
+                        , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+                        , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+                        , (SELECT USER_ID FROM TN_SYS_USER WHERE USE_AT = 'Y'  AND DELETE_AT = 'N' AND USER_NO = tnsysuser.UPDUSR_NO) UPDUSR_ID
+                        , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+                        , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+                        , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+                        , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+                        , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+                        , coalesce(tcdept.DEPT_NM, 'N/A') DEPT_NM /* 부서 명 */
+                        , tccode.CODE_NM USER_SE_NM /* 사용자 구분 명 */
+                        , tcdept.SEHIGH_DEPT_CODE
+                        , (SELECT subtcdept.SEHIGH_DEPT_CODE FROM TC_DEPT subtcdept WHERE subtcdept.DEPT_CODE = tcdept.SEHIGH_DEPT_CODE AND subtcdept.USE_AT='Y' AND subtcdept.DELETE_AT='N') AS UPPER_SEHIGH_DEPT_CODE
+                        , tnsysuser.REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+                        , tnsysuser.REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+                    FROM TN_SYS_USER_CHG_AUTH tnsysuser
+                    LEFT OUTER JOIN TC_DEPT tcdept
+                        ON tcdept.DEPT_CODE = tnsysuser.DEPT_CODE
+                        AND tcdept.USE_AT = 'Y'
+                        AND tcdept.DELETE_AT = 'N'
+                    LEFT OUTER JOIN TN_COMPANY tncompany
+                        ON tncompany.CO_NO = tnsysuser.CO_NO
+                        AND tncompany.USE_AT = 'Y'
+                        AND tncompany.DELETE_AT = 'N'
+                    LEFT OUTER JOIN TC_CODE tccode
+                        ON tccode.CODE_VAL = tnsysuser.USER_SE_CODE
+                        AND tccode.USE_AT = 'Y'
+                        AND tccode.DELETE_AT = 'N'
+                ) tnsysuser
+                WHERE 1 = 1
+                    AND tnsysuser.USE_AT = 'Y'
+                    AND tnsysuser.DELETE_AT = 'N'
+        ]]>
+
+        </isEqual>
+        <![CDATA[
+            )  tnsysuser
+         WHERE 1=1
+        ]]>
+
+        <isNotEmpty property="USER_NM"><![CDATA[ /* 시스템사용자.사용자_이름 */ AND tnsysuser.USER_NM like '%'|| #USER_NM# || '%']]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE"><![CDATA[ /* 시스템사용자.부서_코드 */ AND (tnsysuser.DEPT_CODE = #DEPT_CODE# or tnsysuser.SEHIGH_DEPT_CODE = #DEPT_CODE# or tnsysuser.UPPER_SEHIGH_DEPT_CODE = #DEPT_CODE# ) ]]></isNotEmpty>
+
+        <![CDATA[
+        ) WHERE 1=1
+        ]]>
+
+        <isEqual prepend=" " property="usePage" compareValue="true">
+        <![CDATA[
+        AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+        ]]>
+        </isEqual>
+    </select>
+
+    <select id="sysUserDAO.selectSysUserListTotalCount" parameterClass="sysUserVO" resultClass="int">
+        <![CDATA[
+        /* sysUserDAO.selectApplicationUserListCount */
+        SELECT COUNT(*) totCnt FROM (
+            SELECT tnsysuser.*
+            FROM (
+                SELECT tnsysuser.* FROM (
+                    SELECT
+                        'N' AS USER_FLAG
+                        , tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+                        , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+                        , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+                        , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+                        , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+                        , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+                        , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+                        , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+                        , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+                        , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+                        , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+                        , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+                        , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+                        , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+                        , tnsysuser.RM /* 시스템사용자.비고 */
+                        , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+                        , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+                        , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+                        , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+                        , coalesce(tncompany.CO_NM, coalesce(tnsysuser.CNTRWK_CO_NM, 'N/A')) CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+                        , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+                        , coalesce(tnsysuser.CHRG_JOB, 'N/A') CHRG_JOB/* 시스템사용자.담당_업무 */
+                        , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+                        , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+                        , (SELECT USER_ID FROM TN_SYS_USER WHERE USE_AT = 'Y'  AND DELETE_AT = 'N' AND USER_NO = tnsysuser.UPDUSR_NO) UPDUSR_ID
+                        , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+                        , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+                        , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+                        , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+                        , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+                        , coalesce(tcdept.DEPT_NM, 'N/A') DEPT_NM /* 부서 명 */
+                        , tccode.CODE_NM USER_SE_NM /* 사용자 구분 명 */
+                        , tcdept.SEHIGH_DEPT_CODE
+                        , (SELECT subtcdept.SEHIGH_DEPT_CODE FROM TC_DEPT subtcdept WHERE subtcdept.DEPT_CODE = tcdept.SEHIGH_DEPT_CODE AND subtcdept.USE_AT='Y' AND subtcdept.DELETE_AT='N') AS UPPER_SEHIGH_DEPT_CODE
+                        , tnsysuser.REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+                        , tnsysuser.REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+                    FROM TN_SYS_USER tnsysuser
+                    LEFT OUTER JOIN TC_DEPT tcdept
+                        ON tcdept.DEPT_CODE = tnsysuser.DEPT_CODE
+                        AND tcdept.USE_AT = 'Y'
+                        AND tcdept.DELETE_AT = 'N'
+                    LEFT OUTER JOIN TN_COMPANY tncompany
+                        ON tncompany.CO_NO = tnsysuser.CO_NO
+                        AND tncompany.USE_AT = 'Y'
+                        AND tncompany.DELETE_AT = 'N'
+                    LEFT OUTER JOIN TC_CODE tccode
+                        ON tccode.CODE_VAL = tnsysuser.USER_SE_CODE
+                        AND tccode.USE_AT = 'Y'
+                        AND tccode.DELETE_AT = 'N'
+                ) tnsysuser
+        ]]>
+        <include refid="sysUserDAO.selectSysUserList.where" />
+
+        <!-- 2018. 03. 16. JOY. -->
+        <isEqual property="CONFM_AT" compareValue="N">
+        <![CDATA[
+                UNION ALL
+
+                SELECT tnsysuser.*
+                FROM (
+                    SELECT
+                        'C' AS USER_FLAG
+                        , tnsysuser.USER_NO /* 시스템사용자.사용자_번호 */
+                        , tnsysuser.USER_NM /* 시스템사용자.사용자_이름 */
+                        , tnsysuser.DEPT_CODE /* 시스템사용자.부서_코드 */
+                        , tnsysuser.USE_AT /* 시스템사용자.사용_여부 */
+                        , tnsysuser.SECRET_NO /* 시스템사용자.비밀_번호 */
+                        , tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
+                        , tnsysuser.EMAIL /* 시스템사용자.이메일 */
+                        , tnsysuser.CTTPC /* 시스템사용자.연락처 */
+                        , tnsysuser.STPLAT_AGRE_AT /* 시스템사용자.약관_동의_여부 */
+                        , tnsysuser.USER_SE_CODE /* 시스템사용자.사용자_구분_코드 */
+                        , tnsysuser.CONFM_AT /* 시스템사용자.승인_여부 */
+                        , tnsysuser.CONFM_DT /* 시스템사용자.승인_일시 */
+                        , tnsysuser.CO_NO /* 시스템사용자.업체_번호 */
+                        , tnsysuser.STPLAT_AGRE_DT /* 시스템사용자.약관_동의_일시 */
+                        , tnsysuser.RM /* 시스템사용자.비고 */
+                        , tnsysuser.CNTRCT_NM /* 시스템사용자.계약_명 */
+                        , tnsysuser.CNTRCT_BEGIN_DE /* 시스템사용자.계약_시작_일자 */
+                        , tnsysuser.CNTRCT_END_DE /* 시스템사용자.계약_종료_일자 */
+                        , tnsysuser.CHRG_MANGR_NM /* 시스템사용자.담당_감독자_명 */
+                        , coalesce(tncompany.CO_NM, coalesce(tnsysuser.CNTRWK_CO_NM, 'N/A')) CNTRWK_CO_NM /* 시스템사용자.공사_업체_명 */
+                        , tnsysuser.BRTHDY /* 시스템사용자.생년월일 */
+                        , coalesce(tnsysuser.CHRG_JOB, 'N/A') CHRG_JOB/* 시스템사용자.담당_업무 */
+                        , tnsysuser.DELETE_AT /* 시스템사용자.삭제_여부 */
+                        , tnsysuser.UPDUSR_NO /* 시스템사용자.수정자_번호 */
+                        , (SELECT USER_ID FROM TN_SYS_USER WHERE USE_AT = 'Y'  AND DELETE_AT = 'N' AND USER_NO = tnsysuser.UPDUSR_NO) UPDUSR_ID
+                        , tnsysuser.UPDT_DT /* 시스템사용자.수정_일시 */
+                        , tnsysuser.CRTR_NO /* 시스템사용자.생성자_번호 */
+                        , tnsysuser.CREAT_DT /* 시스템사용자.생성_일시 */
+                        , tnsysuser.PASSWORD_CHANGE_DT /* 시스템사용자.암호_변경_일시 */
+                        , tnsysuser.DELETE_DT /* 시스템사용자.삭제_일시 */
+                        , coalesce(tcdept.DEPT_NM, 'N/A') DEPT_NM /* 부서 명 */
+                        , tccode.CODE_NM USER_SE_NM /* 사용자 구분 명 */
+                        , tcdept.SEHIGH_DEPT_CODE
+                        , (SELECT subtcdept.SEHIGH_DEPT_CODE FROM TC_DEPT subtcdept WHERE subtcdept.DEPT_CODE = tcdept.SEHIGH_DEPT_CODE AND subtcdept.USE_AT='Y' AND subtcdept.DELETE_AT='N') AS UPPER_SEHIGH_DEPT_CODE
+                        , tnsysuser.REQ_USER_GRP /* 시스템사용자.신청_사용자_그룹 */
+                        , tnsysuser.REQ_MENUACC_ROLE /* 시스템사용자.신청_메뉴접근_권한 */
+                    FROM TN_SYS_USER_CHG_AUTH tnsysuser
+                    LEFT OUTER JOIN TC_DEPT tcdept
+                        ON tcdept.DEPT_CODE = tnsysuser.DEPT_CODE
+                        AND tcdept.USE_AT = 'Y'
+                        AND tcdept.DELETE_AT = 'N'
+                    LEFT OUTER JOIN TN_COMPANY tncompany
+                        ON tncompany.CO_NO = tnsysuser.CO_NO
+                        AND tncompany.USE_AT = 'Y'
+                        AND tncompany.DELETE_AT = 'N'
+                    LEFT OUTER JOIN TC_CODE tccode
+                        ON tccode.CODE_VAL = tnsysuser.USER_SE_CODE
+                        AND tccode.USE_AT = 'Y'
+                        AND tccode.DELETE_AT = 'N'
+                ) tnsysuser
+                WHERE 1 = 1
+                    AND tnsysuser.USE_AT = 'Y'
+                    AND tnsysuser.DELETE_AT = 'N'
+        ]]>
+
+        </isEqual>
+        <![CDATA[
+            )  tnsysuser
+         WHERE 1=1
+        ]]>
+
+        <isNotEmpty property="USER_NM"><![CDATA[ /* 시스템사용자.사용자_이름 */ AND tnsysuser.USER_NM like '%'|| #USER_NM# || '%']]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE"><![CDATA[ /* 시스템사용자.부서_코드 */ AND (tnsysuser.DEPT_CODE = #DEPT_CODE# or tnsysuser.SEHIGH_DEPT_CODE = #DEPT_CODE# or tnsysuser.UPPER_SEHIGH_DEPT_CODE = #DEPT_CODE# ) ]]></isNotEmpty>
+
+        <![CDATA[
+        ) WHERE 1=1
+        ]]>
+
+    </select>
+
+
+    <select id="sysUserDAO.selectSysUserLogList" parameterClass="sysUserVO" resultClass="sysUserVO">
+    <![CDATA[
+            /* sysUserDAO.selectSysUserLogList */
+            /* 시스템 로그 목록 조회 */
+            SELECT * FROM (
+                SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) rn, systb.* FROM (
+                    SELECT
+                        tnsysuser.USER_ID,
+                        tnsysuser.USER_NM,
+                        (SELECT tcdept.DEPT_NM FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE =  tnsysuser.DEPT_CODE) AS DEPT_NM,
+                        tlsysconnect.USER_NO,
+                        tnmenu.MENU_NM,
+                        TO_CHAR(tlsysconnect.CREAT_DT, 'YYYY-MM-DD hh24:mi:ss') AS CREAT_DT
+                    FROM
+                        TL_SYS_CONNECT tlsysconnect
+                        LEFT OUTER JOIN TN_SYS_USER tnsysuser ON tlsysconnect.USER_NO = tnsysuser.USER_NO
+                        LEFT OUTER JOIN TN_MENU tnmenu ON tlsysconnect.MENU_ID = tnmenu.MENU_ID
+                    WHERE
+                            tnsysuser.USE_AT = 'Y'
+                        AND
+                            tnsysuser.DELETE_AT = 'N'
+                        AND
+                            tnmenu.USE_AT = 'Y'
+                        AND
+                            tnmenu.DELETE_AT = 'N'
+    ]]>
+            <isNotEmpty property="SCH_MENU_ID"><![CDATA[  AND tlsysconnect.MENU_ID = #SCH_MENU_ID# ]]></isNotEmpty>
+            <isNotEmpty property="SCH_MENU_NM"><![CDATA[  AND tnmenu.MENU_NM LIKE '%' ||  #SCH_MENU_NM# || '%' ]]></isNotEmpty>
+            <isNotEmpty property="SCH_STRCON_DE"><![CDATA[AND TO_CHAR(TO_DATE(tlsysconnect.creat_dt),'YYYY-MM-DD hh24:mi:ss') >= #SCH_STRCON_DE#  ]]></isNotEmpty>
+            <isNotEmpty property="SCH_ENDCON_DE"><![CDATA[AND TO_CHAR(TO_DATE(tlsysconnect.creat_dt),'YYYY-MM-DD hh24:mi:ss') <= #SCH_ENDCON_DE#  || ' 23:59:59'  ]]></isNotEmpty>
+                 ) systb
+<![CDATA[
+             ) tb where 1=1
+]]>
+        <isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+        </isEqual>
+    </select>
+
+    <select id="sysUserDAO.selectSysUserLogListTotalCount" parameterClass="sysUserVO" resultClass="int">
+<![CDATA[
+        /* sysUserDAO.selectSysUserLogListTotalCount */
+        /* 시스템 로그 목록 건수 조회 */
+        SELECT COUNT(*) totCnt FROM (
+            SELECT
+                tnsysuser.USER_ID,
+                tnsysuser.USER_NM,
+                (SELECT tcdept.DEPT_NM FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE =  tnsysuser.DEPT_CODE) AS DEPT_NM,
+                tlsysconnect.USER_NO,
+                tnmenu.MENU_NM,
+                TO_CHAR(tlsysconnect.CREAT_DT, 'YYYY-MM-DD hh24:mi:ss') AS CREAT_DT
+            FROM
+                TL_SYS_CONNECT tlsysconnect
+                LEFT OUTER JOIN TN_SYS_USER tnsysuser ON tlsysconnect.USER_NO = tnsysuser.USER_NO
+                LEFT OUTER JOIN TN_MENU tnmenu ON tlsysconnect.MENU_ID = tnmenu.MENU_ID
+            WHERE
+                    tnsysuser.USE_AT = 'Y'
+                AND
+                    tnsysuser.DELETE_AT = 'N'
+                AND
+                    tnmenu.USE_AT = 'Y'
+                AND
+                    tnmenu.DELETE_AT = 'N'
+]]>
+            <isNotEmpty property="SCH_MENU_ID"><![CDATA[  AND tlsysconnect.MENU_ID = #SCH_MENU_ID# ]]></isNotEmpty>
+            <isNotEmpty property="SCH_MENU_NM"><![CDATA[  AND tnmenu.MENU_NM LIKE '%' ||  #SCH_MENU_NM# || '%' ]]></isNotEmpty>
+            <isNotEmpty property="SCH_STRCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT >= #SCH_STRCON_DE#  ]]></isNotEmpty>
+            <isNotEmpty property="SCH_ENDCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT <= #SCH_ENDCON_DE# ]]></isNotEmpty>
+         )
+    </select>
+
+    <select id="sysUserDAO.selectSysUserLogListExcel" parameterClass="sysUserVO" resultClass="hashMap">
+    <![CDATA[
+            /* sysUserDAO.selectSysUserLogListExcel */
+            /* 시스템 로그 엑셀 목록 조회 */
+                SELECT
+                    tnsysuser.USER_ID,
+                    tnsysuser.USER_NM,
+                    (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE =  tnsysuser.DEPT_CODE) AS DEPT_NM,
+                    tlsysconnect.USER_NO,
+                    tnmenu.MENU_NM,
+                    TO_CHAR(tlsysconnect.CREAT_DT, 'YYYY-MM-DD hh24:mi:ss') AS CREAT_DT
+                FROM
+                    TL_SYS_CONNECT tlsysconnect
+                    LEFT OUTER JOIN TN_SYS_USER tnsysuser ON tlsysconnect.USER_NO = tnsysuser.USER_NO
+                    LEFT OUTER JOIN TN_MENU tnmenu ON tlsysconnect.MENU_ID = tnmenu.MENU_ID
+                WHERE
+                        tnsysuser.USE_AT = 'Y'
+                    AND
+                        tnsysuser.DELETE_AT = 'N'
+                    AND
+                        tnmenu.USE_AT = 'Y'
+                    AND
+                        tnmenu.DELETE_AT = 'N'
+    ]]>
+            <isNotEmpty property="SCH_MENU_ID"><![CDATA[  AND tlsysconnect.MENU_ID = #SCH_MENU_ID# ]]></isNotEmpty>
+            <isNotEmpty property="SCH_MENU_NM"><![CDATA[  AND tnmenu.MENU_NM LIKE '%' ||  #SCH_MENU_NM# || '%' ]]></isNotEmpty>
+            <isNotEmpty property="SCH_STRCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT >= #SCH_STRCON_DE#  ]]></isNotEmpty>
+            <isNotEmpty property="SCH_ENDCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT <= #SCH_ENDCON_DE# ]]></isNotEmpty>
+<![CDATA[
+                ORDER BY tlsysconnect.CREAT_DT DESC,tnsysuser.USER_ID,tnsysuser.DEPT_CODE,tnmenu.MENU_NM
+]]>
+<!--        <isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+        </isEqual> -->
+    </select>
+
+    <select id="sysUserDAO.selectMinMaxYear" resultClass="sysUserVO">
+    <![CDATA[
+        /* sysUserDAO.selectMinMaxYear */
+        /* 데이터 최소, 최대 년도 조회 */
+        SELECT
+            TO_CHAR(MIN(tlsysconnect.CREAT_DT), 'YYYYMMDD') AS MIN_YEAR
+            , TO_CHAR(MAX(tlsysconnect.CREAT_DT), 'YYYYMMDD') AS MAX_YEAR
+         FROM TL_SYS_CONNECT tlsysconnect
+         WHERE 1=1
+    ]]>
+    </select>
+
+
+</sqlMap>

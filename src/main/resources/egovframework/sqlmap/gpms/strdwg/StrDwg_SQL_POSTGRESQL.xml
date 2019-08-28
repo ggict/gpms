@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="strDwgDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="strDwgSerarchVO" type="kr.go.gg.gpms.strdwg.service.model.StrDwgDefaultVO"/>
+	<typeAlias alias="strDwgVO"	type="kr.go.gg.gpms.strdwg.service.model.StrDwgVO" />
+
+	<resultMap id="strDwg.resultMap"
+		class="strDwgVO">
+		<result property="ROAD_NO" column="ROAD_NO" columnIndex="1" /> <!-- 구조물_도면_정보.노선_번호 -->
+		<result property="SECT" column="SECT" columnIndex="2" /> <!-- 구조물_도면_정보.구간_번호 -->
+		<result property="STR_COD" column="STR_COD" columnIndex="3" /> <!-- 구조물_도면_정보.구조물_관리번호 -->
+		<result property="INPUT_DATE" column="INPUT_DATE" columnIndex="4" /> <!-- 구조물_도면_정보.입력일 -->
+		<result property="DWG_FILE" column="DWG_FILE" columnIndex="5" /> <!-- 구조물_도면_정보.파일_명 -->
+		<result property="DWG_NAME" column="DWG_NAME" columnIndex="6" /> <!-- 구조물_도면_정보.도면_명칭 -->
+		<result property="DWG_TYPE" column="DWG_TYPE" columnIndex="7" /> <!-- 구조물_도면_정보.입력_방식 -->
+		<result property="REM" column="REM" columnIndex="8" /> <!-- 구조물_도면_정보.비고 -->
+		<result property="SEQID" column="SEQID" columnIndex="9" /> <!-- 구조물_도면_정보.SEQID -->
+	</resultMap>
+
+	<insert id="strDwgDAO.insertStrDwg">
+	<![CDATA[ 
+		/* strDwgDAO.insertStrDwg */
+		/* 구조물_도면_정보 등록 */
+		
+		INSERT INTO STR_DWG (
+			ROAD_NO /* 구조물_도면_정보.노선_번호 */
+			, SECT /* 구조물_도면_정보.구간_번호 */
+			, STR_COD /* 구조물_도면_정보.구조물_관리번호 */
+			, INPUT_DATE /* 구조물_도면_정보.입력일 */
+			, DWG_FILE /* 구조물_도면_정보.파일_명 */
+			, DWG_NAME /* 구조물_도면_정보.도면_명칭 */
+			, DWG_TYPE /* 구조물_도면_정보.입력_방식 */
+			, REM /* 구조물_도면_정보.비고 */
+			, SEQID /* 구조물_도면_정보.SEQID */
+		) VALUES (
+			#ROAD_NO# /* 구조물_도면_정보.노선_번호 */
+			, #SECT# /* 구조물_도면_정보.구간_번호 */
+			, #STR_COD# /* 구조물_도면_정보.구조물_관리번호 */
+			, #INPUT_DATE# /* 구조물_도면_정보.입력일 */
+			, #DWG_FILE# /* 구조물_도면_정보.파일_명 */
+			, #DWG_NAME# /* 구조물_도면_정보.도면_명칭 */
+			, #DWG_TYPE# /* 구조물_도면_정보.입력_방식 */
+			, #REM# /* 구조물_도면_정보.비고 */
+			, #SEQID# /* 구조물_도면_정보.SEQID */
+		)
+]]>
+	</insert>
+
+	<update id="strDwgDAO.updateStrDwg">
+	<![CDATA[ 
+		/* strDwgDAO.updateStrDwg */
+		/* 구조물_도면_정보 수정 */
+		UPDATE STR_DWG SET
+		ROAD_NO = #ROAD_NO# /* 구조물_도면_정보.노선_번호 */
+		, SECT = #SECT# /* 구조물_도면_정보.구간_번호 */
+		, STR_COD = #STR_COD# /* 구조물_도면_정보.구조물_관리번호 */
+		, INPUT_DATE = #INPUT_DATE# /* 구조물_도면_정보.입력일 */
+		, DWG_FILE = #DWG_FILE# /* 구조물_도면_정보.파일_명 */
+		, DWG_NAME = #DWG_NAME# /* 구조물_도면_정보.도면_명칭 */
+		, DWG_TYPE = #DWG_TYPE# /* 구조물_도면_정보.입력_방식 */
+		, REM = #REM# /* 구조물_도면_정보.비고 */
+		, SEQID = #SEQID# /* 구조물_도면_정보.SEQID */
+]]>
+	</update>
+
+	<delete id="strDwgDAO.deleteStrDwg">
+	<![CDATA[ 
+		/* strDwgDAO.deleteStrDwg */
+		/* 구조물_도면_정보 삭제 */
+		UPDATE STR_DWG SET
+]]>
+	</delete>
+
+	<select id="strDwgDAO.selectStrDwg"
+		parameterClass="strDwgVO"
+		resultClass="strDwgVO">
+	<![CDATA[ 
+		/* strDwgDAO.selectStrDwg */
+		/* 구조물_도면_정보 조회 */
+		SELECT
+			strdwg.ROAD_NO /* 구조물_도면_정보.노선_번호 */
+			, strdwg.SECT /* 구조물_도면_정보.구간_번호 */
+			, strdwg.STR_COD /* 구조물_도면_정보.구조물_관리번호 */
+			, strdwg.INPUT_DATE /* 구조물_도면_정보.입력일 */
+			, strdwg.DWG_FILE /* 구조물_도면_정보.파일_명 */
+			, strdwg.DWG_NAME /* 구조물_도면_정보.도면_명칭 */
+			, strdwg.DWG_TYPE /* 구조물_도면_정보.입력_방식 */
+			, strdwg.REM /* 구조물_도면_정보.비고 */
+			, strdwg.SEQID /* 구조물_도면_정보.SEQID */
+		FROM STR_DWG strdwg
+]]>
+	</select>
+
+	<sql id="strDwgDAO.selectStrDwgList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			<![CDATA[
+				AND strdwg.ROAD_NO = #searchKeyword#
+			]]>
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			<![CDATA[
+				AND strdwg.SECT LIKE '%' || #searchKeyword# || '%'
+			]]>
+		</isEqual>
+		<isNotEmpty property="ROAD_NO"><![CDATA[ /* 구조물_도면_정보.노선_번호 */ AND strdwg.ROAD_NO = #ROAD_NO# ]]></isNotEmpty>
+		<isNotEmpty property="SECT"><![CDATA[ /* 구조물_도면_정보.구간_번호 */ AND strdwg.SECT = #SECT# ]]></isNotEmpty>
+		<isNotEmpty property="STR_COD"><![CDATA[ /* 구조물_도면_정보.구조물_관리번호 */ AND strdwg.STR_COD = #STR_COD# ]]></isNotEmpty>
+		<isNotEmpty property="INPUT_DATE"><![CDATA[ /* 구조물_도면_정보.입력일 */ AND strdwg.INPUT_DATE = #INPUT_DATE# ]]></isNotEmpty>
+		<isNotEmpty property="DWG_FILE"><![CDATA[ /* 구조물_도면_정보.파일_명 */ AND strdwg.DWG_FILE = #DWG_FILE# ]]></isNotEmpty>
+		<isNotEmpty property="DWG_NAME"><![CDATA[ /* 구조물_도면_정보.도면_명칭 */ AND strdwg.DWG_NAME = #DWG_NAME# ]]></isNotEmpty>
+		<isNotEmpty property="DWG_TYPE"><![CDATA[ /* 구조물_도면_정보.입력_방식 */ AND strdwg.DWG_TYPE = #DWG_TYPE# ]]></isNotEmpty>
+		<isNotEmpty property="REM"><![CDATA[ /* 구조물_도면_정보.비고 */ AND strdwg.REM = #REM# ]]></isNotEmpty>
+		<isNotEmpty property="SEQID"><![CDATA[ /* 구조물_도면_정보.SEQID */ AND strdwg.SEQID = #SEQID# ]]></isNotEmpty>
+	</sql>
+
+	<select id="strDwgDAO.selectStrDwgList"
+		parameterClass="strDwgVO"
+		resultClass="strDwgVO">
+<![CDATA[ 		
+		/* strDwgDAO.selectStrDwgList */
+		/* 구조물_도면_정보 조회 */
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN, tb.* FROM (
+			SELECT
+				strdwg.ROAD_NO /* 구조물_도면_정보.노선_번호 */
+				, LTRIM(strdwg.ROAD_NO, '0') ROAD_NO_VAL 
+				, strdwg.SECT /* 구조물_도면_정보.구간_번호 */
+				, strdwg.STR_COD /* 구조물_도면_정보.구조물_관리번호 */
+				, strdwg.INPUT_DATE /* 구조물_도면_정보.입력일 */
+				, strdwg.DWG_FILE /* 구조물_도면_정보.파일_명 */
+				, strdwg.DWG_NAME /* 구조물_도면_정보.도면_명칭 */
+				, strdwg.DWG_TYPE /* 구조물_도면_정보.입력_방식 */
+				, strdwg.REM /* 구조물_도면_정보.비고 */
+				, strdwg.SEQID /* 구조물_도면_정보.SEQID */
+			FROM STR_DWG strdwg
+]]>			
+		
+		<include refid="strDwgDAO.selectStrDwgList.where" />
+
+<![CDATA[
+			AND nvl(strdwg.SEQID,0) = nvl( (SELECT MAX(dwg.SEQID) 
+												   FROM STR_DWG dwg 
+												  WHERE dwg.ROAD_NO = strdwg.ROAD_NO 
+												  	AND dwg.SECT = strdwg.SECT 
+												  	AND dwg.DWG_FILE = strdwg.DWG_FILE),0 )
+ 
+		) tb) WHERE 1=1 
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+		<![CDATA[
+			rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>
+		</isEqual>
+<![CDATA[
+]]>		
+	</select>		
+ 
+
+	<select id="strDwgDAO.selectStrDwgListTotalCount"
+		parameterClass="strDwgVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* strDwgDAO.selectStrDwgListTotalCount */
+		/* 구조물_도면_정보 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM STR_DWG strdwg
+]]>		
+		<include refid="strDwgDAO.selectStrDwgList.where" />
+<![CDATA[		
+
+			AND nvl(strdwg.SEQID,0) = nvl( (SELECT MAX(dwg.SEQID) 
+												   FROM STR_DWG dwg 
+												  WHERE dwg.ROAD_NO = strdwg.ROAD_NO 
+												  	AND dwg.SECT = strdwg.SECT 
+												  	AND dwg.DWG_FILE = strdwg.DWG_FILE),0 )
+]]>		
+	</select>
+	
+		<select id="strDwgDAO.selectStrDwgSectList"
+		parameterClass="strDwgVO"
+		resultClass="strDwgVO">
+<![CDATA[ 		
+		/* strDwgVO.selectStrDwgSectList */
+		/* STR_DWG 구간 목록 조회 */
+		SELECT SECT 
+		  FROM STR_DWG
+		 WHERE ROAD_NO = #ROAD_NO#
+		 GROUP BY SECT
+		 ORDER BY SECT
+]]>				
+	</select>
+
+</sqlMap>

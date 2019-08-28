@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="sysConnectDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="sysConnectSerarchVO" type="kr.go.gg.gpms.sysconnect.service.model.SysConnectDefaultVO"/>
+	<typeAlias alias="sysConnectVO"	type="kr.go.gg.gpms.sysconnect.service.model.SysConnectVO" />
+
+	<resultMap id="sysConnect.resultMap"
+		class="sysConnectVO">
+		<result property="CONECT_LOG_NO" column="CONECT_LOG_NO" columnIndex="1" /> <!-- 시스템접속로그.접속_로그_번호 -->
+		<result property="USER_NO" column="USER_NO" columnIndex="2" /> <!-- 시스템접속로그.사용자_번호 -->
+		<result property="MENU_ID" column="MENU_ID" columnIndex="3" /> <!-- 시스템접속로그.메뉴_ID -->
+		<result property="SESION_ID" column="SESION_ID" columnIndex="4" /> <!-- 시스템접속로그.세션_ID -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="5" /> <!-- 시스템접속로그.생성_일시 -->
+	</resultMap>
+
+	<insert id="sysConnectDAO.insertSysConnect">
+	<selectKey resultClass="String" keyProperty="CONECT_LOG_NO">
+  <![CDATA[
+  select nextval('SEQ_TL_SYS_CONNECT')
+  ]]>
+  </selectKey>
+	<![CDATA[ 
+		/* sysConnectDAO.insertSysConnect */
+		/* 시스템접속로그 등록 */		
+		INSERT INTO TL_SYS_CONNECT (
+			CONECT_LOG_NO /* 시스템접속로그.접속_로그_번호 */
+			, USER_NO /* 시스템접속로그.사용자_번호 */
+			, MENU_ID /* 시스템접속로그.메뉴_ID */
+			, SESION_ID /* 시스템접속로그.세션_ID */
+			, CREAT_DT /* 시스템접속로그.생성_일시 */
+		) VALUES (
+			#CONECT_LOG_NO#::int /* 시스템접속로그.접속_로그_번호 */
+			, #USER_NO#::int /* 시스템접속로그.사용자_번호 */
+			, #MENU_ID# /* 시스템접속로그.메뉴_ID */
+			, #SESION_ID# /* 시스템접속로그.세션_ID */
+			, NOW() /* 시스템접속로그.생성_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="sysConnectDAO.updateSysConnect">
+	<![CDATA[ 
+		/* sysConnectDAO.updateSysConnect */
+		/* 시스템접속로그 수정 */
+		UPDATE TL_SYS_CONNECT SET
+
+
+
+USER_NO = #USER_NO#::int /* 시스템접속로그.사용자_번호 */
+			
+
+, MENU_ID = #MENU_ID# /* 시스템접속로그.메뉴_ID */
+			
+
+, SESION_ID = #SESION_ID# /* 시스템접속로그.세션_ID */
+			
+
+, CREAT_DT = NOW() /* 시스템접속로그.생성_일시 */
+			
+		WHERE 1 = 1
+		AND CONECT_LOG_NO = #CONECT_LOG_NO#::int /* 시스템접속로그.접속_로그_번호 */
+]]>
+	</update>
+
+	<delete id="sysConnectDAO.deleteSysConnect">
+	<![CDATA[ 
+		/* sysConnectDAO.deleteSysConnect */
+		/* 시스템접속로그 삭제 */
+		DELETE FROM TL_SYS_CONNECT 
+		WHERE 1 = 1
+		AND CONECT_LOG_NO = #CONECT_LOG_NO#::int /* 시스템접속로그.접속_로그_번호 */
+]]>
+	</delete>
+
+	<select id="sysConnectDAO.selectSysConnect"
+		resultMap="sysConnect.resultMap">
+	<![CDATA[ 
+		/* sysConnectDAO.selectSysConnect */
+		/* 시스템접속로그 조회 */
+		SELECT
+			tlsysconnect.CONECT_LOG_NO /* 시스템접속로그.접속_로그_번호 */
+			, tlsysconnect.USER_NO /* 시스템접속로그.사용자_번호 */
+			, tlsysconnect.MENU_ID /* 시스템접속로그.메뉴_ID */
+			, tlsysconnect.SESION_ID /* 시스템접속로그.세션_ID */
+			, tlsysconnect.CREAT_DT /* 시스템접속로그.생성_일시 */
+		FROM TL_SYS_CONNECT tlsysconnect
+		WHERE 1 = 1
+		AND tlsysconnect.CONECT_LOG_NO = #CONECT_LOG_NO#::int /* 시스템접속로그.접속_로그_번호 */
+]]>
+	</select>
+
+	<sql id="sysConnectDAO.selectSysConnectList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tlsysconnect.CONECT_LOG_NO = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tlsysconnect.USER_NO LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="CONECT_LOG_NO"><![CDATA[ /* 시스템접속로그.접속_로그_번호 */ AND tlsysconnect.CONECT_LOG_NO = #CONECT_LOG_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="USER_NO"><![CDATA[ /* 시스템접속로그.사용자_번호 */ AND tlsysconnect.USER_NO = #USER_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="MENU_ID"><![CDATA[ /* 시스템접속로그.메뉴_ID */ AND tlsysconnect.MENU_ID = #MENU_ID# ]]></isNotEmpty>
+		<isNotEmpty property="SESION_ID"><![CDATA[ /* 시스템접속로그.세션_ID */ AND tlsysconnect.SESION_ID = #SESION_ID# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 시스템접속로그.생성_일시 */ AND tlsysconnect.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="sysConnectDAO.selectSysConnectListPage"
+		parameterClass="sysConnectVO"
+		resultClass="sysConnectVO">
+<![CDATA[ 		
+		/* sysConnectDAO.selectSysConnectListPage */
+		/* 시스템접속로그 조회(페이징) */
+		WITH tlsysconnect AS
+		(
+		SELECT	
+				tlsysconnect.CONECT_LOG_NO /* 시스템접속로그.접속_로그_번호 */
+				, tlsysconnect.USER_NO /* 시스템접속로그.사용자_번호 */
+				, tlsysconnect.MENU_ID /* 시스템접속로그.메뉴_ID */
+				, tlsysconnect.SESION_ID /* 시스템접속로그.세션_ID */
+				, tlsysconnect.CREAT_DT /* 시스템접속로그.생성_일시 */
+			
+			FROM TL_SYS_CONNECT tlsysconnect
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tlsysconnect.CONECT_LOG_NO = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tlsysconnect.USER_NO LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="CONECT_LOG_NO">
+				<![CDATA[
+					/* 시스템접속로그.접속_로그_번호 */
+					AND tlsysconnect.CONECT_LOG_NO = #CONECT_LOG_NO#::int
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USER_NO">
+				<![CDATA[
+					/* 시스템접속로그.사용자_번호 */
+					AND tlsysconnect.USER_NO = #USER_NO#::int
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="MENU_ID">
+				<![CDATA[
+					/* 시스템접속로그.메뉴_ID */
+					AND tlsysconnect.MENU_ID = #MENU_ID#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="SESION_ID">
+				<![CDATA[
+					/* 시스템접속로그.세션_ID */
+					AND tlsysconnect.SESION_ID = #SESION_ID#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 시스템접속로그.생성_일시 */
+					AND tlsysconnect.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tlsysconnect.* FROM
+		(
+		SELECT 
+										tlsysconnect.CONECT_LOG_NO /* 시스템접속로그.접속_로그_번호 */
+											, tlsysconnect.USER_NO /* 시스템접속로그.사용자_번호 */
+											, tlsysconnect.MENU_ID /* 시스템접속로그.메뉴_ID */
+											, tlsysconnect.SESION_ID /* 시스템접속로그.세션_ID */
+											, tlsysconnect.CREAT_DT /* 시스템접속로그.생성_일시 */
+						/* 시스템접속로그.접속_로그_번호 */
+			/* 시스템접속로그.사용자_번호 */
+			, ROW_NUMBER() OVER( ORDER BY tlsysconnect.CONECT_LOG_NO ASC, tlsysconnect.USER_NO DESC )  ROW_NO
+			FROM  tlsysconnect
+			WHERE 1=1
+		)  tlsysconnect
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tlsysconnect.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tlsysconnect.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="sysConnectDAO.selectSysConnectList"
+		parameterClass="sysConnectVO"
+		resultClass="sysConnectVO">
+<![CDATA[ 		
+		/* sysConnectDAO.selectSysConnectList */
+		/* 시스템접속로그 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tlsysconnect.CONECT_LOG_NO /* 시스템접속로그.접속_로그_번호 */
+				, tlsysconnect.USER_NO /* 시스템접속로그.사용자_번호 */
+				, tlsysconnect.MENU_ID /* 시스템접속로그.메뉴_ID */
+				, tlsysconnect.SESION_ID /* 시스템접속로그.세션_ID */
+				, tlsysconnect.CREAT_DT /* 시스템접속로그.생성_일시 */
+			FROM TL_SYS_CONNECT tlsysconnect
+]]>
+	<include refid="sysConnectDAO.selectSysConnectList.where" />	
+<![CDATA[
+		ORDER BY 
+				tlsysconnect.CONECT_LOG_NO DESC /* 시스템접속로그.접속_로그_번호 */  
+		) tb) tlsysconnect  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="sysConnectDAO.selectSysConnectListTotalCount"
+		parameterClass="sysConnectVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* sysConnectDAO.selectSysConnectListTotalCount */
+		/* 시스템접속로그 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TL_SYS_CONNECT tlsysconnect
+]]>		
+		<include refid="sysConnectDAO.selectSysConnectList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>

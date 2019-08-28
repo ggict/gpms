@@ -1,0 +1,1215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="smDtaLastSttusDAO">
+
+	<typeAlias alias="egovMap"
+		type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="smDtaLastSttusSerarchVO"
+		type="kr.go.gg.gpms.smdtalaststtus.service.model.SmDtaLastSttusDefaultVO" />
+	<typeAlias alias="smDtaLastSttusVO"
+		type="kr.go.gg.gpms.smdtalaststtus.service.model.SmDtaLastSttusVO" />
+
+	<resultMap id="smDtaLastSttus.resultMap" class="smDtaLastSttusVO">
+		<result property="SM_NO" column="SM_NO" columnIndex="1" /> <!-- 집계_자료_최신_현황.집계_번호 -->
+		<result property="SRVY_NO" column="SRVY_NO" columnIndex="2" /> <!-- 집계_자료_최신_현황.조사_번호 -->
+		<result property="SRVY_YEAR" column="SRVY_YEAR" columnIndex="3" /> <!-- 집계_자료_최신_현황.조사_년도 -->
+		<result property="ROUTE_CODE" column="ROUTE_CODE" columnIndex="4" /> <!-- 집계_자료_최신_현황.노선_코드 -->
+		<result property="DIRECT_CODE" column="DIRECT_CODE" columnIndex="5" /> <!-- 집계_자료_최신_현황.행선_코드 -->
+		<result property="TRACK" column="TRACK" columnIndex="6" /> <!-- 집계_자료_최신_현황.차로 -->
+		<result property="STRTPT" column="STRTPT" columnIndex="7" /> <!-- 집계_자료_최신_현황.시점 -->
+		<result property="ENDPT" column="ENDPT" columnIndex="8" /> <!-- 집계_자료_최신_현황.종점 -->
+		<result property="IRI_VAL" column="IRI_VAL" columnIndex="9" /> <!-- 집계_자료_최신_현황.종단평탄성_값 -->
+		<result property="RD_VAL" column="RD_VAL" columnIndex="10" /> <!-- 집계_자료_최신_현황.소성변형_값 -->
+		<result property="VRTCAL_CR" column="VRTCAL_CR" columnIndex="11" /> <!-- 집계_자료_최신_현황.종방향_균열 -->
+		<result property="HRZNTAL_CR" column="HRZNTAL_CR" columnIndex="12" /> <!-- 집계_자료_최신_현황.횡방향_균열 -->
+		<result property="CNSTRCT_JOINT_CR" column="CNSTRCT_JOINT_CR"
+			columnIndex="13" /> <!-- 집계_자료_최신_현황.시공_줄눈_균열 -->
+		<result property="TRTS_BAC_CR" column="TRTS_BAC_CR"
+			columnIndex="14" /> <!-- 집계_자료_최신_현황.거북등_균열 -->
+		<result property="PTCHG_CR" column="PTCHG_CR" columnIndex="15" /> <!-- 집계_자료_최신_현황.패칭_균열 -->
+		<result property="CR_VAL" column="CR_VAL" columnIndex="16" /> <!-- 집계_자료_최신_현황.표면손상값 -->
+		<result property="CR_IDX" column="CR_IDX" columnIndex="17" /> <!-- 집계_자료_최신_현황.표면손상지수 -->
+		<result property="RD_IDX" column="RD_IDX" columnIndex="18" /> <!-- 집계_자료_최신_현황.소성변형지수 -->
+		<result property="PC_GRAD" column="PC_GRAD" columnIndex="19" /> <!-- 집계_자료_최신_현황.포장상태등급 -->
+		<result property="CNTL_DFECT" column="CNTL_DFECT" columnIndex="20" /> <!-- 집계_자료_최신_현황.지배_결함 -->
+		<result property="SRVY_KND" column="SRVY_KND" columnIndex="21" /> <!-- 집계_자료_최신_현황.조사_종류 -->
+		<result property="SRVY_MT" column="SRVY_MT" columnIndex="22" /> <!-- 집계_자료_최신_현황.조사_월 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="23" /> <!-- 집계_자료_최신_현황.삭제_여부 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="24" /> <!-- 집계_자료_최신_현황.사용_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="25" /> <!-- 집계_자료_최신_현황.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="26" /> <!-- 집계_자료_최신_현황.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="27" /> <!-- 집계_자료_최신_현황.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="28" /> <!-- 집계_자료_최신_현황.수정_일시 -->
+		<result property="FRMULA_NO" column="FRMULA_NO" columnIndex="29" /> <!-- 집계_자료_최신_현황.수식_번호 -->
+		<result property="TRNSPORT_QY" column="TRNSPORT_QY"
+			columnIndex="30" /> <!-- 집계_자료_최신_현황.교통_량 -->
+		<result property="CR_GRAD" column="CR_GRAD" columnIndex="31" /> <!-- 집계_자료_최신_현황.표면손상_등급 -->
+		<result property="RD_GRAD" column="RD_GRAD" columnIndex="32" /> <!-- 집계_자료_최신_현황.소성변형_등급 -->
+		<result property="IRI_GRAD" column="IRI_GRAD" columnIndex="33" /> <!-- 집계_자료_최신_현황.종단평탄성_등급 -->
+		<result property="RI_IDX" column="RI_IDX" columnIndex="34" /> <!-- 집계_자료_최신_현황.평탄성_지수 -->
+		<result property="BLOCK_CR" column="BLOCK_CR" columnIndex="35" /> <!-- 집계_자료_최신_현황.블럭_균열 -->
+		<result property="CR_LT" column="CR_LT" columnIndex="36" /> <!-- 집계_자료_최신_현황.균열_길이 -->
+		<result property="CR_WID" column="CR_WID" columnIndex="37" /> <!-- 집계_자료_최신_현황.균열_폭 -->
+		<result property="GPCI" column="GPCI" columnIndex="38" /> <!-- 집계_자료_최신_현황.GPCI -->
+		<result property="NHPCI" column="NHPCI" columnIndex="39" /> <!-- 집계_자료_최신_현황.NHPCI -->
+		<result property="SPI" column="SPI" columnIndex="40" /> <!-- 집계_자료_최신_현황.SPI -->
+		<result property="XCR" column="XCR" columnIndex="41" /> <!-- 집계_자료_최신_현황.NHPCI_균열 -->
+		<result property="RCI" column="RCI" columnIndex="42" /> <!-- 집계_자료_최신_현황.표면_조도_지수 -->
+		<result property="SCR" column="SCR" columnIndex="43" /> <!-- 집계_자료_최신_현황.표면_상태_지수 -->
+		<result property="AC_LOW" column="AC_LOW" columnIndex="44" /> <!-- 집계_자료_최신_현황.거북등균열_LOW -->
+		<result property="AC_MED" column="AC_MED" columnIndex="45" /> <!-- 집계_자료_최신_현황.거북등균열_MED -->
+		<result property="AC_HI" column="AC_HI" columnIndex="46" /> <!-- 집계_자료_최신_현황.거북등균열_HI -->
+		<result property="LC_LOW" column="LC_LOW" columnIndex="47" /> <!-- 집계_자료_최신_현황.종방향균열_LOW -->
+		<result property="LC_MED" column="LC_MED" columnIndex="48" /> <!-- 집계_자료_최신_현황.종방향균열_MED -->
+		<result property="LC_HI" column="LC_HI" columnIndex="49" /> <!-- 집계_자료_최신_현황.종방향균열_HI -->
+		<result property="TC_LOW" column="TC_LOW" columnIndex="50" /> <!-- 집계_자료_최신_현황.횡방향균열_LOW -->
+		<result property="TC_MED" column="TC_MED" columnIndex="51" /> <!-- 집계_자료_최신_현황.횡방향균열_MED -->
+		<result property="TC_HI" column="TC_HI" columnIndex="52" /> <!-- 집계_자료_최신_현황.횡방향균열_HI -->
+		<result property="RD_LOW" column="RD_LOW" columnIndex="53" /> <!-- 집계_자료_최신_현황.소성변형_LOW -->
+		<result property="RD_MED" column="RD_MED" columnIndex="54" /> <!-- 집계_자료_최신_현황.소성변형_MED -->
+		<result property="RD_HI" column="RD_HI" columnIndex="55" /> <!-- 집계_자료_최신_현황.소성변형_HI -->
+		<result property="AC_IDX" column="AC_IDX" columnIndex="56" /> <!-- 집계_자료_최신_현황.거북등균열_지수 -->
+		<result property="LC_IDX" column="LC_IDX" columnIndex="57" /> <!-- 집계_자료_최신_현황.종방향균열_지수 -->
+		<result property="TC_IDX" column="TC_IDX" columnIndex="58" /> <!-- 집계_자료_최신_현황.횡방향균열_지수 -->
+		<result property="PTCHG_IDX" column="PTCHG_IDX" columnIndex="59" /> <!-- 집계_자료_최신_현황.패칭_지수 -->
+		<result property="POTHOLE_CR" column="POTHOLE_CR" columnIndex="60" /> <!-- 집계_자료_최신_현황.포트홀_균열 -->
+		<result property="BLOCK_CR_LOW" column="BLOCK_CR_LOW"
+			columnIndex="61" /> <!-- 집계_자료_최신_현황.블럭_균열_LOW -->
+		<result property="BLOCK_CR_MED" column="BLOCK_CR_MED"
+			columnIndex="62" /> <!-- 집계_자료_최신_현황.블럭_균열_MED -->
+		<result property="BLOCK_CR_HI" column="BLOCK_CR_HI"
+			columnIndex="63" /> <!-- 집계_자료_최신_현황.블럭_균열_HI -->
+		<result property="POTHOLE_IDX" column="POTHOLE_IDX"
+			columnIndex="64" /> <!-- 집계_자료_최신_현황.포트홀_지수 -->
+		<result property="DMG_CUZ_CLMT" column="DMG_CUZ_CLMT"
+			columnIndex="65" /> <!-- 집계_자료_최신_현황.파손_원인_기후 -->
+		<result property="DMG_CUZ_VMTC" column="DMG_CUZ_VMTC"
+			columnIndex="66" /> <!-- 집계_자료_최신_현황.파손_원인_교통량 -->
+		<result property="DMG_CUZ_ETC" column="DMG_CUZ_ETC"
+			columnIndex="67" /> <!-- 집계_자료_최신_현황.파손_원인_기타 -->
+		<result property="BC_IDX" column="BC_IDX" columnIndex="68" /> <!-- 집계_자료_최신_현황.블럭균열_지수 -->
+		<result property="CALC_MT" column="CALC_MT" columnIndex="69" /> <!-- 집계_자료_최신_현황.산정_월 -->
+		<result property="CALC_YEAR" column="CALC_YEAR" columnIndex="70" /> <!-- 집계_자료_최신_현황.산정_년도 -->
+	</resultMap>
+
+	<insert id="smDtaLastSttusDAO.insertSmDtaLastSttus">
+		<selectKey resultClass="String" keyProperty="SM_NO">
+  	<![CDATA[
+ 		select SEQ_TN_SM_DTA_LAST_STTUS.NEXTVAL from dual
+  	]]>
+		</selectKey>
+	<![CDATA[
+		/* smDtaLastSttusDAO.insertSmDtaLastSttus */
+		/* 집계_자료_최신_현황 등록 */
+
+		INSERT INTO TN_SM_DTA_LAST_STTUS (
+			SM_NO /* 집계_자료_최신_현황.집계_번호 */
+			, SRVY_NO /* 집계_자료_최신_현황.조사_번호 */
+			, SRVY_YEAR /* 집계_자료_최신_현황.조사_년도 */
+			, ROUTE_CODE /* 집계_자료_최신_현황.노선_코드 */
+			, DIRECT_CODE /* 집계_자료_최신_현황.행선_코드 */
+			, TRACK /* 집계_자료_최신_현황.차로 */
+			, STRTPT /* 집계_자료_최신_현황.시점 */
+			, ENDPT /* 집계_자료_최신_현황.종점 */
+			, IRI_VAL /* 집계_자료_최신_현황.종단평탄성_값 */
+			, RD_VAL /* 집계_자료_최신_현황.소성변형_값 */
+			, VRTCAL_CR /* 집계_자료_최신_현황.종방향_균열 */
+			, HRZNTAL_CR /* 집계_자료_최신_현황.횡방향_균열 */
+			, CNSTRCT_JOINT_CR /* 집계_자료_최신_현황.시공_줄눈_균열 */
+			, TRTS_BAC_CR /* 집계_자료_최신_현황.거북등_균열 */
+			, PTCHG_CR /* 집계_자료_최신_현황.패칭_균열 */
+			, CR_VAL /* 집계_자료_최신_현황.표면손상값 */
+			, CR_IDX /* 집계_자료_최신_현황.표면손상지수 */
+			, RD_IDX /* 집계_자료_최신_현황.소성변형지수 */
+			, PC_GRAD /* 집계_자료_최신_현황.포장상태등급 */
+			, CNTL_DFECT /* 집계_자료_최신_현황.지배_결함 */
+			, SRVY_KND /* 집계_자료_최신_현황.조사_종류 */
+			, SRVY_MT /* 집계_자료_최신_현황.조사_월 */
+			, DELETE_AT /* 집계_자료_최신_현황.삭제_여부 */
+			, USE_AT /* 집계_자료_최신_현황.사용_여부 */
+			, CRTR_NO /* 집계_자료_최신_현황.생성자_번호 */
+			, CREAT_DT /* 집계_자료_최신_현황.생성_일시 */
+			, UPDUSR_NO /* 집계_자료_최신_현황.수정자_번호 */
+			, UPDT_DT /* 집계_자료_최신_현황.수정_일시 */
+			, FRMULA_NO /* 집계_자료_최신_현황.수식_번호 */
+			, TRNSPORT_QY /* 집계_자료_최신_현황.교통_량 */
+			, CR_GRAD /* 집계_자료_최신_현황.표면손상_등급 */
+			, RD_GRAD /* 집계_자료_최신_현황.소성변형_등급 */
+			, IRI_GRAD /* 집계_자료_최신_현황.종단평탄성_등급 */
+			, RI_IDX /* 집계_자료_최신_현황.평탄성_지수 */
+			, BLOCK_CR /* 집계_자료_최신_현황.블럭_균열 */
+			, CR_LT /* 집계_자료_최신_현황.균열_길이 */
+			, CR_WID /* 집계_자료_최신_현황.균열_폭 */
+			, GPCI /* 집계_자료_최신_현황.GPCI */
+			, NHPCI /* 집계_자료_최신_현황.NHPCI */
+			, SPI /* 집계_자료_최신_현황.SPI */
+			, XCR /* 집계_자료_최신_현황.NHPCI_균열 */
+			, RCI /* 집계_자료_최신_현황.표면_조도_지수 */
+			, SCR /* 집계_자료_최신_현황.표면_상태_지수 */
+			, AC_LOW /* 집계_자료_최신_현황.거북등균열_LOW */
+			, AC_MED /* 집계_자료_최신_현황.거북등균열_MED */
+			, AC_HI /* 집계_자료_최신_현황.거북등균열_HI */
+			, LC_LOW /* 집계_자료_최신_현황.종방향균열_LOW */
+			, LC_MED /* 집계_자료_최신_현황.종방향균열_MED */
+			, LC_HI /* 집계_자료_최신_현황.종방향균열_HI */
+			, TC_LOW /* 집계_자료_최신_현황.횡방향균열_LOW */
+			, TC_MED /* 집계_자료_최신_현황.횡방향균열_MED */
+			, TC_HI /* 집계_자료_최신_현황.횡방향균열_HI */
+			, RD_LOW /* 집계_자료_최신_현황.소성변형_LOW */
+			, RD_MED /* 집계_자료_최신_현황.소성변형_MED */
+			, RD_HI /* 집계_자료_최신_현황.소성변형_HI */
+			, AC_IDX /* 집계_자료_최신_현황.거북등균열_지수 */
+			, LC_IDX /* 집계_자료_최신_현황.종방향균열_지수 */
+			, TC_IDX /* 집계_자료_최신_현황.횡방향균열_지수 */
+			, PTCHG_IDX /* 집계_자료_최신_현황.패칭_지수 */
+			, POTHOLE_CR /* 집계_자료_최신_현황.포트홀_균열 */
+			, BLOCK_CR_LOW /* 집계_자료_최신_현황.블럭_균열_LOW */
+			, BLOCK_CR_MED /* 집계_자료_최신_현황.블럭_균열_MED */
+			, BLOCK_CR_HI /* 집계_자료_최신_현황.블럭_균열_HI */
+			, POTHOLE_IDX /* 집계_자료_최신_현황.포트홀_지수 */
+			, DMG_CUZ_CLMT /* 집계_자료_최신_현황.파손_원인_기후 */
+			, DMG_CUZ_VMTC /* 집계_자료_최신_현황.파손_원인_교통량 */
+			, DMG_CUZ_ETC /* 집계_자료_최신_현황.파손_원인_기타 */
+			, BC_IDX /* 집계_자료_최신_현황.블럭균열_지수 */
+			, CALC_MT /* 집계_자료_최신_현황.산정_월 */
+			, CALC_YEAR /* 집계_자료_최신_현황.산정_년도 */
+		) VALUES (
+			#SM_NO# /* 집계_자료_최신_현황.집계_번호 */
+			, #SRVY_NO# /* 집계_자료_최신_현황.조사_번호 */
+			, #SRVY_YEAR# /* 집계_자료_최신_현황.조사_년도 */
+			, #ROUTE_CODE# /* 집계_자료_최신_현황.노선_코드 */
+			, #DIRECT_CODE# /* 집계_자료_최신_현황.행선_코드 */
+			, #TRACK# /* 집계_자료_최신_현황.차로 */
+			, #STRTPT# /* 집계_자료_최신_현황.시점 */
+			, #ENDPT# /* 집계_자료_최신_현황.종점 */
+			, #IRI_VAL# /* 집계_자료_최신_현황.종단평탄성_값 */
+			, #RD_VAL# /* 집계_자료_최신_현황.소성변형_값 */
+			, #VRTCAL_CR# /* 집계_자료_최신_현황.종방향_균열 */
+			, #HRZNTAL_CR# /* 집계_자료_최신_현황.횡방향_균열 */
+			, #CNSTRCT_JOINT_CR# /* 집계_자료_최신_현황.시공_줄눈_균열 */
+			, #TRTS_BAC_CR# /* 집계_자료_최신_현황.거북등_균열 */
+			, #PTCHG_CR# /* 집계_자료_최신_현황.패칭_균열 */
+			, #CR_VAL# /* 집계_자료_최신_현황.표면손상값 */
+			, #CR_IDX# /* 집계_자료_최신_현황.표면손상지수 */
+			, #RD_IDX# /* 집계_자료_최신_현황.소성변형지수 */
+			, #PC_GRAD# /* 집계_자료_최신_현황.포장상태등급 */
+			, #CNTL_DFECT# /* 집계_자료_최신_현황.지배_결함 */
+			, #SRVY_KND# /* 집계_자료_최신_현황.조사_종류 */
+			, #SRVY_MT# /* 집계_자료_최신_현황.조사_월 */
+			, #DELETE_AT# /* 집계_자료_최신_현황.삭제_여부 */
+			, #USE_AT# /* 집계_자료_최신_현황.사용_여부 */
+			, #CRTR_NO# /* 집계_자료_최신_현황.생성자_번호 */
+			, SYSDATE /* 집계_자료_최신_현황.생성_일시 */
+			, #UPDUSR_NO# /* 집계_자료_최신_현황.수정자_번호 */
+			, SYSDATE /* 집계_자료_최신_현황.수정_일시 */
+			, #FRMULA_NO# /* 집계_자료_최신_현황.수식_번호 */
+			, #TRNSPORT_QY# /* 집계_자료_최신_현황.교통_량 */
+			, #CR_GRAD# /* 집계_자료_최신_현황.표면손상_등급 */
+			, #RD_GRAD# /* 집계_자료_최신_현황.소성변형_등급 */
+			, #IRI_GRAD# /* 집계_자료_최신_현황.종단평탄성_등급 */
+			, #RI_IDX# /* 집계_자료_최신_현황.평탄성_지수 */
+			, #BLOCK_CR# /* 집계_자료_최신_현황.블럭_균열 */
+			, #CR_LT# /* 집계_자료_최신_현황.균열_길이 */
+			, #CR_WID# /* 집계_자료_최신_현황.균열_폭 */
+			, #GPCI# /* 집계_자료_최신_현황.GPCI */
+			, #NHPCI# /* 집계_자료_최신_현황.NHPCI */
+			, #SPI# /* 집계_자료_최신_현황.SPI */
+			, #XCR# /* 집계_자료_최신_현황.NHPCI_균열 */
+			, #RCI# /* 집계_자료_최신_현황.표면_조도_지수 */
+			, #SCR# /* 집계_자료_최신_현황.표면_상태_지수 */
+			, #AC_LOW# /* 집계_자료_최신_현황.거북등균열_LOW */
+			, #AC_MED# /* 집계_자료_최신_현황.거북등균열_MED */
+			, #AC_HI# /* 집계_자료_최신_현황.거북등균열_HI */
+			, #LC_LOW# /* 집계_자료_최신_현황.종방향균열_LOW */
+			, #LC_MED# /* 집계_자료_최신_현황.종방향균열_MED */
+			, #LC_HI# /* 집계_자료_최신_현황.종방향균열_HI */
+			, #TC_LOW# /* 집계_자료_최신_현황.횡방향균열_LOW */
+			, #TC_MED# /* 집계_자료_최신_현황.횡방향균열_MED */
+			, #TC_HI# /* 집계_자료_최신_현황.횡방향균열_HI */
+			, #RD_LOW# /* 집계_자료_최신_현황.소성변형_LOW */
+			, #RD_MED# /* 집계_자료_최신_현황.소성변형_MED */
+			, #RD_HI# /* 집계_자료_최신_현황.소성변형_HI */
+			, #AC_IDX# /* 집계_자료_최신_현황.거북등균열_지수 */
+			, #LC_IDX# /* 집계_자료_최신_현황.종방향균열_지수 */
+			, #TC_IDX# /* 집계_자료_최신_현황.횡방향균열_지수 */
+			, #PTCHG_IDX# /* 집계_자료_최신_현황.패칭_지수 */
+			, #POTHOLE_CR# /* 집계_자료_최신_현황.포트홀_균열 */
+			, #BLOCK_CR_LOW# /* 집계_자료_최신_현황.블럭_균열_LOW */
+			, #BLOCK_CR_MED# /* 집계_자료_최신_현황.블럭_균열_MED */
+			, #BLOCK_CR_HI# /* 집계_자료_최신_현황.블럭_균열_HI */
+			, #POTHOLE_IDX# /* 집계_자료_최신_현황.포트홀_지수 */
+			, #DMG_CUZ_CLMT# /* 집계_자료_최신_현황.파손_원인_기후 */
+			, #DMG_CUZ_VMTC# /* 집계_자료_최신_현황.파손_원인_교통량 */
+			, #DMG_CUZ_ETC# /* 집계_자료_최신_현황.파손_원인_기타 */
+			, #BC_IDX# /* 집계_자료_최신_현황.블럭균열_지수 */
+			, #CALC_MT# /* 집계_자료_최신_현황.산정_월 */
+			, #CALC_YEAR# /* 집계_자료_최신_현황.산정_년도 */
+		)
+]]>
+	</insert>
+
+	<update id="smDtaLastSttusDAO.updateSmDtaLastSttus">
+	<![CDATA[
+		/* smDtaLastSttusDAO.updateSmDtaLastSttus */
+		/* 집계_자료_최신_현황 수정 */
+		UPDATE TN_SM_DTA_LAST_STTUS SET
+		SRVY_NO = #SRVY_NO# /* 집계_자료_최신_현황.조사_번호 */
+		, SRVY_YEAR = #SRVY_YEAR# /* 집계_자료_최신_현황.조사_년도 */
+		, ROUTE_CODE = #ROUTE_CODE# /* 집계_자료_최신_현황.노선_코드 */
+		, DIRECT_CODE = #DIRECT_CODE# /* 집계_자료_최신_현황.행선_코드 */
+		, TRACK = #TRACK# /* 집계_자료_최신_현황.차로 */
+		, STRTPT = #STRTPT# /* 집계_자료_최신_현황.시점 */
+		, ENDPT = #ENDPT# /* 집계_자료_최신_현황.종점 */
+		, IRI_VAL = #IRI_VAL# /* 집계_자료_최신_현황.종단평탄성_값 */
+		, RD_VAL = #RD_VAL# /* 집계_자료_최신_현황.소성변형_값 */
+		, VRTCAL_CR = #VRTCAL_CR# /* 집계_자료_최신_현황.종방향_균열 */
+		, HRZNTAL_CR = #HRZNTAL_CR# /* 집계_자료_최신_현황.횡방향_균열 */
+		, CNSTRCT_JOINT_CR = #CNSTRCT_JOINT_CR# /* 집계_자료_최신_현황.시공_줄눈_균열 */
+		, TRTS_BAC_CR = #TRTS_BAC_CR# /* 집계_자료_최신_현황.거북등_균열 */
+		, PTCHG_CR = #PTCHG_CR# /* 집계_자료_최신_현황.패칭_균열 */
+		, CR_VAL = #CR_VAL# /* 집계_자료_최신_현황.표면손상값 */
+		, CR_IDX = #CR_IDX# /* 집계_자료_최신_현황.표면손상지수 */
+		, RD_IDX = #RD_IDX# /* 집계_자료_최신_현황.소성변형지수 */
+		, PC_GRAD = #PC_GRAD# /* 집계_자료_최신_현황.포장상태등급 */
+		, CNTL_DFECT = #CNTL_DFECT# /* 집계_자료_최신_현황.지배_결함 */
+		, SRVY_KND = #SRVY_KND# /* 집계_자료_최신_현황.조사_종류 */
+		, SRVY_MT = #SRVY_MT# /* 집계_자료_최신_현황.조사_월 */
+		, UPDUSR_NO = #UPDUSR_NO# /* 집계_자료_최신_현황.수정자_번호 */
+		, UPDT_DT = SYSDATE /* 집계_자료_최신_현황.수정_일시 */
+		, FRMULA_NO = #FRMULA_NO# /* 집계_자료_최신_현황.수식_번호 */
+		, TRNSPORT_QY = #TRNSPORT_QY# /* 집계_자료_최신_현황.교통_량 */
+		, CR_GRAD = #CR_GRAD# /* 집계_자료_최신_현황.표면손상_등급 */
+		, RD_GRAD = #RD_GRAD# /* 집계_자료_최신_현황.소성변형_등급 */
+		, IRI_GRAD = #IRI_GRAD# /* 집계_자료_최신_현황.종단평탄성_등급 */
+		, RI_IDX = #RI_IDX# /* 집계_자료_최신_현황.평탄성_지수 */
+		, BLOCK_CR = #BLOCK_CR# /* 집계_자료_최신_현황.블럭_균열 */
+		, CR_LT = #CR_LT# /* 집계_자료_최신_현황.균열_길이 */
+		, CR_WID = #CR_WID# /* 집계_자료_최신_현황.균열_폭 */
+		, GPCI = #GPCI# /* 집계_자료_최신_현황.GPCI */
+		, NHPCI = #NHPCI# /* 집계_자료_최신_현황.NHPCI */
+		, SPI = #SPI# /* 집계_자료_최신_현황.SPI */
+		, XCR = #XCR# /* 집계_자료_최신_현황.NHPCI_균열 */
+		, RCI = #RCI# /* 집계_자료_최신_현황.표면_조도_지수 */
+		, SCR = #SCR# /* 집계_자료_최신_현황.표면_상태_지수 */
+		, AC_LOW = #AC_LOW# /* 집계_자료_최신_현황.거북등균열_LOW */
+		, AC_MED = #AC_MED# /* 집계_자료_최신_현황.거북등균열_MED */
+		, AC_HI = #AC_HI# /* 집계_자료_최신_현황.거북등균열_HI */
+		, LC_LOW = #LC_LOW# /* 집계_자료_최신_현황.종방향균열_LOW */
+		, LC_MED = #LC_MED# /* 집계_자료_최신_현황.종방향균열_MED */
+		, LC_HI = #LC_HI# /* 집계_자료_최신_현황.종방향균열_HI */
+		, TC_LOW = #TC_LOW# /* 집계_자료_최신_현황.횡방향균열_LOW */
+		, TC_MED = #TC_MED# /* 집계_자료_최신_현황.횡방향균열_MED */
+		, TC_HI = #TC_HI# /* 집계_자료_최신_현황.횡방향균열_HI */
+		, RD_LOW = #RD_LOW# /* 집계_자료_최신_현황.소성변형_LOW */
+		, RD_MED = #RD_MED# /* 집계_자료_최신_현황.소성변형_MED */
+		, RD_HI = #RD_HI# /* 집계_자료_최신_현황.소성변형_HI */
+		, AC_IDX = #AC_IDX# /* 집계_자료_최신_현황.거북등균열_지수 */
+		, LC_IDX = #LC_IDX# /* 집계_자료_최신_현황.종방향균열_지수 */
+		, TC_IDX = #TC_IDX# /* 집계_자료_최신_현황.횡방향균열_지수 */
+		, PTCHG_IDX = #PTCHG_IDX# /* 집계_자료_최신_현황.패칭_지수 */
+		, POTHOLE_CR = #POTHOLE_CR# /* 집계_자료_최신_현황.포트홀_균열 */
+		, BLOCK_CR_LOW = #BLOCK_CR_LOW# /* 집계_자료_최신_현황.블럭_균열_LOW */
+		, BLOCK_CR_MED = #BLOCK_CR_MED# /* 집계_자료_최신_현황.블럭_균열_MED */
+		, BLOCK_CR_HI = #BLOCK_CR_HI# /* 집계_자료_최신_현황.블럭_균열_HI */
+		, POTHOLE_IDX = #POTHOLE_IDX# /* 집계_자료_최신_현황.포트홀_지수 */
+		, DMG_CUZ_CLMT = #DMG_CUZ_CLMT# /* 집계_자료_최신_현황.파손_원인_기후 */
+		, DMG_CUZ_VMTC = #DMG_CUZ_VMTC# /* 집계_자료_최신_현황.파손_원인_교통량 */
+		, DMG_CUZ_ETC = #DMG_CUZ_ETC# /* 집계_자료_최신_현황.파손_원인_기타 */
+		, BC_IDX = #BC_IDX# /* 집계_자료_최신_현황.블럭균열_지수 */
+		, CALC_MT = #CALC_MT# /* 집계_자료_최신_현황.산정_월 */
+		, CALC_YEAR = #CALC_YEAR# /* 집계_자료_최신_현황.산정_년도 */
+		WHERE 1 = 1
+		AND SM_NO = #SM_NO# /* 집계_자료_최신_현황.집계_번호 */
+]]>
+	</update>
+
+	<delete id="smDtaLastSttusDAO.deleteSmDtaLastSttus">
+	<![CDATA[
+		/* smDtaLastSttusDAO.deleteSmDtaLastSttus */
+		/* 집계_자료_최신_현황 삭제 */
+		UPDATE TN_SM_DTA_LAST_STTUS SET
+		 DELETE_AT = 'Y' /* 집계_자료_최신_현황.삭제_여부 */
+		, USE_AT = 'N'
+		, UPDUSR_NO = #UPDUSR_NO# /* 집계_자료_최신_현황.수정자_번호 */
+		, UPDT_DT = SYSDATE /* 집계_자료_최신_현황.수정_일시 */
+		WHERE 1 = 1
+		AND SM_NO = #SM_NO# /* 집계_자료_최신_현황.집계_번호 */
+]]>
+	</delete>
+
+	<select id="smDtaLastSttusDAO.selectSmDtaLastSttus"
+		parameterClass="smDtaLastSttusVO" resultClass="smDtaLastSttusVO">
+	<![CDATA[
+		/* smDtaLastSttusDAO.selectSmDtaLastSttus */
+		/* 집계_자료_최신_현황 조회 */
+		SELECT
+			tnsmdtalaststtus.SM_NO /* 집계_자료_최신_현황.집계_번호 */
+			, tnsmdtalaststtus.SRVY_NO /* 집계_자료_최신_현황.조사_번호 */
+			, tnsmdtalaststtus.SRVY_YEAR /* 집계_자료_최신_현황.조사_년도 */
+			, tnsmdtalaststtus.ROUTE_CODE /* 집계_자료_최신_현황.노선_코드 */
+			, tnsmdtalaststtus.DIRECT_CODE /* 집계_자료_최신_현황.행선_코드 */
+			, tnsmdtalaststtus.TRACK /* 집계_자료_최신_현황.차로 */
+			, tnsmdtalaststtus.STRTPT /* 집계_자료_최신_현황.시점 */
+			, tnsmdtalaststtus.ENDPT /* 집계_자료_최신_현황.종점 */
+			, tnsmdtalaststtus.IRI_VAL /* 집계_자료_최신_현황.종단평탄성_값 */
+			, tnsmdtalaststtus.RD_VAL /* 집계_자료_최신_현황.소성변형_값 */
+			, tnsmdtalaststtus.VRTCAL_CR /* 집계_자료_최신_현황.종방향_균열 */
+			, tnsmdtalaststtus.HRZNTAL_CR /* 집계_자료_최신_현황.횡방향_균열 */
+			, tnsmdtalaststtus.CNSTRCT_JOINT_CR /* 집계_자료_최신_현황.시공_줄눈_균열 */
+			, tnsmdtalaststtus.TRTS_BAC_CR /* 집계_자료_최신_현황.거북등_균열 */
+			, tnsmdtalaststtus.PTCHG_CR /* 집계_자료_최신_현황.패칭_균열 */
+			, tnsmdtalaststtus.CR_VAL /* 집계_자료_최신_현황.표면손상값 */
+			, tnsmdtalaststtus.CR_IDX /* 집계_자료_최신_현황.표면손상지수 */
+			, tnsmdtalaststtus.RD_IDX /* 집계_자료_최신_현황.소성변형지수 */
+			, tnsmdtalaststtus.PC_GRAD /* 집계_자료_최신_현황.포장상태등급 */
+			, tnsmdtalaststtus.CNTL_DFECT /* 집계_자료_최신_현황.지배_결함 */
+			, tnsmdtalaststtus.SRVY_KND /* 집계_자료_최신_현황.조사_종류 */
+			, tnsmdtalaststtus.SRVY_MT /* 집계_자료_최신_현황.조사_월 */
+			, tnsmdtalaststtus.DELETE_AT /* 집계_자료_최신_현황.삭제_여부 */
+			, tnsmdtalaststtus.USE_AT /* 집계_자료_최신_현황.사용_여부 */
+			, tnsmdtalaststtus.CRTR_NO /* 집계_자료_최신_현황.생성자_번호 */
+			, tnsmdtalaststtus.CREAT_DT /* 집계_자료_최신_현황.생성_일시 */
+			, tnsmdtalaststtus.UPDUSR_NO /* 집계_자료_최신_현황.수정자_번호 */
+			, tnsmdtalaststtus.UPDT_DT /* 집계_자료_최신_현황.수정_일시 */
+			, tnsmdtalaststtus.FRMULA_NO /* 집계_자료_최신_현황.수식_번호 */
+			, tnsmdtalaststtus.TRNSPORT_QY /* 집계_자료_최신_현황.교통_량 */
+			, tnsmdtalaststtus.CR_GRAD /* 집계_자료_최신_현황.표면손상_등급 */
+			, tnsmdtalaststtus.RD_GRAD /* 집계_자료_최신_현황.소성변형_등급 */
+			, tnsmdtalaststtus.IRI_GRAD /* 집계_자료_최신_현황.종단평탄성_등급 */
+			, tnsmdtalaststtus.RI_IDX /* 집계_자료_최신_현황.평탄성_지수 */
+			, tnsmdtalaststtus.BLOCK_CR /* 집계_자료_최신_현황.블럭_균열 */
+			, tnsmdtalaststtus.CR_LT /* 집계_자료_최신_현황.균열_길이 */
+			, tnsmdtalaststtus.CR_WID /* 집계_자료_최신_현황.균열_폭 */
+			, tnsmdtalaststtus.GPCI /* 집계_자료_최신_현황.GPCI */
+			, tnsmdtalaststtus.NHPCI /* 집계_자료_최신_현황.NHPCI */
+			, tnsmdtalaststtus.SPI /* 집계_자료_최신_현황.SPI */
+			, tnsmdtalaststtus.XCR /* 집계_자료_최신_현황.NHPCI_균열 */
+			, tnsmdtalaststtus.RCI /* 집계_자료_최신_현황.표면_조도_지수 */
+			, tnsmdtalaststtus.SCR /* 집계_자료_최신_현황.표면_상태_지수 */
+			, tnsmdtalaststtus.AC_LOW /* 집계_자료_최신_현황.거북등균열_LOW */
+			, tnsmdtalaststtus.AC_MED /* 집계_자료_최신_현황.거북등균열_MED */
+			, tnsmdtalaststtus.AC_HI /* 집계_자료_최신_현황.거북등균열_HI */
+			, tnsmdtalaststtus.LC_LOW /* 집계_자료_최신_현황.종방향균열_LOW */
+			, tnsmdtalaststtus.LC_MED /* 집계_자료_최신_현황.종방향균열_MED */
+			, tnsmdtalaststtus.LC_HI /* 집계_자료_최신_현황.종방향균열_HI */
+			, tnsmdtalaststtus.TC_LOW /* 집계_자료_최신_현황.횡방향균열_LOW */
+			, tnsmdtalaststtus.TC_MED /* 집계_자료_최신_현황.횡방향균열_MED */
+			, tnsmdtalaststtus.TC_HI /* 집계_자료_최신_현황.횡방향균열_HI */
+			, tnsmdtalaststtus.RD_LOW /* 집계_자료_최신_현황.소성변형_LOW */
+			, tnsmdtalaststtus.RD_MED /* 집계_자료_최신_현황.소성변형_MED */
+			, tnsmdtalaststtus.RD_HI /* 집계_자료_최신_현황.소성변형_HI */
+			, tnsmdtalaststtus.AC_IDX /* 집계_자료_최신_현황.거북등균열_지수 */
+			, tnsmdtalaststtus.LC_IDX /* 집계_자료_최신_현황.종방향균열_지수 */
+			, tnsmdtalaststtus.TC_IDX /* 집계_자료_최신_현황.횡방향균열_지수 */
+			, tnsmdtalaststtus.PTCHG_IDX /* 집계_자료_최신_현황.패칭_지수 */
+			, tnsmdtalaststtus.POTHOLE_CR /* 집계_자료_최신_현황.포트홀_균열 */
+			, tnsmdtalaststtus.BLOCK_CR_LOW /* 집계_자료_최신_현황.블럭_균열_LOW */
+			, tnsmdtalaststtus.BLOCK_CR_MED /* 집계_자료_최신_현황.블럭_균열_MED */
+			, tnsmdtalaststtus.BLOCK_CR_HI /* 집계_자료_최신_현황.블럭_균열_HI */
+			, tnsmdtalaststtus.POTHOLE_IDX /* 집계_자료_최신_현황.포트홀_지수 */
+			, tnsmdtalaststtus.DMG_CUZ_CLMT /* 집계_자료_최신_현황.파손_원인_기후 */
+			, tnsmdtalaststtus.DMG_CUZ_VMTC /* 집계_자료_최신_현황.파손_원인_교통량 */
+			, tnsmdtalaststtus.DMG_CUZ_ETC /* 집계_자료_최신_현황.파손_원인_기타 */
+			, tnsmdtalaststtus.BC_IDX /* 집계_자료_최신_현황.블럭균열_지수 */
+			, tnsmdtalaststtus.CALC_MT /* 집계_자료_최신_현황.산정_월 */
+			, tnsmdtalaststtus.CALC_YEAR /* 집계_자료_최신_현황.산정_년도 */
+			, tnsmdtalaststtus.RPAIR_TA /* 집계_자료_최신_현황.보수도래시기 */
+		FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+		WHERE 1 = 1
+		AND tnsmdtalaststtus.SM_NO = #SM_NO# /* 집계_자료_최신_현황.집계_번호 */
+		AND tnsmdtalaststtus.DELETE_AT = 'N' /* 집계_자료_최신_현황.삭제_여부 */
+		AND tnsmdtalaststtus.USE_AT = 'Y' /* 집계_자료_최신_현황.사용_여부 */
+]]>
+	</select>
+
+	<sql id="smDtaLastSttusDAO.selectSmDtaLastSttusList.where">
+		WHERE 1 = 1
+		AND tnsmdtalaststtus.DELETE_AT = 'N' /* 집계_자료_최신_현황.삭제_여부
+		*/
+		AND tnsmdtalaststtus.USE_AT = 'Y' /* 집계_자료_최신_현황.사용_여부 */
+
+		<isEqual property="searchCondition" compareValue="0">
+			<![CDATA[
+				AND tnsmdtalaststtus.SM_NO = #searchKeyword#
+			]]>
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			<![CDATA[
+				AND tnsmdtalaststtus.SRVY_NO LIKE '%' || #searchKeyword# || '%'
+			]]>
+		</isEqual>
+		<isNotEmpty property="SM_NO"><![CDATA[ /* 집계_자료_최신_현황.집계_번호 */ AND tnsmdtalaststtus.SM_NO = #SM_NO# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_NO"><![CDATA[ /* 집계_자료_최신_현황.조사_번호 */ AND tnsmdtalaststtus.SRVY_NO = #SRVY_NO# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_YEAR"><![CDATA[ /* 집계_자료_최신_현황.조사_년도 */ AND tnsmdtalaststtus.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
+		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 집계_자료_최신_현황.노선_코드 */ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 집계_자료_최신_현황.행선_코드 */ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK"><![CDATA[ /* 집계_자료_최신_현황.차로 */ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 집계_자료_최신_현황.시점 */ AND tnsmdtalaststtus.STRTPT = #STRTPT# ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 집계_자료_최신_현황.종점 */ AND tnsmdtalaststtus.ENDPT = #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="IRI_VAL"><![CDATA[ /* 집계_자료_최신_현황.종단평탄성_값 */ AND tnsmdtalaststtus.IRI_VAL = #IRI_VAL# ]]></isNotEmpty>
+		<isNotEmpty property="RD_VAL"><![CDATA[ /* 집계_자료_최신_현황.소성변형_값 */ AND tnsmdtalaststtus.RD_VAL = #RD_VAL# ]]></isNotEmpty>
+		<isNotEmpty property="VRTCAL_CR"><![CDATA[ /* 집계_자료_최신_현황.종방향_균열 */ AND tnsmdtalaststtus.VRTCAL_CR = #VRTCAL_CR# ]]></isNotEmpty>
+		<isNotEmpty property="HRZNTAL_CR"><![CDATA[ /* 집계_자료_최신_현황.횡방향_균열 */ AND tnsmdtalaststtus.HRZNTAL_CR = #HRZNTAL_CR# ]]></isNotEmpty>
+		<isNotEmpty property="CNSTRCT_JOINT_CR"><![CDATA[ /* 집계_자료_최신_현황.시공_줄눈_균열 */ AND tnsmdtalaststtus.CNSTRCT_JOINT_CR = #CNSTRCT_JOINT_CR# ]]></isNotEmpty>
+		<isNotEmpty property="TRTS_BAC_CR"><![CDATA[ /* 집계_자료_최신_현황.거북등_균열 */ AND tnsmdtalaststtus.TRTS_BAC_CR = #TRTS_BAC_CR# ]]></isNotEmpty>
+		<isNotEmpty property="PTCHG_CR"><![CDATA[ /* 집계_자료_최신_현황.패칭_균열 */ AND tnsmdtalaststtus.PTCHG_CR = #PTCHG_CR# ]]></isNotEmpty>
+		<isNotEmpty property="CR_VAL"><![CDATA[ /* 집계_자료_최신_현황.표면손상값 */ AND tnsmdtalaststtus.CR_VAL = #CR_VAL# ]]></isNotEmpty>
+		<isNotEmpty property="CR_IDX"><![CDATA[ /* 집계_자료_최신_현황.표면손상지수 */ AND tnsmdtalaststtus.CR_IDX = #CR_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="RD_IDX"><![CDATA[ /* 집계_자료_최신_현황.소성변형지수 */ AND tnsmdtalaststtus.RD_IDX = #RD_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="PC_GRAD"><![CDATA[ /* 집계_자료_최신_현황.포장상태등급 */ AND tnsmdtalaststtus.PC_GRAD = #PC_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="CNTL_DFECT"><![CDATA[ /* 집계_자료_최신_현황.지배_결함 */ AND tnsmdtalaststtus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_KND"><![CDATA[ /* 집계_자료_최신_현황.조사_종류 */ AND tnsmdtalaststtus.SRVY_KND = #SRVY_KND# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_MT"><![CDATA[ /* 집계_자료_최신_현황.조사_월 */ AND tnsmdtalaststtus.SRVY_MT = #SRVY_MT# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 집계_자료_최신_현황.생성자_번호 */ AND tnsmdtalaststtus.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 집계_자료_최신_현황.생성_일시 */ AND tnsmdtalaststtus.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 집계_자료_최신_현황.수정자_번호 */ AND tnsmdtalaststtus.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 집계_자료_최신_현황.수정_일시 */ AND tnsmdtalaststtus.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="FRMULA_NO"><![CDATA[ /* 집계_자료_최신_현황.수식_번호 */ AND tnsmdtalaststtus.FRMULA_NO = #FRMULA_NO# ]]></isNotEmpty>
+		<isNotEmpty property="TRNSPORT_QY"><![CDATA[ /* 집계_자료_최신_현황.교통_량 */ AND tnsmdtalaststtus.TRNSPORT_QY = #TRNSPORT_QY# ]]></isNotEmpty>
+		<isNotEmpty property="CR_GRAD"><![CDATA[ /* 집계_자료_최신_현황.표면손상_등급 */ AND tnsmdtalaststtus.CR_GRAD = #CR_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="RD_GRAD"><![CDATA[ /* 집계_자료_최신_현황.소성변형_등급 */ AND tnsmdtalaststtus.RD_GRAD = #RD_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="IRI_GRAD"><![CDATA[ /* 집계_자료_최신_현황.종단평탄성_등급 */ AND tnsmdtalaststtus.IRI_GRAD = #IRI_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="RI_IDX"><![CDATA[ /* 집계_자료_최신_현황.평탄성_지수 */ AND tnsmdtalaststtus.RI_IDX = #RI_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="BLOCK_CR"><![CDATA[ /* 집계_자료_최신_현황.블럭_균열 */ AND tnsmdtalaststtus.BLOCK_CR = #BLOCK_CR# ]]></isNotEmpty>
+		<isNotEmpty property="CR_LT"><![CDATA[ /* 집계_자료_최신_현황.균열_길이 */ AND tnsmdtalaststtus.CR_LT = #CR_LT# ]]></isNotEmpty>
+		<isNotEmpty property="CR_WID"><![CDATA[ /* 집계_자료_최신_현황.균열_폭 */ AND tnsmdtalaststtus.CR_WID = #CR_WID# ]]></isNotEmpty>
+		<isNotEmpty property="GPCI"><![CDATA[ /* 집계_자료_최신_현황.GPCI */ AND tnsmdtalaststtus.GPCI = #GPCI# ]]></isNotEmpty>
+		<isNotEmpty property="NHPCI"><![CDATA[ /* 집계_자료_최신_현황.NHPCI */ AND tnsmdtalaststtus.NHPCI = #NHPCI# ]]></isNotEmpty>
+		<isNotEmpty property="SPI"><![CDATA[ /* 집계_자료_최신_현황.SPI */ AND tnsmdtalaststtus.SPI = #SPI# ]]></isNotEmpty>
+		<isNotEmpty property="XCR"><![CDATA[ /* 집계_자료_최신_현황.NHPCI_균열 */ AND tnsmdtalaststtus.XCR = #XCR# ]]></isNotEmpty>
+		<isNotEmpty property="RCI"><![CDATA[ /* 집계_자료_최신_현황.표면_조도_지수 */ AND tnsmdtalaststtus.RCI = #RCI# ]]></isNotEmpty>
+		<isNotEmpty property="SCR"><![CDATA[ /* 집계_자료_최신_현황.표면_상태_지수 */ AND tnsmdtalaststtus.SCR = #SCR# ]]></isNotEmpty>
+		<isNotEmpty property="AC_LOW"><![CDATA[ /* 집계_자료_최신_현황.거북등균열_LOW */ AND tnsmdtalaststtus.AC_LOW = #AC_LOW# ]]></isNotEmpty>
+		<isNotEmpty property="AC_MED"><![CDATA[ /* 집계_자료_최신_현황.거북등균열_MED */ AND tnsmdtalaststtus.AC_MED = #AC_MED# ]]></isNotEmpty>
+		<isNotEmpty property="AC_HI"><![CDATA[ /* 집계_자료_최신_현황.거북등균열_HI */ AND tnsmdtalaststtus.AC_HI = #AC_HI# ]]></isNotEmpty>
+		<isNotEmpty property="LC_LOW"><![CDATA[ /* 집계_자료_최신_현황.종방향균열_LOW */ AND tnsmdtalaststtus.LC_LOW = #LC_LOW# ]]></isNotEmpty>
+		<isNotEmpty property="LC_MED"><![CDATA[ /* 집계_자료_최신_현황.종방향균열_MED */ AND tnsmdtalaststtus.LC_MED = #LC_MED# ]]></isNotEmpty>
+		<isNotEmpty property="LC_HI"><![CDATA[ /* 집계_자료_최신_현황.종방향균열_HI */ AND tnsmdtalaststtus.LC_HI = #LC_HI# ]]></isNotEmpty>
+		<isNotEmpty property="TC_LOW"><![CDATA[ /* 집계_자료_최신_현황.횡방향균열_LOW */ AND tnsmdtalaststtus.TC_LOW = #TC_LOW# ]]></isNotEmpty>
+		<isNotEmpty property="TC_MED"><![CDATA[ /* 집계_자료_최신_현황.횡방향균열_MED */ AND tnsmdtalaststtus.TC_MED = #TC_MED# ]]></isNotEmpty>
+		<isNotEmpty property="TC_HI"><![CDATA[ /* 집계_자료_최신_현황.횡방향균열_HI */ AND tnsmdtalaststtus.TC_HI = #TC_HI# ]]></isNotEmpty>
+		<isNotEmpty property="RD_LOW"><![CDATA[ /* 집계_자료_최신_현황.소성변형_LOW */ AND tnsmdtalaststtus.RD_LOW = #RD_LOW# ]]></isNotEmpty>
+		<isNotEmpty property="RD_MED"><![CDATA[ /* 집계_자료_최신_현황.소성변형_MED */ AND tnsmdtalaststtus.RD_MED = #RD_MED# ]]></isNotEmpty>
+		<isNotEmpty property="RD_HI"><![CDATA[ /* 집계_자료_최신_현황.소성변형_HI */ AND tnsmdtalaststtus.RD_HI = #RD_HI# ]]></isNotEmpty>
+		<isNotEmpty property="AC_IDX"><![CDATA[ /* 집계_자료_최신_현황.거북등균열_지수 */ AND tnsmdtalaststtus.AC_IDX = #AC_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="LC_IDX"><![CDATA[ /* 집계_자료_최신_현황.종방향균열_지수 */ AND tnsmdtalaststtus.LC_IDX = #LC_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="TC_IDX"><![CDATA[ /* 집계_자료_최신_현황.횡방향균열_지수 */ AND tnsmdtalaststtus.TC_IDX = #TC_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="PTCHG_IDX"><![CDATA[ /* 집계_자료_최신_현황.패칭_지수 */ AND tnsmdtalaststtus.PTCHG_IDX = #PTCHG_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="POTHOLE_CR"><![CDATA[ /* 집계_자료_최신_현황.포트홀_균열 */ AND tnsmdtalaststtus.POTHOLE_CR = #POTHOLE_CR# ]]></isNotEmpty>
+		<isNotEmpty property="BLOCK_CR_LOW"><![CDATA[ /* 집계_자료_최신_현황.블럭_균열_LOW */ AND tnsmdtalaststtus.BLOCK_CR_LOW = #BLOCK_CR_LOW# ]]></isNotEmpty>
+		<isNotEmpty property="BLOCK_CR_MED"><![CDATA[ /* 집계_자료_최신_현황.블럭_균열_MED */ AND tnsmdtalaststtus.BLOCK_CR_MED = #BLOCK_CR_MED# ]]></isNotEmpty>
+		<isNotEmpty property="BLOCK_CR_HI"><![CDATA[ /* 집계_자료_최신_현황.블럭_균열_HI */ AND tnsmdtalaststtus.BLOCK_CR_HI = #BLOCK_CR_HI# ]]></isNotEmpty>
+		<isNotEmpty property="POTHOLE_IDX"><![CDATA[ /* 집계_자료_최신_현황.포트홀_지수 */ AND tnsmdtalaststtus.POTHOLE_IDX = #POTHOLE_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="DMG_CUZ_CLMT"><![CDATA[ /* 집계_자료_최신_현황.파손_원인_기후 */ AND tnsmdtalaststtus.DMG_CUZ_CLMT = #DMG_CUZ_CLMT# ]]></isNotEmpty>
+		<isNotEmpty property="DMG_CUZ_VMTC"><![CDATA[ /* 집계_자료_최신_현황.파손_원인_교통량 */ AND tnsmdtalaststtus.DMG_CUZ_VMTC = #DMG_CUZ_VMTC# ]]></isNotEmpty>
+		<isNotEmpty property="DMG_CUZ_ETC"><![CDATA[ /* 집계_자료_최신_현황.파손_원인_기타 */ AND tnsmdtalaststtus.DMG_CUZ_ETC = #DMG_CUZ_ETC# ]]></isNotEmpty>
+		<isNotEmpty property="BC_IDX"><![CDATA[ /* 집계_자료_최신_현황.블럭균열_지수 */ AND tnsmdtalaststtus.BC_IDX = #BC_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="CALC_MT"><![CDATA[ /* 집계_자료_최신_현황.산정_월 */ AND tnsmdtalaststtus.CALC_MT = #CALC_MT# ]]></isNotEmpty>
+		<isNotEmpty property="CALC_YEAR"><![CDATA[ /* 집계_자료_최신_현황.산정_년도 */ AND tnsmdtalaststtus.CALC_YEAR = #CALC_YEAR# ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_TA"><![CDATA[ /* 집계_자료_최신_현황.보수도래시기 */ AND tnsmdtalaststtus.RPAIR_TA = #RPAIR_TA# ]]></isNotEmpty>
+	</sql>
+
+	<select id="smDtaLastSttusDAO.selectSmDtaLastSttusList"
+		parameterClass="smDtaLastSttusVO" resultClass="smDtaLastSttusVO">
+<![CDATA[
+		/* smDtaLastSttusDAO.selectSmDtaLastSttusList */
+		/* 집계_자료_최신_현황 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tnsmdtalaststtus.SM_NO /* 집계_자료_최신_현황.집계_번호 */
+				, tnsmdtalaststtus.SRVY_NO /* 집계_자료_최신_현황.조사_번호 */
+				, tnsmdtalaststtus.SRVY_YEAR /* 집계_자료_최신_현황.조사_년도 */
+				, tnsmdtalaststtus.ROUTE_CODE /* 집계_자료_최신_현황.노선_코드 */
+				, tnsmdtalaststtus.DIRECT_CODE /* 집계_자료_최신_현황.행선_코드 */
+				, tnsmdtalaststtus.TRACK /* 집계_자료_최신_현황.차로 */
+				, tnsmdtalaststtus.STRTPT /* 집계_자료_최신_현황.시점 */
+				, tnsmdtalaststtus.ENDPT /* 집계_자료_최신_현황.종점 */
+				, tnsmdtalaststtus.IRI_VAL /* 집계_자료_최신_현황.종단평탄성_값 */
+				, tnsmdtalaststtus.RD_VAL /* 집계_자료_최신_현황.소성변형_값 */
+				, tnsmdtalaststtus.VRTCAL_CR /* 집계_자료_최신_현황.종방향_균열 */
+				, tnsmdtalaststtus.HRZNTAL_CR /* 집계_자료_최신_현황.횡방향_균열 */
+				, tnsmdtalaststtus.CNSTRCT_JOINT_CR /* 집계_자료_최신_현황.시공_줄눈_균열 */
+				, tnsmdtalaststtus.TRTS_BAC_CR /* 집계_자료_최신_현황.거북등_균열 */
+				, tnsmdtalaststtus.PTCHG_CR /* 집계_자료_최신_현황.패칭_균열 */
+				, tnsmdtalaststtus.CR_VAL /* 집계_자료_최신_현황.표면손상값 */
+				, tnsmdtalaststtus.CR_IDX /* 집계_자료_최신_현황.표면손상지수 */
+				, tnsmdtalaststtus.RD_IDX /* 집계_자료_최신_현황.소성변형지수 */
+				, tnsmdtalaststtus.PC_GRAD /* 집계_자료_최신_현황.포장상태등급 */
+				, tnsmdtalaststtus.CNTL_DFECT /* 집계_자료_최신_현황.지배_결함 */
+				, tnsmdtalaststtus.SRVY_KND /* 집계_자료_최신_현황.조사_종류 */
+				, tnsmdtalaststtus.SRVY_MT /* 집계_자료_최신_현황.조사_월 */
+				, tnsmdtalaststtus.DELETE_AT /* 집계_자료_최신_현황.삭제_여부 */
+				, tnsmdtalaststtus.USE_AT /* 집계_자료_최신_현황.사용_여부 */
+				, tnsmdtalaststtus.CRTR_NO /* 집계_자료_최신_현황.생성자_번호 */
+				, tnsmdtalaststtus.CREAT_DT /* 집계_자료_최신_현황.생성_일시 */
+				, tnsmdtalaststtus.UPDUSR_NO /* 집계_자료_최신_현황.수정자_번호 */
+				, tnsmdtalaststtus.UPDT_DT /* 집계_자료_최신_현황.수정_일시 */
+				, tnsmdtalaststtus.FRMULA_NO /* 집계_자료_최신_현황.수식_번호 */
+				, tnsmdtalaststtus.TRNSPORT_QY /* 집계_자료_최신_현황.교통_량 */
+				, tnsmdtalaststtus.CR_GRAD /* 집계_자료_최신_현황.표면손상_등급 */
+				, tnsmdtalaststtus.RD_GRAD /* 집계_자료_최신_현황.소성변형_등급 */
+				, tnsmdtalaststtus.IRI_GRAD /* 집계_자료_최신_현황.종단평탄성_등급 */
+				, tnsmdtalaststtus.RI_IDX /* 집계_자료_최신_현황.평탄성_지수 */
+				, tnsmdtalaststtus.BLOCK_CR /* 집계_자료_최신_현황.블럭_균열 */
+				, tnsmdtalaststtus.CR_LT /* 집계_자료_최신_현황.균열_길이 */
+				, tnsmdtalaststtus.CR_WID /* 집계_자료_최신_현황.균열_폭 */
+				, tnsmdtalaststtus.GPCI /* 집계_자료_최신_현황.GPCI */
+				, tnsmdtalaststtus.NHPCI /* 집계_자료_최신_현황.NHPCI */
+				, tnsmdtalaststtus.SPI /* 집계_자료_최신_현황.SPI */
+				, tnsmdtalaststtus.XCR /* 집계_자료_최신_현황.NHPCI_균열 */
+				, tnsmdtalaststtus.RCI /* 집계_자료_최신_현황.표면_조도_지수 */
+				, tnsmdtalaststtus.SCR /* 집계_자료_최신_현황.표면_상태_지수 */
+				, tnsmdtalaststtus.AC_LOW /* 집계_자료_최신_현황.거북등균열_LOW */
+				, tnsmdtalaststtus.AC_MED /* 집계_자료_최신_현황.거북등균열_MED */
+				, tnsmdtalaststtus.AC_HI /* 집계_자료_최신_현황.거북등균열_HI */
+				, tnsmdtalaststtus.LC_LOW /* 집계_자료_최신_현황.종방향균열_LOW */
+				, tnsmdtalaststtus.LC_MED /* 집계_자료_최신_현황.종방향균열_MED */
+				, tnsmdtalaststtus.LC_HI /* 집계_자료_최신_현황.종방향균열_HI */
+				, tnsmdtalaststtus.TC_LOW /* 집계_자료_최신_현황.횡방향균열_LOW */
+				, tnsmdtalaststtus.TC_MED /* 집계_자료_최신_현황.횡방향균열_MED */
+				, tnsmdtalaststtus.TC_HI /* 집계_자료_최신_현황.횡방향균열_HI */
+				, tnsmdtalaststtus.RD_LOW /* 집계_자료_최신_현황.소성변형_LOW */
+				, tnsmdtalaststtus.RD_MED /* 집계_자료_최신_현황.소성변형_MED */
+				, tnsmdtalaststtus.RD_HI /* 집계_자료_최신_현황.소성변형_HI */
+				, tnsmdtalaststtus.AC_IDX /* 집계_자료_최신_현황.거북등균열_지수 */
+				, tnsmdtalaststtus.LC_IDX /* 집계_자료_최신_현황.종방향균열_지수 */
+				, tnsmdtalaststtus.TC_IDX /* 집계_자료_최신_현황.횡방향균열_지수 */
+				, tnsmdtalaststtus.PTCHG_IDX /* 집계_자료_최신_현황.패칭_지수 */
+				, tnsmdtalaststtus.POTHOLE_CR /* 집계_자료_최신_현황.포트홀_균열 */
+				, tnsmdtalaststtus.BLOCK_CR_LOW /* 집계_자료_최신_현황.블럭_균열_LOW */
+				, tnsmdtalaststtus.BLOCK_CR_MED /* 집계_자료_최신_현황.블럭_균열_MED */
+				, tnsmdtalaststtus.BLOCK_CR_HI /* 집계_자료_최신_현황.블럭_균열_HI */
+				, tnsmdtalaststtus.POTHOLE_IDX /* 집계_자료_최신_현황.포트홀_지수 */
+				, tnsmdtalaststtus.DMG_CUZ_CLMT /* 집계_자료_최신_현황.파손_원인_기후 */
+				, tnsmdtalaststtus.DMG_CUZ_VMTC /* 집계_자료_최신_현황.파손_원인_교통량 */
+				, tnsmdtalaststtus.DMG_CUZ_ETC /* 집계_자료_최신_현황.파손_원인_기타 */
+				, tnsmdtalaststtus.BC_IDX /* 집계_자료_최신_현황.블럭균열_지수 */
+				, tnsmdtalaststtus.CALC_MT /* 집계_자료_최신_현황.산정_월 */
+				, tnsmdtalaststtus.CALC_YEAR /* 집계_자료_최신_현황.산정_년도 */
+				, tnsmdtalaststtus.RPAIR_TA /* 집계_자료_최신_현황.보수도래시기 */
+
+			FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+
+]]>
+		<include refid="smDtaLastSttusDAO.selectSmDtaLastSttusList.where" />
+<![CDATA[
+		ORDER BY
+				tnsmdtalaststtus.SM_NO DESC /* 집계_자료_최신_현황.집계_번호 */
+
+		) tb) WHERE 1=1
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+		<![CDATA[
+			AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>
+		</isEqual>
+<![CDATA[
+]]>
+	</select>
+
+
+	<select id="smDtaLastSttusDAO.selectSmDtaLastSttusListTotalCount"
+		parameterClass="smDtaLastSttusVO" resultClass="int">
+<![CDATA[
+		/* smDtaLastSttusDAO.selectSmDtaLastSttusListTotalCount */
+		/* 집계_자료_최신_현황 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+]]>
+		<include refid="smDtaLastSttusDAO.selectSmDtaLastSttusList.where" />
+<![CDATA[
+]]>
+	</select>
+
+	<select id="smDtaLastSttusDAO.selectRouteEvlList"
+		parameterClass="smDtaLastSttusVO" resultClass="smDtaLastSttusVO">
+	<![CDATA[
+			/* smDtaLastSttusDAO.selectRouteEvlList */
+			/* 포장상태 평가 - 노선단위 수시병가 대상 목록 */
+			SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN, tb.* FROM (
+				SELECT tnrouteinfo.ROAD_NO
+				     , TO_NUMBER(tnrouteinfo.ROAD_NO) ROAD_NO_VAL
+				     , tnrouteinfo.ROAD_NAME
+				     , TO_CHAR(SYSDATE, 'YYYY') CALC_YEAR
+				     , TO_CHAR(SYSDATE, 'MM') CALC_MT
+				     , CASE WHEN tnsmdtagnlsttus.ROUTE_CODE IS NULL THEN 'N/A'
+				            WHEN tnsmdtalaststtus.ROUTE_CODE IS NULL THEN '미평가'
+				            ELSE '평가' END CALC_STTUS
+				  FROM TN_ROUTE_INFO tnrouteinfo
+				  LEFT OUTER JOIN TN_SM_DTA_GNL_STTUS tnsmdtagnlsttus
+					ON tnsmdtagnlsttus.ROUTE_CODE = tnrouteinfo.ROAD_NO
+				   AND tnsmdtagnlsttus.USE_AT = 'Y'
+				   AND tnsmdtagnlsttus.DELETE_AT = 'N'
+				   AND tnsmdtagnlsttus.LAST_DTA_AT = 'Y'
+				  LEFT OUTER JOIN
+					 ( SELECT tnsmdtalaststtus.ROUTE_CODE FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+                       WHERE 1=1
+                       AND tnsmdtalaststtus.USE_AT='Y'
+                       AND tnsmdtalaststtus.DELETE_AT = 'N'
+                       AND tnsmdtalaststtus.CALC_YEAR = TO_CHAR(SYSDATE, 'YYYY')
+                       AND tnsmdtalaststtus.CALC_MT = TO_CHAR(SYSDATE, 'MM')
+                     GROUP BY tnsmdtalaststtus.ROUTE_CODE) tnsmdtalaststtus
+                    ON tnsmdtalaststtus.ROUTE_CODE = tnrouteinfo.ROAD_NO
+			     WHERE 1=1
+]]>
+		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnrouteinfo.ROAD_NO = #ROAD_NO# ]]></isNotEmpty>
+<![CDATA[
+				 GROUP BY tnrouteinfo.ROAD_NO, tnrouteinfo.ROAD_NAME, tnsmdtagnlsttus.ROUTE_CODE, tnsmdtalaststtus.ROUTE_CODE
+]]>
+
+<![CDATA[
+		) tb) WHERE 1=1
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+		<![CDATA[
+			AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+		]]>
+		</isEqual>
+<![CDATA[
+]]>
+	</select>
+
+	<select id="smDtaLastSttusDAO.selectRouteEvlListTotalCount"
+		parameterClass="smDtaLastSttusVO" resultClass="int">
+<![CDATA[
+		/* smDtaLastSttusDAO.selectRouteEvlListTotalCount */
+		/* 집계_자료_최신_현황 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		  FROM TN_ROUTE_INFO tnrouteinfo
+		 WHERE 1=1
+]]>
+		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnrouteinfo.ROAD_NO = #ROAD_NO# ]]></isNotEmpty>
+<![CDATA[
+]]>
+	</select>
+
+	<!-- 집계된 조사자료를 현행화 한다 -->
+	<parameterMap id="prc_clac_predct_route_srvy_evl" class="java.util.Map">
+		<parameter property="p_ROUTE_CODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_SRVY_NO" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_USER_NO" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_MODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="o_PROCCODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="o_PROCMSG" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<procedure id="smDtaLastSttusDAO.PRC_CLAC_PREDCT_ROUTE_SRVY_EVL"
+		parameterMap="prc_clac_predct_route_srvy_evl">
+		{ call PRC_CLAC_PREDCT_ROUTE_SRVY_EVL(?,?,?,?,?,?) }
+	</procedure>
+
+	<!-- 10년치 예측 데이터를 생성한다. -->
+	<parameterMap id="prc_clac_predct_last" class="java.util.Map">
+		<parameter property="p_ROUTE_CODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_SRVY_NO" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_USER_NO" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_MODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="o_PROCCODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="o_PROCMSG" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="OUT" />
+	</parameterMap>
+	<procedure id="smDtaLastSttusDAO.PRC_CLAC_PREDCT_LAST"
+		parameterMap="prc_clac_predct_last">
+		{ call PRC_CLAC_PREDCT_LAST(?,?,?,?,?,?) }
+	</procedure>
+
+
+
+	<select id="smDtaLastSttusDAO.selectSmDtaLastSttusListExcel" parameterClass="smDtaLastSttusVO" resultClass="hashMap">
+    <![CDATA[
+		/* smDtaLastSttusDAO.selectSmDtaLastSttusListExcel */ /* 포장상태 예측정보 상세조회 목록 엑셀다운로드 */
+		SELECT * FROM (
+		SELECT  tb.* FROM (
+		SELECT tnsmdtalaststtus.SM_NO
+		, tnsmdtalaststtus.CALC_YEAR
+		, TO_NUMBER(tnsmdtalaststtus.ROUTE_CODE) AS ROAD_NO_VAL
+		, ( SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo
+		WHERE tnrouteinfo.ROAD_NO = tnsmdtalaststtus.ROUTE_CODE ) AS ROAD_NAME
+		, ( SELECT code.CODE_NM FROM TC_CODE code WHERE sect.ROAD_GRAD =
+		code.CODE_VAL ) AS ROAD_GRAD
+		, ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept WHERE sect.DEPT_CODE =
+		dept.DEPT_CODE ) AS DEPT_CODE
+		, ( SELECT code.CODE_NM FROM TC_CODE code WHERE code.CODE_VAL =
+		sect.CELL_TYPE ) AS SECT_SE
+		, CASE tnsmdtalaststtus.DIRECT_CODE
+		WHEN 'S' THEN '상행'
+		WHEN 'E' THEN '하행'
+		WHEN 'SE' THEN '상하행'
+		ELSE '' END AS DIRECT_CODE
+		, tnsmdtalaststtus.TRACK
+ 	  	,tnsmdtalaststtus.STRTPT/1000 AS  STRTPT /* 최소_구간_조사_자료.시점 */
+  		,tnsmdtalaststtus.ENDPT/1000 AS  ENDPT /* 최소_구간_조사_자료.종점 */
+		, tnsmdtalaststtus.GPCI
+		, DECODE(( SELECT tccode.CODE_NM FROM TC_CODE tccode
+		WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ),
+		'AC','거북등균열','BC','블럭균열','LC','선형균열','PTCHG','패칭','POTHOLE','포트홀','RD','소성변형','RCI','종단평탄성','IRI','종단평탄성')
+		AS CR
+		, CASE WHEN DMG_CUZ_CLMT > DMG_CUZ_VMTC AND DMG_CUZ_CLMT > DMG_CUZ_ETC
+		THEN '기후'
+		WHEN DMG_CUZ_VMTC > DMG_CUZ_CLMT AND DMG_CUZ_VMTC > DMG_CUZ_ETC THEN
+		'교통량/하부불량'
+		WHEN DMG_CUZ_ETC > DMG_CUZ_CLMT AND DMG_CUZ_VMTC < DMG_CUZ_ETC THEN '기타'
+		WHEN DMG_CUZ_ETC = DMG_CUZ_VMTC AND DMG_CUZ_CLMT > DMG_CUZ_ETC THEN
+		'교통량/하부불량, 기후'
+		WHEN DMG_CUZ_ETC = DMG_CUZ_CLMT AND DMG_CUZ_CLMT > DMG_CUZ_VMTC THEN '기후,
+		기타'
+		WHEN DMG_CUZ_ETC = DMG_CUZ_VMTC AND DMG_CUZ_VMTC > DMG_CUZ_CLMT THEN
+		'교통량/하부불량, 기타'
+		WHEN DMG_CUZ_VMTC = DMG_CUZ_CLMT AND DMG_CUZ_VMTC = DMG_CUZ_ETC AND
+		DMG_CUZ_ETC = 0 THEN '파손없슴'
+		WHEN DMG_CUZ_VMTC = DMG_CUZ_CLMT AND DMG_CUZ_VMTC = DMG_CUZ_ETC AND
+		DMG_CUZ_ETC != 0 THEN '교통량/하부불량,기후,기타'
+		END
+		AS CUZ
+		, tnsmdtalaststtus.RPAIR_TA ||'년' RPAIR_TA
+		FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+		LEFT OUTER JOIN CELL_SECT sect
+		ON sect.ROUTE_CODE = tnsmdtalaststtus.ROUTE_CODE
+		AND sect.DIRECT_CODE = tnsmdtalaststtus.DIRECT_CODE
+		AND sect.TRACK = tnsmdtalaststtus.TRACK
+		AND sect.STRTPT = tnsmdtalaststtus.STRTPT
+		AND sect.ENDPT = tnsmdtalaststtus.ENDPT
+		WHERE 1=1
+		AND tnsmdtalaststtus.USE_AT = 'Y'
+		AND tnsmdtalaststtus.DELETE_AT = 'N'
+		AND sect.CELL_TYPE LIKE 'CELT%'
+		AND sect.CELL_TYPE NOT LIKE '%3'
+		AND sect.CELL_TYPE NOT LIKE '%4'
+		AND sect.CELL_TYPE NOT LIKE '%5'
+		AND sect.CELL_TYPE NOT LIKE '%6'
+		]]>
+		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND sect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
+        <isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
+        <isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+        <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+        <isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
+        <isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+        <isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
+    <![CDATA[
+		/* tnsmdtalaststtus.STRTPT ASC
+		, tnsmdtalaststtus.TRACK ASC
+		, tnsmdtalaststtus.DIRECT_CODE DESC */
+		) tb
+		ORDER BY $orderByColumn$ $orderByType$
+		) WHERE 1=1
+		]]>
+	</select>
+
+	<select id="smDtaLastSttusDAO.selectSrvyDtaLastSttusList" parameterClass="smDtaLastSttusVO" resultClass="smDtaLastSttusVO">
+    <![CDATA[
+		/* smDtaLastSttusDAO.selectSrvyDtaLastSttusList */
+		/* JOY_ 포장상태 예측정보 상세조회 목록 */
+		SELECT *
+		FROM (
+		    SELECT ROWNUM AS rn, tb.*
+		    FROM (
+			    SELECT
+				    tnsmdtalaststtus.SM_NO
+				    , sect.OBJECT_ID
+				    , sect.CELL_ID
+				    , tnsmdtalaststtus.CALC_YEAR
+				    , tnsmdtalaststtus.ROUTE_CODE
+				    , TO_NUMBER(tnsmdtalaststtus.ROUTE_CODE) AS ROAD_NO_VAL
+				    , ( SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo
+				        WHERE tnrouteinfo.ROAD_NO = tnsmdtalaststtus.ROUTE_CODE
+				    ) AS ROAD_NAME
+				    , ( SELECT code.CODE_NM FROM TC_CODE code
+				        WHERE sect.ROAD_GRAD = code.CODE_VAL
+				    ) AS ROAD_GRAD
+				    , ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept
+				        WHERE sect.DEPT_CODE = dept.DEPT_CODE
+				    ) AS DEPT_CODE
+				    , ( SELECT code.CODE_NM FROM TC_CODE code
+				        WHERE code.CODE_VAL = sect.CELL_TYPE
+				    ) AS SECT_SE
+				    , CASE tnsmdtalaststtus.DIRECT_CODE
+				        WHEN 'S' THEN '상행'
+				        WHEN 'E' THEN '하행'
+				        WHEN 'SE' THEN '상하행'
+				        ELSE ''
+				    END AS DIRECT_CODE
+				    , tnsmdtalaststtus.TRACK
+				    , tnsmdtalaststtus.STRTPT
+				    , tnsmdtalaststtus.ENDPT
+				    , tnsmdtalaststtus.GPCI AS GPCI
+				    , tnsmdtalaststtus.CNTL_DFECT
+				    , ( SELECT code.CODE_NM FROM TC_CODE code
+				        WHERE code.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT
+				    ) AS CODE_NM
+				    , tnsmdtalaststtus.AC_IDX
+				    , tnsmdtalaststtus.LC_IDX
+				    , tnsmdtalaststtus.BC_IDX
+				    , tnsmdtalaststtus.PTCHG_IDX
+				    , tnsmdtalaststtus.POTHOLE_IDX
+				    , tnsmdtalaststtus.RD_IDX
+				    , tnsmdtalaststtus.RCI
+				    , tnsmdtalaststtus.DMG_CUZ_CLMT
+				    , tnsmdtalaststtus.DMG_CUZ_VMTC
+				    , tnsmdtalaststtus.DMG_CUZ_ETC
+				    , tnsmdtalaststtus.RPAIR_TA
+				FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+				    LEFT OUTER JOIN CELL_SECT sect
+				    ON sect.ROUTE_CODE = tnsmdtalaststtus.ROUTE_CODE
+				    AND sect.DIRECT_CODE = tnsmdtalaststtus.DIRECT_CODE
+				    AND sect.TRACK = tnsmdtalaststtus.TRACK
+				    AND sect.STRTPT = tnsmdtalaststtus.STRTPT
+				    AND sect.ENDPT = tnsmdtalaststtus.ENDPT
+				WHERE 1=1
+				    AND tnsmdtalaststtus.USE_AT = 'Y'
+			        AND tnsmdtalaststtus.DELETE_AT = 'N'
+			        AND sect.CELL_TYPE LIKE 'CELT%'
+					AND sect.CELL_TYPE NOT LIKE '%3'
+					AND sect.CELL_TYPE NOT LIKE '%4'
+					AND sect.CELL_TYPE NOT LIKE '%5'
+					AND sect.CELL_TYPE NOT LIKE '%6'
+        ]]>
+
+		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND sect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
+		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+		<isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
+		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
+        <![CDATA[
+				/* ORDER BY
+				    tnsmdtalaststtus.STRTPT ASC
+				    , tnsmdtalaststtus.TRACK ASC
+				    , tnsmdtalaststtus.DIRECT_CODE DESC */
+	            ) tb
+        ]]>
+        <isNotEmpty property="orderByColumn">
+            <![CDATA[
+            ORDER BY $orderByColumn$ $orderByType$
+            ]]>
+        </isNotEmpty>
+        <![CDATA[
+            ) WHERE 1=1
+        ]]>
+
+		<isEqual prepend=" " property="usePage" compareValue="true">
+        <![CDATA[
+            AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+        ]]>
+		</isEqual>
+	</select>
+
+	<select id="smDtaLastSttusDAO.selectSrvyDtaLastSttusListCnt"
+		parameterClass="smDtaLastSttusVO" resultClass="int">
+        <![CDATA[
+	        /* smDtaLastSttusDAO.selectSrvyDtaLastSttusListCnt */
+	        /* JOY_ 포장상태 예측정보 상세조회 목록 개수 조회  */
+	        SELECT COUNT(*)
+            FROM (
+                SELECT ROWNUM AS rn, tb.*
+                FROM (
+                    SELECT
+                    tnsmdtalaststtus.SM_NO
+                    , sect.OBJECT_ID
+                    , sect.CELL_ID
+                    , tnsmdtalaststtus.CALC_YEAR
+                    , tnsmdtalaststtus.ROUTE_CODE
+                    , TO_NUMBER(tnsmdtalaststtus.ROUTE_CODE) AS ROAD_NO_VAL
+                    , ( SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo
+                        WHERE tnrouteinfo.ROAD_NO = tnsmdtalaststtus.ROUTE_CODE
+                    ) AS ROAD_NAME
+                    , ( SELECT code.CODE_NM FROM TC_CODE code
+                        WHERE sect.ROAD_GRAD = code.CODE_VAL
+                    ) AS ROAD_GRAD
+                    , ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept
+                        WHERE sect.DEPT_CODE = dept.DEPT_CODE
+                    ) AS DEPT_CODE
+                    , ( SELECT code.CODE_NM FROM TC_CODE code
+                        WHERE code.CODE_VAL = sect.CELL_TYPE
+                    ) AS SECT_SE
+                    , CASE tnsmdtalaststtus.DIRECT_CODE
+                        WHEN 'S' THEN '상행'
+                        WHEN 'E' THEN '하행'
+                        WHEN 'SE' THEN '상하행'
+                        ELSE ''
+                    END AS DIRECT_CODE
+                    , tnsmdtalaststtus.TRACK
+                    , tnsmdtalaststtus.STRTPT
+                    , tnsmdtalaststtus.ENDPT
+                    , tnsmdtalaststtus.GPCI
+                    , tnsmdtalaststtus.CNTL_DFECT
+                    , ( SELECT code.CODE_NM FROM TC_CODE code
+                        WHERE code.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT
+                    ) AS CODE_NM
+                    , tnsmdtalaststtus.AC_IDX
+                    , tnsmdtalaststtus.LC_IDX
+                    , tnsmdtalaststtus.BC_IDX
+                    , tnsmdtalaststtus.PTCHG_IDX
+                    , tnsmdtalaststtus.POTHOLE_IDX
+                    , tnsmdtalaststtus.RD_IDX
+                    , tnsmdtalaststtus.RCI
+                    , tnsmdtalaststtus.DMG_CUZ_CLMT
+                    , tnsmdtalaststtus.DMG_CUZ_VMTC
+                    , tnsmdtalaststtus.DMG_CUZ_ETC
+                    , tnsmdtalaststtus.RPAIR_TA
+                FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+                    LEFT OUTER JOIN CELL_SECT sect
+                    ON sect.ROUTE_CODE = tnsmdtalaststtus.ROUTE_CODE
+                    AND sect.DIRECT_CODE = tnsmdtalaststtus.DIRECT_CODE
+                    AND sect.TRACK = tnsmdtalaststtus.TRACK
+                    AND sect.STRTPT = tnsmdtalaststtus.STRTPT
+                    AND sect.ENDPT = tnsmdtalaststtus.ENDPT
+                WHERE 1=1
+                    AND tnsmdtalaststtus.USE_AT = 'Y'
+                    AND tnsmdtalaststtus.DELETE_AT = 'N'
+                    AND sect.CELL_TYPE LIKE 'CELT%'
+                    AND sect.CELL_TYPE NOT LIKE '%3'
+                    AND sect.CELL_TYPE NOT LIKE '%4'
+                    AND sect.CELL_TYPE NOT LIKE '%5'
+                    AND sect.CELL_TYPE NOT LIKE '%6'
+        ]]>
+
+		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND sect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
+		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+		<isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
+		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
+
+        <![CDATA[
+                ORDER BY
+                    tnsmdtalaststtus.STRTPT ASC
+                    , tnsmdtalaststtus.SM_NO ASC
+            ) tb) WHERE 1=1
+        ]]>
+	</select>
+
+	<select id="smDtaLastSttusDAO.selectCntrwkListBySect"
+		parameterClass="smDtaLastSttusVO" resultClass="smDtaLastSttusVO">
+	    <![CDATA[
+	        /* smDtaLastSttusDAO.selectCntrwkListBySect */
+	        /* JOY_ 포장상태 예측정보 상세조회 포장공사 목록 */
+	        SELECT *
+	        FROM (
+	            SELECT
+	                ROWNUM AS rn, tb.*
+	            FROM (
+	                 SELECT
+		                tncntrwkcellinfo.PAV_CELL_ID AS CELL_ID /* 공사_셀_정보.셀번호 */
+		                , sect.OBJECT_ID /* 섹션 ID */
+		                , tncntrwk.CNTRWK_ID /* 공사상세정보.공사_ID */
+		                , tncntrwkdtl.DETAIL_CNTRWK_ID  /* 공사상세정보.세부_공사_ID */
+		                , tncntrwk.FULL_CNTRWK_NM /* 공사상세정보.전체_공사_명 */
+		                , tncntrwk.STRWRK_DE /* 공사상세정보.착공_일자 */
+		                , tncntrwk.COMPET_DE /* 공사상세정보.준공_일자 */
+		            FROM TN_CNTRWK tncntrwk
+		                LEFT OUTER JOIN TN_CNTRWK_DTL tncntrwkdtl
+		                             ON tncntrwkdtl.CNTRWK_ID = tncntrwk.CNTRWK_ID
+		                LEFT OUTER JOIN TN_CNTRWK_CELL_INFO tncntrwkcellinfo
+		                             ON tncntrwkcellinfo.CNTRWK_ID = tncntrwkdtl.CNTRWK_ID
+		                LEFT OUTER JOIN CELL_SECT sect
+		                             ON sect.ROUTE_CODE = tncntrwkdtl.ROUTE_CODE
+		                            AND sect.DIRECT_CODE = tncntrwkdtl.DIRECT_CODE
+		                            AND sect.TRACK = tncntrwkdtl.TRACK
+		                            AND sect.STRTPT <= tncntrwkdtl.STRTPT
+		                            AND sect.ENDPT >= tncntrwkdtl.ENDPT
+		            WHERE 1=1
+		                AND tncntrwkdtl.DELETE_AT = 'N'
+		                AND tncntrwkdtl.USE_AT    = 'Y'
+		                AND sect.OBJECT_ID = #OBJECT_ID#
+		            ORDER BY sect.STRTPT, tncntrwkdtl.STRTPT
+	            ) tb
+	        ) WHERE 1=1
+	    ]]>
+
+		<isEqual prepend=" " property="usePage" compareValue="true">
+        <![CDATA[
+            AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+        ]]>
+		</isEqual>
+	</select>
+
+	<select id="smDtaLastSttusDAO.selectCntrwkListBySectCnt"
+		parameterClass="smDtaLastSttusVO" resultClass="int">
+        <![CDATA[
+            /* smDtaLastSttusDAO.selectCntrwkListBySectCnt */
+            /* JOY_ 포장상태 예측정보 상세조회 포장공사 목록 개수 조회  */
+            SELECT COUNT(*)
+	        FROM (
+	            SELECT
+	                ROWNUM AS rn, tb.*
+	            FROM (
+	                 SELECT
+	                    tncntrwkcellinfo.PAV_CELL_ID AS CELL_ID /* 공사_셀_정보.셀번호 */
+	                    , sect.OBJECT_ID /* 섹션 ID */
+	                    , tncntrwk.CNTRWK_ID /* 공사상세정보.공사_ID */
+	                    , tncntrwkdtl.DETAIL_CNTRWK_ID  /* 공사상세정보.세부_공사_ID */
+	                    , tncntrwk.FULL_CNTRWK_NM /* 공사상세정보.전체_공사_명 */
+	                    , tncntrwk.STRWRK_DE /* 공사상세정보.착공_일자 */
+	                    , tncntrwk.COMPET_DE /* 공사상세정보.준공_일자 */
+	                FROM TN_CNTRWK tncntrwk
+	                    LEFT OUTER JOIN TN_CNTRWK_DTL tncntrwkdtl
+	                                 ON tncntrwkdtl.CNTRWK_ID = tncntrwk.CNTRWK_ID
+	                    LEFT OUTER JOIN TN_CNTRWK_CELL_INFO tncntrwkcellinfo
+	                                 ON tncntrwkcellinfo.CNTRWK_ID = tncntrwkdtl.CNTRWK_ID
+	                    LEFT OUTER JOIN CELL_SECT sect
+	                                 ON sect.ROUTE_CODE = tncntrwkdtl.ROUTE_CODE
+	                                AND sect.DIRECT_CODE = tncntrwkdtl.DIRECT_CODE
+	                                AND sect.TRACK = tncntrwkdtl.TRACK
+	                                AND sect.STRTPT <= tncntrwkdtl.STRTPT
+	                                AND sect.ENDPT >= tncntrwkdtl.ENDPT
+	                WHERE 1=1
+	                    AND tncntrwkdtl.DELETE_AT = 'N'
+	                    AND tncntrwkdtl.USE_AT    = 'Y'
+	                    AND sect.OBJECT_ID = #OBJECT_ID#
+	                ORDER BY sect.STRTPT, tncntrwkdtl.STRTPT
+	            ) tb
+	        ) WHERE 1=1
+        ]]>
+	</select>
+
+	<resultMap id="mapSmDtaLastSttusVO" class="smDtaLastSttusVO">
+		<result property="PREDCT_YEAR" column="PREDCT_YEAR" /><!-- COMMENTS -->
+		<result property="PREDCT_MT" column="PREDCT_MT" /><!-- COMMENTS -->
+		<result property="ROAD_GPCI_1" column="ROAD_GPCI_1" /><!-- COMMENTS -->
+		<result property="ROAD_GPCI_2" column="ROAD_GPCI_2" /><!-- COMMENTS -->
+		<result property="ROAD_GPCI_3" column="ROAD_GPCI_3" /><!-- COMMENTS -->
+		<result property="DEPT_GPCI_1" column="DEPT_GPCI_1" /><!-- COMMENTS -->
+		<result property="DEPT_GPCI_2" column="DEPT_GPCI_2" /><!-- COMMENTS -->
+		<result property="DEPT_GPCI_3" column="DEPT_GPCI_3" /><!-- COMMENTS -->
+		<result property="ROAD_GRAD" column="ROAD_GRAD" /><!-- COMMENTS -->
+		<result property="ROUTE_CODE" column="ROUTE_CODE" /><!-- COMMENTS -->
+		<result property="DEPT_NM" column="DEPT_NM" /><!-- COMMENTS -->
+		<result property="GPCI" column="GPCI" /><!-- COMMENTS -->
+		<result property="resultMSG" column="PROCMSG" /><!-- COMMENTS -->
+		<result property="resultSuccess" column="PROCCODE" /><!-- COMMENTS -->
+
+	</resultMap>
+
+	<!-- 입력한 조사자료 엑셀 데이터를 시스템에 반영한다. -->
+	<parameterMap id="prc_stat_predct" class="java.util.Map">
+		<parameter property="p_ROUTE_CODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_DEPT_CODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="p_MODE" javaType="java.lang.String"
+			jdbcType="VARCHAR" mode="IN" />
+		<parameter property="o_OUTPUT" javaType="java.sql.ResultSet"
+			jdbcType="ORACLECURSOR" mode="OUT" />
+	</parameterMap>
+	<procedure id="smDtaLastSttusDAO.PRC_STAT_PREDCT"
+		parameterMap="prc_stat_predct" resultMap="mapSmDtaLastSttusVO">
+		{ call
+		PRC_STAT_PREDCT(?,?,?,?) }
+	</procedure>
+
+	<procedure id="smDtaLastSttusDAO.PRC_STAT_PREDCT_EXCEL"
+		parameterMap="prc_stat_predct" resultClass="hashMap">
+		{ call
+		PRC_STAT_PREDCT(?,?,?,?) }
+	</procedure>
+
+	<select id="smDtaLastSttusDAO.selectSmDtaGnlGPCIList"
+		parameterClass="smDtaLastSttusVO" resultClass="smDtaLastSttusVO">
+	    <![CDATA[
+	        /* smDtaLastSttusDAO.selectSmDtaGnlGPCIList */
+	        /* SKC_ 포장상태 예측정보 상세조회 조사자료 GPCI 목록*/
+	        SELECT tnsmdtagnlsttus.SRVY_YEAR
+	        	 , tnsmdtagnlsttus.GPCI
+			  FROM TN_SM_DTA_GNL_STTUS tnsmdtagnlsttus
+			 INNER JOIN TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+				ON tnsmdtalaststtus.ROUTE_CODE = tnsmdtagnlsttus.ROUTE_CODE
+			   AND tnsmdtalaststtus.DIRECT_CODE = tnsmdtagnlsttus.DIRECT_CODE
+			   AND tnsmdtalaststtus.TRACK = tnsmdtagnlsttus.TRACK
+			   AND tnsmdtalaststtus.STRTPT = tnsmdtagnlsttus.STRTPT
+			   AND tnsmdtalaststtus.ENDPT = tnsmdtagnlsttus.ENDPT
+			   AND tnsmdtalaststtus.SM_NO = #SM_NO#
+			   AND tnsmdtalaststtus.USE_AT = 'Y'
+			   AND tnsmdtalaststtus.DELETE_AT = 'N'
+			 WHERE tnsmdtagnlsttus.USE_AT = 'Y'
+			   AND tnsmdtagnlsttus.DELETE_AT = 'N'
+	    ]]>
+	</select>
+
+	<select id="smDtaLastSttusDAO.selectSmDtaLastSttusBySrvy"
+		parameterClass="smDtaLastSttusVO" resultClass="smDtaLastSttusVO">
+        <![CDATA[
+            /* smDtaLastSttusDAO.selectSmDtaLastSttusBySrvy */
+            /* 포장상태 평가정보 상세조회 - 현행정보조회 */
+        WITH LASTLIST AS (
+            SELECT
+			    cellsect.CELL_ID
+			    , cellsect.ROUTE_CODE
+			    , cellsect.DIRECT_CODE
+			    , cellsect.TRACK
+			    , cellsect.STRTPT
+			    , cellsect.ENDPT
+			    , cellsect.CELL_TYPE
+			    , tnsmdtalaststtus.SM_NO
+			    , tnsmdtalaststtus.SRVY_NO
+			    , tnsmdtalaststtus.SRVY_YEAR
+			    , tnsmdtalaststtus.SRVY_MT
+			    , NVL(tnsmdtalaststtus.GPCI, 0) AS GPCI
+			    , tnsmdtalaststtus.CNTL_DFECT
+			    , ( SELECT tccode.CODE_NM
+			        FROM TC_CODE tccode
+			        WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT
+			    ) AS CODE_NM
+			    , NVL(tnsmdtalaststtus.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
+			    , NVL(tnsmdtalaststtus.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
+			    , NVL(tnsmdtalaststtus.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
+			    , NVL(tnsmdtalaststtus.AC_IDX, 0) AS AC_IDX
+			    , NVL(tnsmdtalaststtus.LC_IDX, 0) AS LC_IDX
+			    , NVL(tnsmdtalaststtus.BC_IDX, 0) AS BC_IDX
+			    , NVL(tnsmdtalaststtus.PTCHG_IDX, 0) AS PTCHG_IDX
+			    , NVL(tnsmdtalaststtus.POTHOLE_IDX, 0) AS POTHOLE_IDX
+			    , NVL(tnsmdtalaststtus.RD_IDX, 0) AS RD_IDX
+			    , NVL(tnsmdtalaststtus.RCI, 0) AS RCI
+			    , NVL(tnsmdtalaststtus.SCR, 0) AS SCR
+			    , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.AC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) AC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.BC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) BC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.LC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) LC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.PTCHG_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) PTCHG_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.POTHOLE_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) POT_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RD_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) RD_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RCI, 0, 0, cellsect.CELL_TYPE, 'RCI', 0) RCI_RATE
+			FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
+			LEFT OUTER JOIN CELL_SECT cellsect
+			    ON cellsect.ROUTE_CODE = tnsmdtalaststtus.ROUTE_CODE
+			    AND cellsect.DIRECT_CODE = tnsmdtalaststtus.DIRECT_CODE
+			    AND cellsect.TRACK = tnsmdtalaststtus.TRACK
+			    AND cellsect.STRTPT = tnsmdtalaststtus.STRTPT
+			    AND cellsect.ENDPT = tnsmdtalaststtus.ENDPT
+			WHERE 1=1
+			    AND tnsmdtalaststtus.use_at = 'Y'
+			    AND tnsmdtalaststtus.delete_at = 'N'
+			    AND cellsect.CELL_ID = #CELL_ID#
+        ),
+        RESULTLIST AS (
+            SELECT tb.*
+                 , DECODE(tb.SCR, 0, (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE), 0) SUM_RATE
+              FROM LASTLIST tb
+        )
+        SELECT tb.*
+            , FN_GET_GPCI_RDUCT_RATE(tb.AC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) AC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.BC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) BC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.LC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) LC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.PTCHG_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) PTCHG_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.POTHOLE_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) POT_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.RD_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) RD_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.RCI, 0, 0, tb.CELL_TYPE, 'RCI', tb.SUM_RATE) RCI_RDUCT_RATE
+          FROM RESULTLIST tb
+        ]]>
+	</select>
+
+</sqlMap>

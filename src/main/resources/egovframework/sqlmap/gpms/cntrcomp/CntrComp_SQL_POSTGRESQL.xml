@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="cntrCompDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="cntrCompSerarchVO" type="kr.go.gg.gpms.cntrcomp.service.model.CntrCompDefaultVO"/>
+	<typeAlias alias="cntrCompVO"	type="kr.go.gg.gpms.cntrcomp.service.model.CntrCompVO" />
+
+	<resultMap id="cntrComp.resultMap"
+		class="cntrCompVO">
+		<result property="CNTRWK_ACMSLT_NO" column="CNTRWK_ACMSLT_NO" columnIndex="1" /> <!-- 공사업체정보.공사_실적_번호 -->
+		<result property="CNTRWK_ID" column="CNTRWK_ID" columnIndex="2" /> <!-- 공사업체정보.공사_ID -->
+		<result property="CO_NO" column="CO_NO" columnIndex="3" /> <!-- 공사업체정보.업체_번호 -->
+		<result property="EXEC_SE" column="EXEC_SE" columnIndex="4" /> <!-- 공사업체정보.이행_구분 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="5" /> <!-- 공사업체정보.사용_여부 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="6" /> <!-- 공사업체정보.삭제_여부 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="7" /> <!-- 공사업체정보.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="8" /> <!-- 공사업체정보.생성_일시 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="9" /> <!-- 공사업체정보.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="10" /> <!-- 공사업체정보.수정_일시 -->
+	</resultMap>
+
+	<insert id="cntrCompDAO.insertCntrComp">
+	<selectKey resultClass="String" keyProperty="CNTRWK_ACMSLT_NO">
+  <![CDATA[
+  select SEQ_TN_CNTR_COMP.NEXTVAL from dual
+  ]]>
+  </selectKey>
+	<![CDATA[ 
+		/* cntrCompDAO.insertCntrComp */
+		/* 공사업체정보 등록 */		
+		INSERT INTO TN_CNTR_COMP (
+			CNTRWK_ACMSLT_NO /* 공사업체정보.공사_실적_번호 */
+			, CNTRWK_ID /* 공사업체정보.공사_ID */
+			, CO_NO /* 공사업체정보.업체_번호 */
+			, EXEC_SE /* 공사업체정보.이행_구분 */
+			, USE_AT /* 공사업체정보.사용_여부 */
+			, DELETE_AT /* 공사업체정보.삭제_여부 */
+			, CRTR_NO /* 공사업체정보.생성자_번호 */
+			, CREAT_DT /* 공사업체정보.생성_일시 */
+			, UPDUSR_NO /* 공사업체정보.수정자_번호 */
+			, UPDT_DT /* 공사업체정보.수정_일시 */
+		) VALUES (
+			#CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
+			, #CNTRWK_ID# /* 공사업체정보.공사_ID */
+			, #CO_NO# /* 공사업체정보.업체_번호 */
+			, #EXEC_SE# /* 공사업체정보.이행_구분 */
+			, 'Y' /* 공사업체정보.사용_여부 */
+			, 'N' /* 공사업체정보.삭제_여부 */
+			, #CRTR_NO# /* 공사업체정보.생성자_번호 */
+			, SYSDATE /* 공사업체정보.생성_일시 */
+			, #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
+			, SYSDATE /* 공사업체정보.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="cntrCompDAO.updateCntrComp">
+	<![CDATA[ 
+		/* cntrCompDAO.updateCntrComp */
+		/* 공사업체정보 수정 */
+		UPDATE TN_CNTR_COMP SET
+
+CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
+, CO_NO = #CO_NO# /* 공사업체정보.업체_번호 */
+, EXEC_SE = #EXEC_SE# /* 공사업체정보.이행_구분 */
+, USE_AT = #USE_AT# /* 공사업체정보.사용_여부 */
+, UPDUSR_NO = #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
+, UPDT_DT = SYSDATE /* 공사업체정보.수정_일시 */
+			
+		WHERE 1 = 1
+		AND CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
+]]>
+	</update>
+
+	<delete id="cntrCompDAO.deleteCntrComp">
+	<![CDATA[ 
+		UPDATE TN_CNTR_COMP SET
+
+	 	 DELETE_AT = 'Y' /* 공사업체정보.삭제_여부 */
+		, UPDUSR_NO = #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
+		, UPDT_DT = SYSDATE /* 공사업체정보.수정_일시 */
+			
+		WHERE 1 = 1
+		AND CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
+]]>
+	</delete>
+
+	<select id="cntrCompDAO.selectCntrComp" resultClass="cntrCompVO">
+	<![CDATA[ 
+		/* cntrCompDAO.selectCntrComp */
+		/* 공사업체정보 조회 */
+		SELECT
+			tncntrcomp.CNTRWK_ACMSLT_NO /* 공사업체정보.공사_실적_번호 */
+			, tncntrcomp.CNTRWK_ID /* 공사업체정보.공사_ID */
+			, tncntrcomp.CO_NO /* 공사업체정보.업체_번호 */
+			, tncntrcomp.EXEC_SE /* 공사업체정보.이행_구분 */
+			, tncntrcomp.USE_AT /* 공사업체정보.사용_여부 */
+			, tncntrcomp.DELETE_AT /* 공사업체정보.삭제_여부 */
+			, tncntrcomp.CRTR_NO /* 공사업체정보.생성자_번호 */
+			, tncntrcomp.CREAT_DT /* 공사업체정보.생성_일시 */
+			, tncntrcomp.UPDUSR_NO /* 공사업체정보.수정자_번호 */
+			, tncntrcomp.UPDT_DT /* 공사업체정보.수정_일시 */
+		FROM TN_CNTR_COMP tncntrcomp
+		WHERE 1 = 1
+		AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
+		AND tncntrcomp.DELETE_AT = 'N'
+]]>
+	</select>
+
+	<sql id="cntrCompDAO.selectCntrCompList.where">
+		WHERE 1 = 1
+ 		AND tncntrcomp.DELETE_AT = 'N'
+		<isEqual property="searchCondition" compareValue="0">
+			AND tncntrcomp.CNTRWK_ACMSLT_NO = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND tncntrcomp.CNTRWK_ID LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="CNTRWK_ACMSLT_NO"><![CDATA[ /* 공사업체정보.공사_실적_번호 */ AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CNTRWK_ID"><![CDATA[ /* 공사업체정보.공사_ID */ AND tncntrcomp.CNTRWK_ID = #CNTRWK_ID# ]]></isNotEmpty>
+		<isNotEmpty property="CO_NO"><![CDATA[ /* 공사업체정보.업체_번호 */ AND tncntrcomp.CO_NO = #CO_NO# ]]></isNotEmpty>
+		<isNotEmpty property="EXEC_SE"><![CDATA[ /* 공사업체정보.이행_구분 */ AND tncntrcomp.EXEC_SE = #EXEC_SE# ]]></isNotEmpty>
+		<isNotEmpty property="USE_AT"><![CDATA[ /* 공사업체정보.사용_여부 */ AND tncntrcomp.USE_AT = #USE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 공사업체정보.삭제_여부 */ AND tncntrcomp.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공사업체정보.생성자_번호 */ AND tncntrcomp.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 공사업체정보.생성_일시 */ AND tncntrcomp.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공사업체정보.수정자_번호 */ AND tncntrcomp.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 공사업체정보.수정_일시 */ AND tncntrcomp.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="cntrCompDAO.selectCntrCompListPage"
+		parameterClass="cntrCompVO"
+		resultClass="cntrCompVO">
+<![CDATA[ 		
+		/* cntrCompDAO.selectCntrCompListPage */
+		/* 공사업체정보 조회(페이징) */
+		WITH tncntrcomp AS
+		(
+		SELECT	
+				tncntrcomp.CNTRWK_ACMSLT_NO /* 공사업체정보.공사_실적_번호 */
+				, tncntrcomp.CNTRWK_ID /* 공사업체정보.공사_ID */
+				, tncntrcomp.CO_NO /* 공사업체정보.업체_번호 */
+				, tncntrcomp.EXEC_SE /* 공사업체정보.이행_구분 */
+				, tncntrcomp.USE_AT /* 공사업체정보.사용_여부 */
+				, tncntrcomp.DELETE_AT /* 공사업체정보.삭제_여부 */
+				, tncntrcomp.CRTR_NO /* 공사업체정보.생성자_번호 */
+				, tncntrcomp.CREAT_DT /* 공사업체정보.생성_일시 */
+				, tncntrcomp.UPDUSR_NO /* 공사업체정보.수정자_번호 */
+				, tncntrcomp.UPDT_DT /* 공사업체정보.수정_일시 */
+			
+			FROM TN_CNTR_COMP tncntrcomp
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND tncntrcomp.CNTRWK_ACMSLT_NO = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND tncntrcomp.CNTRWK_ID LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="CNTRWK_ACMSLT_NO">
+				<![CDATA[
+					/* 공사업체정보.공사_실적_번호 */
+					AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CNTRWK_ID">
+				<![CDATA[
+					/* 공사업체정보.공사_ID */
+					AND tncntrcomp.CNTRWK_ID = #CNTRWK_ID#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CO_NO">
+				<![CDATA[
+					/* 공사업체정보.업체_번호 */
+					AND tncntrcomp.CO_NO = #CO_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="EXEC_SE">
+				<![CDATA[
+					/* 공사업체정보.이행_구분 */
+					AND tncntrcomp.EXEC_SE = #EXEC_SE#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 공사업체정보.사용_여부 */
+					AND tncntrcomp.USE_AT = #USE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 공사업체정보.삭제_여부 */
+					AND tncntrcomp.DELETE_AT = #DELETE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 공사업체정보.생성자_번호 */
+					AND tncntrcomp.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 공사업체정보.생성_일시 */
+					AND tncntrcomp.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 공사업체정보.수정자_번호 */
+					AND tncntrcomp.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 공사업체정보.수정_일시 */
+					AND tncntrcomp.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT tncntrcomp.* FROM
+		(
+		SELECT 
+										tncntrcomp.CNTRWK_ACMSLT_NO /* 공사업체정보.공사_실적_번호 */
+											, tncntrcomp.CNTRWK_ID /* 공사업체정보.공사_ID */
+											, tncntrcomp.CO_NO /* 공사업체정보.업체_번호 */
+											, tncntrcomp.EXEC_SE /* 공사업체정보.이행_구분 */
+											, tncntrcomp.USE_AT /* 공사업체정보.사용_여부 */
+											, tncntrcomp.DELETE_AT /* 공사업체정보.삭제_여부 */
+											, tncntrcomp.CRTR_NO /* 공사업체정보.생성자_번호 */
+											, tncntrcomp.CREAT_DT /* 공사업체정보.생성_일시 */
+											, tncntrcomp.UPDUSR_NO /* 공사업체정보.수정자_번호 */
+											, tncntrcomp.UPDT_DT /* 공사업체정보.수정_일시 */
+						/* 공사업체정보.공사_실적_번호 */
+			/* 공사업체정보.공사_ID */
+			, ROW_NUMBER() OVER( ORDER BY tncntrcomp.CNTRWK_ACMSLT_NO ASC, tncntrcomp.CNTRWK_ID DESC )  ROW_NO
+			FROM  tncntrcomp
+			WHERE 1=1
+		)  tncntrcomp
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  tncntrcomp.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  tncntrcomp.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="cntrCompDAO.selectCntrCompList"
+		parameterClass="cntrCompVO"
+		resultClass="cntrCompVO">
+<![CDATA[ 		
+		/* cntrCompDAO.selectCntrCompList */
+		/* 공사업체정보 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				tncntrcomp.CNTRWK_ACMSLT_NO /* 공사업체정보.공사_실적_번호 */
+				, tncntrcomp.CNTRWK_ID /* 공사업체정보.공사_ID */
+				, tncntrcomp.CO_NO /* 공사업체정보.업체_번호 */
+				, tncntrcomp.EXEC_SE /* 공사업체정보.이행_구분 */
+				, tncntrcomp.USE_AT /* 공사업체정보.사용_여부 */
+				, tncntrcomp.DELETE_AT /* 공사업체정보.삭제_여부 */
+				, tncntrcomp.CRTR_NO /* 공사업체정보.생성자_번호 */
+				, tncntrcomp.CREAT_DT /* 공사업체정보.생성_일시 */
+				, tncntrcomp.UPDUSR_NO /* 공사업체정보.수정자_번호 */
+				, tncntrcomp.UPDT_DT /* 공사업체정보.수정_일시 */
+			FROM TN_CNTR_COMP tncntrcomp
+]]>
+	<include refid="cntrCompDAO.selectCntrCompList.where" />	
+<![CDATA[
+		ORDER BY 
+				tncntrcomp.CNTRWK_ACMSLT_NO DESC /* 공사업체정보.공사_실적_번호 */  
+		) tb) tncntrcomp  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="cntrCompDAO.selectCntrCompListTotalCount"
+		parameterClass="cntrCompVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* cntrCompDAO.selectCntrCompListTotalCount */
+		/* 공사업체정보 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_CNTR_COMP tncntrcomp
+]]>		
+		<include refid="cntrCompDAO.selectCntrCompList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>

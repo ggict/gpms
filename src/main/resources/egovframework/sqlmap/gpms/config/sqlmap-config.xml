@@ -4,121 +4,121 @@
 <!---->
 <sqlMap resource="egovframework/sqlmap/example/sample/EgovSample_Sample_SQL.xml"/>
 <!--	TC_CL_CODE 	분류코드	-->
-<sqlMap resource="egovframework/sqlmap/gpms/clcode/ClCode_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/clcode/ClCode_SQL_POSTGRESQL.xml"/>
 <!--	TC_CODE 	공통코드	-->
-<sqlMap resource="egovframework/sqlmap/gpms/code/Code_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/code/Code_SQL_POSTGRESQL.xml"/>
 <!--	TC_CODE_USEMAP 	코드사용맵	-->
-<sqlMap resource="egovframework/sqlmap/gpms/codeusemap/CodeUsemap_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/codeusemap/CodeUsemap_SQL_POSTGRESQL.xml"/>
 <!--	TH_CNTRWK_SCTN_HIST 	공사구간이력	-->
-<sqlMap resource="egovframework/sqlmap/gpms/cntrwksctnhist/CntrwkSctnHist_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/cntrwksctnhist/CntrwkSctnHist_SQL_POSTGRESQL.xml"/>
 <!--	TL_SRVY_DTA_LOG 	조사자료로그	-->
-<sqlMap resource="egovframework/sqlmap/gpms/srvydtalog/SrvyDtaLog_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/srvydtalog/SrvyDtaLog_SQL_POSTGRESQL.xml"/>
 <!--	TL_SYS_CONNECT 	시스템접속로그	-->
-<sqlMap resource="egovframework/sqlmap/gpms/sysconnect/SysConnect_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/sysconnect/SysConnect_SQL_POSTGRESQL.xml"/>
 <!--	TN_ATTACH_FILE 	공통첨부파일	-->
-<sqlMap resource="egovframework/sqlmap/gpms/attachfile/AttachFile_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/attachfile/AttachFile_SQL_POSTGRESQL.xml"/>
 <!--	TN_AUTHORITY 	권한그룹	-->
-<sqlMap resource="egovframework/sqlmap/gpms/authority/Authority_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/authority/Authority_SQL_POSTGRESQL.xml"/>
 <!--	TN_MENU 	시스템메뉴	-->
-<sqlMap resource="egovframework/sqlmap/gpms/menu/Menu_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/menu/Menu_SQL_POSTGRESQL.xml"/>
 <!--	TN_MUMM_SCTN_SRVY_DTA 	최소구간조사자료	-->
-<sqlMap resource="egovframework/sqlmap/gpms/mummsctnsrvydta/MummSctnSrvyDta_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/mummsctnsrvydta/MummSctnSrvyDta_SQL_POSTGRESQL.xml"/>
 <!--	TN_PAV_FRMULA 	포장수식	-->
-<sqlMap resource="egovframework/sqlmap/gpms/pavfrmula/PavFrmula_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pavfrmula/PavFrmula_SQL_POSTGRESQL.xml"/>
 <!--	TN_PAV_FRMULA_IDX 	포장수식지수	-->
-<sqlMap resource="egovframework/sqlmap/gpms/pavfrmulaidx/PavFrmulaIdx_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pavfrmulaidx/PavFrmulaIdx_SQL_POSTGRESQL.xml"/>
 <!--	TN_PAV_IDX_INITVAL 	포장지수초기값	-->
-<sqlMap resource="egovframework/sqlmap/gpms/pavidxeryyval/PavIdxEryyval_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pavidxeryyval/PavIdxEryyval_SQL_POSTGRESQL.xml"/>
 <!--	TN_PAV_STTUS_GRAD_STDR 	포장상태등급기준	-->
-<sqlMap resource="egovframework/sqlmap/gpms/pavsttusgradstdr/PavSttusGradStdr_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pavsttusgradstdr/PavSttusGradStdr_SQL_POSTGRESQL.xml"/>
 <!--	TN_ROLE_MENU 	권한역할메뉴	-->
-<sqlMap resource="egovframework/sqlmap/gpms/rolemenu/RoleMenu_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/rolemenu/RoleMenu_SQL_POSTGRESQL.xml"/>
 <!--	TN_ROUTE_INFO 	노선정보	-->
-<sqlMap resource="egovframework/sqlmap/gpms/routeinfo/RouteInfo_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/routeinfo/RouteInfo_SQL_POSTGRESQL.xml"/>
 <!--	TN_SM_CALC_PREDCT 	집계산정예측	-->
-<sqlMap resource="egovframework/sqlmap/gpms/smcalcpredct/SmCalcPredct_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/smcalcpredct/SmCalcPredct_SQL_POSTGRESQL.xml"/>
 <!--	TN_SM_DTA_GNL_STTUS 	집계자료일반현황	-->
-<sqlMap resource="egovframework/sqlmap/gpms/smdtagnlsttus/SmDtaGnlSttus_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/smdtagnlsttus/SmDtaGnlSttus_SQL_POSTGRESQL.xml"/>
 <!--	TN_SM_DTA_LAST_STTUS 	집계자료최신현황	-->
-<sqlMap resource="egovframework/sqlmap/gpms/smdtalaststtus/SmDtaLastSttus_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/smdtalaststtus/SmDtaLastSttus_SQL_POSTGRESQL.xml"/>
 <!--	TN_SRVY_DTA_EXCEL 	조사자료엑셀	-->
-<sqlMap resource="egovframework/sqlmap/gpms/srvydtaexcel/SrvyDtaExcel_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/srvydtaexcel/SrvyDtaExcel_SQL_POSTGRESQL.xml"/>
 <!--	TN_SRVY_DTA_STTUS 	조사자료현황	-->
-<sqlMap resource="egovframework/sqlmap/gpms/srvydtasttus/SrvyDtaSttus_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/srvydtasttus/SrvyDtaSttus_SQL_POSTGRESQL.xml"/>
 <!--	TN_SYS_USER 	시스템사용자	-->
-<sqlMap resource="egovframework/sqlmap/gpms/sysuser/SysUser_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/sysuser/SysUser_SQL_POSTGRESQL.xml"/>
 <!--	TN_USER_AUTH 	사용자권한	-->
-<sqlMap resource="egovframework/sqlmap/gpms/userauth/UserAuth_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/userauth/UserAuth_SQL_POSTGRESQL.xml"/>
 <!--	TN_USER_MENU 	사용자권한메뉴	-->
-<sqlMap resource="egovframework/sqlmap/gpms/usermenu/UserMenu_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/usermenu/UserMenu_SQL_POSTGRESQL.xml"/>
 <!--	Common 	공통	-->
-<sqlMap resource="egovframework/sqlmap/gpms/cmmn/cmmn_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/cmmn/cmmn_SQL_POSTGRESQL.xml"/>
 <!--	TN_COMPANY 	공사 업체	-->
-<sqlMap resource="egovframework/sqlmap/gpms/company/Company_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/company/Company_SQL_POSTGRESQL.xml"/>
 <!--	TC_DEPT 	부서코드	-->
-<sqlMap resource="egovframework/sqlmap/gpms/dept/Dept_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/dept/Dept_SQL_POSTGRESQL.xml"/>
 
 <!--	TN_CNTRWK 	공사정보	-->
-<sqlMap resource="egovframework/sqlmap/gpms/cntrwk/Cntrwk_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/cntrwk/Cntrwk_SQL_POSTGRESQL.xml"/>
 <!--	TN_CNTRWK_DTL 	공사상세정보	-->
-<sqlMap resource="egovframework/sqlmap/gpms/cntrwkdtl/CntrwkDtl_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/cntrwkdtl/CntrwkDtl_SQL_POSTGRESQL.xml"/>
 <!--	TN_CNTR_COMP 	공사업체정보	-->
-<sqlMap resource="egovframework/sqlmap/gpms/cntrcomp/CntrComp_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/cntrcomp/CntrComp_SQL_POSTGRESQL.xml"/>
 <!--	TN_FLAW 	공사하자정보	-->
-<sqlMap resource="egovframework/sqlmap/gpms/flaw/Flaw_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/flaw/Flaw_SQL_POSTGRESQL.xml"/>
 <!--	TN_FLAW_CNTRWK 	하자보수공사	-->
-<sqlMap resource="egovframework/sqlmap/gpms/flawcntrwk/FlawCntrwk_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/flawcntrwk/FlawCntrwk_SQL_POSTGRESQL.xml"/>
 <!--	TC_PAV_MATRL 	포장재료코드	-->
-<sqlMap resource="egovframework/sqlmap/gpms/pavmatrl/PavMatrl_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pavmatrl/PavMatrl_SQL_POSTGRESQL.xml"/>
 
 <!--	TC_RPAIR_MTHD 	보수공법코드	-->
-<sqlMap resource="egovframework/sqlmap/gpms/rpairmthd/RpairMthd_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/rpairmthd/RpairMthd_SQL_POSTGRESQL.xml"/>
 
 <!--	DWG_INFO 	            dwginfo	-->
-<sqlMap resource="egovframework/sqlmap/gpms/dwginfo/DwgInfo_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/dwginfo/DwgInfo_SQL_POSTGRESQL.xml"/>
 <!--	STR_DWG 	            strdwg	-->
-<sqlMap resource="egovframework/sqlmap/gpms/strdwg/StrDwg_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/strdwg/StrDwg_SQL_POSTGRESQL.xml"/>
 
 <!--	CELL_10 	            cell10	-->
-<sqlMap resource="egovframework/sqlmap/gpms/cell10/Cell10_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/cell10/Cell10_SQL_POSTGRESQL.xml"/>
 <!--	CELL_SECT 	            cellsect	-->
-<sqlMap resource="egovframework/sqlmap/gpms/cellsect/CellSect_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/cellsect/CellSect_SQL_POSTGRESQL.xml"/>
 
 <!--	TN_CNTRWK_CELL_INFO 	공사셀정보	-->
-<sqlMap resource="egovframework/sqlmap/gpms/cntrwkcellinfo/CntrwkCellInfo_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/cntrwkcellinfo/CntrwkCellInfo_SQL_POSTGRESQL.xml"/>
 <!--	M_CALS_T                교량정보	-->
-<sqlMap resource="egovframework/sqlmap/gpms/mcalst/MCalsT_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/mcalst/MCalsT_SQL_POSTGRESQL.xml"/>
 
 <!--	TN_PREDCT_FRMULA_IDX 	예측수식지수	-->
-<sqlMap resource="egovframework/sqlmap/gpms/predctfrmulaidx/PredctFrmulaIdx_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/predctfrmulaidx/PredctFrmulaIdx_SQL_POSTGRESQL.xml"/>
 <!--	TN_RPAIR_TRGET 	        보수대상항목	-->
-<sqlMap resource="egovframework/sqlmap/gpms/rpairtrget/RpairTrget_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/rpairtrget/RpairTrget_SQL_POSTGRESQL.xml"/>
 <!--	TN_RPAIR_TRGET_SLCTN 	보수대상선정	-->
-<sqlMap resource="egovframework/sqlmap/gpms/rpairtrgetslctn/RpairTrgetSlctn_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/rpairtrgetslctn/RpairTrgetSlctn_SQL_POSTGRESQL.xml"/>
 <!--	TN_RPAIR_TRGET_GROUP 	보수대상항목 그룹	-->
-<sqlMap resource="egovframework/sqlmap/gpms/rpairtrgetgroup/RpairTrgetGroup_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/rpairtrgetgroup/RpairTrgetGroup_SQL_POSTGRESQL.xml"/>
 <!--	TN_RPAIR_MTHD_UNTPC 	보수공법단가	-->
-<sqlMap resource="egovframework/sqlmap/gpms/rpairmthduntpc/RpairMthdUntpc_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/rpairmthduntpc/RpairMthdUntpc_SQL_POSTGRESQL.xml"/>
 <!--	TN_RPAIR_MTHD_FRMULA 	보수공법수식지수	-->
-<sqlMap resource="egovframework/sqlmap/gpms/rpairmthdfrmula/RpairMthdFrmula_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/rpairmthdfrmula/RpairMthdFrmula_SQL_POSTGRESQL.xml"/>
 
 <!--	TN_NOTICE	         공지사항	-->
-<sqlMap resource="egovframework/sqlmap/gpms/notice/Notice_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/notice/Notice_SQL_POSTGRESQL.xml"/>
 <!--	TL_USER_CONNECT 	 사용자접속로그	-->
-<sqlMap resource="egovframework/sqlmap/gpms/userconnect/UserConnect_SQL_Oracle.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/userconnect/UserConnect_SQL_POSTGRESQL.xml"/>
 
 
 <!--    TN_MNTRNG_MBR           모니터링단원관리 -->
-<sqlMap resource="egovframework/sqlmap/gpms/pothole/Monitor_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pothole/Monitor_SQL_POSTGRESQL.xml"/>
 <!--    CPMTNC_ROUTE            관할구역검색 -->
-<sqlMap resource="egovframework/sqlmap/gpms/pothole/Cmptnc_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pothole/Cmptnc_SQL_POSTGRESQL.xml"/>
 <!--    TN_POTHOLE_STTEMNT      포트홀 신고관리 -->
-<sqlMap resource="egovframework/sqlmap/gpms/pothole/Sttemnt_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pothole/Sttemnt_SQL_POSTGRESQL.xml"/>
 <!--    TN_POTHOLE_STTEMNT      포트홀 신고관리 보수내역 -->
-<sqlMap resource="egovframework/sqlmap/gpms/pothole/Rpair_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pothole/Rpair_SQL_POSTGRESQL.xml"/>
 <!--                            통계 -->
-<sqlMap resource="egovframework/sqlmap/gpms/pothole/Sttst_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pothole/Sttst_SQL_POSTGRESQL.xml"/>
 <!--                            주소변환 -->
-<sqlMap resource="egovframework/sqlmap/gpms/pothole/Address_SQL_ORACLE.xml"/>
+<sqlMap resource="egovframework/sqlmap/gpms/pothole/Address_SQL_POSTGRESQL.xml"/>
 
 </sqlMapConfig>

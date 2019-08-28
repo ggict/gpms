@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="cntrwkSctnHistDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="cntrwkSctnHistSerarchVO" type="kr.go.gg.gpms.cntrwksctnhist.service.model.CntrwkSctnHistDefaultVO"/>
+	<typeAlias alias="cntrwkSctnHistVO"	type="kr.go.gg.gpms.cntrwksctnhist.service.model.CntrwkSctnHistVO" />
+
+	<resultMap id="cntrwkSctnHist.resultMap"
+		class="cntrwkSctnHistVO">
+		<result property="CNTRWKSCTN_NO" column="CNTRWKSCTN_NO" columnIndex="1" /> <!-- 공사_구간_이력.공사구간_번호 -->
+		<result property="ROUTE_CODE" column="ROUTE_CODE" columnIndex="2" /> <!-- 공사_구간_이력.노선_코드 -->
+		<result property="DIRECT_CODE" column="DIRECT_CODE" columnIndex="3" /> <!-- 공사_구간_이력.행선_코드 -->
+		<result property="TRACK" column="TRACK" columnIndex="4" /> <!-- 공사_구간_이력.차로 -->
+		<result property="STRTPT" column="STRTPT" columnIndex="5" /> <!-- 공사_구간_이력.시점 -->
+		<result property="ENDPT" column="ENDPT" columnIndex="6" /> <!-- 공사_구간_이력.종점 -->
+		<result property="RPAIR_DE" column="RPAIR_DE" columnIndex="7" /> <!-- 공사_구간_이력.보수_일자 -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="8" /> <!-- 공사_구간_이력.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="9" /> <!-- 공사_구간_이력.생성_일시 -->
+		<result property="DELETE_AT" column="DELETE_AT" columnIndex="10" /> <!-- 공사_구간_이력.삭제_여부 -->
+		<result property="USE_AT" column="USE_AT" columnIndex="11" /> <!-- 공사_구간_이력.사용_여부 -->
+		<result property="UPDUSR_NO" column="UPDUSR_NO" columnIndex="12" /> <!-- 공사_구간_이력.수정자_번호 -->
+		<result property="UPDT_DT" column="UPDT_DT" columnIndex="13" /> <!-- 공사_구간_이력.수정_일시 -->
+	</resultMap>
+
+	<insert id="cntrwkSctnHistDAO.insertCntrwkSctnHist">
+	<selectKey resultClass="String" keyProperty="CNTRWKSCTN_NO">
+  <![CDATA[
+  select SEQ_TH_CNTRWK_SCTN_HIST.NEXTVAL from dual
+  ]]>
+  </selectKey>
+	<![CDATA[ 
+		/* cntrwkSctnHistDAO.insertCntrwkSctnHist */
+		/* 공사_구간_이력 등록 */		
+		INSERT INTO TH_CNTRWK_SCTN_HIST (
+			CNTRWKSCTN_NO /* 공사_구간_이력.공사구간_번호 */
+			, ROUTE_CODE /* 공사_구간_이력.노선_코드 */
+			, DIRECT_CODE /* 공사_구간_이력.행선_코드 */
+			, TRACK /* 공사_구간_이력.차로 */
+			, STRTPT /* 공사_구간_이력.시점 */
+			, ENDPT /* 공사_구간_이력.종점 */
+			, RPAIR_DE /* 공사_구간_이력.보수_일자 */
+			, CRTR_NO /* 공사_구간_이력.생성자_번호 */
+			, CREAT_DT /* 공사_구간_이력.생성_일시 */
+			, DELETE_AT /* 공사_구간_이력.삭제_여부 */
+			, USE_AT /* 공사_구간_이력.사용_여부 */
+			, UPDUSR_NO /* 공사_구간_이력.수정자_번호 */
+			, UPDT_DT /* 공사_구간_이력.수정_일시 */
+		) VALUES (
+			#CNTRWKSCTN_NO# /* 공사_구간_이력.공사구간_번호 */
+			, #ROUTE_CODE# /* 공사_구간_이력.노선_코드 */
+			, #DIRECT_CODE# /* 공사_구간_이력.행선_코드 */
+			, #TRACK# /* 공사_구간_이력.차로 */
+			, #STRTPT# /* 공사_구간_이력.시점 */
+			, #ENDPT# /* 공사_구간_이력.종점 */
+			, #RPAIR_DE# /* 공사_구간_이력.보수_일자 */
+			, #CRTR_NO# /* 공사_구간_이력.생성자_번호 */
+			, SYSDATE /* 공사_구간_이력.생성_일시 */
+			, #DELETE_AT# /* 공사_구간_이력.삭제_여부 */
+			, #USE_AT# /* 공사_구간_이력.사용_여부 */
+			, #UPDUSR_NO# /* 공사_구간_이력.수정자_번호 */
+			, SYSDATE /* 공사_구간_이력.수정_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="cntrwkSctnHistDAO.updateCntrwkSctnHist">
+	<![CDATA[ 
+		/* cntrwkSctnHistDAO.updateCntrwkSctnHist */
+		/* 공사_구간_이력 수정 */
+		UPDATE TH_CNTRWK_SCTN_HIST SET
+
+
+
+ROUTE_CODE = #ROUTE_CODE# /* 공사_구간_이력.노선_코드 */
+			
+
+, DIRECT_CODE = #DIRECT_CODE# /* 공사_구간_이력.행선_코드 */
+			
+
+, TRACK = #TRACK# /* 공사_구간_이력.차로 */
+			
+
+, STRTPT = #STRTPT# /* 공사_구간_이력.시점 */
+			
+
+, ENDPT = #ENDPT# /* 공사_구간_이력.종점 */
+			
+
+, RPAIR_DE = #RPAIR_DE# /* 공사_구간_이력.보수_일자 */
+			
+
+, CRTR_NO = #CRTR_NO# /* 공사_구간_이력.생성자_번호 */
+			
+
+, CREAT_DT = SYSDATE /* 공사_구간_이력.생성_일시 */
+			
+
+, DELETE_AT = #DELETE_AT# /* 공사_구간_이력.삭제_여부 */
+			
+
+, USE_AT = #USE_AT# /* 공사_구간_이력.사용_여부 */
+			
+
+, UPDUSR_NO = #UPDUSR_NO# /* 공사_구간_이력.수정자_번호 */
+			
+
+, UPDT_DT = SYSDATE /* 공사_구간_이력.수정_일시 */
+			
+		WHERE 1 = 1
+		AND CNTRWKSCTN_NO = #CNTRWKSCTN_NO# /* 공사_구간_이력.공사구간_번호 */
+]]>
+	</update>
+
+	<delete id="cntrwkSctnHistDAO.deleteCntrwkSctnHist">
+	<![CDATA[ 
+		/* cntrwkSctnHistDAO.deleteCntrwkSctnHist */
+		/* 공사_구간_이력 삭제 */
+		DELETE FROM TH_CNTRWK_SCTN_HIST 
+		WHERE 1 = 1
+		AND CNTRWKSCTN_NO = #CNTRWKSCTN_NO# /* 공사_구간_이력.공사구간_번호 */
+]]>
+	</delete>
+
+	<select id="cntrwkSctnHistDAO.selectCntrwkSctnHist" resultClass="cntrwkSctnHistVO">
+	<![CDATA[ 
+		/* cntrwkSctnHistDAO.selectCntrwkSctnHist */
+		/* 공사_구간_이력 조회 */
+		SELECT
+			thcntrwksctnhist.CNTRWKSCTN_NO /* 공사_구간_이력.공사구간_번호 */
+			, thcntrwksctnhist.ROUTE_CODE /* 공사_구간_이력.노선_코드 */
+			, thcntrwksctnhist.DIRECT_CODE /* 공사_구간_이력.행선_코드 */
+			, thcntrwksctnhist.TRACK /* 공사_구간_이력.차로 */
+			, thcntrwksctnhist.STRTPT /* 공사_구간_이력.시점 */
+			, thcntrwksctnhist.ENDPT /* 공사_구간_이력.종점 */
+			, thcntrwksctnhist.RPAIR_DE /* 공사_구간_이력.보수_일자 */
+			, thcntrwksctnhist.CRTR_NO /* 공사_구간_이력.생성자_번호 */
+			, thcntrwksctnhist.CREAT_DT /* 공사_구간_이력.생성_일시 */
+			, thcntrwksctnhist.DELETE_AT /* 공사_구간_이력.삭제_여부 */
+			, thcntrwksctnhist.USE_AT /* 공사_구간_이력.사용_여부 */
+			, thcntrwksctnhist.UPDUSR_NO /* 공사_구간_이력.수정자_번호 */
+			, thcntrwksctnhist.UPDT_DT /* 공사_구간_이력.수정_일시 */
+		FROM TH_CNTRWK_SCTN_HIST thcntrwksctnhist
+		WHERE 1 = 1
+		AND thcntrwksctnhist.CNTRWKSCTN_NO = #CNTRWKSCTN_NO# /* 공사_구간_이력.공사구간_번호 */
+]]>
+	</select>
+
+	<sql id="cntrwkSctnHistDAO.selectCntrwkSctnHistList.where">
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND thcntrwksctnhist.CNTRWKSCTN_NO = #searchKeyword#
+		</isEqual>
+		<isEqual property="searchCondition" compareValue="1">
+			AND thcntrwksctnhist.ROUTE_CODE LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		<isNotEmpty property="CNTRWKSCTN_NO"><![CDATA[ /* 공사_구간_이력.공사구간_번호 */ AND thcntrwksctnhist.CNTRWKSCTN_NO = #CNTRWKSCTN_NO# ]]></isNotEmpty>
+		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 공사_구간_이력.노선_코드 */ AND thcntrwksctnhist.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 공사_구간_이력.행선_코드 */ AND thcntrwksctnhist.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK"><![CDATA[ /* 공사_구간_이력.차로 */ AND thcntrwksctnhist.TRACK = #TRACK# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 공사_구간_이력.시점 */ AND thcntrwksctnhist.STRTPT = #STRTPT# ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 공사_구간_이력.종점 */ AND thcntrwksctnhist.ENDPT = #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_DE"><![CDATA[ /* 공사_구간_이력.보수_일자 */ AND thcntrwksctnhist.RPAIR_DE = #RPAIR_DE# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공사_구간_이력.생성자_번호 */ AND thcntrwksctnhist.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 공사_구간_이력.생성_일시 */ AND thcntrwksctnhist.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 공사_구간_이력.삭제_여부 */ AND thcntrwksctnhist.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="USE_AT"><![CDATA[ /* 공사_구간_이력.사용_여부 */ AND thcntrwksctnhist.USE_AT = #USE_AT# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공사_구간_이력.수정자_번호 */ AND thcntrwksctnhist.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 공사_구간_이력.수정_일시 */ AND thcntrwksctnhist.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+</sql>
+
+	<select id="cntrwkSctnHistDAO.selectCntrwkSctnHistListPage"
+		parameterClass="cntrwkSctnHistVO"
+		resultClass="cntrwkSctnHistVO">
+<![CDATA[ 		
+		/* cntrwkSctnHistDAO.selectCntrwkSctnHistListPage */
+		/* 공사_구간_이력 조회(페이징) */
+		WITH thcntrwksctnhist AS
+		(
+		SELECT	
+				thcntrwksctnhist.CNTRWKSCTN_NO /* 공사_구간_이력.공사구간_번호 */
+				, thcntrwksctnhist.ROUTE_CODE /* 공사_구간_이력.노선_코드 */
+				, thcntrwksctnhist.DIRECT_CODE /* 공사_구간_이력.행선_코드 */
+				, thcntrwksctnhist.TRACK /* 공사_구간_이력.차로 */
+				, thcntrwksctnhist.STRTPT /* 공사_구간_이력.시점 */
+				, thcntrwksctnhist.ENDPT /* 공사_구간_이력.종점 */
+				, thcntrwksctnhist.RPAIR_DE /* 공사_구간_이력.보수_일자 */
+				, thcntrwksctnhist.CRTR_NO /* 공사_구간_이력.생성자_번호 */
+				, thcntrwksctnhist.CREAT_DT /* 공사_구간_이력.생성_일시 */
+				, thcntrwksctnhist.DELETE_AT /* 공사_구간_이력.삭제_여부 */
+				, thcntrwksctnhist.USE_AT /* 공사_구간_이력.사용_여부 */
+				, thcntrwksctnhist.UPDUSR_NO /* 공사_구간_이력.수정자_번호 */
+				, thcntrwksctnhist.UPDT_DT /* 공사_구간_이력.수정_일시 */
+			
+			FROM TH_CNTRWK_SCTN_HIST thcntrwksctnhist
+]]>			
+		WHERE 1 = 1
+
+		<isEqual property="searchCondition" compareValue="0">
+			AND thcntrwksctnhist.CNTRWKSCTN_NO = #searchKeyword#
+		</isEqual>
+
+		<isEqual property="searchCondition" compareValue="1">
+			AND thcntrwksctnhist.ROUTE_CODE LIKE '%' || #searchKeyword# || '%'
+		</isEqual>
+		
+			<isNotEmpty property="CNTRWKSCTN_NO">
+				<![CDATA[
+					/* 공사_구간_이력.공사구간_번호 */
+					AND thcntrwksctnhist.CNTRWKSCTN_NO = #CNTRWKSCTN_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="ROUTE_CODE">
+				<![CDATA[
+					/* 공사_구간_이력.노선_코드 */
+					AND thcntrwksctnhist.ROUTE_CODE = #ROUTE_CODE#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DIRECT_CODE">
+				<![CDATA[
+					/* 공사_구간_이력.행선_코드 */
+					AND thcntrwksctnhist.DIRECT_CODE = #DIRECT_CODE#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="TRACK">
+				<![CDATA[
+					/* 공사_구간_이력.차로 */
+					AND thcntrwksctnhist.TRACK = #TRACK#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="STRTPT">
+				<![CDATA[
+					/* 공사_구간_이력.시점 */
+					AND thcntrwksctnhist.STRTPT = #STRTPT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="ENDPT">
+				<![CDATA[
+					/* 공사_구간_이력.종점 */
+					AND thcntrwksctnhist.ENDPT = #ENDPT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="RPAIR_DE">
+				<![CDATA[
+					/* 공사_구간_이력.보수_일자 */
+					AND thcntrwksctnhist.RPAIR_DE = #RPAIR_DE#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CRTR_NO">
+				<![CDATA[
+					/* 공사_구간_이력.생성자_번호 */
+					AND thcntrwksctnhist.CRTR_NO = #CRTR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="CREAT_DT">
+				<![CDATA[
+					/* 공사_구간_이력.생성_일시 */
+					AND thcntrwksctnhist.CREAT_DT = #CREAT_DT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="DELETE_AT">
+				<![CDATA[
+					/* 공사_구간_이력.삭제_여부 */
+					AND thcntrwksctnhist.DELETE_AT = #DELETE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="USE_AT">
+				<![CDATA[
+					/* 공사_구간_이력.사용_여부 */
+					AND thcntrwksctnhist.USE_AT = #USE_AT#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDUSR_NO">
+				<![CDATA[
+					/* 공사_구간_이력.수정자_번호 */
+					AND thcntrwksctnhist.UPDUSR_NO = #UPDUSR_NO#
+				]]>
+			</isNotEmpty>
+		
+			<isNotEmpty property="UPDT_DT">
+				<![CDATA[
+					/* 공사_구간_이력.수정_일시 */
+					AND thcntrwksctnhist.UPDT_DT = #UPDT_DT#
+				]]>
+			</isNotEmpty>
+	<![CDATA[		
+		)
+		SELECT thcntrwksctnhist.* FROM
+		(
+		SELECT 
+										thcntrwksctnhist.CNTRWKSCTN_NO /* 공사_구간_이력.공사구간_번호 */
+											, thcntrwksctnhist.ROUTE_CODE /* 공사_구간_이력.노선_코드 */
+											, thcntrwksctnhist.DIRECT_CODE /* 공사_구간_이력.행선_코드 */
+											, thcntrwksctnhist.TRACK /* 공사_구간_이력.차로 */
+											, thcntrwksctnhist.STRTPT /* 공사_구간_이력.시점 */
+											, thcntrwksctnhist.ENDPT /* 공사_구간_이력.종점 */
+											, thcntrwksctnhist.RPAIR_DE /* 공사_구간_이력.보수_일자 */
+											, thcntrwksctnhist.CRTR_NO /* 공사_구간_이력.생성자_번호 */
+											, thcntrwksctnhist.CREAT_DT /* 공사_구간_이력.생성_일시 */
+											, thcntrwksctnhist.DELETE_AT /* 공사_구간_이력.삭제_여부 */
+											, thcntrwksctnhist.USE_AT /* 공사_구간_이력.사용_여부 */
+											, thcntrwksctnhist.UPDUSR_NO /* 공사_구간_이력.수정자_번호 */
+											, thcntrwksctnhist.UPDT_DT /* 공사_구간_이력.수정_일시 */
+						/* 공사_구간_이력.공사구간_번호 */
+			/* 공사_구간_이력.노선_코드 */
+			, ROW_NUMBER() OVER( ORDER BY thcntrwksctnhist.CNTRWKSCTN_NO ASC, thcntrwksctnhist.ROUTE_CODE DESC )  ROW_NO
+			FROM  thcntrwksctnhist
+			WHERE 1=1
+		)  thcntrwksctnhist
+		WHERE 1=1
+]]>			
+<![CDATA[  		
+  		AND  thcntrwksctnhist.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
+]]>	  		
+<![CDATA[
+		AND  thcntrwksctnhist.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
+]]>	
+	
+
+	</select>	
+	
+	
+	<select id="cntrwkSctnHistDAO.selectCntrwkSctnHistList"
+		parameterClass="cntrwkSctnHistVO"
+		resultClass="cntrwkSctnHistVO">
+<![CDATA[ 		
+		/* cntrwkSctnHistDAO.selectCntrwkSctnHistList */
+		/* 공사_구간_이력 조회 */
+		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			SELECT
+				thcntrwksctnhist.CNTRWKSCTN_NO /* 공사_구간_이력.공사구간_번호 */
+				, thcntrwksctnhist.ROUTE_CODE /* 공사_구간_이력.노선_코드 */
+				, thcntrwksctnhist.DIRECT_CODE /* 공사_구간_이력.행선_코드 */
+				, thcntrwksctnhist.TRACK /* 공사_구간_이력.차로 */
+				, thcntrwksctnhist.STRTPT /* 공사_구간_이력.시점 */
+				, thcntrwksctnhist.ENDPT /* 공사_구간_이력.종점 */
+				, thcntrwksctnhist.RPAIR_DE /* 공사_구간_이력.보수_일자 */
+				, thcntrwksctnhist.CRTR_NO /* 공사_구간_이력.생성자_번호 */
+				, thcntrwksctnhist.CREAT_DT /* 공사_구간_이력.생성_일시 */
+				, thcntrwksctnhist.DELETE_AT /* 공사_구간_이력.삭제_여부 */
+				, thcntrwksctnhist.USE_AT /* 공사_구간_이력.사용_여부 */
+				, thcntrwksctnhist.UPDUSR_NO /* 공사_구간_이력.수정자_번호 */
+				, thcntrwksctnhist.UPDT_DT /* 공사_구간_이력.수정_일시 */
+			FROM TH_CNTRWK_SCTN_HIST thcntrwksctnhist
+]]>
+	<include refid="cntrwkSctnHistDAO.selectCntrwkSctnHistList.where" />	
+<![CDATA[
+		ORDER BY 
+				thcntrwksctnhist.CNTRWKSCTN_NO DESC /* 공사_구간_이력.공사구간_번호 */  
+		) tb) thcntrwksctnhist  WHERE 1=1
+]]>		
+<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+</isEqual>		
+
+
+	</select>		
+ 
+
+	<select id="cntrwkSctnHistDAO.selectCntrwkSctnHistListTotalCount"
+		parameterClass="cntrwkSctnHistVO"
+		resultClass="int">
+<![CDATA[ 		
+		/* cntrwkSctnHistDAO.selectCntrwkSctnHistListTotalCount */
+		/* 공사_구간_이력 목록 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TH_CNTRWK_SCTN_HIST thcntrwksctnhist
+]]>		
+		<include refid="cntrwkSctnHistDAO.selectCntrwkSctnHistList.where" />
+<![CDATA[		
+]]>		
+	</select>
+
+</sqlMap>
