@@ -40,10 +40,10 @@
 			, #DC# /* 권한그룹.설명 */
 			, #USE_AT# /* 권한그룹.사용_여부 */
 			, #CRTR_NO# /* 권한그룹.생성자_번호 */
-			, SYSDATE /* 권한그룹.생성_일시 */
+			, NOW() /* 권한그룹.생성_일시 */
 			, #DELETE_AT# /* 권한그룹.삭제_여부 */
 			, #UPDUSR_NO# /* 권한그룹.수정자_번호 */
-			, SYSDATE /* 권한그룹.수정_일시 */
+			, NOW() /* 권한그룹.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -68,7 +68,7 @@ AUTHOR_NM = #AUTHOR_NM# /* 권한그룹.권한_명칭 */
 , CRTR_NO = #CRTR_NO# /* 권한그룹.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 권한그룹.생성_일시 */
+, CREAT_DT = NOW() /* 권한그룹.생성_일시 */
 			
 
 , DELETE_AT = #DELETE_AT# /* 권한그룹.삭제_여부 */
@@ -77,7 +77,7 @@ AUTHOR_NM = #AUTHOR_NM# /* 권한그룹.권한_명칭 */
 , UPDUSR_NO = #UPDUSR_NO# /* 권한그룹.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 권한그룹.수정_일시 */
+, UPDT_DT = NOW() /* 권한그룹.수정_일시 */
 			
 		WHERE 1 = 1
 		AND AUTHOR_ID = #AUTHOR_ID# /* 권한그룹.권한_ID */
@@ -267,7 +267,7 @@ AUTHOR_NM = #AUTHOR_NM# /* 권한그룹.권한_명칭 */
 <![CDATA[ 		
 		/* authorityDAO.selectAuthorityList */
 		/* 권한그룹 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnauthority.AUTHOR_ID /* 권한그룹.권한_ID */
 				, tnauthority.AUTHOR_NM /* 권한그룹.권한_명칭 */

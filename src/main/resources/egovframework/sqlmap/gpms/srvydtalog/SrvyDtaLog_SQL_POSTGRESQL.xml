@@ -22,7 +22,7 @@
 	<insert id="srvyDtaLogDAO.insertSrvyDtaLog">
 				<selectKey resultClass="String" keyProperty="PROCESS_LOG_NO">
   <![CDATA[
-  select SEQ_TL_SRVY_DTA_LOG.NEXTVAL from dual
+  select nextval('SEQ_TL_SRVY_DTA_LOG')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -254,7 +254,7 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 <![CDATA[ 		
 		/* srvyDtaLogDAO.selectSrvyDtaLogList */
 		/* 조사_자료_로그 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tlsrvydtalog.PROCESS_LOG_NO /* 조사_자료_로그.처리_로그_번호 */
 				, tlsrvydtalog.LOG_MSSAGE /* 조사_자료_로그.로그_메세지 */

@@ -25,7 +25,7 @@
 	<insert id="attachFileDAO.insertAttachFile">
 	<selectKey resultClass="String" keyProperty="FILE_NO">
   <![CDATA[
-  select SEQ_TN_ATTACH_FILE.NEXTVAL from dual
+  select nextval('SEQ_TN_ATTACH_FILE')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -52,9 +52,9 @@
 			, #USE_AT# /* 공통첨부파일.사용_여부 */
 			, #DELETE_AT# /* 공통첨부파일.삭제_여부 */
 			, #CRTR_NO# /* 공통첨부파일.생성자_번호 */
-			, SYSDATE /* 공통첨부파일.생성_일시 */
+			, NOW() /* 공통첨부파일.생성_일시 */
 			, #UPDUSR_NO# /* 공통첨부파일.수정자_번호 */
-			, SYSDATE /* 공통첨부파일.수정_일시 */
+			, NOW() /* 공통첨부파일.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -88,13 +88,13 @@ FILE_NM = #FILE_NM# /* 공통첨부파일.파일_명 */
 , CRTR_NO = #CRTR_NO# /* 공통첨부파일.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 공통첨부파일.생성_일시 */
+, CREAT_DT = NOW() /* 공통첨부파일.생성_일시 */
 			
 
 , UPDUSR_NO = #UPDUSR_NO# /* 공통첨부파일.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 공통첨부파일.수정_일시 */
+, UPDT_DT = NOW() /* 공통첨부파일.수정_일시 */
 			
 		WHERE 1 = 1
 		AND FILE_NO = #FILE_NO# /* 공통첨부파일.파일_번호 */
@@ -306,7 +306,7 @@ FILE_NM = #FILE_NM# /* 공통첨부파일.파일_명 */
 <![CDATA[ 		
 		/* attachFileDAO.selectAttachFileList */
 		/* 공통첨부파일 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnattachfile.FILE_NO /* 공통첨부파일.파일_번호 */
 				, tnattachfile.FILE_NM /* 공통첨부파일.파일_명 */

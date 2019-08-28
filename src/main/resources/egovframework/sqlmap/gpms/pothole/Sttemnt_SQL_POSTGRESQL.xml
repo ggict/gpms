@@ -137,9 +137,9 @@
     </isNotEmpty>
     <isEqual property="imode" compareValue="ADD">
     <![CDATA[
-        , PTH_RG_NO = ( select CASE WHEN NVL(max(PTH_RG_NO),1) < (TO_CHAR(sysdate,'yyyymmdd') || '000001')
-                THEN TO_CHAR(sysdate,'yyyymmdd') || '000001'
-                ELSE TO_CHAR(sysdate,'yyyymmdd') || LPAD(TO_CHAR(NVL(TO_NUMBER(SUBSTR(max(PTH_RG_NO),9,6)+1),1)),6,'0')
+        , PTH_RG_NO = ( select CASE WHEN COALESCE(max(PTH_RG_NO),1) < (TO_CHAR(NOW(),'yyyymmdd') || '000001')
+                THEN TO_CHAR(NOW(),'yyyymmdd') || '000001'
+                ELSE TO_CHAR(NOW(),'yyyymmdd') || LPAD(TO_CHAR(COALESCE(TO_NUMBER(SUBSTR(max(PTH_RG_NO),9,6)+1),1)),6,'0')
                 END PTH_RG_NO
     ]]>
                 from <include refid="sttemntDAO.pthmode.pthmnt" /> )
@@ -184,7 +184,7 @@
         <![CDATA[
             CHARGER_NM = #CHARGER_NM# ,                                 /* 포트홀_신고_내역.담당자_명 */
             LCDO = #LCDO# ,                                             /* 포트홀_신고_내역.수정_일자 */
-            UPDT_DE = SYSDATE                                           /* 포트홀_신고_내역.수정_일자 */
+            UPDT_DE = NOW()                                           /* 포트홀_신고_내역.수정_일자 */
 
             WHERE 1 = 1
                 AND PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')
@@ -226,7 +226,7 @@
             #LNM_ADRES# ,             /* 포트홀_신고_내역.지번_주소 */
             #CHARGER_NM# ,           /* 포트홀_신고_내역.담당자_명 */
             #LCDO# ,                 /* 포트홀_신고_내역.위치도 */
-            SYSDATE ,                /* 포트홀_신고_내역.생성_일자 */
+            NOW() ,                /* 포트홀_신고_내역.생성_일자 */
             SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0'),              /* 포트홀_신고_내역.관리_번호 */
             'C'         /* 포트홀_신고_내역.접수경로 구분코드 */
          FROM
@@ -245,7 +245,7 @@
             USE_AT = 'N'                             /* 포트홀_신고_내역.삭제_여부 */
             , DELETE_AT = 'Y'                        /* 포트홀_신고_내역.삭제_여부 */
             , UPDUSR_NO = #UPDUSR_NO#                /* 포트홀_신고_내역.수정자_번호 */
-            , DELETE_DE = SYSDATE                    /* 포트홀_신고_내역.삭제_일자 */
+            , DELETE_DE = NOW()                    /* 포트홀_신고_내역.삭제_일자 */
         WHERE 1 = 1
             AND PTH_RG_NO = SUBSTR(#PTH_RG_NO#, 0, 8) || LPAD(SUBSTR(#PTH_RG_NO#, 10), 6, '0')    /* 포트홀_신고_내역.관리_번호 */
     ]]>
@@ -474,17 +474,17 @@
             , tnpotholerpair.RPRDTLS_MNG_NO      /* 포트홀_보수_내역.보수_관리번호 */
             , TO_CHAR(tnpotholerpair.CNFIRM_DT, 'YYYY-MM-DD') AS CNFIRM_DT      /* 포트홀_수리_내역.확인일자 */
             , TO_CHAR(tnpotholerpair.RPAIR_DT, 'YYYY-MM-DD') AS RPAIR_DT        /* 포트홀_수리_내역.보수일자 */
-            , NVL(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
+            , COALESCE(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
             , ( SELECT tccode.CODE_NM
                 FROM TC_CODE tccode
-                WHERE tccode.CODE_VAL = NVL(tnpotholerpair.DMG_TYPE, '')
+                WHERE tccode.CODE_VAL = COALESCE(tnpotholerpair.DMG_TYPE, '')
             ) AS DMG_TYPE_NM                     /* 포트홀_보수_내역.파손_유형_이름 */
-            , NVL(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
+            , COALESCE(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
             , tnpotholerpair.RPRDTLS_MNG_NO      /* 포트홀_보수_내역.보수_관리번호 */
             , tnpotholesttemnt.VHCLE_TYPE AS pthmode    /* 포트홀_신고_내역.접수경로 구분값 */
             , ( SELECT tccode.CODE_NM
                FROM TC_CODE tccode
-               WHERE tccode.CL_CODE='PRRT' AND tccode.CODE_VAL = NVL(tnpotholesttemnt.VHCLE_TYPE, '')
+               WHERE tccode.CL_CODE='PRRT' AND tccode.CODE_VAL = COALESCE(tnpotholesttemnt.VHCLE_TYPE, '')
             ) AS RCPT_ROUTE                             /* 포트홀_신고_내역.접수경로 */
 		    , tnpotholesttemnt.PTH_PHOTO AS PTH_PHOTO
 		    , (tcsmstime.STIME_HH || ':' || tcsmstime.STIME_MM || ':' || tcsmstime.STIME_SS) SMS_TIME_START
@@ -572,17 +572,17 @@
 	       , TO_CHAR(tnpotholesttemnt.CREAT_DE, 'YYYY-MM-DD hh24:mi:ss') AS CREAT_DE      /* 포트홀_신고_내역.생성_일자 */
 	       , tnpotholesttemnt.UPDUSR_NO         /* 포트홀_신고_내역.수정자_번호 */
 	       , TO_CHAR(tnpotholesttemnt.UPDT_DE, 'YYYY-MM-DD hh24:mi:ss') AS UPDT_DE        /* 포트홀_신고_내역.수정_일자 */
-	       , NVL(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
+	       , COALESCE(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
 	       , ( SELECT tccode.CODE_NM
 	           FROM TC_CODE tccode
-	           WHERE tccode.CODE_VAL = NVL(tnpotholerpair.DMG_TYPE, '')
+	           WHERE tccode.CODE_VAL = COALESCE(tnpotholerpair.DMG_TYPE, '')
 	       ) AS DMG_TYPE_NM                     /* 포트홀_보수_내역.파손_유형_이름 */
-	       , NVL(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
+	       , COALESCE(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
 	       , tnpotholerpair.RPRDTLS_MNG_NO      /* 포트홀_보수_내역.보수_관리번호 */
 	       , tnpotholesttemnt.VHCLE_TYPE AS pthmode    /* 포트홀_신고_내역.접수경로 구분값 */
 	       , ( SELECT tccode.CODE_NM
                FROM TC_CODE tccode
-               WHERE tccode.CL_CODE='PRRT' AND tccode.CODE_VAL = NVL(tnpotholesttemnt.VHCLE_TYPE, '')
+               WHERE tccode.CL_CODE='PRRT' AND tccode.CODE_VAL = COALESCE(tnpotholesttemnt.VHCLE_TYPE, '')
            ) AS RCPT_ROUTE                             /* 포트홀_신고_내역.접수경로 */
     ]]>
     </sql>
@@ -1069,12 +1069,12 @@
          , TO_CHAR(tnpotholesttemnt.CREAT_DE, 'YYYY-MM-DD hh24:mi:ss') AS CREAT_DE      /* 포트홀_신고_내역.생성_일자 */
          , tnpotholesttemnt.UPDUSR_NO         /* 포트홀_신고_내역.수정자_번호 */
          , TO_CHAR(tnpotholesttemnt.UPDT_DE, 'YYYY-MM-DD hh24:mi:ss') AS UPDT_DE        /* 포트홀_신고_내역.수정_일자 */
-         , NVL(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
+         , COALESCE(tnpotholerpair.RM, '') AS RM   /* 포트홀_보수_내역.비고 */
          , ( SELECT tccode.CODE_NM
              FROM TC_CODE tccode
-             WHERE tccode.CODE_VAL = NVL(tnpotholerpair.DMG_TYPE, '')
+             WHERE tccode.CODE_VAL = COALESCE(tnpotholerpair.DMG_TYPE, '')
          ) AS DMG_TYPE_NM                     /* 포트홀_보수_내역.파손_유형_이름 */
-         , NVL(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
+         , COALESCE(tnpotholerpair.DMG_TYPE, '') AS DMG_TYPE            /* 포트홀_보수_내역.파손_유형 */
          , tnpotholerpair.RPRDTLS_MNG_NO      /* 포트홀_보수_내역.보수_관리번호 */
          , tnpotholesttemnt.VHCLE_TYPE AS pthmode
     ]]>
@@ -1671,7 +1671,7 @@ ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
         SELECT
             ROUND(t.X, 6) AS X, ROUND(t.Y, 6) AS Y
         FROM
-            ( SELECT SDO_CS.TRANSFORM(SDO_GEOMETRY(2001, 5181, SDO_POINT_TYPE( #TM_X#, #TM_Y#, NULL), NULL, NULL), 4326) AS G2_LONLAT FROM DUAL ) a
+            ( SELECT SDO_CS.TRANSFORM(SDO_GEOMETRY(2001, 5181, SDO_POINT_TYPE( #TM_X#, #TM_Y#, NULL), NULL, NULL), 4326) AS G2_LONLAT  ) a
             , TABLE( SDO_UTIL.GETVERTICES( a.G2_LONLAT ) ) t
     ]]>
     </select>
@@ -1688,7 +1688,7 @@ ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
 		            THEN ( SELECT SEHIGH_DEPT_CODE FROM TC_DEPT WHERE DEPT_CODE = ( SELECT SEHIGH_DEPT_CODE FROM TC_DEPT WHERE DEPT_CODE = #DEPT_CODE# ) )
 		        ELSE #DEPT_CODE#
 		    END AS DEPT_CODE
-		FROM DUAL
+		
     ]]>
     </select>
 
@@ -1763,7 +1763,7 @@ ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
                 /* 시군 자체 관리 SMS 전송 여부 확인 후 추가 */
 
         ) tb
-        WHERE NVL(tb.CTTPC, '0') <> '0'
+        WHERE COALESCE(tb.CTTPC, '0') <> '0'
         group by tb.DEPT_CODE, tb.LOWEST_DEPT_NM, tb.CHARGER_NM, tb.CTTPC
     ]]>
     </select>
@@ -1800,7 +1800,7 @@ ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
                 /* 시군 자체 관리 SMS 전송 여부 확인 후 추가 */
 
         ) tb
-        WHERE NVL(tb.CTTPC, '0') <> '0'
+        WHERE COALESCE(tb.CTTPC, '0') <> '0'
 
     ]]>
     </select>
@@ -1819,7 +1819,7 @@ ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
     <![CDATA[
             PRCS_STTUS = #PRCS_STTUS# ,        /* 포트홀_신고_내역.처리_상태 */
             SMS_SNDNG_AT = #SMS_SNDNG_AT# ,    /* 포트홀_신고_내역.SMS_발송_여부 */
-            UPDT_DE = SYSDATE                  /* 포트홀_신고_내역.수정_일자 */
+            UPDT_DE = NOW()                  /* 포트홀_신고_내역.수정_일자 */
             WHERE 1 = 1
             AND PTH_RG_NO = #PTH_RG_NO#
         ]]>

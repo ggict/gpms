@@ -27,7 +27,7 @@
 	<insert id="cntrwkSctnHistDAO.insertCntrwkSctnHist">
 	<selectKey resultClass="String" keyProperty="CNTRWKSCTN_NO">
   <![CDATA[
-  select SEQ_TH_CNTRWK_SCTN_HIST.NEXTVAL from dual
+  select nextval('SEQ_TH_CNTRWK_SCTN_HIST')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -56,11 +56,11 @@
 			, #ENDPT# /* 공사_구간_이력.종점 */
 			, #RPAIR_DE# /* 공사_구간_이력.보수_일자 */
 			, #CRTR_NO# /* 공사_구간_이력.생성자_번호 */
-			, SYSDATE /* 공사_구간_이력.생성_일시 */
+			, NOW() /* 공사_구간_이력.생성_일시 */
 			, #DELETE_AT# /* 공사_구간_이력.삭제_여부 */
 			, #USE_AT# /* 공사_구간_이력.사용_여부 */
 			, #UPDUSR_NO# /* 공사_구간_이력.수정자_번호 */
-			, SYSDATE /* 공사_구간_이력.수정_일시 */
+			, NOW() /* 공사_구간_이력.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -94,7 +94,7 @@ ROUTE_CODE = #ROUTE_CODE# /* 공사_구간_이력.노선_코드 */
 , CRTR_NO = #CRTR_NO# /* 공사_구간_이력.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 공사_구간_이력.생성_일시 */
+, CREAT_DT = NOW() /* 공사_구간_이력.생성_일시 */
 			
 
 , DELETE_AT = #DELETE_AT# /* 공사_구간_이력.삭제_여부 */
@@ -106,7 +106,7 @@ ROUTE_CODE = #ROUTE_CODE# /* 공사_구간_이력.노선_코드 */
 , UPDUSR_NO = #UPDUSR_NO# /* 공사_구간_이력.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 공사_구간_이력.수정_일시 */
+, UPDT_DT = NOW() /* 공사_구간_이력.수정_일시 */
 			
 		WHERE 1 = 1
 		AND CNTRWKSCTN_NO = #CNTRWKSCTN_NO# /* 공사_구간_이력.공사구간_번호 */
@@ -339,7 +339,7 @@ ROUTE_CODE = #ROUTE_CODE# /* 공사_구간_이력.노선_코드 */
 <![CDATA[ 		
 		/* cntrwkSctnHistDAO.selectCntrwkSctnHistList */
 		/* 공사_구간_이력 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				thcntrwksctnhist.CNTRWKSCTN_NO /* 공사_구간_이력.공사구간_번호 */
 				, thcntrwksctnhist.ROUTE_CODE /* 공사_구간_이력.노선_코드 */

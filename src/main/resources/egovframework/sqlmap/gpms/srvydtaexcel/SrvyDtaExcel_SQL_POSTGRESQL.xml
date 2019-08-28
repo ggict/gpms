@@ -39,7 +39,7 @@
 	<insert id="srvyDtaExcelDAO.insertSrvyDtaExcel">
 		<selectKey resultClass="String" keyProperty="SRVY_NO">
   <![CDATA[
-  select SEQ_TN_SRVY_DTA_EXCEL.NEXTVAL from dual
+  select nextval('SEQ_TN_SRVY_DTA_EXCEL')
   ]]>
 		</selectKey>
 	<![CDATA[
@@ -88,9 +88,9 @@
 			, #DELETE_AT# /* 조사_자료_엑셀.삭제_여부 */
 			, #USE_AT# /* 조사_자료_엑셀.사용_여부 */
 			, #CRTR_NO# /* 조사_자료_엑셀.생성자_번호 */
-			, SYSDATE /* 조사_자료_엑셀.생성_일시 */
+			, NOW() /* 조사_자료_엑셀.생성_일시 */
 			, #UPDUSR_NO# /* 조사_자료_엑셀.수정자_번호 */
-			, SYSDATE /* 조사_자료_엑셀.수정_일시 */
+			, NOW() /* 조사_자료_엑셀.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -101,7 +101,7 @@
 		/* 조사_자료_엑셀 수정 */
 		UPDATE TN_SRVY_DTA_EXCEL SET
 
-		UPDT_DT = SYSDATE /* 조사_자료_엑셀.수정_일시 */
+		UPDT_DT = NOW() /* 조사_자료_엑셀.수정_일시 */
 ]]>
 
 		<isNotEmpty property="FILE_NO">
@@ -539,7 +539,7 @@
 <![CDATA[
 		/* srvyDtaExcelDAO.selectSrvyDtaExcelList */
 		/* 조사_자료_엑셀 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnsrvydtaexcel.SRVY_NO /* 조사_자료_엑셀.조사_번호 */
 				, tnsrvydtaexcel.FILE_NO /* 조사_자료_엑셀.파일_번호 */
@@ -701,7 +701,7 @@
 							, tnsysuser.USER_NM
 							, tnsrvydtaexcel.FILE_NO
 							, tnsrvydtaexcel.SRVY_NO
-					        , NVL((
+					        , COALESCE((
                                SELECT DECODE(tlsrvydtalog.PROCESS_STTUS, 'PCST0002', '성공', 'PCST0003', '실패') FROM(
                                   SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
                                         PROCESS_SE, PROCESS_STTUS, SRVY_NO
@@ -711,7 +711,7 @@
                               WHERE tlsrvydtalog.RN = 1
                               AND tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO
                               ), '미평가') EVL_PROCESS
-                            , NVL((
+                            , COALESCE((
                                SELECT DECODE(tlsrvydtalog.PROCESS_STTUS, 'PCST0002', '성공', 'PCST0003', '실패') FROM(
                                   SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
                                         PROCESS_SE, PROCESS_STTUS, SRVY_NO
@@ -721,7 +721,7 @@
                               WHERE tlsrvydtalog.RN = 1
                               AND tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO
                               ), '미평가') GPS_CORTN_PROCESS
-                            , NVL((
+                            , COALESCE((
                                SELECT DECODE(tlsrvydtalog.PROCESS_STTUS, 'PCST0002', '성공', 'PCST0003', '실패') FROM(
                                   SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
                                         PROCESS_SE, PROCESS_STTUS, SRVY_NO
@@ -731,7 +731,7 @@
                               WHERE tlsrvydtalog.RN = 1
                               AND tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO
                               ), '미평가') SM_PROCESS
-                             , TO_CHAR(SYSDATE, 'YYYY') EVL_YEAR
+                             , TO_CHAR(NOW(), 'YYYY') EVL_YEAR
 					  FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel,
                             TN_ATTACH_FILE tnattachfile,
                             TN_SYS_USER tnsysuser
@@ -893,7 +893,7 @@
 		/* srvyDtaExcelDAO.srvyDtaExcelListExcelDownload */
 		/* 조사_자료 목록 엑셀 다운로드 */
 		SELECT * FROM (
-		SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 		SELECT DISTINCT
 		tnsrvydtaexcel.SRVY_NO /* 조사_자료_엑셀.조사_번호 */
 		, tnsrvydtaexcel.FILE_NO /* 조사_자료_엑셀.파일_번호 */
@@ -938,7 +938,7 @@
 			/* srvyDtaExcelDAO.srvyDtaExcelList */
 			/* 조사_자료 목록  */
 			SELECT * FROM (
-				SELECT ROWNUM AS rn, tb.* FROM (
+				SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 					SELECT DISTINCT
 					tnsrvydtaexcel.SRVY_NO /* 조사_자료_엑셀.조사_번호 */
 					, tnsrvydtaexcel.FILE_NO /* 조사_자료_엑셀.파일_번호 */
@@ -1043,7 +1043,7 @@
 				/* srvyDtaExcelDAO.searchCreatDt */
 				/* 조사_자료_엑셀 등록일자를 조회한다. */
 			SELECT SRVY_DE FROM (
-				SELECT ROWNUM AS rn, tb.* FROM (
+				SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 					SELECT DISTINCT
 					   TO_CHAR(to_date(tnsrvydtaexcel.SRVY_DE),'YYYY-MM-DD') AS SRVY_DE /* 조사_자료_엑셀.조사_일시 */
 		            , (SELECT CODE_NM FROM TC_CODE  tccode WHERE tccode.CODE_VAL = tlsrvydtalog.PROCESS_STTUS) AS PROCESS_STTUS
@@ -1069,10 +1069,10 @@
 			SELECT tnsrvydtaexcel.SRVY_NO
 			     , tnattachfile.ORGINL_FILE_NM FILE_NM
 			     , SUBSTR(tnsrvydtaexcel.SRVY_DE, 0, 4) || '년 ' || SUBSTR(tnsrvydtaexcel.SRVY_DE, 5, 2) || '월' SRVY_DE
-			     , TO_CHAR(SYSDATE, 'YYYY') || '년 ' || TO_CHAR(SYSDATE, 'MM') || '월' CALC_DE
-			     , TO_CHAR(add_months(SYSDATE, 12), 'YYYY') || '~' || TO_CHAR(add_months(SYSDATE, 120), 'YYYY') PREDCT_DE
+			     , TO_CHAR(NOW(), 'YYYY') || '년 ' || TO_CHAR(NOW(), 'MM') || '월' CALC_DE
+			     , TO_CHAR(add_months(NOW(), 12), 'YYYY') || '~' || TO_CHAR(add_months(NOW(), 120), 'YYYY') PREDCT_DE
 			     , tnsrvydtaexcel.DATA_CO
-			     , NVL((
+			     , COALESCE((
 			           SELECT DECODE(tlsrvydtalog.PROCESS_STTUS, 'PCST0002', '성공', 'PCST0003', '실패') FROM(
 			              SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
 			                    PROCESS_SE, PROCESS_STTUS, SRVY_NO
@@ -1207,7 +1207,7 @@
         /* JOY_포장상태 평가정보.상세정보 목록 조회 */
         SELECT tnsmdtagnlsttus.*
         FROM (
-	        SELECT ROWNUM AS rn, tb.*
+	        SELECT ROW_NUMBER() OVER() AS rn, tb.*
 			FROM (
                 SELECT
 	                tnsmdtagnlsttus.SRVY_NO /* 최소_구간_조사_자료.조사번호 */
@@ -1297,7 +1297,7 @@
         /* JOY_포장상태 평가정보.상세정보 목록 조회 */
         SELECT count(*)
         FROM (
-            SELECT ROWNUM AS rn, tb.*
+            SELECT ROW_NUMBER() OVER() AS rn, tb.*
             FROM (
                 SELECT
                     tnsmdtagnlsttus.SRVY_NO /* 최소_구간_조사_자료.조사번호 */
@@ -1426,7 +1426,7 @@
 		<isNotEmpty property="VAR"><![CDATA[ tnpavfrmulaidx.IDX_VAL = #VAR# ]]></isNotEmpty>
 		<isNotEmpty property="UPDUSR_NO"><![CDATA[ , tnpavfrmulaidx.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
         <![CDATA[
-        ,UPDT_DT = sysdate
+        ,UPDT_DT = NOW()
 		WHERE 1=1
     	]]>
 		<isNotEmpty property="VAR">

@@ -96,7 +96,7 @@
 	<insert id="smDtaLastSttusDAO.insertSmDtaLastSttus">
 		<selectKey resultClass="String" keyProperty="SM_NO">
   	<![CDATA[
- 		select SEQ_TN_SM_DTA_LAST_STTUS.NEXTVAL from dual
+ 		select nextval('SEQ_TN_SM_DTA_LAST_STTUS')
   	]]>
 		</selectKey>
 	<![CDATA[
@@ -200,9 +200,9 @@
 			, #DELETE_AT# /* 집계_자료_최신_현황.삭제_여부 */
 			, #USE_AT# /* 집계_자료_최신_현황.사용_여부 */
 			, #CRTR_NO# /* 집계_자료_최신_현황.생성자_번호 */
-			, SYSDATE /* 집계_자료_최신_현황.생성_일시 */
+			, NOW() /* 집계_자료_최신_현황.생성_일시 */
 			, #UPDUSR_NO# /* 집계_자료_최신_현황.수정자_번호 */
-			, SYSDATE /* 집계_자료_최신_현황.수정_일시 */
+			, NOW() /* 집계_자료_최신_현황.수정_일시 */
 			, #FRMULA_NO# /* 집계_자료_최신_현황.수식_번호 */
 			, #TRNSPORT_QY# /* 집계_자료_최신_현황.교통_량 */
 			, #CR_GRAD# /* 집계_자료_최신_현황.표면손상_등급 */
@@ -276,7 +276,7 @@
 		, SRVY_KND = #SRVY_KND# /* 집계_자료_최신_현황.조사_종류 */
 		, SRVY_MT = #SRVY_MT# /* 집계_자료_최신_현황.조사_월 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 집계_자료_최신_현황.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 집계_자료_최신_현황.수정_일시 */
+		, UPDT_DT = NOW() /* 집계_자료_최신_현황.수정_일시 */
 		, FRMULA_NO = #FRMULA_NO# /* 집계_자료_최신_현황.수식_번호 */
 		, TRNSPORT_QY = #TRNSPORT_QY# /* 집계_자료_최신_현황.교통_량 */
 		, CR_GRAD = #CR_GRAD# /* 집계_자료_최신_현황.표면손상_등급 */
@@ -332,7 +332,7 @@
 		 DELETE_AT = 'Y' /* 집계_자료_최신_현황.삭제_여부 */
 		, USE_AT = 'N'
 		, UPDUSR_NO = #UPDUSR_NO# /* 집계_자료_최신_현황.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 집계_자료_최신_현황.수정_일시 */
+		, UPDT_DT = NOW() /* 집계_자료_최신_현황.수정_일시 */
 		WHERE 1 = 1
 		AND SM_NO = #SM_NO# /* 집계_자료_최신_현황.집계_번호 */
 ]]>
@@ -515,7 +515,7 @@
 <![CDATA[
 		/* smDtaLastSttusDAO.selectSmDtaLastSttusList */
 		/* 집계_자료_최신_현황 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnsmdtalaststtus.SM_NO /* 집계_자료_최신_현황.집계_번호 */
 				, tnsmdtalaststtus.SRVY_NO /* 집계_자료_최신_현황.조사_번호 */
@@ -631,8 +631,8 @@
 				SELECT tnrouteinfo.ROAD_NO
 				     , TO_NUMBER(tnrouteinfo.ROAD_NO) ROAD_NO_VAL
 				     , tnrouteinfo.ROAD_NAME
-				     , TO_CHAR(SYSDATE, 'YYYY') CALC_YEAR
-				     , TO_CHAR(SYSDATE, 'MM') CALC_MT
+				     , TO_CHAR(NOW(), 'YYYY') CALC_YEAR
+				     , TO_CHAR(NOW(), 'MM') CALC_MT
 				     , CASE WHEN tnsmdtagnlsttus.ROUTE_CODE IS NULL THEN 'N/A'
 				            WHEN tnsmdtalaststtus.ROUTE_CODE IS NULL THEN '미평가'
 				            ELSE '평가' END CALC_STTUS
@@ -647,8 +647,8 @@
                        WHERE 1=1
                        AND tnsmdtalaststtus.USE_AT='Y'
                        AND tnsmdtalaststtus.DELETE_AT = 'N'
-                       AND tnsmdtalaststtus.CALC_YEAR = TO_CHAR(SYSDATE, 'YYYY')
-                       AND tnsmdtalaststtus.CALC_MT = TO_CHAR(SYSDATE, 'MM')
+                       AND tnsmdtalaststtus.CALC_YEAR = TO_CHAR(NOW(), 'YYYY')
+                       AND tnsmdtalaststtus.CALC_MT = TO_CHAR(NOW(), 'MM')
                      GROUP BY tnsmdtalaststtus.ROUTE_CODE) tnsmdtalaststtus
                     ON tnsmdtalaststtus.ROUTE_CODE = tnrouteinfo.ROAD_NO
 			     WHERE 1=1
@@ -813,7 +813,7 @@
 		/* JOY_ 포장상태 예측정보 상세조회 목록 */
 		SELECT *
 		FROM (
-		    SELECT ROWNUM AS rn, tb.*
+		    SELECT ROW_NUMBER() OVER() AS rn, tb.*
 		    FROM (
 			    SELECT
 				    tnsmdtalaststtus.SM_NO
@@ -914,7 +914,7 @@
 	        /* JOY_ 포장상태 예측정보 상세조회 목록 개수 조회  */
 	        SELECT COUNT(*)
             FROM (
-                SELECT ROWNUM AS rn, tb.*
+                SELECT ROW_NUMBER() OVER() AS rn, tb.*
                 FROM (
                     SELECT
                     tnsmdtalaststtus.SM_NO
@@ -1002,7 +1002,7 @@
 	        SELECT *
 	        FROM (
 	            SELECT
-	                ROWNUM AS rn, tb.*
+	                ROW_NUMBER() OVER() AS rn, tb.*
 	            FROM (
 	                 SELECT
 		                tncntrwkcellinfo.PAV_CELL_ID AS CELL_ID /* 공사_셀_정보.셀번호 */
@@ -1047,7 +1047,7 @@
             SELECT COUNT(*)
 	        FROM (
 	            SELECT
-	                ROWNUM AS rn, tb.*
+	                ROW_NUMBER() OVER() AS rn, tb.*
 	            FROM (
 	                 SELECT
 	                    tncntrwkcellinfo.PAV_CELL_ID AS CELL_ID /* 공사_셀_정보.셀번호 */
@@ -1159,23 +1159,23 @@
 			    , tnsmdtalaststtus.SRVY_NO
 			    , tnsmdtalaststtus.SRVY_YEAR
 			    , tnsmdtalaststtus.SRVY_MT
-			    , NVL(tnsmdtalaststtus.GPCI, 0) AS GPCI
+			    , COALESCE(tnsmdtalaststtus.GPCI, 0) AS GPCI
 			    , tnsmdtalaststtus.CNTL_DFECT
 			    , ( SELECT tccode.CODE_NM
 			        FROM TC_CODE tccode
 			        WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT
 			    ) AS CODE_NM
-			    , NVL(tnsmdtalaststtus.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
-			    , NVL(tnsmdtalaststtus.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
-			    , NVL(tnsmdtalaststtus.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
-			    , NVL(tnsmdtalaststtus.AC_IDX, 0) AS AC_IDX
-			    , NVL(tnsmdtalaststtus.LC_IDX, 0) AS LC_IDX
-			    , NVL(tnsmdtalaststtus.BC_IDX, 0) AS BC_IDX
-			    , NVL(tnsmdtalaststtus.PTCHG_IDX, 0) AS PTCHG_IDX
-			    , NVL(tnsmdtalaststtus.POTHOLE_IDX, 0) AS POTHOLE_IDX
-			    , NVL(tnsmdtalaststtus.RD_IDX, 0) AS RD_IDX
-			    , NVL(tnsmdtalaststtus.RCI, 0) AS RCI
-			    , NVL(tnsmdtalaststtus.SCR, 0) AS SCR
+			    , COALESCE(tnsmdtalaststtus.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
+			    , COALESCE(tnsmdtalaststtus.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
+			    , COALESCE(tnsmdtalaststtus.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
+			    , COALESCE(tnsmdtalaststtus.AC_IDX, 0) AS AC_IDX
+			    , COALESCE(tnsmdtalaststtus.LC_IDX, 0) AS LC_IDX
+			    , COALESCE(tnsmdtalaststtus.BC_IDX, 0) AS BC_IDX
+			    , COALESCE(tnsmdtalaststtus.PTCHG_IDX, 0) AS PTCHG_IDX
+			    , COALESCE(tnsmdtalaststtus.POTHOLE_IDX, 0) AS POTHOLE_IDX
+			    , COALESCE(tnsmdtalaststtus.RD_IDX, 0) AS RD_IDX
+			    , COALESCE(tnsmdtalaststtus.RCI, 0) AS RCI
+			    , COALESCE(tnsmdtalaststtus.SCR, 0) AS SCR
 			    , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.AC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) AC_RATE
 	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.BC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) BC_RATE
 	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.LC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) LC_RATE

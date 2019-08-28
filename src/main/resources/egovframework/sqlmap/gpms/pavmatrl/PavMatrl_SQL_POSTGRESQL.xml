@@ -22,7 +22,7 @@
 	<insert id="pavMatrlDAO.insertPavMatrl">
 	<selectKey resultClass="String" keyProperty="PAV_MATRL_CODE">
 		  <![CDATA[
-		  select 'PM' || LPAD( SEQ_TC_PAV_MATRL.NEXTVAL ,8,'0') PAV_MATRL_CODE from dual
+		  select 'PM' || LPAD( nextval('SEQ_TC_PAV_MATRL') ,8,'0') PAV_MATRL_CODE 
 		  ]]>
 	  </selectKey>
 	<![CDATA[ 
@@ -43,9 +43,9 @@
 			, 'N' /* 포장재료코드.삭제_여부 */
 			, 'Y' /* 포장재료코드.사용_여부 */
 			, #CRTR_NO# /* 포장재료코드.생성자_번호 */
-			, SYSDATE /* 포장재료코드.생성_일시 */
+			, NOW() /* 포장재료코드.생성_일시 */
 			, #UPDUSR_NO# /* 포장재료코드.수정자_번호 */
-			, SYSDATE /* 포장재료코드.수정_일시 */
+			, NOW() /* 포장재료코드.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -70,13 +70,13 @@ PAV_MATRL_NM = #PAV_MATRL_NM# /* 포장재료코드.포장_재료_명 */
 , CRTR_NO = #CRTR_NO# /* 포장재료코드.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 포장재료코드.생성_일시 */
+, CREAT_DT = NOW() /* 포장재료코드.생성_일시 */
 			
 
 , UPDUSR_NO = #UPDUSR_NO# /* 포장재료코드.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 포장재료코드.수정_일시 */
+, UPDT_DT = NOW() /* 포장재료코드.수정_일시 */
 			
 		WHERE 1 = 1
 		AND PAV_MATRL_CODE = #PAV_MATRL_CODE# /* 포장재료코드.포장_재료_코드 */
@@ -254,7 +254,7 @@ PAV_MATRL_NM = #PAV_MATRL_NM# /* 포장재료코드.포장_재료_명 */
 <![CDATA[ 		
 		/* pavMatrlDAO.selectPavMatrlList */
 		/* 포장재료코드 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tcpavmatrl.PAV_MATRL_CODE /* 포장재료코드.포장_재료_코드 */
 				, tcpavmatrl.PAV_MATRL_NM /* 포장재료코드.포장_재료_명 */

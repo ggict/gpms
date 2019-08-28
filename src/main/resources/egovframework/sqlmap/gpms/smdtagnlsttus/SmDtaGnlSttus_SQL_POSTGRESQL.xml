@@ -82,7 +82,7 @@
     <insert id="smDtaGnlSttusDAO.insertSmDtaGnlSttus">
     <selectKey resultClass="String" keyProperty="SM_NO">
     <![CDATA[
-        select SEQ_TN_SM_DTA_GNL_STTUS.NEXTVAL from dual
+        select nextval('SEQ_TN_SM_DTA_GNL_STTUS')
     ]]>
     </selectKey>
     <![CDATA[
@@ -192,7 +192,7 @@
             , #CRTR_NO# /* 집계_자료_일반_현황.생성자_번호 */
             , #CREAT_DT# /* 집계_자료_일반_현황.생성_일시 */
             , #UPDUSR_NO# /* 집계_자료_일반_현황.수정자_번호 */
-            , SYSDATE /* 집계_자료_일반_현황.수정_일시 */
+            , NOW() /* 집계_자료_일반_현황.수정_일시 */
             , #BLOCK_CR# /* 집계_자료_일반_현황.블럭_균열 */
             , #CR_LT# /* 집계_자료_일반_현황.균열_길이 */
             , #CR_WID# /* 집계_자료_일반_현황.균열_폭 */
@@ -264,7 +264,7 @@
         , RD_GRAD = #RD_GRAD# /* 집계_자료_일반_현황.소성변형_등급 */
         , IRI_GRAD = #IRI_GRAD# /* 집계_자료_일반_현황.종단평탄성_등급 */
         , UPDUSR_NO = #UPDUSR_NO# /* 집계_자료_일반_현황.수정자_번호 */
-        , UPDT_DT = SYSDATE /* 집계_자료_일반_현황.수정_일시 */
+        , UPDT_DT = NOW() /* 집계_자료_일반_현황.수정_일시 */
         , BLOCK_CR = #BLOCK_CR# /* 집계_자료_일반_현황.블럭_균열 */
         , CR_LT = #CR_LT# /* 집계_자료_일반_현황.균열_길이 */
         , CR_WID = #CR_WID# /* 집계_자료_일반_현황.균열_폭 */
@@ -312,7 +312,7 @@
          DELETE_AT = 'Y' /* 집계_자료_일반_현황.삭제_여부 */
         , USE_AT = 'N'
         , UPDUSR_NO = #UPDUSR_NO# /* 집계_자료_일반_현황.수정자_번호 */
-        , UPDT_DT = SYSDATE /* 집계_자료_일반_현황.수정_일시 */
+        , UPDT_DT = NOW() /* 집계_자료_일반_현황.수정_일시 */
         WHERE 1 = 1
         AND SM_NO = #SM_NO# /* 집계_자료_일반_현황.집계_번호 */
 ]]>
@@ -547,7 +547,7 @@
     <![CDATA[
         /* smDtaGnlSttusDAO.selectSmDtaGnlSttusList */
         /* 집계_자료_일반_현황 조회 */
-        SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+        SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
             SELECT
                 tnsmdtagnlsttus.SM_NO /* 집계_자료_일반_현황.집계_번호 */
                 , tnsmdtagnlsttus.SRVY_NO /* 집계_자료_일반_현황.조사_번호 */

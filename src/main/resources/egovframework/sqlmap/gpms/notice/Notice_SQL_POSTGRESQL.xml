@@ -95,7 +95,7 @@
 	<insert id="noticeDAO.insertNotice">
 	<selectKey resultClass="String" keyProperty="SEQ_NO">
 		  <![CDATA[
-			  select SEQ_TN_NOTICE.NEXTVAL from dual
+			  select nextval('SEQ_TN_NOTICE')
 		  ]]>
 	</selectKey>
 	<![CDATA[ 
@@ -123,7 +123,7 @@
 			,#SJ#             
 			,#CN#             
 			,#RDCNT#          
-			,SYSDATE
+			,NOW()
 			,#FILE_NM#        
 			,#POPUP_PD#       
 			,#ORGINL_FILE_NM# 
@@ -188,7 +188,7 @@
 		/* noticeDAO.updateNoticeRdcnt */
 		/* 공지사항 조회수수정 */
 		UPDATE TN_NOTICE
-		   SET RDCNT = NVL(#RDCNT#,0)          /*조회수*/
+		   SET RDCNT = COALESCE(#RDCNT#,0)          /*조회수*/
 		WHERE SEQ_NO = #SEQ_NO#
 	]]>
 	</update>

@@ -62,7 +62,7 @@
 	<insert id="flawCntrwkDAO.insertFlawCntrwk">
 		<selectKey resultClass="String" keyProperty="FLAW_CNTRWK_ID">
   <![CDATA[
-  select SEQ_TN_FLAW_CNTRWK.NEXTVAL from dual
+  select nextval('SEQ_TN_FLAW_CNTRWK')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -164,9 +164,9 @@
 			, 'Y' /* 하자_보수_공사.사용_여부 */
 			, 'N' /* 하자_보수_공사.삭제_여부 */
 			, #CRTR_NO# /* 하자_보수_공사.생성자_번호 */
-			, SYSDATE /* 하자_보수_공사.생성_일시 */
+			, NOW() /* 하자_보수_공사.생성_일시 */
 			, #UPDUSR_NO# /* 하자_보수_공사.수정자_번호 */
-			, SYSDATE /* 하자_보수_공사.수정_일시 */
+			, NOW() /* 하자_보수_공사.수정_일시 */
 			, #RPAIR_MTHD_CODE# /* 하자_보수_공사.보수_꽁법_코드  */
 		)
 ]]>
@@ -178,7 +178,7 @@
 		/* 하자_보수_공사 수정 */
 		UPDATE TN_FLAW_CNTRWK SET
 			UPDUSR_NO = #UPDUSR_NO# /* 하자_보수_공사.수정자_번호 */
-		  , UPDT_DT = SYSDATE /* 하자_보수_공사.수정_일시 */
+		  , UPDT_DT = NOW() /* 하자_보수_공사.수정_일시 */
 
 , CNTRWK_ID = #CNTRWK_ID# /* 하자_보수_공사.공사_ID */
 			
@@ -316,7 +316,7 @@
 		UPDATE TN_FLAW_CNTRWK SET
 		DELETE_AT = 'Y' /* 하자_보수_공사.삭제_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 하자_보수_공사.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 하자_보수_공사.수정_일시 */
+		, UPDT_DT = NOW() /* 하자_보수_공사.수정_일시 */
 		WHERE 1 = 1
 		AND FLAW_CNTRWK_ID = #FLAW_CNTRWK_ID# /* 하자_보수_공사.하자_공사_ID */
 ]]>
@@ -329,7 +329,7 @@
 		UPDATE TN_FLAW_CNTRWK SET
 		DELETE_AT = 'Y' /* 하자_보수_공사.삭제_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 하자_보수_공사.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 하자_보수_공사.수정_일시 */
+		, UPDT_DT = NOW() /* 하자_보수_공사.수정_일시 */
 		WHERE 1 = 1
 ]]>
 		<isNotEmpty property="DETAIL_CNTRWK_ID">
@@ -353,7 +353,7 @@
 			, tnflawcntrwk.DETAIL_KND_NM /* 하자_보수_공사.세부_종류_명 */
 			, tnflawcntrwk.CNTRWK_DE /* 하자_보수_공사.공사_일자 */
 			, tnflawcntrwk.FLAW_CO_NO /* 하자_보수_공사.하자_업체_번호 */
-			, NVL((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tnflawcntrwk.FLAW_CO_NO), tnflawcntrwk.FLAW_CO_NM) AS FLAW_CO_NM/* 하자_보수_공사.하자_업체_명 */
+			, COALESCE((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tnflawcntrwk.FLAW_CO_NO), tnflawcntrwk.FLAW_CO_NM) AS FLAW_CO_NM/* 하자_보수_공사.하자_업체_명 */
 			, tnflawcntrwk.FLAW_CHCK_DE /* 하자_보수_공사.하자_검사_일자 */
 			, tnflawcntrwk.FLAW_AR /* 하자_보수_공사.하자_면적 */
 			, tnflawcntrwk.FLAW_LEN /* 하자_보수_공사.하자_연장 */
@@ -957,7 +957,7 @@
 <![CDATA[ 		
 		/* flawCntrwkDAO.selectFlawCntrwkList */
 		/* 하자_보수_공사 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				  cell10.cell_id  /* CELL_10.셀관리번호 */
 				, tnflawcntrwk.CNTRWK_ID /* 하자_보수_공사.공사_ID */
@@ -1064,7 +1064,7 @@
 <![CDATA[ 		
 		/* flawCntrwkDAO.selectFlawCntrwkListExcel */
 		/* 하자보수공사목록 엑셀조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnflawcntrwk.CNTRWK_ID /* 하자_보수_공사.공사_ID */
 				, tnflawcntrwk.FLAW_CNTRWK_ID /* 하자_보수_공사.하자_공사_ID */

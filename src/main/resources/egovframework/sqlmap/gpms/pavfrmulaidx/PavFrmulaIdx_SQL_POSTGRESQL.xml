@@ -25,7 +25,7 @@
 	<insert id="pavFrmulaIdxDAO.insertPavFrmulaIdx">
 			<selectKey resultClass="String" keyProperty="IDX_NO">
   <![CDATA[
-  select SEQ_TN_PAV_FRMULA_IDX.NEXTVAL from dual
+  select nextval('SEQ_TN_PAV_FRMULA_IDX')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -52,9 +52,9 @@
 			, #DELETE_AT# /* 포장_수식_지수.삭제_여부 */
 			, #USE_AT# /* 포장_수식_지수.사용_여부 */
 			, #CRTR_NO# /* 포장_수식_지수.생성자_번호 */
-			, SYSDATE /* 포장_수식_지수.생성_일시 */
+			, NOW() /* 포장_수식_지수.생성_일시 */
 			, #UPDUSR_NO# /* 포장_수식_지수.수정자_번호 */
-			, SYSDATE /* 포장_수식_지수.수정_일시 */
+			, NOW() /* 포장_수식_지수.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -88,13 +88,13 @@ FRMULA_NO = #FRMULA_NO# /* 포장_수식_지수.수식_번호 */
 , CRTR_NO = #CRTR_NO# /* 포장_수식_지수.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 포장_수식_지수.생성_일시 */
+, CREAT_DT = NOW() /* 포장_수식_지수.생성_일시 */
 			
 
 , UPDUSR_NO = #UPDUSR_NO# /* 포장_수식_지수.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 포장_수식_지수.수정_일시 */
+, UPDT_DT = NOW() /* 포장_수식_지수.수정_일시 */
 			
 		WHERE 1 = 1
 		AND IDX_NO = #IDX_NO# /* 포장_수식_지수.지수_번호 */
@@ -305,7 +305,7 @@ FRMULA_NO = #FRMULA_NO# /* 포장_수식_지수.수식_번호 */
 <![CDATA[ 		
 		/* pavFrmulaIdxDAO.selectPavFrmulaIdxList */
 		/* 포장_수식_지수 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnpavfrmulaidx.IDX_NO /* 포장_수식_지수.지수_번호 */
 				, tnpavfrmulaidx.FRMULA_NO /* 포장_수식_지수.수식_번호 */

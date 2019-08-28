@@ -44,9 +44,9 @@
 			, #USE_AT# /* 분류코드.사용_여부 */
 			, 'N' /* 분류코드.삭제_여부 */
 			, #CRTR_NO# /* 분류코드.생성자_번호 */
-			, SYSDATE /* 분류코드.생성_일시 */
+			, NOW() /* 분류코드.생성_일시 */
 			, #UPDUSR_NO# /* 분류코드.수정자_번호 */
-			, SYSDATE /* 분류코드.수정_일시 */
+			, NOW() /* 분류코드.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -67,7 +67,7 @@ PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */
 
 , UPDUSR_NO = #UPDUSR_NO# /* 분류코드.수정자_번호 */			
 
-, UPDT_DT = SYSDATE /* 분류코드.수정_일시 */			
+, UPDT_DT = NOW() /* 분류코드.수정_일시 */			
 		WHERE 1 = 1
 		AND CL_CODE = #CL_CODE# /* 분류코드.분류_코드 */
 ]]>
@@ -281,7 +281,7 @@ PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */
  
  		<isEmpty property="sidx">
  		<![CDATA[ 
- 			ROWNUM AS rn, 
+ 			ROW_NUMBER() OVER() AS rn, 
  		 ]]>
  		</isEmpty>
  		<isNotEmpty property="sidx">

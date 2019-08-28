@@ -58,7 +58,7 @@
 	<insert id="rpairTrgetDAO.insertRpairTrget">
 	<selectKey resultClass="String" keyProperty="TRGET_ITEM_NO">
   <![CDATA[
-  select SEQ_TN_RPAIR_TRGET.NEXTVAL from dual
+  select nextval('SEQ_TN_RPAIR_TRGET')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -151,9 +151,9 @@
 			, 'N'  /* 보수_대상_항목.삭제_여부 DELETE_AT */
 			, 'Y'  /* 보수_대상_항목.사용_여부	USE_AT */
 			, #CRTR_NO# /* 보수_대상_항목.생성자_번호 */
-			, SYSDATE /* 보수_대상_항목.생성_일시 */
+			, NOW() /* 보수_대상_항목.생성_일시 */
 			, #UPDUSR_NO# /* 보수_대상_항목.수정자_번호 */
-			, SYSDATE /* 보수_대상_항목.수정_일시 */		
+			, NOW() /* 보수_대상_항목.수정_일시 */		
 		)
 ]]>
 	</insert>
@@ -202,7 +202,7 @@
 , ROAD_GRAD = #ROAD_GRAD# /* 보수_대상_항목.도로등급 */
 , ADM_CODE = #ADM_CODE# /* 보수_대상_항목.행정구역코드 */
 , UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_항목.수정자_번호 */
-, UPDT_DT = SYSDATE /* 보수_대상_항목.수정_일시 */
+, UPDT_DT = NOW() /* 보수_대상_항목.수정_일시 */
 		WHERE 1 = 1
 		AND TRGET_ITEM_NO = #TRGET_ITEM_NO# /* 보수_대상_항목.대상_항목_번호 */
 ]]>
@@ -216,7 +216,7 @@
 		 DELETE_AT = 'Y' /* 보수_대상_항목.삭제_여부 */
 		, USE_AT = 'N' /* 보수_대상_항목.사용_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_항목.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 보수_대상_항목.수정_일시 */
+		, UPDT_DT = NOW() /* 보수_대상_항목.수정_일시 */
 		WHERE 1 = 1
 		AND TRGET_ITEM_NO = #TRGET_ITEM_NO# /* 보수_대상_항목.대상_항목_번호 */
 ]]>
@@ -234,7 +234,7 @@ SELECT
      , tcrpairmthd.MSRC_CT    /* 보수공법코드.공법_비용 */
      , tcrpairmthd.MSRC_LCLAS_CODE    /* 보수공법코드.공법_대분류_코드 */
      , tcrpairmthd.MSR_DM_CODE /* 공법선정비율_결정방식_코드 */
-     , NVL( (SELECT tccode.ATRB_VAL   FROM GPMS.TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE AND tccode.CL_CODE ='MSRD' ),'0') RPAIR_MTHD_CLASS
+     , COALESCE( (SELECT tccode.ATRB_VAL   FROM GPMS.TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE AND tccode.CL_CODE ='MSRD' ),'0') RPAIR_MTHD_CLASS
      , tnrpairmthduntpc.CNTRWK_AMOUNT    /* 보수_공법_단가.공사_금액 */
      , tnrpairmthduntpc.PAINT_AMOUNT    /* 보수_공법_단가.차선_도색_금액 */
      , tnrpairmthduntpc.ETC_AMOUNT    /* 보수_공법_단가.기타_금액 */
@@ -571,7 +571,7 @@ SELECT
      , tcrpairmthd.MSRC_CT    /* 보수공법코드.공법_비용 */
      , tcrpairmthd.MSRC_LCLAS_CODE    /* 보수공법코드.공법_대분류_코드 */
      , tcrpairmthd.MSR_DM_CODE /* 공법선정비율_결정방식_코드 */
-     , NVL( (SELECT tccode.ATRB_VAL   FROM GPMS.TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE AND tccode.CL_CODE ='MSRD' ),'0') RPAIR_MTHD_CLASS
+     , COALESCE( (SELECT tccode.ATRB_VAL   FROM GPMS.TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE AND tccode.CL_CODE ='MSRD' ),'0') RPAIR_MTHD_CLASS
      , tnrpairmthduntpc.CNTRWK_AMOUNT    /* 보수_공법_단가.공사_금액 */
      , tnrpairmthduntpc.PAINT_AMOUNT    /* 보수_공법_단가.차선_도색_금액 */
      , tnrpairmthduntpc.ETC_AMOUNT    /* 보수_공법_단가.기타_금액 */
@@ -585,7 +585,7 @@ SELECT
    AND tcrpairmthd.DELETE_AT = 'N'                                   /* 보수공법코드.삭제_여부 */
    AND tcrpairmthd.USE_AT = 'Y'                                         /* 보수공법코드.사용_여부 */
 )
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
                 tnrpairtrget.TRGET_ITEM_NO    /* 보수_대상_항목.대상_항목_번호 */
      , tnrpairtrget.TRGET_SLCTN_NO    /* 보수_대상_항목.대상_선정_번호 */
@@ -684,7 +684,7 @@ SELECT
      , tcrpairmthd.MSRC_CT    /* 보수공법코드.공법_비용 */
      , tcrpairmthd.MSRC_LCLAS_CODE    /* 보수공법코드.공법_대분류_코드 */
      , tcrpairmthd.MSR_DM_CODE /* 공법선정비율_결정방식_코드 */
-     , NVL( (SELECT tccode.ATRB_VAL   FROM GPMS.TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE AND tccode.CL_CODE ='MSRD' ),'0') RPAIR_MTHD_CLASS
+     , COALESCE( (SELECT tccode.ATRB_VAL   FROM GPMS.TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE AND tccode.CL_CODE ='MSRD' ),'0') RPAIR_MTHD_CLASS
      , tnrpairmthduntpc.CNTRWK_AMOUNT    /* 보수_공법_단가.공사_금액 */
      , tnrpairmthduntpc.PAINT_AMOUNT    /* 보수_공법_단가.차선_도색_금액 */
      , tnrpairmthduntpc.ETC_AMOUNT    /* 보수_공법_단가.기타_금액 */

@@ -37,7 +37,7 @@
     <insert id="cell10DAO.insertCell10">
     <selectKey resultClass="String" keyProperty="G2_ID">
     <![CDATA[
-        select SEQ_CELL_10.NEXTVAL from dual
+        select nextval('SEQ_CELL_10')
     ]]>
     </selectKey>
     <![CDATA[
@@ -768,9 +768,9 @@
                                  WHERE CELL10A.ROAD_GRAD = 'RDGD0001' /*RDGD0001 : 국지도 RDGD0002 : 지방도*/
                                  GROUP BY CELL10A.ROUTE_CODE) C10A,
                              ( SELECT 0 AS NJR_LEN
-                                  FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                                  ) NJR,/*GPMS 중용구간 국지도*/
                              ( SELECT 0 AS JBR_LEN
-                                  FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                                  ) JBR,/*GPMS 중용구간 지방도*/
                              ( SELECT TO_NUMBER(CELL10B.ROUTE_CODE) || '호선' AS ROUTE_CODE,
                                        SUM(ROAD_L) AS UNTRACK_LEN
                                   FROM CELL_10 CELL10B
@@ -809,9 +809,9 @@
                                  WHERE CELL10A.ROAD_GRAD = 'RDGD0002' /*RDGD0001 : 국지도 RDGD0002 : 지방도*/
                                  GROUP BY CELL10A.ROUTE_CODE) C10A,
                              ( SELECT 0 AS NJR_LEN
-                                  FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                                  ) NJR,/*GPMS 중용구간 국지도*/
                              ( SELECT 0 AS JBR_LEN
-                                  FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                                  ) JBR,/*GPMS 중용구간 지방도*/
                              ( SELECT TO_NUMBER(CELL10B.ROUTE_CODE) || '호선' AS ROUTE_CODE,
                                        SUM(ROAD_L) AS UNTRACK_LEN
                                   FROM CELL_10 CELL10B
@@ -856,9 +856,9 @@
                      WHERE CELL10A.ROAD_GRAD = 'RDGD0001' /*RDGD0001 : 국지도 RDGD0002 : 지방도*/
                      GROUP BY CELL10A.ROUTE_CODE) C10A,
                  ( SELECT NULL AS NJR_LEN
-                      FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                      ) NJR,/*GPMS 중용구간 국지도*/
                  ( SELECT NULL AS JBR_LEN
-                      FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                      ) JBR,/*GPMS 중용구간 지방도*/
                  ( SELECT TO_NUMBER(CELL10B.ROUTE_CODE) || '호선' AS ROUTE_CODE,
                            SUM(ROAD_L) AS UNTRACK_LEN
                       FROM CELL_10 CELL10B
@@ -912,9 +912,9 @@
                              WHERE CELL10A.ROAD_GRAD = 'RDGD0001' /*RDGD0001 : 국지도 RDGD0002 : 지방도*/
                              GROUP BY CELL10A.ROUTE_CODE) C10A,
                          ( SELECT NULL AS NJR_LEN
-                              FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                              ) NJR,/*GPMS 중용구간 국지도*/
                          ( SELECT NULL AS JBR_LEN
-                              FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                              ) JBR,/*GPMS 중용구간 지방도*/
                          ( SELECT TO_NUMBER(CELL10B.ROUTE_CODE) || '호선' AS ROUTE_CODE,
                                    SUM(ROAD_L) AS UNTRACK_LEN
                               FROM CELL_10 CELL10B
@@ -959,9 +959,9 @@
                      WHERE cell10a.road_grad = 'RDGD0002' /*RDGD0001 : 국지도 RDGD0002 : 지방도*/
                      GROUP BY cell10a.route_code) c10a,
                  ( SELECT NULL AS njr_len
-                      FROM dual) njr,/*GPMS 중용구간 국지도*/
+                      ) njr,/*GPMS 중용구간 국지도*/
                  ( SELECT NULL AS jbr_len
-                      FROM dual) jbr,/*GPMS 중용구간 지방도*/
+                      ) jbr,/*GPMS 중용구간 지방도*/
                  ( SELECT to_number(cell10b.route_code) || '호선' AS route_code,
                            SUM(road_l) AS untrack_len
                       FROM cell_10 cell10b
@@ -1014,9 +1014,9 @@
                         WHERE cell10a.road_grad = 'RDGD0002' /*RDGD0001 : 국지도 RDGD0002 : 지방도*/
                         GROUP BY cell10a.route_code) c10a,
                     ( SELECT NULL AS njr_len
-                         FROM dual) njr,/*GPMS 중용구간 국지도*/
+                         ) njr,/*GPMS 중용구간 국지도*/
                     ( SELECT NULL AS jbr_len
-                         FROM dual) jbr,/*GPMS 중용구간 지방도*/
+                         ) jbr,/*GPMS 중용구간 지방도*/
                     ( SELECT to_number(cell10b.route_code) || '호선' AS route_code,
                               SUM(road_l) AS untrack_len
                          FROM cell_10 cell10b
@@ -1053,9 +1053,9 @@
                                       '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
                                 GROUP BY CELL10A.DEPT_CODE) C10A,
                              ( SELECT NULL AS NJR_LEN
-                                  FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                                  ) NJR,/*GPMS 중용구간 국지도*/
                              ( SELECT NULL AS JBR_LEN
-                                  FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                                  ) JBR,/*GPMS 중용구간 지방도*/
                              ( SELECT CELL10B.DEPT_CODE,
                                        SUM(ROAD_L) AS UNTRACK_LEN
                                   FROM CELL_10 CELL10B
@@ -1089,9 +1089,9 @@
                         WHERE CELL10A.DEPT_CODE IN('6411399',
                               '6411799') /* 6411399:도로건설과/6411799:북부도로과 */ ) C10A,
                     ( SELECT NULL AS NJR_LEN
-                         FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                         ) NJR,/*GPMS 중용구간 국지도*/
                     ( SELECT NULL AS JBR_LEN
-                         FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                         ) JBR,/*GPMS 중용구간 지방도*/
                     ( SELECT SUM(ROAD_L) AS UNTRACK_LEN
                          FROM CELL_10 CELL10B
                         WHERE CELL10B.DEPT_CODE IN('6411399',
@@ -1123,9 +1123,9 @@
                                       '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
                                 GROUP BY CELL10A.DEPT_CODE) C10A,
                              ( SELECT NULL AS NJR_LEN
-                                  FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                                  ) NJR,/*GPMS 중용구간 국지도*/
                              ( SELECT NULL AS JBR_LEN
-                                  FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                                  ) JBR,/*GPMS 중용구간 지방도*/
                              ( SELECT CELL10B.DEPT_CODE,
                                        SUM(ROAD_L) AS UNTRACK_LEN
                                   FROM CELL_10 CELL10B
@@ -1159,9 +1159,9 @@
                         WHERE CELL10A.DEPT_CODE IN('6411399',
                               '6411799') /* 6411399:도로건설과/6411799:북부도로과 */ ) C10A,
                     ( SELECT NULL AS NJR_LEN
-                         FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                         ) NJR,/*GPMS 중용구간 국지도*/
                     ( SELECT NULL AS JBR_LEN
-                         FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                         ) JBR,/*GPMS 중용구간 지방도*/
                     ( SELECT SUM(ROAD_L) AS UNTRACK_LEN
                          FROM CELL_10 CELL10B
                         WHERE CELL10B.DEPT_CODE IN('6411399',
@@ -1181,11 +1181,11 @@
                                               6 C3,
                                               8 C4,
                                               10 C5
-                                         FROM DUAL) SELECT LV,
+                                         ) SELECT LV,
                                                            DECODE(LV, 2, C1, 4, C2, 6, C3, 8, C4, 10, C5) TRACK /*차로*/
                                                       FROM TTB,
                                                            ( SELECT LEVEL LV
-                                                                FROM DUAL CONNECT BY LEVEL <= 10)
+                                                                 CONNECT BY LEVEL <= 10)
                                                      ORDER BY LV) TBA,
                         ( SELECT CELL10.TRACK,
                                   SUM(ROAD_L) / 1000 AS LEN
@@ -1219,7 +1219,7 @@
                                                     DECODE(LV, 2, C1, 4, C2, 6, C3, 8, C4, 10, C5) LEN/*연장*/
                                                FROM TEST,
                                                     ( SELECT LEVEL LV
-                                                         FROM DUAL CONNECT BY LEVEL <= 10)
+                                                          CONNECT BY LEVEL <= 10)
                                               ORDER BY LV
             ]]>
         </select>
@@ -1315,7 +1315,7 @@
                                                    WHERE CELL10A.ROAD_GRAD = 'RDGD0001')
                                           GROUP BY ADM_CODE) ) C10A,
                              ( SELECT 0 AS JR_LEN
-                                  FROM DUAL) JR /*중용구간*/
+                                  ) JR /*중용구간*/
                        WHERE NGA.BJCD = NJB.ADM_CODE (+ )
                          AND NGA.BJCD = C10A.ADM_CODE (+ )
                        UNION ALL
@@ -1377,7 +1377,7 @@
                                                    WHERE CELL10A.ROAD_GRAD = 'RDGD0002')
                                           GROUP BY ADM_CODE) ) C10A,
                              ( SELECT 0 AS JR_LEN
-                                  FROM DUAL) JR /*중용구간*/
+                                  ) JR /*중용구간*/
                        WHERE NGB.BJCD = JB.ADM_CODE (+ )
                          AND NGB.BJCD = C10A.ADM_CODE (+ ) )
             GROUP BY  ROLLUP(ADM_NM,ROAD_GRAD) HAVING GROUPING_ID(ADM_NM,ROAD_GRAD) IN (0,3)
@@ -1462,7 +1462,7 @@
                                                    WHERE CELL10A.ROAD_GRAD = 'RDGD0001')
                                           GROUP BY ADM_CODE) ) C10A,
                              ( SELECT 0 AS JR_LEN
-                                  FROM DUAL) JR /*중용구간*/
+                                  ) JR /*중용구간*/
                        WHERE NGA.BJCD = NJB.ADM_CODE (+ )
                          AND NGA.BJCD = C10A.ADM_CODE (+ )
                        UNION ALL
@@ -1524,7 +1524,7 @@
                                                    WHERE CELL10A.ROAD_GRAD = 'RDGD0002')
                                           GROUP BY ADM_CODE) ) C10A,
                              ( SELECT 0 AS JR_LEN
-                                  FROM DUAL) JR /*중용구간*/
+                                  ) JR /*중용구간*/
                        WHERE NGB.BJCD = JB.ADM_CODE (+ )
                          AND NGB.BJCD = C10A.ADM_CODE (+ ) )
             GROUP BY  ROLLUP(ADM_NM,ROAD_GRAD) HAVING GROUPING_ID(ADM_NM,ROAD_GRAD) IN (0,3)
@@ -1697,9 +1697,9 @@
                          FROM CELL_10 CELL10A
                         GROUP BY CELL10A.ADM_CODE) C10A,
                     ( SELECT 0 AS NJR_LEN
-                         FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                         ) NJR,/*GPMS 중용구간 국지도*/
                     ( SELECT 0 AS JBR_LEN
-                         FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                         ) JBR,/*GPMS 중용구간 지방도*/
                     ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
                               SUM(ROAD_L) AS UNTRACK_LEN
                          FROM CELL_10 CELL10B
@@ -1744,9 +1744,9 @@
                          FROM CELL_10 CELL10A
                         GROUP BY CELL10A.ADM_CODE) C10A,
                     ( SELECT 0 AS NJR_LEN
-                         FROM DUAL) NJR,/*GPMS 중용구간 국지도*/
+                         ) NJR,/*GPMS 중용구간 국지도*/
                     ( SELECT 0 AS JBR_LEN
-                         FROM DUAL) JBR,/*GPMS 중용구간 지방도*/
+                         ) JBR,/*GPMS 중용구간 지방도*/
                     ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
                               SUM(ROAD_L) AS UNTRACK_LEN
                          FROM CELL_10 CELL10B
@@ -1924,7 +1924,7 @@
                   , ( SELECT SDO_CS.TRANSFORM(
                                   SDO_GEOMETRY( 2001, 4326, SDO_POINT_TYPE( #lon#, #lat#, NULL ), NULL, NULL)
                                   , 5181 )
-                      FROM DUAL )
+                       )
                   , 'mask=ANYINTERACT'
               ) = 'TRUE'
     ]]>
@@ -1962,7 +1962,7 @@
                   , ( SELECT SDO_CS.TRANSFORM(
                                   SDO_GEOMETRY( 2001, 4326, SDO_POINT_TYPE( #lon#, #lat#, NULL ), NULL, NULL)
                                   , 5181 )
-                      FROM DUAL )
+                       )
                   , 'mask=ANYINTERACT'
               ) = 'TRUE'
     ]]>

@@ -50,7 +50,7 @@
     <insert id="rpairDAO.insertPotholeRpair">
         <selectKey resultClass="String" keyProperty="RPRDTLS_MNG_NO">
         <![CDATA[
-            select SEQ_POTHOLE_RPAIR.NEXTVAL from dual
+            select nextval('SEQ_POTHOLE_RPAIR')
         ]]>
         </selectKey>
 
@@ -72,7 +72,7 @@
             , 'Y'                 /* 포트홀_보수_내역.사용_여부 */
             , 'N'                 /* 포트홀_보수_내역.삭제_여부 */
             , #CRTR_NO#           /* 포트홀_보수_내역.생성자_번호 */
-            , SYSDATE             /* 포트홀_보수_내역.생성_일자 */
+            , NOW()             /* 포트홀_보수_내역.생성_일자 */
         )
     ]]>
     </insert>
@@ -97,7 +97,7 @@
             DELETE_DE = #DELETE_DE# ,              /* 포트홀_보수_내역.삭제_일자 */
             RPAIR_BFE_PHOTO = #RPAIR_BFE_PHOTO# ,  /* 포트홀_보수_내역.보수_전_사진 */
             RPAIR_AFT_PHOTO = #RPAIR_AFT_PHOTO# ,  /* 포트홀_보수_내역.보수_후_사진 */
-            UPDT_DE = SYSDATE                      /* 포트홀_보수_내역.수정_일자 */
+            UPDT_DE = NOW()                      /* 포트홀_보수_내역.수정_일자 */
             , DAYCNT = #DAYCNT#                    /* 포트홀_신고_내역.처리_일수 */
 
         WHERE 1 = 1
@@ -117,7 +117,7 @@
             USE_AT = 'N'                             /* 포트홀_보수_내역.삭제_여부 */
             , DELETE_AT = 'Y'                        /* 포트홀_보수_내역.삭제_여부 */
             , UPDUSR_NO = #UPDUSR_NO#                /* 포트홀_보수_내역.수정자_번호 */
-            , DELETE_DE = SYSDATE                    /* 포트홀_보수_내역.삭제_일자 */
+            , DELETE_DE = NOW()                    /* 포트홀_보수_내역.삭제_일자 */
         WHERE 1 = 1
             AND RPRDTLS_MNG_NO = #RPRDTLS_MNG_NO#    /* 포트홀_보수_내역.보수_내역_관리_번호 */
     ]]>

@@ -152,7 +152,7 @@
     /* monitorDAO.updateMntrngMbr */
     /* 모니터링단원 수정 */
     UPDATE TN_MNTRNG_MBR
-       SET UPDT_DE = sysdate
+       SET UPDT_DE = NOW()
     ]]>
     <isNotEmpty property="VHCLE_NO">
     <![CDATA[
@@ -187,7 +187,7 @@
     /* 모니터링단원 위촉 수정 */
 
     UPDATE TN_MNTRNG_MBR
-       SET UPDT_DE = sysdate
+       SET UPDT_DE = NOW()
         , ENTRST_AT = #ENTRST_AT#
         , ENTRST_DE = #ENTRST_DE#
     WHERE 1=1
@@ -260,7 +260,7 @@ VHCLE_NO = #VHCLE_NO# AND BSNM_NM = #BSNM_NM#
 			, #ENTRST_AT#
 			, #ENTRST_DE#
 			, #RM#
-			, sysdate
+			, NOW()
 	       )
     ]]>
     </insert>
@@ -274,7 +274,7 @@ VHCLE_NO = #VHCLE_NO# AND BSNM_NM = #BSNM_NM#
     UPDATE TN_MNTRNG_MBR SET
     DELETE_AT = 'Y'
     , USE_AT = 'N'
-    , DELETE_DE = sysdate
+    , DELETE_DE = NOW()
      WHERE 1 = 1
            AND VHCLE_NO = #VHCLE_NO#
            AND BSNM_NM = #BSNM_NM#

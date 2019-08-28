@@ -30,7 +30,7 @@
 	<insert id="pavSttusGradStdrDAO.insertPavSttusGradStdr">
 	<selectKey resultClass="String" keyProperty="GRAD_NO">
   <![CDATA[
-  select SEQ_TN_PAV_STTUS_GRAD_STDR.NEXTVAL from dual
+  select nextval('SEQ_TN_PAV_STTUS_GRAD_STDR')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -67,9 +67,9 @@
 			, #DELETE_AT# /* 포장상태등급기준.삭제_여부 */
 			, #USE_AT# /* 포장상태등급기준.사용_여부 */
 			, #CRTR_NO# /* 포장상태등급기준.생성자_번호 */
-			, SYSDATE /* 포장상태등급기준.생성_일시 */
+			, NOW() /* 포장상태등급기준.생성_일시 */
 			, #UPDUSR_NO# /* 포장상태등급기준.수정자_번호 */
-			, SYSDATE /* 포장상태등급기준.수정_일시 */
+			, NOW() /* 포장상태등급기준.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -118,13 +118,13 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 , CRTR_NO = #CRTR_NO# /* 포장상태등급기준.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 포장상태등급기준.생성_일시 */
+, CREAT_DT = NOW() /* 포장상태등급기준.생성_일시 */
 			
 
 , UPDUSR_NO = #UPDUSR_NO# /* 포장상태등급기준.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 포장상태등급기준.수정_일시 */
+, UPDT_DT = NOW() /* 포장상태등급기준.수정_일시 */
 			
 		WHERE 1 = 1
 		AND GRAD_NO = #GRAD_NO# /* 포장상태등급기준.등급_번호 */
@@ -390,7 +390,7 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 <![CDATA[ 		
 		/* pavSttusGradStdrDAO.selectPavSttusGradStdrList */
 		/* 포장상태등급기준 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnpavsttusgradstdr.GRAD_NO /* 포장상태등급기준.등급_번호 */
 				, tnpavsttusgradstdr.GRAD_STDR_CODE /* 포장상태등급기준.등급_기준_코드 */

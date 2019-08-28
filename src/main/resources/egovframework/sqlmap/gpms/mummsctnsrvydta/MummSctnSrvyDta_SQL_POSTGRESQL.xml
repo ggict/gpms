@@ -76,7 +76,7 @@
 	<insert id="mummSctnSrvyDtaDAO.insertMummSctnSrvyDta">
 		<selectKey resultClass="String" keyProperty="DTA_NO">
   <![CDATA[
-  select SEQ_TN_MUMM_SCTN_SRVY_DTA.NEXTVAL from dual
+  select nextval('SEQ_TN_MUMM_SCTN_SRVY_DTA')
   ]]>
 		</selectKey>
 	<![CDATA[
@@ -177,9 +177,9 @@
 			, #DELETE_AT# /* 최소_구간_조사_자료.삭제_여부 */
 			, #USE_AT# /* 최소_구간_조사_자료.사용_여부 */
 			, #CRTR_NO# /* 최소_구간_조사_자료.생성자_번호 */
-			, SYSDATE /* 최소_구간_조사_자료.생성_일시 */
+			, NOW() /* 최소_구간_조사_자료.생성_일시 */
 			, #UPDUSR_NO# /* 최소_구간_조사_자료.수정자_번호 */
-			, SYSDATE /* 최소_구간_조사_자료.수정_일시 */
+			, NOW() /* 최소_구간_조사_자료.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -324,13 +324,13 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 , CRTR_NO = #CRTR_NO# /* 최소_구간_조사_자료.생성자_번호 */
 
 
-, CREAT_DT = SYSDATE /* 최소_구간_조사_자료.생성_일시 */
+, CREAT_DT = NOW() /* 최소_구간_조사_자료.생성_일시 */
 
 
 , UPDUSR_NO = #UPDUSR_NO# /* 최소_구간_조사_자료.수정자_번호 */
 
 
-, UPDT_DT = SYSDATE /* 최소_구간_조사_자료.수정_일시 */
+, UPDT_DT = NOW() /* 최소_구간_조사_자료.수정_일시 */
 
 		WHERE 1 = 1
 		AND DTA_NO = #DTA_NO# /* 최소_구간_조사_자료.자료_번호 */
@@ -586,8 +586,8 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 		AND ROUTE_CODE = #ROUTE_CODE#
 		AND STRTPT >= #STRTPT#
 		AND ENDPT <= #ENDPT#
-		AND ROWNUM = 1
 		GROUP BY SRVY_NM, ROUTE_CODE, SCTN_STRTPT_DC, SCTN_ENDPT_DC, MEMO, ROAD_NM
+		LIMIT 1
 	]]>
 	</select>
 
@@ -1134,7 +1134,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 	    <![CDATA[
 		/* mummSctnSrvyDtaDAO.selectMummSctnSrvyDtaTab3ListPage */
 		/* 최소_구간_조사_자료_10m 세부내역 조회  */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				 tnmummsctnsrvydta.STRTPT 		/* 최소_구간_조사_자료.시점 */
 				, tnmummsctnsrvydta.ENDPT 		/* 최소_구간_조사_자료.종점 */
@@ -1174,7 +1174,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 <![CDATA[
 		/* mummSctnSrvyDtaDAO.selectMummSctnSrvyDtaList */
 		/* 최소_구간_조사_자료 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			 SELECT
 			 		srvy_no,
                     srvy_de,
@@ -1340,7 +1340,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			        , tnmummsctnsrvydta.ENDPT
 			        , tnmummsctnsrvydta.RDSRFC_IMG_FILE_NM_1
 			        , tnmummsctnsrvydta.DTA_NO
-			        , ROWNUM as rnum
+			        , ROW_NUMBER() OVER() as rnum
 			    FROM (
 			        SELECT cell.*
 			        FROM CELL_10 cell
@@ -1643,10 +1643,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			    tnrouteinfo.ROAD_GRAD
 			    , tnrouteinfo.ROAD_NO AS ROUTE_CODE
 			    , tnrouteinfo.ROAD_NAME AS ROAD_NM
-			    , NVL(ROUND(AVG(tnmummsctnsrvydta.GPCI), 2), 0) AS GPCI
-			    , NVL(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC), 2), 0) AS DMG_CUZ_VMTC
-                , NVL(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT), 2), 0) AS DMG_CUZ_CLMT
-                , NVL(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC), 2), 0) AS DMG_CUZ_ETC
+			    , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI), 2), 0) AS GPCI
+			    , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC), 2), 0) AS DMG_CUZ_VMTC
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT), 2), 0) AS DMG_CUZ_CLMT
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC), 2), 0) AS DMG_CUZ_ETC
 			FROM
 			    TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
 			RIGHT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
@@ -1676,10 +1676,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                 tnrouteinfo.ROAD_GRAD
                 , tnrouteinfo.ROAD_NO AS ROUTE_CODE
                 , tnrouteinfo.ROAD_NAME AS ROAD_NM
-                , NVL(ROUND(AVG(tnmummsctnsrvydta.GPCI), 2), 0) AS GPCI
-                , NVL(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC), 2), 0) AS DMG_CUZ_VMTC
-                , NVL(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT), 2), 0) AS DMG_CUZ_CLMT
-                , NVL(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC), 2), 0) AS DMG_CUZ_ETC
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI), 2), 0) AS GPCI
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC), 2), 0) AS DMG_CUZ_VMTC
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT), 2), 0) AS DMG_CUZ_CLMT
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC), 2), 0) AS DMG_CUZ_ETC
             FROM
                 TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
             RIGHT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
@@ -1708,10 +1708,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
             SELECT
 			    dept.DEPT_CODE
 			    , dept.LOWEST_DEPT_NM AS DEPT_NM
-			    , NVL(mumm.GPCI, 0) AS GPCI
-			    , NVL(mumm.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
-			    , NVL(mumm.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
-			    , NVL(mumm.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
+			    , COALESCE(mumm.GPCI, 0) AS GPCI
+			    , COALESCE(mumm.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
+			    , COALESCE(mumm.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
+			    , COALESCE(mumm.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
 			FROM (
 			        SELECT dept.*
 			        FROM TC_DEPT dept
@@ -1759,10 +1759,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
             SELECT
                 dept.DEPT_CODE
                 , dept.LOWEST_DEPT_NM AS DEPT_NM
-                , NVL(mumm.GPCI, 0) AS GPCI
-                , NVL(mumm.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
-                , NVL(mumm.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
-                , NVL(mumm.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
+                , COALESCE(mumm.GPCI, 0) AS GPCI
+                , COALESCE(mumm.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
+                , COALESCE(mumm.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
+                , COALESCE(mumm.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
             FROM (
                     SELECT dept.*
                     FROM TC_DEPT dept

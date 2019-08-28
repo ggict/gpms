@@ -32,7 +32,7 @@
 	<insert id="companyDAO.insertCompany">
 	<selectKey resultClass="String" keyProperty="CO_NO">
 	  <![CDATA[
-	  select SEQ_TN_COMPANY.NEXTVAL from dual
+	  select nextval('SEQ_TN_COMPANY')
 	  ]]>
 	  </selectKey>
 	<![CDATA[
@@ -71,9 +71,9 @@
 			, #MFRC_CNTRWK# /* 업체정보.주력_공사 */
 			, #MAJOR_CNTRWK_AREA# /* 업체정보.주요_공사_지역 */
 			, #CRTR_NO# /* 업체정보.생성자_번호 */
-			, SYSDATE /* 업체정보.생성_일시 */
+			, NOW() /* 업체정보.생성_일시 */
 			, #UPDUSR_NO# /* 업체정보.수정자_번호 */
-			, SYSDATE /* 업체정보.수정_일시 */
+			, NOW() /* 업체정보.수정_일시 */
 			, #USE_AT# /* 업체정보.사용_여부 */
 			, 'N' /* 업체정보.삭제_여부 */
 		)
@@ -109,7 +109,7 @@
 
 , UPDUSR_NO = #UPDUSR_NO# /* 업체정보.수정자_번호 */
 
-, UPDT_DT = SYSDATE /* 업체정보.수정_일시 */
+, UPDT_DT = NOW() /* 업체정보.수정_일시 */
 
 , USE_AT = #USE_AT# /* 업체정보.사용_여부 */
 
@@ -126,7 +126,7 @@ WHERE CO_NO = #CO_NO#
 		SET
 			DELETE_AT = 'Y' /* 업체정보.삭제_여부 */
 			, UPDUSR_NO = #UPDUSR_NO# /* 업체정보.수정자_번호 */
-			, UPDT_DT = SYSDATE /* 업체정보.수정_일시 */
+			, UPDT_DT = NOW() /* 업체정보.수정_일시 */
 		WHERE CO_NO = #CO_NO#
 ]]>
 	</delete>

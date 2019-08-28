@@ -46,7 +46,7 @@
 		<![CDATA[
 		/* mcalstDAO.selectMCalsTList */
 		/* 교량정보(M_CALS_T) 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				mcalst.BRDG_SEQ,/*교량정보.BMS코드*/
 				mcalst.BRDG_NAME,/*교량정보.교량명*/
@@ -81,7 +81,7 @@
 	<![CDATA[
 		/* mcalstDAO.selectMCalsTListTotalCount */
 		/* M_CALS_T 조회 수 */
-		SELECT COUNT(*) FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT COUNT(*) FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				mcalst.BRDG_SEQ,/*교량정보.BMS코드*/
 				mcalst.BRDG_NAME,/*교량정보.교량명*/

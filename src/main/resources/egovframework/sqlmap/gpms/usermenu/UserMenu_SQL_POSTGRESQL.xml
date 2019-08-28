@@ -21,7 +21,7 @@
 	<insert id="userMenuDAO.insertUserMenu">
 			<selectKey resultClass="String" keyProperty="AUTHOR_NO">
   <![CDATA[
-  select SEQ_TN_USER_MENU.NEXTVAL from dual
+  select nextval('SEQ_TN_USER_MENU')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -39,7 +39,7 @@
 			#AUTHOR_NO# /* 사용자권한메뉴.권한_번호 */
 			, #DELETE_AT# /* 사용자권한메뉴.삭제_여부 */
 			, #CRTR_NO# /* 사용자권한메뉴.생성자_번호 */
-			, SYSDATE /* 사용자권한메뉴.생성_일시 */
+			, NOW() /* 사용자권한메뉴.생성_일시 */
 			, #MENU_ID# /* 사용자권한메뉴.메뉴_ID */
 			, #USER_NO# /* 사용자권한메뉴.사용자_번호 */
 			, #AUTHOR_ID# /* 사용자권한메뉴.권한_ID */ 
@@ -61,7 +61,7 @@ DELETE_AT = #DELETE_AT# /* 사용자권한메뉴.삭제_여부 */
 , CRTR_NO = #CRTR_NO# /* 사용자권한메뉴.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 사용자권한메뉴.생성_일시 */
+, CREAT_DT = NOW() /* 사용자권한메뉴.생성_일시 */
 			
 
 , MENU_ID = #MENU_ID# /* 사용자권한메뉴.메뉴_ID */
@@ -238,7 +238,7 @@ DELETE_AT = #DELETE_AT# /* 사용자권한메뉴.삭제_여부 */
 <![CDATA[ 		
 		/* userMenuDAO.selectUserMenuList */
 		/* 사용자권한메뉴 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnusermenu.AUTHOR_NO /* 사용자권한메뉴.권한_번호 */
 				, tnusermenu.DELETE_AT /* 사용자권한메뉴.삭제_여부 */

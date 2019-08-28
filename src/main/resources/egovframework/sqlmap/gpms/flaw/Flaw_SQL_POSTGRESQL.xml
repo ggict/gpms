@@ -29,7 +29,7 @@
 	<insert id="flawDAO.insertFlaw">
 	<selectKey resultClass="String" keyProperty="FLAW_ID">
   <![CDATA[
-  select SEQ_TN_FLAW.NEXTVAL from dual
+  select nextval('SEQ_TN_FLAW')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -64,9 +64,9 @@
 			, 'N' /* 공사하자정보.삭제_여부 */
 			, #DELETE_DT# /* 공사하자정보.삭제_일시 */
 			, #CRTR_NO# /* 공사하자정보.생성자_번호 */
-			, SYSDATE /* 공사하자정보.생성_일시 */
+			, NOW() /* 공사하자정보.생성_일시 */
 			, #UPDUSR_NO# /* 공사하자정보.수정자_번호 */
-			, SYSDATE /* 공사하자정보.수정_일시 */
+			, NOW() /* 공사하자정보.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -76,7 +76,7 @@
 		/* flawDAO.updateFlaw */
 		/* 공사하자정보 수정 */
 		UPDATE TN_FLAW SET
-		UPDT_DT = SYSDATE /* 공사하자정보.수정_일시 */
+		UPDT_DT = NOW() /* 공사하자정보.수정_일시 */
 
 	]]>
 	<isNotEmpty property="CNTRWK_ID">
@@ -138,7 +138,7 @@
 		SET 
 		DELETE_AT = 'Y' /* 공사하자정보.삭제_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 공사하자정보.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 공사하자정보.수정_일시 */
+		, UPDT_DT = NOW() /* 공사하자정보.수정_일시 */
 		WHERE 1 = 1
 		AND FLAW_ID = #FLAW_ID# /* 공사하자정보.하자_ID */
 ]]>
@@ -386,7 +386,7 @@
 <![CDATA[ 		
 		/* flawDAO.selectFlawList */
 		/* 공사하자정보 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnflaw.FLAW_ID /* 공사하자정보.하자_ID */
 				, tnflaw.CNTRWK_ID /* 공사하자정보.공사_ID */
@@ -465,7 +465,7 @@
 		     , tncntrwk.DEPT_CODE
 		     , tcdept.LOWEST_DEPT_NM DEPT_NM
 		     , tncntrwk.CNSTRCT_CO_NO
-		     , NVL(tncompany.CO_NM, tncntrwk.CNSTRCT_CO_NM) CNSTRCT_CO_NM
+		     , COALESCE(tncompany.CO_NM, tncntrwk.CNSTRCT_CO_NM) CNSTRCT_CO_NM
 		     , tncntrwk.FLAW_BEGIN_DE
 		     , tncntrwk.FLAW_END_DE
 		     , tnflaw.FLAW_ID

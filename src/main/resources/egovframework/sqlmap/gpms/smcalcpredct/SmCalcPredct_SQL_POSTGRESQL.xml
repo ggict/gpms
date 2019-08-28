@@ -36,7 +36,7 @@
 	<insert id="smCalcPredctDAO.insertSmCalcPredct">
 	<selectKey resultClass="String" keyProperty="PREDCT_NO">
   	<![CDATA[
- 		select SEQ_TN_SM_CALC_PREDCT.NEXTVAL from dual
+ 		select nextval('SEQ_TN_SM_CALC_PREDCT')
   	]]>
   	</selectKey>
 	<![CDATA[ 
@@ -211,7 +211,7 @@
 <![CDATA[ 		
 		/* smCalcPredctDAO.selectSmCalcPredctList */
 		/* 집계_산정_예측 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnsmcalcpredct.CALC_YEAR /* 집계_산정_예측.산정_년도 */
 				, tnsmcalcpredct.CALC_MT /* 집계_산정_예측.산정_월 */

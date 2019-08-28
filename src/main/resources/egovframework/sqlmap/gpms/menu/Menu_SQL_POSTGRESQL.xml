@@ -88,7 +88,7 @@
 	<insert id="menuDAO.insertMenu">
 		<selectKey resultClass="String" keyProperty="MENU_ID">
 		  <![CDATA[
-		  select tccode.ATRB_VAL || LPAD( SEQ_TN_MENU.NEXTVAL ,11,'0') MENU_ID from dual
+		  select tccode.ATRB_VAL || LPAD( nextval('SEQ_TN_MENU') ,11,'0') MENU_ID 
 			LEFT OUTER JOIN TC_CODE tccode
 	        ON 1 = 1
 	        AND tccode.CODE_VAL = #SYS_CODE# /* 공통코드.코드_값 */
@@ -120,10 +120,10 @@
 				, 'Y' /* 시스템메뉴.사용_여부 */
 				, 'N' /* 시스템메뉴.삭제_여부 */
 				, #UPDUSR_NO# /* 시스템메뉴.수정자_번호 */
-				, SYSDATE /* 시스템메뉴.수정_일시 */
+				, NOW() /* 시스템메뉴.수정_일시 */
 				, #MENU_NM# /* 시스템메뉴.메뉴_명 */
 				, #CRTR_NO# /* 시스템메뉴.생성자_번호 */
-				, SYSDATE /* 시스템메뉴.생성_일시 */
+				, NOW() /* 시스템메뉴.생성_일시 */
 				, LOWER(#URL#) /* 시스템메뉴.URL */
 				, #MENU_DC# /* 시스템메뉴.메뉴_설명 */
 				, #SYS_CODE#/* 시스템메뉴.시스템코드 */
@@ -139,7 +139,7 @@
 			SELECT tnmenu.*
 			, (SELECT tnsysuser.USER_ID /* 시스템사용자.사용자_ID */ FROM TN_SYS_USER tnsysuser WHERE 1 = 1 AND tnsysuser.USER_NO = tnmenu.UPDUSR_NO /* 시스템사용자.사용자_번호 */ 
 			AND tnsysuser.USE_AT = 'Y' AND tnsysuser.CONFM_AT = 'Y' AND tnsysuser.DELETE_AT = 'N' )	UPDUSR_ID 
-			FROM (SELECT ROWNUM AS rn, tb.* FROM (
+			FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 				SELECT
 					tnmenu.MENU_ID /* 시스템메뉴.메뉴_ID */
 					, tnmenu.UPPER_MENU_ID /* 시스템메뉴.상위_메뉴_ID */
@@ -221,7 +221,7 @@
 				,MENU_DC = #MENU_DC#  /* 시스템메뉴.메뉴_설명 */
 				,USE_AT = #USE_AT#	  /* 시스템메뉴.사용여부 */
 				,UPDUSR_NO = #UPDUSR_NO# /* 시스템메뉴.정자_번호 */
-				,UPDT_DT = sysdate    /* 시스템메뉴.수정_일시 */
+				,UPDT_DT = NOW()    /* 시스템메뉴.수정_일시 */
 			WHERE 1 = 1
 			AND MENU_ID = #MENU_ID#   /* 시스템메뉴.메뉴_ID */
 			]]>
@@ -236,7 +236,7 @@
 			DELETE_AT = 'Y' /* 시스템메뉴.삭제_여부 */
 			, USE_AT = 'N'/* 시스템메뉴.사용_여부 */
 			, UPDUSR_NO = #UPDUSR_NO# /* 시스템메뉴.수정자_번호 */
-			, UPDT_DT = SYSDATE /* 시스템메뉴.수정_일시 */
+			, UPDT_DT = NOW() /* 시스템메뉴.수정_일시 */
 			WHERE 1 = 1
 			AND MENU_ID = #MENU_ID# /* 시스템메뉴.메뉴_ID */
 		]]>

@@ -26,7 +26,7 @@
 	<insert id="pavFrmulaDAO.insertPavFrmula">
 		<selectKey resultClass="String" keyProperty="FRMULA_NO">
   <![CDATA[
-  select SEQ_TN_PAV_FRMULA.NEXTVAL from dual
+  select nextval('SEQ_TN_PAV_FRMULA')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -55,9 +55,9 @@
 			, #DELETE_AT# /* 포장_수식.삭제_여부 */
 			, #USE_AT# /* 포장_수식.사용_여부 */
 			, #CRTR_NO# /* 포장_수식.생성자_번호 */
-			, SYSDATE /* 포장_수식.생성_일시 */
+			, NOW() /* 포장_수식.생성_일시 */
 			, #UPDUSR_NO# /* 포장_수식.수정자_번호 */
-			, SYSDATE /* 포장_수식.수정_일시 */
+			, NOW() /* 포장_수식.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -94,13 +94,13 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 , CRTR_NO = #CRTR_NO# /* 포장_수식.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 포장_수식.생성_일시 */
+, CREAT_DT = NOW() /* 포장_수식.생성_일시 */
 			
 
 , UPDUSR_NO = #UPDUSR_NO# /* 포장_수식.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 포장_수식.수정_일시 */
+, UPDT_DT = NOW() /* 포장_수식.수정_일시 */
 			
 		WHERE 1 = 1
 		AND FRMULA_NO = #FRMULA_NO# /* 포장_수식.수식_번호 */
@@ -326,7 +326,7 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 <![CDATA[ 		
 		/* pavFrmulaDAO.selectPavFrmulaList */
 		/* 포장_수식 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnpavfrmula.FRMULA_NO /* 포장_수식.수식_번호 */
 				, tnpavfrmula.PARNTS_FRMULA_NO /* 포장_수식.부모_수식_번호 */

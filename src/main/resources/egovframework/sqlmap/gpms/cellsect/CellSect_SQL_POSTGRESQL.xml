@@ -60,7 +60,7 @@
         <![CDATA[
         /* cellSectDAO.selectCellSectList */
         /* CELL_SECT 조회 */
-        SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+        SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
             SELECT
                 cellsect.G2_ID /* CELL_SECT.G2_ID */
                 , cellsect.G2_DATASETID /* CELL_SECT.G2_DATASETID */

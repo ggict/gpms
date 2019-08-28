@@ -27,7 +27,7 @@
 	<insert id="rpairMthdUntpcDAO.insertRpairMthdUntpc">
 	<selectKey resultClass="String" keyProperty="UNTPC_MANAGE_NO">
   	<![CDATA[
- 		select SEQ_TN_RPAIR_MTHD_UNTPC.NEXTVAL from dual
+ 		select nextval('SEQ_TN_RPAIR_MTHD_UNTPC')
   	]]>
   	</selectKey>
 	<![CDATA[ 
@@ -61,7 +61,7 @@
 			, #CRTR_NO# /* 보수_공법_단가.생성자_번호 */
 			, #CREAT_DT# /* 보수_공법_단가.생성_일시 */
 			, #UPDUSR_NO# /* 보수_공법_단가.수정자_번호 */
-			, SYSDATE /* 보수_공법_단가.수정_일시 */
+			, NOW() /* 보수_공법_단가.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -84,16 +84,16 @@
 			, CREAT_DT /* 보수_공법_단가_이력.생성_일시 */
 		) 
 		SELECT 
-			  SEQ_TH_RPAIR_MTHD_UNTPC.NEXTVAL 
+			  nextval('SEQ_TH_RPAIR_MTHD_UNTPC') 
 			, RPAIR_MTHD_CODE
 			, CNTRWK_AMOUNT
 			, PAINT_AMOUNT
 			, ETC_AMOUNT
 			, TOT_AMOUNT
 			, DSGN_DT
-			, SYSDATE
+			, NOW()
 			, #CRTR_NO# 
-			, SYSDATE
+			, NOW()
 		FROM TN_RPAIR_MTHD_UNTPC
 ]]>
 	</insert>
@@ -107,11 +107,11 @@
 		, PAINT_AMOUNT = #PAINT_AMOUNT# /* 보수_공법_단가.차선_도색_금액 */
 		, ETC_AMOUNT = #ETC_AMOUNT# /* 보수_공법_단가.기타_금액 */
 		, TOT_AMOUNT = #TOT_AMOUNT# /* 보수_공법_단가.총_금액 */
-		, DSGN_DT = SYSDATE /* 보수_공법_단가.설계_일시 */
+		, DSGN_DT = NOW() /* 보수_공법_단가.설계_일시 */
 		, USE_AT = #USE_AT# /* 보수_공법_단가.사용_여부 */
 		, DELETE_AT = #DELETE_AT# /* 보수_공법_단가.삭제_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 보수_공법_단가.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 보수_공법_단가.수정_일시 */
+		, UPDT_DT = NOW() /* 보수_공법_단가.수정_일시 */
 		WHERE 1 = 1
 		AND UNTPC_MANAGE_NO = #UNTPC_MANAGE_NO# /* 보수_공법_단가.단가_관리_번호 */
 		AND RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# /* 보수_공법_단가.보수_공법_코드 */
@@ -125,7 +125,7 @@
 		UPDATE TN_RPAIR_MTHD_UNTPC SET
 		 DELETE_AT = 'Y' /* 보수_공법_단가.삭제_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 보수_공법_단가.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 보수_공법_단가.수정_일시 */
+		, UPDT_DT = NOW() /* 보수_공법_단가.수정_일시 */
 		WHERE 1 = 1
 		AND UNTPC_MANAGE_NO = #UNTPC_MANAGE_NO# /* 보수_공법_단가.단가_관리_번호 */
 ]]>
@@ -193,7 +193,7 @@
 <![CDATA[ 		
 		/* rpairMthdUntpcDAO.selectRpairMthdUntpcList */
 		/* 보수_공법_단가 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnrpairmthduntpc.UNTPC_MANAGE_NO /* 보수_공법_단가.단가_관리_번호 */
 				, tnrpairmthduntpc.RPAIR_MTHD_CODE /* 보수_공법_단가.보수_공법_코드 */

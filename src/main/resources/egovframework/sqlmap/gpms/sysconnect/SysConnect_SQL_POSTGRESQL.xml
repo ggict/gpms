@@ -204,7 +204,7 @@ USER_NO = #USER_NO#::int /* 시스템접속로그.사용자_번호 */
 <![CDATA[ 		
 		/* sysConnectDAO.selectSysConnectList */
 		/* 시스템접속로그 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tlsysconnect.CONECT_LOG_NO /* 시스템접속로그.접속_로그_번호 */
 				, tlsysconnect.USER_NO /* 시스템접속로그.사용자_번호 */

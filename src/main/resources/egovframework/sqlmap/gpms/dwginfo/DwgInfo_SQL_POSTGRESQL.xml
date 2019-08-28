@@ -198,7 +198,7 @@
 		<include refid="dwgInfoDAO.selectDwgInfoList.where" />
 
 <![CDATA[
-			AND nvl(dwginfo.SEQID,0) = nvl( (SELECT MAX(dwg.SEQID) 
+			AND COALESCE(dwginfo.SEQID,0) = COALESCE( (SELECT MAX(dwg.SEQID) 
 											   FROM DWG_INFO dwg 
 											  WHERE dwg.ROAD_NO = dwginfo.ROAD_NO 
 											  	AND dwg.SECT = dwginfo.SECT 
@@ -227,7 +227,7 @@
 ]]>		
 		<include refid="dwgInfoDAO.selectDwgInfoList.where" />
 <![CDATA[		
-			AND nvl(dwginfo.SEQID,0) = nvl( (SELECT MAX(dwg.SEQID) 
+			AND COALESCE(dwginfo.SEQID,0) = COALESCE( (SELECT MAX(dwg.SEQID) 
 											   FROM DWG_INFO dwg 
 											  WHERE dwg.ROAD_NO = dwginfo.ROAD_NO 
 											  	AND dwg.SECT = dwginfo.SECT 

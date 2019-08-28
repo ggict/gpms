@@ -40,7 +40,7 @@
 	<insert id="srvyDtaSttusDAO.insertSrvyDtaSttus">
 		<selectKey resultClass="String" keyProperty="DTA_STTUS_NO">
   <![CDATA[
-  select SEQ_TN_SRVY_DTA_STTUS.NEXTVAL from dual
+  select nextval('SEQ_TN_SRVY_DTA_STTUS')
   ]]>
 		</selectKey>
 	<![CDATA[ 
@@ -84,9 +84,9 @@
 			, #DELETE_AT# /* 조사_자료_현황.삭제_여부 */
 			, #USE_AT# /* 조사_자료_현황.사용_여부 */
 			, #CRTR_NO# /* 조사_자료_현황.생성자_번호 */
-			, SYSDATE /* 조사_자료_현황.생성_일시 */
+			, NOW() /* 조사_자료_현황.생성_일시 */
 			, #UPDUSR_NO# /* 조사_자료_현황.수정자_번호 */
-			, SYSDATE /* 조사_자료_현황.수정_일시 */
+			, NOW() /* 조사_자료_현황.수정_일시 */
 			, #DTA_NO# /* 조사_자료_현황.자료_번호 */
 		)
 ]]>
@@ -145,13 +145,13 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 , CRTR_NO = #CRTR_NO# /* 조사_자료_현황.생성자_번호 */
 			
 
-, CREAT_DT = SYSDATE /* 조사_자료_현황.생성_일시 */
+, CREAT_DT = NOW() /* 조사_자료_현황.생성_일시 */
 			
 
 , UPDUSR_NO = #UPDUSR_NO# /* 조사_자료_현황.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 조사_자료_현황.수정_일시 */
+, UPDT_DT = NOW() /* 조사_자료_현황.수정_일시 */
 
 , DTA_NO = #DTA_NO# /* 조사_자료_현황.자료_번호 */
 			
@@ -510,7 +510,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 <![CDATA[ 		
 		/* srvyDtaSttusDAO.selectSrvyDtaSttusList */
 		/* 조사_자료_현황 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnsrvydtasttus.DTA_STTUS_NO /* 조사_자료_현황.자료_현황_번호 */
 				, tnsrvydtasttus.SRVY_YEAR /* 조사_자료_현황.조사_년도 */
@@ -614,7 +614,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		   SET USE_AT = 'N'
 		   	 , DELETE_AT = 'Y'
 		   	 , UPDUSR_NO = #UPDUSR_NO#
-		   	 , UPDT_DT = SYSDATE
+		   	 , UPDT_DT = NOW()
 		 WHERE SM_PROCESS_AT = 'N'
 		   AND SRVY_YEAR = #SRVY_YEAR#
 		   AND SRVY_MT = #SRVY_MT#

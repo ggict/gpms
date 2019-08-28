@@ -26,7 +26,7 @@
 	<insert id="predctFrmulaIdxDAO.insertPredctFrmulaIdx">
 	<selectKey resultClass="String" keyProperty="PREDCT_IDX_NO">
   	<![CDATA[
- 		select SEQ_TN_PREDCT_FRMULA_IDX.NEXTVAL from dual
+ 		select nextval('SEQ_TN_PREDCT_FRMULA_IDX')
   	]]>
   	</selectKey>
 	<![CDATA[ 
@@ -56,9 +56,9 @@
 			, #DELETE_AT# /* 예측_수식_지수.삭제_여부 */
 			, #USE_AT# /* 예측_수식_지수.사용_여부 */
 			, #CRTR_NO# /* 예측_수식_지수.생성자_번호 */
-			, SYSDATE /* 예측_수식_지수.생성_일시 */
+			, NOW() /* 예측_수식_지수.생성_일시 */
 			, #UPDUSR_NO# /* 예측_수식_지수.수정자_번호 */
-			, SYSDATE /* 예측_수식_지수.수정_일시 */
+			, NOW() /* 예측_수식_지수.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -72,7 +72,7 @@
 		, RK_B = #RK_B# /* 예측_수식_지수.계수_B */
 		, RK_C = #RK_C# /* 예측_수식_지수.계수_C */
 		, UPDUSR_NO = #UPDUSR_NO# /* 예측_수식_지수.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 예측_수식_지수.수정_일시 */
+		, UPDT_DT = NOW() /* 예측_수식_지수.수정_일시 */
 		WHERE 1 = 1
 		AND PREDCT_IDX_NO = #PREDCT_IDX_NO# /* 예측_수식_지수.예측_지수_번호 */
 ]]>
@@ -85,7 +85,7 @@
 		UPDATE TN_PREDCT_FRMULA_IDX SET
 		 DELETE_AT = 'Y' /* 예측_수식_지수.삭제_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 예측_수식_지수.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 예측_수식_지수.수정_일시 */
+		, UPDT_DT = NOW() /* 예측_수식_지수.수정_일시 */
 		WHERE 1 = 1
 		AND PREDCT_IDX_NO = #PREDCT_IDX_NO# /* 예측_수식_지수.예측_지수_번호 */
 ]]>

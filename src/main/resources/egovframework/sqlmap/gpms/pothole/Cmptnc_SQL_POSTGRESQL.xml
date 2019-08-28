@@ -35,7 +35,7 @@
 	    FROM (
 	        SELECT tb.*
 	               ,FN_GET_LIST_G2_ID(DEPT_CODE) G2_ID
-	               ,rownum as deptnum
+	               ,ROW_NUMBER() OVER() as deptnum
 	          FROM (
 	            SELECT
 	                dept.DEPT_CODE
@@ -53,7 +53,7 @@
 	                    END) AS LOWEST_DEPT_NM
 	                , cmptnczone.CHARGER_NM
 	                , cmptnczone.CTTPC
-	                , NVL(cmptnczone.AR, 0) AS AR
+	                , COALESCE(cmptnczone.AR, 0) AS AR
 	            FROM
 	                ( SELECT DEPT_CODE, LOWEST_DEPT_NM
 	                  FROM TC_DEPT
@@ -229,7 +229,7 @@ SELECT *
     SELECT COUNT(*)
     FROM (
         SELECT tb.*
-               ,ROWNUM rnum
+               ,ROW_NUMBER() OVER() rnum
           FROM (
             SELECT
                 dept.DEPT_CODE
@@ -247,7 +247,7 @@ SELECT *
                     END) AS LOWEST_DEPT_NM
                 , cmptnczone.CHARGER_NM
                 , cmptnczone.CTTPC
-                , NVL(cmptnczone.AR, 0) AS AR
+                , COALESCE(cmptnczone.AR, 0) AS AR
             FROM
                 ( SELECT DEPT_CODE, LOWEST_DEPT_NM
                   FROM TC_DEPT
@@ -320,7 +320,7 @@ SELECT *
         FROM (
             SELECT tb.*
                    ,FN_GET_LIST_G2_ID(DEPT_CODE) G2_ID
-                   ,rownum as deptnum
+                   ,ROW_NUMBER() OVER() as deptnum
               FROM (
                 SELECT
                     dept.DEPT_CODE
@@ -338,7 +338,7 @@ SELECT *
                         END) AS LOWEST_DEPT_NM
                     , cmptnczone.CHARGER_NM
                     , cmptnczone.CTTPC
-                    , NVL(cmptnczone.AR, 0) AS AR
+                    , COALESCE(cmptnczone.AR, 0) AS AR
                 FROM
                     ( SELECT DEPT_CODE, LOWEST_DEPT_NM
                       FROM TC_DEPT
@@ -464,9 +464,8 @@ SELECT *
     <!-- 관할구역검색 로그 등록 -->
     <insert id="cmptncDAO.insertCmptncLog">
     <selectKey resultClass="String" keyProperty="HIST_MNG_NO">
-    <!-- /* SELECT SEQ_TH_CMPTNC_ZONE.NEXTVAL from dual */ -->
     <![CDATA[
-        SELECT SEQ_TH_CMPTNC_ZONE.NEXTVAL from dual
+        SELECT nextval('SEQ_TH_CMPTNC_ZONE')
     ]]>
     </selectKey>
     <![CDATA[
@@ -487,7 +486,7 @@ SELECT *
             ,CREAT_DE     /* 관할구역검색_로그.생성_일자    */
            )
     SELECT
-            SEQ_TH_CMPTNC_ZONE.NEXTVAL  /* 관할구역검색_로그.이력_관리_번호 */
+            nextval('SEQ_TH_CMPTNC_ZONE')  /* 관할구역검색_로그.이력_관리_번호 */
             ,CPT_MNG_NO    /* 관할구역검색_로그.노선_관리_번호 */
             ,ROAD_GRAD     /* 관할구역검색_로그.도로_등급    */
             ,DEPT_CODE     /* 관할구역검색_로그.부서_코드    */
@@ -497,7 +496,7 @@ SELECT *
             ,'Y'           /* 관할구역검색_로그.사용_여부    */
             ,'N'           /* 관할구역검색_로그.삭제_여부    */
             ,#CRTR_NO#     /* 관할구역검색_로그.생성자_번호   */
-            ,sysdate       /* 관할구역검색_로그.생성_일자    */
+            ,NOW()       /* 관할구역검색_로그.생성_일자    */
       FROM CMPTNC_ZONE
      WHERE DEPT_CODE = #LOWEST_DEPT_NM#
     ]]>
@@ -506,36 +505,30 @@ SELECT *
     <!-- 담당자 연락처 조회 -->
     <select id="cmptncDAO.selectChargerCttpc" parameterClass="cmptncVO" resultClass="cmptncVO">
     <![CDATA[
-        SELECT *
-        FROM (
-            SELECT
-            DEPT_CODE
-            , CHARGER_NM
-            , CTTPC
-            , SUM(AR) AS AR
-            FROM CMPTNC_ZONE
-            WHERE CHARGER_NM = #CHARGER_NM#
-            GROUP BY DEPT_CODE, CHARGER_NM, CTTPC
-        )
-        WHERE ROWNUM = 1
+       SELECT
+       DEPT_CODE
+       , CHARGER_NM
+       , CTTPC
+       , SUM(AR) AS AR
+       FROM CMPTNC_ZONE
+       WHERE CHARGER_NM = #CHARGER_NM#
+       GROUP BY DEPT_CODE, CHARGER_NM, CTTPC
+       LIMIT 1
     ]]>
     </select>
 
     <!-- 담당자 조회 -->
     <select id="cmptncDAO.selectChargerNm" parameterClass="cmptncVO" resultClass="cmptncVO">
     <![CDATA[
-        SELECT *
-        FROM (
-            SELECT
-            DEPT_CODE
-            , CHARGER_NM
-            , CTTPC
-            , SUM(AR) AS AR
-            FROM CMPTNC_ZONE
-            WHERE DEPT_CODE = #DEPT_CODE#
-            GROUP BY DEPT_CODE, CHARGER_NM, CTTPC
-        )
-        WHERE ROWNUM = 1
+        SELECT
+        DEPT_CODE
+        , CHARGER_NM
+        , CTTPC
+        , SUM(AR) AS AR
+        FROM CMPTNC_ZONE
+        WHERE DEPT_CODE = #DEPT_CODE#
+        GROUP BY DEPT_CODE, CHARGER_NM, CTTPC
+        LIMIT 1
     ]]>
     </select>
 
@@ -588,7 +581,7 @@ SELECT *
             ,'Y'           /* 관할구역검색_로그.사용_여부    */
             ,'N'           /* 관할구역검색_로그.삭제_여부    */
             ,#CRTR_NO#     /* 관할구역검색_로그.생성자_번호   */
-            ,sysdate       /* 관할구역검색_로그.생성_일자    */
+            ,NOW()       /* 관할구역검색_로그.생성_일자    */
            )
  -->
 

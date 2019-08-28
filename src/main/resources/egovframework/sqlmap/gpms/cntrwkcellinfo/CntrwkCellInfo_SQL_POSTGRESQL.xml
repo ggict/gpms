@@ -101,7 +101,7 @@
 <![CDATA[ 		
 		/* cntrwkCellInfoDAO.selectCntrwkCellInfoList */
 		/* 공사_셀_정보 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tncntrwkcellinfo.DETAIL_CNTRWK_ID /* 공사_셀_정보.세부_공사_ID */
 				, tncntrwkcellinfo.PAV_CELL_ID /* 공사_셀_정보.포장_셀_ID */
@@ -150,7 +150,7 @@
 <![CDATA[ 		
 		/* cntrwkCellInfoDAO.selectPavYearListByCellId */
 		/* 공사_셀별 직전 포장년도 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT tncntrwkcellinfo.PAV_CELL_ID
 			     , MAX(tncntrwkcellinfo.PAV_YEAR) PAV_YEAR 
 			  FROM TN_CNTRWK_CELL_INFO tncntrwkcellinfo

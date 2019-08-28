@@ -24,7 +24,7 @@
 	<insert id="cntrCompDAO.insertCntrComp">
 	<selectKey resultClass="String" keyProperty="CNTRWK_ACMSLT_NO">
   <![CDATA[
-  select SEQ_TN_CNTR_COMP.NEXTVAL from dual
+  select nextval('SEQ_TN_CNTR_COMP')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -49,9 +49,9 @@
 			, 'Y' /* 공사업체정보.사용_여부 */
 			, 'N' /* 공사업체정보.삭제_여부 */
 			, #CRTR_NO# /* 공사업체정보.생성자_번호 */
-			, SYSDATE /* 공사업체정보.생성_일시 */
+			, NOW() /* 공사업체정보.생성_일시 */
 			, #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
-			, SYSDATE /* 공사업체정보.수정_일시 */
+			, NOW() /* 공사업체정보.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -67,7 +67,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 , EXEC_SE = #EXEC_SE# /* 공사업체정보.이행_구분 */
 , USE_AT = #USE_AT# /* 공사업체정보.사용_여부 */
 , UPDUSR_NO = #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
-, UPDT_DT = SYSDATE /* 공사업체정보.수정_일시 */
+, UPDT_DT = NOW() /* 공사업체정보.수정_일시 */
 			
 		WHERE 1 = 1
 		AND CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
@@ -80,7 +80,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 
 	 	 DELETE_AT = 'Y' /* 공사업체정보.삭제_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 공사업체정보.수정_일시 */
+		, UPDT_DT = NOW() /* 공사업체정보.수정_일시 */
 			
 		WHERE 1 = 1
 		AND CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
@@ -271,7 +271,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 <![CDATA[ 		
 		/* cntrCompDAO.selectCntrCompList */
 		/* 공사업체정보 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tncntrcomp.CNTRWK_ACMSLT_NO /* 공사업체정보.공사_실적_번호 */
 				, tncntrcomp.CNTRWK_ID /* 공사업체정보.공사_ID */

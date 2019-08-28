@@ -39,7 +39,7 @@
 	<insert id="rpairTrgetSlctnDAO.insertRpairTrgetSlctn">
 	<selectKey resultClass="String" keyProperty="TRGET_SLCTN_NO">
   <![CDATA[
-  select SEQ_TN_RPAIR_TRGET_SLCTN.NEXTVAL from dual
+  select nextval('SEQ_TN_RPAIR_TRGET_SLCTN')
   ]]>
   </selectKey>
 	<![CDATA[ 
@@ -75,9 +75,9 @@
 			, 'N' /* 보수_대상_선정.삭제_여부 */
 			, 'Y' /* 보수_대상_선정.사용_여부 */
 			, #CRTR_NO# /* 보수_대상_선정.생성자_번호 */
-			, SYSDATE /* 보수_대상_선정.생성_일시 */
+			, NOW() /* 보수_대상_선정.생성_일시 */
 			, #UPDUSR_NO# /* 보수_대상_선정.수정자_번호 */
-			, SYSDATE /* 보수_대상_선정.수정_일시 */
+			, NOW() /* 보수_대상_선정.수정_일시 */
 			, #DEPT_CODE# /* 보수_대상_선정.부서_코드 */
 			, #DECSN_MTHD_1_RATE# /* 보수_대상_선정.결정_방식_1_비율 */
 			, #DECSN_MTHD_2_RATE# /* 보수_대상_선정.결정_방식_2_비율 */
@@ -102,7 +102,7 @@ SLCTN_OPERT_NM = #SLCTN_OPERT_NM# /* 보수_대상_선정.선정_작업_명 */
 , SLCTN_DT = #SLCTN_DT# /* 보수_대상_선정.선정_일시 */
 , USE_AT = #USE_AT# /* 보수_대상_선정.사용_여부 */
 , UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_선정.수정자_번호 */
-, UPDT_DT = SYSDATE /* 보수_대상_선정.수정_일시 */
+, UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
 , DEPT_CODE = #DEPT_CODE# /* 보수_대상_선정.부서_코드 */
 , DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE# /* 보수_대상_선정.결정_방식_1_비율 */
 , DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE# /* 보수_대상_선정.결정_방식_2_비율 */
@@ -129,7 +129,7 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
   SLCTN_STTUS = #SLCTN_STTUS# /* 보수_대상_선정.선정_상태 */
 , SLCTN_BUDGET = #SLCTN_BUDGET# /* 보수_대상_선정.선정_예산 */
 , UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_선정.수정자_번호 */
-, UPDT_DT = SYSDATE /* 보수_대상_선정.수정_일시 */
+, UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
 , DEPT_CODE = #DEPT_CODE# /* 보수_대상_선정.부서_코드 */
 , DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE# /* 보수_대상_선정.결정_방식_1_비율 */
 , DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE# /* 보수_대상_선정.결정_방식_2_비율 */
@@ -155,7 +155,7 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 		DELETE_AT = 'Y' /* 보수_대상_선정.삭제_여부 */
 		, USE_AT = 'N' /* 보수_대상_선정.사용_여부 */
 		, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_선정.수정자_번호 */
-		, UPDT_DT = SYSDATE /* 보수_대상_선정.수정_일시 */
+		, UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
 		WHERE 1 = 1
 		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번호 */
 ]]>
@@ -188,11 +188,11 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 			, tnrpairtrgetslctn.DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
 			, tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
 			, tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_1_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_1_RATE/100))) DECSN_MTHD_1_BUDGET
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_2_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_2_RATE/100))) DECSN_MTHD_2_BUDGET
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_3_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_3_RATE/100))) DECSN_MTHD_3_BUDGET
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_4_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_4_RATE/100))) DECSN_MTHD_4_BUDGET
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_5_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_5_RATE/100))) DECSN_MTHD_5_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_1_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_1_RATE/100))) DECSN_MTHD_1_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_2_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_2_RATE/100))) DECSN_MTHD_2_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_3_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_3_RATE/100))) DECSN_MTHD_3_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_4_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_4_RATE/100))) DECSN_MTHD_4_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_5_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_5_RATE/100))) DECSN_MTHD_5_BUDGET
 			, tnrpairtrgetslctn.SLCTN_BUDGET_1    /* 보수_대상_선정.선정_예산_1_WF */
 			, tnrpairtrgetslctn.SLCTN_BUDGET_2    /* 보수_대상_선정.선정_예산_2_BF_1 */
 			, tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */
@@ -352,7 +352,7 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 <![CDATA[ 		
 		/* rpairTrgetSlctnDAO.selectRpairTrgetSlctnList */
 		/* 보수_대상_선정 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tnrpairtrgetslctn.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
 				, tnrpairtrgetslctn.SLCTN_OPERT_NM /* 보수_대상_선정.선정_작업_명 */
@@ -376,11 +376,11 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 			, tnrpairtrgetslctn.DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
 			, tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
 			, tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_1_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_1_RATE/100))) DECSN_MTHD_1_BUDGET
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_2_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_2_RATE/100))) DECSN_MTHD_2_BUDGET
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_3_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_3_RATE/100))) DECSN_MTHD_3_BUDGET
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_4_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_4_RATE/100))) DECSN_MTHD_4_BUDGET
-			, DECODE(NVL(tnrpairtrgetslctn.DECSN_MTHD_5_RATE,0),0,0, DECODE( NVL(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_5_RATE/100))) DECSN_MTHD_5_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_1_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_1_RATE/100))) DECSN_MTHD_1_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_2_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_2_RATE/100))) DECSN_MTHD_2_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_3_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_3_RATE/100))) DECSN_MTHD_3_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_4_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_4_RATE/100))) DECSN_MTHD_4_BUDGET
+			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_5_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_5_RATE/100))) DECSN_MTHD_5_BUDGET
 			 , tnrpairtrgetslctn.SLCTN_BUDGET_1    /* 보수_대상_선정.선정_예산_1_WF */
 		     , tnrpairtrgetslctn.SLCTN_BUDGET_2    /* 보수_대상_선정.선정_예산_2_BF_1 */
 		     , tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */

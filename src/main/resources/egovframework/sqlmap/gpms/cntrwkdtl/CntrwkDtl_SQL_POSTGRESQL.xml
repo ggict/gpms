@@ -166,7 +166,7 @@
 	<insert id="cntrwkDtlDAO.insertCntrwkDtl">
 		<selectKey resultClass="String" keyProperty="DETAIL_CNTRWK_ID">
   <![CDATA[
-  select SEQ_TN_CNTRWK_DTL.NEXTVAL from dual
+  select nextval('SEQ_TN_CNTRWK_DTL')
   ]]>
 		</selectKey>
 	<![CDATA[ 
@@ -329,9 +329,9 @@
 			, 'Y' /* 공사상세정보.사용_여부 */
 			, 'N' /* 공사상세정보.삭제_여부 */
 			, #CRTR_NO# /* 공사상세정보.생성자_번호 */
-			, SYSDATE /* 공사상세정보.생성_일시 */
+			, NOW() /* 공사상세정보.생성_일시 */
 			, #UPDUSR_NO# /* 공사상세정보.수정자_번호 */
-			, SYSDATE /* 공사상세정보.수정_일시 */
+			, NOW() /* 공사상세정보.수정_일시 */
 			, #PAV_MATRL_ASCON_CODE# /* 공사상세정보.포장_재료_표층_코드 */
 			, #PAINT_MSRC# /* 공사상세정보.차선_도색_공법 */
 			, #PAINT_YLWSLLN_AR# /* 공사상세정보.차선_도색_황색실선_면적 */
@@ -557,7 +557,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , UPDUSR_NO = #UPDUSR_NO# /* 공사상세정보.수정자_번호 */
 			
 
-, UPDT_DT = SYSDATE /* 공사상세정보.수정_일시 */
+, UPDT_DT = NOW() /* 공사상세정보.수정_일시 */
 			
 , PAV_MATRL_ASCON_CODE = #PAV_MATRL_ASCON_CODE# /* 공사상세정보.포장_재료_표층_코드 */
 			
@@ -614,7 +614,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 		   SET DELETE_AT = 'Y'
 		     , USE_AT = 'N'
 		     , UPDUSR_NO = #UPDUSR_NO#
-			 , UPDT_DT = SYSDATE
+			 , UPDT_DT = NOW()
 		WHERE 1 = 1
 		AND DETAIL_CNTRWK_ID = #DETAIL_CNTRWK_ID# /* 공사상세정보.세부_공사_ID */
 ]]>
@@ -628,7 +628,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 		   SET DELETE_AT = 'Y'
 		     , USE_AT = 'N'
 		     , UPDUSR_NO = #UPDUSR_NO#
-			 , UPDT_DT = SYSDATE
+			 , UPDT_DT = NOW()
 		WHERE 1 = 1
 		AND CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.세부_공사_ID */
 ]]>
@@ -652,15 +652,15 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 			     AND tcrpairmthd.DELETE_AT = 'N') AS RPAIR_MTHD_NM /* 공사상세정보.보수_공법명 */
 			, tncntrwkdtl.DETAIL_CNTRWK_GROUP /* 공사상세정보.세부_공사_그룹 */
 			, tncntrwkdtl.DETAIL_CNTRWK_NM /* 공사상세정보.세부_공사_명 */
-			, NVL(tncntrwkdtl.TRACK_LEN,0) AS TRACK_LEN /* 공사상세정보.1차로_연장 */
+			, COALESCE(tncntrwkdtl.TRACK_LEN,0) AS TRACK_LEN /* 공사상세정보.1차로_연장 */
 			, tncntrwkdtl.SPRVISN_CO_NO /* 공사상세정보.감리_업체_번호 */
-			, NVL((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.SPRVISN_CO_NO), tncntrwkdtl.SPRVISN_CO_NM) AS SPRVISN_CO_NM /* 공사상세정보.감리_업체_명 */
+			, COALESCE((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.SPRVISN_CO_NO), tncntrwkdtl.SPRVISN_CO_NM) AS SPRVISN_CO_NM /* 공사상세정보.감리_업체_명 */
 			, tncntrwkdtl.SPRVISN_CO_RPRSNT_NO /* 공사상세정보.감리_업체_대표_번호 */
 			, tncntrwkdtl.SPRVISN_CO_RPRSNTV_NM /* 공사상세정보.감리_업체_대표자_명 */
 			, tncntrwkdtl.SPRVISOR_NM /* 공사상세정보.감리원_명 */
 			, tncntrwkdtl.SPRVISOR_TELNO /* 공사상세정보.감리원_전화번호 */
 			, tncntrwkdtl.CNSTRCT_CO_NO /* 공사상세정보.시공_업체_번호 */
-			, NVL((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO), tncntrwkdtl.CNSTRCT_CO_NM) AS CNSTRCT_CO_NM /* 공사상세정보.시공_업체_명 */
+			, COALESCE((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO), tncntrwkdtl.CNSTRCT_CO_NM) AS CNSTRCT_CO_NM /* 공사상세정보.시공_업체_명 */
 			, tncntrwkdtl.CNSTRCT_CO_RPRSNTV_NM /* 공사상세정보.시공_업체_대표자_명 */
 			, tncntrwkdtl.CNSTRCT_CO_TELNO /* 공사상세정보.시공_업체_전화번호 */
 			, tncntrwkdtl.CNSTRCT_CO_CHARGER_NM /* 공사상세정보.시공_업체_담당자_명 */
@@ -671,14 +671,14 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 			, (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tncntrwkdtl.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_코드 */
 			, tncntrwkdtl.DIRECT_CODE /* 공사상세정보.행선_코드 */
 			, tncntrwkdtl.TRACK /* 공사상세정보.차로 */
-			, NVL(tncntrwkdtl.STRTPT,0) AS STRTPT /* 공사상세정보.시점 */
-			, NVL(tncntrwkdtl.ENDPT,0) AS ENDPT/* 공사상세정보.종점 */
+			, COALESCE(tncntrwkdtl.STRTPT,0) AS STRTPT /* 공사상세정보.시점 */
+			, COALESCE(tncntrwkdtl.ENDPT,0) AS ENDPT/* 공사상세정보.종점 */
 			, tncntrwkdtl.CNTRWK_STRTPT_NM /* 공사상세정보.공사_시점_명 */
 			, tncntrwkdtl.CNTRWK_ENDPT_NM /* 공사상세정보.공사_종점_명 */
-			, NVL(tncntrwkdtl.CNTRWK_AMOUNT,0) AS CNTRWK_AMOUNT /* 공사상세정보.공사_금액 */
-			, NVL(tncntrwkdtl.GVSLCT,0) AS GVSLCT  /* 공사상세정보.관급비 */
-			, NVL(tncntrwkdtl.OUTSRCCT,0) AS OUTSRCCT /* 공사상세정보.도급비 */
-			, NVL(tncntrwkdtl.ETC_RLOCATCT,0) AS ETC_RLOCATCT /* 공사상세정보.기타_이설비 */
+			, COALESCE(tncntrwkdtl.CNTRWK_AMOUNT,0) AS CNTRWK_AMOUNT /* 공사상세정보.공사_금액 */
+			, COALESCE(tncntrwkdtl.GVSLCT,0) AS GVSLCT  /* 공사상세정보.관급비 */
+			, COALESCE(tncntrwkdtl.OUTSRCCT,0) AS OUTSRCCT /* 공사상세정보.도급비 */
+			, COALESCE(tncntrwkdtl.ETC_RLOCATCT,0) AS ETC_RLOCATCT /* 공사상세정보.기타_이설비 */
 			, tncntrwkdtl.CNTRWK_TMPRT /* 공사상세정보.공사_기온 */
 			, (SELECT CODE_NM FROM TC_CODE tccode WHERE tccode.CODE_VAL=tncntrwkdtl.CNTRWK_WETHR) AS CNTRWK_WETHR  /* 공사상세정보.공사_날씨 */
 			, tncntrwkdtl.CNTRWK_TIME /* 공사상세정보.공사_시간 */
@@ -687,15 +687,15 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 			, tncntrwkdtl.BEFORE_PAV_YEAR /* 공사상세정보.직전_포장_연도 */
 			, tncntrwkdtl.RPAIR_BEGIN_DE /* 공사상세정보.보수_시작_일자 */
 			, tncntrwkdtl.RPAIR_END_DE /* 공사상세정보.보수_종료_일자 */
-			, NVL(tncntrwkdtl.RPAIR_AR,0) AS RPAIR_AR /* 공사상세정보.보수_면적 */
-			, NVL(tncntrwkdtl.RPAIR_BT,0) AS RPAIR_BT /* 공사상세정보.보수_폭 */
+			, COALESCE(tncntrwkdtl.RPAIR_AR,0) AS RPAIR_AR /* 공사상세정보.보수_면적 */
+			, COALESCE(tncntrwkdtl.RPAIR_BT,0) AS RPAIR_BT /* 공사상세정보.보수_폭 */
 			, tncntrwkdtl.PAV_STLE_CODE /* 공사상세정보.포장_형태_코드 */
 			, tncntrwkdtl.PAV_MSRC_ETC /* 공사상세정보.포장_공법_기타 */
 			, tncntrwkdtl.RPAIR_THICK_DC /* 공사상세정보.보수_두께_설명 */
 			, tncntrwkdtl.RPAIR_THICK /* 공사상세정보.보수_두께 */
-			, NVL(tncntrwkdtl.RPAIR_THICK_BASE,0) AS RPAIR_THICK_BASE /* 공사상세정보.보수_두께_기층 */
-			, NVL(tncntrwkdtl.RPAIR_THICK_CNTR,0) AS RPAIR_THICK_CNTR /* 공사상세정보.보수_두께_중간층 */
-			, NVL(tncntrwkdtl.RPAIR_THICK_ASCON,0) AS RPAIR_THICK_ASCON /* 공사상세정보.보수_두께_표층 */
+			, COALESCE(tncntrwkdtl.RPAIR_THICK_BASE,0) AS RPAIR_THICK_BASE /* 공사상세정보.보수_두께_기층 */
+			, COALESCE(tncntrwkdtl.RPAIR_THICK_CNTR,0) AS RPAIR_THICK_CNTR /* 공사상세정보.보수_두께_중간층 */
+			, COALESCE(tncntrwkdtl.RPAIR_THICK_ASCON,0) AS RPAIR_THICK_ASCON /* 공사상세정보.보수_두께_표층 */
 			, tncntrwkdtl.PAV_MATRL_ASCON_ETC/* 공사상세정보.포장_재료_표층_기타 */
 			, tncntrwkdtl.PAV_MATRL_BASE_CODE/* 공사상세정보.포장_재료_기층_코드 */
 			, (SELECT PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_BASE_CODE) AS PAV_MATRL_BASE_NM /* 공사상세정보.포장_재료_기층명 */
@@ -726,18 +726,18 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 			, tncntrwkdtl.PAV_MATRL_ASCON_CODE /* 공사상세정보.포장_재료_표층_코드 */
 			, (SELECT PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_ASCON_CODE ) AS PAV_MATRL_ASCON_NM /* 공사상세정보.포장_재료_표층명 */
 			, tncntrwkdtl.PAINT_MSRC /* 공사상세정보.차선_도색_공법 */
-			, NVL(tncntrwkdtl.PAINT_YLWSLLN_AR,0) AS PAINT_YLWSLLN_AR /* 공사상세정보.차선_도색_황색실선_면적 */
-			, NVL(tncntrwkdtl.PAINT_YLWDASHLN_AR,0) AS PAINT_YLWDASHLN_AR /* 공사상세정보.차선_도색_황색파선_면적 */
-			, NVL(tncntrwkdtl.PAINT_WHSLLN_AR,0) AS PAINT_WHSLLN_AR /* 공사상세정보.차선_도색_백색실선_면적 */
-			, NVL(tncntrwkdtl.PAINT_CRSLK_CO,0) AS PAINT_CRSLK_CO /* 공사상세정보.차선_도색_횡단보도_개수 */
-			, NVL(tncntrwkdtl.PAINT_STOPLN_CO,0) AS PAINT_STOPLN_CO /* 공사상세정보.차선_도색_정지선_개수 */
-			, NVL(tncntrwkdtl.PAINT_STOPLN_AR,0) AS PAINT_STOPLN_AR /* 공사상세정보.차선_도색_정지선_면적 */
-			, NVL(tncntrwkdtl.PAINT_SPDBMP_CO,0) AS PAINT_SPDBMP_CO /* 공사상세정보.차선_도색_방지턱_개수 */
-			, NVL(tncntrwkdtl.PAINT_SPDBMP_AR,0) AS PAINT_SPDBMP_AR /* 공사상세정보.차선_도색_방지턱_면적 */
-			, NVL(tncntrwkdtl.PAINT_WHDASHLN_AR,0) AS PAINT_WHDASHLN_AR /* 공사상세정보.차선_도색_백색파선_면적 */
-			, NVL(tncntrwkdtl.PAINT_CHRCTRSYMBL_CO,0) AS PAINT_CHRCTRSYMBL_CO /* 공사상세정보.차선_도색_문자기호_개수 */
-			, NVL(tncntrwkdtl.PAINT_CHRCTRSYMBL_AR,0) AS PAINT_CHRCTRSYMBL_AR /* 공사상세정보.차선_도색_문자기호_면적 */
-			, NVL(tncntrwkdtl.PAINT_CRSLK_AR,0) AS PAINT_CRSLK_AR /* 공사상세정보.차선_도색_횡단보도_면적 */
+			, COALESCE(tncntrwkdtl.PAINT_YLWSLLN_AR,0) AS PAINT_YLWSLLN_AR /* 공사상세정보.차선_도색_황색실선_면적 */
+			, COALESCE(tncntrwkdtl.PAINT_YLWDASHLN_AR,0) AS PAINT_YLWDASHLN_AR /* 공사상세정보.차선_도색_황색파선_면적 */
+			, COALESCE(tncntrwkdtl.PAINT_WHSLLN_AR,0) AS PAINT_WHSLLN_AR /* 공사상세정보.차선_도색_백색실선_면적 */
+			, COALESCE(tncntrwkdtl.PAINT_CRSLK_CO,0) AS PAINT_CRSLK_CO /* 공사상세정보.차선_도색_횡단보도_개수 */
+			, COALESCE(tncntrwkdtl.PAINT_STOPLN_CO,0) AS PAINT_STOPLN_CO /* 공사상세정보.차선_도색_정지선_개수 */
+			, COALESCE(tncntrwkdtl.PAINT_STOPLN_AR,0) AS PAINT_STOPLN_AR /* 공사상세정보.차선_도색_정지선_면적 */
+			, COALESCE(tncntrwkdtl.PAINT_SPDBMP_CO,0) AS PAINT_SPDBMP_CO /* 공사상세정보.차선_도색_방지턱_개수 */
+			, COALESCE(tncntrwkdtl.PAINT_SPDBMP_AR,0) AS PAINT_SPDBMP_AR /* 공사상세정보.차선_도색_방지턱_면적 */
+			, COALESCE(tncntrwkdtl.PAINT_WHDASHLN_AR,0) AS PAINT_WHDASHLN_AR /* 공사상세정보.차선_도색_백색파선_면적 */
+			, COALESCE(tncntrwkdtl.PAINT_CHRCTRSYMBL_CO,0) AS PAINT_CHRCTRSYMBL_CO /* 공사상세정보.차선_도색_문자기호_개수 */
+			, COALESCE(tncntrwkdtl.PAINT_CHRCTRSYMBL_AR,0) AS PAINT_CHRCTRSYMBL_AR /* 공사상세정보.차선_도색_문자기호_면적 */
+			, COALESCE(tncntrwkdtl.PAINT_CRSLK_AR,0) AS PAINT_CRSLK_AR /* 공사상세정보.차선_도색_횡단보도_면적 */
 		FROM TN_CNTRWK_DTL tncntrwkdtl
 		WHERE 1 = 1
 		AND tncntrwkdtl.DETAIL_CNTRWK_ID = #DETAIL_CNTRWK_ID# /* 공사상세정보.세부_공사_ID */
@@ -1670,7 +1670,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 <![CDATA[ 		
 		/* cntrwkDtlDAO.selectCntrwkDtlList */
 		/* 공사상세정보 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT cell10.CELL_ID/*CELL_10.셀관리번호*/
 				, tncntrwkdtl.DETAIL_CNTRWK_ID /* 공사상세정보.세부_공사_ID */
 				, tncntrwkdtl.CNTRWK_ID /* 공사상세정보.공사_ID */
@@ -1803,7 +1803,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 <![CDATA[ 		
 		/* cntrwkDtlDAO.selectCntrwkDtlListExcel */
 		/* 상세정보목록 엑셀조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT
 				tncntrwkdtl.DETAIL_CNTRWK_ID /* 공사상세정보.세부_공사_ID */
 				, tncntrwkdtl.CNTRWK_ID /* 공사상세정보.공사_ID */
@@ -1812,13 +1812,13 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				, tncntrwkdtl.DETAIL_CNTRWK_NM /* 공사상세정보.세부_공사_명 */
 				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tncntrwkdtl.TRACK_LEN,0))), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN  /* 공사상세정보.1차로_연장 */
 				, tncntrwkdtl.SPRVISN_CO_NO /* 공사상세정보.감리_업체_번호 */
-				, NVL((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.SPRVISN_CO_NO), tncntrwkdtl.SPRVISN_CO_NM) AS SPRVISN_CO_NM /* 공사상세정보.감리_업체_명 */
+				, COALESCE((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.SPRVISN_CO_NO), tncntrwkdtl.SPRVISN_CO_NM) AS SPRVISN_CO_NM /* 공사상세정보.감리_업체_명 */
 				, tncntrwkdtl.SPRVISN_CO_RPRSNT_NO /* 공사상세정보.감리_업체_대표_번호 */
 				, tncntrwkdtl.SPRVISN_CO_RPRSNTV_NM /* 공사상세정보.감리_업체_대표자_명 */
 				, tncntrwkdtl.SPRVISOR_NM /* 공사상세정보.감리원_명 */
 				, tncntrwkdtl.SPRVISOR_TELNO /* 공사상세정보.감리원_전화번호 */
 				, tncntrwkdtl.CNSTRCT_CO_NO /* 공사상세정보.시공_업체_번호 */
-				, NVL((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO), tncntrwkdtl.CNSTRCT_CO_NM) AS CNSTRCT_CO_NM /* 공사상세정보.시공_업체_명 */
+				, COALESCE((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO), tncntrwkdtl.CNSTRCT_CO_NM) AS CNSTRCT_CO_NM /* 공사상세정보.시공_업체_명 */
 				, tncntrwkdtl.CNSTRCT_CO_RPRSNTV_NM /* 공사상세정보.시공_업체_대표자_명 */
 				, tncntrwkdtl.CNSTRCT_CO_TELNO /* 공사상세정보.시공_업체_전화번호 */
 				, tncntrwkdtl.CNSTRCT_CO_CHARGER_NM /* 공사상세정보.시공_업체_담당자_명 */
@@ -1930,11 +1930,11 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 <![CDATA[ 		
 		/* cntrwkDtlDAO.selectCntrwkDtlListByCntrwkID */
 		/* 상세정보목록 조회 */
-		SELECT 	NVL(tncntrwkdtl.ROUTE_CODE,'-') AS ROUTE_CODE
-			  , NVL(tnrouteinfo.ROAD_NAME,tncntrwkdtl.ROAD_NM) AS ROAD_NM
-			  , NVL(tncntrwkdtl.DIRECT_CODE,'-') AS DIRECT_CODE
-			  , NVL(tncntrwkdtl.TRACK,'-') AS TRACK
-			  , NVL(DECODE(tncntrwkdtl.DIRECT_CODE,'S',tnrouteinfo.ST_POINT,'E',tnrouteinfo.ED_POINT),'-') AS DIRECT_POINT_NM
+		SELECT 	COALESCE(tncntrwkdtl.ROUTE_CODE,'-') AS ROUTE_CODE
+			  , COALESCE(tnrouteinfo.ROAD_NAME,tncntrwkdtl.ROAD_NM) AS ROAD_NM
+			  , COALESCE(tncntrwkdtl.DIRECT_CODE,'-') AS DIRECT_CODE
+			  , COALESCE(tncntrwkdtl.TRACK,'-') AS TRACK
+			  , COALESCE(DECODE(tncntrwkdtl.DIRECT_CODE,'S',tnrouteinfo.ST_POINT,'E',tnrouteinfo.ED_POINT),'-') AS DIRECT_POINT_NM
 			  , tncntrwkdtl.RPAIR_MTHD_CODE
 			  , tncntrwkdtl.PAV_MATRL_ASCON_CODE
 			  , tncntrwkdtl.STRTPT
@@ -1976,8 +1976,8 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				    COUNT(*) AS CNT,
 				    ROUTE_CODE,
 				    ROUTE_NM,
-				    NVL(SUM(CNTRWK_AMOUNT),0) AS CNTRWK_AMOUNT,
-				    NVL(SUM(TRACK_LEN),0) AS TRACK_LEN,
+				    COALESCE(SUM(CNTRWK_AMOUNT),0) AS CNTRWK_AMOUNT,
+				    COALESCE(SUM(TRACK_LEN),0) AS TRACK_LEN,
 				    ROUND(100 * (COUNT(*) / SUM(COUNT(*) ) OVER() ),2) AS PERC
 				FROM ( SELECT
 				            tncntrwk.CNTRWK_ID,
@@ -2011,8 +2011,8 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				SELECT
 				    COUNT(DETAIL_CNTRWK_ID) AS CNT,
 				    RPAIR_MTHD_NM,
-				    NVL(SUM(CNTRWK_AMOUNT),0) AS CNTRWK_AMOUNT,
-				    NVL(SUM(TRACK_LEN),0) AS TRACK_LEN,
+				    COALESCE(SUM(CNTRWK_AMOUNT),0) AS CNTRWK_AMOUNT,
+				    COALESCE(SUM(TRACK_LEN),0) AS TRACK_LEN,
 				    ROUND(100 * (COUNT(DETAIL_CNTRWK_ID) / SUM(COUNT(DETAIL_CNTRWK_ID) ) OVER() ),2) AS PERC
 				FROM ( SELECT
 							tcrpairmthd.RPAIR_MTHD_CODE,
@@ -2057,8 +2057,8 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				SELECT
 				    COUNT(*) AS CNT,
 				    DEPT_NM,
-				    NVL(SUM(CNTRWK_AMOUNT),0) AS CNTRWK_AMOUNT,
-				    NVL(SUM(TRACK_LEN),0) AS TRACK_LEN,
+				    COALESCE(SUM(CNTRWK_AMOUNT),0) AS CNTRWK_AMOUNT,
+				    COALESCE(SUM(TRACK_LEN),0) AS TRACK_LEN,
 				    ROUND(100 * (COUNT(*) / SUM(COUNT(*) ) OVER() ),2) AS PERC				    
 				FROM ( SELECT
 				            tncntrwk.CNTRWK_ID,/*공사정보.공사ID*/
@@ -2097,8 +2097,8 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 			    COUNT(*) AS CNT
 			    ,LTRIM(ROUTE_CODE,'0') AS ROUTE_CODE  /*노선코드*/
 			    ,ROUTE_NM  /*노선명*/
-				,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(NVL(SUM(CNTRWK_AMOUNT),0),0))), '([0-9]{3})','\1,')), '^,','') AS CNTRWK_AMOUNT  /*공사비*/
-				,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(NVL(SUM(TRACK_LEN),0),0))), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN  /*연장*/
+				,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(COALESCE(SUM(CNTRWK_AMOUNT),0),0))), '([0-9]{3})','\1,')), '^,','') AS CNTRWK_AMOUNT  /*공사비*/
+				,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(COALESCE(SUM(TRACK_LEN),0),0))), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN  /*연장*/
 			    ,ROUND(100 * (COUNT(*) / SUM(COUNT(*) ) OVER() ),2) AS PERC  /*빈도수*/
 			FROM ( SELECT
 			            tncntrwk.CNTRWK_ID  /*공사정보.공사ID*/
@@ -2133,8 +2133,8 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				SELECT
 				    COUNT(*) AS CNT
 				    ,DEPT_NM/*관리기관명*/
-				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(NVL(SUM(CNTRWK_AMOUNT),0),0))), '([0-9]{3})','\1,')), '^,','') AS CNTRWK_AMOUNT /*공사비*/
-				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(NVL(SUM(TRACK_LEN),0),0))), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN /*연장*/
+				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(COALESCE(SUM(CNTRWK_AMOUNT),0),0))), '([0-9]{3})','\1,')), '^,','') AS CNTRWK_AMOUNT /*공사비*/
+				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(COALESCE(SUM(TRACK_LEN),0),0))), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN /*연장*/
 				    ,ROUND(100 * (COUNT(*) / SUM(COUNT(*) ) OVER() ),2) AS PERC /*빈도수*/  
 				FROM ( SELECT
 				            tncntrwk.CNTRWK_ID/*공사정보.공사ID*/
@@ -2171,8 +2171,8 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				SELECT
 				    COUNT(DETAIL_CNTRWK_ID) AS CNT
 				    ,RPAIR_MTHD_NM/*공법명*/
-				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(NVL(SUM(CNTRWK_AMOUNT),0),0))), '([0-9]{3})','\1,')), '^,','') AS CNTRWK_AMOUNT/*공사비*/
-				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(NVL(SUM(TRACK_LEN),0),0))), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN/*연장*/
+				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(COALESCE(SUM(CNTRWK_AMOUNT),0),0))), '([0-9]{3})','\1,')), '^,','') AS CNTRWK_AMOUNT/*공사비*/
+				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(COALESCE(SUM(TRACK_LEN),0),0))), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN/*연장*/
 				    ,ROUND(100 * (COUNT(DETAIL_CNTRWK_ID) / SUM(COUNT(DETAIL_CNTRWK_ID) ) OVER() ),2) AS PERC/*빈도*/
 				FROM ( SELECT
 				            tccode.CODE_NM AS RPAIR_MTHD_NM,

@@ -22,7 +22,7 @@
 	<insert id="roleMenuDAO.insertRoleMenu">
     <selectKey resultClass="String" keyProperty="ROLE_NO">
 	  <![CDATA[
-		select SEQ_TN_ROLE_MENU.NEXTVAL AS ROLE_NO from dual
+		select nextval('SEQ_TN_ROLE_MENU') AS ROLE_NO
 	  ]]>
 	</selectKey>
 	<![CDATA[ 
@@ -42,10 +42,10 @@
 			, #AUTHOR_ID# /* 권한역할메뉴.권한_ID */
 			, #MENU_ID# /* 권한역할메뉴.메뉴_ID */
 			, #CRTR_NO# /* 권한역할메뉴.생성자_번호 */
-			, SYSDATE /* 권한역할메뉴.생성_일시 */
+			, NOW() /* 권한역할메뉴.생성_일시 */
 			, 'N' /* 권한역할메뉴.삭제_여부 */
 			, #UPDUSR_NO# /* 권한역할메뉴.수정자_번호 */
-			, SYSDATE /* 권한역할메뉴.수정_일시 */
+			, NOW() /* 권한역할메뉴.수정_일시 */
 		)
 ]]>
 	</insert>
@@ -57,7 +57,7 @@
 		UPDATE TN_ROLE_MENU 
 		   SET  DELETE_AT = 'Y' /* 권한역할메뉴.삭제_여부 */
 				, UPDUSR_NO = #UPDUSR_NO# /* 권한역할메뉴.수정자_번호 */
-				, UPDT_DT = SYSDATE /* 권한역할메뉴.수정_일시 */
+				, UPDT_DT = NOW() /* 권한역할메뉴.수정_일시 */
 			WHERE 1 = 1
 			AND AUTHOR_ID = #AUTHOR_ID# /* 권한역할메뉴.권한_ID */
 			AND  MENU_ID = #MENU_ID# /* 권한역할메뉴.메뉴_ID */
@@ -259,7 +259,7 @@
 	<![CDATA[ 		
 		/* roleMenuDAO.selectRoleMenuYList */
 		/* 권한이 있는 메뉴 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT tnmenu.MENU_ID	/*시스템메뉴.메뉴ID*/
 				      ,LPAD(' ', 4 *(LEVEL - 1)) || tnmenu.MENU_NM	MENU_NM /*시스템메뉴.메뉴명*/
 				      ,tnmenu.MENU_DC	/*시스템메뉴.메뉴설명*/
@@ -318,7 +318,7 @@
 	<![CDATA[ 		
 		/* roleMenuDAO.selectRoleMenuNList */
 		/* 권한이 없는메뉴 조회 */
-		SELECT * FROM (SELECT ROWNUM AS rn, tb.* FROM (
+		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 			SELECT tnmenu.MENU_ID	/*시스템메뉴.메뉴ID*/
 			      ,LPAD(' ', 4 *(LEVEL - 1)) || tnmenu.MENU_NM	MENU_NM /*시스템메뉴.메뉴명*/
 			      ,tnmenu.MENU_DC	/*시스템메뉴.메뉴설명*/
