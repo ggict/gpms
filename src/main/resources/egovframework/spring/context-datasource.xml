@@ -26,12 +26,29 @@
         <property name ="password" value="${Globals.smsPassword}" />
     </bean>
   
-  	<!-- postgresql 연결 -->
+  	<!-- [2019-08-28] postgresql 연결 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 	    <property name="driverClassName" value="${Globals.DriverClassName}" />
 	    <property name="url" value="${Globals.Url}" />
 	    <property name="username" value="${Globals.UserName}" />
 	    <property name="password" value="${Globals.Password}" />
-	</bean>	
+	    <!-- Connection pool -->
+	    <property name="initialSize" value="10" />
+    	<property name="maxActive" value="50" />
+    	<property name="maxIdle" value="50" />
+    	<property name="minIdle" value="50" />
+    	<property name="maxWait" value="60000" />
+	    <!-- connection verification -->
+	    <property name="testOnBorrow" value="true" />
+	    <property name="testOnReturn" value="false" />
+	    <property name="validationQuery" value=" SELECT 1" />
+	    <property name="testWhileIdle" value="true" />
+	    <property name="timeBetweenEvictionRunsMillis" value="600000" />
+	    <!-- abandoned connection -->
+	    <property name="removeAbandonedTimeout" value="60" />
+	    <property name="removeAbandoned" value="true" />
+	    <property name="logAbandoned" value="true" />
+	    <property name="defaultAutoCommit" value="true" />
+	</bean>
    
 </beans>
