@@ -561,6 +561,34 @@
 <![CDATA[
 		/* deptDAO.selectDeptList */
 		/* 부서_코드 조회 */
+		WITH RECURSIVE tcdept
+		(
+			dept_code, dept_nm, lowest_dept_nm, odr, ord, sehigh_dept_code, 
+			top_dept_code, psitn_dept_odr, rprsnt_dept_code, istdr_clsf_nm, adstrd_code, 
+			zip, fax_no, creat_de, abl_de, last_opert_de, instt_ty, prev_instt, edc_traing_instt_at, 
+			use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no, LEVEL
+		) AS
+		(
+			SELECT
+				dept_code, dept_nm, lowest_dept_nm, odr, ord, sehigh_dept_code, 
+				top_dept_code, psitn_dept_odr, rprsnt_dept_code, istdr_clsf_nm, adstrd_code, 
+				zip, fax_no, creat_de, abl_de, last_opert_de, instt_ty, prev_instt, edc_traing_instt_at, 
+				use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no, 0
+			FROM
+				tc_dept
+			WHERE
+				dept_code = '6410000'	/* 경기도 DEPT_CODE */
+			UNION ALL
+			SELECT
+				a.dept_code, a.dept_nm, a.lowest_dept_nm, a.odr, a.ord, a.sehigh_dept_code, 
+				a.top_dept_code, a.psitn_dept_odr, a.rprsnt_dept_code, a.istdr_clsf_nm, a.adstrd_code, 
+				a.zip, a.fax_no, a.creat_de, a.abl_de, a.last_opert_de, a.instt_ty, a.prev_instt, a.edc_traing_instt_at, 
+				a.use_at, a.delete_at, a.crtr_no, a.creat_dt, a.updusr_no, a.updt_dt, a.tel_no, LEVEL+1
+			FROM
+				tc_dept a, tcdept b
+			WHERE
+				a.sehigh_dept_code = b.dept_code
+		)
 		SELECT * FROM (SELECT
 ]]>
 
@@ -579,41 +607,7 @@
 		tb.*
 		FROM (
 			SELECT tcdept.*
-			FROM (
-			SELECT
-				tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
-				, tcdept.DEPT_NM /* 부서_코드.부서_명 */
-				, tcdept.LOWEST_DEPT_NM /* 부서_코드.최하위_부서_명 */
-				, tcdept.ODR /* 부서_코드.차수 */
-				, tcdept.ORD /* 부서_코드.서열 */
-				, tcdept.SEHIGH_DEPT_CODE /* 부서_코드.차상위_부서_코드 */
-				, tcdept.TOP_DEPT_CODE /* 부서_코드.최상위_부서_코드 */
-				, tcdept.PSITN_DEPT_ODR /* 부서_코드.소속_부서_차수 */
-				, tcdept.RPRSNT_DEPT_CODE /* 부서_코드.대표_부서_코드 */
-				, tcdept.ISTDR_CLSF_NM /* 부서_코드.기관장_직급_명 */
-				, tcdept.ADSTRD_CODE /* 부서_코드.행정동_코드 */
-				, tcdept.ZIP /* 부서_코드.우편번호 */
-				, tcdept.FAX_NO /* 부서_코드.팩스_번호 */
-				, tcdept.CREAT_DE /* 부서_코드.생성_일자 */
-				, tcdept.ABL_DE /* 부서_코드.폐지_일자 */
-				, tcdept.LAST_OPERT_DE /* 부서_코드.최종_작업_일자 */
-				, tcdept.INSTT_TY /* 부서_코드.기관_유형 */
-				, tcdept.PREV_INSTT /* 부서_코드.이전_기관 */
-				, tcdept.EDC_TRAING_INSTT_AT /* 부서_코드.교육_훈련_기관_여부 */
-				, tcdept.USE_AT /* 부서_코드.사용_여부 */
-				, tcdept.DELETE_AT /* 부서_코드.삭제_여부 */
-				, tcdept.CRTR_NO /* 부서_코드.생성자_번호 */
-				, tcdept.CREAT_DT /* 부서_코드.생성_일시 */
-				, tcdept.UPDUSR_NO /* 부서_코드.수정자_번호 */
-				, tcdept.UPDT_DT /* 부서_코드.수정_일시 */
-				, tcdept.TEL_NO /* 부서_코드.전화_번호 */
-				, (SELECT subtcdept.SEHIGH_DEPT_CODE FROM TC_DEPT subtcdept WHERE subtcdept.DEPT_CODE = tcdept.SEHIGH_DEPT_CODE AND subtcdept.USE_AT='Y' AND subtcdept.DELETE_AT='N') AS UPPER_SEHIGH_DEPT_CODE
-			FROM TC_DEPT tcdept
-]]>
-<![CDATA[
-		START WITH tcdept.DEPT_CODE = '6410000'
-	  CONNECT BY PRIOR tcdept.DEPT_CODE = tcdept.SEHIGH_DEPT_CODE
-		) tcdept
+			FROM tcdept
 ]]>
 	<include refid="deptDAO.selectDeptList.where" />
 <![CDATA[
@@ -676,6 +670,34 @@
 <![CDATA[
 		/* deptDAO.selectDeptCodeList */
 		/* 부서_코드 조회  */
+		WITH RECURSIVE tcdept
+		(
+			dept_code, dept_nm, lowest_dept_nm, odr, ord, sehigh_dept_code, 
+			top_dept_code, psitn_dept_odr, rprsnt_dept_code, istdr_clsf_nm, adstrd_code, 
+			zip, fax_no, creat_de, abl_de, last_opert_de, instt_ty, prev_instt, edc_traing_instt_at, 
+			use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no, LEVEL
+		) AS
+		(
+			SELECT
+				dept_code, dept_nm, lowest_dept_nm, odr, ord, sehigh_dept_code, 
+				top_dept_code, psitn_dept_odr, rprsnt_dept_code, istdr_clsf_nm, adstrd_code, 
+				zip, fax_no, creat_de, abl_de, last_opert_de, instt_ty, prev_instt, edc_traing_instt_at, 
+				use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no, 0
+			FROM
+				tc_dept
+			WHERE
+				dept_code = '6410000'	/* 경기도 DEPT_CODE */
+			UNION ALL
+			SELECT
+				a.dept_code, a.dept_nm, a.lowest_dept_nm, a.odr, a.ord, a.sehigh_dept_code, 
+				a.top_dept_code, a.psitn_dept_odr, a.rprsnt_dept_code, a.istdr_clsf_nm, a.adstrd_code, 
+				a.zip, a.fax_no, a.creat_de, a.abl_de, a.last_opert_de, a.instt_ty, a.prev_instt, a.edc_traing_instt_at, 
+				a.use_at, a.delete_at, a.crtr_no, a.creat_dt, a.updusr_no, a.updt_dt, a.tel_no, LEVEL+1
+			FROM
+				tc_dept a, tcdept b
+			WHERE
+				a.sehigh_dept_code = b.dept_code
+		)
 		SELECT tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
 			 , tcdept.DEPT_NM /* 부서_코드.부서_명 */
 			 , tcdept.LOWEST_DEPT_NM /* 부서_코드.최하위_부서_명 */
@@ -702,9 +724,8 @@
 			 , tcdept.UPDUSR_NO /* 부서_코드.수정자_번호 */
 			 , tcdept.UPDT_DT /* 부서_코드.수정_일시 */
 			 , tcdept.TEL_NO /* 부서_코드.전화_번호 */
-		  FROM TC_DEPT tcdept
-		 WHERE tcdept.DELETE_AT = 'N'
- 		   AND tcdept.USE_AT = 'Y'
+		  FROM tcdept
+		  WHERE 1=1
 ]]>
 		<isNotEmpty property="ODR">
 			<![CDATA[
@@ -727,9 +748,7 @@
 			]]>
 		</isNotEmpty>
 <![CDATA[
- 		 START WITH tcdept.DEPT_CODE = '6410000'
-	   CONNECT BY PRIOR tcdept.DEPT_CODE = tcdept.SEHIGH_DEPT_CODE
-	   ORDER BY ORD
+	   ORDER BY tcdept.ORD
 ]]>
 </select>
 
@@ -738,6 +757,38 @@
 <![CDATA[
 		/* deptDAO.selectSHighDeptList */
 		/* 부서_코드 상위 부서 목록 조회  */
+		WITH RECURSIVE tcdept
+		(
+			dept_code, dept_nm, lowest_dept_nm, odr, ord, sehigh_dept_code, 
+			top_dept_code, psitn_dept_odr, rprsnt_dept_code, istdr_clsf_nm, adstrd_code, 
+			zip, fax_no, creat_de, abl_de, last_opert_de, instt_ty, prev_instt, edc_traing_instt_at, 
+			use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no, LEVEL
+		) AS
+		(
+			SELECT
+				dept_code, dept_nm, lowest_dept_nm, odr, ord, sehigh_dept_code, 
+				top_dept_code, psitn_dept_odr, rprsnt_dept_code, istdr_clsf_nm, adstrd_code, 
+				zip, fax_no, creat_de, abl_de, last_opert_de, instt_ty, prev_instt, edc_traing_instt_at, 
+				use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no, 0
+			FROM
+				tc_dept
+			WHERE
+				dept_code = #DEPT_CODE#
+			AND
+			 	delete_at = 'N' AND use_at = 'Y'
+			UNION ALL
+			SELECT
+				a.dept_code, a.dept_nm, a.lowest_dept_nm, a.odr, a.ord, a.sehigh_dept_code, 
+				a.top_dept_code, a.psitn_dept_odr, a.rprsnt_dept_code, a.istdr_clsf_nm, a.adstrd_code, 
+				a.zip, a.fax_no, a.creat_de, a.abl_de, a.last_opert_de, a.instt_ty, a.prev_instt, a.edc_traing_instt_at, 
+				a.use_at, a.delete_at, a.crtr_no, a.creat_dt, a.updusr_no, a.updt_dt, a.tel_no, LEVEL+1
+			FROM
+				tc_dept a, tcdept b
+			WHERE
+				a.dept_code = b.sehigh_dept_code AND a.sehigh_dept_code <> '0000000'
+			AND
+				a.delete_at = 'N' AND a.use_at = 'Y'
+		)
 		SELECT tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
 			 , tcdept.DEPT_NM /* 부서_코드.부서_명 */
 			 , tcdept.LOWEST_DEPT_NM /* 부서_코드.최하위_부서_명 */
@@ -764,12 +815,7 @@
 			 , tcdept.UPDUSR_NO /* 부서_코드.수정자_번호 */
 			 , tcdept.UPDT_DT /* 부서_코드.수정_일시 */
 			 , tcdept.TEL_NO /* 부서_코드.전화_번호 */
-		  FROM TC_DEPT tcdept
-		 WHERE tcdept.DELETE_AT = 'N'
- 		   AND tcdept.USE_AT = 'Y'
- 		   AND tcdept.SEHIGH_DEPT_CODE <> '0000000'
-		 START WITH tcdept.DEPT_CODE = #DEPT_CODE#
-	   CONNECT BY PRIOR tcdept.SEHIGH_DEPT_CODE = tcdept.DEPT_CODE
+		  FROM tcdept
 	   	 ORDER BY tcdept.ODR
 ]]>
 		</select>
