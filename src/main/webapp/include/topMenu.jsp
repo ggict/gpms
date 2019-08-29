@@ -118,9 +118,11 @@
                 </ul>
             </div>
             <div class="submenubg"></div>
+            <%-- 
             <div class="logobx" style='line-height:63px; cursor:pointer;'>
                 <img src="<c:url value='images/sys2.png' />" id='logobx2' style='vertical-align:middle; width:90px;' >
             </div>
+             --%>
             <div class="htbx user-area">
                 <h2 class="hidden">사용자정보</h2>
                 <div class="user user-area">
