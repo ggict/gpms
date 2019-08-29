@@ -1133,7 +1133,8 @@
         <isNotEmpty property="DEPT_CODE"><![CDATA[ /* 시스템사용자.부서_코드 */ AND (tnsysuser.DEPT_CODE = #DEPT_CODE# or tnsysuser.SEHIGH_DEPT_CODE = #DEPT_CODE# or tnsysuser.UPPER_SEHIGH_DEPT_CODE = #DEPT_CODE# ) ]]></isNotEmpty>
 
         <![CDATA[
-        ) WHERE 1=1
+        ) as sub_totCnt 
+        WHERE 1=1
         ]]>
 
     </select>

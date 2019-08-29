@@ -233,7 +233,8 @@
 
 <![CDATA[
 
-		) tb) WHERE 1=1
+		) tb) as sub_all 
+		WHERE 1=1
 ]]>
 		<isEqual prepend="  " property="usePage" compareValue="true">
 		<![CDATA[
