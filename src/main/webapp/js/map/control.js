@@ -3604,7 +3604,7 @@ MAP.CONTROL = (function($, undefined){
 
      	var answer = confirm("포트홀 신고 위치를 수정 하시겠습니까?\r\n위치를 다시 입력하시려면 취소를 선택하십시오.");
   		if(answer){
-  			var fields = ["G2_ID","CRDNT_X","CRDNT_Y","CORTN_X","CORTN_Y",
+  			var fields = ["GID","CRDNT_X","CRDNT_Y","CORTN_X","CORTN_Y",
   			              "RCEPT_CN"];
   			var values = [];
   			var cptg2Id = "0";	//관할구역 ID 기본값 0
@@ -3713,7 +3713,7 @@ MAP.CONTROL = (function($, undefined){
 
 	   	var answer = confirm("포트홀 신고 위치를 수정 하시겠습니까?\r\n위치를 다시 입력하시려면 취소를 선택하십시오.");
 			if(answer){
-				var fields = ["G2_ID","CRDNT_X","CRDNT_Y","CORTN_X","CORTN_Y",
+				var fields = ["GID","CRDNT_X","CRDNT_Y","CORTN_X","CORTN_Y",
 				              "RCEPT_CN"];
 				var values = [];
 				var cptg2Id = "0";	//관할구역 ID 기본값 0

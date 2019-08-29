@@ -696,12 +696,12 @@ public class SttemntController extends BaseController {
             String imode = isEmptyValue(request.getParameter("imode"),"");
             String GG_ID = isEmptyValue(request.getParameter("GG_ID"),"");
 
-            // 시군관리 포트홀 신고 정보 처음 등록시에는 G2_ID값이 넘어옴.
+            // 시군관리 포트홀 신고 정보 처음 등록시에는 GID값이 넘어옴.
             if("ADD".equals(imode)){
             	SttemntVO sttemntVO = new SttemntVO();
             	sttemntVO.setPthmode(isEmptyValue(rpairVO.getPthmode(),"T"));
             	sttemntVO.setGG_ID(GG_ID);
-            	//G2_ID로 해당 포트홀 관리 번호 가져오기
+            	//GID로 해당 포트홀 관리 번호 가져오기
             	SttemntVO sttemntResult = sttemntService.selectPotholeRgNo(sttemntVO);
             	rpairVO.setPTH_RG_NO(sttemntResult.getPTH_RG_NO());
             }
@@ -923,7 +923,7 @@ public class SttemntController extends BaseController {
     	// 접수경로 구분 초기화 - 구분값이 없을 경우, 스마트 카드 기본 조회됨.
     	sttemntVO.setPthmode(isEmptyValue(sttemntVO.getPthmode(),"T"));
 
-    	//G2_ID로 해당 포트홀 관리 번호 가져오기
+    	//GID로 해당 포트홀 관리 번호 가져오기
     	SttemntVO sttemntResult = sttemntService.selectPotholeRgNo(sttemntVO);
     	sttemntVO.setPTH_RG_NO(sttemntResult.getPTH_RG_NO());
 

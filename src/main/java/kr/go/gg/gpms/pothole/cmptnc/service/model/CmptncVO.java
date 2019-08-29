@@ -31,11 +31,11 @@ public class CmptncVO extends BaseVO {
 
 
 	/**
-	 * CMPTNC_ZONE.G2_ID,
-	 * 관할_노선.G2_ID
+	 * CMPTNC_ZONE.GID,
+	 * 관할_노선.GID
 	 */
 	@XmlElement
-	private java.lang.String G2_ID	       ;
+	private java.lang.String GID	       ;
 
 	/**
 	 * CMPTNC_ZONE.CPT_MNG_NO,
@@ -333,15 +333,15 @@ public class CmptncVO extends BaseVO {
 
 	/**
 	 * CMPTNC_ZONE.AR,
-	 * 관할_노선.G2_ID
+	 * 관할_노선.GID
 	 */
-	@JsonProperty(value="G2_ID")
-	public java.lang.String getG2_ID() {
-		return G2_ID;
+	@JsonProperty(value="GID")
+	public java.lang.String getGID() {
+		return GID;
 	}
 
-	public void setG2_ID(java.lang.String g2_ID) {
-		G2_ID = g2_ID;
+	public void setGID(java.lang.String GID) {
+		GID = GID;
 	}
 
 	/**

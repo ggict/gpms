@@ -7,7 +7,7 @@
     <typeAlias alias="cmptncVO" type="kr.go.gg.gpms.pothole.cmptnc.service.model.CmptncVO" />
 
     <resultMap id="cmptncVO.resultMap" class="cmptncVO">
-        <result property="G2_ID"        column="G2_ID"         columnIndex="1"  /> <!-- G2_ID -->
+        <result property="GID"        column="GID"         columnIndex="1"  /> <!-- GID -->
         <result property="CPT_MNG_NO"   column="CPT_MNG_NO"    columnIndex="2"  /> <!-- 노선_관리_번호 -->
         <result property="ROAD_GRAD"    column="ROAD_GRAD"     columnIndex="3"  /> <!-- 도로_등급    -->
         <result property="ROUTE_NO"     column="ROUTE_NO"      columnIndex="4"  /> <!-- 노선_번호    -->
@@ -34,7 +34,7 @@
 	           ,ROW_NUMBER() OVER (ORDER BY $sidx$ $sord$) rnum
 	    FROM (
 	        SELECT tb.*
-	               ,FN_GET_LIST_G2_ID(DEPT_CODE) G2_ID
+	               ,FN_GET_LIST_G2_ID(DEPT_CODE) GID
 	               ,ROW_NUMBER() OVER() as deptnum
 	          FROM (
 	            SELECT
@@ -319,7 +319,7 @@ SELECT *
                ,ROW_NUMBER() OVER (ORDER BY $sidx$ $sord$) rnum
         FROM (
             SELECT tb.*
-                   ,FN_GET_LIST_G2_ID(DEPT_CODE) G2_ID
+                   ,FN_GET_LIST_G2_ID(DEPT_CODE) GID
                    ,ROW_NUMBER() OVER() as deptnum
               FROM (
                 SELECT

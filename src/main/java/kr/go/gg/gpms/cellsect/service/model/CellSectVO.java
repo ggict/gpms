@@ -33,10 +33,10 @@ public class CellSectVO extends BaseVO {
 	}
 	
 	/** 
-	 * CELL_SECT.G2_ID
+	 * CELL_SECT.GID
 	 */
 	@XmlElement
-	private java.lang.String G2_ID;
+	private java.lang.String GID;
 
 	/** 
 	 * CELL_SECT.G2_DATASETID
@@ -190,20 +190,20 @@ public class CellSectVO extends BaseVO {
 	
 	
 	/**
-	 * CELL_SECT.G2_ID 
+	 * CELL_SECT.GID 
 	 * @return
 	 */
-	@JsonProperty(value="G2_ID") 
-	public java.lang.String getG2_ID() {
-		return this.G2_ID;
+	@JsonProperty(value="GID") 
+	public java.lang.String getGID() {
+		return this.GID;
 	}
  
 	 /**
-	 * CELL_SECT.G2_ID 
+	 * CELL_SECT.GID 
 	 * @param g2Id
 	 */
-	public void setG2_ID(java.lang.String g2Id) {
-		this.G2_ID = g2Id;
+	public void setGID(java.lang.String gId) {
+		this.GID = gId;
 	}
 
 	/**

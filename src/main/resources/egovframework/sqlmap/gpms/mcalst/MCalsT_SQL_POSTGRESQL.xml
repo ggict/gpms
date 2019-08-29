@@ -11,7 +11,7 @@
 
 		<isEqual property="searchCondition" compareValue="0">
 			<![CDATA[
-				AND cellsect.G2_ID = #searchKeyword#
+				AND cellsect.GID = #searchKeyword#
 			]]>
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
@@ -19,7 +19,7 @@
 				AND cellsect.G2_DATASETID LIKE '%' || #searchKeyword# || '%'
 			]]>
 		</isEqual>
-		<isNotEmpty property="G2_ID"><![CDATA[ /* CELL_SECT.G2_ID */ AND cellsect.G2_ID = #G2_ID# ]]></isNotEmpty>
+		<isNotEmpty property="GID"><![CDATA[ /* CELL_SECT.GID */ AND cellsect.GID = #GID# ]]></isNotEmpty>
 		<isNotEmpty property="G2_DATASETID"><![CDATA[ /* CELL_SECT.G2_DATASETID */ AND cellsect.G2_DATASETID = #G2_DATASETID# ]]></isNotEmpty>
 		<isNotEmpty property="G2_SPATIALTYPE"><![CDATA[ /* CELL_SECT.G2_SPATIALTYPE */ AND cellsect.G2_SPATIALTYPE = #G2_SPATIALTYPE# ]]></isNotEmpty>
 		<isNotEmpty property="G2_XMIN"><![CDATA[ /* CELL_SECT.G2_XMIN */ AND cellsect.G2_XMIN = #G2_XMIN# ]]></isNotEmpty>

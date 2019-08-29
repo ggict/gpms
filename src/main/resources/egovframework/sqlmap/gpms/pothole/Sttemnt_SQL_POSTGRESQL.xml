@@ -153,7 +153,7 @@
     <isEqual property="imode" compareValue="ADD">
     <![CDATA[
         WHERE 1 = 1
-            AND G2_ID = #GG_ID#
+            AND GID = #GG_ID#
     ]]>
     </isEqual>
     </update>
@@ -374,7 +374,7 @@
         SELECT SUBSTR(PTH_RG_NO, 0, 8) || '-' || TO_NUMBER(SUBSTR(PTH_RG_NO, 9)) AS PTH_RG_NO
         FROM <include refid="sttemntDAO.pthmode.pthmnt" />
         <![CDATA[
-            WHERE G2_ID = #GG_ID#
+            WHERE GID = #GG_ID#
         ]]>
     </select>
 
@@ -388,13 +388,13 @@
              LEFT JOIN (SELECT SD_NM, SGG_NM, DL_NM, BJD_CD FROM KIK_CD
                             GROUP BY SD_NM, SGG_NM, DL_NM, BJD_CD ) B ON B.BJD_CD = SUBSTR(A.PNU, 0, 10)
              WHERE SDO_RELATE ( A.G2_SPATIAL,
-                 (SELECT G2_SPATIAL FROM pth_ctsmnt WHERE G2_ID=#GG_ID#), 'mask=ANYINTERACT' ) = 'TRUE'
+                 (SELECT G2_SPATIAL FROM pth_ctsmnt WHERE GID=#GG_ID#), 'mask=ANYINTERACT' ) = 'TRUE'
             ) LNM_ADRES
         FROM
     ]]>
            <include refid="sttemntDAO.pthmode.pthmnt" />
     <![CDATA[
-        WHERE G2_ID=#GG_ID#
+        WHERE GID=#GG_ID#
     ]]>
     </select>
 
@@ -1281,7 +1281,7 @@ ON tnmntrngmbr.VHCLE_NO = pthsttmnt.VHCLE_NO
         tnpotholesttemnt.dplct_sttemnt_at, tnpotholesttemnt.dsm_rp_no, tnpotholesttemnt.sms_sndng_at,
         tnpotholesttemnt.cpt_mng_no, tnpotholesttemnt.charger_nm, tnpotholesttemnt.cttpc, tnpotholesttemnt.use_at,
         tnpotholesttemnt.delete_at, tnpotholesttemnt.crtr_no, tnpotholesttemnt.creat_de, tnpotholesttemnt.updusr_no,
-        tnpotholesttemnt.updt_de, pthsttmnt.G2_ID GG_ID, tnpotholerpair.RPRDTLS_MNG_NO,
+        tnpotholesttemnt.updt_de, pthsttmnt.GID GG_ID, tnpotholerpair.RPRDTLS_MNG_NO,
         tnpotholesttemnt.vhcle_type as pthmode
     ]]>
     </sql>

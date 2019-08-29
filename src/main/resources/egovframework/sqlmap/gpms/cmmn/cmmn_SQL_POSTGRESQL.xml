@@ -123,21 +123,21 @@
 			/* 레이어목록 조회 */
 		  SELECT
 		        g2vlayer.G2_MAPID AS "tmapid",
-			    g2vlayer.G2_ID AS "id",
+			    g2vlayer.GID AS "id",
 			    g2sdataset.G2_NAME AS "table",
 			   	g2sdataset.G2_NAME AS"theme",
 			    g2sdataset.G2_ALIAS AS"alias",
-			    g2vlayer.G2_ID AS "seq",
+			    g2vlayer.GID AS "seq",
 		     	1 AS "show", /*1(ON) 0(OFF)*/
                 3 AS "layerType" /*3(면형)*/
 			FROM G2S_DATASET g2sdataset
 			     LEFT OUTER JOIN G2V_LAYER g2vlayer ON g2sdataset.G2_NAME = g2vlayer.G2_NAME
 			WHERE
 			     g2vlayer.G2_BASEID =-1
-			AND  g2vlayer.G2_MAPID = ( SELECT  g2_id  FROM  g2v_map  WHERE  g2_name = 'mt_gpms')
+			AND  g2vlayer.G2_MAPID = ( SELECT  GID  FROM  g2v_map  WHERE  g2_name = 'mt_gpms')
 			AND g2sdataset.G2_NAME IN ('CELL_10','CELL_SECT')
 
-			ORDER BY g2vlayer.G2_ID
+			ORDER BY g2vlayer.GID
 		]]>
 	</select>
 
@@ -149,24 +149,24 @@
             /* 전체 레이어목록 조회 */
           SELECT
                 g2vlayer.G2_MAPID AS "tmapid",
-                g2vlayer.G2_ID AS "id",
+                g2vlayer.GID AS "id",
                 g2sdataset.G2_NAME AS "table",
                 g2sdataset.G2_NAME AS"theme",
                 g2sdataset.G2_ALIAS AS "alias",
                 /* CASE WHEN g2sdataset.G2_ALIAS='포트홀_관할_구역' THEN '관할구역도' ELSE REPLACE(g2sdataset.G2_ALIAS, '_', ' ' ) END AS "alias", */
                 /* CASE WHEN g2sdataset.G2_ALIAS='포트홀_도로면_50만' THEN '도로면' ELSE REPLACE(g2sdataset.G2_ALIAS, '_', ' ' ) END AS "alias", */
-                g2vlayer.G2_ID AS "seq",
+                g2vlayer.GID AS "seq",
                 1 AS "show", /*1(ON) 0(OFF)*/
                 3 AS "layerType" /*3(면형)*/
             FROM G2S_DATASET g2sdataset
                  LEFT OUTER JOIN G2V_LAYER g2vlayer ON g2sdataset.G2_NAME = g2vlayer.G2_NAME
             WHERE
                  g2vlayer.G2_BASEID =-1
-            AND  g2vlayer.G2_MAPID = ( SELECT  g2_id  FROM  g2v_map  WHERE  g2_name = 'mt_gpms')
+            AND  g2vlayer.G2_MAPID = ( SELECT  GID  FROM  g2v_map  WHERE  g2_name = 'mt_gpms')
             AND g2sdataset.G2_NAME IN
                  ('MV_SRVYDTA_10_2018', 'MV_SRVYDTA_10_2017', 'MV_GNLSTTUS_SECT_2018', 'MV_GNLSTTUS_SECT_2017', 'CELL_10', 'CELL_SECT','M_CALS_T','MV_THM_YEAR_10','MV_CELL_SECT_TYPE', 'MV_POTHOLE_STTEMNT', 'CMPTNC_ZONE', 'DORO_A001', 'LSMD_CONT_LDREG', 'N3A_B0010000', 'SIGUNGU' )
 
-            ORDER BY g2vlayer.G2_ID
+            ORDER BY g2vlayer.GID
         ]]>
     </select>
 
@@ -175,7 +175,7 @@
 			/* cmmnDAO.selectLyrGroupInfo */
 			/* 레이어그룹 조회 */
 			SELECT
-			    G2_ID AS "id",
+			    GID AS "id",
 			    G2_NAME AS "name",
 			    G2_MAPID "mapId"
 			FROM
@@ -185,13 +185,13 @@
 			    AND
 			        G2_MAPID = (
 			            SELECT
-			                G2_ID
+			                GID
 			            FROM
 			                G2V_MAP
 			            WHERE
 			                G2_NAME = 'mt_gpms'
 			        )
-			ORDER BY G2_ID
+			ORDER BY GID
         ]]>
 	</select>
 

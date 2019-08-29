@@ -131,9 +131,9 @@ $( document ).ready(function() {
         ,postData: $("#frm").cmSerializeObject()
         //,postData: postData
         ,ignoreCase: true
-        ,colNames:["G2_ID","CPT_MNG_NO","DEPT_CODE",/*"노선등급","노선번호","노선명", "시점명","종점명", */ "관할기관","담당자","연락처",/* "연장(km)", */"면적(㎡)", "위치보기", "수정하기"]
+        ,colNames:["GID","CPT_MNG_NO","DEPT_CODE",/*"노선등급","노선번호","노선명", "시점명","종점명", */ "관할기관","담당자","연락처",/* "연장(km)", */"면적(㎡)", "위치보기", "수정하기"]
         ,colModel:[
-            {name:'G2_ID',index:'G2_ID', hidden: true }
+            {name:'GID',index:'GID', hidden: true }
             ,{name:'CPT_MNG_NO',index:'CPT_MNG_NO', hidden: true }
             ,{name:'DEPT_CODE',index:'DEPT_CODE', hidden: true}
             //,{name:'ROAD_GRAD',index:'ROAD_GRAD', align:'center', width:50, sortable:true}

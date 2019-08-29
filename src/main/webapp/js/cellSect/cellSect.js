@@ -5,7 +5,7 @@
 //jqGrid
 function fnSelectCellSect(g2Id) {
 	//
-	var postData = {"G2_ID" : "1"};
+	var postData = {"GID" : "1"};
 	
 	// 검색 목록 그리드 구성
 	$("#gridArea").jqGrid({
@@ -17,9 +17,9 @@ function fnSelectCellSect(g2Id) {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["G2_ID","노선번호","노선명","관리주체","행정구역","도로등급","교통용량","SECTION구분","위치보기"]
+		,colNames:["GID","노선번호","노선명","관리주체","행정구역","도로등급","교통용량","SECTION구분","위치보기"]
 	   	,colModel:[
-	   	     {name:'G2_ID',index:'G2_ID', hidden: true}
+	   	     {name:'GID',index:'GID', hidden: true}
 	   	    ,{name:'ROUTE_CODE',index:'ROUTE_CODE', align:'center',width:30, sortable:true}
 	   	    ,{name:'ROUTE_NM',index:'ROUTE_NM', align:'center',width:50, sortable:true}
 			,{name:'DEPT_CODE',index:'DEPT_CODE', align:'center', width:50, sortable:true}

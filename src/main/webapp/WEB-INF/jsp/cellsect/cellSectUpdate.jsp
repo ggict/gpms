@@ -206,7 +206,7 @@ function fnStep3(){
     // 전송 데이터 조합
     var postData = $("#frm").cmSerializeObject();
     /* postData["OBJECT_ID"] = obId; */
-    postData["G2_ID"] = obId;
+    postData["GID"] = obId;
 
     // 검색 목록 그리드 구성
     $("#gridArea").jqGrid({
@@ -219,9 +219,9 @@ function fnStep3(){
         ,postData: postData
         //,postData:  JSON.stringify( $("#frm").cmSerializeObject())
         ,ignoreCase: true
-        ,colNames:["G2_ID","행선","차로","시점","종점","노선</br>번호","노선명","관리</br>주체","행정</br>구역","도로</br>등급","교통</br>용량","교통량","SECTION_CD","SECTION구분","위치</br>보기"]
+        ,colNames:["GID","행선","차로","시점","종점","노선</br>번호","노선명","관리</br>주체","행정</br>구역","도로</br>등급","교통</br>용량","교통량","SECTION_CD","SECTION구분","위치</br>보기"]
         ,colModel:[
-            {name:'G2_ID',index:'G2_ID', hidden: true}
+            {name:'GID',index:'GID', hidden: true}
             ,{name:'DIRECT_CODE',index:'DIRECT_CODE', hidden: true}
             ,{name:'TRACK',index:'TRACK', hidden: true}
             ,{name:'STRTPT',index:'STRTPT', hidden: true}
@@ -298,7 +298,7 @@ function fnStep3(){
 function fn_select_route(g2Id){
 
     var tables = ["CELL_SECT"];
-    var fields = ["G2_ID"];
+    var fields = ["GID"];
     var values = [g2Id];
 
     // 모든 팝업창 최소화
@@ -312,12 +312,12 @@ function fn_select_route(g2Id){
 
 //위치이동 버튼 생성
 function fn_create_btn(cellValue, options, rowObject) {
-    return "<a href='#' onclick=\"fn_select_cellSect('" + rowObject.G2_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+    return "<a href='#' onclick=\"fn_select_cellSect('" + rowObject.GID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
 }
 
 function fn_saveSectse(){
     var rowData = $("#gridArea").getRowData(selRow);
-    var g2Id = rowData["G2_ID"];
+    var g2Id = rowData["GID"];
     var routeCd = rowData["ROUTE_CODE"];
     var dirCd = rowData["DIRECT_CODE"];
     var track = rowData["TRACK"];
@@ -329,7 +329,7 @@ function fn_saveSectse(){
     }
 
     var sectSe = $("#"+selRow+"_CELL_TYPE_NM option:selected" ).val();
-    var data = {"G2_ID" : g2Id,"CELL_TYPE": sectSe
+    var data = {"GID" : g2Id,"CELL_TYPE": sectSe
                 ,"ROUTE_CODE" : routeCd, "DIRECT_CODE" : dirCd
                 ,"TRACK" : track, "STRTPT" : st, "ENDPT" : et};
 
@@ -353,7 +353,7 @@ function fn_saveSectse(){
 //위치조회
 function fn_select_cellSect(g2Id){
     var tables = ["CELL_SECT"];
-    var fields = ["G2_ID"];
+    var fields = ["GID"];
     var values = [g2Id];
     var attribute = {
             attributes : {

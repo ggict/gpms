@@ -1445,7 +1445,7 @@ GRequest.WFS = {
 
 		wfsStr += '<ogc:Filter>';
 		wfsStr += '<ogc:PropertyIsEqualTo matchCase="true">';
-		wfsStr += '<ogc:PropertyName>' + table + '.G2_ID</ogc:PropertyName> ';
+		wfsStr += '<ogc:PropertyName>' + table + '.GID</ogc:PropertyName> ';
 		wfsStr += '<ogc:Literal>' + value + '</ogc:Literal> ';
 		wfsStr += '</ogc:PropertyIsEqualTo>';
 		wfsStr += '</ogc:Filter>';

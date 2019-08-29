@@ -42,11 +42,11 @@ public class Cell10VO extends BaseVO {
     private java.lang.String lat;
 
 	/**
-	 * CELL_10.G2_ID,
-	 * CELL_10.G2_ID
+	 * CELL_10.GID,
+	 * CELL_10.GID
 	 */
 	@XmlElement
-	private java.lang.String G2_ID;
+	private java.lang.String GID;
 
 	/**
 	 * CELL_10.G2_DATASETID,
@@ -352,22 +352,22 @@ public class Cell10VO extends BaseVO {
     private java.lang.String SRVY_YEAR;
 
 	/**
-	 * CELL_10.G2_ID,
-	 * CELL_10.G2_ID
+	 * CELL_10.GID,
+	 * CELL_10.GID
 	 * @return
 	 */
-	@JsonProperty(value="G2_ID")
-	public java.lang.String getG2_ID() {
-		return this.G2_ID;
+	@JsonProperty(value="GID")
+	public java.lang.String getGID() {
+		return this.GID;
 	}
 
 	 /**
-	 * CELL_10.G2_ID,
-	 * CELL_10.G2_ID
+	 * CELL_10.GID,
+	 * CELL_10.GID
 	 * @param g2Id
 	 */
-	public void setG2_ID(java.lang.String g2Id) {
-		this.G2_ID = g2Id;
+	public void setGID(java.lang.String gId) {
+		this.GID = gId;
 	}
 
 	/**

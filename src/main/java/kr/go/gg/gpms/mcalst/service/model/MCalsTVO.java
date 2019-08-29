@@ -33,10 +33,10 @@ public class MCalsTVO extends BaseVO {
 	}
 	
 	/** 
-	 * M_CALS_T.G2_ID
+	 * M_CALS_T.GID
 	 */
 	@XmlElement
-	private java.lang.String G2_ID;
+	private java.lang.String GID;
 
 	/** 
 	 * M_CALS_T.G2_DATASETID
@@ -270,20 +270,20 @@ public class MCalsTVO extends BaseVO {
 	private java.lang.String DECK_PAV;
 	
 	/**
-	 * M_CALS_T.G2_ID 
+	 * M_CALS_T.GID 
 	 * @return
 	 */
-	@JsonProperty(value="G2_ID") 
-	public java.lang.String getG2_ID() {
-		return this.G2_ID;
+	@JsonProperty(value="GID") 
+	public java.lang.String getGID() {
+		return this.GID;
 	}
  
 	 /**
-	 * M_CALS_T.G2_ID 
+	 * M_CALS_T.GID 
 	 * @param g2Id
 	 */
-	public void setG2_ID(java.lang.String g2Id) {
-		this.G2_ID = g2Id;
+	public void setGID(java.lang.String gId) {
+		this.GID = gId;
 	}
 
 	/**
