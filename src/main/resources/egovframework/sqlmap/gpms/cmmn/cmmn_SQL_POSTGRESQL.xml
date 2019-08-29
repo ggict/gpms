@@ -78,13 +78,14 @@
 	    <![CDATA[ AND STRTPT <= #ENDPT# ]]>
 	    </isNotEmpty>
 	</select>
-
+	
+	<!-- G2S_DATASET 테이블 추후 삭제_sdh
 	<select id="cmmnDAO.selectTableAlias" parameterClass="String" resultClass="String">
 		<![CDATA[
 			SELECT DISTINCT G2_ALIAS FROM G2S_DATASET WHERE upper(G2_NAME) = upper(#value#)
 		]]>
 	</select>
-
+ 	
 	<select id="cmmnDAO.selectTableAliasList" resultClass="hashmap">
 		<![CDATA[
 			 SELECT G2_NAME as LAYER_NM, G2_ALIAS AS ALIAS_NM FROM G2S_DATASET
@@ -96,7 +97,8 @@
 			SELECT DISTINCT G2_ALIAS FROM G2S_FIELDINFO WHERE G2_TABLENAME = upper(#table#) AND G2_NAME = upper(#field#)
 		]]>
 	</select>
-
+	-->
+	
 	<select id="cmmnDAO.selectCodeName" parameterClass="java.util.HashMap" resultClass="codeVO">
 	    SELECT DISTINCT $COLUM_VAL$ AS CODE_VAL , $CODE_NM$ AS CODE_NM
 		  FROM $TABLE_NM$

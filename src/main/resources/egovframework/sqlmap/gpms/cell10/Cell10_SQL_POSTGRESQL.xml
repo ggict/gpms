@@ -11,12 +11,6 @@
     <resultMap id="cell10.resultMap"
         class="cell10VO">
         <result property="GID" column="GID" columnIndex="1" /> <!-- CELL_10.GID -->
-        <result property="G2_DATASETID" column="G2_DATASETID" columnIndex="2" /> <!-- CELL_10.G2_DATASETID -->
-        <result property="G2_SPATIALTYPE" column="G2_SPATIALTYPE" columnIndex="3" /> <!-- CELL_10.G2_SPATIALTYPE -->
-        <result property="G2_XMIN" column="G2_XMIN" columnIndex="4" /> <!-- CELL_10.G2_XMIN -->
-        <result property="G2_YMIN" column="G2_YMIN" columnIndex="5" /> <!-- CELL_10.G2_YMIN -->
-        <result property="G2_XMAX" column="G2_XMAX" columnIndex="6" /> <!-- CELL_10.G2_XMAX -->
-        <result property="G2_YMAX" column="G2_YMAX" columnIndex="7" /> <!-- CELL_10.G2_YMAX -->
         <result property="OBJECT_ID" column="OBJECT_ID" columnIndex="9" /> <!-- CELL_10.OBJECT_ID -->
         <result property="ROUTE_CODE" column="ROUTE_CODE" columnIndex="10" /> <!-- CELL_10.ROUTE_CODE -->
         <result property="DIRECT_CODE" column="DIRECT_CODE" columnIndex="11" /> <!-- CELL_10.DIRECT_CODE -->
@@ -46,12 +40,6 @@
 
         INSERT INTO CELL_10 (
             GID /* CELL_10.GID */
-            , G2_DATASETID /* CELL_10.G2_DATASETID */
-            , G2_SPATIALTYPE /* CELL_10.G2_SPATIALTYPE */
-            , G2_XMIN /* CELL_10.G2_XMIN */
-            , G2_YMIN /* CELL_10.G2_YMIN */
-            , G2_XMAX /* CELL_10.G2_XMAX */
-            , G2_YMAX /* CELL_10.G2_YMAX */
             , OBJECT_ID /* CELL_10.OBJECT_ID */
             , ROUTE_CODE /* CELL_10.ROUTE_CODE */
             , DIRECT_CODE /* CELL_10.DIRECT_CODE */
@@ -69,12 +57,6 @@
             , CELL_ID /* CELL_10.CELL_ID */
         ) VALUES (
             #GID# /* CELL_10.GID */
-            , #G2_DATASETID# /* CELL_10.G2_DATASETID */
-            , #G2_SPATIALTYPE# /* CELL_10.G2_SPATIALTYPE */
-            , #G2_XMIN# /* CELL_10.G2_XMIN */
-            , #G2_YMIN# /* CELL_10.G2_YMIN */
-            , #G2_XMAX# /* CELL_10.G2_XMAX */
-            , #G2_YMAX# /* CELL_10.G2_YMAX */
             , #OBJECT_ID# /* CELL_10.OBJECT_ID */
             , #ROUTE_CODE# /* CELL_10.ROUTE_CODE */
             , #DIRECT_CODE# /* CELL_10.DIRECT_CODE */
@@ -99,13 +81,7 @@
         /* cell10DAO.updateCell10 */
         /* CELL_10 수정 */
         UPDATE CELL_10 SET
-        G2_DATASETID = #G2_DATASETID# /* CELL_10.G2_DATASETID */
-        , G2_SPATIALTYPE = #G2_SPATIALTYPE# /* CELL_10.G2_SPATIALTYPE */
-        , G2_XMIN = #G2_XMIN# /* CELL_10.G2_XMIN */
-        , G2_YMIN = #G2_YMIN# /* CELL_10.G2_YMIN */
-        , G2_XMAX = #G2_XMAX# /* CELL_10.G2_XMAX */
-        , G2_YMAX = #G2_YMAX# /* CELL_10.G2_YMAX */
-        , OBJECT_ID = #OBJECT_ID# /* CELL_10.OBJECT_ID */
+        OBJECT_ID = #OBJECT_ID# /* CELL_10.OBJECT_ID */
         , ROUTE_CODE = #ROUTE_CODE# /* CELL_10.ROUTE_CODE */
         , DIRECT_CODE = #DIRECT_CODE# /* CELL_10.DIRECT_CODE */
         , TRACK = #TRACK# /* CELL_10.TRACK */
@@ -145,12 +121,6 @@
         /* CELL_10 조회 */
         SELECT
             cell10.GID /* CELL_10.GID */
-            , cell10.G2_DATASETID /* CELL_10.G2_DATASETID */
-            , cell10.G2_SPATIALTYPE /* CELL_10.G2_SPATIALTYPE */
-            , cell10.G2_XMIN /* CELL_10.G2_XMIN */
-            , cell10.G2_YMIN /* CELL_10.G2_YMIN */
-            , cell10.G2_XMAX /* CELL_10.G2_XMAX */
-            , cell10.G2_YMAX /* CELL_10.G2_YMAX */
             , cell10.OBJECT_ID /* CELL_10.OBJECT_ID */
             , cell10.ROUTE_CODE /* CELL_10.ROUTE_CODE */
             , cell10.DIRECT_CODE /* CELL_10.DIRECT_CODE */
@@ -180,18 +150,14 @@
                 AND cell10.GID = #searchKeyword#
             ]]>
         </isEqual>
+        <!-- 추후변경_sdh
         <isEqual property="searchCondition" compareValue="1">
             <![CDATA[
                 AND cell10.G2_DATASETID LIKE '%' || #searchKeyword# || '%'
             ]]>
         </isEqual>
+         -->
         <isNotEmpty property="GID"><![CDATA[ /* CELL_10.GID */ AND cell10.GID = #GID# ]]></isNotEmpty>
-        <isNotEmpty property="G2_DATASETID"><![CDATA[ /* CELL_10.G2_DATASETID */ AND cell10.G2_DATASETID = #G2_DATASETID# ]]></isNotEmpty>
-        <isNotEmpty property="G2_SPATIALTYPE"><![CDATA[ /* CELL_10.G2_SPATIALTYPE */ AND cell10.G2_SPATIALTYPE = #G2_SPATIALTYPE# ]]></isNotEmpty>
-        <isNotEmpty property="G2_XMIN"><![CDATA[ /* CELL_10.G2_XMIN */ AND cell10.G2_XMIN = #G2_XMIN# ]]></isNotEmpty>
-        <isNotEmpty property="G2_YMIN"><![CDATA[ /* CELL_10.G2_YMIN */ AND cell10.G2_YMIN = #G2_YMIN# ]]></isNotEmpty>
-        <isNotEmpty property="G2_XMAX"><![CDATA[ /* CELL_10.G2_XMAX */ AND cell10.G2_XMAX = #G2_XMAX# ]]></isNotEmpty>
-        <isNotEmpty property="G2_YMAX"><![CDATA[ /* CELL_10.G2_YMAX */ AND cell10.G2_YMAX = #G2_YMAX# ]]></isNotEmpty>
         <isNotEmpty property="OBJECT_ID"><![CDATA[ /* CELL_10.OBJECT_ID */ AND cell10.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
         <isNotEmpty property="ROUTE_CODE"><![CDATA[ /* CELL_10.ROUTE_CODE */ AND cell10.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
         <isNotEmpty property="DIRECT_CODE"><![CDATA[ /* CELL_10.DIRECT_CODE */ AND cell10.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
@@ -220,12 +186,6 @@
         SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
             SELECT
                 cell10.GID /* CELL_10.GID */
-                , cell10.G2_DATASETID /* CELL_10.G2_DATASETID */
-                , cell10.G2_SPATIALTYPE /* CELL_10.G2_SPATIALTYPE */
-                , cell10.G2_XMIN /* CELL_10.G2_XMIN */
-                , cell10.G2_YMIN /* CELL_10.G2_YMIN */
-                , cell10.G2_XMAX /* CELL_10.G2_XMAX */
-                , cell10.G2_YMAX /* CELL_10.G2_YMAX */
                 , cell10.OBJECT_ID /* CELL_10.OBJECT_ID */
                 , cell10.ROUTE_CODE /* CELL_10.ROUTE_CODE */
                 , TO_NUMBER(cell10.ROUTE_CODE) ROAD_NO_VAL
@@ -1916,7 +1876,8 @@
             ON tnrouteinfo.ROAD_NO = cell.ROUTE_CODE
         WHERE 1=1
     ]]>
-
+    
+	<!-- 추후수정_sdh 
     <isEmpty property="CELL_ID_ARR">
     <![CDATA[
         AND SDO_RELATE (
@@ -1929,7 +1890,8 @@
               ) = 'TRUE'
     ]]>
     </isEmpty>
-
+ 	-->
+ 	
     <isNotEmpty property="CELL_ID">
     <![CDATA[
         AND cell.CELL_ID = #CELL_ID#
@@ -1955,6 +1917,7 @@
             WHERE 1=1
     ]]>
 
+	<!-- 추후수정_sdh
     <isEmpty property="CELL_ID_ARR">
     <![CDATA[
         AND SDO_RELATE (
@@ -1967,7 +1930,8 @@
               ) = 'TRUE'
     ]]>
     </isEmpty>
-
+ 	-->
+ 	
     <isNotEmpty property="CELL_ID">
     <![CDATA[
         AND cell.CELL_ID = #CELL_ID#

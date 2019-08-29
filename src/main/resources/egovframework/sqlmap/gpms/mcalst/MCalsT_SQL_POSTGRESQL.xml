@@ -5,42 +5,6 @@
  
 	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
 	<typeAlias alias="mcalstVO"	type="kr.go.gg.gpms.mcalst.service.model.MCalsTVO" />
-
-	<!-- <sql id="mcalstDAO.selectMCalsTList.where">
-		WHERE 1 = 1
-
-		<isEqual property="searchCondition" compareValue="0">
-			<![CDATA[
-				AND cellsect.GID = #searchKeyword#
-			]]>
-		</isEqual>
-		<isEqual property="searchCondition" compareValue="1">
-			<![CDATA[
-				AND cellsect.G2_DATASETID LIKE '%' || #searchKeyword# || '%'
-			]]>
-		</isEqual>
-		<isNotEmpty property="GID"><![CDATA[ /* CELL_SECT.GID */ AND cellsect.GID = #GID# ]]></isNotEmpty>
-		<isNotEmpty property="G2_DATASETID"><![CDATA[ /* CELL_SECT.G2_DATASETID */ AND cellsect.G2_DATASETID = #G2_DATASETID# ]]></isNotEmpty>
-		<isNotEmpty property="G2_SPATIALTYPE"><![CDATA[ /* CELL_SECT.G2_SPATIALTYPE */ AND cellsect.G2_SPATIALTYPE = #G2_SPATIALTYPE# ]]></isNotEmpty>
-		<isNotEmpty property="G2_XMIN"><![CDATA[ /* CELL_SECT.G2_XMIN */ AND cellsect.G2_XMIN = #G2_XMIN# ]]></isNotEmpty>
-		<isNotEmpty property="G2_YMIN"><![CDATA[ /* CELL_SECT.G2_YMIN */ AND cellsect.G2_YMIN = #G2_YMIN# ]]></isNotEmpty>
-		<isNotEmpty property="G2_XMAX"><![CDATA[ /* CELL_SECT.G2_XMAX */ AND cellsect.G2_XMAX = #G2_XMAX# ]]></isNotEmpty>
-		<isNotEmpty property="G2_YMAX"><![CDATA[ /* CELL_SECT.G2_YMAX */ AND cellsect.G2_YMAX = #G2_YMAX# ]]></isNotEmpty>
-		<isNotEmpty property="OBJECT_ID"><![CDATA[ /* CELL_SECT.OBJECT_ID */ AND cellsect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
-		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* CELL_SECT.ROUTE_CODE */ AND cellsect.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* CELL_SECT.DIRECT_CODE */ AND cellsect.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="TRACK"><![CDATA[ /* CELL_SECT.TRACK */ AND cellsect.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ /* CELL_SECT.STRTPT */ AND cellsect.STRTPT >= #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ /* CELL_SECT.ENDPT */ AND cellsect.ENDPT <= #ENDPT# ]]></isNotEmpty>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ /* CELL_SECT.DEPT_CODE */ AND cellsect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="SECT_SE"><![CDATA[ /* CELL_SECT.SECT_SE */ AND cellsect.SECT_SE = #SECT_SE# ]]></isNotEmpty>
-		<isNotEmpty property="VMTC_GRAD"><![CDATA[ /* CELL_SECT.VMTC_GRAD */ AND cellsect.VMTC_GRAD = #VMTC_GRAD# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_GRAD"><![CDATA[ /* CELL_SECT.ROAD_GRAD */ AND cellsect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
-		<isNotEmpty property="ADM_CODE"><![CDATA[ /* CELL_SECT.ADM_CODE */ AND (cellsect.ADM_CODE || '00000') = #ADM_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="CREAT_DT"><![CDATA[ /* CELL_SECT.CREAT_DT */ AND cellsect.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* CELL_SECT.UPDUSR_NO */ AND cellsect.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
-		<isNotEmpty property="UPDT_DT"><![CDATA[ /* CELL_SECT.UPDT_DT */ AND cellsect.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
-	</sql> -->
 	
 	<select id="mcalstDAO.selectMCalsTList"	parameterClass="mcalstVO" resultClass="mcalstVO">
 		<![CDATA[

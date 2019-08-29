@@ -120,21 +120,7 @@
             , CTSEMNT_DT = TO_DATE(#STTEMNT_DT#, 'YYYY-MM-DD hh24:mi:ss')
     ]]>
     </isEqual>
-
-    <!-- 위치보정 시 공간데이터 편집 -->
-    <isNotEmpty property="TM_X">
-    <![CDATA[
-        , G2_SPATIAL = SDO_GEOMETRY(2001, 5181, SDO_POINT_TYPE( #TM_X#, #TM_Y#, NULL), NULL, NULL)
-        , G2_XMIN = TRUNC( TO_NUMBER( #TM_X# ) * 1000 )
-        , G2_XMAX = TRUNC( TO_NUMBER( #TM_X# ) * 1000 )
-    ]]>
-    </isNotEmpty>
-    <isNotEmpty property="TM_Y">
-    <![CDATA[
-        , G2_YMIN = TRUNC( TO_NUMBER( #TM_Y# ) * 1000 )
-        , G2_YMAX = TRUNC( TO_NUMBER( #TM_Y# ) * 1000 )
-    ]]>
-    </isNotEmpty>
+    
     <isEqual property="imode" compareValue="ADD">
     <![CDATA[
         , PTH_RG_NO = ( select CASE WHEN COALESCE(max(PTH_RG_NO),1) < (TO_CHAR(NOW(),'yyyymmdd') || '000001')

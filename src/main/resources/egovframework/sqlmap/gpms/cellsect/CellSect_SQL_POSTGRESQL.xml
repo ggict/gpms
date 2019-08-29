@@ -14,18 +14,16 @@
                 AND cellsect.GID = #searchKeyword#
             ]]>
         </isEqual>
+        
+        <!-- 추후수정_sdh 
         <isEqual property="searchCondition" compareValue="1">
             <![CDATA[
                 AND cellsect.G2_DATASETID LIKE '%' || #searchKeyword# || '%'
             ]]>
         </isEqual>
+         -->
+         
         <isNotEmpty property="GID"><![CDATA[ /* CELL_SECT.GID */ AND cellsect.GID = #GID# ]]></isNotEmpty>
-        <isNotEmpty property="G2_DATASETID"><![CDATA[ /* CELL_SECT.G2_DATASETID */ AND cellsect.G2_DATASETID = #G2_DATASETID# ]]></isNotEmpty>
-        <isNotEmpty property="G2_SPATIALTYPE"><![CDATA[ /* CELL_SECT.G2_SPATIALTYPE */ AND cellsect.G2_SPATIALTYPE = #G2_SPATIALTYPE# ]]></isNotEmpty>
-        <isNotEmpty property="G2_XMIN"><![CDATA[ /* CELL_SECT.G2_XMIN */ AND cellsect.G2_XMIN = #G2_XMIN# ]]></isNotEmpty>
-        <isNotEmpty property="G2_YMIN"><![CDATA[ /* CELL_SECT.G2_YMIN */ AND cellsect.G2_YMIN = #G2_YMIN# ]]></isNotEmpty>
-        <isNotEmpty property="G2_XMAX"><![CDATA[ /* CELL_SECT.G2_XMAX */ AND cellsect.G2_XMAX = #G2_XMAX# ]]></isNotEmpty>
-        <isNotEmpty property="G2_YMAX"><![CDATA[ /* CELL_SECT.G2_YMAX */ AND cellsect.G2_YMAX = #G2_YMAX# ]]></isNotEmpty>
         <isNotEmpty property="OBJECT_ID"><![CDATA[ /* CELL_SECT.OBJECT_ID */ AND cellsect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
         <isNotEmpty property="ROUTE_CODE"><![CDATA[ /* CELL_SECT.ROUTE_CODE */ AND cellsect.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
         <isNotEmpty property="DIRECT_CODE"><![CDATA[ /* CELL_SECT.DIRECT_CODE */ AND cellsect.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
@@ -63,12 +61,6 @@
         SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
             SELECT
                 cellsect.GID /* CELL_SECT.GID */
-                , cellsect.G2_DATASETID /* CELL_SECT.G2_DATASETID */
-                , cellsect.G2_SPATIALTYPE /* CELL_SECT.G2_SPATIALTYPE */
-                , cellsect.G2_XMIN /* CELL_SECT.G2_XMIN */
-                , cellsect.G2_YMIN /* CELL_SECT.G2_YMIN */
-                , cellsect.G2_XMAX /* CELL_SECT.G2_XMAX */
-                , cellsect.G2_YMAX /* CELL_SECT.G2_YMAX */
                 , cellsect.OBJECT_ID /* CELL_SECT.OBJECT_ID */
                 , TO_NUMBER(cellsect.ROUTE_CODE) AS ROUTE_CODE /* CELL_SECT.노선번호 */
                 , (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = cellsect.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_코드 */
@@ -121,12 +113,6 @@
         SELECT COUNT(*) FROM (
             SELECT
                 cellsect.GID /* CELL_SECT.GID */
-                , cellsect.G2_DATASETID /* CELL_SECT.G2_DATASETID */
-                , cellsect.G2_SPATIALTYPE /* CELL_SECT.G2_SPATIALTYPE */
-                , cellsect.G2_XMIN /* CELL_SECT.G2_XMIN */
-                , cellsect.G2_YMIN /* CELL_SECT.G2_YMIN */
-                , cellsect.G2_XMAX /* CELL_SECT.G2_XMAX */
-                , cellsect.G2_YMAX /* CELL_SECT.G2_YMAX */
                 , cellsect.OBJECT_ID /* CELL_SECT.OBJECT_ID */
                 , TO_NUMBER(cellsect.ROUTE_CODE) AS ROUTE_CODE /* CELL_SECT.노선번호 */
                 , (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = cellsect.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_코드 */
