@@ -67,8 +67,9 @@ GIndexMap = OpenLayers.Class({
 			options.serviceUrl,
 			{
 				layers : options.layers,
-				styles : options.styles,
-				CRS : "EPSG:5181"
+				//styles : options.styles,
+				CRS : "EPSG:5181",
+				version: "1.1.0"
 			}
 		);
 		

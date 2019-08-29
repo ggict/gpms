@@ -631,13 +631,13 @@ MAP.LAYER = (function($,undefined){
 	    var oLayers = layerTool.layers;
 		var oNameLayers = oSld.namedLayers;
 		var _sSldName = _sId.trim();
-
-		for(var i in oLayers) {
-			if(oLayers[i].id === _sId) {
-				_sSldName = oLayers[i].table;
-			}
-		}
-
+//
+//		for(var i in oLayers) {
+//			if(oLayers[i].id === _sId) {
+//				_sSldName = oLayers[i].table;
+//			}
+//		}
+		
 		for(var i in oNameLayers) {
 			if(oNameLayers[i].featureTypeName === _sSldName || oNameLayers[i].name === _sSldName){
 				return oNameLayers[i];
@@ -780,8 +780,13 @@ MAP.LAYER = (function($,undefined){
 		    oWmsLayer = gMap.getLayerByName(layer);
 
 		}
-
+		
+		if(sThemeList == "EMPTY_LAYER"){
+			oWmsLayer.setVisibility(false);
+			return ;
+		}
 		if (oWmsLayer) {
+			oWmsLayer.setVisibility(true);
 			oWmsLayer.mergeNewParams( {
 				layers : sThemeList
 				,styles : ""

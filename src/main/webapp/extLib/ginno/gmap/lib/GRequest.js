@@ -6,11 +6,14 @@ GRequest.WMS = {
 
 	service : "WMS",
 
-	version : "1.3.0",
+	//version : "1.3.0",
+	version : "1.1.1",
 
 	request : null,
 
-	format : new OpenLayers.Format.SLD.v1_1_0(),
+	//format : new OpenLayers.Format.SLD.v1_1_0(),
+	//format : new OpenLayers.Format.SLD.v1_0_0(),
+	format : new OpenLayers.Format.SLD.v1_0_0_GeoServer(),
 
 	getCapability : function(serviceUrl, callback) {
 		var params = {
@@ -79,7 +82,8 @@ GRequest.WMS = {
 	getStyles : function(serviceUrl, layers, callback) {
 		var params = {
 			service : this.service,
-			version : this.version,
+			//version : this.version,
+			version : '1.1.1',
 			request : "GetStyles",
 			layers : layers
 		};
@@ -137,14 +141,22 @@ GRequest.WMS = {
 			var name = namedLayers[i].name;
 			if(name.length > 0) namedObj.name = name;
 
-			var description = namedLayers[i].description;
-			if(description.length > 0) {
-				namedObj.title = description.title;
+			if(namedLayers[i].hasOwnProperty('description')){
+				var description = namedLayers[i].description;
+				if(description.length > 0) {
+					namedObj.title = description.title;
+				}
+			}else{
+				namedObj.title = name;
 			}
 
-			var layerFeatureConstraints = namedLayers[i].LayerFeatureConstraints;
-			if(layerFeatureConstraints.length > 0) {
-				namedObj.featureTypeName = layerFeatureConstraints;
+			if(namedLayers[i].hasOwnProperty('LayerFeatureConstraints')){
+				var layerFeatureConstraints = namedLayers[i].LayerFeatureConstraints;
+				if(layerFeatureConstraints.length > 0) {
+					namedObj.featureTypeName = layerFeatureConstraints;
+				}
+			}else{
+				namedObj.featureTypeName = name;
 			}
 
 			var userStyles = namedLayers[i].userStyles;
@@ -158,8 +170,12 @@ GRequest.WMS = {
 				var name = userStyles[j].name;
 				if(name.length > 0) userdObj.name = name;
 
-				var description = userStyles[j].description;
-				if(description.length > 0)  userdObj.title = description;
+				if(userStyles[j].hasOwnProperty('description')){
+					var description = userStyles[j].description;
+					if(description.length > 0)  userdObj.title = description;
+				}else{
+					userdObj.title = name;
+				}
 
 				var layerName = userStyles[j].layerName;
 				if(layerName.length > 0) userdObj.title = layerName;

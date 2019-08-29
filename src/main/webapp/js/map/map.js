@@ -203,27 +203,45 @@ function($,undefined){
 			}
         }
 
-		var oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
-            layers : sThemeList
-            //,styles : sThemeList
-            ,format : sGetMapImageFormat
-            ,version : sGetMapVersion
-            ,crs : new OpenLayers.Projection(sRequestCrs)
-            ,transparent : true
-            ,dataHouse : CONFIG.fn_get_dataHouseName()
-            ,sld_body : sSldBody
-        }, {
-            isBaseLayer : true,
-            singleTile : true,
-            transitionEffect : 'resize',
-            tileOptions: {maxGetUrlLength: 2048},
-            projection : new OpenLayers.Projection(sDataHouseCrs),
-            ratio : 1.0
-        });
-
-        gMap.addLayer(oWmsLayer);
+//		var oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
+//            layers : sThemeList
+//            //,styles : sThemeList
+//            ,format : sGetMapImageFormat
+//            ,version : sGetMapVersion
+//            ,crs : new OpenLayers.Projection(sRequestCrs)
+//            ,transparent : true
+//            ,dataHouse : CONFIG.fn_get_dataHouseName()
+//            ,sld_body : sSldBody
+//        }, {
+//            isBaseLayer : true,
+//            singleTile : true,
+//            transitionEffect : 'resize',
+//            tileOptions: {maxGetUrlLength: 2048},
+//            projection : new OpenLayers.Projection(sDataHouseCrs),
+//            ratio : 1.0
+//        });
+//
+//        gMap.addLayer(oWmsLayer);
         //gMap.layers[0].setVisibility(false);
-
+        
+        window.oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
+        	layers : sThemeList
+        	//,styles : sThemeList
+        	,format : sGetMapImageFormat
+        	,version : sGetMapVersion
+        	,crs : new OpenLayers.Projection(sRequestCrs)
+        ,transparent : true
+        ,dataHouse : CONFIG.fn_get_dataHouseName()
+        ,sld_body : sSldBody
+        }, {
+        	isBaseLayer : true,
+        	singleTile : true,
+        	transitionEffect : 'resize',
+        	tileOptions: {maxGetUrlLength: 2048},
+        	projection : new OpenLayers.Projection(sDataHouseCrs),
+        	ratio : 1.0
+        });
+        gMap.addLayer(oWmsLayer);
 
 // 지도 인쇄/저장용
 
@@ -246,7 +264,7 @@ function($,undefined){
         });
 
         gMap.addLayer(oBGLayer);
-
+        oBGLayer.setVisibility(false);
 
         // 2017. 11. 06. JOY 테마지도 레이어 추가
         var oThemeLayer = new GWMS("themeLayer", CONFIG.fn_get_serviceUrl(), {

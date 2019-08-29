@@ -95,7 +95,8 @@ GTMapLayerTool = OpenLayers.Class({
 	 */
 	sld : null,
 
-	format : new OpenLayers.Format.SLD.v1_1_0(),
+	//format : new OpenLayers.Format.SLD.v1_1_0(),
+	format : new OpenLayers.Format.SLD.v1_0_0_GeoServer(),
 
 	/**********************************************************************************
 	 * 함수명 : initialize (생성자 함수)
@@ -142,7 +143,8 @@ GTMapLayerTool = OpenLayers.Class({
 		if(options && options.serviceUrl && options.callback) {
 
 			if(options.sync){
-				GRequest.WMS.getStylesBySync(options.serviceUrl,this.getLayers({retAttr:"theme"})+',', function(res) {
+				//GRequest.WMS.getStylesBySync(options.serviceUrl,this.getLayers({retAttr:"theme"})+',', function(res) {
+				GRequest.WMS.getStyles(options.serviceUrl,this.getLayers({retAttr:"theme"}), function(res) {
 					control.defaultSld = res.xml.cloneNode(true);
 					var bool = false;
 					if(options.userStyle) {
@@ -157,7 +159,8 @@ GTMapLayerTool = OpenLayers.Class({
 			}
 			else{
 
-				GRequest.WMS.getStyles(options.serviceUrl,this.getLayers({retAttr:"theme"})+',', function(res) {
+				//GRequest.WMS.getStyles(options.serviceUrl,this.getLayers({retAttr:"theme"})+',', function(res) {
+				GRequest.WMS.getStyles(options.serviceUrl,this.getLayers({retAttr:"theme"}), function(res) {
 					control.defaultSld = res.xml.cloneNode(true);
 					var bool = false;
 					if(options.userStyle) {
@@ -210,7 +213,8 @@ GTMapLayerTool = OpenLayers.Class({
 
 		control = this;
 		if(options && options.serviceUrl && options.callback) {
-			GRequest.WMS.getStyles(options.serviceUrl, this.getLayers({retAttr:"theme"})+',', function(res) {
+			//GRequest.WMS.getStyles(options.serviceUrl, this.getLayers({retAttr:"theme"})+',', function(res) {
+			GRequest.WMS.getStyles(options.serviceUrl,this.getLayers({retAttr:"theme"}), function(res) {
 				/*
 				control.defaultSld = res.xml.cloneNode(true);
 				var bool = 0;
@@ -764,6 +768,17 @@ GTMapLayerTool = OpenLayers.Class({
 	},
 
 	getSld_body : function(ruleView, baseLayer) {
+		//geoserver 저장소 이름을 붙여준다.
+		var prefixAppandName = function(name){
+			if(name){
+				var dataHouseName = CONFIG.fn_get_dataHouseName();
+				if(dataHouseName){
+					return dataHouseName + ':' + name;
+				}
+			}
+			return name
+		};
+		
 		var tempXml = this.sld.xml.cloneNode(true);
 
 		var sld = this.format.read(tempXml);
@@ -826,7 +841,10 @@ GTMapLayerTool = OpenLayers.Class({
 							}
 						}
 					}
+					
+					sld.namedLayers[i].name = prefixAppandName(name);
 				}
+				
 				index++;
 			}
 

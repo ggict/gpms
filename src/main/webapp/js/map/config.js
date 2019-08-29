@@ -17,6 +17,14 @@ var CONFIG = (function($, undefined){
 	*/
 	var sGetProxyUrl 		= "/gpms/proxyGet.do";
 
+	
+	/**
+	* 공간서버, DataHouse(=> wfs prefix로 사용될) 이름
+	* @member {String} sDataHouse
+	*/
+	//var sDataHouse 			= "dh_gpms";
+	var sDataHouse 			= "gpms";
+	
 	/**
 	* 지도서비스 URL
 	* @member {String} sServiceUrl
@@ -24,18 +32,14 @@ var CONFIG = (function($, undefined){
 	// local server
 	//var sServiceUrl 		= "http://192.168.0.205:8079/G2DataService/GService?";
 	// 2018.11.02 도메인호스트 변경에 의한 변경
-	var sServiceUrl        = "http://test.muhanit.kr:18079/G2DataService/GService?";
+	//var sServiceUrl        = "http://test.muhanit.kr:18079/G2DataService/GService?";
+	//var sServiceUrl        = "http://127.0.0.1:18080/geoserver/"+sDataHouse+"/wms?";
+	var sServiceUrl        = "http://192.168.0.206:18080/geoserver/"+sDataHouse+"/wms?";
 	//var sServiceUrl        = "http://www.muhanit.kr:18079/G2DataService/GService?";
 
 
 	// real server
 	//var sServiceUrl        = "http://105.0.111.9:8089/G2DataService/GService?";
-
-	/**
-	* 공간서버, DataHouse(=> wfs prefix로 사용될) 이름
-	* @member {String} sDataHouse
-	*/
-	var sDataHouse 			= "dh_gpms";
 
 	/**
 	* 지도서비스 구축데이터 좌표계
@@ -96,7 +100,8 @@ var CONFIG = (function($, undefined){
 			"zoomLevels" : "11",		// 14																//지도서비스 레벨 개수
 			"layerOrder" : "desc",																			//지도서비스 GetMap Layer Order
 			"imageFormat" : "image/jpeg",																	//지도서비스 GetMap 이미지 포맷 - image/jpeg , image/png, image/gif
-			"version" : "1.3.0"																				//지도서비스 GetMap Version
+			//"version" : "1.3.0"																				//지도서비스 GetMap Version
+			"version" : "1.1.0"
 	};
 
 	/**
@@ -117,6 +122,181 @@ var CONFIG = (function($, undefined){
 			}
 		}
 	};
+	
+	
+	var serviceLayerInfo = {
+	         
+	     "SIGUNGU" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3753',
+	         'table' : 'SIGUNGU',
+	         'theme' : 'SIGUNGU',
+	         'alias' : '시군구',
+	         'seq' : '3753',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "DORO_A001" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3754',
+	         'table' : 'DORO_A001',
+	         'theme' : 'DORO_A001',
+	         'alias' : '도로면',
+	         'seq' : '3754',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "N3A_B0010000" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3755',
+	         'table' : 'N3A_B0010000',
+	         'theme' : 'N3A_B0010000',
+	         'alias' : '건물',
+	         'seq' : '3755',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "MV_SRVYDTA_10_2017" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3758',
+	         'table' : 'MV_SRVYDTA_10_2017',
+	         'theme' : 'MV_SRVYDTA_10_2017',
+	         'alias' : '10m셀_포장상태_2017',
+	         'seq' : '3758',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "MV_SRVYDTA_10_2018" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3759',
+	         'table' : 'MV_SRVYDTA_10_2018',
+	         'theme' : 'MV_SRVYDTA_10_2018',
+	         'alias' : '10m셀_포장상태_2018',
+	         'seq' : '3759',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "MV_GNLSTTUS_SECT_2017" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3761',
+	         'table' : 'MV_GNLSTTUS_SECT_2017',
+	         'theme' : 'MV_GNLSTTUS_SECT_2017',
+	         'alias' : 'Section셀_포장상태_2017',
+	         'seq' : '3761',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "MV_GNLSTTUS_SECT_2018" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3762',
+	         'table' : 'MV_GNLSTTUS_SECT_2018',
+	         'theme' : 'MV_GNLSTTUS_SECT_2018',
+	         'alias' : 'Section셀_포장상태_2018',
+	         'seq' : '3762',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "CELL_10" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3764',
+	         'table' : 'CELL_10',
+	         'theme' : 'CELL_10',
+	         'alias' : 'CELL_10',
+	         'seq' : '3764',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "CELL_SECT" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3765',
+	         'table' : 'CELL_SECT',
+	         'theme' : 'CELL_SECT',
+	         'alias' : 'CELL_SECT',
+	         'seq' : '3765',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "MV_THM_YEAR_10" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3767',
+	         'table' : 'MV_THM_YEAR_10',
+	         'theme' : 'MV_THM_YEAR_10',
+	         'alias' : '10m셀_테마지도',
+	         'seq' : '3767',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "MV_CELL_SECT_TYPE" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3768',
+	         'table' : 'MV_CELL_SECT_TYPE',
+	         'theme' : 'MV_CELL_SECT_TYPE',
+	         'alias' : 'Section셀_종류',
+	         'seq' : '3768',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "CMPTNC_ZONE" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3769',
+	         'table' : 'CMPTNC_ZONE',
+	         'theme' : 'CMPTNC_ZONE',
+	         'alias' : '포트홀_관할_구역',
+	         'seq' : '3769',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "MV_POTHOLE_STTEMNT" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3774',
+	         'table' : 'MV_POTHOLE_STTEMNT',
+	         'theme' : 'MV_POTHOLE_STTEMNT',
+	         'alias' : '포트홀_신고_관리',
+	         'seq' : '3774',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "M_CALS_T" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3775',
+	         'table' : 'M_CALS_T',
+	         'theme' : 'M_CALS_T',
+	         'alias' : 'M_CALS_T',
+	         'seq' : '3775',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	};	
+	
+	
 
 	var fn_get_deactiveControls = function(){
 		return aSelectiveControls;
@@ -216,15 +396,27 @@ var CONFIG = (function($, undefined){
         return exceptLayerList;
     }
 
-
-
 	/**
-	    * @description  지도서비스 GetMap 지도 레이어
-	    * @returns {String} 지도서비스 GetMap 지도 레이어
-	    */
-	    var fn_get_tlayerList = function (){
-	        return tLayerList;
-	    }
+    * @description  지도서비스 GetMap 지도 레이어
+    * @returns {String} 지도서비스 GetMap 지도 레이어
+    */
+    var fn_get_tlayerList = function (){
+        return tLayerList;
+    }
+    
+    /**
+     * @description  지도서비스 GetMap 지도 레이어
+     * @returns {String} 지도서비스 GetMap 지도 레이어
+     */
+    var fn_get_tlayerList = function (){
+    	return tLayerList;
+    }
+    
+    var fn_get_serviceLayerInfo = function (){
+    	return serviceLayerInfo;
+    }
+    
+    
 
 	return{
 		fn_get_serviceUrl 			: fn_get_serviceUrl,
@@ -240,6 +432,7 @@ var CONFIG = (function($, undefined){
 		fn_get_clayerList 			: fn_get_clayerList,
 		fn_get_mlayerList 			: fn_get_mlayerList,
 		fn_get_tlayerList           : fn_get_tlayerList,
-		fn_get_exceptLayerList      : fn_get_exceptLayerList
+		fn_get_exceptLayerList      : fn_get_exceptLayerList,
+		fn_get_serviceLayerInfo		: fn_get_serviceLayerInfo
 	}
 }(jQuery));

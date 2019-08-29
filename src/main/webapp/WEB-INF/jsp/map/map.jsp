@@ -243,7 +243,7 @@ var MAIN = (function(_mod_map, $, undefined) {
 				},
 		    </c:forEach>
 	}; */
-
+/* 
 	oLayerInfoList = {
             <c:forEach items="${layerInfoListTheme}" var="layerInfo" varStatus="status">
                 "${layerInfo.table}" : {
@@ -252,7 +252,35 @@ var MAIN = (function(_mod_map, $, undefined) {
                 },
             </c:forEach>
     };
-
+ */
+ 	
+ 	//oLayerInfoList = CONFIG.fn_get_serviceLayerInfo();
+	oLayerInfoList = {
+         "CELL_10" : {
+             
+             'tmapid' : '870',
+             'id' : '3764',
+             'table' : 'CELL_10',
+             'theme' : 'CELL_10',
+             'alias' : 'CELL_10',
+             'seq' : '3764',
+             'show' : '1',
+             'layerType' : '3',
+         },
+         "CELL_SECT" : {
+             
+             'tmapid' : '870',
+             'id' : '3765',
+             'table' : 'CELL_SECT',
+             'theme' : 'CELL_SECT',
+             'alias' : 'CELL_SECT',
+             'seq' : '3765',
+             'show' : '1',
+             'layerType' : '3',
+         }
+	}; 
+ 
+ 
 	/* oLayerGroups =
 		[<c:forEach items="${layerGroupInfoList}" var="layerGroupInfo">
 			{<c:forEach items="${layerGroupInfo}" var="layerGroup" >
