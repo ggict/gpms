@@ -277,7 +277,18 @@ var MAIN = (function(_mod_map, $, undefined) {
              'seq' : '3765',
              'show' : '1',
              'layerType' : '3',
-         }
+         },
+	     "MV_CELL_SECT_TYPE" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3768',
+	         'table' : 'MV_CELL_SECT_TYPE',
+	         'theme' : 'MV_CELL_SECT_TYPE',
+	         'alias' : 'Section셀_종류',
+	         'seq' : '3768',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },         
 	}; 
  
  

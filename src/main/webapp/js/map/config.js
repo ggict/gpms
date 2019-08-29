@@ -87,7 +87,8 @@ var CONFIG = (function($, undefined){
     /*
      * 테마지도 _ 레이어 목록
      * */
-    var tLayerList = ['MV_SRVYDTA_10', 'MV_GNLSTTUS_SECT', 'MV_THM_YEAR_10', 'MV_CELL_SECT_TYPE'];
+    //var tLayerList = ['MV_SRVYDTA_10', 'MV_GNLSTTUS_SECT', 'MV_THM_YEAR_10', 'MV_CELL_SECT_TYPE'];
+	var tLayerList = ['MV_CELL_SECT_TYPE'];
 
 	/**
 	* GetMap서비스를 위한 설정정보 - 서비스영역/초기영역/최대해상도/서비스레벨/WMS버전/이미지요청포맷 etc

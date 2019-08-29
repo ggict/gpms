@@ -224,9 +224,9 @@ function($,undefined){
 //        gMap.addLayer(oWmsLayer);
         //gMap.layers[0].setVisibility(false);
         
-        window.oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
+        var oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
         	layers : sThemeList
-        	//,styles : sThemeList
+        	,styles : sThemeList
         	,format : sGetMapImageFormat
         	,version : sGetMapVersion
         	,crs : new OpenLayers.Projection(sRequestCrs)
