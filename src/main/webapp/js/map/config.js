@@ -125,7 +125,56 @@ var CONFIG = (function($, undefined){
 	
 	
 	var serviceLayerInfo = {
+
+	     "CELL_10" : {
 	         
+	         'tmapid' : '870',
+	         'id' : '3764',
+	         'table' : 'CELL_10',
+	         'theme' : 'CELL_10',
+	         'alias' : 'CELL_10',
+	         'seq' : '3764',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "CELL_SECT" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3765',
+	         'table' : 'CELL_SECT',
+	         'theme' : 'CELL_SECT',
+	         'alias' : 'CELL_SECT',
+	         'seq' : '3765',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	     
+	     "MV_CELL_SECT_TYPE" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3768',
+	         'table' : 'MV_CELL_SECT_TYPE',
+	         'theme' : 'MV_CELL_SECT_TYPE',
+	         'alias' : 'Section셀_종류',
+	         'seq' : '3768',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	     
+	     "MV_GNLSTTUS_SECT_2017" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3761',
+	         'table' : 'MV_GNLSTTUS_SECT_2017',
+	         'theme' : 'MV_GNLSTTUS_SECT_2017',
+	         'alias' : 'Section셀_포장상태_2017',
+	         'seq' : '3761',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	     
+	     /*
 	     "SIGUNGU" : {
 	         
 	         'tmapid' : '870',
@@ -186,17 +235,7 @@ var CONFIG = (function($, undefined){
 	         'layerType' : '3',
 	     },
 	 
-	     "MV_GNLSTTUS_SECT_2017" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3761',
-	         'table' : 'MV_GNLSTTUS_SECT_2017',
-	         'theme' : 'MV_GNLSTTUS_SECT_2017',
-	         'alias' : 'Section셀_포장상태_2017',
-	         'seq' : '3761',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
+
 	 
 	     "MV_GNLSTTUS_SECT_2018" : {
 	         
@@ -210,30 +249,6 @@ var CONFIG = (function($, undefined){
 	         'layerType' : '3',
 	     },
 	 
-	     "CELL_10" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3764',
-	         'table' : 'CELL_10',
-	         'theme' : 'CELL_10',
-	         'alias' : 'CELL_10',
-	         'seq' : '3764',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
-	 
-	     "CELL_SECT" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3765',
-	         'table' : 'CELL_SECT',
-	         'theme' : 'CELL_SECT',
-	         'alias' : 'CELL_SECT',
-	         'seq' : '3765',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
-	 
 	     "MV_THM_YEAR_10" : {
 	         
 	         'tmapid' : '870',
@@ -242,18 +257,6 @@ var CONFIG = (function($, undefined){
 	         'theme' : 'MV_THM_YEAR_10',
 	         'alias' : '10m셀_테마지도',
 	         'seq' : '3767',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
-	 
-	     "MV_CELL_SECT_TYPE" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3768',
-	         'table' : 'MV_CELL_SECT_TYPE',
-	         'theme' : 'MV_CELL_SECT_TYPE',
-	         'alias' : 'Section셀_종류',
-	         'seq' : '3768',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
@@ -293,7 +296,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	 
+	      */
 	};	
 	
 	
