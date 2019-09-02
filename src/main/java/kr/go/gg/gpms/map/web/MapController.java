@@ -106,7 +106,7 @@ public class MapController extends BaseController{
 		RouteInfoVO routeInfoVO = new RouteInfoVO();
 		routeInfoVO.setUsePage(false);
 		routeInfoVO.setSidx("ROAD_NO");
-		//List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+		List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
 
 		//도로 등급
 		List<CodeVO> roadGradList = getCodeList("RDGD");
@@ -128,7 +128,7 @@ public class MapController extends BaseController{
 		
 		//stats div(통계)에서 사용할 부서정보/노선코드/ 도로 등급조회
 		model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
-		//model.addAttribute("roadNoList", roadNoList);
+		model.addAttribute("roadNoList", roadNoList);
 		model.addAttribute("roadGradList", roadGradList);
 		model.addAttribute("RpairMthds", rpairMthdList);
 		model.addAttribute("statsYear",statsYear);

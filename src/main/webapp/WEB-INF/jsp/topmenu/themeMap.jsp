@@ -531,10 +531,10 @@
 		}
 
 
-		if(sNm == "sld:NamedLayer") {
+		if(sNm == "sld:NamedLayer" || sNm == "NamedLayer") {
 			var sLyrNm = arrEle[0].elements[0].text;
 			if(sLyrNm == _targetLyr) {
-				var oStyle = arrEle[3];
+				var oStyle = arrEle[1];
 				var oFeatStyle = oStyle.elements[2];
 
 				var arrTarget = oFeatStyle.elements;
@@ -545,32 +545,30 @@
 						var sElNm = thisEl.name;
 						if(sElNm == "ogc:Filter") {
 							var oQ1 = thisEl.elements;
-							if(oQ1[0].name == "ogc:And") {
+							if(oQ1[0].name == "ogc:And" || oQ1[0].name == "And") {
+								var isPropertyIsLike = false;
 								var arrQ = oQ1[0].elements;
-
 								for(var i in arrQ) {
 									var oThisQ = arrQ[i];
-									if(oThisQ.name == "ogc:PropertyIsLike") {
+									if(oThisQ.name == "ogc:PropertyIsLike" || oThisQ.name == "PropertyIsLike") {
 										for(var j in oThisQ.elements) {
-											if(oThisQ.elements[j].name == "ogc:Literal") {
+											if(oThisQ.elements[j].name == "ogc:Literal" || oThisQ.elements[j].name == "Literal") {
 												oThisQ.elements[j].elements = [{
 													type : "text",
 													text : sValue
 												}];
 											}
 										}
+										
+										isPropertyIsLike = true;
 									}
 								}
-							} else {
-								var oSetParam = {
-										elements : oQ1,
-										type : "element",
-										name : "ogc:And"
-									};
-
-									oSetParam.elements.push({
+								
+								if(!isPropertyIsLike){
+									arrQ.push({
 										elements : [{
-											elements : [{type : "text", text : "ROUTE_CODE"}],
+											//elements : [{type : "text", text : "ROUTE_CODE"}],
+											elements : [{type : "text", text : "route_code"}],
 											name : "ogc:PropertyName",
 											type : "element"
 										}, {
@@ -581,7 +579,33 @@
 										name : "ogc:PropertyIsLike",
 										type : "element"
 									});
-									thisEl.elements = [oSetParam];
+								}
+								
+								console.log(oQ1);
+								console.log(thisEl);
+								
+							} else {
+								var oSetParam = {
+									elements : oQ1,
+									type : "element",
+									name : "ogc:And"
+								};
+
+								oSetParam.elements.push({
+									elements : [{
+										//elements : [{type : "text", text : "ROUTE_CODE"}],
+										elements : [{type : "text", text : "route_code"}],
+										name : "ogc:PropertyName",
+										type : "element"
+									}, {
+										elements : [{type : "text", text : sValue}],
+										name : "ogc:Literal",
+										type : "element"
+									}],
+									name : "ogc:PropertyIsLike",
+									type : "element"
+								});
+								thisEl.elements = [oSetParam];
 							}
 						}
 					}

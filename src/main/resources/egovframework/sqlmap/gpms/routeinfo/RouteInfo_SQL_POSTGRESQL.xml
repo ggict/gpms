@@ -126,7 +126,7 @@
 		/* 노선_대장_마스터 조회 */
 		SELECT
 			tnrouteinfo.ROAD_NO /* 노선_대장_마스터.노선_번호 */
-			, TO_NUMBER(tnrouteinfo.ROAD_NO) ROAD_NO_VAL
+			, cast(tnrouteinfo.ROAD_NO as integer) as ROAD_NO_VAL
 			, tnrouteinfo.INPUT_DATE /* 노선_대장_마스터.입력일 */
 			, tnrouteinfo.ROAD_NAME /* 노선_대장_마스터.도로_명 */
 			, tnrouteinfo.ROAD_TYPE /* 노선_대장_마스터.도로_종류 */
@@ -170,7 +170,7 @@
 			]]>
 		</isEqual>
 		<isNotEmpty property="ROAD_NO"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND tnrouteinfo.ROAD_NO = #ROAD_NO# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_NO_VAL"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND TO_NUMBER(tnrouteinfo.ROAD_NO) = #ROAD_NO_VAL# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_NO_VAL"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND cast(tnrouteinfo.ROAD_NO as integer) = #ROAD_NO_VAL# ]]></isNotEmpty>
 		<isNotEmpty property="INPUT_DATE"><![CDATA[ /* 노선_대장_마스터.입력일 */ AND tnrouteinfo.INPUT_DATE = #INPUT_DATE# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_NAME"><![CDATA[ /* 노선_대장_마스터.도로_명 */ AND tnrouteinfo.ROAD_NAME LIKE '%'|| #ROAD_NAME# ||'%' ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_TYPE"><![CDATA[ /* 노선_대장_마스터.도로_종류 */ AND tnrouteinfo.ROAD_TYPE = #ROAD_TYPE# ]]></isNotEmpty>
@@ -203,7 +203,7 @@
             SELECT * FROM (
 			SELECT
 				doro.ROAD_NO /* 노선_대장_마스터.노선_번호 */
-				, TO_NUMBER(doro.ROAD_NO) ROAD_NO_VAL
+				, cast(doro.ROAD_NO as integer) as ROAD_NO_VAL
 				, tnrouteinfo.INPUT_DATE /* 노선_대장_마스터.입력일 */
 				, tnrouteinfo.ROAD_NAME /* 노선_대장_마스터.도로_명 */
 				, tnrouteinfo.ROAD_TYPE /* 노선_대장_마스터.도로_종류 */
@@ -256,7 +256,7 @@
             SELECT * FROM (
             SELECT
                 doro.ROAD_NO /* 노선_대장_마스터.노선_번호 */
-                , TO_NUMBER(doro.ROAD_NO) ROAD_NO_VAL
+                , cast(doro.ROAD_NO as integer) ROAD_NO_VAL
                 , tnrouteinfo.INPUT_DATE /* 노선_대장_마스터.입력일 */
                 , tnrouteinfo.ROAD_NAME /* 노선_대장_마스터.도로_명 */
                 , tnrouteinfo.ROAD_TYPE /* 노선_대장_마스터.도로_종류 */
