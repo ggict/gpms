@@ -502,7 +502,6 @@
         parent.MAP.LAYER.fn_redraw_wms("themeLayer");
 	}
 
-
 	//노선번호 적용된 sldbody 생성
 	function fn_setRouteCodeToSld(_sldJson, _targetLyr, _param) {
 
@@ -516,8 +515,6 @@
 		}
 		return _sldJson;
 	}
-
-	
 
 	//트리 탐색해서 sld변경
 	function fn_serSldJson(_sldJson, _targetLyr, _param) {
