@@ -232,7 +232,7 @@ SLCTN_STEP = #SLCTN_STEP# /* 보수_대상_항목_그룹.선정_단계 */
 		/* rpairTrgetGroupDAO.updateToggleTMPR_SLCTN_AT */
 		/* 보수_대상_항목_그룹 수정 임시선택 토글 */
 		UPDATE TN_RPAIR_TRGET_GROUP SET
- TMPR_SLCTN_AT = DECODE(TMPR_SLCTN_AT,'Y','N','Y') /* 보수_대상_항목_그룹.임시_선정_여부 */
+ TMPR_SLCTN_AT = CASE WHEN TMPR_SLCTN_AT = 'Y' THEN 'N' ELSE 'Y' END /* 보수_대상_항목_그룹.임시_선정_여부 */
 , UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_항목_그룹.수정자_번호 */
 , UPDT_DT = NOW() /* 보수_대상_항목_그룹.수정_일시 */
 		WHERE 1 = 1
@@ -628,7 +628,7 @@ FROM (SELECT ROW_NUMBER() OVER(
 		, SUM( tb.TMPR_FIX_BUDGET_ASIGN) OVER() TOTAL_TMPR_FIX_BUDGET_ASIGN
 		, SUM( tb.BUDGET_ASIGN) OVER() TOTAL_BUDGET_ASIGN
 		, SUM( tb.AMOUNT_CALC) OVER() TOTAL_AMOUNT_CALC
-		, SUM(DECODE(tb.TMPR_SLCTN_AT, 'Y', tb.AMOUNT_CALC, 0)) OVER() TOTAL_TMPR_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
+		, SUM(CASE WHEN tb.TMPR_SLCTN_AT = 'Y' THEN tb.AMOUNT_CALC ELSE 0 END) OVER() TOTAL_TMPR_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
 		, tb.*
 	FROM (
 	SELECT
@@ -667,7 +667,7 @@ FROM (SELECT ROW_NUMBER() OVER(
      , tnrpairtrgetgroup.THRHLD    /* 보수_대상_항목_그룹.임계값 */
      , tnrpairtrgetgroup.AMOUNT_CALC    /* 보수_대상_항목_그룹.금액_산정 */
      , ROUND(tnrpairtrgetgroup.AMOUNT_CALC  ,0) FIX_AMOUNT_CALC     /* 보수_대상_항목_그룹.금액_산정 */
-     , ROUND( DECODE(tnrpairtrgetgroup.TMPR_SLCTN_AT, 'Y', tnrpairtrgetgroup.AMOUNT_CALC, 0) ,0) TMPR_FIX_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
+     , ROUND( CASE WHEN tnrpairtrgetgroup.TMPR_SLCTN_AT = 'Y' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END ,0) TMPR_FIX_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
      , tnrpairtrgetgroup.BUDGET_ASIGN    /* 보수_대상_항목_그룹.예산_배정 */
      , ROUND(tnrpairtrgetgroup.BUDGET_ASIGN  ,0) FIX_BUDGET_ASIGN  /* 보수_대상_항목_그룹.예산_배정 */
      , tnrpairtrgetgroup.FIXING_AT    /* 보수_대상_항목_그룹.고정_여부 */
@@ -827,11 +827,11 @@ SELECT
 		/* rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalSummary */
 		/* 보수_대상_항목_선정예산(원) 조회  */
 SELECT
-       SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0001', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_1
-     , SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0002', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_2
-     , SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0003', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_3
-     , SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0004', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_4
-     , SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0005', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_5
+       SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0001' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_1
+     , SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0002' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_2
+     , SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0003' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_3
+     , SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0004' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_4
+     , SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0005' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_5
   FROM TN_RPAIR_TRGET_GROUP  tnrpairtrgetgroup  /*** 보수_대상_항목_그룹 테이블 ***/
    INNER JOIN TC_CODE  celtcode
    ON celtcode.CODE_VAL = tnrpairtrgetgroup.CELL_TYPE AND celtcode.CL_CODE = 'CELT' AND celtcode.USE_AT = 'Y'    AND celtcode.DELETE_AT = 'N'
@@ -1046,7 +1046,7 @@ WITH RPMDCODES AS (
 , ADMINLIST AS (
 	SELECT
 		COALESCE(GU.BJCD, CITY.BJCD) ADM_CODE
-		, DECODE(GU.NAME, NULL, CITY.NAME, CITY.NAME ||' '|| GU.NAME) ADM_NM
+		, CASE WHEN GU.NAME = NULL THEN CITY.NAME ELSE CITY.NAME ||' '|| GU.NAME END ADM_NM
 	FROM N3A_G0100000 CITY
 	LEFT OUTER JOIN N3A_G0100000 GU
 		ON GU.BJCD NOT LIKE '41__000000'
