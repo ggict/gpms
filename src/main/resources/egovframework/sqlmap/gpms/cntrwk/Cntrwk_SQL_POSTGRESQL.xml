@@ -1164,32 +1164,48 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		       , COALESCE(tncntrwkdtl.RPAIR_AR,0) RPAIR_AR
 		       , COALESCE(tncntrwkdtl.CNTRWK_AMOUNT,0) CNTRWK_AMOUNT
 		       , tncntrwkdtl.RPAIR_MATRL_PRDCT_CO_NM
-		       , DECODE(tncntrwkdtl.CNSTRCT_CO_NO, NULL, tncntrwkdtl.CNSTRCT_CO_NM
-					  , (SELECT tncompany.CO_NM FROM TN_COMPANY tncompany
-						  WHERE tncompany.USE_AT='Y' AND tncompany.DELETE_AT='N'
-						    AND tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO)
-				 ) CNSTRCT_CO_NM
+		       , CASE WHEN 
+			   		tncntrwkdtl.CNSTRCT_CO_NO = NULL
+			   	 THEN
+			   	 	tncntrwkdtl.CNSTRCT_CO_NM
+			   	 ELSE
+			   	 	(SELECT tncompany.CO_NM FROM TN_COMPANY tncompany
+					  WHERE tncompany.USE_AT='Y' AND tncompany.DELETE_AT='N'
+					    AND tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO)
+				 END CNSTRCT_CO_NM
 		       , COALESCE(tncntrwkdtl.BEFORE_PAV_YEAR, '없음') BEFORE_PAV_YEAR
 		       , TO_CHAR(TO_DATE(tncntrwkdtl.RPAIR_BEGIN_DE), 'YYYY-MM-DD') RPAIR_BEGIN_DE
 		       , TO_CHAR(TO_DATE(tncntrwkdtl.RPAIR_END_DE), 'YYYY-MM-DD') RPAIR_END_DE
 		       , tncntrwkdtl.RPAIR_THICK_ASCON
 		       , tncntrwkdtl.RPAIR_THICK_CNTR
 		       , tncntrwkdtl.RPAIR_THICK_BASE
-		       , DECODE(tncntrwkdtl.PAV_MATRL_ASCON_CODE, 'PM00000008', PAV_MATRL_ASCON_ETC
-					  , (SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
-						  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_ASCON_CODE
+		       , CASE WHEN
+			   		tncntrwkdtl.PAV_MATRL_ASCON_CODE = 'PM00000008'
+			   	 THEN
+			   	 	PAV_MATRL_ASCON_ETC
+			   	 ELSE
+			   	 	(SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
+					  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_ASCON_CODE
+						AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
+				 END PAV_MATRL_ASCON_NM 
+				, CASE WHEN
+			   		tncntrwkdtl.PAV_MATRL_CNTR_CODE = 'PM00000008'
+			   	 THEN
+			   	 	PAV_MATRL_CNTR_ETC
+			   	 ELSE
+			   	 	(SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
+						WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_CNTR_CODE
 							AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
-				 ) PAV_MATRL_ASCON_NM
-		       , DECODE(tncntrwkdtl.PAV_MATRL_CNTR_CODE, 'PM00000008', PAV_MATRL_CNTR_ETC
-					  , (SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
-						  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_CNTR_CODE
-							AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
-				 ) PAV_MATRL_CNTR_NM
-		       , DECODE(tncntrwkdtl.PAV_MATRL_BASE_CODE, 'PM00000008', PAV_MATRL_BASE_ETC
-					  , (SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
-						  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_BASE_CODE
-							AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
-				 ) PAV_MATRL_BASE_NM
+				 END PAV_MATRL_CNTR_NM 
+			   , CASE WHEN
+			   		tncntrwkdtl.PAV_MATRL_BASE_CODE = 'PM00000008'
+			   	 THEN
+			   	 	PAV_MATRL_BASE_ETC
+			   	 ELSE
+			   	 	(SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
+					  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_BASE_CODE
+						AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
+				 END PAV_MATRL_BASE_NM
 		       , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
 				   WHERE tcdept.DEPT_CODE = tncntrwk.DEPT_CODE
 					 AND tcdept.USE_AT='Y' AND tcdept.DELETE_AT = 'N') DEPT_NM

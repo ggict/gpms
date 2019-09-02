@@ -978,7 +978,11 @@
 				, tnflawcntrwk.ROUTE_CODE /* 하자_보수_공사.노선_코드 */
 				, (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tnflawcntrwk.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_명 */
 				, tnflawcntrwk.DIRECT_CODE /* 하자_보수_공사.행선_코드 */
-				, decode(tnflawcntrwk.DIRECT_CODE, 'S', '상행', 'E', '하행', 'SE', '양방향') DIRECT_NM
+				, CASE 
+			        WHEN tnflawcntrwk.DIRECT_CODE = 'S' THEN '상행'
+			        WHEN tnflawcntrwk.DIRECT_CODE = 'E' THEN '하행'
+			        WHEN tnflawcntrwk.DIRECT_CODE = 'SE' THEN '양방향'
+			      END DIRECT_NM
 				, tnflawcntrwk.TRACK /* 하자_보수_공사.차로 */
 				, tnflawcntrwk.STRTPT /* 하자_보수_공사.시점 */
 				, tnflawcntrwk.ENDPT /* 하자_보수_공사.종점 */
@@ -1084,7 +1088,11 @@
 				, LTRIM(tnflawcntrwk.ROUTE_CODE,'0') AS ROUTE_CODE/* 하자_보수_공사.노선_코드 */
 				, (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tnflawcntrwk.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_명 */
 				, tnflawcntrwk.DIRECT_CODE /* 하자_보수_공사.행선_코드 */
-				, DECODE(tnflawcntrwk.DIRECT_CODE,'S','상행','E','하행','SE','양방향') AS DIRECT_NM/* 행선명 */
+				, CASE
+			        WHEN tnflawcntrwk.DIRECT_CODE = 'S' THEN '상행'
+			        WHEN tnflawcntrwk.DIRECT_CODE = 'E' THEN '하행'
+			        WHEN tnflawcntrwk.DIRECT_CODE = 'SE' THEN '양방향'
+			      END AS DIRECT_NM/* 행선명 */
 				, tnflawcntrwk.TRACK /* 하자_보수_공사.차로 */
 				, tnflawcntrwk.STRTPT /* 하자_보수_공사.시점 */
 				, tnflawcntrwk.ENDPT /* 하자_보수_공사.종점 */

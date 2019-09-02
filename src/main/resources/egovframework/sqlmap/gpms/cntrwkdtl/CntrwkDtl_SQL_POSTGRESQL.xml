@@ -1695,7 +1695,11 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				, tncntrwkdtl.ROUTE_CODE /* 공사상세정보.노선_코드 */
 				, (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tncntrwkdtl.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_코드 */
 				, tncntrwkdtl.DIRECT_CODE /* 공사상세정보.행선_코드 */
-				, decode(tncntrwkdtl.DIRECT_CODE, 'S', '상행', 'E', '하행', 'SE', '양방향') DIRECT_NM
+				, CASE 
+			        WHEN tncntrwkdtl.DIRECT_CODE = 'S' THEN '상행'
+			        WHEN tncntrwkdtl.DIRECT_CODE = 'E' THEN '하행'
+			        WHEN tncntrwkdtl.DIRECT_CODE = 'SE' THEN '양방향'
+			      END DIRECT_NM
 				, tncntrwkdtl.TRACK /* 공사상세정보.차로 */
 				, tncntrwkdtl.STRTPT /* 공사상세정보.시점 */
 				, tncntrwkdtl.ENDPT /* 공사상세정보.종점 */
@@ -1828,7 +1832,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				, LTRIM(tncntrwkdtl.ROUTE_CODE,'0') AS ROUTE_CODE/* 공사상세정보.노선_코드 */
 				, (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tncntrwkdtl.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_명 */
 				, tncntrwkdtl.DIRECT_CODE/* 공사상세정보.행선_코드 */
-				, DECODE(tncntrwkdtl.DIRECT_CODE,'S','상행','하행') AS DIRECT_NM/* 행선명 */
+				, CASE WHEN tncntrwkdtl.DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END AS DIRECT_NM/* 행선명 */
 				, tncntrwkdtl.TRACK /* 공사상세정보.차로 */
 				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tncntrwkdtl.STRTPT,0))), '([0-9]{3})','\1,')), '^,','') AS STRTPT /* 공사상세정보.시점 */
 				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tncntrwkdtl.ENDPT,0))), '([0-9]{3})','\1,')), '^,','') AS ENDPT /* 공사상세정보.종점 */
@@ -1934,7 +1938,12 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 			  , COALESCE(tnrouteinfo.ROAD_NAME,tncntrwkdtl.ROAD_NM) AS ROAD_NM
 			  , COALESCE(tncntrwkdtl.DIRECT_CODE,'-') AS DIRECT_CODE
 			  , COALESCE(tncntrwkdtl.TRACK,'-') AS TRACK
-			  , COALESCE(DECODE(tncntrwkdtl.DIRECT_CODE,'S',tnrouteinfo.ST_POINT,'E',tnrouteinfo.ED_POINT),'-') AS DIRECT_POINT_NM
+			  , COALESCE(
+			  		CASE
+        				WHEN tncntrwkdtl.DIRECT_CODE = 'S' THEN tnrouteinfo.ST_POINT
+        				WHEN tncntrwkdtl.DIRECT_CODE = 'E' THEN tnrouteinfo.ED_POINT
+        				END
+			  	,'-') AS DIRECT_POINT_NM
 			  , tncntrwkdtl.RPAIR_MTHD_CODE
 			  , tncntrwkdtl.PAV_MATRL_ASCON_CODE
 			  , tncntrwkdtl.STRTPT
