@@ -567,7 +567,6 @@
 								if(!isPropertyIsLike){
 									arrQ.push({
 										elements : [{
-											//elements : [{type : "text", text : "ROUTE_CODE"}],
 											elements : [{type : "text", text : "route_code"}],
 											name : "ogc:PropertyName",
 											type : "element"
@@ -580,10 +579,6 @@
 										type : "element"
 									});
 								}
-								
-								console.log(oQ1);
-								console.log(thisEl);
-								
 							} else {
 								var oSetParam = {
 									elements : oQ1,
@@ -593,7 +588,6 @@
 
 								oSetParam.elements.push({
 									elements : [{
-										//elements : [{type : "text", text : "ROUTE_CODE"}],
 										elements : [{type : "text", text : "route_code"}],
 										name : "ogc:PropertyName",
 										type : "element"
