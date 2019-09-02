@@ -254,43 +254,7 @@ var MAIN = (function(_mod_map, $, undefined) {
     };
  */
  	
- 	//oLayerInfoList = CONFIG.fn_get_serviceLayerInfo();
-	oLayerInfoList = {
-         "CELL_10" : {
-             
-             'tmapid' : '870',
-             'id' : '3764',
-             'table' : 'CELL_10',
-             'theme' : 'CELL_10',
-             'alias' : 'CELL_10',
-             'seq' : '3764',
-             'show' : '1',
-             'layerType' : '3',
-         },
-         "CELL_SECT" : {
-             
-             'tmapid' : '870',
-             'id' : '3765',
-             'table' : 'CELL_SECT',
-             'theme' : 'CELL_SECT',
-             'alias' : 'CELL_SECT',
-             'seq' : '3765',
-             'show' : '1',
-             'layerType' : '3',
-         },
-	     "MV_CELL_SECT_TYPE" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3768',
-	         'table' : 'MV_CELL_SECT_TYPE',
-	         'theme' : 'MV_CELL_SECT_TYPE',
-	         'alias' : 'Section셀_종류',
-	         'seq' : '3768',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },         
-	}; 
- 
+ 	oLayerInfoList = CONFIG.fn_get_serviceLayerInfo();
  
 	/* oLayerGroups =
 		[<c:forEach items="${layerGroupInfoList}" var="layerGroupInfo">

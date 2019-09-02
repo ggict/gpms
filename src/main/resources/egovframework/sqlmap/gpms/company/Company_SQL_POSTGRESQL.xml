@@ -58,7 +58,7 @@
 			, USE_AT /* 업체정보.사용_여부 */
 			, DELETE_AT /* 업체정보.삭제_여부 */
 		) VALUES (
-			#CO_NO# /* 업체정보.업체_번호 */
+			#CO_NO#::int /* 업체정보.업체_번호 */
 			, #CO_NM# /* 업체정보.업체_명 */
 			, #RPRSNTV_NM# /* 업체정보.대표자_명 */
 			, #BIZ_LOC# /* 업체정보.영업_소재지 */
@@ -70,9 +70,9 @@
 			, #REGIST_INDUTY# /* 업체정보.등록_업종 */
 			, #MFRC_CNTRWK# /* 업체정보.주력_공사 */
 			, #MAJOR_CNTRWK_AREA# /* 업체정보.주요_공사_지역 */
-			, #CRTR_NO# /* 업체정보.생성자_번호 */
+			, #CRTR_NO#::int /* 업체정보.생성자_번호 */
 			, NOW() /* 업체정보.생성_일시 */
-			, #UPDUSR_NO# /* 업체정보.수정자_번호 */
+			, #UPDUSR_NO#::int /* 업체정보.수정자_번호 */
 			, NOW() /* 업체정보.수정_일시 */
 			, #USE_AT# /* 업체정보.사용_여부 */
 			, 'N' /* 업체정보.삭제_여부 */
@@ -107,14 +107,14 @@
 
 , MAJOR_CNTRWK_AREA = #MAJOR_CNTRWK_AREA# /* 업체정보.주요_공사_지역 */
 
-, UPDUSR_NO = #UPDUSR_NO# /* 업체정보.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 업체정보.수정자_번호 */
 
 , UPDT_DT = NOW() /* 업체정보.수정_일시 */
 
 , USE_AT = #USE_AT# /* 업체정보.사용_여부 */
 
 
-WHERE CO_NO = #CO_NO#
+WHERE CO_NO = #CO_NO#::int
 ]]>
 	</update>
 
@@ -125,9 +125,9 @@ WHERE CO_NO = #CO_NO#
 		UPDATE TN_COMPANY
 		SET
 			DELETE_AT = 'Y' /* 업체정보.삭제_여부 */
-			, UPDUSR_NO = #UPDUSR_NO# /* 업체정보.수정자_번호 */
+			, UPDUSR_NO = #UPDUSR_NO#::int /* 업체정보.수정자_번호 */
 			, UPDT_DT = NOW() /* 업체정보.수정_일시 */
-		WHERE CO_NO = #CO_NO#
+		WHERE CO_NO = #CO_NO#::int
 ]]>
 	</delete>
 
@@ -158,7 +158,7 @@ WHERE CO_NO = #CO_NO#
 			, tncompany.USE_AT /* 업체정보.사용_여부 */
 			, tncompany.DELETE_AT /* 업체정보.삭제_여부 */
 		FROM TN_COMPANY tncompany
-		WHERE tncompany.CO_NO = #CO_NO#	/* 업체정보.업체_번호 */
+		WHERE tncompany.CO_NO = #CO_NO#::int	/* 업체정보.업체_번호 */
 		AND tncompany.DELETE_AT = 'N'	/* 업체정보.삭제_여부 */
 ]]>
 	</select>
@@ -167,12 +167,12 @@ WHERE CO_NO = #CO_NO#
 		WHERE 1 = 1
 		AND tncompany.DELETE_AT = 'N'	/* 업체정보.삭제_여부 */
 		<isEqual property="searchCondition" compareValue="0">
-			AND tncompany.CO_NO = #searchKeyword#
+			AND tncompany.CO_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			AND tncompany.CO_NM LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		<isNotEmpty property="CO_NO"><![CDATA[ /* 업체정보.업체_번호 */ AND tncompany.CO_NO = #CO_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CO_NO"><![CDATA[ /* 업체정보.업체_번호 */ AND tncompany.CO_NO = #CO_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CO_NM"><![CDATA[ /* 업체정보.업체_명 */ AND tncompany.CO_NM  LIKE '%' || #CO_NM# || '%'  ]]></isNotEmpty>
 		<isNotEmpty property="RPRSNTV_NM"><![CDATA[ /* 업체정보.대표자_명 */ AND tncompany.RPRSNTV_NM = #RPRSNTV_NM# ]]></isNotEmpty>
 		<isNotEmpty property="BIZ_LOC"><![CDATA[ /* 업체정보.영업_소재지 */ AND tncompany.BIZ_LOC = #BIZ_LOC# ]]></isNotEmpty>
@@ -184,9 +184,9 @@ WHERE CO_NO = #CO_NO#
 		<isNotEmpty property="REGIST_INDUTY"><![CDATA[ /* 업체정보.등록_업종 */ AND tncompany.REGIST_INDUTY = #REGIST_INDUTY# ]]></isNotEmpty>
 		<isNotEmpty property="MFRC_CNTRWK"><![CDATA[ /* 업체정보.주력_공사 */ AND tncompany.MFRC_CNTRWK = #MFRC_CNTRWK# ]]></isNotEmpty>
 		<isNotEmpty property="MAJOR_CNTRWK_AREA"><![CDATA[ /* 업체정보.주요_공사_지역 */ AND tncompany.MAJOR_CNTRWK_AREA = #MAJOR_CNTRWK_AREA# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 업체정보.생성자_번호 */ AND tncompany.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 업체정보.생성자_번호 */ AND tncompany.CRTR_NO = #CRTR_NO#::int]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 업체정보.생성_일시 */ AND tncompany.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 업체정보.수정자_번호 */ AND tncompany.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 업체정보.수정자_번호 */ AND tncompany.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 업체정보.수정_일시 */ AND tncompany.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 업체정보.사용_여부 */ AND tncompany.USE_AT = #USE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 업체정보.삭제_여부 */ AND tncompany.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
@@ -225,7 +225,7 @@ WHERE CO_NO = #CO_NO#
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tncompany.CO_NO = #searchKeyword#
+			AND tncompany.CO_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
@@ -235,7 +235,7 @@ WHERE CO_NO = #CO_NO#
 			<isNotEmpty property="CO_NO">
 				<![CDATA[
 					/* 업체정보.업체_번호 */
-					AND tncompany.CO_NO = #CO_NO#
+					AND tncompany.CO_NO = #CO_NO#::int
 				]]>
 			</isNotEmpty>
 
@@ -319,7 +319,7 @@ WHERE CO_NO = #CO_NO#
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 업체정보.생성자_번호 */
-					AND tncompany.CRTR_NO = #CRTR_NO#
+					AND tncompany.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 
@@ -333,7 +333,7 @@ WHERE CO_NO = #CO_NO#
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 업체정보.수정자_번호 */
-					AND tncompany.UPDUSR_NO = #UPDUSR_NO#
+					AND tncompany.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 
