@@ -422,7 +422,7 @@
             AND
             tnsysuser.USER_NM LIKE '%' || #searchKeyword# || '%'
         </isEqual>
-        <isNotEmpty property="USER_NO"><![CDATA[ /* 시스템사용자.사용자_번호 */ AND tnsysuser.USER_NO = #USER_NO# ]]></isNotEmpty>
+        <isNotEmpty property="USER_NO"><![CDATA[ /* 시스템사용자.사용자_번호 */ AND tnsysuser.USER_NO = #USER_NO#::int ]]></isNotEmpty>
         <isNotEmpty property="USER_NM"><![CDATA[ /* 시스템사용자.사용자_이름 */ AND tnsysuser.USER_NM like '%'|| #USER_NM# || '%']]></isNotEmpty>
         <isNotEmpty property="DEPT_CODE"><![CDATA[ /* 시스템사용자.부서_코드 */ AND (tnsysuser.DEPT_CODE = #DEPT_CODE# or tnsysuser.SEHIGH_DEPT_CODE = #DEPT_CODE# or tnsysuser.UPPER_SEHIGH_DEPT_CODE = #DEPT_CODE# ) ]]></isNotEmpty>
         <isNotEmpty property="USE_AT"><![CDATA[ /* 시스템사용자.사용_여부 */ AND tnsysuser.USE_AT = #USE_AT# ]]></isNotEmpty>
@@ -435,7 +435,7 @@
         <isNotEmpty property="USER_SE_CODE"><![CDATA[ /* 시스템사용자.사용자_구분_코드 */ AND tnsysuser.USER_SE_CODE = #USER_SE_CODE# ]]></isNotEmpty>
         <isNotEmpty property="CONFM_AT"><![CDATA[ /* 시스템사용자.승인_여부 */ AND tnsysuser.CONFM_AT = #CONFM_AT# ]]></isNotEmpty>
         <isNotEmpty property="CONFM_DT"><![CDATA[ /* 시스템사용자.승인_일시 */ AND tnsysuser.CONFM_DT = #CONFM_DT# ]]></isNotEmpty>
-        <isNotEmpty property="CO_NO"><![CDATA[ /* 시스템사용자.업체_번호 */ AND tnsysuser.CO_NO = #CO_NO# ]]></isNotEmpty>
+        <isNotEmpty property="CO_NO"><![CDATA[ /* 시스템사용자.업체_번호 */ AND tnsysuser.CO_NO = #CO_NO#::int ]]></isNotEmpty>
         <isNotEmpty property="STPLAT_AGRE_DT"><![CDATA[ /* 시스템사용자.약관_동의_일시 */ AND tnsysuser.STPLAT_AGRE_DT = #STPLAT_AGRE_DT# ]]></isNotEmpty>
         <isNotEmpty property="RM"><![CDATA[ /* 시스템사용자.비고 */ AND tnsysuser.RM = #RM# ]]></isNotEmpty>
         <isNotEmpty property="CNTRCT_NM"><![CDATA[ /* 시스템사용자.계약_명 */ AND tnsysuser.CNTRCT_NM like '%'|| #CNTRCT_NM#  || '%']]></isNotEmpty>
@@ -445,9 +445,9 @@
         <isNotEmpty property="CNTRWK_CO_NM"><![CDATA[ /* 시스템사용자.공사_업체_명 */ AND tnsysuser.CNTRWK_CO_NM like '%'|| #CNTRWK_CO_NM# || '%']]></isNotEmpty>
         <isNotEmpty property="BRTHDY"><![CDATA[ /* 시스템사용자.생년월일 */ AND tnsysuser.BRTHDY = #BRTHDY# ]]></isNotEmpty>
         <isNotEmpty property="CHRG_JOB"><![CDATA[/* 시스템사용자.담당_업무 */ AND tnsysuser.CHRG_JOB like '%' || #CHRG_JOB# || '%' ]]></isNotEmpty>
-        <isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 시스템사용자.수정자_번호 */ AND tnsysuser.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+        <isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 시스템사용자.수정자_번호 */ AND tnsysuser.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
         <isNotEmpty property="UPDT_DT"><![CDATA[ /* 시스템사용자.수정_일시 */ AND tnsysuser.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
-        <isNotEmpty property="CRTR_NO"><![CDATA[ /* 시스템사용자.생성자_번호 */ AND tnsysuser.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+        <isNotEmpty property="CRTR_NO"><![CDATA[ /* 시스템사용자.생성자_번호 */ AND tnsysuser.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
         <isNotEmpty property="CREAT_DT"><![CDATA[ /* 시스템사용자.생성_일시 */ AND tnsysuser.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
         <isNotEmpty property="PASSWORD_CHANGE_DT"><![CDATA[ /* 시스템사용자.암호_변경_일시 */ AND tnsysuser.PASSWORD_CHANGE_DT = #PASSWORD_CHANGE_DT# ]]></isNotEmpty>
         <isNotEmpty property="DELETE_DT"><![CDATA[ /* 시스템사용자.삭제_일시 */ AND tnsysuser.DELETE_DT = #DELETE_DT# ]]></isNotEmpty>

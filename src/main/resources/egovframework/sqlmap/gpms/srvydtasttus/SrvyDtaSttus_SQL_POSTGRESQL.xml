@@ -68,26 +68,26 @@
 			, UPDT_DT /* 조사_자료_현황.수정_일시 */
 			, DTA_NO /* 조사_자료_현황.자료_번호 */
 		) VALUES (
-			#DTA_STTUS_NO# /* 조사_자료_현황.자료_현황_번호 */
+			#DTA_STTUS_NO#::int /* 조사_자료_현황.자료_현황_번호 */
 			, #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 			, #ROUTE_CODE# /* 조사_자료_현황.노선_코드 */
 			, #DIRECT_CODE# /* 조사_자료_현황.행선_코드 */
 			, #TRACK# /* 조사_자료_현황.차로 */
-			, #STRTPT# /* 조사_자료_현황.시점 */
-			, #ENDPT# /* 조사_자료_현황.종점 */
+			, #STRTPT#::int /* 조사_자료_현황.시점 */
+			, #ENDPT#::int /* 조사_자료_현황.종점 */
 			, #SRVY_KND# /* 조사_자료_현황.조사_종류 */
 			, #SRVY_MT# /* 조사_자료_현황.조사_월 */
-			, #EXCEL_DTA_SEQ# /* 조사_자료_현황.엑셀_자료_SEQ */
-			, #SRVY_NO# /* 조사_자료_현황.조사_번호 */
+			, #EXCEL_DTA_SEQ#::int /* 조사_자료_현황.엑셀_자료_SEQ */
+			, #SRVY_NO#::int /* 조사_자료_현황.조사_번호 */
 			, #SM_PROCESS_AT# /* 조사_자료_현황.집계_구간_산출_여부 */
 			, #PRDTMDL_PROCESS_AT# /* 조사_자료_현황.예측_모델_적용_여부 */
 			, #DELETE_AT# /* 조사_자료_현황.삭제_여부 */
 			, #USE_AT# /* 조사_자료_현황.사용_여부 */
-			, #CRTR_NO# /* 조사_자료_현황.생성자_번호 */
+			, #CRTR_NO#::int /* 조사_자료_현황.생성자_번호 */
 			, NOW() /* 조사_자료_현황.생성_일시 */
-			, #UPDUSR_NO# /* 조사_자료_현황.수정자_번호 */
+			, #UPDUSR_NO#::int /* 조사_자료_현황.수정자_번호 */
 			, NOW() /* 조사_자료_현황.수정_일시 */
-			, #DTA_NO# /* 조사_자료_현황.자료_번호 */
+			, #DTA_NO#::int /* 조사_자료_현황.자료_번호 */
 		)
 ]]>
 	</insert>
@@ -112,10 +112,10 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 , TRACK = #TRACK# /* 조사_자료_현황.차로 */
 			
 
-, STRTPT = #STRTPT# /* 조사_자료_현황.시점 */
+, STRTPT = #STRTPT#::int /* 조사_자료_현황.시점 */
 			
 
-, ENDPT = #ENDPT# /* 조사_자료_현황.종점 */
+, ENDPT = #ENDPT#::int /* 조사_자료_현황.종점 */
 			
 
 , SRVY_KND = #SRVY_KND# /* 조사_자료_현황.조사_종류 */
@@ -124,10 +124,10 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 , SRVY_MT = #SRVY_MT# /* 조사_자료_현황.조사_월 */
 			
 
-, EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ# /* 조사_자료_현황.엑셀_자료_SEQ */
+, EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ#::int /* 조사_자료_현황.엑셀_자료_SEQ */
 			
 
-, SRVY_NO = #SRVY_NO# /* 조사_자료_현황.조사_번호 */
+, SRVY_NO = #SRVY_NO#::int /* 조사_자료_현황.조사_번호 */
 			
 
 , SM_PROCESS_AT = #SM_PROCESS_AT# /* 조사_자료_현황.집계_구간_산출_여부 */
@@ -142,21 +142,21 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 , USE_AT = #USE_AT# /* 조사_자료_현황.사용_여부 */
 			
 
-, CRTR_NO = #CRTR_NO# /* 조사_자료_현황.생성자_번호 */
+, CRTR_NO = #CRTR_NO#::int /* 조사_자료_현황.생성자_번호 */
 			
 
 , CREAT_DT = NOW() /* 조사_자료_현황.생성_일시 */
 			
 
-, UPDUSR_NO = #UPDUSR_NO# /* 조사_자료_현황.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 조사_자료_현황.수정자_번호 */
 			
 
 , UPDT_DT = NOW() /* 조사_자료_현황.수정_일시 */
 
-, DTA_NO = #DTA_NO# /* 조사_자료_현황.자료_번호 */
+, DTA_NO = #DTA_NO#::int /* 조사_자료_현황.자료_번호 */
 			
 		WHERE 1 = 1
-		AND DTA_STTUS_NO = #DTA_STTUS_NO# /* 조사_자료_현황.자료_현황_번호 */
+		AND DTA_STTUS_NO = #DTA_STTUS_NO#::int /* 조사_자료_현황.자료_현황_번호 */
 ]]>
 	</update>
 
@@ -166,7 +166,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		/* 조사_자료_현황 삭제 */
 		DELETE FROM TN_SRVY_DTA_STTUS 
 		WHERE 1 = 1
-		AND DTA_STTUS_NO = #DTA_STTUS_NO# /* 조사_자료_현황.자료_현황_번호 */
+		AND DTA_STTUS_NO = #DTA_STTUS_NO#::int /* 조사_자료_현황.자료_현황_번호 */
 ]]>
 	</delete>
 
@@ -197,7 +197,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 			, tnsrvydtasttus.DTA_NO /* 조사_자료_현황.자료_번호 */
 		FROM TN_SRVY_DTA_STTUS tnsrvydtasttus
 		WHERE 1 = 1
-		AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO# /* 조사_자료_현황.자료_현황_번호 */
+		AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO#::int /* 조사_자료_현황.자료_현황_번호 */
 ]]>
 	</select>
 
@@ -250,32 +250,32 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 
 		<isEqual property="searchCondition" compareValue="0">
 			AND
-			tnsrvydtasttus.DTA_STTUS_NO = #searchKeyword#
+			tnsrvydtasttus.DTA_STTUS_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			AND
 			tnsrvydtasttus.SRVY_YEAR LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		<isNotEmpty property="DTA_STTUS_NO"><![CDATA[ /* 조사_자료_현황.자료_현황_번호 */ AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO# ]]></isNotEmpty>
+		<isNotEmpty property="DTA_STTUS_NO"><![CDATA[ /* 조사_자료_현황.자료_현황_번호 */ AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_YEAR"><![CDATA[ /* 조사_자료_현황.조사_년도 */ AND tnsrvydtasttus.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 조사_자료_현황.노선_코드 */ AND tnsrvydtasttus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 조사_자료_현황.행선_코드 */ AND tnsrvydtasttus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ /* 조사_자료_현황.차로 */ AND tnsrvydtasttus.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ /* 조사_자료_현황.시점 */ AND tnsrvydtasttus.STRTPT = #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ /* 조사_자료_현황.종점 */ AND tnsrvydtasttus.ENDPT = #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 조사_자료_현황.시점 */ AND tnsrvydtasttus.STRTPT = #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 조사_자료_현황.종점 */ AND tnsrvydtasttus.ENDPT = #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_KND"><![CDATA[ /* 조사_자료_현황.조사_종류 */ AND tnsrvydtasttus.SRVY_KND = #SRVY_KND# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_MT"><![CDATA[ /* 조사_자료_현황.조사_월 */ AND tnsrvydtasttus.SRVY_MT = #SRVY_MT# ]]></isNotEmpty>
-		<isNotEmpty property="EXCEL_DTA_SEQ"><![CDATA[ /* 조사_자료_현황.엑셀_자료_SEQ */ AND tnsrvydtasttus.EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ# ]]></isNotEmpty>
-		<isNotEmpty property="SRVY_NO"><![CDATA[ /* 조사_자료_현황.조사_번호 */ AND tnsrvydtasttus.SRVY_NO = #SRVY_NO# ]]></isNotEmpty>
+		<isNotEmpty property="EXCEL_DTA_SEQ"><![CDATA[ /* 조사_자료_현황.엑셀_자료_SEQ */ AND tnsrvydtasttus.EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ#::int ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_NO"><![CDATA[ /* 조사_자료_현황.조사_번호 */ AND tnsrvydtasttus.SRVY_NO = #SRVY_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="SM_PROCESS_AT"><![CDATA[ /* 조사_자료_현황.집계_구간_산출_여부 */ AND tnsrvydtasttus.SM_PROCESS_AT = #SM_PROCESS_AT# ]]></isNotEmpty>
 		<isNotEmpty property="PRDTMDL_PROCESS_AT"><![CDATA[ /* 조사_자료_현황.예측_모델_적용_여부 */ AND tnsrvydtasttus.PRDTMDL_PROCESS_AT = #PRDTMDL_PROCESS_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 조사_자료_현황.삭제_여부 */ AND tnsrvydtasttus.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 조사_자료_현황.사용_여부 */ AND tnsrvydtasttus.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 조사_자료_현황.생성자_번호 */ AND tnsrvydtasttus.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 조사_자료_현황.생성자_번호 */ AND tnsrvydtasttus.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 조사_자료_현황.생성_일시 */ AND tnsrvydtasttus.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 조사_자료_현황.수정자_번호 */ AND tnsrvydtasttus.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 조사_자료_현황.수정자_번호 */ AND tnsrvydtasttus.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 조사_자료_현황.수정_일시 */ AND tnsrvydtasttus.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="DTA_NO"><![CDATA[ /* 조사_자료_현황.자료_번호 */ AND tnsrvydtasttus.DTA_NO  = #DTA_NO# ]]></isNotEmpty>
+		<isNotEmpty property="DTA_NO"><![CDATA[ /* 조사_자료_현황.자료_번호 */ AND tnsrvydtasttus.DTA_NO  = #DTA_NO#::int ]]></isNotEmpty>
 	</sql>
 
 	<select id="srvyDtaSttusDAO.selectSrvyDtaSttusListPage"
@@ -313,7 +313,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 
 		<isEqual property="searchCondition" compareValue="0">
 			AND
-			tnsrvydtasttus.DTA_STTUS_NO = #searchKeyword#
+			tnsrvydtasttus.DTA_STTUS_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
@@ -324,7 +324,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		<isNotEmpty property="DTA_STTUS_NO">
 				<![CDATA[
 					/* 조사_자료_현황.자료_현황_번호 */
-					AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO#
+					AND tnsrvydtasttus.DTA_STTUS_NO = #DTA_STTUS_NO#::int
 				]]>
 		</isNotEmpty>
 
@@ -359,14 +359,14 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		<isNotEmpty property="STRTPT">
 				<![CDATA[
 					/* 조사_자료_현황.시점 */
-					AND tnsrvydtasttus.STRTPT = #STRTPT#
+					AND tnsrvydtasttus.STRTPT = #STRTPT#::int
 				]]>
 		</isNotEmpty>
 
 		<isNotEmpty property="ENDPT">
 				<![CDATA[
 					/* 조사_자료_현황.종점 */
-					AND tnsrvydtasttus.ENDPT = #ENDPT#
+					AND tnsrvydtasttus.ENDPT = #ENDPT#::int
 				]]>
 		</isNotEmpty>
 
@@ -387,14 +387,14 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		<isNotEmpty property="EXCEL_DTA_SEQ">
 				<![CDATA[
 					/* 조사_자료_현황.엑셀_자료_SEQ */
-					AND tnsrvydtasttus.EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ#
+					AND tnsrvydtasttus.EXCEL_DTA_SEQ = #EXCEL_DTA_SEQ#::int
 				]]>
 		</isNotEmpty>
 
 		<isNotEmpty property="SRVY_NO">
 				<![CDATA[
 					/* 조사_자료_현황.조사_번호 */
-					AND tnsrvydtasttus.SRVY_NO = #SRVY_NO#
+					AND tnsrvydtasttus.SRVY_NO = #SRVY_NO#::int
 				]]>
 		</isNotEmpty>
 
@@ -429,7 +429,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 조사_자료_현황.생성자_번호 */
-					AND tnsrvydtasttus.CRTR_NO = #CRTR_NO#
+					AND tnsrvydtasttus.CRTR_NO = #CRTR_NO#::int
 				]]>
 		</isNotEmpty>
 
@@ -443,7 +443,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 조사_자료_현황.수정자_번호 */
-					AND tnsrvydtasttus.UPDUSR_NO = #UPDUSR_NO#
+					AND tnsrvydtasttus.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 		</isNotEmpty>
 
@@ -457,7 +457,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		<isNotEmpty property="DTA_NO">
 				<![CDATA[
 					/* 조사_자료_현황.자료_번호 */
-					AND tnsrvydtasttus.DTA_NO = #DTA_NO#
+					AND tnsrvydtasttus.DTA_NO = #DTA_NO#::int
 				]]>
 		</isNotEmpty>
 				 
@@ -613,7 +613,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 		UPDATE TN_SRVY_DTA_STTUS
 		   SET USE_AT = 'N'
 		   	 , DELETE_AT = 'Y'
-		   	 , UPDUSR_NO = #UPDUSR_NO#
+		   	 , UPDUSR_NO = #UPDUSR_NO#::int
 		   	 , UPDT_DT = NOW()
 		 WHERE SM_PROCESS_AT = 'N'
 		   AND SRVY_YEAR = #SRVY_YEAR#

@@ -128,11 +128,11 @@ USER_NO = #USER_NO#::int /* 시스템접속로그.사용자_번호 */
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tlsysconnect.CONECT_LOG_NO = #searchKeyword#
+			AND tlsysconnect.CONECT_LOG_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
-			AND tlsysconnect.USER_NO LIKE '%' || #searchKeyword# || '%'
+			AND tlsysconnect.USER_NO LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
 		
 			<isNotEmpty property="CONECT_LOG_NO">

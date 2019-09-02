@@ -86,12 +86,12 @@
 
 		<isEqual property="searchCondition" compareValue="0">
 			<![CDATA[
-				AND tluserconnect.CONECT_LOG_NO = #searchKeyword#
+				AND tluserconnect.CONECT_LOG_NO = #searchKeyword#::int
 			]]>
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			<![CDATA[
-				AND tluserconnect.USER_NO LIKE '%' || #searchKeyword# || '%'
+				AND tluserconnect.USER_NO LIKE '%' || #searchKeyword#::int || '%'
 			]]>
 		</isEqual>
 		<isNotEmpty property="CONECT_LOG_NO"><![CDATA[ /* 사용자접속로그.접속_로그_번호 */ AND tluserconnect.CONECT_LOG_NO = #CONECT_LOG_NO#::int ]]></isNotEmpty>
