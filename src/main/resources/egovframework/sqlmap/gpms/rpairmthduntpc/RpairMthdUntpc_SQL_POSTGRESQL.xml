@@ -49,18 +49,18 @@
 			, UPDUSR_NO /* 보수_공법_단가.수정자_번호 */
 			, UPDT_DT /* 보수_공법_단가.수정_일시 */
 		) VALUES (
-			#UNTPC_MANAGE_NO# /* 보수_공법_단가.단가_관리_번호 */
+			#UNTPC_MANAGE_NO#::int /* 보수_공법_단가.단가_관리_번호 */
 			, #RPAIR_MTHD_CODE# /* 보수_공법_단가.보수_공법_코드 */
-			, #CNTRWK_AMOUNT# /* 보수_공법_단가.공사_금액 */
-			, #PAINT_AMOUNT# /* 보수_공법_단가.차선_도색_금액 */
-			, #ETC_AMOUNT# /* 보수_공법_단가.기타_금액 */
-			, #TOT_AMOUNT# /* 보수_공법_단가.총_금액 */
+			, #CNTRWK_AMOUNT#::int /* 보수_공법_단가.공사_금액 */
+			, #PAINT_AMOUNT#::int /* 보수_공법_단가.차선_도색_금액 */
+			, #ETC_AMOUNT#::int /* 보수_공법_단가.기타_금액 */
+			, #TOT_AMOUNT#::int /* 보수_공법_단가.총_금액 */
 			, #DSGN_DT# /* 보수_공법_단가.설계_일시 */
 			, #USE_AT# /* 보수_공법_단가.사용_여부 */
 			, #DELETE_AT# /* 보수_공법_단가.삭제_여부 */
-			, #CRTR_NO# /* 보수_공법_단가.생성자_번호 */
+			, #CRTR_NO#::int /* 보수_공법_단가.생성자_번호 */
 			, #CREAT_DT# /* 보수_공법_단가.생성_일시 */
-			, #UPDUSR_NO# /* 보수_공법_단가.수정자_번호 */
+			, #UPDUSR_NO#::int /* 보수_공법_단가.수정자_번호 */
 			, NOW() /* 보수_공법_단가.수정_일시 */
 		)
 ]]>
@@ -92,7 +92,7 @@
 			, TOT_AMOUNT
 			, DSGN_DT
 			, NOW()
-			, #CRTR_NO# 
+			, #CRTR_NO#::int 
 			, NOW()
 		FROM TN_RPAIR_MTHD_UNTPC
 ]]>
@@ -103,17 +103,17 @@
 		/* rpairMthdUntpcDAO.updateRpairMthdUntpc */
 		/* 보수_공법_단가 수정 */
 		UPDATE TN_RPAIR_MTHD_UNTPC SET
-		  CNTRWK_AMOUNT = #CNTRWK_AMOUNT# /* 보수_공법_단가.공사_금액 */
-		, PAINT_AMOUNT = #PAINT_AMOUNT# /* 보수_공법_단가.차선_도색_금액 */
-		, ETC_AMOUNT = #ETC_AMOUNT# /* 보수_공법_단가.기타_금액 */
-		, TOT_AMOUNT = #TOT_AMOUNT# /* 보수_공법_단가.총_금액 */
+		  CNTRWK_AMOUNT = #CNTRWK_AMOUNT#::int /* 보수_공법_단가.공사_금액 */
+		, PAINT_AMOUNT = #PAINT_AMOUNT#::int /* 보수_공법_단가.차선_도색_금액 */
+		, ETC_AMOUNT = #ETC_AMOUNT#::int /* 보수_공법_단가.기타_금액 */
+		, TOT_AMOUNT = #TOT_AMOUNT#::int /* 보수_공법_단가.총_금액 */
 		, DSGN_DT = NOW() /* 보수_공법_단가.설계_일시 */
 		, USE_AT = #USE_AT# /* 보수_공법_단가.사용_여부 */
 		, DELETE_AT = #DELETE_AT# /* 보수_공법_단가.삭제_여부 */
-		, UPDUSR_NO = #UPDUSR_NO# /* 보수_공법_단가.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_공법_단가.수정자_번호 */
 		, UPDT_DT = NOW() /* 보수_공법_단가.수정_일시 */
 		WHERE 1 = 1
-		AND UNTPC_MANAGE_NO = #UNTPC_MANAGE_NO# /* 보수_공법_단가.단가_관리_번호 */
+		AND UNTPC_MANAGE_NO = #UNTPC_MANAGE_NO#::int /* 보수_공법_단가.단가_관리_번호 */
 		AND RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# /* 보수_공법_단가.보수_공법_코드 */
 ]]>
 	</update>
@@ -124,10 +124,10 @@
 		/* 보수_공법_단가 삭제 */
 		UPDATE TN_RPAIR_MTHD_UNTPC SET
 		 DELETE_AT = 'Y' /* 보수_공법_단가.삭제_여부 */
-		, UPDUSR_NO = #UPDUSR_NO# /* 보수_공법_단가.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_공법_단가.수정자_번호 */
 		, UPDT_DT = NOW() /* 보수_공법_단가.수정_일시 */
 		WHERE 1 = 1
-		AND UNTPC_MANAGE_NO = #UNTPC_MANAGE_NO# /* 보수_공법_단가.단가_관리_번호 */
+		AND UNTPC_MANAGE_NO = #UNTPC_MANAGE_NO#::int /* 보수_공법_단가.단가_관리_번호 */
 ]]>
 	</delete>
 
@@ -166,7 +166,7 @@
 
 		<isEqual property="searchCondition" compareValue="0">
 			<![CDATA[
-				AND tnrpairmthduntpc.UNTPC_MANAGE_NO = #searchKeyword#
+				AND tnrpairmthduntpc.UNTPC_MANAGE_NO = #searchKeyword#::int
 			]]>
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
@@ -174,16 +174,16 @@
 				AND tnrpairmthduntpc.RPAIR_MTHD_CODE LIKE '%' || #searchKeyword# || '%'
 			]]>
 		</isEqual>
-		<isNotEmpty property="UNTPC_MANAGE_NO"><![CDATA[ /* 보수_공법_단가.단가_관리_번호 */ AND tnrpairmthduntpc.UNTPC_MANAGE_NO = #UNTPC_MANAGE_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UNTPC_MANAGE_NO"><![CDATA[ /* 보수_공법_단가.단가_관리_번호 */ AND tnrpairmthduntpc.UNTPC_MANAGE_NO = #UNTPC_MANAGE_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_MTHD_CODE"><![CDATA[ /* 보수_공법_단가.보수_공법_코드 */ AND tnrpairmthduntpc.RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="CNTRWK_AMOUNT"><![CDATA[ /* 보수_공법_단가.공사_금액 */ AND tnrpairmthduntpc.CNTRWK_AMOUNT = #CNTRWK_AMOUNT# ]]></isNotEmpty>
-		<isNotEmpty property="PAINT_AMOUNT"><![CDATA[ /* 보수_공법_단가.차선_도색_금액 */ AND tnrpairmthduntpc.PAINT_AMOUNT = #PAINT_AMOUNT# ]]></isNotEmpty>
-		<isNotEmpty property="ETC_AMOUNT"><![CDATA[ /* 보수_공법_단가.기타_금액 */ AND tnrpairmthduntpc.ETC_AMOUNT = #ETC_AMOUNT# ]]></isNotEmpty>
-		<isNotEmpty property="TOT_AMOUNT"><![CDATA[ /* 보수_공법_단가.총_금액 */ AND tnrpairmthduntpc.TOT_AMOUNT = #TOT_AMOUNT# ]]></isNotEmpty>
+		<isNotEmpty property="CNTRWK_AMOUNT"><![CDATA[ /* 보수_공법_단가.공사_금액 */ AND tnrpairmthduntpc.CNTRWK_AMOUNT = #CNTRWK_AMOUNT#::int ]]></isNotEmpty>
+		<isNotEmpty property="PAINT_AMOUNT"><![CDATA[ /* 보수_공법_단가.차선_도색_금액 */ AND tnrpairmthduntpc.PAINT_AMOUNT = #PAINT_AMOUNT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ETC_AMOUNT"><![CDATA[ /* 보수_공법_단가.기타_금액 */ AND tnrpairmthduntpc.ETC_AMOUNT = #ETC_AMOUNT#::int ]]></isNotEmpty>
+		<isNotEmpty property="TOT_AMOUNT"><![CDATA[ /* 보수_공법_단가.총_금액 */ AND tnrpairmthduntpc.TOT_AMOUNT = #TOT_AMOUNT#::int ]]></isNotEmpty>
 		<isNotEmpty property="DSGN_DT"><![CDATA[ /* 보수_공법_단가.설계_일시 */ AND tnrpairmthduntpc.DSGN_DT = #DSGN_DT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_공법_단가.생성자_번호 */ AND tnrpairmthduntpc.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_공법_단가.생성자_번호 */ AND tnrpairmthduntpc.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 보수_공법_단가.생성_일시 */ AND tnrpairmthduntpc.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_공법_단가.수정자_번호 */ AND tnrpairmthduntpc.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_공법_단가.수정자_번호 */ AND tnrpairmthduntpc.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 보수_공법_단가.수정_일시 */ AND tnrpairmthduntpc.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 	</sql>
 

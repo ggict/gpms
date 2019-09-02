@@ -42,9 +42,9 @@
 			, #PAV_MATRL_NM# /* 포장재료코드.포장_재료_명 */
 			, 'N' /* 포장재료코드.삭제_여부 */
 			, 'Y' /* 포장재료코드.사용_여부 */
-			, #CRTR_NO# /* 포장재료코드.생성자_번호 */
+			, #CRTR_NO#::int /* 포장재료코드.생성자_번호 */
 			, NOW() /* 포장재료코드.생성_일시 */
-			, #UPDUSR_NO# /* 포장재료코드.수정자_번호 */
+			, #UPDUSR_NO#::int /* 포장재료코드.수정자_번호 */
 			, NOW() /* 포장재료코드.수정_일시 */
 		)
 ]]>
@@ -67,13 +67,13 @@ PAV_MATRL_NM = #PAV_MATRL_NM# /* 포장재료코드.포장_재료_명 */
 , USE_AT = #USE_AT# /* 포장재료코드.사용_여부 */
 			
 
-, CRTR_NO = #CRTR_NO# /* 포장재료코드.생성자_번호 */
+, CRTR_NO = #CRTR_NO#::int /* 포장재료코드.생성자_번호 */
 			
 
 , CREAT_DT = NOW() /* 포장재료코드.생성_일시 */
 			
 
-, UPDUSR_NO = #UPDUSR_NO# /* 포장재료코드.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 포장재료코드.수정자_번호 */
 			
 
 , UPDT_DT = NOW() /* 포장재료코드.수정_일시 */
@@ -125,9 +125,9 @@ PAV_MATRL_NM = #PAV_MATRL_NM# /* 포장재료코드.포장_재료_명 */
 		<isNotEmpty property="PAV_MATRL_NM"><![CDATA[ /* 포장재료코드.포장_재료_명 */ AND tcpavmatrl.PAV_MATRL_NM = #PAV_MATRL_NM# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 포장재료코드.삭제_여부 */ AND tcpavmatrl.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 포장재료코드.사용_여부 */ AND tcpavmatrl.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장재료코드.생성자_번호 */ AND tcpavmatrl.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장재료코드.생성자_번호 */ AND tcpavmatrl.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 포장재료코드.생성_일시 */ AND tcpavmatrl.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장재료코드.수정자_번호 */ AND tcpavmatrl.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장재료코드.수정자_번호 */ AND tcpavmatrl.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 포장재료코드.수정_일시 */ AND tcpavmatrl.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -192,7 +192,7 @@ PAV_MATRL_NM = #PAV_MATRL_NM# /* 포장재료코드.포장_재료_명 */
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 포장재료코드.생성자_번호 */
-					AND tcpavmatrl.CRTR_NO = #CRTR_NO#
+					AND tcpavmatrl.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -206,7 +206,7 @@ PAV_MATRL_NM = #PAV_MATRL_NM# /* 포장재료코드.포장_재료_명 */
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 포장재료코드.수정자_번호 */
-					AND tcpavmatrl.UPDUSR_NO = #UPDUSR_NO#
+					AND tcpavmatrl.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

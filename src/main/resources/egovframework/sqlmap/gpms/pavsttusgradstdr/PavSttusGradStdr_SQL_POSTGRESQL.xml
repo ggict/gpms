@@ -54,21 +54,21 @@
 			, UPDUSR_NO /* 포장상태등급기준.수정자_번호 */
 			, UPDT_DT /* 포장상태등급기준.수정_일시 */
 		) VALUES (
-			#GRAD_NO# /* 포장상태등급기준.등급_번호 */
+			#GRAD_NO#::int /* 포장상태등급기준.등급_번호 */
 			, #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코드 */
 			, #APPLC_YEAR# /* 포장상태등급기준.적용_년도 */
 			, #SRVY_INFO_GRAD# /* 포장상태등급기준.조사_정보_등급 */
-			, #GRAD_MUMM_STDR# /* 포장상태등급기준.등급_최소_기준 */
-			, #GRAD_MXMM_STDR# /* 포장상태등급기준.등급_최대_기준 */
+			, #GRAD_MUMM_STDR#::int /* 포장상태등급기준.등급_최소_기준 */
+			, #GRAD_MXMM_STDR#::int /* 포장상태등급기준.등급_최대_기준 */
 			, #GRAD_JDGMNT_STDR# /* 포장상태등급기준.등급_판정_기준 */
 			, #GRAD_SCTN_STTUS# /* 포장상태등급기준.등급_구간_상태 */
 			, #GRAD_COLOR_CODE# /* 포장상태등급기준.등급_색상_코드 */
 			, #ALPHA# /* 포장상태등급기준.ALPHA */
 			, #DELETE_AT# /* 포장상태등급기준.삭제_여부 */
 			, #USE_AT# /* 포장상태등급기준.사용_여부 */
-			, #CRTR_NO# /* 포장상태등급기준.생성자_번호 */
+			, #CRTR_NO#::int /* 포장상태등급기준.생성자_번호 */
 			, NOW() /* 포장상태등급기준.생성_일시 */
-			, #UPDUSR_NO# /* 포장상태등급기준.수정자_번호 */
+			, #UPDUSR_NO#::int /* 포장상태등급기준.수정자_번호 */
 			, NOW() /* 포장상태등급기준.수정_일시 */
 		)
 ]]>
@@ -91,10 +91,10 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 , SRVY_INFO_GRAD = #SRVY_INFO_GRAD# /* 포장상태등급기준.조사_정보_등급 */
 			
 
-, GRAD_MUMM_STDR = #GRAD_MUMM_STDR# /* 포장상태등급기준.등급_최소_기준 */
+, GRAD_MUMM_STDR = #GRAD_MUMM_STDR#::int /* 포장상태등급기준.등급_최소_기준 */
 			
 
-, GRAD_MXMM_STDR = #GRAD_MXMM_STDR# /* 포장상태등급기준.등급_최대_기준 */
+, GRAD_MXMM_STDR = #GRAD_MXMM_STDR#::int /* 포장상태등급기준.등급_최대_기준 */
 			
 
 , GRAD_JDGMNT_STDR = #GRAD_JDGMNT_STDR# /* 포장상태등급기준.등급_판정_기준 */
@@ -115,19 +115,19 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 , USE_AT = #USE_AT# /* 포장상태등급기준.사용_여부 */
 			
 
-, CRTR_NO = #CRTR_NO# /* 포장상태등급기준.생성자_번호 */
+, CRTR_NO = #CRTR_NO#::int /* 포장상태등급기준.생성자_번호 */
 			
 
 , CREAT_DT = NOW() /* 포장상태등급기준.생성_일시 */
 			
 
-, UPDUSR_NO = #UPDUSR_NO# /* 포장상태등급기준.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 포장상태등급기준.수정자_번호 */
 			
 
 , UPDT_DT = NOW() /* 포장상태등급기준.수정_일시 */
 			
 		WHERE 1 = 1
-		AND GRAD_NO = #GRAD_NO# /* 포장상태등급기준.등급_번호 */
+		AND GRAD_NO = #GRAD_NO#::int /* 포장상태등급기준.등급_번호 */
 ]]>
 	</update>
 
@@ -137,7 +137,7 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 		/* 포장상태등급기준 삭제 */
 		DELETE FROM TN_PAV_STTUS_GRAD_STDR 
 		WHERE 1 = 1
-		AND GRAD_NO = #GRAD_NO# /* 포장상태등급기준.등급_번호 */
+		AND GRAD_NO = #GRAD_NO#::int /* 포장상태등급기준.등급_번호 */
 ]]>
 	</delete>
 
@@ -164,7 +164,7 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 			, tnpavsttusgradstdr.UPDT_DT /* 포장상태등급기준.수정_일시 */
 		FROM TN_PAV_STTUS_GRAD_STDR tnpavsttusgradstdr
 		WHERE 1 = 1
-		AND tnpavsttusgradstdr.GRAD_NO = #GRAD_NO# /* 포장상태등급기준.등급_번호 */
+		AND tnpavsttusgradstdr.GRAD_NO = #GRAD_NO#::int /* 포장상태등급기준.등급_번호 */
 ]]>
 	</select>
 
@@ -172,26 +172,26 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnpavsttusgradstdr.GRAD_NO = #searchKeyword#
+			AND tnpavsttusgradstdr.GRAD_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			AND tnpavsttusgradstdr.GRAD_STDR_CODE LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		<isNotEmpty property="GRAD_NO"><![CDATA[ /* 포장상태등급기준.등급_번호 */ AND tnpavsttusgradstdr.GRAD_NO = #GRAD_NO# ]]></isNotEmpty>
+		<isNotEmpty property="GRAD_NO"><![CDATA[ /* 포장상태등급기준.등급_번호 */ AND tnpavsttusgradstdr.GRAD_NO = #GRAD_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="GRAD_STDR_CODE"><![CDATA[ /* 포장상태등급기준.등급_기준_코드 */ AND tnpavsttusgradstdr.GRAD_STDR_CODE = #GRAD_STDR_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="APPLC_YEAR"><![CDATA[ /* 포장상태등급기준.적용_년도 */ AND tnpavsttusgradstdr.APPLC_YEAR = #APPLC_YEAR# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_INFO_GRAD"><![CDATA[ /* 포장상태등급기준.조사_정보_등급 */ AND tnpavsttusgradstdr.SRVY_INFO_GRAD = #SRVY_INFO_GRAD# ]]></isNotEmpty>
-		<isNotEmpty property="GRAD_MUMM_STDR"><![CDATA[ /* 포장상태등급기준.등급_최소_기준 */ AND tnpavsttusgradstdr.GRAD_MUMM_STDR = #GRAD_MUMM_STDR# ]]></isNotEmpty>
-		<isNotEmpty property="GRAD_MXMM_STDR"><![CDATA[ /* 포장상태등급기준.등급_최대_기준 */ AND tnpavsttusgradstdr.GRAD_MXMM_STDR = #GRAD_MXMM_STDR# ]]></isNotEmpty>
+		<isNotEmpty property="GRAD_MUMM_STDR"><![CDATA[ /* 포장상태등급기준.등급_최소_기준 */ AND tnpavsttusgradstdr.GRAD_MUMM_STDR = #GRAD_MUMM_STDR#::int ]]></isNotEmpty>
+		<isNotEmpty property="GRAD_MXMM_STDR"><![CDATA[ /* 포장상태등급기준.등급_최대_기준 */ AND tnpavsttusgradstdr.GRAD_MXMM_STDR = #GRAD_MXMM_STDR#::int ]]></isNotEmpty>
 		<isNotEmpty property="GRAD_JDGMNT_STDR"><![CDATA[ /* 포장상태등급기준.등급_판정_기준 */ AND tnpavsttusgradstdr.GRAD_JDGMNT_STDR = #GRAD_JDGMNT_STDR# ]]></isNotEmpty>
 		<isNotEmpty property="GRAD_SCTN_STTUS"><![CDATA[ /* 포장상태등급기준.등급_구간_상태 */ AND tnpavsttusgradstdr.GRAD_SCTN_STTUS = #GRAD_SCTN_STTUS# ]]></isNotEmpty>
 		<isNotEmpty property="GRAD_COLOR_CODE"><![CDATA[ /* 포장상태등급기준.등급_색상_코드 */ AND tnpavsttusgradstdr.GRAD_COLOR_CODE = #GRAD_COLOR_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="ALPHA"><![CDATA[ /* 포장상태등급기준.ALPHA */ AND tnpavsttusgradstdr.ALPHA = #ALPHA# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 포장상태등급기준.삭제_여부 */ AND tnpavsttusgradstdr.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 포장상태등급기준.사용_여부 */ AND tnpavsttusgradstdr.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장상태등급기준.생성자_번호 */ AND tnpavsttusgradstdr.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장상태등급기준.생성자_번호 */ AND tnpavsttusgradstdr.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 포장상태등급기준.생성_일시 */ AND tnpavsttusgradstdr.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장상태등급기준.수정자_번호 */ AND tnpavsttusgradstdr.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장상태등급기준.수정자_번호 */ AND tnpavsttusgradstdr.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 포장상태등급기준.수정_일시 */ AND tnpavsttusgradstdr.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -226,7 +226,7 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnpavsttusgradstdr.GRAD_NO = #searchKeyword#
+			AND tnpavsttusgradstdr.GRAD_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
@@ -236,7 +236,7 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 			<isNotEmpty property="GRAD_NO">
 				<![CDATA[
 					/* 포장상태등급기준.등급_번호 */
-					AND tnpavsttusgradstdr.GRAD_NO = #GRAD_NO#
+					AND tnpavsttusgradstdr.GRAD_NO = #GRAD_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -264,14 +264,14 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 			<isNotEmpty property="GRAD_MUMM_STDR">
 				<![CDATA[
 					/* 포장상태등급기준.등급_최소_기준 */
-					AND tnpavsttusgradstdr.GRAD_MUMM_STDR = #GRAD_MUMM_STDR#
+					AND tnpavsttusgradstdr.GRAD_MUMM_STDR = #GRAD_MUMM_STDR#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="GRAD_MXMM_STDR">
 				<![CDATA[
 					/* 포장상태등급기준.등급_최대_기준 */
-					AND tnpavsttusgradstdr.GRAD_MXMM_STDR = #GRAD_MXMM_STDR#
+					AND tnpavsttusgradstdr.GRAD_MXMM_STDR = #GRAD_MXMM_STDR#::int
 				]]>
 			</isNotEmpty>
 		
@@ -320,7 +320,7 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 포장상태등급기준.생성자_번호 */
-					AND tnpavsttusgradstdr.CRTR_NO = #CRTR_NO#
+					AND tnpavsttusgradstdr.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -334,7 +334,7 @@ GRAD_STDR_CODE = #GRAD_STDR_CODE# /* 포장상태등급기준.등급_기준_코�
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 포장상태등급기준.수정자_번호 */
-					AND tnpavsttusgradstdr.UPDUSR_NO = #UPDUSR_NO#
+					AND tnpavsttusgradstdr.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

@@ -126,46 +126,46 @@
 			, #DETAIL_CNTRWK_GROUP# /* 하자_보수_공사.세부_공사_그룹 */
 			, #DETAIL_KND_NM# /* 하자_보수_공사.세부_종류_명 */
 			, #CNTRWK_DE# /* 하자_보수_공사.공사_일자 */
-			, #FLAW_CO_NO# /* 하자_보수_공사.하자_업체_번호 */
+			, #FLAW_CO_NO#::int /* 하자_보수_공사.하자_업체_번호 */
 			, #FLAW_CO_NM# /* 하자_보수_공사.하자_업체_명 */
 			, #FLAW_CHCK_DE# /* 하자_보수_공사.하자_검사_일자 */
-			, #FLAW_AR# /* 하자_보수_공사.하자_면적 */
-			, #FLAW_LEN# /* 하자_보수_공사.하자_연장 */
+			, #FLAW_AR#::int /* 하자_보수_공사.하자_면적 */
+			, #FLAW_LEN#::int /* 하자_보수_공사.하자_연장 */
 			, #FLAW_LC# /* 하자_보수_공사.하자_위치 */
 			, #FLAW_CAUSE# /* 하자_보수_공사.하자_원인 */
 			, #ROAD_NM# /* 하자_보수_공사.도로_명 */
 			, #ROUTE_CODE# /* 하자_보수_공사.노선_코드 */
 			, #DIRECT_CODE# /* 하자_보수_공사.행선_코드 */
 			, #TRACK# /* 하자_보수_공사.차로 */
-			, #STRTPT# /* 하자_보수_공사.시점 */
-			, #ENDPT# /* 하자_보수_공사.종점 */
+			, #STRTPT#::int /* 하자_보수_공사.시점 */
+			, #ENDPT#::int /* 하자_보수_공사.종점 */
 			, #PAV_STLE_CODE# /* 하자_보수_공사.포장_형태_코드 */
 			, #PAV_MSRC_ETC# /* 하자_보수_공사.포장_공법_기타 */
 			, #RPAIR_THICK_DC# /* 하자_보수_공사.보수_두께_설명 */
-			, #RPAIR_THICK# /* 하자_보수_공사.보수_두께 */
-			, #RPAIR_AR# /* 하자_보수_공사.보수_면적 */
-			, #RPAIR_BT# /* 하자_보수_공사.보수_폭 */
-			, #RPAIR_LEN# /* 하자_보수_공사.보수_연장 */
+			, #RPAIR_THICK#::int /* 하자_보수_공사.보수_두께 */
+			, #RPAIR_AR#::int /* 하자_보수_공사.보수_면적 */
+			, #RPAIR_BT#::int /* 하자_보수_공사.보수_폭 */
+			, #RPAIR_LEN#::int /* 하자_보수_공사.보수_연장 */
 			, #RPAIR_LC# /* 하자_보수_공사.보수_위치 */
 			, #RPAIR_DE# /* 하자_보수_공사.보수_일자 */
 			, #RPAIR_MATRL_DETAIL_NM# /* 하자_보수_공사.보수_재료_세부_명 */
-			, #RPAIR_THICK_BASE# /* 하자_보수_공사.보수_두께_기층 */
-			, #RPAIR_THICK_CNTR# /* 하자_보수_공사.보수_두께_중간층 */
-			, #RPAIR_THICK_ASCON# /* 하자_보수_공사.보수_두께_표층 */
+			, #RPAIR_THICK_BASE#::int /* 하자_보수_공사.보수_두께_기층 */
+			, #RPAIR_THICK_CNTR#::int /* 하자_보수_공사.보수_두께_중간층 */
+			, #RPAIR_THICK_ASCON#::int /* 하자_보수_공사.보수_두께_표층 */
 			, #PAV_MATRL_ASCON_CODE# /* 하자_보수_공사.포장_재료_표층_코드 */
 			, #PAV_MATRL_ASCON_ETC# /* 하자_보수_공사.포장_재료_표층_기타 */
 			, #PAV_MATRL_BASE_CODE# /* 하자_보수_공사.포장_재료_기층_코드 */
 			, #PAV_MATRL_BASE_ETC# /* 하자_보수_공사.포장_재료_기층_기타 */
 			, #PAV_MATRL_CNTR_CODE# /* 하자_보수_공사.포장_재료_중간층_코드 */
 			, #PAV_MATRL_CNTR_ETC# /* 하자_보수_공사.포장_재료_중간층_기타 */
-			, #FILE_NO# /* 하자_보수_공사.파일_번호 */
-			, #OPERT_BFE_PHOTO_NO# /* 하자_보수_공사.작업_전_사진_번호 */
-			, #OPERT_AFT_PHOTO_NO# /* 하자_보수_공사.작업_후_사진_번호 */
+			, #FILE_NO#::int /* 하자_보수_공사.파일_번호 */
+			, #OPERT_BFE_PHOTO_NO#::int /* 하자_보수_공사.작업_전_사진_번호 */
+			, #OPERT_AFT_PHOTO_NO#::int /* 하자_보수_공사.작업_후_사진_번호 */
 			, 'Y' /* 하자_보수_공사.사용_여부 */
 			, 'N' /* 하자_보수_공사.삭제_여부 */
-			, #CRTR_NO# /* 하자_보수_공사.생성자_번호 */
+			, #CRTR_NO#::int /* 하자_보수_공사.생성자_번호 */
 			, NOW() /* 하자_보수_공사.생성_일시 */
-			, #UPDUSR_NO# /* 하자_보수_공사.수정자_번호 */
+			, #UPDUSR_NO#::int /* 하자_보수_공사.수정자_번호 */
 			, NOW() /* 하자_보수_공사.수정_일시 */
 			, #RPAIR_MTHD_CODE# /* 하자_보수_공사.보수_꽁법_코드  */
 		)
@@ -177,7 +177,7 @@
 		/* flawCntrwkDAO.updateFlawCntrwk */
 		/* 하자_보수_공사 수정 */
 		UPDATE TN_FLAW_CNTRWK SET
-			UPDUSR_NO = #UPDUSR_NO# /* 하자_보수_공사.수정자_번호 */
+			UPDUSR_NO = #UPDUSR_NO#::int /* 하자_보수_공사.수정자_번호 */
 		  , UPDT_DT = NOW() /* 하자_보수_공사.수정_일시 */
 
 , CNTRWK_ID = #CNTRWK_ID# /* 하자_보수_공사.공사_ID */
@@ -198,7 +198,7 @@
 , CNTRWK_DE = #CNTRWK_DE# /* 하자_보수_공사.공사_일자 */
 			
 
-, FLAW_CO_NO = #FLAW_CO_NO# /* 하자_보수_공사.하자_업체_번호 */
+, FLAW_CO_NO = #FLAW_CO_NO#::int /* 하자_보수_공사.하자_업체_번호 */
 			
 
 , FLAW_CO_NM = #FLAW_CO_NM# /* 하자_보수_공사.하자_업체_명 */
@@ -207,10 +207,10 @@
 , FLAW_CHCK_DE = #FLAW_CHCK_DE# /* 하자_보수_공사.하자_검사_일자 */
 			
 
-, FLAW_AR = #FLAW_AR# /* 하자_보수_공사.하자_면적 */
+, FLAW_AR = #FLAW_AR#::int /* 하자_보수_공사.하자_면적 */
 			
 
-, FLAW_LEN = #FLAW_LEN# /* 하자_보수_공사.하자_연장 */
+, FLAW_LEN = #FLAW_LEN#::int /* 하자_보수_공사.하자_연장 */
 			
 
 , FLAW_LC = #FLAW_LC# /* 하자_보수_공사.하자_위치 */
@@ -231,10 +231,10 @@
 , TRACK = #TRACK# /* 하자_보수_공사.차로 */
 			
 
-, STRTPT = #STRTPT# /* 하자_보수_공사.시점 */
+, STRTPT = #STRTPT#::int /* 하자_보수_공사.시점 */
 			
 
-, ENDPT = #ENDPT# /* 하자_보수_공사.종점 */
+, ENDPT = #ENDPT#::int /* 하자_보수_공사.종점 */
 			
 
 , PAV_STLE_CODE = #PAV_STLE_CODE# /* 하자_보수_공사.포장_형태_코드 */
@@ -246,16 +246,16 @@
 , RPAIR_THICK_DC = #RPAIR_THICK_DC# /* 하자_보수_공사.보수_두께_설명 */
 			
 
-, RPAIR_THICK = #RPAIR_THICK# /* 하자_보수_공사.보수_두께 */
+, RPAIR_THICK = #RPAIR_THICK#::int /* 하자_보수_공사.보수_두께 */
 			
 
-, RPAIR_AR = #RPAIR_AR# /* 하자_보수_공사.보수_면적 */
+, RPAIR_AR = #RPAIR_AR#::int /* 하자_보수_공사.보수_면적 */
 			
 
-, RPAIR_BT = #RPAIR_BT# /* 하자_보수_공사.보수_폭 */
+, RPAIR_BT = #RPAIR_BT#::int /* 하자_보수_공사.보수_폭 */
 			
 
-, RPAIR_LEN = #RPAIR_LEN# /* 하자_보수_공사.보수_연장 */
+, RPAIR_LEN = #RPAIR_LEN#::int /* 하자_보수_공사.보수_연장 */
 			
 
 , RPAIR_LC = #RPAIR_LC# /* 하자_보수_공사.보수_위치 */
@@ -267,13 +267,13 @@
 , RPAIR_MATRL_DETAIL_NM = #RPAIR_MATRL_DETAIL_NM# /* 하자_보수_공사.보수_재료_세부_명 */
 			
 
-, RPAIR_THICK_BASE = #RPAIR_THICK_BASE# /* 하자_보수_공사.보수_두께_기층 */
+, RPAIR_THICK_BASE = #RPAIR_THICK_BASE#::int /* 하자_보수_공사.보수_두께_기층 */
 			
 
-, RPAIR_THICK_CNTR = #RPAIR_THICK_CNTR# /* 하자_보수_공사.보수_두께_중간층 */
+, RPAIR_THICK_CNTR = #RPAIR_THICK_CNTR#::int /* 하자_보수_공사.보수_두께_중간층 */
 			
 
-, RPAIR_THICK_ASCON = #RPAIR_THICK_ASCON# /* 하자_보수_공사.보수_두께_표층 */
+, RPAIR_THICK_ASCON = #RPAIR_THICK_ASCON#::int /* 하자_보수_공사.보수_두께_표층 */
 			
 
 , PAV_MATRL_ASCON_CODE = #PAV_MATRL_ASCON_CODE# /* 하자_보수_공사.포장_재료_표층_코드 */
@@ -294,13 +294,13 @@
 , PAV_MATRL_CNTR_ETC = #PAV_MATRL_CNTR_ETC# /* 하자_보수_공사.포장_재료_중간층_기타 */
 			
 
-, FILE_NO = #FILE_NO# /* 하자_보수_공사.파일_번호 */
+, FILE_NO = #FILE_NO#::int /* 하자_보수_공사.파일_번호 */
 			
 
-, OPERT_BFE_PHOTO_NO = #OPERT_BFE_PHOTO_NO# /* 하자_보수_공사.작업_전_사진_번호 */
+, OPERT_BFE_PHOTO_NO = #OPERT_BFE_PHOTO_NO#::int /* 하자_보수_공사.작업_전_사진_번호 */
 			
 
-, OPERT_AFT_PHOTO_NO = #OPERT_AFT_PHOTO_NO# /* 하자_보수_공사.작업_후_사진_번호 */
+, OPERT_AFT_PHOTO_NO = #OPERT_AFT_PHOTO_NO#::int /* 하자_보수_공사.작업_후_사진_번호 */
 
 , RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# /* 하자_보수_공사.보수_꽁법_코드  */
 			
@@ -315,7 +315,7 @@
 		/* 하자_보수_공사 삭제 */
 		UPDATE TN_FLAW_CNTRWK SET
 		DELETE_AT = 'Y' /* 하자_보수_공사.삭제_여부 */
-		, UPDUSR_NO = #UPDUSR_NO# /* 하자_보수_공사.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 하자_보수_공사.수정자_번호 */
 		, UPDT_DT = NOW() /* 하자_보수_공사.수정_일시 */
 		WHERE 1 = 1
 		AND FLAW_CNTRWK_ID = #FLAW_CNTRWK_ID# /* 하자_보수_공사.하자_공사_ID */
@@ -328,7 +328,7 @@
 		/* 하자_보수_공사 삭제 */
 		UPDATE TN_FLAW_CNTRWK SET
 		DELETE_AT = 'Y' /* 하자_보수_공사.삭제_여부 */
-		, UPDUSR_NO = #UPDUSR_NO# /* 하자_보수_공사.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 하자_보수_공사.수정자_번호 */
 		, UPDT_DT = NOW() /* 하자_보수_공사.수정_일시 */
 		WHERE 1 = 1
 ]]>
@@ -420,46 +420,46 @@
 		<isNotEmpty property="DETAIL_CNTRWK_GROUP"><![CDATA[ /* 하자_보수_공사.세부_공사_그룹 */ AND tnflawcntrwk.DETAIL_CNTRWK_GROUP = #DETAIL_CNTRWK_GROUP# ]]></isNotEmpty>
 		<isNotEmpty property="DETAIL_KND_NM"><![CDATA[ /* 하자_보수_공사.세부_종류_명 */ AND tnflawcntrwk.DETAIL_KND_NM = #DETAIL_KND_NM# ]]></isNotEmpty>
 		<isNotEmpty property="CNTRWK_DE"><![CDATA[ /* 하자_보수_공사.공사_일자 */ AND tnflawcntrwk.CNTRWK_DE = #CNTRWK_DE# ]]></isNotEmpty>
-		<isNotEmpty property="FLAW_CO_NO"><![CDATA[ /* 하자_보수_공사.하자_업체_번호 */ AND tnflawcntrwk.FLAW_CO_NO = #FLAW_CO_NO# ]]></isNotEmpty>
+		<isNotEmpty property="FLAW_CO_NO"><![CDATA[ /* 하자_보수_공사.하자_업체_번호 */ AND tnflawcntrwk.FLAW_CO_NO = #FLAW_CO_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="FLAW_CO_NM"><![CDATA[ /* 하자_보수_공사.하자_업체_명 */ AND tnflawcntrwk.FLAW_CO_NM = #FLAW_CO_NM# ]]></isNotEmpty>
 		<isNotEmpty property="FLAW_CHCK_DE"><![CDATA[ /* 하자_보수_공사.하자_검사_일자 */ AND tnflawcntrwk.FLAW_CHCK_DE = #FLAW_CHCK_DE# ]]></isNotEmpty>
-		<isNotEmpty property="FLAW_AR"><![CDATA[ /* 하자_보수_공사.하자_면적 */ AND tnflawcntrwk.FLAW_AR = #FLAW_AR# ]]></isNotEmpty>
-		<isNotEmpty property="FLAW_LEN"><![CDATA[ /* 하자_보수_공사.하자_연장 */ AND tnflawcntrwk.FLAW_LEN = #FLAW_LEN# ]]></isNotEmpty>
+		<isNotEmpty property="FLAW_AR"><![CDATA[ /* 하자_보수_공사.하자_면적 */ AND tnflawcntrwk.FLAW_AR = #FLAW_AR#::int ]]></isNotEmpty>
+		<isNotEmpty property="FLAW_LEN"><![CDATA[ /* 하자_보수_공사.하자_연장 */ AND tnflawcntrwk.FLAW_LEN = #FLAW_LEN#::int ]]></isNotEmpty>
 		<isNotEmpty property="FLAW_LC"><![CDATA[ /* 하자_보수_공사.하자_위치 */ AND tnflawcntrwk.FLAW_LC = #FLAW_LC# ]]></isNotEmpty>
 		<isNotEmpty property="FLAW_CAUSE"><![CDATA[ /* 하자_보수_공사.하자_원인 */ AND tnflawcntrwk.FLAW_CAUSE = #FLAW_CAUSE# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_NM"><![CDATA[ /* 하자_보수_공사.도로_명 */ AND tnflawcntrwk.ROAD_NM = #ROAD_NM# ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 하자_보수_공사.노선_코드 */ AND tnflawcntrwk.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 하자_보수_공사.행선_코드 */ AND tnflawcntrwk.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ /* 하자_보수_공사.차로 */ AND tnflawcntrwk.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ /* 하자_보수_공사.시점 */ AND tnflawcntrwk.STRTPT = #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ /* 하자_보수_공사.종점 */ AND tnflawcntrwk.ENDPT = #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 하자_보수_공사.시점 */ AND tnflawcntrwk.STRTPT = #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 하자_보수_공사.종점 */ AND tnflawcntrwk.ENDPT = #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="PAV_STLE_CODE"><![CDATA[ /* 하자_보수_공사.포장_형태_코드 */ AND tnflawcntrwk.PAV_STLE_CODE = #PAV_STLE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="PAV_MSRC_ETC"><![CDATA[ /* 하자_보수_공사.포장_공법_기타 */ AND tnflawcntrwk.PAV_MSRC_ETC = #PAV_MSRC_ETC# ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_THICK_DC"><![CDATA[ /* 하자_보수_공사.보수_두께_설명 */ AND tnflawcntrwk.RPAIR_THICK_DC = #RPAIR_THICK_DC# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_THICK"><![CDATA[ /* 하자_보수_공사.보수_두께 */ AND tnflawcntrwk.RPAIR_THICK = #RPAIR_THICK# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_AR"><![CDATA[ /* 하자_보수_공사.보수_면적 */ AND tnflawcntrwk.RPAIR_AR = #RPAIR_AR# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_BT"><![CDATA[ /* 하자_보수_공사.보수_폭 */ AND tnflawcntrwk.RPAIR_BT = #RPAIR_BT# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_LEN"><![CDATA[ /* 하자_보수_공사.보수_연장 */ AND tnflawcntrwk.RPAIR_LEN = #RPAIR_LEN# ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_THICK"><![CDATA[ /* 하자_보수_공사.보수_두께 */ AND tnflawcntrwk.RPAIR_THICK = #RPAIR_THICK#::int ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_AR"><![CDATA[ /* 하자_보수_공사.보수_면적 */ AND tnflawcntrwk.RPAIR_AR = #RPAIR_AR#::int ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_BT"><![CDATA[ /* 하자_보수_공사.보수_폭 */ AND tnflawcntrwk.RPAIR_BT = #RPAIR_BT#::int ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_LEN"><![CDATA[ /* 하자_보수_공사.보수_연장 */ AND tnflawcntrwk.RPAIR_LEN = #RPAIR_LEN#::int ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_LC"><![CDATA[ /* 하자_보수_공사.보수_위치 */ AND tnflawcntrwk.RPAIR_LC = #RPAIR_LC# ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_DE"><![CDATA[ /* 하자_보수_공사.보수_일자 */ AND tnflawcntrwk.RPAIR_DE = #RPAIR_DE# ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_MATRL_DETAIL_NM"><![CDATA[ /* 하자_보수_공사.보수_재료_세부_명 */ AND tnflawcntrwk.RPAIR_MATRL_DETAIL_NM = #RPAIR_MATRL_DETAIL_NM# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_THICK_BASE"><![CDATA[ /* 하자_보수_공사.보수_두께_기층 */ AND tnflawcntrwk.RPAIR_THICK_BASE = #RPAIR_THICK_BASE# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_THICK_CNTR"><![CDATA[ /* 하자_보수_공사.보수_두께_중간층 */ AND tnflawcntrwk.RPAIR_THICK_CNTR = #RPAIR_THICK_CNTR# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_THICK_ASCON"><![CDATA[ /* 하자_보수_공사.보수_두께_표층 */ AND tnflawcntrwk.RPAIR_THICK_ASCON = #RPAIR_THICK_ASCON# ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_THICK_BASE"><![CDATA[ /* 하자_보수_공사.보수_두께_기층 */ AND tnflawcntrwk.RPAIR_THICK_BASE = #RPAIR_THICK_BASE#::int ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_THICK_CNTR"><![CDATA[ /* 하자_보수_공사.보수_두께_중간층 */ AND tnflawcntrwk.RPAIR_THICK_CNTR = #RPAIR_THICK_CNTR#::int ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_THICK_ASCON"><![CDATA[ /* 하자_보수_공사.보수_두께_표층 */ AND tnflawcntrwk.RPAIR_THICK_ASCON = #RPAIR_THICK_ASCON#::int ]]></isNotEmpty>
 		<isNotEmpty property="PAV_MATRL_ASCON_CODE"><![CDATA[ /* 하자_보수_공사.포장_재료_표층_코드 */ AND tnflawcntrwk.PAV_MATRL_ASCON_CODE = #PAV_MATRL_ASCON_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="PAV_MATRL_ASCON_ETC"><![CDATA[ /* 하자_보수_공사.포장_재료_표층_기타 */ AND tnflawcntrwk.PAV_MATRL_ASCON_ETC = #PAV_MATRL_ASCON_ETC# ]]></isNotEmpty>
 		<isNotEmpty property="PAV_MATRL_BASE_CODE"><![CDATA[ /* 하자_보수_공사.포장_재료_기층_코드 */ AND tnflawcntrwk.PAV_MATRL_BASE_CODE = #PAV_MATRL_BASE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="PAV_MATRL_BASE_ETC"><![CDATA[ /* 하자_보수_공사.포장_재료_기층_기타 */ AND tnflawcntrwk.PAV_MATRL_BASE_ETC = #PAV_MATRL_BASE_ETC# ]]></isNotEmpty>
 		<isNotEmpty property="PAV_MATRL_CNTR_CODE"><![CDATA[ /* 하자_보수_공사.포장_재료_중간층_코드 */ AND tnflawcntrwk.PAV_MATRL_CNTR_CODE = #PAV_MATRL_CNTR_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="PAV_MATRL_CNTR_ETC"><![CDATA[ /* 하자_보수_공사.포장_재료_중간층_기타 */ AND tnflawcntrwk.PAV_MATRL_CNTR_ETC = #PAV_MATRL_CNTR_ETC# ]]></isNotEmpty>
-		<isNotEmpty property="FILE_NO"><![CDATA[ /* 하자_보수_공사.파일_번호 */ AND tnflawcntrwk.FILE_NO = #FILE_NO# ]]></isNotEmpty>
-		<isNotEmpty property="OPERT_BFE_PHOTO_NO"><![CDATA[ /* 하자_보수_공사.작업_전_사진_번호 */ AND tnflawcntrwk.OPERT_BFE_PHOTO_NO = #OPERT_BFE_PHOTO_NO# ]]></isNotEmpty>
-		<isNotEmpty property="OPERT_AFT_PHOTO_NO"><![CDATA[ /* 하자_보수_공사.작업_후_사진_번호 */ AND tnflawcntrwk.OPERT_AFT_PHOTO_NO = #OPERT_AFT_PHOTO_NO# ]]></isNotEmpty>
+		<isNotEmpty property="FILE_NO"><![CDATA[ /* 하자_보수_공사.파일_번호 */ AND tnflawcntrwk.FILE_NO = #FILE_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="OPERT_BFE_PHOTO_NO"><![CDATA[ /* 하자_보수_공사.작업_전_사진_번호 */ AND tnflawcntrwk.OPERT_BFE_PHOTO_NO = #OPERT_BFE_PHOTO_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="OPERT_AFT_PHOTO_NO"><![CDATA[ /* 하자_보수_공사.작업_후_사진_번호 */ AND tnflawcntrwk.OPERT_AFT_PHOTO_NO = #OPERT_AFT_PHOTO_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 하자_보수_공사.사용_여부 */ AND tnflawcntrwk.USE_AT = #USE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 하자_보수_공사.삭제_여부 */ AND tnflawcntrwk.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 하자_보수_공사.생성자_번호 */ AND tnflawcntrwk.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 하자_보수_공사.생성자_번호 */ AND tnflawcntrwk.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 하자_보수_공사.생성_일시 */ AND tnflawcntrwk.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 하자_보수_공사.수정자_번호 */ AND tnflawcntrwk.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 하자_보수_공사.수정자_번호 */ AND tnflawcntrwk.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 하자_보수_공사.수정_일시 */ AND tnflawcntrwk.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_MTHD_CODE"><![CDATA[ /* 하자_보수_공사.보수_꽁법_코드 */ AND tnflawcntrwk.RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# ]]></isNotEmpty>
 </sql>
@@ -587,7 +587,7 @@
 			<isNotEmpty property="FLAW_CO_NO">
 				<![CDATA[
 					/* 하자_보수_공사.하자_업체_번호 */
-					AND tnflawcntrwk.FLAW_CO_NO = #FLAW_CO_NO#
+					AND tnflawcntrwk.FLAW_CO_NO = #FLAW_CO_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -608,14 +608,14 @@
 			<isNotEmpty property="FLAW_AR">
 				<![CDATA[
 					/* 하자_보수_공사.하자_면적 */
-					AND tnflawcntrwk.FLAW_AR = #FLAW_AR#
+					AND tnflawcntrwk.FLAW_AR = #FLAW_AR#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="FLAW_LEN">
 				<![CDATA[
 					/* 하자_보수_공사.하자_연장 */
-					AND tnflawcntrwk.FLAW_LEN = #FLAW_LEN#
+					AND tnflawcntrwk.FLAW_LEN = #FLAW_LEN#::int
 				]]>
 			</isNotEmpty>
 		
@@ -664,14 +664,14 @@
 			<isNotEmpty property="STRTPT">
 				<![CDATA[
 					/* 하자_보수_공사.시점 */
-					AND tnflawcntrwk.STRTPT = #STRTPT#
+					AND tnflawcntrwk.STRTPT = #STRTPT#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="ENDPT">
 				<![CDATA[
 					/* 하자_보수_공사.종점 */
-					AND tnflawcntrwk.ENDPT = #ENDPT#
+					AND tnflawcntrwk.ENDPT = #ENDPT#::int
 				]]>
 			</isNotEmpty>
 		
@@ -699,28 +699,28 @@
 			<isNotEmpty property="RPAIR_THICK">
 				<![CDATA[
 					/* 하자_보수_공사.보수_두께 */
-					AND tnflawcntrwk.RPAIR_THICK = #RPAIR_THICK#
+					AND tnflawcntrwk.RPAIR_THICK = #RPAIR_THICK#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="RPAIR_AR">
 				<![CDATA[
 					/* 하자_보수_공사.보수_면적 */
-					AND tnflawcntrwk.RPAIR_AR = #RPAIR_AR#
+					AND tnflawcntrwk.RPAIR_AR = #RPAIR_AR#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="RPAIR_BT">
 				<![CDATA[
 					/* 하자_보수_공사.보수_폭 */
-					AND tnflawcntrwk.RPAIR_BT = #RPAIR_BT#
+					AND tnflawcntrwk.RPAIR_BT = #RPAIR_BT#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="RPAIR_LEN">
 				<![CDATA[
 					/* 하자_보수_공사.보수_연장 */
-					AND tnflawcntrwk.RPAIR_LEN = #RPAIR_LEN#
+					AND tnflawcntrwk.RPAIR_LEN = #RPAIR_LEN#::int
 				]]>
 			</isNotEmpty>
 		
@@ -748,21 +748,21 @@
 			<isNotEmpty property="RPAIR_THICK_BASE">
 				<![CDATA[
 					/* 하자_보수_공사.보수_두께_기층 */
-					AND tnflawcntrwk.RPAIR_THICK_BASE = #RPAIR_THICK_BASE#
+					AND tnflawcntrwk.RPAIR_THICK_BASE = #RPAIR_THICK_BASE#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="RPAIR_THICK_CNTR">
 				<![CDATA[
 					/* 하자_보수_공사.보수_두께_중간층 */
-					AND tnflawcntrwk.RPAIR_THICK_CNTR = #RPAIR_THICK_CNTR#
+					AND tnflawcntrwk.RPAIR_THICK_CNTR = #RPAIR_THICK_CNTR#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="RPAIR_THICK_ASCON">
 				<![CDATA[
 					/* 하자_보수_공사.보수_두께_표층 */
-					AND tnflawcntrwk.RPAIR_THICK_ASCON = #RPAIR_THICK_ASCON#
+					AND tnflawcntrwk.RPAIR_THICK_ASCON = #RPAIR_THICK_ASCON#::int
 				]]>
 			</isNotEmpty>
 		
@@ -811,21 +811,21 @@
 			<isNotEmpty property="FILE_NO">
 				<![CDATA[
 					/* 하자_보수_공사.파일_번호 */
-					AND tnflawcntrwk.FILE_NO = #FILE_NO#
+					AND tnflawcntrwk.FILE_NO = #FILE_NO#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="OPERT_BFE_PHOTO_NO">
 				<![CDATA[
 					/* 하자_보수_공사.작업_전_사진_번호 */
-					AND tnflawcntrwk.OPERT_BFE_PHOTO_NO = #OPERT_BFE_PHOTO_NO#
+					AND tnflawcntrwk.OPERT_BFE_PHOTO_NO = #OPERT_BFE_PHOTO_NO#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="OPERT_AFT_PHOTO_NO">
 				<![CDATA[
 					/* 하자_보수_공사.작업_후_사진_번호 */
-					AND tnflawcntrwk.OPERT_AFT_PHOTO_NO = #OPERT_AFT_PHOTO_NO#
+					AND tnflawcntrwk.OPERT_AFT_PHOTO_NO = #OPERT_AFT_PHOTO_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -846,7 +846,7 @@
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 하자_보수_공사.생성자_번호 */
-					AND tnflawcntrwk.CRTR_NO = #CRTR_NO#
+					AND tnflawcntrwk.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -860,7 +860,7 @@
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 하자_보수_공사.수정자_번호 */
-					AND tnflawcntrwk.UPDUSR_NO = #UPDUSR_NO#
+					AND tnflawcntrwk.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

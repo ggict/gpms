@@ -56,16 +56,16 @@
 			, #CNTRWK_ID# /* 공사하자정보.공사_ID */
 			, #ORDER_DEPT_CODE# /* 공사하자정보.발주_부서_코드 */
 			, #FLAW_CHCK_DE# /* 공사하자정보.하자_검사_일자 */
-			, #FLAW_GTN# /* 공사하자정보.하자_보증금 */
+			, #FLAW_GTN#::int /* 공사하자정보.하자_보증금 */
 			, #FLAW_GTN_KND# /* 공사하자정보.하자_보증금_종류 */
 			, #WARNT_BEGIN_DE# /* 공사하자정보.하자_담보_시작_일자 */
 			, #WARNT_END_DE# /* 공사하자정보.하자_담보_종료_일자 */
 			, 'Y' /* 공사하자정보.사용_여부 */
 			, 'N' /* 공사하자정보.삭제_여부 */
 			, #DELETE_DT# /* 공사하자정보.삭제_일시 */
-			, #CRTR_NO# /* 공사하자정보.생성자_번호 */
+			, #CRTR_NO#::int /* 공사하자정보.생성자_번호 */
 			, NOW() /* 공사하자정보.생성_일시 */
-			, #UPDUSR_NO# /* 공사하자정보.수정자_번호 */
+			, #UPDUSR_NO#::int /* 공사하자정보.수정자_번호 */
 			, NOW() /* 공사하자정보.수정_일시 */
 		)
 ]]>
@@ -96,7 +96,7 @@
 	</isNotEmpty>			
 	<isNotEmpty property="FLAW_GTN">
 		<![CDATA[
-		, FLAW_GTN = #FLAW_GTN# /* 공사하자정보.하자_보증금 */
+		, FLAW_GTN = #FLAW_GTN#::int /* 공사하자정보.하자_보증금 */
 		]]>
 	</isNotEmpty>			
 	<isNotEmpty property="FLAW_GTN_KND">
@@ -121,7 +121,7 @@
 	</isNotEmpty>			
 	<isNotEmpty property="UPDUSR_NO">
 		<![CDATA[
-		, UPDUSR_NO = #UPDUSR_NO# /* 공사하자정보.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 공사하자정보.수정자_번호 */
 		]]>
 	</isNotEmpty>			
 	<![CDATA[		
@@ -137,7 +137,7 @@
 		UPDATE TN_FLAW
 		SET 
 		DELETE_AT = 'Y' /* 공사하자정보.삭제_여부 */
-		, UPDUSR_NO = #UPDUSR_NO# /* 공사하자정보.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 공사하자정보.수정자_번호 */
 		, UPDT_DT = NOW() /* 공사하자정보.수정_일시 */
 		WHERE 1 = 1
 		AND FLAW_ID = #FLAW_ID# /* 공사하자정보.하자_ID */
@@ -185,7 +185,7 @@
 		<isNotEmpty property="CNTRWK_ID"><![CDATA[ /* 공사하자정보.공사_ID */ AND tnflaw.CNTRWK_ID = #CNTRWK_ID# ]]></isNotEmpty>
 		<isNotEmpty property="ORDER_DEPT_CODE"><![CDATA[ /* 공사하자정보.발주_부서_코드 */ AND tnflaw.ORDER_DEPT_CODE = #ORDER_DEPT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="FLAW_CHCK_DE"><![CDATA[ /* 공사하자정보.하자_검사_일자 */ AND tnflaw.FLAW_CHCK_DE = #FLAW_CHCK_DE# ]]></isNotEmpty>
-		<isNotEmpty property="FLAW_GTN"><![CDATA[ /* 공사하자정보.하자_보증금 */ AND tnflaw.FLAW_GTN = #FLAW_GTN# ]]></isNotEmpty>
+		<isNotEmpty property="FLAW_GTN"><![CDATA[ /* 공사하자정보.하자_보증금 */ AND tnflaw.FLAW_GTN = #FLAW_GTN#::int ]]></isNotEmpty>
 		<isNotEmpty property="FLAW_GTN_KND"><![CDATA[ /* 공사하자정보.하자_보증금_종류 */ AND tnflaw.FLAW_GTN_KND = #FLAW_GTN_KND# ]]></isNotEmpty>
 		<isNotEmpty property="WARNT_BEGIN_DE"><![CDATA[ /* 공사하자정보.하자_담보_시작_일자 */ AND tnflaw.WARNT_BEGIN_DE = #WARNT_BEGIN_DE# ]]></isNotEmpty>
 		<isNotEmpty property="WARNT_END_DE"><![CDATA[ /* 공사하자정보.하자_담보_종료_일자 */ AND tnflaw.WARNT_END_DE = #WARNT_END_DE# ]]></isNotEmpty>
@@ -194,9 +194,9 @@
 		<isEmpty property="USE_AT"><![CDATA[ /* 공사하자정보.사용_여부 */ AND tnflaw.USE_AT = 'Y' ]]></isEmpty>
 		<isEmpty property="DELETE_AT"><![CDATA[ /* 공사하자정보.삭제_여부 */ AND tnflaw.DELETE_AT = 'N' ]]></isEmpty>
 		<isNotEmpty property="DELETE_DT"><![CDATA[ /* 공사하자정보.삭제_일시 */ AND tnflaw.DELETE_DT = #DELETE_DT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공사하자정보.생성자_번호 */ AND tnflaw.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공사하자정보.생성자_번호 */ AND tnflaw.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 공사하자정보.생성_일시 */ AND tnflaw.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공사하자정보.수정자_번호 */ AND tnflaw.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공사하자정보.수정자_번호 */ AND tnflaw.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 공사하자정보.수정_일시 */ AND tnflaw.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -268,7 +268,7 @@
 			<isNotEmpty property="FLAW_GTN">
 				<![CDATA[
 					/* 공사하자정보.하자_보증금 */
-					AND tnflaw.FLAW_GTN = #FLAW_GTN#
+					AND tnflaw.FLAW_GTN = #FLAW_GTN#::int
 				]]>
 			</isNotEmpty>
 		
@@ -317,7 +317,7 @@
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 공사하자정보.생성자_번호 */
-					AND tnflaw.CRTR_NO = #CRTR_NO#
+					AND tnflaw.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -331,7 +331,7 @@
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 공사하자정보.수정자_번호 */
-					AND tnflaw.UPDUSR_NO = #UPDUSR_NO#
+					AND tnflaw.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

@@ -370,7 +370,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		<isNotEmpty property="CNSTRCT_CO_TELNO"><![CDATA[ /* 공사정보.시공_업체_전화번호 */ AND tncntrwk.CNSTRCT_CO_TELNO = #CNSTRCT_CO_TELNO# ]]></isNotEmpty>
 		<isNotEmpty property="SPT_AGENT_NM"><![CDATA[ /* 공사정보.현장_대리인_명 */ AND tncntrwk.SPT_AGENT_NM = #SPT_AGENT_NM# ]]></isNotEmpty>
 		<isNotEmpty property="SPT_AGENT_TELNO"><![CDATA[ /* 공사정보.현장_대리인_전화번호 */ AND tncntrwk.SPT_AGENT_TELNO = #SPT_AGENT_TELNO# ]]></isNotEmpty>
-		<isNotEmpty property="TRACK_LEN"><![CDATA[ /* 공사정보.1차로_연장 */ AND tncntrwk.TRACK_LEN = #TRACK_LEN# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK_LEN"><![CDATA[ /* 공사정보.1차로_연장 */ AND tncntrwk.TRACK_LEN = #TRACK_LEN#::int ]]></isNotEmpty>
 		<isNotEmpty property="SCH_STRWRK_DE"><![CDATA[ /* 공사정보.착공_일자 */ AND tncntrwk.STRWRK_DE >= #SCH_STRWRK_DE# ]]></isNotEmpty>
 		<isNotEmpty property="SCH_COMPET_DE"><![CDATA[ /* 공사정보.준공_일자 */ AND tncntrwk.COMPET_DE <= #SCH_COMPET_DE# ]]></isNotEmpty>
 		<isNotEmpty property="CNTRWK_OPERT_CN"><![CDATA[ /* 공사정보.공사_작업_내용 */ AND tncntrwk.CNTRWK_OPERT_CN = #CNTRWK_OPERT_CN# ]]></isNotEmpty>
@@ -525,7 +525,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 			<isNotEmpty property="SPRVISN_CO_NO">
 				<![CDATA[
 					/* 공사정보.감리_업체_번호 */
-					AND tncntrwk.SPRVISN_CO_NO = #SPRVISN_CO_NO#
+					AND tncntrwk.SPRVISN_CO_NO = #SPRVISN_CO_NO#::int
 				]]>
 			</isNotEmpty>
 
@@ -553,7 +553,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 			<isNotEmpty property="CNSTRCT_CO_NO">
 				<![CDATA[
 					/* 공사정보.시공_업체_번호 */
-					AND tncntrwk.CNSTRCT_CO_NO = #CNSTRCT_CO_NO#
+					AND tncntrwk.CNSTRCT_CO_NO = #CNSTRCT_CO_NO#::int
 				]]>
 			</isNotEmpty>
 
@@ -595,7 +595,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 			<isNotEmpty property="TRACK_LEN">
 				<![CDATA[
 					/* 공사정보.1차로_연장 */
-					AND tncntrwk.TRACK_LEN = #TRACK_LEN#
+					AND tncntrwk.TRACK_LEN = #TRACK_LEN#::int
 				]]>
 			</isNotEmpty>
 
@@ -637,7 +637,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 			<isNotEmpty property="TOT_AMOUNT">
 				<![CDATA[
 					/* 공사정보.총_금액 */
-					AND tncntrwk.TOT_AMOUNT = #TOT_AMOUNT#
+					AND tncntrwk.TOT_AMOUNT = #TOT_AMOUNT#::int
 				]]>
 			</isNotEmpty>
 
@@ -651,21 +651,21 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 			<isNotEmpty property="RPAIR_THICK">
 				<![CDATA[
 					/* 공사정보.보수_두께 */
-					AND tncntrwk.RPAIR_THICK = #RPAIR_THICK#
+					AND tncntrwk.RPAIR_THICK = #RPAIR_THICK#::int
 				]]>
 			</isNotEmpty>
 
 			<isNotEmpty property="RPAIR_AR">
 				<![CDATA[
 					/* 공사정보.보수_면적 */
-					AND tncntrwk.RPAIR_AR = #RPAIR_AR#
+					AND tncntrwk.RPAIR_AR = #RPAIR_AR#::int
 				]]>
 			</isNotEmpty>
 
 			<isNotEmpty property="RPAIR_BT">
 				<![CDATA[
 					/* 공사정보.보수_폭 */
-					AND tncntrwk.RPAIR_BT = #RPAIR_BT#
+					AND tncntrwk.RPAIR_BT = #RPAIR_BT#::int
 				]]>
 			</isNotEmpty>
 
@@ -686,7 +686,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 공사정보.생성자_번호 */
-					AND tncntrwk.CRTR_NO = #CRTR_NO#
+					AND tncntrwk.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 
@@ -700,7 +700,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 공사정보.수정자_번호 */
-					AND tncntrwk.UPDUSR_NO = #UPDUSR_NO#
+					AND tncntrwk.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 
@@ -721,7 +721,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 			<isNotEmpty property="FILE_NO">
 				<![CDATA[
 					/* 공사정보.파일_번호 */
-					AND tncntrwk.FILE_NO = #FILE_NO#
+					AND tncntrwk.FILE_NO = #FILE_NO#::int
 				]]>
 			</isNotEmpty>
 	<![CDATA[

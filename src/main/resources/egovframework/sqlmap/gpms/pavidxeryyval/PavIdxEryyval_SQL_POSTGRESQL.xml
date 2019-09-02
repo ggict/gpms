@@ -37,15 +37,15 @@
 			, UPDUSR_NO /* 포장_지수_초기값.수정자_번호 */
 			, UPDT_DT /* 포장_지수_초기값.수정_일시 */
 		) VALUES (
-			#INITVAL_CR# /* 포장_지수_초기값.초기값_CR */
-			, #INITVAL_RD# /* 포장_지수_초기값.초기값_RD */
-			, #INITVAL_IRI# /* 포장_지수_초기값.초기값_IRI */
-			, #STDR_DFECT_CR# /* 포장_지수_초기값.기준_결함_CR */
-			, #STDR_DFECT_RD# /* 포장_지수_초기값.기준_결함_RD */
-			, #STDR_DFECT_IRI# /* 포장_지수_초기값.기준_결함_IRI */
-			, #CRTR_NO# /* 포장_지수_초기값.생성자_번호 */
+			#INITVAL_CR#::int /* 포장_지수_초기값.초기값_CR */
+			, #INITVAL_RD#::int /* 포장_지수_초기값.초기값_RD */
+			, #INITVAL_IRI#::int /* 포장_지수_초기값.초기값_IRI */
+			, #STDR_DFECT_CR#::int /* 포장_지수_초기값.기준_결함_CR */
+			, #STDR_DFECT_RD#::int /* 포장_지수_초기값.기준_결함_RD */
+			, #STDR_DFECT_IRI#::int /* 포장_지수_초기값.기준_결함_IRI */
+			, #CRTR_NO#::int /* 포장_지수_초기값.생성자_번호 */
 			, NOW() /* 포장_지수_초기값.생성_일시 */
-			, #UPDUSR_NO# /* 포장_지수_초기값.수정자_번호 */
+			, #UPDUSR_NO#::int /* 포장_지수_초기값.수정자_번호 */
 			, NOW() /* 포장_지수_초기값.수정_일시 */
 		)
 ]]>
@@ -59,31 +59,31 @@
 
 
 
-INITVAL_CR = #INITVAL_CR# /* 포장_지수_초기값.초기값_CR */
+INITVAL_CR = #INITVAL_CR#::int /* 포장_지수_초기값.초기값_CR */
 			
 
-, INITVAL_RD = #INITVAL_RD# /* 포장_지수_초기값.초기값_RD */
+, INITVAL_RD = #INITVAL_RD#::int /* 포장_지수_초기값.초기값_RD */
 			
 
-, INITVAL_IRI = #INITVAL_IRI# /* 포장_지수_초기값.초기값_IRI */
+, INITVAL_IRI = #INITVAL_IRI#::int /* 포장_지수_초기값.초기값_IRI */
 			
 
-, STDR_DFECT_CR = #STDR_DFECT_CR# /* 포장_지수_초기값.기준_결함_CR */
+, STDR_DFECT_CR = #STDR_DFECT_CR#::int /* 포장_지수_초기값.기준_결함_CR */
 			
 
-, STDR_DFECT_RD = #STDR_DFECT_RD# /* 포장_지수_초기값.기준_결함_RD */
+, STDR_DFECT_RD = #STDR_DFECT_RD#::int /* 포장_지수_초기값.기준_결함_RD */
 			
 
-, STDR_DFECT_IRI = #STDR_DFECT_IRI# /* 포장_지수_초기값.기준_결함_IRI */
+, STDR_DFECT_IRI = #STDR_DFECT_IRI#::int /* 포장_지수_초기값.기준_결함_IRI */
 			
 
-, CRTR_NO = #CRTR_NO# /* 포장_지수_초기값.생성자_번호 */
+, CRTR_NO = #CRTR_NO#::int /* 포장_지수_초기값.생성자_번호 */
 			
 
 , CREAT_DT = NOW() /* 포장_지수_초기값.생성_일시 */
 			
 
-, UPDUSR_NO = #UPDUSR_NO# /* 포장_지수_초기값.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 포장_지수_초기값.수정자_번호 */
 			
 
 , UPDT_DT = NOW() /* 포장_지수_초기값.수정_일시 */
@@ -122,20 +122,20 @@ INITVAL_CR = #INITVAL_CR# /* 포장_지수_초기값.초기값_CR */
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnpavidxeryyval.INITVAL_CR = #searchKeyword#
+			AND tnpavidxeryyval.INITVAL_CR = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
-			AND tnpavidxeryyval.INITVAL_RD LIKE '%' || #searchKeyword# || '%'
+			AND tnpavidxeryyval.INITVAL_RD LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
-		<isNotEmpty property="INITVAL_CR"><![CDATA[ /* 포장_지수_초기값.초기값_CR */ AND tnpavidxeryyval.INITVAL_CR = #INITVAL_CR# ]]></isNotEmpty>
-		<isNotEmpty property="INITVAL_RD"><![CDATA[ /* 포장_지수_초기값.초기값_RD */ AND tnpavidxeryyval.INITVAL_RD = #INITVAL_RD# ]]></isNotEmpty>
-		<isNotEmpty property="INITVAL_IRI"><![CDATA[ /* 포장_지수_초기값.초기값_IRI */ AND tnpavidxeryyval.INITVAL_IRI = #INITVAL_IRI# ]]></isNotEmpty>
-		<isNotEmpty property="STDR_DFECT_CR"><![CDATA[ /* 포장_지수_초기값.기준_결함_CR */ AND tnpavidxeryyval.STDR_DFECT_CR = #STDR_DFECT_CR# ]]></isNotEmpty>
-		<isNotEmpty property="STDR_DFECT_RD"><![CDATA[ /* 포장_지수_초기값.기준_결함_RD */ AND tnpavidxeryyval.STDR_DFECT_RD = #STDR_DFECT_RD# ]]></isNotEmpty>
-		<isNotEmpty property="STDR_DFECT_IRI"><![CDATA[ /* 포장_지수_초기값.기준_결함_IRI */ AND tnpavidxeryyval.STDR_DFECT_IRI = #STDR_DFECT_IRI# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장_지수_초기값.생성자_번호 */ AND tnpavidxeryyval.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="INITVAL_CR"><![CDATA[ /* 포장_지수_초기값.초기값_CR */ AND tnpavidxeryyval.INITVAL_CR = #INITVAL_CR#::int ]]></isNotEmpty>
+		<isNotEmpty property="INITVAL_RD"><![CDATA[ /* 포장_지수_초기값.초기값_RD */ AND tnpavidxeryyval.INITVAL_RD = #INITVAL_RD#::int ]]></isNotEmpty>
+		<isNotEmpty property="INITVAL_IRI"><![CDATA[ /* 포장_지수_초기값.초기값_IRI */ AND tnpavidxeryyval.INITVAL_IRI = #INITVAL_IRI#::int ]]></isNotEmpty>
+		<isNotEmpty property="STDR_DFECT_CR"><![CDATA[ /* 포장_지수_초기값.기준_결함_CR */ AND tnpavidxeryyval.STDR_DFECT_CR = #STDR_DFECT_CR#::int ]]></isNotEmpty>
+		<isNotEmpty property="STDR_DFECT_RD"><![CDATA[ /* 포장_지수_초기값.기준_결함_RD */ AND tnpavidxeryyval.STDR_DFECT_RD = #STDR_DFECT_RD#::int ]]></isNotEmpty>
+		<isNotEmpty property="STDR_DFECT_IRI"><![CDATA[ /* 포장_지수_초기값.기준_결함_IRI */ AND tnpavidxeryyval.STDR_DFECT_IRI = #STDR_DFECT_IRI#::int ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장_지수_초기값.생성자_번호 */ AND tnpavidxeryyval.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 포장_지수_초기값.생성_일시 */ AND tnpavidxeryyval.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장_지수_초기값.수정자_번호 */ AND tnpavidxeryyval.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장_지수_초기값.수정자_번호 */ AND tnpavidxeryyval.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 포장_지수_초기값.수정_일시 */ AND tnpavidxeryyval.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -164,59 +164,59 @@ INITVAL_CR = #INITVAL_CR# /* 포장_지수_초기값.초기값_CR */
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnpavidxeryyval.INITVAL_CR = #searchKeyword#
+			AND tnpavidxeryyval.INITVAL_CR = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
-			AND tnpavidxeryyval.INITVAL_RD LIKE '%' || #searchKeyword# || '%'
+			AND tnpavidxeryyval.INITVAL_RD LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
 		
 			<isNotEmpty property="INITVAL_CR">
 				<![CDATA[
 					/* 포장_지수_초기값.초기값_CR */
-					AND tnpavidxeryyval.INITVAL_CR = #INITVAL_CR#
+					AND tnpavidxeryyval.INITVAL_CR = #INITVAL_CR#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="INITVAL_RD">
 				<![CDATA[
 					/* 포장_지수_초기값.초기값_RD */
-					AND tnpavidxeryyval.INITVAL_RD = #INITVAL_RD#
+					AND tnpavidxeryyval.INITVAL_RD = #INITVAL_RD#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="INITVAL_IRI">
 				<![CDATA[
 					/* 포장_지수_초기값.초기값_IRI */
-					AND tnpavidxeryyval.INITVAL_IRI = #INITVAL_IRI#
+					AND tnpavidxeryyval.INITVAL_IRI = #INITVAL_IRI#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="STDR_DFECT_CR">
 				<![CDATA[
 					/* 포장_지수_초기값.기준_결함_CR */
-					AND tnpavidxeryyval.STDR_DFECT_CR = #STDR_DFECT_CR#
+					AND tnpavidxeryyval.STDR_DFECT_CR = #STDR_DFECT_CR#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="STDR_DFECT_RD">
 				<![CDATA[
 					/* 포장_지수_초기값.기준_결함_RD */
-					AND tnpavidxeryyval.STDR_DFECT_RD = #STDR_DFECT_RD#
+					AND tnpavidxeryyval.STDR_DFECT_RD = #STDR_DFECT_RD#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="STDR_DFECT_IRI">
 				<![CDATA[
 					/* 포장_지수_초기값.기준_결함_IRI */
-					AND tnpavidxeryyval.STDR_DFECT_IRI = #STDR_DFECT_IRI#
+					AND tnpavidxeryyval.STDR_DFECT_IRI = #STDR_DFECT_IRI#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 포장_지수_초기값.생성자_번호 */
-					AND tnpavidxeryyval.CRTR_NO = #CRTR_NO#
+					AND tnpavidxeryyval.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -230,7 +230,7 @@ INITVAL_CR = #INITVAL_CR# /* 포장_지수_초기값.초기값_CR */
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 포장_지수_초기값.수정자_번호 */
-					AND tnpavidxeryyval.UPDUSR_NO = #UPDUSR_NO#
+					AND tnpavidxeryyval.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

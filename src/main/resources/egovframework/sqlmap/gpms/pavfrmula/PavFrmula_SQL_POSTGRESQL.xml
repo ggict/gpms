@@ -46,17 +46,17 @@
 			, UPDUSR_NO /* 포장_수식.수정자_번호 */
 			, UPDT_DT /* 포장_수식.수정_일시 */
 		) VALUES (
-			#FRMULA_NO# /* 포장_수식.수식_번호 */
-			, #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
+			#FRMULA_NO#::int /* 포장_수식.수식_번호 */
+			, #PARNTS_FRMULA_NO#::int /* 포장_수식.부모_수식_번호 */
 			, #FRMULA_NM# /* 포장_수식.수식_명 */
 			, #ARITH_FRMLA# /* 포장_수식.산술_식 */
 			, #DC# /* 포장_수식.설명 */
-			, #ARITH_SN# /* 포장_수식.산술_순번 */
+			, #ARITH_SN#::int /* 포장_수식.산술_순번 */
 			, #DELETE_AT# /* 포장_수식.삭제_여부 */
 			, #USE_AT# /* 포장_수식.사용_여부 */
-			, #CRTR_NO# /* 포장_수식.생성자_번호 */
+			, #CRTR_NO#::int /* 포장_수식.생성자_번호 */
 			, NOW() /* 포장_수식.생성_일시 */
-			, #UPDUSR_NO# /* 포장_수식.수정자_번호 */
+			, #UPDUSR_NO#::int /* 포장_수식.수정자_번호 */
 			, NOW() /* 포장_수식.수정_일시 */
 		)
 ]]>
@@ -70,7 +70,7 @@
 
 
 
-PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
+PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO#::int /* 포장_수식.부모_수식_번호 */
 			
 
 , FRMULA_NM = #FRMULA_NM# /* 포장_수식.수식_명 */
@@ -82,7 +82,7 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 , DC = #DC# /* 포장_수식.설명 */
 			
 
-, ARITH_SN = #ARITH_SN# /* 포장_수식.산술_순번 */
+, ARITH_SN = #ARITH_SN#::int /* 포장_수식.산술_순번 */
 			
 
 , DELETE_AT = #DELETE_AT# /* 포장_수식.삭제_여부 */
@@ -91,19 +91,19 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 , USE_AT = #USE_AT# /* 포장_수식.사용_여부 */
 			
 
-, CRTR_NO = #CRTR_NO# /* 포장_수식.생성자_번호 */
+, CRTR_NO = #CRTR_NO#::int /* 포장_수식.생성자_번호 */
 			
 
 , CREAT_DT = NOW() /* 포장_수식.생성_일시 */
 			
 
-, UPDUSR_NO = #UPDUSR_NO# /* 포장_수식.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 포장_수식.수정자_번호 */
 			
 
 , UPDT_DT = NOW() /* 포장_수식.수정_일시 */
 			
 		WHERE 1 = 1
-		AND FRMULA_NO = #FRMULA_NO# /* 포장_수식.수식_번호 */
+		AND FRMULA_NO = #FRMULA_NO#::int /* 포장_수식.수식_번호 */
 ]]>
 	</update>
 
@@ -113,7 +113,7 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 		/* 포장_수식 삭제 */
 		DELETE FROM TN_PAV_FRMULA 
 		WHERE 1 = 1
-		AND FRMULA_NO = #FRMULA_NO# /* 포장_수식.수식_번호 */
+		AND FRMULA_NO = #FRMULA_NO#::int /* 포장_수식.수식_번호 */
 ]]>
 	</delete>
 
@@ -137,8 +137,8 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 		FROM TN_PAV_FRMULA tnpavfrmula
 		WHERE 1 = 1
 ]]>
-<isNotEmpty property="FRMULA_NO"><![CDATA[ /* 포장_수식.수식_번호 */ AND tnpavfrmula.FRMULA_NO = #FRMULA_NO# ]]></isNotEmpty>
-<isNotEmpty property="PARNTS_FRMULA_NO"><![CDATA[ /* 포장_수식.부모_수식_번호 */ AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# ]]></isNotEmpty>
+<isNotEmpty property="FRMULA_NO"><![CDATA[ /* 포장_수식.수식_번호 */ AND tnpavfrmula.FRMULA_NO = #FRMULA_NO#::int ]]></isNotEmpty>
+<isNotEmpty property="PARNTS_FRMULA_NO"><![CDATA[ /* 포장_수식.부모_수식_번호 */ AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO#::int ]]></isNotEmpty>
 <isNotEmpty property="FRMULA_NM"><![CDATA[ /* 포장_수식.수식_명 */ AND tnpavfrmula.FRMULA_NM = #FRMULA_NM# ]]></isNotEmpty>
 <isNotEmpty property="DELETE_AT"><![CDATA[ /* 포장_수식.삭제_여부 */ AND tnpavfrmula.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 <isNotEmpty property="USE_AT"><![CDATA[ /* 포장_수식.사용_여부 */ AND tnpavfrmula.USE_AT = #USE_AT# ]]></isNotEmpty>
@@ -148,22 +148,22 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnpavfrmula.FRMULA_NO = #searchKeyword#
+			AND tnpavfrmula.FRMULA_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
-			AND tnpavfrmula.PARNTS_FRMULA_NO LIKE '%' || #searchKeyword# || '%'
+			AND tnpavfrmula.PARNTS_FRMULA_NO LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
-		<isNotEmpty property="FRMULA_NO"><![CDATA[ /* 포장_수식.수식_번호 */ AND tnpavfrmula.FRMULA_NO = #FRMULA_NO# ]]></isNotEmpty>
-		<isNotEmpty property="PARNTS_FRMULA_NO"><![CDATA[ /* 포장_수식.부모_수식_번호 */ AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# ]]></isNotEmpty>
+		<isNotEmpty property="FRMULA_NO"><![CDATA[ /* 포장_수식.수식_번호 */ AND tnpavfrmula.FRMULA_NO = #FRMULA_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="PARNTS_FRMULA_NO"><![CDATA[ /* 포장_수식.부모_수식_번호 */ AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="FRMULA_NM"><![CDATA[ /* 포장_수식.수식_명 */ AND tnpavfrmula.FRMULA_NM = #FRMULA_NM# ]]></isNotEmpty>
 		<isNotEmpty property="ARITH_FRMLA"><![CDATA[ /* 포장_수식.산술_식 */ AND tnpavfrmula.ARITH_FRMLA = #ARITH_FRMLA# ]]></isNotEmpty>
 		<isNotEmpty property="DC"><![CDATA[ /* 포장_수식.설명 */ AND tnpavfrmula.DC = #DC# ]]></isNotEmpty>
-		<isNotEmpty property="ARITH_SN"><![CDATA[ /* 포장_수식.산술_순번 */ AND tnpavfrmula.ARITH_SN = #ARITH_SN# ]]></isNotEmpty>
+		<isNotEmpty property="ARITH_SN"><![CDATA[ /* 포장_수식.산술_순번 */ AND tnpavfrmula.ARITH_SN = #ARITH_SN#::int ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 포장_수식.삭제_여부 */ AND tnpavfrmula.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 포장_수식.사용_여부 */ AND tnpavfrmula.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장_수식.생성자_번호 */ AND tnpavfrmula.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 포장_수식.생성자_번호 */ AND tnpavfrmula.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 포장_수식.생성_일시 */ AND tnpavfrmula.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장_수식.수정자_번호 */ AND tnpavfrmula.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 포장_수식.수정자_번호 */ AND tnpavfrmula.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 포장_수식.수정_일시 */ AND tnpavfrmula.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -194,24 +194,24 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnpavfrmula.FRMULA_NO = #searchKeyword#
+			AND tnpavfrmula.FRMULA_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
-			AND tnpavfrmula.PARNTS_FRMULA_NO LIKE '%' || #searchKeyword# || '%'
+			AND tnpavfrmula.PARNTS_FRMULA_NO LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
 		
 			<isNotEmpty property="FRMULA_NO">
 				<![CDATA[
 					/* 포장_수식.수식_번호 */
-					AND tnpavfrmula.FRMULA_NO = #FRMULA_NO#
+					AND tnpavfrmula.FRMULA_NO = #FRMULA_NO#::int
 				]]>
 			</isNotEmpty>
 		
 			<isNotEmpty property="PARNTS_FRMULA_NO">
 				<![CDATA[
 					/* 포장_수식.부모_수식_번호 */
-					AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO#
+					AND tnpavfrmula.PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -239,7 +239,7 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 			<isNotEmpty property="ARITH_SN">
 				<![CDATA[
 					/* 포장_수식.산술_순번 */
-					AND tnpavfrmula.ARITH_SN = #ARITH_SN#
+					AND tnpavfrmula.ARITH_SN = #ARITH_SN#::int
 				]]>
 			</isNotEmpty>
 		
@@ -260,7 +260,7 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 포장_수식.생성자_번호 */
-					AND tnpavfrmula.CRTR_NO = #CRTR_NO#
+					AND tnpavfrmula.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -274,7 +274,7 @@ PARNTS_FRMULA_NO = #PARNTS_FRMULA_NO# /* 포장_수식.부모_수식_번호 */
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 포장_수식.수정자_번호 */
-					AND tnpavfrmula.UPDUSR_NO = #UPDUSR_NO#
+					AND tnpavfrmula.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

@@ -46,15 +46,15 @@
 			#UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 			, #CL_CODE# /* 공통코드.분류_코드 */
 			, #CODE_VAL# /* 공통코드.코드_값 */
-			, #PRIOR_RANK# /* 공통코드.우선_순위 */
+			, #PRIOR_RANK#::int /* 공통코드.우선_순위 */
 			, #CODE_NM# /* 공통코드.코드_명 */
 			, #ATRB_VAL# /* 공통코드.속성_값 */
 			, #CN# /* 공통코드.내용 */
 			, #USE_AT# /* 공통코드.사용_여부 */
 			, 'N' /* 공통코드.삭제_여부 */
-			, #UPDUSR_NO# /* 공통코드.수정자_번호 */
+			, #UPDUSR_NO#::int /* 공통코드.수정자_번호 */
 			, NOW() /* 공통코드.수정_일시 */
-			, #CRTR_NO# /* 공통코드.생성자_번호 */
+			, #CRTR_NO#::int /* 공통코드.생성자_번호 */
 			, NOW() /* 공통코드.생성_일시 */
 		)
 ]]>
@@ -71,7 +71,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 , CL_CODE = #CL_CODE# /* 공통코드.분류_코드 */
 			
 
-, PRIOR_RANK = #PRIOR_RANK# /* 공통코드.우선_순위 */
+, PRIOR_RANK = #PRIOR_RANK#::int /* 공통코드.우선_순위 */
 			
 
 , CODE_NM = #CODE_NM# /* 공통코드.코드_명 */
@@ -86,7 +86,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 , USE_AT = #USE_AT# /* 공통코드.사용_여부 */
 			
 
-, UPDUSR_NO = #UPDUSR_NO# /* 공통코드.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 공통코드.수정자_번호 */
 			
 
 , UPDT_DT = NOW() /* 공통코드.수정_일시 */
@@ -103,7 +103,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 		UPDATE TC_CODE SET
 		DELETE_AT = 'Y' /* 공통코드.삭제_여부 */	
 		, USE_AT = 'N'
-		, UPDUSR_NO = #UPDUSR_NO# /* 공통코드.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 공통코드.수정자_번호 */
 		, UPDT_DT = NOW() /* 공통코드.수정_일시 */	
 		WHERE 1 = 1	
 ]]>
@@ -177,15 +177,15 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 		<isNotEmpty property="UPPER_CODE_VAL"><![CDATA[ /* 공통코드.상위_코드_값 */ AND tccode.UPPER_CODE_VAL = #UPPER_CODE_VAL# ]]></isNotEmpty>
 		<isNotEmpty property="CL_CODE"><![CDATA[ /* 공통코드.분류_코드 */ AND tccode.CL_CODE = #CL_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="CODE_VAL"><![CDATA[ /* 공통코드.코드_값 */ AND tccode.CODE_VAL = #CODE_VAL# ]]></isNotEmpty>
-		<isNotEmpty property="PRIOR_RANK"><![CDATA[ /* 공통코드.우선_순위 */ AND tccode.PRIOR_RANK = #PRIOR_RANK# ]]></isNotEmpty>
+		<isNotEmpty property="PRIOR_RANK"><![CDATA[ /* 공통코드.우선_순위 */ AND tccode.PRIOR_RANK = #PRIOR_RANK#::int ]]></isNotEmpty>
 		<isNotEmpty property="CODE_NM"><![CDATA[ /* 공통코드.코드_명 */ AND tccode.CODE_NM LIKE '%' || #CODE_NM# || '%' ]]></isNotEmpty>
 		<isNotEmpty property="ATRB_VAL"><![CDATA[ /* 공통코드.속성_값 */ AND tccode.ATRB_VAL = #ATRB_VAL# ]]></isNotEmpty>
 		<isNotEmpty property="CN"><![CDATA[ /* 공통코드.내용 */ AND tccode.CN = #CN# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 공통코드.사용_여부 */ AND tccode.USE_AT = #USE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 공통코드.삭제_여부 */ AND tccode.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공통코드.수정자_번호 */ AND tccode.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공통코드.수정자_번호 */ AND tccode.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 공통코드.수정_일시 */ AND tccode.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공통코드.생성자_번호 */ AND tccode.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공통코드.생성자_번호 */ AND tccode.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 공통코드.생성_일시 */ AND tccode.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -248,7 +248,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 			<isNotEmpty property="PRIOR_RANK">
 				<![CDATA[
 					/* 공통코드.우선_순위 */
-					AND tccode.PRIOR_RANK = #PRIOR_RANK#
+					AND tccode.PRIOR_RANK = #PRIOR_RANK#::int
 				]]>
 			</isNotEmpty>
 		
@@ -290,7 +290,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 공통코드.수정자_번호 */
-					AND tccode.UPDUSR_NO = #UPDUSR_NO#
+					AND tccode.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -304,7 +304,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 공통코드.생성자_번호 */
-					AND tccode.CRTR_NO = #CRTR_NO#
+					AND tccode.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		

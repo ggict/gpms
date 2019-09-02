@@ -47,7 +47,7 @@
 			, UPDUSR_NO /* 예측_수식_지수.수정자_번호 */
 			, UPDT_DT /* 예측_수식_지수.수정_일시 */
 		) VALUES (
-			#PREDCT_IDX_NO# /* 예측_수식_지수.예측_지수_번호 */
+			#PREDCT_IDX_NO#::int /* 예측_수식_지수.예측_지수_번호 */
 			, #CELL_TYPE# /* 예측_수식_지수.섹션_구분 */
 			, #PRDTFML_TRGET# /* 예측_수식_지수.예측수식_적용대상 */
 			, #RK_A# /* 예측_수식_지수.계수_A */
@@ -55,9 +55,9 @@
 			, #RK_C# /* 예측_수식_지수.계수_C */
 			, #DELETE_AT# /* 예측_수식_지수.삭제_여부 */
 			, #USE_AT# /* 예측_수식_지수.사용_여부 */
-			, #CRTR_NO# /* 예측_수식_지수.생성자_번호 */
+			, #CRTR_NO#::int /* 예측_수식_지수.생성자_번호 */
 			, NOW() /* 예측_수식_지수.생성_일시 */
-			, #UPDUSR_NO# /* 예측_수식_지수.수정자_번호 */
+			, #UPDUSR_NO#::int /* 예측_수식_지수.수정자_번호 */
 			, NOW() /* 예측_수식_지수.수정_일시 */
 		)
 ]]>
@@ -71,10 +71,10 @@
 		  RK_A = #RK_A# /* 예측_수식_지수.계수_A */
 		, RK_B = #RK_B# /* 예측_수식_지수.계수_B */
 		, RK_C = #RK_C# /* 예측_수식_지수.계수_C */
-		, UPDUSR_NO = #UPDUSR_NO# /* 예측_수식_지수.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 예측_수식_지수.수정자_번호 */
 		, UPDT_DT = NOW() /* 예측_수식_지수.수정_일시 */
 		WHERE 1 = 1
-		AND PREDCT_IDX_NO = #PREDCT_IDX_NO# /* 예측_수식_지수.예측_지수_번호 */
+		AND PREDCT_IDX_NO = #PREDCT_IDX_NO#::int /* 예측_수식_지수.예측_지수_번호 */
 ]]>
 	</update>
 
@@ -84,10 +84,10 @@
 		/* 예측_수식_지수 삭제 */
 		UPDATE TN_PREDCT_FRMULA_IDX SET
 		 DELETE_AT = 'Y' /* 예측_수식_지수.삭제_여부 */
-		, UPDUSR_NO = #UPDUSR_NO# /* 예측_수식_지수.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 예측_수식_지수.수정자_번호 */
 		, UPDT_DT = NOW() /* 예측_수식_지수.수정_일시 */
 		WHERE 1 = 1
-		AND PREDCT_IDX_NO = #PREDCT_IDX_NO# /* 예측_수식_지수.예측_지수_번호 */
+		AND PREDCT_IDX_NO = #PREDCT_IDX_NO#::int /* 예측_수식_지수.예측_지수_번호 */
 ]]>
 	</delete>
 
@@ -111,7 +111,7 @@
 			, tnpredctfrmulaidx.UPDT_DT /* 예측_수식_지수.수정_일시 */
 		FROM TN_PREDCT_FRMULA_IDX tnpredctfrmulaidx
 		WHERE 1 = 1
-		AND tnpredctfrmulaidx.PREDCT_IDX_NO = #PREDCT_IDX_NO# /* 예측_수식_지수.예측_지수_번호 */
+		AND tnpredctfrmulaidx.PREDCT_IDX_NO = #PREDCT_IDX_NO#::int /* 예측_수식_지수.예측_지수_번호 */
 		AND tnpredctfrmulaidx.DELETE_AT = 'N' /* 예측_수식_지수.삭제_여부 */
 		AND tnpredctfrmulaidx.USE_AT = 'Y' /* 예측_수식_지수.사용_여부 */
 ]]>
@@ -122,7 +122,7 @@
 
 		<isEqual property="searchCondition" compareValue="0">
 			<![CDATA[
-				AND tnpredctfrmulaidx.PREDCT_IDX_NO = #searchKeyword#
+				AND tnpredctfrmulaidx.PREDCT_IDX_NO = #searchKeyword#::int
 			]]>
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
@@ -130,7 +130,7 @@
 				AND tnpredctfrmulaidx.CELL_TYPE LIKE '%' || #searchKeyword# || '%'
 			]]>
 		</isEqual>
-		<isNotEmpty property="PREDCT_IDX_NO"><![CDATA[ /* 예측_수식_지수.예측_지수_번호 */ AND tnpredctfrmulaidx.PREDCT_IDX_NO = #PREDCT_IDX_NO# ]]></isNotEmpty>
+		<isNotEmpty property="PREDCT_IDX_NO"><![CDATA[ /* 예측_수식_지수.예측_지수_번호 */ AND tnpredctfrmulaidx.PREDCT_IDX_NO = #PREDCT_IDX_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CELL_TYPE"><![CDATA[ /* 예측_수식_지수.섹션_구분 */ AND tnpredctfrmulaidx.CELL_TYPE = #CELL_TYPE# ]]></isNotEmpty>
 		<isNotEmpty property="PRDTFML_TRGET"><![CDATA[ /* 예측_수식_지수.예측수식_적용대상 */ AND tnpredctfrmulaidx.PRDTFML_TRGET = #PRDTFML_TRGET# ]]></isNotEmpty>
 		<isNotEmpty property="RK_A"><![CDATA[ /* 예측_수식_지수.계수_A */ AND tnpredctfrmulaidx.RK_A = #RK_A# ]]></isNotEmpty>
@@ -138,9 +138,9 @@
 		<isNotEmpty property="RK_C"><![CDATA[ /* 예측_수식_지수.계수_C */ AND tnpredctfrmulaidx.RK_C = #RK_C# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 예측_수식_지수.삭제_여부 */ AND tnpredctfrmulaidx.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 예측_수식_지수.사용_여부 */ AND tnpredctfrmulaidx.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 예측_수식_지수.생성자_번호 */ AND tnpredctfrmulaidx.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 예측_수식_지수.생성자_번호 */ AND tnpredctfrmulaidx.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 예측_수식_지수.생성_일시 */ AND tnpredctfrmulaidx.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 예측_수식_지수.수정자_번호 */ AND tnpredctfrmulaidx.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 예측_수식_지수.수정자_번호 */ AND tnpredctfrmulaidx.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 예측_수식_지수.수정_일시 */ AND tnpredctfrmulaidx.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 	</sql>
 
