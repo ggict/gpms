@@ -82,11 +82,11 @@
 			#DEPT_CODE# /* 부서_코드.부서_코드 */
 			, #DEPT_NM# /* 부서_코드.부서_명 */
 			, #LOWEST_DEPT_NM# /* 부서_코드.최하위_부서_명 */
-			, #ODR# /* 부서_코드.차수 */
+			, #ODR#::int /* 부서_코드.차수 */
 			, #ORD# /* 부서_코드.서열 */
 			, #SEHIGH_DEPT_CODE# /* 부서_코드.차상위_부서_코드 */
 			, #TOP_DEPT_CODE# /* 부서_코드.최상위_부서_코드 */
-			, #PSITN_DEPT_ODR# /* 부서_코드.소속_부서_차수 */
+			, #PSITN_DEPT_ODR#::int /* 부서_코드.소속_부서_차수 */
 			, #RPRSNT_DEPT_CODE# /* 부서_코드.대표_부서_코드 */
 			, #ISTDR_CLSF_NM# /* 부서_코드.기관장_직급_명 */
 			, #ADSTRD_CODE# /* 부서_코드.행정동_코드 */
@@ -100,9 +100,9 @@
 			, #EDC_TRAING_INSTT_AT# /* 부서_코드.교육_훈련_기관_여부 */
 			, #USE_AT# /* 부서_코드.사용_여부 */
 			, 'N' /* 부서_코드.삭제_여부 */
-			, #CRTR_NO# /* 부서_코드.생성자_번호 */
+			, #CRTR_NO#::int /* 부서_코드.생성자_번호 */
 			, NOW() /* 부서_코드.생성_일시 */
-			, #UPDUSR_NO# /* 부서_코드.수정자_번호 */
+			, #UPDUSR_NO#::int /* 부서_코드.수정자_번호 */
 			, NOW() /* 부서_코드.수정_일시 */
 			, #TEL_NO# /* 부서_코드.전화_번호 */
 		)
@@ -123,7 +123,7 @@
 , LOWEST_DEPT_NM = #LOWEST_DEPT_NM# /* 부서_코드.최하위_부서_명 */
 </isNotEmpty>
 <isNotEmpty property="ODR">
-, ODR = #ODR# /* 부서_코드.차수 */
+, ODR = #ODR#::int /* 부서_코드.차수 */
 </isNotEmpty>
 <isNotEmpty property="ORD">
 , ORD = #ORD# /* 부서_코드.서열 */
@@ -135,7 +135,7 @@
 , TOP_DEPT_CODE = #TOP_DEPT_CODE# /* 부서_코드.최상위_부서_코드 */
 </isNotEmpty>
 <isNotEmpty property="PSITN_DEPT_ODR">
-, PSITN_DEPT_ODR = #PSITN_DEPT_ODR# /* 부서_코드.소속_부서_차수 */
+, PSITN_DEPT_ODR = #PSITN_DEPT_ODR#::int /* 부서_코드.소속_부서_차수 */
 </isNotEmpty>
 <isNotEmpty property="RPRSNT_DEPT_CODE">
 , RPRSNT_DEPT_CODE = #RPRSNT_DEPT_CODE# /* 부서_코드.대표_부서_코드 */
@@ -174,7 +174,7 @@
 , USE_AT = #USE_AT# /* 부서_코드.사용_여부 */
 </isNotEmpty>
 <isNotEmpty property="UPDUSR_NO">
-, UPDUSR_NO = #UPDUSR_NO# /* 부서_코드.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 부서_코드.수정자_번호 */
 </isNotEmpty>
 <isNotEmpty property="UPDT_DT">
 , UPDT_DT = NOW() /* 부서_코드.수정_일시 */
@@ -251,11 +251,11 @@
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ /* 부서_코드.부서_코드 */ AND (tcdept.DEPT_CODE = #DEPT_CODE# or tcdept.SEHIGH_DEPT_CODE = #DEPT_CODE# or tcdept.UPPER_SEHIGH_DEPT_CODE = #DEPT_CODE# ) ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_NM"><![CDATA[ /* 부서_코드.부서_명 */ AND tcdept.DEPT_NM like '%' || #DEPT_NM# || '%' ]]></isNotEmpty>
 		<isNotEmpty property="LOWEST_DEPT_NM"><![CDATA[ /* 부서_코드.최하위_부서_명 */ AND tcdept.LOWEST_DEPT_NM = #LOWEST_DEPT_NM# ]]></isNotEmpty>
-		<isNotEmpty property="ODR"><![CDATA[ /* 부서_코드.차수 */ AND tcdept.ODR = #ODR# ]]></isNotEmpty>
+		<isNotEmpty property="ODR"><![CDATA[ /* 부서_코드.차수 */ AND tcdept.ODR = #ODR#::int ]]></isNotEmpty>
 		<isNotEmpty property="ORD"><![CDATA[ /* 부서_코드.서열 */ AND tcdept.ORD = #ORD# ]]></isNotEmpty>
 		<isNotEmpty property="SEHIGH_DEPT_CODE"><![CDATA[ /* 부서_코드.차상위_부서_코드 */ AND tcdept.SEHIGH_DEPT_CODE = #SEHIGH_DEPT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TOP_DEPT_CODE"><![CDATA[ /* 부서_코드.최상위_부서_코드 */ AND tcdept.TOP_DEPT_CODE = #TOP_DEPT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="PSITN_DEPT_ODR"><![CDATA[ /* 부서_코드.소속_부서_차수 */ AND tcdept.PSITN_DEPT_ODR = #PSITN_DEPT_ODR# ]]></isNotEmpty>
+		<isNotEmpty property="PSITN_DEPT_ODR"><![CDATA[ /* 부서_코드.소속_부서_차수 */ AND tcdept.PSITN_DEPT_ODR = #PSITN_DEPT_ODR#::int ]]></isNotEmpty>
 		<isNotEmpty property="RPRSNT_DEPT_CODE"><![CDATA[ /* 부서_코드.대표_부서_코드 */ AND tcdept.RPRSNT_DEPT_CODE = #RPRSNT_DEPT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="ISTDR_CLSF_NM"><![CDATA[ /* 부서_코드.기관장_직급_명 */ AND tcdept.ISTDR_CLSF_NM = #ISTDR_CLSF_NM# ]]></isNotEmpty>
 		<isNotEmpty property="ADSTRD_CODE"><![CDATA[ /* 부서_코드.행정동_코드 */ AND tcdept.ADSTRD_CODE = #ADSTRD_CODE# ]]></isNotEmpty>
@@ -269,9 +269,9 @@
 		<isNotEmpty property="EDC_TRAING_INSTT_AT"><![CDATA[ /* 부서_코드.교육_훈련_기관_여부 */ AND tcdept.EDC_TRAING_INSTT_AT = #EDC_TRAING_INSTT_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 부서_코드.사용_여부 */ AND tcdept.USE_AT = #USE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 부서_코드.삭제_여부 */ AND tcdept.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 부서_코드.생성자_번호 */ AND tcdept.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 부서_코드.생성자_번호 */ AND tcdept.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 부서_코드.생성_일시 */ AND tcdept.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 부서_코드.수정자_번호 */ AND tcdept.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 부서_코드.수정자_번호 */ AND tcdept.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 부서_코드.수정_일시 */ AND tcdept.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="TEL_NO"><![CDATA[ /* 부서_코드.전화_번호 */ AND tcdept.TEL_NO = #TEL_NO# ]]></isNotEmpty>
 	</sql>
@@ -349,7 +349,7 @@
 		<isNotEmpty property="ODR">
 				<![CDATA[
 					/* 부서_코드.차수 */
-					AND tcdept.ODR = #ODR#
+					AND tcdept.ODR = #ODR#::int
 				]]>
 		</isNotEmpty>
 
@@ -377,7 +377,7 @@
 		<isNotEmpty property="PSITN_DEPT_ODR">
 				<![CDATA[
 					/* 부서_코드.소속_부서_차수 */
-					AND tcdept.PSITN_DEPT_ODR = #PSITN_DEPT_ODR#
+					AND tcdept.PSITN_DEPT_ODR = #PSITN_DEPT_ODR#::int
 				]]>
 		</isNotEmpty>
 
@@ -475,7 +475,7 @@
 		<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 부서_코드.생성자_번호 */
-					AND tcdept.CRTR_NO = #CRTR_NO#
+					AND tcdept.CRTR_NO = #CRTR_NO#::int
 				]]>
 		</isNotEmpty>
 
@@ -489,7 +489,7 @@
 		<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 부서_코드.수정자_번호 */
-					AND tcdept.UPDUSR_NO = #UPDUSR_NO#
+					AND tcdept.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 		</isNotEmpty>
 
@@ -611,7 +611,7 @@
 ]]>
 	<include refid="deptDAO.selectDeptList.where" />
 <![CDATA[
-		) tb )
+		) tb )as sub_tcdept
 		WHERE 1=1
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
@@ -729,7 +729,7 @@
 ]]>
 		<isNotEmpty property="ODR">
 			<![CDATA[
-				AND tcdept.ODR = #ODR#
+				AND tcdept.ODR = #ODR#::int
 			]]>
 		</isNotEmpty>
 		<isNotEmpty property="SEHIGH_DEPT_CODE">
