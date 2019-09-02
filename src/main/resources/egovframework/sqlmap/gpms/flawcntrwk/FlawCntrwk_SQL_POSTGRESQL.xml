@@ -978,7 +978,7 @@
 				, tnflawcntrwk.ROUTE_CODE /* 하자_보수_공사.노선_코드 */
 				, (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tnflawcntrwk.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_명 */
 				, tnflawcntrwk.DIRECT_CODE /* 하자_보수_공사.행선_코드 */
-				, CASE
+				, CASE 
 			        WHEN tnflawcntrwk.DIRECT_CODE = 'S' THEN '상행'
 			        WHEN tnflawcntrwk.DIRECT_CODE = 'E' THEN '하행'
 			        WHEN tnflawcntrwk.DIRECT_CODE = 'SE' THEN '양방향'

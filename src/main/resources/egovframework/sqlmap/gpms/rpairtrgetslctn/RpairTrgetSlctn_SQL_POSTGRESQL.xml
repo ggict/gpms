@@ -191,7 +191,7 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_1_rate, 0) = 0 THEN 0 ELSE
 				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
 					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_1_rate / 100)
-				END
+				END 
 			  END DECSN_MTHD_1_BUDGET
 			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_2_rate, 0) = 0 THEN 0 ELSE
 				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 

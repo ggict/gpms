@@ -445,7 +445,7 @@
         SELECT tb.*
              , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 SUM_RATE
          FROM LASTLIST tb
-     )
+     ) 
      SELECT tb.*
             , FN_GET_GPCI_RDUCT_RATE(tb.AC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) AC_RDUCT_RATE
             , FN_GET_GPCI_RDUCT_RATE(tb.BC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) BC_RDUCT_RATE

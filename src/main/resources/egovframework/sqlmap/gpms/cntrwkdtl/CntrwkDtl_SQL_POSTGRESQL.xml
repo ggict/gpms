@@ -1695,7 +1695,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				, tncntrwkdtl.ROUTE_CODE /* 공사상세정보.노선_코드 */
 				, (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tncntrwkdtl.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_코드 */
 				, tncntrwkdtl.DIRECT_CODE /* 공사상세정보.행선_코드 */
-				, CASE
+				, CASE 
 			        WHEN tncntrwkdtl.DIRECT_CODE = 'S' THEN '상행'
 			        WHEN tncntrwkdtl.DIRECT_CODE = 'E' THEN '하행'
 			        WHEN tncntrwkdtl.DIRECT_CODE = 'SE' THEN '양방향'

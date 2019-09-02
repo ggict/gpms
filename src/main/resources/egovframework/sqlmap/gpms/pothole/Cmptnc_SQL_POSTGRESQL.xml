@@ -105,7 +105,7 @@
             </isNotEmpty>
             <isNotEmpty property="SCH_CHARGER_NM"><![CDATA[   AND  cmptnczone.CHARGER_NM LIKE '%' || #SCH_CHARGER_NM# || '%'  ]]></isNotEmpty>
             <![CDATA[
-	                ORDER BY 
+	                ORDER BY  
 	                	CASE
 					        WHEN LOWEST_DEPT_NM = '수원시' THEN 1 
 					        WHEN LOWEST_DEPT_NM = '수원시 장안구' THEN 2 

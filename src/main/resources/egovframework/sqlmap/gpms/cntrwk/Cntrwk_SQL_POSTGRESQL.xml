@@ -1164,7 +1164,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		       , COALESCE(tncntrwkdtl.RPAIR_AR,0) RPAIR_AR
 		       , COALESCE(tncntrwkdtl.CNTRWK_AMOUNT,0) CNTRWK_AMOUNT
 		       , tncntrwkdtl.RPAIR_MATRL_PRDCT_CO_NM
-			   , CASE WHEN
+			   , CASE WHEN 
 			   		tncntrwkdtl.CNSTRCT_CO_NO = NULL
 			   	 THEN
 			   	 	tncntrwkdtl.CNSTRCT_CO_NM

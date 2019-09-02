@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
-<sqlMap namespace="cell10DAO">
+<sqlMap namespace="cell10DAO"> 
 
     <typeAlias alias="egovMap"  type="egovframework.rte.psl.dataaccess.util.EgovMap" />
     <typeAlias  alias="cell10SerarchVO" type="kr.go.gg.gpms.cell10.service.model.Cell10DefaultVO"/>

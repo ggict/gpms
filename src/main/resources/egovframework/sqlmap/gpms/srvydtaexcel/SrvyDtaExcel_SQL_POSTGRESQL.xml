@@ -707,7 +707,7 @@
 		                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0003' THEN '실패'
 		                              END FROM(
                                   SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
-                                        PROCESS_SE, PROCESS_STTUS, SRVY_NO
+                                         PROCESS_SE, PROCESS_STTUS, SRVY_NO
                                   FROM TL_SRVY_DTA_LOG
                                   WHERE PROCESS_SE = 'PCSE0003'
                               ) tlsrvydtalog

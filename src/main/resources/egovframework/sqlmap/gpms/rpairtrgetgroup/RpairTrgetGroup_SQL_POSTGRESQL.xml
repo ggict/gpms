@@ -237,7 +237,7 @@ SLCTN_STEP = #SLCTN_STEP# /* 보수_대상_항목_그룹.선정_단계 */
 , UPDT_DT = NOW() /* 보수_대상_항목_그룹.수정_일시 */
 		WHERE 1 = 1
 		AND GROUP_ITEM_NO = #GROUP_ITEM_NO# /* 보수_대상_항목_그룹.그룹_항목_번호 */
-]]>
+]]> 
 	</update>
 
 	<update id="rpairTrgetGroupDAO.updateInitTMPR_SLCTN_AT">

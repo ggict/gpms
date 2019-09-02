@@ -563,7 +563,7 @@ TN_MNTRNG_MBR tnmntrngmbr
 
     <![CDATA[
     				) tb
-                    ORDER BY 
+                    ORDER BY  
                     	CASE
 					        WHEN LOWEST_DEPT_NM_BF = '수원시' THEN 1 
 					        WHEN LOWEST_DEPT_NM_BF = '수원시 장안구' THEN 2 
