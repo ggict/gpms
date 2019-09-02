@@ -188,11 +188,31 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 			, tnrpairtrgetslctn.DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
 			, tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
 			, tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_1_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_1_RATE/100))) DECSN_MTHD_1_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_2_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_2_RATE/100))) DECSN_MTHD_2_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_3_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_3_RATE/100))) DECSN_MTHD_3_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_4_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_4_RATE/100))) DECSN_MTHD_4_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_5_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_5_RATE/100))) DECSN_MTHD_5_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_1_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_1_rate / 100)
+				END 
+			  END DECSN_MTHD_1_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_2_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_2_rate / 100)
+				END
+			  END DECSN_MTHD_2_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_3_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_3_rate / 100)
+				END
+			  END DECSN_MTHD_3_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_4_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_4_rate / 100)
+				END
+			  END DECSN_MTHD_4_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_5_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_5_rate / 100)
+				END
+			  END DECSN_MTHD_5_BUDGET
 			, tnrpairtrgetslctn.SLCTN_BUDGET_1    /* 보수_대상_선정.선정_예산_1_WF */
 			, tnrpairtrgetslctn.SLCTN_BUDGET_2    /* 보수_대상_선정.선정_예산_2_BF_1 */
 			, tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */
@@ -376,11 +396,31 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 			, tnrpairtrgetslctn.DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
 			, tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
 			, tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_1_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_1_RATE/100))) DECSN_MTHD_1_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_2_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_2_RATE/100))) DECSN_MTHD_2_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_3_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_3_RATE/100))) DECSN_MTHD_3_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_4_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_4_RATE/100))) DECSN_MTHD_4_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_5_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_5_RATE/100))) DECSN_MTHD_5_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_1_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_1_rate / 100)
+				END
+			  END DECSN_MTHD_1_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_2_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_2_rate / 100)
+				END
+			  END DECSN_MTHD_2_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_3_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_3_rate / 100)
+				END
+			  END DECSN_MTHD_3_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_4_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_4_rate / 100)
+				END
+			  END DECSN_MTHD_4_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_5_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_5_rate / 100)
+				END
+			  END DECSN_MTHD_5_BUDGET
 			 , tnrpairtrgetslctn.SLCTN_BUDGET_1    /* 보수_대상_선정.선정_예산_1_WF */
 		     , tnrpairtrgetslctn.SLCTN_BUDGET_2    /* 보수_대상_선정.선정_예산_2_BF_1 */
 		     , tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */
