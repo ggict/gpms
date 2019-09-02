@@ -886,62 +886,64 @@
               ,'5550000','5560000'  /* 안산시 구 추가 */
               ,'5620000','5630000','5640000'  /* 용인시 구 추가 */
               ,'5530072','5530073','5530074'))  /* 화성시청, 출장소 추가 */
-	ORDER BY DECODE(LOWEST_DEPT_NM
-            , '수원시', 1
-            , '수원시 장안구', 2
-            , '수원시 권선구', 3
-            , '수원시 팔달구', 4
-            , '수원시 영통구', 5
-            , '고양시', 6
-            , '고양시 덕양구', 7
-            , '고양시 일산동구', 8
-            , '고양시 일산서구', 9
-            , '용인시', 10
-            , '용인시 처인구', 11
-            , '용인시 기흥구', 12
-            , '용인시 수지구', 13
-            , '성남시', 14
-            , '성남시 수정구', 15
-            , '성남시 중원구', 16
-            , '성남시 분당구', 17
-            , '부천시', 18
-            , '안산시', 19
-            , '안산시 상록구', 20
-            , '안산시 단원구', 21
-            , '화성시', 22
-            , '화성시청', 23
-            , '화성시 동부출장소', 24
-            , '화성시 동탄출장소', 25
-            , '남양주시', 26
-            , '안양시', 27
-            , '안양시 만안구', 28
-            , '안양시 동안구', 29
-            , '평택시', 30
-            , '평택시청', 31
-            , '평택시 송탄출장소', 32
-            , '평택시 안중출장소', 33
-            , '의정부시', 34
-            , '파주시', 35
-            , '시흥시', 36
-            , '김포시', 37
-            , '광명시', 38
-            , '광주시', 39
-            , '군포시', 40
-            , '이천시', 41
-            , '오산시', 42
-            , '하남시', 43
-            , '양주시', 44
-            , '구리시', 45
-            , '안성시', 46
-            , '포천시', 47
-            , '의왕시', 48
-            , '여주시', 49
-            , '양평군', 50
-            , '동두천시', 51
-            , '과천시', 52
-            , '가평군', 53
-            , '연천군', 54
-          ), DEPT_CODE
+	ORDER BY 
+		CASE
+	        WHEN LOWEST_DEPT_NM = '수원시' THEN 1 
+	        WHEN LOWEST_DEPT_NM = '수원시 장안구' THEN 2 
+	        WHEN LOWEST_DEPT_NM = '수원시 권선구' THEN 3 
+	        WHEN LOWEST_DEPT_NM = '수원시 팔달구' THEN 4 
+	        WHEN LOWEST_DEPT_NM = '수원시 영통구' THEN 5 
+	        WHEN LOWEST_DEPT_NM = '고양시' THEN 6 
+	        WHEN LOWEST_DEPT_NM = '고양시 덕양구' THEN 7 
+	        WHEN LOWEST_DEPT_NM = '고양시 일산동구' THEN 8 
+	        WHEN LOWEST_DEPT_NM = '고양시 일산서구' THEN 9 
+	        WHEN LOWEST_DEPT_NM = '용인시' THEN 10
+	        WHEN LOWEST_DEPT_NM = '용인시 처인구' THEN 11
+	        WHEN LOWEST_DEPT_NM = '용인시 기흥구' THEN 12
+	        WHEN LOWEST_DEPT_NM = '용인시 수지구' THEN 13
+	        WHEN LOWEST_DEPT_NM = '성남시' THEN 14
+	        WHEN LOWEST_DEPT_NM = '성남시 수정구' THEN 15
+	        WHEN LOWEST_DEPT_NM = '성남시 중원구' THEN 16
+	        WHEN LOWEST_DEPT_NM = '성남시 분당구' THEN 17
+	        WHEN LOWEST_DEPT_NM = '부천시' THEN 18
+	        WHEN LOWEST_DEPT_NM = '안산시' THEN 19
+	        WHEN LOWEST_DEPT_NM = '안산시 상록구' THEN 20
+	        WHEN LOWEST_DEPT_NM = '안산시 단원구' THEN 21
+	        WHEN LOWEST_DEPT_NM = '화성시' THEN 22
+	        WHEN LOWEST_DEPT_NM = '화성시청' THEN 23
+	        WHEN LOWEST_DEPT_NM = '화성시 동부출장소' THEN 24
+	        WHEN LOWEST_DEPT_NM = '화성시 동탄출장소' THEN 25
+	        WHEN LOWEST_DEPT_NM = '남양주' THEN 26
+	        WHEN LOWEST_DEPT_NM = '안양시' THEN 27
+	        WHEN LOWEST_DEPT_NM = '안양시 만안구' THEN 28
+	        WHEN LOWEST_DEPT_NM = '안양시 동안구' THEN 29
+	        WHEN LOWEST_DEPT_NM = '평택시' THEN 30
+	        WHEN LOWEST_DEPT_NM = '평택시청' THEN 31
+	        WHEN LOWEST_DEPT_NM = '평택시 송탄출장소' THEN 32
+	        WHEN LOWEST_DEPT_NM = '평택시 안중출장소' THEN 33
+	        WHEN LOWEST_DEPT_NM = '의정부시' THEN 34
+	        WHEN LOWEST_DEPT_NM = '파주시' THEN 35
+	        WHEN LOWEST_DEPT_NM = '시흥시' THEN 36
+	        WHEN LOWEST_DEPT_NM = '김포시' THEN 37
+	        WHEN LOWEST_DEPT_NM = '광명시' THEN 38
+	        WHEN LOWEST_DEPT_NM = '광주시' THEN 39
+	        WHEN LOWEST_DEPT_NM = '군포시' THEN 40
+	        WHEN LOWEST_DEPT_NM = '이천시' THEN 41
+	        WHEN LOWEST_DEPT_NM = '오산시' THEN 42
+	        WHEN LOWEST_DEPT_NM = '하남시' THEN 43
+	        WHEN LOWEST_DEPT_NM = '양주시' THEN 44
+	        WHEN LOWEST_DEPT_NM = '구리시' THEN 45
+	        WHEN LOWEST_DEPT_NM = '안성시' THEN 46
+	        WHEN LOWEST_DEPT_NM = '포천시' THEN 47
+	        WHEN LOWEST_DEPT_NM = '의왕시' THEN 48
+	        WHEN LOWEST_DEPT_NM = '여주시' THEN 49
+	        WHEN LOWEST_DEPT_NM = '양평군' THEN 50
+	        WHEN LOWEST_DEPT_NM = '동두천시' THEN 51
+	        WHEN LOWEST_DEPT_NM = '과천시' THEN 52
+	        WHEN LOWEST_DEPT_NM = '가평군' THEN 53
+	        WHEN LOWEST_DEPT_NM = '연천군' THEN 54
+    	END	
+    , DEPT_CODE
     ]]>
     </select>
 
@@ -998,62 +1000,64 @@
     <isEmpty property="flag"> <![CDATA[   OR DEPT_CODE = 7000300   ]]> </isEmpty>
     <isNotEmpty property="flag"> <![CDATA[    OR ( DEPT_CODE >= '7000300'  AND DEPT_CODE  < '7000400') /* 민자도로사업자 */  ]]> </isNotEmpty>
     <![CDATA[
-       ORDER BY DECODE(LOWEST_DEPT_NM
-            , '수원시', 1
-            , '수원시 장안구', 2
-            , '수원시 권선구', 3
-            , '수원시 팔달구', 4
-            , '수원시 영통구', 5
-            , '고양시', 6
-            , '고양시 덕양구', 7
-            , '고양시 일산동구', 8
-            , '고양시 일산서구', 9
-            , '용인시', 10
-            , '용인시 처인구', 11
-            , '용인시 기흥구', 12
-            , '용인시 수지구', 13
-            , '성남시', 14
-            , '성남시 수정구', 15
-            , '성남시 중원구', 16
-            , '성남시 분당구', 17
-            , '부천시', 18
-            , '안산시', 19
-            , '안산시 상록구', 20
-            , '안산시 단원구', 21
-            , '화성시', 22
-            , '화성시청', 23
-            , '화성시 동부출장소', 24
-            , '화성시 동탄출장소', 25
-            , '남양주시', 26
-            , '안양시', 27
-            , '안양시 만안구', 28
-            , '안양시 동안구', 29
-            , '평택시', 30
-            , '평택시청', 31
-            , '평택시 송탄출장소', 32
-            , '평택시 안중출장소', 33
-            , '의정부시', 34
-            , '파주시', 35
-            , '시흥시', 36
-            , '김포시', 37
-            , '광명시', 38
-            , '광주시', 39
-            , '군포시', 40
-            , '이천시', 41
-            , '오산시', 42
-            , '하남시', 43
-            , '양주시', 44
-            , '구리시', 45
-            , '안성시', 46
-            , '포천시', 47
-            , '의왕시', 48
-            , '여주시', 49
-            , '양평군', 50
-            , '동두천시', 51
-            , '과천시', 52
-            , '가평군', 53
-            , '연천군', 54
-          ), DEPT_CODE
+       ORDER BY 
+       	CASE
+	        WHEN LOWEST_DEPT_NM = '수원시' THEN 1 
+	        WHEN LOWEST_DEPT_NM = '수원시 장안구' THEN 2 
+	        WHEN LOWEST_DEPT_NM = '수원시 권선구' THEN 3 
+	        WHEN LOWEST_DEPT_NM = '수원시 팔달구' THEN 4 
+	        WHEN LOWEST_DEPT_NM = '수원시 영통구' THEN 5 
+	        WHEN LOWEST_DEPT_NM = '고양시' THEN 6 
+	        WHEN LOWEST_DEPT_NM = '고양시 덕양구' THEN 7 
+	        WHEN LOWEST_DEPT_NM = '고양시 일산동구' THEN 8 
+	        WHEN LOWEST_DEPT_NM = '고양시 일산서구' THEN 9 
+	        WHEN LOWEST_DEPT_NM = '용인시' THEN 10
+	        WHEN LOWEST_DEPT_NM = '용인시 처인구' THEN 11
+	        WHEN LOWEST_DEPT_NM = '용인시 기흥구' THEN 12
+	        WHEN LOWEST_DEPT_NM = '용인시 수지구' THEN 13
+	        WHEN LOWEST_DEPT_NM = '성남시' THEN 14
+	        WHEN LOWEST_DEPT_NM = '성남시 수정구' THEN 15
+	        WHEN LOWEST_DEPT_NM = '성남시 중원구' THEN 16
+	        WHEN LOWEST_DEPT_NM = '성남시 분당구' THEN 17
+	        WHEN LOWEST_DEPT_NM = '부천시' THEN 18
+	        WHEN LOWEST_DEPT_NM = '안산시' THEN 19
+	        WHEN LOWEST_DEPT_NM = '안산시 상록구' THEN 20
+	        WHEN LOWEST_DEPT_NM = '안산시 단원구' THEN 21
+	        WHEN LOWEST_DEPT_NM = '화성시' THEN 22
+	        WHEN LOWEST_DEPT_NM = '화성시청' THEN 23
+	        WHEN LOWEST_DEPT_NM = '화성시 동부출장소' THEN 24
+	        WHEN LOWEST_DEPT_NM = '화성시 동탄출장소' THEN 25
+	        WHEN LOWEST_DEPT_NM = '남양주' THEN 26
+	        WHEN LOWEST_DEPT_NM = '안양시' THEN 27
+	        WHEN LOWEST_DEPT_NM = '안양시 만안구' THEN 28
+	        WHEN LOWEST_DEPT_NM = '안양시 동안구' THEN 29
+	        WHEN LOWEST_DEPT_NM = '평택시' THEN 30
+	        WHEN LOWEST_DEPT_NM = '평택시청' THEN 31
+	        WHEN LOWEST_DEPT_NM = '평택시 송탄출장소' THEN 32
+	        WHEN LOWEST_DEPT_NM = '평택시 안중출장소' THEN 33
+	        WHEN LOWEST_DEPT_NM = '의정부시' THEN 34
+	        WHEN LOWEST_DEPT_NM = '파주시' THEN 35
+	        WHEN LOWEST_DEPT_NM = '시흥시' THEN 36
+	        WHEN LOWEST_DEPT_NM = '김포시' THEN 37
+	        WHEN LOWEST_DEPT_NM = '광명시' THEN 38
+	        WHEN LOWEST_DEPT_NM = '광주시' THEN 39
+	        WHEN LOWEST_DEPT_NM = '군포시' THEN 40
+	        WHEN LOWEST_DEPT_NM = '이천시' THEN 41
+	        WHEN LOWEST_DEPT_NM = '오산시' THEN 42
+	        WHEN LOWEST_DEPT_NM = '하남시' THEN 43
+	        WHEN LOWEST_DEPT_NM = '양주시' THEN 44
+	        WHEN LOWEST_DEPT_NM = '구리시' THEN 45
+	        WHEN LOWEST_DEPT_NM = '안성시' THEN 46
+	        WHEN LOWEST_DEPT_NM = '포천시' THEN 47
+	        WHEN LOWEST_DEPT_NM = '의왕시' THEN 48
+	        WHEN LOWEST_DEPT_NM = '여주시' THEN 49
+	        WHEN LOWEST_DEPT_NM = '양평군' THEN 50
+	        WHEN LOWEST_DEPT_NM = '동두천시' THEN 51
+	        WHEN LOWEST_DEPT_NM = '과천시' THEN 52
+	        WHEN LOWEST_DEPT_NM = '가평군' THEN 53
+	        WHEN LOWEST_DEPT_NM = '연천군' THEN 54
+    	END
+       	, DEPT_CODE
     ]]>
     </select>
 
