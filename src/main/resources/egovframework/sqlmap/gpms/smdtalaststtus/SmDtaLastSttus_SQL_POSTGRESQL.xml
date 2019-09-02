@@ -751,10 +751,24 @@
  	  	,tnsmdtalaststtus.STRTPT/1000 AS  STRTPT /* 최소_구간_조사_자료.시점 */
   		,tnsmdtalaststtus.ENDPT/1000 AS  ENDPT /* 최소_구간_조사_자료.종점 */
 		, tnsmdtalaststtus.GPCI
-		, DECODE(( SELECT tccode.CODE_NM FROM TC_CODE tccode
-		WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ),
-		'AC','거북등균열','BC','블럭균열','LC','선형균열','PTCHG','패칭','POTHOLE','포트홀','RD','소성변형','RCI','종단평탄성','IRI','종단평탄성')
-		AS CR
+		, CASE  
+		    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
+				 WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ) = 'AC' THEN '거북등균열' 
+		    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
+				 WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ) = 'BC' THEN '블럭균열' 
+		    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
+				 WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ) = 'LC' THEN '선형균열' 
+		    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
+				 WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ) = 'PTCHG' THEN '패칭' 
+		    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
+				 WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ) = 'POTHOLE' THEN '포트홀' 
+		    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
+				 WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ) = 'RD' THEN '소성변형' 
+		    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
+				 WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ) = 'RCI' THEN '종단평탄성' 
+		    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
+				 WHERE tccode.CODE_VAL = tnsmdtalaststtus.CNTL_DFECT ) = 'IRI' THEN '종단평탄성' 
+		  END AS CR
 		, CASE WHEN DMG_CUZ_CLMT > DMG_CUZ_VMTC AND DMG_CUZ_CLMT > DMG_CUZ_ETC
 		THEN '기후'
 		WHEN DMG_CUZ_VMTC > DMG_CUZ_CLMT AND DMG_CUZ_VMTC > DMG_CUZ_ETC THEN
@@ -1197,7 +1211,7 @@
         ),
         RESULTLIST AS (
             SELECT tb.*
-                 , DECODE(tb.SCR, 0, (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE), 0) SUM_RATE
+                 , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 SUM_RATE
               FROM LASTLIST tb
         )
         SELECT tb.*

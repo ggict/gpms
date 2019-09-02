@@ -38,13 +38,13 @@
 			, UPDUSR_NO /* 권한역할메뉴.수정자_번호 */
 			, UPDT_DT /* 권한역할메뉴.수정_일시 */
 		) VALUES (
-			#ROLE_NO# /* 권한역할메뉴.역할_번호 */
+			#ROLE_NO#::int /* 권한역할메뉴.역할_번호 */
 			, #AUTHOR_ID# /* 권한역할메뉴.권한_ID */
 			, #MENU_ID# /* 권한역할메뉴.메뉴_ID */
-			, #CRTR_NO# /* 권한역할메뉴.생성자_번호 */
+			, #CRTR_NO#::int /* 권한역할메뉴.생성자_번호 */
 			, NOW() /* 권한역할메뉴.생성_일시 */
 			, 'N' /* 권한역할메뉴.삭제_여부 */
-			, #UPDUSR_NO# /* 권한역할메뉴.수정자_번호 */
+			, #UPDUSR_NO#::int /* 권한역할메뉴.수정자_번호 */
 			, NOW() /* 권한역할메뉴.수정_일시 */
 		)
 ]]>
@@ -56,7 +56,7 @@
 		/* 권한역할메뉴 삭제(삭제여부:N -> Y) */
 		UPDATE TN_ROLE_MENU 
 		   SET  DELETE_AT = 'Y' /* 권한역할메뉴.삭제_여부 */
-				, UPDUSR_NO = #UPDUSR_NO# /* 권한역할메뉴.수정자_번호 */
+				, UPDUSR_NO = #UPDUSR_NO#::int /* 권한역할메뉴.수정자_번호 */
 				, UPDT_DT = NOW() /* 권한역할메뉴.수정_일시 */
 			WHERE 1 = 1
 			AND AUTHOR_ID = #AUTHOR_ID# /* 권한역할메뉴.권한_ID */
@@ -80,7 +80,7 @@
 			, tnrolemenu.UPDT_DT /* 권한역할메뉴.수정_일시 */
 		FROM TN_ROLE_MENU tnrolemenu
 		WHERE 1 = 1
-		AND tnrolemenu.ROLE_NO = #ROLE_NO# /* 권한역할메뉴.역할_번호 */
+		AND tnrolemenu.ROLE_NO = #ROLE_NO#::int /* 권한역할메뉴.역할_번호 */
 ]]>
 	</select>
 	
@@ -114,18 +114,18 @@
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnrolemenu.ROLE_NO = #searchKeyword#
+			AND tnrolemenu.ROLE_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			AND tnrolemenu.AUTHOR_ID LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		<isNotEmpty property="ROLE_NO"><![CDATA[ /* 권한역할메뉴.역할_번호 */ AND tnrolemenu.ROLE_NO = #ROLE_NO# ]]></isNotEmpty>
+		<isNotEmpty property="ROLE_NO"><![CDATA[ /* 권한역할메뉴.역할_번호 */ AND tnrolemenu.ROLE_NO = #ROLE_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="AUTHOR_ID"><![CDATA[ /* 권한역할메뉴.권한_ID */ AND tnrolemenu.AUTHOR_ID = #AUTHOR_ID# ]]></isNotEmpty>
 		<isNotEmpty property="MENU_ID"><![CDATA[ /* 권한역할메뉴.메뉴_ID */ AND tnrolemenu.MENU_ID = #MENU_ID# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 권한역할메뉴.생성자_번호 */ AND tnrolemenu.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 권한역할메뉴.생성자_번호 */ AND tnrolemenu.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 권한역할메뉴.생성_일시 */ AND tnrolemenu.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 권한역할메뉴.삭제_여부 */ AND tnrolemenu.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 권한역할메뉴.수정자_번호 */ AND tnrolemenu.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 권한역할메뉴.수정자_번호 */ AND tnrolemenu.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 권한역할메뉴.수정_일시 */ AND tnrolemenu.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -152,7 +152,7 @@
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnrolemenu.ROLE_NO = #searchKeyword#
+			AND tnrolemenu.ROLE_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
@@ -162,7 +162,7 @@
 			<isNotEmpty property="ROLE_NO">
 				<![CDATA[
 					/* 권한역할메뉴.역할_번호 */
-					AND tnrolemenu.ROLE_NO = #ROLE_NO#
+					AND tnrolemenu.ROLE_NO = #ROLE_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -183,7 +183,7 @@
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 권한역할메뉴.생성자_번호 */
-					AND tnrolemenu.CRTR_NO = #CRTR_NO#
+					AND tnrolemenu.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -204,7 +204,7 @@
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 권한역할메뉴.수정자_번호 */
-					AND tnrolemenu.UPDUSR_NO = #UPDUSR_NO#
+					AND tnrolemenu.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

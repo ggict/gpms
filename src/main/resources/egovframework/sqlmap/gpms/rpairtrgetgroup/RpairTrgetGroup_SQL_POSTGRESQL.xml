@@ -114,51 +114,51 @@
 			, UPDUSR_NO /* 보수_대상_항목_그룹.수정자_번호 */
 			, UPDT_DT /* 보수_대상_항목_그룹.수정_일시 */
 		) VALUES (
-			#GROUP_ITEM_NO# /* 보수_대상_항목_그룹.그룹_항목_번호	GROUP_ITEM_NO */
-			, #TRGET_SLCTN_NO# /* 보수_대상_항목_그룹.대상_선정_번호	TRGET_SLCTN_NO */
-			, #SLCTN_STEP# /* 보수_대상_항목_그룹.선정_단계	SLCTN_STEP */
+			#GROUP_ITEM_NO#::int /* 보수_대상_항목_그룹.그룹_항목_번호	GROUP_ITEM_NO */
+			, #TRGET_SLCTN_NO#::int /* 보수_대상_항목_그룹.대상_선정_번호	TRGET_SLCTN_NO */
+			, #SLCTN_STEP#::int /* 보수_대상_항목_그룹.선정_단계	SLCTN_STEP */
 			, #ITEM_SLCTN_STTUS# /* 보수_대상_항목_그룹.항목_선정_상태	ITEM_SLCTN_STTUS */
 			, #ROUTE_CODE# /* 보수_대상_항목_그룹.노선_코드	ROUTE_CODE */
 			, #DIRECT_CODE# /* 보수_대상_항목_그룹.행선_코드	DIRECT_CODE */
 			, #TRACK# /* 보수_대상_항목_그룹.차로	TRACK */
-			, #STRTPT# /* 보수_대상_항목_그룹.시점	STRTPT */
-			, #ENDPT# /* 보수_대상_항목_그룹.종점	ENDPT */
+			, #STRTPT#::int /* 보수_대상_항목_그룹.시점	STRTPT */
+			, #ENDPT#::int /* 보수_대상_항목_그룹.종점	ENDPT */
 			, #CELL_TYPE# /* 보수_대상_항목_그룹.셀_타입	CELL_TYPE */
 			, #DEPT_CODE# /* 보수_대상_항목_그룹.부서코드	DEPT_CODE */
 			, #SRVY_MT# /* 보수_대상_항목_그룹.조사_월	SRVY_MT */
 			, #SRVY_YEAR# /* 보수_대상_항목_그룹.조사_년도	SRVY_YEAR */
-			, #GPCI# /* 보수_대상_항목_그룹.GPCI	GPCI */
-			, #PC_GRAD# /* 보수_대상_항목_그룹.포장상태등급	PC_GRAD */
+			, #GPCI#::int /* 보수_대상_항목_그룹.GPCI	GPCI */
+			, #PC_GRAD#::int /* 보수_대상_항목_그룹.포장상태등급	PC_GRAD */
 			, #CALC_YEAR# /* 보수_대상_항목_그룹.산정_년도	CALC_YEAR */
 			, #CALC_MT# /* 보수_대상_항목_그룹.산정_월	CALC_MT */
-			, #CALC_GPCI# /* 보수_대상_항목_그룹.산정_GPCI	CALC_GPCI */
-			, #CALC_PC_GRAD# /* 보수_대상_항목_그룹.산정_포장상태등급	CALC_PC_GRAD */
-			, #DMG_VAL# /* 보수_대상_항목_그룹.파손도_값	DMG_VAL */
+			, #CALC_GPCI#::int /* 보수_대상_항목_그룹.산정_GPCI	CALC_GPCI */
+			, #CALC_PC_GRAD#::int /* 보수_대상_항목_그룹.산정_포장상태등급	CALC_PC_GRAD */
+			, #DMG_VAL#::int /* 보수_대상_항목_그룹.파손도_값	DMG_VAL */
 			, #CNTRWK_YEAR# /* 보수_대상_항목_그룹.공사_년도	CNTRWK_YEAR */
-			, #TRNSPORT_QY# /* 보수_대상_항목_그룹.교통_량	TRNSPORT_QY */
-			, #LEN# /* 보수_대상_항목_그룹.연장	LEN */
-			, #AR# /* 보수_대상_항목_그룹.면적	AR */
+			, #TRNSPORT_QY#::int /* 보수_대상_항목_그룹.교통_량	TRNSPORT_QY */
+			, #LEN#::int /* 보수_대상_항목_그룹.연장	LEN */
+			, #AR#::int /* 보수_대상_항목_그룹.면적	AR */
 			, #RPAIR_MTHD_CODE# /* 보수_대상_항목_그룹.보수_공법_코드	RPAIR_MTHD_CODE */
 			, #MSR_DM_CODE# /* 보수_대상_항목_그룹.공법선정비율_결정방식_코드	MSR_DM_CODE */
-			, #THRHLD# /* 보수_대상_항목_그룹.임계값	THRHLD */
-			, #AMOUNT_CALC# /* 보수_대상_항목_그룹.금액_산정	AMOUNT_CALC */
-			, #BUDGET_ASIGN# /* 보수_대상_항목_그룹.예산_배정	BUDGET_ASIGN */
+			, #THRHLD#::int /* 보수_대상_항목_그룹.임계값	THRHLD */
+			, #AMOUNT_CALC#::int /* 보수_대상_항목_그룹.금액_산정	AMOUNT_CALC */
+			, #BUDGET_ASIGN#::int /* 보수_대상_항목_그룹.예산_배정	BUDGET_ASIGN */
 			, #FIXING_AT# /* 보수_대상_항목_그룹.고정_여부	FIXING_AT */
 			, #BUDGET_CECK# /* 보수_대상_항목_그룹.예산_체크	BUDGET_CECK */
-			, #ACCMLT_CALC# /* 보수_대상_항목_그룹.누적_산정	ACCMLT_CALC */
+			, #ACCMLT_CALC#::int /* 보수_대상_항목_그룹.누적_산정	ACCMLT_CALC */
 			, #SLCTN_AT# /* 보수_대상_항목_그룹.선정_여부	SLCTN_AT */
 			, #SLCTN_DT# /* 보수_대상_항목_그룹.선정_일시	SLCTN_DT */
 			, #TMPR_SLCTN_AT# /* 보수_대상_항목_그룹.임시_선정_여부	TMPR_SLCTN_AT */
-			, #NODE_CO# /* 보수_대상_항목_그룹.노드_개수	NODE_CO */
+			, #NODE_CO#::int /* 보수_대상_항목_그룹.노드_개수	NODE_CO */
 			, #VMTC_GRAD# /* 보수_대상_항목_그룹.교통량등급	VMTC_GRAD */
 			, #ROAD_GRAD# /* 보수_대상_항목_그룹.도로등급	ROAD_GRAD */
 			, #ADM_CODE# /* 보수_대상_항목_그룹.행정구역코드	ADM_CODE */
-			, #SLCTN_ORDR# /* 보수_대상_항목_그룹.선정_순서	SLCTN_ORDR */
+			, #SLCTN_ORDR#::int /* 보수_대상_항목_그룹.선정_순서	SLCTN_ORDR */
 			, 'N' /* 보수_대상_항목_그룹.삭제_여부	DELETE_AT */
 			,  'Y' /* 보수_대상_항목_그룹.사용_여부	USE_AT */
-			, #CRTR_NO# /* 보수_대상_항목_그룹.생성자_번호	CRTR_NO */
+			, #CRTR_NO#::int /* 보수_대상_항목_그룹.생성자_번호	CRTR_NO */
 			, NOW() /* 보수_대상_항목_그룹.생성_일시 */
-			, #UPDUSR_NO# /* 보수_대상_항목_그룹.수정자_번호	UPDUSR_NO */
+			, #UPDUSR_NO#::int /* 보수_대상_항목_그룹.수정자_번호	UPDUSR_NO */
 			, NOW() /* 보수_대상_항목_그룹.수정_일시 */
 
 		)
@@ -170,48 +170,48 @@
 		/* rpairTrgetGroupDAO.updateRpairTrgetGroup */
 		/* 보수_대상_항목_그룹 수정 */
 		UPDATE TN_RPAIR_TRGET_GROUP SET
-SLCTN_STEP = #SLCTN_STEP# /* 보수_대상_항목_그룹.선정_단계 */
+SLCTN_STEP = #SLCTN_STEP#::int /* 보수_대상_항목_그룹.선정_단계 */
 , ITEM_SLCTN_STTUS = #ITEM_SLCTN_STTUS# /* 보수_대상_항목_그룹.항목_선정_상태 */
 , ROUTE_CODE = #ROUTE_CODE# /* 보수_대상_항목_그룹.노선_코드 */
 , DIRECT_CODE = #DIRECT_CODE# /* 보수_대상_항목_그룹.행선_코드 */
 , TRACK = #TRACK# /* 보수_대상_항목_그룹.차로 */
-, STRTPT = #STRTPT# /* 보수_대상_항목_그룹.시점 */
-, ENDPT = #ENDPT# /* 보수_대상_항목_그룹.종점 */
+, STRTPT = #STRTPT#::int /* 보수_대상_항목_그룹.시점 */
+, ENDPT = #ENDPT#::int /* 보수_대상_항목_그룹.종점 */
 , CELL_TYPE = #CELL_TYPE# /* 보수_대상_항목_그룹.셀_타입 */
 , DEPT_CODE = #DEPT_CODE# /* 보수_대상_항목_그룹.부서코드 */
 , SRVY_MT = #SRVY_MT# /* 보수_대상_항목_그룹.조사_월 */
 , SRVY_YEAR = #SRVY_YEAR# /* 보수_대상_항목_그룹.조사_년도 */
-, GPCI = #GPCI# /* 보수_대상_항목_그룹.GPCI */
-, PC_GRAD = #PC_GRAD# /* 보수_대상_항목_그룹.포장상태등급 */
+, GPCI = #GPCI#::int /* 보수_대상_항목_그룹.GPCI */
+, PC_GRAD = #PC_GRAD#::int /* 보수_대상_항목_그룹.포장상태등급 */
 , CALC_YEAR = #CALC_YEAR# /* 보수_대상_항목_그룹.산정_년도 */
 , CALC_MT = #CALC_MT# /* 보수_대상_항목_그룹.산정_월 */
-, CALC_GPCI = #CALC_GPCI# /* 보수_대상_항목_그룹.산정_GPCI */
-, CALC_PC_GRAD = #CALC_PC_GRAD# /* 보수_대상_항목_그룹.산정_포장상태등급 */
-, DMG_VAL = #DMG_VAL# /* 보수_대상_항목_그룹.파손도_값 */
+, CALC_GPCI = #CALC_GPCI#::int /* 보수_대상_항목_그룹.산정_GPCI */
+, CALC_PC_GRAD = #CALC_PC_GRAD#::int /* 보수_대상_항목_그룹.산정_포장상태등급 */
+, DMG_VAL = #DMG_VAL#::int /* 보수_대상_항목_그룹.파손도_값 */
 , CNTRWK_YEAR = #CNTRWK_YEAR# /* 보수_대상_항목_그룹.공사_년도 */
-, TRNSPORT_QY = #TRNSPORT_QY# /* 보수_대상_항목_그룹.교통_량 */
-, LEN = #LEN# /* 보수_대상_항목_그룹.연장 */
-, AR = #AR# /* 보수_대상_항목_그룹.면적 */
+, TRNSPORT_QY = #TRNSPORT_QY#::int /* 보수_대상_항목_그룹.교통_량 */
+, LEN = #LEN#::int /* 보수_대상_항목_그룹.연장 */
+, AR = #AR#::int /* 보수_대상_항목_그룹.면적 */
 , RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# /* 보수_대상_항목_그룹.보수_공법_코드 */
 , MSR_DM_CODE = #MSR_DM_CODE# /* 보수_대상_항목_그룹.공법선정비율_결정방식_코드 */
-, THRHLD = #THRHLD# /* 보수_대상_항목_그룹.임계값 */
-, AMOUNT_CALC = #AMOUNT_CALC# /* 보수_대상_항목_그룹.금액_산정 */
-, BUDGET_ASIGN = #BUDGET_ASIGN# /* 보수_대상_항목_그룹.예산_배정 */
+, THRHLD = #THRHLD#::int /* 보수_대상_항목_그룹.임계값 */
+, AMOUNT_CALC = #AMOUNT_CALC#::int /* 보수_대상_항목_그룹.금액_산정 */
+, BUDGET_ASIGN = #BUDGET_ASIGN#::int /* 보수_대상_항목_그룹.예산_배정 */
 , FIXING_AT = #FIXING_AT# /* 보수_대상_항목_그룹.고정_여부 */
 , BUDGET_CECK = #BUDGET_CECK# /* 보수_대상_항목_그룹.예산_체크 */
-, ACCMLT_CALC = #ACCMLT_CALC# /* 보수_대상_항목_그룹.누적_산정 */
+, ACCMLT_CALC = #ACCMLT_CALC#::int /* 보수_대상_항목_그룹.누적_산정 */
 , SLCTN_AT = #SLCTN_AT# /* 보수_대상_항목_그룹.선정_여부 */
 , SLCTN_DT = #SLCTN_DT# /* 보수_대상_항목_그룹.선정_일시 */
 , TMPR_SLCTN_AT = #TMPR_SLCTN_AT# /* 보수_대상_항목_그룹.임시_선정_여부 */
-, NODE_CO = #NODE_CO# /* 보수_대상_항목_그룹.노드_개수 */
+, NODE_CO = #NODE_CO#::int /* 보수_대상_항목_그룹.노드_개수 */
 , VMTC_GRAD = #VMTC_GRAD# /* 보수_대상_항목_그룹.교통량등급 */
 , ROAD_GRAD = #ROAD_GRAD# /* 보수_대상_항목_그룹.도로등급 */
 , ADM_CODE = #ADM_CODE# /* 보수_대상_항목_그룹.행정구역코드 */
-, SLCTN_ORDR = #SLCTN_ORDR# /* 보수_대상_항목_그룹.선정_순서 */
-, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_항목_그룹.수정자_번호 */
+, SLCTN_ORDR = #SLCTN_ORDR#::int /* 보수_대상_항목_그룹.선정_순서 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_대상_항목_그룹.수정자_번호 */
 , UPDT_DT = NOW() /* 보수_대상_항목_그룹.수정_일시 */
 		WHERE 1 = 1
-		AND GROUP_ITEM_NO = #GROUP_ITEM_NO# /* 보수_대상_항목_그룹.그룹_항목_번호 */
+		AND GROUP_ITEM_NO = #GROUP_ITEM_NO#::int /* 보수_대상_항목_그룹.그룹_항목_번호 */
 ]]>
 	</update>
 
@@ -220,10 +220,10 @@ SLCTN_STEP = #SLCTN_STEP# /* 보수_대상_항목_그룹.선정_단계 */
 		UPDATE TN_RPAIR_TRGET_GROUP SET
  DELETE_AT = 'Y' /* 보수_대상_항목_그룹.삭제_여부 */
 , USE_AT = 'N' /* 보수_대상_항목_그룹.사용_여부 */
-, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_항목_그룹.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_대상_항목_그룹.수정자_번호 */
 , UPDT_DT = NOW() /* 보수_대상_항목_그룹.수정_일시 */
 		WHERE 1 = 1
-		AND GROUP_ITEM_NO = #GROUP_ITEM_NO# /* 보수_대상_항목_그룹.그룹_항목_번호 */
+		AND GROUP_ITEM_NO = #GROUP_ITEM_NO#::int /* 보수_대상_항목_그룹.그룹_항목_번호 */
 ]]>
 	</delete>
 
@@ -232,11 +232,11 @@ SLCTN_STEP = #SLCTN_STEP# /* 보수_대상_항목_그룹.선정_단계 */
 		/* rpairTrgetGroupDAO.updateToggleTMPR_SLCTN_AT */
 		/* 보수_대상_항목_그룹 수정 임시선택 토글 */
 		UPDATE TN_RPAIR_TRGET_GROUP SET
- TMPR_SLCTN_AT = DECODE(TMPR_SLCTN_AT,'Y','N','Y') /* 보수_대상_항목_그룹.임시_선정_여부 */
-, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_항목_그룹.수정자_번호 */
+ TMPR_SLCTN_AT = CASE WHEN TMPR_SLCTN_AT = 'Y' THEN 'N' ELSE 'Y' END /* 보수_대상_항목_그룹.임시_선정_여부 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_대상_항목_그룹.수정자_번호 */
 , UPDT_DT = NOW() /* 보수_대상_항목_그룹.수정_일시 */
 		WHERE 1 = 1
-		AND GROUP_ITEM_NO = #GROUP_ITEM_NO# /* 보수_대상_항목_그룹.그룹_항목_번호 */
+		AND GROUP_ITEM_NO = #GROUP_ITEM_NO#::int /* 보수_대상_항목_그룹.그룹_항목_번호 */
 ]]>
 	</update>
 
@@ -246,10 +246,10 @@ SLCTN_STEP = #SLCTN_STEP# /* 보수_대상_항목_그룹.선정_단계 */
 		/* 보수_대상_항목_그룹 수정 임시선택 을 선정으로 돌린다. */
 		UPDATE TN_RPAIR_TRGET_GROUP SET
  TMPR_SLCTN_AT = SLCTN_AT /* 보수_대상_항목_그룹.임시_선정_여부 */
-, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_항목_그룹.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_대상_항목_그룹.수정자_번호 */
 , UPDT_DT = NOW() /* 보수_대상_항목_그룹.수정_일시 */
 		WHERE 1 = 1
-		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#   /* 보수_대상_항목_그룹.대상_선정_번호 */
+		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int   /* 보수_대상_항목_그룹.대상_선정_번호 */
 ]]>
 	</update>
 
@@ -350,7 +350,7 @@ SELECT
     INNER JOIN RPMDCODES
         ON RPMDCODES.RPAIR_MTHD_CODE= tnrpairtrgetgroup.RPAIR_MTHD_CODE
 	WHERE 1 = 1
-	AND tnrpairtrgetgroup.GROUP_ITEM_NO = #GROUP_ITEM_NO# /* 보수_대상_항목_그룹.그룹_항목_번호 */
+	AND tnrpairtrgetgroup.GROUP_ITEM_NO = #GROUP_ITEM_NO#::int /* 보수_대상_항목_그룹.그룹_항목_번호 */
 ]]>
 	</select>
 
@@ -358,56 +358,56 @@ SELECT
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnrpairtrgetgroup.GROUP_ITEM_NO = #searchKeyword#
+			AND tnrpairtrgetgroup.GROUP_ITEM_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
-			AND tnrpairtrgetgroup.TRGET_SLCTN_NO LIKE '%' || #searchKeyword# || '%'
+			AND tnrpairtrgetgroup.TRGET_SLCTN_NO LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
-		<isNotEmpty property="GROUP_ITEM_NO"><![CDATA[ /* 보수_대상_항목_그룹.그룹_항목_번호 */ AND tnrpairtrgetgroup.GROUP_ITEM_NO = #GROUP_ITEM_NO# ]]></isNotEmpty>
-		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_항목_그룹.대상_선정_번호 */ AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO# ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_STEP"><![CDATA[ /* 보수_대상_항목_그룹.선정_단계 */ AND tnrpairtrgetgroup.SLCTN_STEP = #SLCTN_STEP# ]]></isNotEmpty>
+		<isNotEmpty property="GROUP_ITEM_NO"><![CDATA[ /* 보수_대상_항목_그룹.그룹_항목_번호 */ AND tnrpairtrgetgroup.GROUP_ITEM_NO = #GROUP_ITEM_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_항목_그룹.대상_선정_번호 */ AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="SLCTN_STEP"><![CDATA[ /* 보수_대상_항목_그룹.선정_단계 */ AND tnrpairtrgetgroup.SLCTN_STEP = #SLCTN_STEP#::int ]]></isNotEmpty>
 		<isNotEmpty property="ITEM_SLCTN_STTUS"><![CDATA[ /* 보수_대상_항목_그룹.항목_선정_상태 */ AND tnrpairtrgetgroup.ITEM_SLCTN_STTUS = #ITEM_SLCTN_STTUS# ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 보수_대상_항목_그룹.노선_코드 */ AND tnrpairtrgetgroup.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 보수_대상_항목_그룹.행선_코드 */ AND tnrpairtrgetgroup.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ /* 보수_대상_항목_그룹.차로 */ AND tnrpairtrgetgroup.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ /* 보수_대상_항목_그룹.시점 */ AND tnrpairtrgetgroup.STRTPT = #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ /* 보수_대상_항목_그룹.종점 */ AND tnrpairtrgetgroup.ENDPT = #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 보수_대상_항목_그룹.시점 */ AND tnrpairtrgetgroup.STRTPT = #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 보수_대상_항목_그룹.종점 */ AND tnrpairtrgetgroup.ENDPT = #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="CELL_TYPE"><![CDATA[ /* 보수_대상_항목_그룹.셀_타입 */ AND tnrpairtrgetgroup.CELL_TYPE = #CELL_TYPE# ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ /* 보수_대상_항목_그룹.부서코드 */ AND tnrpairtrgetgroup.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_MT"><![CDATA[ /* 보수_대상_항목_그룹.조사_월 */ AND tnrpairtrgetgroup.SRVY_MT = #SRVY_MT# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_YEAR"><![CDATA[ /* 보수_대상_항목_그룹.조사_년도 */ AND tnrpairtrgetgroup.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
-		<isNotEmpty property="GPCI"><![CDATA[ /* 보수_대상_항목_그룹.GPCI */ AND tnrpairtrgetgroup.GPCI = #GPCI# ]]></isNotEmpty>
-		<isNotEmpty property="PC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.포장상태등급 */ AND tnrpairtrgetgroup.PC_GRAD = #PC_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="GPCI"><![CDATA[ /* 보수_대상_항목_그룹.GPCI */ AND tnrpairtrgetgroup.GPCI = #GPCI#::int ]]></isNotEmpty>
+		<isNotEmpty property="PC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.포장상태등급 */ AND tnrpairtrgetgroup.PC_GRAD = #PC_GRAD#::int ]]></isNotEmpty>
 		<isNotEmpty property="CALC_YEAR"><![CDATA[ /* 보수_대상_항목_그룹.산정_년도 */ AND tnrpairtrgetgroup.CALC_YEAR = #CALC_YEAR# ]]></isNotEmpty>
 		<isNotEmpty property="CALC_MT"><![CDATA[ /* 보수_대상_항목_그룹.산정_월 */ AND tnrpairtrgetgroup.CALC_MT = #CALC_MT# ]]></isNotEmpty>
-		<isNotEmpty property="CALC_GPCI"><![CDATA[ /* 보수_대상_항목_그룹.산정_GPCI */ AND tnrpairtrgetgroup.CALC_GPCI = #CALC_GPCI# ]]></isNotEmpty>
-		<isNotEmpty property="CALC_PC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.산정_포장상태등급 */ AND tnrpairtrgetgroup.CALC_PC_GRAD = #CALC_PC_GRAD# ]]></isNotEmpty>
-		<isNotEmpty property="DMG_VAL"><![CDATA[ /* 보수_대상_항목_그룹.파손도_값 */ AND tnrpairtrgetgroup.DMG_VAL = #DMG_VAL# ]]></isNotEmpty>
+		<isNotEmpty property="CALC_GPCI"><![CDATA[ /* 보수_대상_항목_그룹.산정_GPCI */ AND tnrpairtrgetgroup.CALC_GPCI = #CALC_GPCI#::int ]]></isNotEmpty>
+		<isNotEmpty property="CALC_PC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.산정_포장상태등급 */ AND tnrpairtrgetgroup.CALC_PC_GRAD = #CALC_PC_GRAD#::int ]]></isNotEmpty>
+		<isNotEmpty property="DMG_VAL"><![CDATA[ /* 보수_대상_항목_그룹.파손도_값 */ AND tnrpairtrgetgroup.DMG_VAL = #DMG_VAL#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTRWK_YEAR"><![CDATA[ /* 보수_대상_항목_그룹.공사_년도 */ AND tnrpairtrgetgroup.CNTRWK_YEAR = #CNTRWK_YEAR# ]]></isNotEmpty>
-		<isNotEmpty property="TRNSPORT_QY"><![CDATA[ /* 보수_대상_항목_그룹.교통_량 */ AND tnrpairtrgetgroup.TRNSPORT_QY = #TRNSPORT_QY# ]]></isNotEmpty>
-		<isNotEmpty property="LEN"><![CDATA[ /* 보수_대상_항목_그룹.연장 */ AND tnrpairtrgetgroup.LEN = #LEN# ]]></isNotEmpty>
-		<isNotEmpty property="AR"><![CDATA[ /* 보수_대상_항목_그룹.면적 */ AND tnrpairtrgetgroup.AR = #AR# ]]></isNotEmpty>
+		<isNotEmpty property="TRNSPORT_QY"><![CDATA[ /* 보수_대상_항목_그룹.교통_량 */ AND tnrpairtrgetgroup.TRNSPORT_QY = #TRNSPORT_QY#::int ]]></isNotEmpty>
+		<isNotEmpty property="LEN"><![CDATA[ /* 보수_대상_항목_그룹.연장 */ AND tnrpairtrgetgroup.LEN = #LEN#::int ]]></isNotEmpty>
+		<isNotEmpty property="AR"><![CDATA[ /* 보수_대상_항목_그룹.면적 */ AND tnrpairtrgetgroup.AR = #AR#::int ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_MTHD_CODE"><![CDATA[ /* 보수_대상_항목_그룹.보수_공법_코드 */ AND tnrpairtrgetgroup.RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="MSR_DM_CODE"><![CDATA[ /* 보수_대상_항목_그룹.공법선정비율_결정방식_코드 */ AND tnrpairtrgetgroup.MSR_DM_CODE = #MSR_DM_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="THRHLD"><![CDATA[ /* 보수_대상_항목_그룹.임계값 */ AND tnrpairtrgetgroup.THRHLD = #THRHLD# ]]></isNotEmpty>
-		<isNotEmpty property="AMOUNT_CALC"><![CDATA[ /* 보수_대상_항목_그룹.금액_산정 */ AND tnrpairtrgetgroup.AMOUNT_CALC = #AMOUNT_CALC# ]]></isNotEmpty>
-		<isNotEmpty property="BUDGET_ASIGN"><![CDATA[ /* 보수_대상_항목_그룹.예산_배정 */ AND tnrpairtrgetgroup.BUDGET_ASIGN = #BUDGET_ASIGN# ]]></isNotEmpty>
+		<isNotEmpty property="THRHLD"><![CDATA[ /* 보수_대상_항목_그룹.임계값 */ AND tnrpairtrgetgroup.THRHLD = #THRHLD#::int ]]></isNotEmpty>
+		<isNotEmpty property="AMOUNT_CALC"><![CDATA[ /* 보수_대상_항목_그룹.금액_산정 */ AND tnrpairtrgetgroup.AMOUNT_CALC = #AMOUNT_CALC#::int ]]></isNotEmpty>
+		<isNotEmpty property="BUDGET_ASIGN"><![CDATA[ /* 보수_대상_항목_그룹.예산_배정 */ AND tnrpairtrgetgroup.BUDGET_ASIGN = #BUDGET_ASIGN#::int ]]></isNotEmpty>
 		<isNotEmpty property="FIXING_AT"><![CDATA[ /* 보수_대상_항목_그룹.고정_여부 */ AND tnrpairtrgetgroup.FIXING_AT = #FIXING_AT# ]]></isNotEmpty>
 		<isNotEmpty property="BUDGET_CECK"><![CDATA[ /* 보수_대상_항목_그룹.예산_체크 */ AND tnrpairtrgetgroup.BUDGET_CECK = #BUDGET_CECK# ]]></isNotEmpty>
-		<isNotEmpty property="ACCMLT_CALC"><![CDATA[ /* 보수_대상_항목_그룹.누적_산정 */ AND tnrpairtrgetgroup.ACCMLT_CALC = #ACCMLT_CALC# ]]></isNotEmpty>
+		<isNotEmpty property="ACCMLT_CALC"><![CDATA[ /* 보수_대상_항목_그룹.누적_산정 */ AND tnrpairtrgetgroup.ACCMLT_CALC = #ACCMLT_CALC#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_AT"><![CDATA[ /* 보수_대상_항목_그룹.선정_여부 */ AND tnrpairtrgetgroup.SLCTN_AT = #SLCTN_AT# ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_DT"><![CDATA[ /* 보수_대상_항목_그룹.선정_일시 */ AND tnrpairtrgetgroup.SLCTN_DT = #SLCTN_DT# ]]></isNotEmpty>
 		<isNotEmpty property="TMPR_SLCTN_AT"><![CDATA[ /* 보수_대상_항목_그룹.임시_선정_여부 */ AND tnrpairtrgetgroup.TMPR_SLCTN_AT = #TMPR_SLCTN_AT# ]]></isNotEmpty>
-		<isNotEmpty property="NODE_CO"><![CDATA[ /* 보수_대상_항목_그룹.노드_개수 */ AND tnrpairtrgetgroup.NODE_CO = #NODE_CO# ]]></isNotEmpty>
+		<isNotEmpty property="NODE_CO"><![CDATA[ /* 보수_대상_항목_그룹.노드_개수 */ AND tnrpairtrgetgroup.NODE_CO = #NODE_CO#::int ]]></isNotEmpty>
 		<isNotEmpty property="VMTC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.교통량등급 */ AND tnrpairtrgetgroup.VMTC_GRAD = #VMTC_GRAD# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.도로등급 */ AND tnrpairtrgetgroup.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
 		<isNotEmpty property="ADM_CODE"><![CDATA[ /* 보수_대상_항목_그룹.행정구역코드 */ AND tnrpairtrgetgroup.ADM_CODE LIKE #ADM_CODE# || '%' ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_ORDR"><![CDATA[ /* 보수_대상_항목_그룹.선정_순서 */ AND tnrpairtrgetgroup.SLCTN_ORDR = #SLCTN_ORDR# ]]></isNotEmpty>
+		<isNotEmpty property="SLCTN_ORDR"><![CDATA[ /* 보수_대상_항목_그룹.선정_순서 */ AND tnrpairtrgetgroup.SLCTN_ORDR = #SLCTN_ORDR#::int ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 보수_대상_항목_그룹.삭제_여부 */ AND tnrpairtrgetgroup.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 보수_대상_항목_그룹.사용_여부 */ AND tnrpairtrgetgroup.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_항목_그룹.생성자_번호 */ AND tnrpairtrgetgroup.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_항목_그룹.생성자_번호 */ AND tnrpairtrgetgroup.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 보수_대상_항목_그룹.생성_일시 */ AND tnrpairtrgetgroup.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_항목_그룹.수정자_번호 */ AND tnrpairtrgetgroup.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_항목_그룹.수정자_번호 */ AND tnrpairtrgetgroup.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 보수_대상_항목_그룹.수정_일시 */ AND tnrpairtrgetgroup.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -467,58 +467,58 @@ SELECT
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnrpairtrgetgroup.GROUP_ITEM_NO = #searchKeyword#
+			AND tnrpairtrgetgroup.GROUP_ITEM_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
-			AND tnrpairtrgetgroup.TRGET_SLCTN_NO LIKE '%' || #searchKeyword# || '%'
+			AND tnrpairtrgetgroup.TRGET_SLCTN_NO LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
 
-			<isNotEmpty property="GROUP_ITEM_NO"><![CDATA[ /* 보수_대상_항목_그룹.그룹_항목_번호 */ AND tnrpairtrgetgroup.GROUP_ITEM_NO = #GROUP_ITEM_NO# ]]></isNotEmpty>
-		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_항목_그룹.대상_선정_번호 */ AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO# ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_STEP"><![CDATA[ /* 보수_대상_항목_그룹.선정_단계 */ AND tnrpairtrgetgroup.SLCTN_STEP = #SLCTN_STEP# ]]></isNotEmpty>
+			<isNotEmpty property="GROUP_ITEM_NO"><![CDATA[ /* 보수_대상_항목_그룹.그룹_항목_번호 */ AND tnrpairtrgetgroup.GROUP_ITEM_NO = #GROUP_ITEM_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_항목_그룹.대상_선정_번호 */ AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="SLCTN_STEP"><![CDATA[ /* 보수_대상_항목_그룹.선정_단계 */ AND tnrpairtrgetgroup.SLCTN_STEP = #SLCTN_STEP#::int ]]></isNotEmpty>
 		<isNotEmpty property="ITEM_SLCTN_STTUS"><![CDATA[ /* 보수_대상_항목_그룹.항목_선정_상태 */ AND tnrpairtrgetgroup.ITEM_SLCTN_STTUS = #ITEM_SLCTN_STTUS# ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 보수_대상_항목_그룹.노선_코드 */ AND tnrpairtrgetgroup.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 보수_대상_항목_그룹.행선_코드 */ AND tnrpairtrgetgroup.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ /* 보수_대상_항목_그룹.차로 */ AND tnrpairtrgetgroup.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ /* 보수_대상_항목_그룹.시점 */ AND tnrpairtrgetgroup.STRTPT = #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ /* 보수_대상_항목_그룹.종점 */ AND tnrpairtrgetgroup.ENDPT = #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 보수_대상_항목_그룹.시점 */ AND tnrpairtrgetgroup.STRTPT = #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 보수_대상_항목_그룹.종점 */ AND tnrpairtrgetgroup.ENDPT = #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="CELL_TYPE"><![CDATA[ /* 보수_대상_항목_그룹.셀_타입 */ AND tnrpairtrgetgroup.CELL_TYPE = #CELL_TYPE# ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ /* 보수_대상_항목_그룹.부서코드 */ AND tnrpairtrgetgroup.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_MT"><![CDATA[ /* 보수_대상_항목_그룹.조사_월 */ AND tnrpairtrgetgroup.SRVY_MT = #SRVY_MT# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_YEAR"><![CDATA[ /* 보수_대상_항목_그룹.조사_년도 */ AND tnrpairtrgetgroup.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
-		<isNotEmpty property="GPCI"><![CDATA[ /* 보수_대상_항목_그룹.GPCI */ AND tnrpairtrgetgroup.GPCI = #GPCI# ]]></isNotEmpty>
-		<isNotEmpty property="PC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.포장상태등급 */ AND tnrpairtrgetgroup.PC_GRAD = #PC_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="GPCI"><![CDATA[ /* 보수_대상_항목_그룹.GPCI */ AND tnrpairtrgetgroup.GPCI = #GPCI#::int ]]></isNotEmpty>
+		<isNotEmpty property="PC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.포장상태등급 */ AND tnrpairtrgetgroup.PC_GRAD = #PC_GRAD#::int ]]></isNotEmpty>
 		<isNotEmpty property="CALC_YEAR"><![CDATA[ /* 보수_대상_항목_그룹.산정_년도 */ AND tnrpairtrgetgroup.CALC_YEAR = #CALC_YEAR# ]]></isNotEmpty>
 		<isNotEmpty property="CALC_MT"><![CDATA[ /* 보수_대상_항목_그룹.산정_월 */ AND tnrpairtrgetgroup.CALC_MT = #CALC_MT# ]]></isNotEmpty>
-		<isNotEmpty property="CALC_GPCI"><![CDATA[ /* 보수_대상_항목_그룹.산정_GPCI */ AND tnrpairtrgetgroup.CALC_GPCI = #CALC_GPCI# ]]></isNotEmpty>
-		<isNotEmpty property="CALC_PC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.산정_포장상태등급 */ AND tnrpairtrgetgroup.CALC_PC_GRAD = #CALC_PC_GRAD# ]]></isNotEmpty>
-		<isNotEmpty property="DMG_VAL"><![CDATA[ /* 보수_대상_항목_그룹.파손도_값 */ AND tnrpairtrgetgroup.DMG_VAL = #DMG_VAL# ]]></isNotEmpty>
+		<isNotEmpty property="CALC_GPCI"><![CDATA[ /* 보수_대상_항목_그룹.산정_GPCI */ AND tnrpairtrgetgroup.CALC_GPCI = #CALC_GPCI#::int ]]></isNotEmpty>
+		<isNotEmpty property="CALC_PC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.산정_포장상태등급 */ AND tnrpairtrgetgroup.CALC_PC_GRAD = #CALC_PC_GRAD#::int ]]></isNotEmpty>
+		<isNotEmpty property="DMG_VAL"><![CDATA[ /* 보수_대상_항목_그룹.파손도_값 */ AND tnrpairtrgetgroup.DMG_VAL = #DMG_VAL#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTRWK_YEAR"><![CDATA[ /* 보수_대상_항목_그룹.공사_년도 */ AND tnrpairtrgetgroup.CNTRWK_YEAR = #CNTRWK_YEAR# ]]></isNotEmpty>
-		<isNotEmpty property="TRNSPORT_QY"><![CDATA[ /* 보수_대상_항목_그룹.교통_량 */ AND tnrpairtrgetgroup.TRNSPORT_QY = #TRNSPORT_QY# ]]></isNotEmpty>
-		<isNotEmpty property="LEN"><![CDATA[ /* 보수_대상_항목_그룹.연장 */ AND tnrpairtrgetgroup.LEN = #LEN# ]]></isNotEmpty>
-		<isNotEmpty property="AR"><![CDATA[ /* 보수_대상_항목_그룹.면적 */ AND tnrpairtrgetgroup.AR = #AR# ]]></isNotEmpty>
+		<isNotEmpty property="TRNSPORT_QY"><![CDATA[ /* 보수_대상_항목_그룹.교통_량 */ AND tnrpairtrgetgroup.TRNSPORT_QY = #TRNSPORT_QY#::int ]]></isNotEmpty>
+		<isNotEmpty property="LEN"><![CDATA[ /* 보수_대상_항목_그룹.연장 */ AND tnrpairtrgetgroup.LEN = #LEN#::int ]]></isNotEmpty>
+		<isNotEmpty property="AR"><![CDATA[ /* 보수_대상_항목_그룹.면적 */ AND tnrpairtrgetgroup.AR = #AR#::int ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_MTHD_CODE"><![CDATA[ /* 보수_대상_항목_그룹.보수_공법_코드 */ AND tnrpairtrgetgroup.RPAIR_MTHD_CODE = #RPAIR_MTHD_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="MSR_DM_CODE"><![CDATA[ /* 보수_대상_항목_그룹.공법선정비율_결정방식_코드 */ AND tnrpairtrgetgroup.MSR_DM_CODE = #MSR_DM_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="THRHLD"><![CDATA[ /* 보수_대상_항목_그룹.임계값 */ AND tnrpairtrgetgroup.THRHLD = #THRHLD# ]]></isNotEmpty>
-		<isNotEmpty property="AMOUNT_CALC"><![CDATA[ /* 보수_대상_항목_그룹.금액_산정 */ AND tnrpairtrgetgroup.AMOUNT_CALC = #AMOUNT_CALC# ]]></isNotEmpty>
-		<isNotEmpty property="BUDGET_ASIGN"><![CDATA[ /* 보수_대상_항목_그룹.예산_배정 */ AND tnrpairtrgetgroup.BUDGET_ASIGN = #BUDGET_ASIGN# ]]></isNotEmpty>
+		<isNotEmpty property="THRHLD"><![CDATA[ /* 보수_대상_항목_그룹.임계값 */ AND tnrpairtrgetgroup.THRHLD = #THRHLD#::int ]]></isNotEmpty>
+		<isNotEmpty property="AMOUNT_CALC"><![CDATA[ /* 보수_대상_항목_그룹.금액_산정 */ AND tnrpairtrgetgroup.AMOUNT_CALC = #AMOUNT_CALC#::int ]]></isNotEmpty>
+		<isNotEmpty property="BUDGET_ASIGN"><![CDATA[ /* 보수_대상_항목_그룹.예산_배정 */ AND tnrpairtrgetgroup.BUDGET_ASIGN = #BUDGET_ASIGN#::int ]]></isNotEmpty>
 		<isNotEmpty property="FIXING_AT"><![CDATA[ /* 보수_대상_항목_그룹.고정_여부 */ AND tnrpairtrgetgroup.FIXING_AT = #FIXING_AT# ]]></isNotEmpty>
 		<isNotEmpty property="BUDGET_CECK"><![CDATA[ /* 보수_대상_항목_그룹.예산_체크 */ AND tnrpairtrgetgroup.BUDGET_CECK = #BUDGET_CECK# ]]></isNotEmpty>
-		<isNotEmpty property="ACCMLT_CALC"><![CDATA[ /* 보수_대상_항목_그룹.누적_산정 */ AND tnrpairtrgetgroup.ACCMLT_CALC = #ACCMLT_CALC# ]]></isNotEmpty>
+		<isNotEmpty property="ACCMLT_CALC"><![CDATA[ /* 보수_대상_항목_그룹.누적_산정 */ AND tnrpairtrgetgroup.ACCMLT_CALC = #ACCMLT_CALC#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_AT"><![CDATA[ /* 보수_대상_항목_그룹.선정_여부 */ AND tnrpairtrgetgroup.SLCTN_AT = #SLCTN_AT# ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_DT"><![CDATA[ /* 보수_대상_항목_그룹.선정_일시 */ AND tnrpairtrgetgroup.SLCTN_DT = #SLCTN_DT# ]]></isNotEmpty>
 		<isNotEmpty property="TMPR_SLCTN_AT"><![CDATA[ /* 보수_대상_항목_그룹.임시_선정_여부 */ AND tnrpairtrgetgroup.TMPR_SLCTN_AT = #TMPR_SLCTN_AT# ]]></isNotEmpty>
-		<isNotEmpty property="NODE_CO"><![CDATA[ /* 보수_대상_항목_그룹.노드_개수 */ AND tnrpairtrgetgroup.NODE_CO = #NODE_CO# ]]></isNotEmpty>
+		<isNotEmpty property="NODE_CO"><![CDATA[ /* 보수_대상_항목_그룹.노드_개수 */ AND tnrpairtrgetgroup.NODE_CO = #NODE_CO#::int ]]></isNotEmpty>
 		<isNotEmpty property="VMTC_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.교통량등급 */ AND tnrpairtrgetgroup.VMTC_GRAD = #VMTC_GRAD# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_GRAD"><![CDATA[ /* 보수_대상_항목_그룹.도로등급 */ AND tnrpairtrgetgroup.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
 		<isNotEmpty property="ADM_CODE"><![CDATA[ /* 보수_대상_항목_그룹.행정구역코드 */ AND tnrpairtrgetgroup.ADM_CODE LIKE #ADM_CODE# || '%' ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_ORDR"><![CDATA[ /* 보수_대상_항목_그룹.선정_순서 */ AND tnrpairtrgetgroup.SLCTN_ORDR = #SLCTN_ORDR# ]]></isNotEmpty>
+		<isNotEmpty property="SLCTN_ORDR"><![CDATA[ /* 보수_대상_항목_그룹.선정_순서 */ AND tnrpairtrgetgroup.SLCTN_ORDR = #SLCTN_ORDR#::int ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 보수_대상_항목_그룹.삭제_여부 */ AND tnrpairtrgetgroup.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 보수_대상_항목_그룹.사용_여부 */ AND tnrpairtrgetgroup.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_항목_그룹.생성자_번호 */ AND tnrpairtrgetgroup.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_항목_그룹.생성자_번호 */ AND tnrpairtrgetgroup.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 보수_대상_항목_그룹.생성_일시 */ AND tnrpairtrgetgroup.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_항목_그룹.수정자_번호 */ AND tnrpairtrgetgroup.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_항목_그룹.수정자_번호 */ AND tnrpairtrgetgroup.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 보수_대상_항목_그룹.수정_일시 */ AND tnrpairtrgetgroup.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 	<![CDATA[
 		)
@@ -615,7 +615,7 @@ SELECT
    AND tcrpairmthd.USE_AT = 'Y'                                         /* 보수공법코드.사용_여부 */
 )
 SELECT
-	TO_NUMBER(tnrpairtrgetgroup.ROUTE_CODE) ROAD_NO_VAL
+	tnrpairtrgetgroup.ROUTE_CODE::int ROAD_NO_VAL
 	, tnrpairtrgetgroup.*
 FROM (SELECT ROW_NUMBER() OVER(
 ]]>
@@ -628,7 +628,7 @@ FROM (SELECT ROW_NUMBER() OVER(
 		, SUM( tb.TMPR_FIX_BUDGET_ASIGN) OVER() TOTAL_TMPR_FIX_BUDGET_ASIGN
 		, SUM( tb.BUDGET_ASIGN) OVER() TOTAL_BUDGET_ASIGN
 		, SUM( tb.AMOUNT_CALC) OVER() TOTAL_AMOUNT_CALC
-		, SUM(DECODE(tb.TMPR_SLCTN_AT, 'Y', tb.AMOUNT_CALC, 0)) OVER() TOTAL_TMPR_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
+		, SUM(CASE WHEN tb.TMPR_SLCTN_AT = 'Y' THEN tb.AMOUNT_CALC ELSE 0 END) OVER() TOTAL_TMPR_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
 		, tb.*
 	FROM (
 	SELECT
@@ -667,7 +667,7 @@ FROM (SELECT ROW_NUMBER() OVER(
      , tnrpairtrgetgroup.THRHLD    /* 보수_대상_항목_그룹.임계값 */
      , tnrpairtrgetgroup.AMOUNT_CALC    /* 보수_대상_항목_그룹.금액_산정 */
      , ROUND(tnrpairtrgetgroup.AMOUNT_CALC  ,0) FIX_AMOUNT_CALC     /* 보수_대상_항목_그룹.금액_산정 */
-     , ROUND( DECODE(tnrpairtrgetgroup.TMPR_SLCTN_AT, 'Y', tnrpairtrgetgroup.AMOUNT_CALC, 0) ,0) TMPR_FIX_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
+     , ROUND( CASE WHEN tnrpairtrgetgroup.TMPR_SLCTN_AT = 'Y' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END ,0) TMPR_FIX_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
      , tnrpairtrgetgroup.BUDGET_ASIGN    /* 보수_대상_항목_그룹.예산_배정 */
      , ROUND(tnrpairtrgetgroup.BUDGET_ASIGN  ,0) FIX_BUDGET_ASIGN  /* 보수_대상_항목_그룹.예산_배정 */
      , tnrpairtrgetgroup.FIXING_AT    /* 보수_대상_항목_그룹.고정_여부 */
@@ -827,16 +827,16 @@ SELECT
 		/* rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalSummary */
 		/* 보수_대상_항목_선정예산(원) 조회  */
 SELECT
-       SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0001', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_1
-     , SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0002', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_2
-     , SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0003', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_3
-     , SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0004', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_4
-     , SUM(DECODE(tnrpairtrgetgroup.MSR_DM_CODE,'MSRD0005', tnrpairtrgetgroup.AMOUNT_CALC, 0) )    SLCTN_BUDGET_5
+       SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0001' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_1
+     , SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0002' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_2
+     , SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0003' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_3
+     , SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0004' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_4
+     , SUM(CASE WHEN tnrpairtrgetgroup.MSR_DM_CODE = 'MSRD0005' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END )    SLCTN_BUDGET_5
   FROM TN_RPAIR_TRGET_GROUP  tnrpairtrgetgroup  /*** 보수_대상_항목_그룹 테이블 ***/
    INNER JOIN TC_CODE  celtcode
    ON celtcode.CODE_VAL = tnrpairtrgetgroup.CELL_TYPE AND celtcode.CL_CODE = 'CELT' AND celtcode.USE_AT = 'Y'    AND celtcode.DELETE_AT = 'N'
  WHERE 1= 1
-   AND tnrpairtrgetgroup.TRGET_SLCTN_NO =#TRGET_SLCTN_NO#
+   AND tnrpairtrgetgroup.TRGET_SLCTN_NO =#TRGET_SLCTN_NO#::int
    AND tnrpairtrgetgroup.TMPR_SLCTN_AT ='Y'
    AND tnrpairtrgetgroup.DELETE_AT ='N'   /* 보수_대상_항목_그룹.삭제_여부 */
    AND tnrpairtrgetgroup.USE_AT ='Y'   /* 보수_대상_항목_그룹.사용_여부 */
@@ -908,7 +908,7 @@ WITH RPMDCODES AS (
 ]]>
 	<include refid="rpairTrgetGroupDAO.selectRpairTrgetGroupList.where" />
 <![CDATA[
-		AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_항목_그룹.대상_선정_번호 */
+		AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_항목_그룹.대상_선정_번호 */
 		AND tnrpairtrgetgroup.DELETE_AT = 'N'
 		AND tnrpairtrgetgroup.USE_AT  = 'Y'
 GROUP BY tnrpairtrgetgroup.DEPT_CODE
@@ -984,7 +984,7 @@ INNER JOIN RPMDCODES
 ]]>
 	<include refid="rpairTrgetGroupDAO.selectRpairTrgetGroupList.where" />
 <![CDATA[
-	AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#	/* 보수_대상_항목_그룹.대상_선정_번호 */
+	AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int	/* 보수_대상_항목_그룹.대상_선정_번호 */
 	AND tnrpairtrgetgroup.DELETE_AT = 'N'
 	AND tnrpairtrgetgroup.USE_AT = 'Y'
 GROUP BY RPMDCODES.RPAIR_MTHD_CODE
@@ -1046,7 +1046,7 @@ WITH RPMDCODES AS (
 , ADMINLIST AS (
 	SELECT
 		COALESCE(GU.BJCD, CITY.BJCD) ADM_CODE
-		, DECODE(GU.NAME, NULL, CITY.NAME, CITY.NAME ||' '|| GU.NAME) ADM_NM
+		, CASE WHEN GU.NAME = NULL THEN CITY.NAME ELSE CITY.NAME ||' '|| GU.NAME END ADM_NM
 	FROM N3A_G0100000 CITY
 	LEFT OUTER JOIN N3A_G0100000 GU
 		ON GU.BJCD NOT LIKE '41__000000'
@@ -1079,7 +1079,7 @@ INNER JOIN RPMDCODES
 ]]>
 	<include refid="rpairTrgetGroupDAO.selectRpairTrgetGroupList.where" />
 <![CDATA[
-	AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#	/* 보수_대상_항목_그룹.대상_선정_번호 */
+	AND tnrpairtrgetgroup.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int	/* 보수_대상_항목_그룹.대상_선정_번호 */
 	AND tnrpairtrgetgroup.DELETE_AT = 'N'
 	AND tnrpairtrgetgroup.USE_AT = 'Y'
 GROUP BY tnrpairtrgetgroup.ADM_CODE

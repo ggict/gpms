@@ -443,7 +443,7 @@
      )
      , RESULTLIST AS (
         SELECT tb.*
-             , DECODE(tb.SCR, 0, (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE), 0) SUM_RATE
+             , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 SUM_RATE
          FROM LASTLIST tb
      )
      SELECT tb.*
@@ -919,7 +919,7 @@
         )
         , RESULTLIST AS (
             SELECT tb.*
-                 , DECODE(tb.SCR, 0, (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE), 0) SUM_RATE
+                 , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 SUM_RATE
              FROM LASTLIST tb
          )
          SELECT tb.*

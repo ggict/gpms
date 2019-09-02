@@ -58,7 +58,7 @@
 			, #HCODE# /* DWG_INFO.이력_코드 */
 			, #SECT_ST# /* DWG_INFO.도면_시점 */
 			, #SECT_ED# /* DWG_INFO.도면_종점 */
-			, #DWG_LEN# /* DWG_INFO.도면_연장 */
+			, #DWG_LEN#::int /* DWG_INFO.도면_연장 */
 			, #DWG_NAME# /* DWG_INFO.도면_명 */
 			, #CON_NAME# /* DWG_INFO.구간_도면_명 */
 			, #LOCAT# /* DWG_INFO.법정동_위치 */
@@ -84,7 +84,7 @@
 		, HCODE = #HCODE# /* DWG_INFO.이력_코드 */
 		, SECT_ST = #SECT_ST# /* DWG_INFO.도면_시점 */
 		, SECT_ED = #SECT_ED# /* DWG_INFO.도면_종점 */
-		, DWG_LEN = #DWG_LEN# /* DWG_INFO.도면_연장 */
+		, DWG_LEN = #DWG_LEN#::int /* DWG_INFO.도면_연장 */
 		, DWG_NAME = #DWG_NAME# /* DWG_INFO.도면_명 */
 		, CON_NAME = #CON_NAME# /* DWG_INFO.구간_도면_명 */
 		, LOCAT = #LOCAT# /* DWG_INFO.법정동_위치 */
@@ -153,7 +153,7 @@
 		<isNotEmpty property="HCODE"><![CDATA[ /* DWG_INFO.이력_코드 */ AND dwginfo.HCODE = #HCODE# ]]></isNotEmpty>
 		<isNotEmpty property="SECT_ST"><![CDATA[ /* DWG_INFO.도면_시점 */ AND dwginfo.SECT_ST = #SECT_ST# ]]></isNotEmpty>
 		<isNotEmpty property="SECT_ED"><![CDATA[ /* DWG_INFO.도면_종점 */ AND dwginfo.SECT_ED = #SECT_ED# ]]></isNotEmpty>
-		<isNotEmpty property="DWG_LEN"><![CDATA[ /* DWG_INFO.도면_연장 */ AND dwginfo.DWG_LEN = #DWG_LEN# ]]></isNotEmpty>
+		<isNotEmpty property="DWG_LEN"><![CDATA[ /* DWG_INFO.도면_연장 */ AND dwginfo.DWG_LEN = #DWG_LEN#::int ]]></isNotEmpty>
 		<isNotEmpty property="DWG_NAME"><![CDATA[ /* DWG_INFO.도면_명 */ AND dwginfo.DWG_NAME = #DWG_NAME# ]]></isNotEmpty>
 		<isNotEmpty property="CON_NAME"><![CDATA[ /* DWG_INFO.구간_도면_명 */ AND dwginfo.CON_NAME = #CON_NAME# ]]></isNotEmpty>
 		<isNotEmpty property="LOCAT"><![CDATA[ /* DWG_INFO.법정동_위치 */ AND dwginfo.LOCAT = #LOCAT# ]]></isNotEmpty>

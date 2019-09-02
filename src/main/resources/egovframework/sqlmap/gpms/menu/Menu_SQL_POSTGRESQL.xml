@@ -39,10 +39,10 @@
 		<isNotEmpty property="UPPER_MENU_ID"><![CDATA[ /* 시스템메뉴.상위_메뉴_ID */ AND tnmenu.UPPER_MENU_ID = #UPPER_MENU_ID# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 시스템메뉴.사용_여부 */ AND tnmenu.USE_AT = #USE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 시스템메뉴.삭제_여부 */ AND tnmenu.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 시스템메뉴.수정자_번호 */ AND tnmenu.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 시스템메뉴.수정자_번호 */ AND tnmenu.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 시스템메뉴.수정_일시 */ AND tnmenu.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="MENU_NM"><![CDATA[ /* 시스템메뉴.메뉴_명 */ AND REPLACE(tnmenu.MENU_NM, ' ', '') LIKE '%' ||  REPLACE(#MENU_NM#, ' ', '')  || '%']]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 시스템메뉴.생성자_번호 */ AND tnmenu.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 시스템메뉴.생성자_번호 */ AND tnmenu.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 시스템메뉴.생성_일시 */ AND tnmenu.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="URL"><![CDATA[ /* 시스템메뉴.URL */ AND tnmenu.URL = #URL# ]]></isNotEmpty>
 		<isNotEmpty property="MENU_DC"><![CDATA[ /* 시스템메뉴.메뉴_설명 */ AND tnmenu.MENU_DC = #MENU_DC# ]]></isNotEmpty>
@@ -119,15 +119,15 @@
 				, #UPPER_MENU_ID# /* 시스템메뉴.상위_메뉴_ID */
 				, 'Y' /* 시스템메뉴.사용_여부 */
 				, 'N' /* 시스템메뉴.삭제_여부 */
-				, #UPDUSR_NO# /* 시스템메뉴.수정자_번호 */
+				, #UPDUSR_NO#::int /* 시스템메뉴.수정자_번호 */
 				, NOW() /* 시스템메뉴.수정_일시 */
 				, #MENU_NM# /* 시스템메뉴.메뉴_명 */
-				, #CRTR_NO# /* 시스템메뉴.생성자_번호 */
+				, #CRTR_NO#::int /* 시스템메뉴.생성자_번호 */
 				, NOW() /* 시스템메뉴.생성_일시 */
 				, LOWER(#URL#) /* 시스템메뉴.URL */
 				, #MENU_DC# /* 시스템메뉴.메뉴_설명 */
 				, #SYS_CODE#/* 시스템메뉴.시스템코드 */
-				, #MENU_DP# /* 시스템메뉴.메뉴레벨 */
+				, #MENU_DP#::int /* 시스템메뉴.메뉴레벨 */
 			)
 		]]>
 	</insert>
@@ -220,7 +220,7 @@
 				,URL = LOWER(#URL#)   /* 시스템메뉴.URL */
 				,MENU_DC = #MENU_DC#  /* 시스템메뉴.메뉴_설명 */
 				,USE_AT = #USE_AT#	  /* 시스템메뉴.사용여부 */
-				,UPDUSR_NO = #UPDUSR_NO# /* 시스템메뉴.정자_번호 */
+				,UPDUSR_NO = #UPDUSR_NO#::int /* 시스템메뉴.정자_번호 */
 				,UPDT_DT = NOW()    /* 시스템메뉴.수정_일시 */
 			WHERE 1 = 1
 			AND MENU_ID = #MENU_ID#   /* 시스템메뉴.메뉴_ID */
@@ -235,7 +235,7 @@
 			SET
 			DELETE_AT = 'Y' /* 시스템메뉴.삭제_여부 */
 			, USE_AT = 'N'/* 시스템메뉴.사용_여부 */
-			, UPDUSR_NO = #UPDUSR_NO# /* 시스템메뉴.수정자_번호 */
+			, UPDUSR_NO = #UPDUSR_NO#::int /* 시스템메뉴.수정자_번호 */
 			, UPDT_DT = NOW() /* 시스템메뉴.수정_일시 */
 			WHERE 1 = 1
 			AND MENU_ID = #MENU_ID# /* 시스템메뉴.메뉴_ID */

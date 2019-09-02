@@ -73,10 +73,10 @@
 			, #ED_PIC_FILE# /* 노선_대장_마스터.ED_PIC_FILE */
 			, #IMPOPASS# /* 노선_대장_마스터.IMPOPASS */
 			, #REM# /* 노선_대장_마스터.REM */
-			, #JUN# /* 노선_대장_마스터.JUN */
-			, #ROAD_TOT_LEN_JYG_Y# /* 노선_대장_마스터.도로_총_연장_중용포함 */
-			, #ROAD_TOT_LEN_JYG_N# /* 노선_대장_마스터.도로_총_연장_중용비포함 */
-			, #ROAD_LEN_CMPT# /* 노선_대장_마스터.도로_연장_전산화완료 */
+			, #JUN#::float /* 노선_대장_마스터.JUN */
+			, #ROAD_TOT_LEN_JYG_Y#::float /* 노선_대장_마스터.도로_총_연장_중용포함 */
+			, #ROAD_TOT_LEN_JYG_N#::float /* 노선_대장_마스터.도로_총_연장_중용비포함 */
+			, #ROAD_LEN_CMPT#::float /* 노선_대장_마스터.도로_연장_전산화완료 */
 			, #ROAD_GRAD# /* 노선_대장_마스터.도로등급 */
 		)
 ]]>
@@ -102,10 +102,10 @@
 		, ED_PIC_FILE = #ED_PIC_FILE# /* 노선_대장_마스터.ED_PIC_FILE */
 		, IMPOPASS = #IMPOPASS# /* 노선_대장_마스터.IMPOPASS */
 		, REM = #REM# /* 노선_대장_마스터.REM */
-		, JUN = #JUN# /* 노선_대장_마스터.JUN */
-		, ROAD_TOT_LEN_JYG_Y = #ROAD_TOT_LEN_JYG_Y# /* 노선_대장_마스터.도로_총_연장_중용포함 */
-		, ROAD_TOT_LEN_JYG_N = #ROAD_TOT_LEN_JYG_N# /* 노선_대장_마스터.도로_총_연장_중용비포함 */
-		, ROAD_LEN_CMPT = #ROAD_LEN_CMPT# /* 노선_대장_마스터.도로_연장_전산화완료 */
+		, JUN = #JUN#::float /* 노선_대장_마스터.JUN */
+		, ROAD_TOT_LEN_JYG_Y = #ROAD_TOT_LEN_JYG_Y#::float /* 노선_대장_마스터.도로_총_연장_중용포함 */
+		, ROAD_TOT_LEN_JYG_N = #ROAD_TOT_LEN_JYG_N#::float /* 노선_대장_마스터.도로_총_연장_중용비포함 */
+		, ROAD_LEN_CMPT = #ROAD_LEN_CMPT#::float /* 노선_대장_마스터.도로_연장_전산화완료 */
 		, ROAD_GRAD = #ROAD_GRAD# /* 노선_대장_마스터.도로등급 */
 ]]>
 	</update>
@@ -170,7 +170,7 @@
 			]]>
 		</isEqual>
 		<isNotEmpty property="ROAD_NO"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND tnrouteinfo.ROAD_NO = #ROAD_NO# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_NO_VAL"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND cast(tnrouteinfo.ROAD_NO as integer) = #ROAD_NO_VAL# ]]></isNotEmpty>
+<isNotEmpty property="ROAD_NO_VAL"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND cast(tnrouteinfo.ROAD_NO as integer) = #ROAD_NO_VAL# ]]></isNotEmpty>
 		<isNotEmpty property="INPUT_DATE"><![CDATA[ /* 노선_대장_마스터.입력일 */ AND tnrouteinfo.INPUT_DATE = #INPUT_DATE# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_NAME"><![CDATA[ /* 노선_대장_마스터.도로_명 */ AND tnrouteinfo.ROAD_NAME LIKE '%'|| #ROAD_NAME# ||'%' ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_TYPE"><![CDATA[ /* 노선_대장_마스터.도로_종류 */ AND tnrouteinfo.ROAD_TYPE = #ROAD_TYPE# ]]></isNotEmpty>
@@ -185,10 +185,10 @@
 		<isNotEmpty property="ED_PIC_FILE"><![CDATA[ /* 노선_대장_마스터.ED_PIC_FILE */ AND tnrouteinfo.ED_PIC_FILE = #ED_PIC_FILE# ]]></isNotEmpty>
 		<isNotEmpty property="IMPOPASS"><![CDATA[ /* 노선_대장_마스터.IMPOPASS */ AND tnrouteinfo.IMPOPASS = #IMPOPASS# ]]></isNotEmpty>
 		<isNotEmpty property="REM"><![CDATA[ /* 노선_대장_마스터.REM */ AND tnrouteinfo.REM = #REM# ]]></isNotEmpty>
-		<isNotEmpty property="JUN"><![CDATA[ /* 노선_대장_마스터.JUN */ AND tnrouteinfo.JUN = #JUN# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_TOT_LEN_JYG_Y"><![CDATA[ /* 노선_대장_마스터.도로_총_연장_중용포함 */ AND tnrouteinfo.ROAD_TOT_LEN_JYG_Y = #ROAD_TOT_LEN_JYG_Y# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_TOT_LEN_JYG_N"><![CDATA[ /* 노선_대장_마스터.도로_총_연장_중용비포함 */ AND tnrouteinfo.ROAD_TOT_LEN_JYG_N = #ROAD_TOT_LEN_JYG_N# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_LEN_CMPT"><![CDATA[ /* 노선_대장_마스터.도로_연장_전산화완료 */ AND tnrouteinfo.ROAD_LEN_CMPT = #ROAD_LEN_CMPT# ]]></isNotEmpty>
+		<isNotEmpty property="JUN"><![CDATA[ /* 노선_대장_마스터.JUN */ AND tnrouteinfo.JUN = #JUN#::float ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_TOT_LEN_JYG_Y"><![CDATA[ /* 노선_대장_마스터.도로_총_연장_중용포함 */ AND tnrouteinfo.ROAD_TOT_LEN_JYG_Y = #ROAD_TOT_LEN_JYG_Y#::float ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_TOT_LEN_JYG_N"><![CDATA[ /* 노선_대장_마스터.도로_총_연장_중용비포함 */ AND tnrouteinfo.ROAD_TOT_LEN_JYG_N = #ROAD_TOT_LEN_JYG_N#::float ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_LEN_CMPT"><![CDATA[ /* 노선_대장_마스터.도로_연장_전산화완료 */ AND tnrouteinfo.ROAD_LEN_CMPT = #ROAD_LEN_CMPT#::float ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_GRAD"><![CDATA[ /* 노선_대장_마스터.도로등급 */ AND tnrouteinfo.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_NO_LIST"><iterate close=")" conjunction="," open="("	prepend=" AND ROAD_NO IN " property="ROAD_NO_LIST">	#ROAD_NO_LIST[]# </iterate></isNotEmpty>
 	</sql>

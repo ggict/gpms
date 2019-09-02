@@ -66,24 +66,24 @@
 			, DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
 			, SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
 		) VALUES (
-			#TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번호 */
+			#TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
 			, #SLCTN_OPERT_NM# /* 보수_대상_선정.선정_작업_명 */
 			, #SLCTN_MTH# /* 보수_대상_선정.선정_방법 */
 			, #SLCTN_STTUS# /* 보수_대상_선정.선정_상태 */
-			, #SLCTN_BUDGET# /* 보수_대상_선정.선정_예산 */
+			, #SLCTN_BUDGET#::int /* 보수_대상_선정.선정_예산 */
 			, TRUNC(#SLCTN_DT#)  /* 보수_대상_선정.선정_일시 */
 			, 'N' /* 보수_대상_선정.삭제_여부 */
 			, 'Y' /* 보수_대상_선정.사용_여부 */
-			, #CRTR_NO# /* 보수_대상_선정.생성자_번호 */
+			, #CRTR_NO#::int /* 보수_대상_선정.생성자_번호 */
 			, NOW() /* 보수_대상_선정.생성_일시 */
-			, #UPDUSR_NO# /* 보수_대상_선정.수정자_번호 */
+			, #UPDUSR_NO#::int /* 보수_대상_선정.수정자_번호 */
 			, NOW() /* 보수_대상_선정.수정_일시 */
 			, #DEPT_CODE# /* 보수_대상_선정.부서_코드 */
-			, #DECSN_MTHD_1_RATE# /* 보수_대상_선정.결정_방식_1_비율 */
-			, #DECSN_MTHD_2_RATE# /* 보수_대상_선정.결정_방식_2_비율 */
-			, #DECSN_MTHD_3_RATE# /* 보수_대상_선정.결정_방식_3_비율 */
-			, #DECSN_MTHD_4_RATE# /* 보수_대상_선정.결정_방식_4_비율 */
-			, #DECSN_MTHD_5_RATE# /* 보수_대상_선정.결정_방식_5_비율 */
+			, #DECSN_MTHD_1_RATE#::int /* 보수_대상_선정.결정_방식_1_비율 */
+			, #DECSN_MTHD_2_RATE#::int /* 보수_대상_선정.결정_방식_2_비율 */
+			, #DECSN_MTHD_3_RATE#::int /* 보수_대상_선정.결정_방식_3_비율 */
+			, #DECSN_MTHD_4_RATE#::int /* 보수_대상_선정.결정_방식_4_비율 */
+			, #DECSN_MTHD_5_RATE#::int /* 보수_대상_선정.결정_방식_5_비율 */
 			, #SLCTN_PURPS# /* 보수_대상_선정.산정_목적 */
 		)
 ]]>
@@ -98,17 +98,17 @@ SET
 SLCTN_OPERT_NM = #SLCTN_OPERT_NM# /* 보수_대상_선정.선정_작업_명 */
 , SLCTN_MTH = #SLCTN_MTH# /* 보수_대상_선정.선정_방법 */
 , SLCTN_STTUS = #SLCTN_STTUS# /* 보수_대상_선정.선정_상태 */
-, SLCTN_BUDGET = #SLCTN_BUDGET# /* 보수_대상_선정.선정_예산 */
+, SLCTN_BUDGET = #SLCTN_BUDGET#::int /* 보수_대상_선정.선정_예산 */
 , SLCTN_DT = #SLCTN_DT# /* 보수_대상_선정.선정_일시 */
 , USE_AT = #USE_AT# /* 보수_대상_선정.사용_여부 */
-, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_선정.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_대상_선정.수정자_번호 */
 , UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
 , DEPT_CODE = #DEPT_CODE# /* 보수_대상_선정.부서_코드 */
-, DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE# /* 보수_대상_선정.결정_방식_1_비율 */
-, DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE# /* 보수_대상_선정.결정_방식_2_비율 */
-, DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE# /* 보수_대상_선정.결정_방식_3_비율 */
-, DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE# /* 보수_대상_선정.결정_방식_4_비율 */
-, DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE# /* 보수_대상_선정.결정_방식_5_비율 */
+, DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE#::int /* 보수_대상_선정.결정_방식_1_비율 */
+, DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE#::int /* 보수_대상_선정.결정_방식_2_비율 */
+, DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE#::int /* 보수_대상_선정.결정_방식_3_비율 */
+, DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE#::int /* 보수_대상_선정.결정_방식_4_비율 */
+, DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE#::int /* 보수_대상_선정.결정_방식_5_비율 */
 , SLCTN_BUDGET_1 = #SLCTN_BUDGET_1#   /* 보수_대상_선정.선정_예산_1_WF */
 , SLCTN_BUDGET_2 = #SLCTN_BUDGET_2#     /* 보수_대상_선정.선정_예산_2_BF_1 */
 , SLCTN_BUDGET_3 = #SLCTN_BUDGET_3#     /* 보수_대상_선정.선정_예산_3_BF_2 */
@@ -116,7 +116,7 @@ SLCTN_OPERT_NM = #SLCTN_OPERT_NM# /* 보수_대상_선정.선정_작업_명 */
 , SLCTN_BUDGET_5 = #SLCTN_BUDGET_5#    /* 보수_대상_선정.선정_예산_5 */
 , SLCTN_PURPS = #SLCTN_PURPS# /* 보수_대상_선정.산정_목적 */	
 WHERE 1 = 1
-AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번호 */
+AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
 ]]>
 	</update>
 	
@@ -127,22 +127,22 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 		/* 보수_대상_선정  범위내 선정 */
 		UPDATE TN_RPAIR_TRGET_SLCTN SET
   SLCTN_STTUS = #SLCTN_STTUS# /* 보수_대상_선정.선정_상태 */
-, SLCTN_BUDGET = #SLCTN_BUDGET# /* 보수_대상_선정.선정_예산 */
-, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_선정.수정자_번호 */
+, SLCTN_BUDGET = #SLCTN_BUDGET#::int /* 보수_대상_선정.선정_예산 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_대상_선정.수정자_번호 */
 , UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
 , DEPT_CODE = #DEPT_CODE# /* 보수_대상_선정.부서_코드 */
-, DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE# /* 보수_대상_선정.결정_방식_1_비율 */
-, DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE# /* 보수_대상_선정.결정_방식_2_비율 */
-, DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE# /* 보수_대상_선정.결정_방식_3_비율 */
-, DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE# /* 보수_대상_선정.결정_방식_4_비율 */
-, DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE# /* 보수_대상_선정.결정_방식_5_비율 */
+, DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE#::int /* 보수_대상_선정.결정_방식_1_비율 */
+, DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE#::int /* 보수_대상_선정.결정_방식_2_비율 */
+, DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE#::int /* 보수_대상_선정.결정_방식_3_비율 */
+, DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE#::int /* 보수_대상_선정.결정_방식_4_비율 */
+, DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE#::int /* 보수_대상_선정.결정_방식_5_비율 */
 , SLCTN_BUDGET_1 = NULL  /* 보수_대상_선정.선정_예산_1_WF */
 , SLCTN_BUDGET_2 = NULL    /* 보수_대상_선정.선정_예산_2_BF_1 */
 , SLCTN_BUDGET_3 = NULL    /* 보수_대상_선정.선정_예산_3_BF_2 */
 , SLCTN_BUDGET_4 = NULL    /* 보수_대상_선정.선정_예산_4 */
 , SLCTN_BUDGET_5 = NULL    /* 보수_대상_선정.선정_예산_5 */
 		WHERE 1 = 1
-		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번호 */
+		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
 ]]>
 	</update>
 	
@@ -154,10 +154,10 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 		UPDATE TN_RPAIR_TRGET_SLCTN SET
 		DELETE_AT = 'Y' /* 보수_대상_선정.삭제_여부 */
 		, USE_AT = 'N' /* 보수_대상_선정.사용_여부 */
-		, UPDUSR_NO = #UPDUSR_NO# /* 보수_대상_선정.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_대상_선정.수정자_번호 */
 		, UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
 		WHERE 1 = 1
-		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번호 */
+		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
 ]]>
 	</delete>
 
@@ -188,11 +188,31 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 			, tnrpairtrgetslctn.DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
 			, tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
 			, tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_1_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_1_RATE/100))) DECSN_MTHD_1_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_2_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_2_RATE/100))) DECSN_MTHD_2_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_3_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_3_RATE/100))) DECSN_MTHD_3_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_4_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_4_RATE/100))) DECSN_MTHD_4_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_5_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_5_RATE/100))) DECSN_MTHD_5_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_1_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_1_rate / 100)
+				END 
+			  END DECSN_MTHD_1_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_2_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_2_rate / 100)
+				END
+			  END DECSN_MTHD_2_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_3_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_3_rate / 100)
+				END
+			  END DECSN_MTHD_3_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_4_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_4_rate / 100)
+				END
+			  END DECSN_MTHD_4_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_5_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_5_rate / 100)
+				END
+			  END DECSN_MTHD_5_BUDGET
 			, tnrpairtrgetslctn.SLCTN_BUDGET_1    /* 보수_대상_선정.선정_예산_1_WF */
 			, tnrpairtrgetslctn.SLCTN_BUDGET_2    /* 보수_대상_선정.선정_예산_2_BF_1 */
 			, tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */
@@ -200,7 +220,7 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 			, tnrpairtrgetslctn.SLCTN_BUDGET_5    /* 보수_대상_선정.선정_예산_5 */
 		FROM TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
 		WHERE 1 = 1
-		AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번호 */
+		AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
 		AND tnrpairtrgetslctn.DELETE_AT = 'N'
 		AND tnrpairtrgetslctn.USE_AT = 'Y'
 ]]>
@@ -210,29 +230,29 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #searchKeyword#
+			AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			AND tnrpairtrgetslctn.SLCTN_OPERT_NM LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_선정.대상_선정_번호 */ AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO# ]]></isNotEmpty>
+		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_선정.대상_선정_번호 */ AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_OPERT_NM"><![CDATA[ /* 보수_대상_선정.선정_작업_명 */ AND tnrpairtrgetslctn.SLCTN_OPERT_NM = #SLCTN_OPERT_NM# ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_MTH"><![CDATA[ /* 보수_대상_선정.선정_방법 */ AND tnrpairtrgetslctn.SLCTN_MTH = #SLCTN_MTH# ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_STTUS"><![CDATA[ /* 보수_대상_선정.선정_상태 */ AND tnrpairtrgetslctn.SLCTN_STTUS = #SLCTN_STTUS# ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_BUDGET"><![CDATA[ /* 보수_대상_선정.선정_예산 */ AND tnrpairtrgetslctn.SLCTN_BUDGET = #SLCTN_BUDGET# ]]></isNotEmpty>
+		<isNotEmpty property="SLCTN_BUDGET"><![CDATA[ /* 보수_대상_선정.선정_예산 */ AND tnrpairtrgetslctn.SLCTN_BUDGET = #SLCTN_BUDGET#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_DT"><![CDATA[ /* 보수_대상_선정.선정_일시 */ AND tnrpairtrgetslctn.SLCTN_DT = #SLCTN_DT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 보수_대상_선정.삭제_여부 */ AND tnrpairtrgetslctn.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 보수_대상_선정.사용_여부 */ AND tnrpairtrgetslctn.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_선정.생성자_번호 */ AND tnrpairtrgetslctn.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_선정.생성자_번호 */ AND tnrpairtrgetslctn.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 보수_대상_선정.생성_일시 */ AND tnrpairtrgetslctn.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_선정.수정자_번호 */ AND tnrpairtrgetslctn.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_선정.수정자_번호 */ AND tnrpairtrgetslctn.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 보수_대상_선정.수정_일시 */ AND tnrpairtrgetslctn.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ /* 보수_대상_선정.부서_코드 */ AND tnrpairtrgetslctn.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_1_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_1_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_2_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_2_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_3_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_3_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_4_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_4_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_5_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_5_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE# ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_1_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_1_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE#::int ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_2_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_2_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE#::int ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_3_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_3_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE#::int ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_4_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_4_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE#::int ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_5_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_5_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_PURPS"><![CDATA[ /* 보수_대상_선정.산정_목적 */ AND tnrpairtrgetslctn.SLCTN_PURPS = #SLCTN_PURPS# ]]></isNotEmpty>
 </sql>
 
@@ -274,31 +294,31 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #searchKeyword#
+			AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
 			AND tnrpairtrgetslctn.SLCTN_OPERT_NM LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
 		
-		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_선정.대상_선정_번호 */ AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO# ]]></isNotEmpty>
+		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_선정.대상_선정_번호 */ AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_OPERT_NM"><![CDATA[ /* 보수_대상_선정.선정_작업_명 */ AND tnrpairtrgetslctn.SLCTN_OPERT_NM = #SLCTN_OPERT_NM# ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_MTH"><![CDATA[ /* 보수_대상_선정.선정_방법 */ AND tnrpairtrgetslctn.SLCTN_MTH = #SLCTN_MTH# ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_STTUS"><![CDATA[ /* 보수_대상_선정.선정_상태 */ AND tnrpairtrgetslctn.SLCTN_STTUS = #SLCTN_STTUS# ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_BUDGET"><![CDATA[ /* 보수_대상_선정.선정_예산 */ AND tnrpairtrgetslctn.SLCTN_BUDGET = #SLCTN_BUDGET# ]]></isNotEmpty>
+		<isNotEmpty property="SLCTN_BUDGET"><![CDATA[ /* 보수_대상_선정.선정_예산 */ AND tnrpairtrgetslctn.SLCTN_BUDGET = #SLCTN_BUDGET#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_DT"><![CDATA[ /* 보수_대상_선정.선정_일시 */ AND tnrpairtrgetslctn.SLCTN_DT = #SLCTN_DT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 보수_대상_선정.삭제_여부 */ AND tnrpairtrgetslctn.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 보수_대상_선정.사용_여부 */ AND tnrpairtrgetslctn.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_선정.생성자_번호 */ AND tnrpairtrgetslctn.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_선정.생성자_번호 */ AND tnrpairtrgetslctn.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 보수_대상_선정.생성_일시 */ AND tnrpairtrgetslctn.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_선정.수정자_번호 */ AND tnrpairtrgetslctn.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_선정.수정자_번호 */ AND tnrpairtrgetslctn.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 보수_대상_선정.수정_일시 */ AND tnrpairtrgetslctn.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ /* 보수_대상_선정.부서_코드 */ AND tnrpairtrgetslctn.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_1_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_1_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_2_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_2_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_3_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_3_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_4_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_4_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_5_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_5_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE# ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_1_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_1_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE#::int ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_2_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_2_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE#::int ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_3_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_3_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE#::int ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_4_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_4_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE#::int ]]></isNotEmpty>
+		<isNotEmpty property="DECSN_MTHD_5_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_5_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_PURPS"><![CDATA[ /* 보수_대상_선정.산정_목적 */ AND tnrpairtrgetslctn.SLCTN_PURPS = #SLCTN_PURPS# ]]></isNotEmpty>
 	<![CDATA[		
 		)
@@ -376,11 +396,31 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO# /* 보수_대상_선정.대상_선정_번�
 			, tnrpairtrgetslctn.DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
 			, tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
 			, tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_1_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_1_RATE/100))) DECSN_MTHD_1_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_2_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_2_RATE/100))) DECSN_MTHD_2_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_3_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_3_RATE/100))) DECSN_MTHD_3_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_4_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_4_RATE/100))) DECSN_MTHD_4_BUDGET
-			, DECODE(COALESCE(tnrpairtrgetslctn.DECSN_MTHD_5_RATE,0),0,0, DECODE( COALESCE(tnrpairtrgetslctn.SLCTN_BUDGET, 0 ),0,0, tnrpairtrgetslctn.SLCTN_BUDGET * (tnrpairtrgetslctn.DECSN_MTHD_5_RATE/100))) DECSN_MTHD_5_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_1_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_1_rate / 100)
+				END
+			  END DECSN_MTHD_1_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_2_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_2_rate / 100)
+				END
+			  END DECSN_MTHD_2_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_3_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_3_rate / 100)
+				END
+			  END DECSN_MTHD_3_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_4_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_4_rate / 100)
+				END
+			  END DECSN_MTHD_4_BUDGET
+			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_5_rate, 0) = 0 THEN 0 ELSE
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_5_rate / 100)
+				END
+			  END DECSN_MTHD_5_BUDGET
 			 , tnrpairtrgetslctn.SLCTN_BUDGET_1    /* 보수_대상_선정.선정_예산_1_WF */
 		     , tnrpairtrgetslctn.SLCTN_BUDGET_2    /* 보수_대상_선정.선정_예산_2_BF_1 */
 		     , tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */

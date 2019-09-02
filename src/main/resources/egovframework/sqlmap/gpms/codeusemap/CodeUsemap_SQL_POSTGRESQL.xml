@@ -39,9 +39,9 @@
 			, #CL_CODE# /* 코드사용맵.분류_코드 */
 
 			, #USE_AT# /* 코드사용맵.사용_여부 */
-			, #CRTR_NO# /* 코드사용맵.생성자_번호 */
+			, #CRTR_NO#::int /* 코드사용맵.생성자_번호 */
 			, NOW() /* 코드사용맵.생성_일시 */
-			, #UPDUSR_NO# /* 코드사용맵.수정자_번호 */
+			, #UPDUSR_NO#::int /* 코드사용맵.수정자_번호 */
 			, NOW() /* 코드사용맵.수정_일시 */
 		)
 ]]>
@@ -55,7 +55,7 @@
 
   USE_AT = #USE_AT# /* 코드사용맵.사용_여부 */
 
-, UPDUSR_NO = #UPDUSR_NO# /* 코드사용맵.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 코드사용맵.수정자_번호 */
 
 , UPDT_DT = NOW() /* 코드사용맵.수정_일시 */
 
@@ -161,9 +161,9 @@
 		<isNotEmpty property="COLMN_NM"><![CDATA[ /* 코드사용맵.칼럼_명 */ AND tccodeusemap.COLMN_NM = #COLMN_NM# ]]></isNotEmpty>
 		<isNotEmpty property="CL_CODE"><![CDATA[ /* 코드사용맵.분류_코드 */ AND tccodeusemap.CL_CODE = #CL_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 코드사용맵.사용_여부 */ AND tccodeusemap.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 코드사용맵.생성자_번호 */ AND tccodeusemap.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 코드사용맵.생성자_번호 */ AND tccodeusemap.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 코드사용맵.생성_일시 */ AND tccodeusemap.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 코드사용맵.수정자_번호 */ AND tccodeusemap.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 코드사용맵.수정자_번호 */ AND tccodeusemap.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 코드사용맵.수정_일시 */ AND tccodeusemap.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -231,7 +231,7 @@
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 코드사용맵.생성자_번호 */
-					AND tccodeusemap.CRTR_NO = #CRTR_NO#
+					AND tccodeusemap.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 
@@ -245,7 +245,7 @@
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 코드사용맵.수정자_번호 */
-					AND tccodeusemap.UPDUSR_NO = #UPDUSR_NO#
+					AND tccodeusemap.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 
