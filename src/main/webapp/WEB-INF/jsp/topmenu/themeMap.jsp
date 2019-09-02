@@ -536,7 +536,6 @@
 			if(sLyrNm == _targetLyr) {
 				var oStyle = arrEle[1];
 				var oFeatStyle = oStyle.elements[2];
-
 				var arrTarget = oFeatStyle.elements;
 				for(var j in arrTarget) {
 					var arrEl = arrTarget[j].elements;
@@ -546,7 +545,7 @@
 						if(sElNm == "ogc:Filter") {
 							var oQ1 = thisEl.elements;
 							if(oQ1[0].name == "ogc:And" || oQ1[0].name == "And") {
-								var isPropertyIsLike = false;
+								var isPropertyIsLike = false; //PropertyIsLike 태그 존재 유무 체크
 								var arrQ = oQ1[0].elements;
 								for(var i in arrQ) {
 									var oThisQ = arrQ[i];
@@ -559,7 +558,6 @@
 												}];
 											}
 										}
-										
 										isPropertyIsLike = true;
 									}
 								}
@@ -579,6 +577,8 @@
 										type : "element"
 									});
 								}
+								
+								
 							} else {
 								var oSetParam = {
 									elements : oQ1,
