@@ -38,11 +38,11 @@
 			, PROCESS_STTUS /* 조사_자료_로그.처리_상태 */
 			, END_DT /* 조사_자료_로그.종료_일시 */
 		) VALUES (
-			#PROCESS_LOG_NO# /* 조사_자료_로그.처리_로그_번호 */
+			#PROCESS_LOG_NO#::int /* 조사_자료_로그.처리_로그_번호 */
 			, #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
-			, #CRTR_NO# /* 조사_자료_로그.생성자_번호 */
+			, #CRTR_NO#::int /* 조사_자료_로그.생성자_번호 */
 			, #BEGIN_DT# /* 조사_자료_로그.시작_일시 */
-			, #SRVY_NO# /* 조사_자료_로그.조사_번호 */
+			, #SRVY_NO#::int /* 조사_자료_로그.조사_번호 */
 			, #PROCESS_SE# /* 조사_자료_로그.처리_구분 */
 			, #PROCESS_STTUS# /* 조사_자료_로그.처리_상태 */
 			, #END_DT# /* 조사_자료_로그.종료_일시 */
@@ -61,13 +61,13 @@
 LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 			
 
-, CRTR_NO = #CRTR_NO# /* 조사_자료_로그.생성자_번호 */
+, CRTR_NO = #CRTR_NO#::int /* 조사_자료_로그.생성자_번호 */
 			
 
 , BEGIN_DT = #BEGIN_DT# /* 조사_자료_로그.시작_일시 */
 			
 
-, SRVY_NO = #SRVY_NO# /* 조사_자료_로그.조사_번호 */
+, SRVY_NO = #SRVY_NO#::int /* 조사_자료_로그.조사_번호 */
 			
 
 , PROCESS_SE = #PROCESS_SE# /* 조사_자료_로그.처리_구분 */
@@ -79,7 +79,7 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 , END_DT = #END_DT# /* 조사_자료_로그.종료_일시 */
 			
 		WHERE 1 = 1
-		AND PROCESS_LOG_NO = #PROCESS_LOG_NO# /* 조사_자료_로그.처리_로그_번호 */
+		AND PROCESS_LOG_NO = #PROCESS_LOG_NO#::int /* 조사_자료_로그.처리_로그_번호 */
 ]]>
 	</update>
 
@@ -89,7 +89,7 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 		/* 조사_자료_로그 삭제 */
 		DELETE FROM TL_SRVY_DTA_LOG 
 		WHERE 1 = 1
-		AND PROCESS_LOG_NO = #PROCESS_LOG_NO# /* 조사_자료_로그.처리_로그_번호 */
+		AND PROCESS_LOG_NO = #PROCESS_LOG_NO#::int /* 조사_자료_로그.처리_로그_번호 */
 ]]>
 	</delete>
 
@@ -108,7 +108,7 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 			, tlsrvydtalog.END_DT /* 조사_자료_로그.종료_일시 */
 		FROM TL_SRVY_DTA_LOG tlsrvydtalog
 		WHERE 1 = 1
-		AND tlsrvydtalog.PROCESS_LOG_NO = #PROCESS_LOG_NO# /* 조사_자료_로그.처리_로그_번호 */
+		AND tlsrvydtalog.PROCESS_LOG_NO = #PROCESS_LOG_NO#::int /* 조사_자료_로그.처리_로그_번호 */
 ]]>
 	</select>
 
@@ -116,16 +116,16 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tlsrvydtalog.PROCESS_LOG_NO = #searchKeyword#
+			AND tlsrvydtalog.PROCESS_LOG_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			AND tlsrvydtalog.LOG_MSSAGE LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		<isNotEmpty property="PROCESS_LOG_NO"><![CDATA[ /* 조사_자료_로그.처리_로그_번호 */ AND tlsrvydtalog.PROCESS_LOG_NO = #PROCESS_LOG_NO# ]]></isNotEmpty>
+		<isNotEmpty property="PROCESS_LOG_NO"><![CDATA[ /* 조사_자료_로그.처리_로그_번호 */ AND tlsrvydtalog.PROCESS_LOG_NO = #PROCESS_LOG_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="LOG_MSSAGE"><![CDATA[ /* 조사_자료_로그.로그_메세지 */ AND tlsrvydtalog.LOG_MSSAGE = #LOG_MSSAGE# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 조사_자료_로그.생성자_번호 */ AND tlsrvydtalog.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 조사_자료_로그.생성자_번호 */ AND tlsrvydtalog.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="BEGIN_DT"><![CDATA[ /* 조사_자료_로그.시작_일시 */ AND tlsrvydtalog.BEGIN_DT = #BEGIN_DT# ]]></isNotEmpty>
-		<isNotEmpty property="SRVY_NO"><![CDATA[ /* 조사_자료_로그.조사_번호 */ AND tlsrvydtalog.SRVY_NO = #SRVY_NO# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_NO"><![CDATA[ /* 조사_자료_로그.조사_번호 */ AND tlsrvydtalog.SRVY_NO = #SRVY_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="PROCESS_SE"><![CDATA[ /* 조사_자료_로그.처리_구분 */ AND tlsrvydtalog.PROCESS_SE = #PROCESS_SE# ]]></isNotEmpty>
 		<isNotEmpty property="PROCESS_STTUS"><![CDATA[ /* 조사_자료_로그.처리_상태 */ AND tlsrvydtalog.PROCESS_STTUS = #PROCESS_STTUS# ]]></isNotEmpty>
 		<isNotEmpty property="END_DT"><![CDATA[ /* 조사_자료_로그.종료_일시 */ AND tlsrvydtalog.END_DT = #END_DT# ]]></isNotEmpty>
@@ -154,7 +154,7 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tlsrvydtalog.PROCESS_LOG_NO = #searchKeyword#
+			AND tlsrvydtalog.PROCESS_LOG_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
@@ -164,7 +164,7 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 			<isNotEmpty property="PROCESS_LOG_NO">
 				<![CDATA[
 					/* 조사_자료_로그.처리_로그_번호 */
-					AND tlsrvydtalog.PROCESS_LOG_NO = #PROCESS_LOG_NO#
+					AND tlsrvydtalog.PROCESS_LOG_NO = #PROCESS_LOG_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -178,7 +178,7 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 조사_자료_로그.생성자_번호 */
-					AND tlsrvydtalog.CRTR_NO = #CRTR_NO#
+					AND tlsrvydtalog.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -192,7 +192,7 @@ LOG_MSSAGE = #LOG_MSSAGE# /* 조사_자료_로그.로그_메세지 */
 			<isNotEmpty property="SRVY_NO">
 				<![CDATA[
 					/* 조사_자료_로그.조사_번호 */
-					AND tlsrvydtalog.SRVY_NO = #SRVY_NO#
+					AND tlsrvydtalog.SRVY_NO = #SRVY_NO#::int
 				]]>
 			</isNotEmpty>
 		
