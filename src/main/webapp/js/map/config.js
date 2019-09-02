@@ -174,6 +174,18 @@ var CONFIG = (function($, undefined){
 	         'layerType' : '3',
 	     },
 	     
+	     "MV_GNLSTTUS_SECT_2018" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3762',
+	         'table' : 'MV_GNLSTTUS_SECT_2018',
+	         'theme' : 'MV_GNLSTTUS_SECT_2018',
+	         'alias' : 'Section셀_포장상태_2018',
+	         'seq' : '3762',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	     
 	     /*
 	     "SIGUNGU" : {
 	         
@@ -237,17 +249,7 @@ var CONFIG = (function($, undefined){
 	 
 
 	 
-	     "MV_GNLSTTUS_SECT_2018" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3762',
-	         'table' : 'MV_GNLSTTUS_SECT_2018',
-	         'theme' : 'MV_GNLSTTUS_SECT_2018',
-	         'alias' : 'Section셀_포장상태_2018',
-	         'seq' : '3762',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
+
 	 
 	     "MV_THM_YEAR_10" : {
 	         
