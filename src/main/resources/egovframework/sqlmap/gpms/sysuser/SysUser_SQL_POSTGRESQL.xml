@@ -416,7 +416,7 @@
 
         <isEqual property="searchCondition" compareValue="0">
             AND
-            tnsysuser.USER_NO = #searchKeyword#
+            tnsysuser.USER_NO = #searchKeyword#::int
         </isEqual>
         <isEqual property="searchCondition" compareValue="1">
             AND
@@ -530,7 +530,7 @@
         FROM TN_SYS_USER_CHG_AUTH tnsysuserchgauth
         WHERE 1 = 1
     ]]>
-    <isNotEmpty property="USER_NO"><![CDATA[ AND tnsysuserchgauth.USER_NO = #USER_NO# ]]></isNotEmpty>
+    <isNotEmpty property="USER_NO"><![CDATA[ AND tnsysuserchgauth.USER_NO = #USER_NO#::int ]]></isNotEmpty>
     </select>
 
     <select id="sysUserDAO.selectSysUserChgAuthListCnt" parameterClass="sysUserVO" resultClass="int">
@@ -539,7 +539,7 @@
         FROM TN_SYS_USER_CHG_AUTH tnsysuserchgauth
         WHERE 1 = 1
     ]]>
-    <isNotEmpty property="USER_NO"><![CDATA[ AND tnsysuserchgauth.USER_NO = #USER_NO# ]]></isNotEmpty>
+    <isNotEmpty property="USER_NO"><![CDATA[ AND tnsysuserchgauth.USER_NO = #USER_NO#::int ]]></isNotEmpty>
     </select>
 
 

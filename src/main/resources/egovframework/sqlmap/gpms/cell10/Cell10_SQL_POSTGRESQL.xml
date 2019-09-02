@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
-<sqlMap namespace="cell10DAO"> 
+<sqlMap namespace="cell10DAO">
 
     <typeAlias alias="egovMap"  type="egovframework.rte.psl.dataaccess.util.EgovMap" />
     <typeAlias  alias="cell10SerarchVO" type="kr.go.gg.gpms.cell10.service.model.Cell10DefaultVO"/>
@@ -265,8 +265,8 @@
           FROM(
                     SELECT ROUTE_CODE
                          , DIRECT_CODE
-                         , MAX(CASE WHEN DIRECT_CODE='S' THEN 1 ELSE 0 END) DIRECT_S
-     					 , MAX(CASE WHEN DIRECT_CODE='E' THEN 1 ELSE 0 END) DIRECT_E
+                         , MAX(DECODE(DIRECT_CODE, 'S', 1, 0)) DIRECT_S
+                         , MAX(DECODE(DIRECT_CODE, 'E', 1, 0)) DIRECT_E
                          , TRACK
                          , MIN(STRTPT) STRTPT
                          , MAX(ENDPT) ENDPT
@@ -1488,8 +1488,7 @@
                        WHERE NGB.BJCD = JB.ADM_CODE (+ )
                          AND NGB.BJCD = C10A.ADM_CODE (+ ) )
             GROUP BY  ROLLUP(ADM_NM,ROAD_GRAD) HAVING GROUPING_ID(ADM_NM,ROAD_GRAD) IN (0,3)
-              ORDER BY 
-              CASE WHEN ADM_NM='전체' THEN 103 ELSE 1 END, ADM_NM 
+              ORDER BY DECODE( ADM_NM,'전체',103,1),ADM_NM
             ]]>
         </select>
 

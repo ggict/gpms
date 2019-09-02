@@ -115,14 +115,14 @@
 			,POPUP_PD       /*팝업_기간*/
 			,ORGINL_FILE_NM /*원본_파일명*/
 		) VALUES (
-			#SEQ_NO#         
-			,#POS#         
+			#SEQ_NO#::int         
+			,#POS#::int         
 			,0          
 			,1            
 			,#WRTER#          
 			,#SJ#             
 			,#CN#             
-			,#RDCNT#          
+			,#RDCNT#::int          
 			,NOW()
 			,#FILE_NM#        
 			,#POPUP_PD#       
@@ -151,7 +151,7 @@
 						,ANSWRR             /*답변자*/
 						,TO_CHAR(ANSWER_DT,'YYYY-MM-DD') AS ANSWER_DT        /*답변일시*/
 			   	  FROM TN_NOTICE
-			   	 WHERE SEQ_NO = #SEQ_NO#
+			   	 WHERE SEQ_NO = #SEQ_NO#::int
 		]]>
 	</select>
 	
@@ -161,7 +161,7 @@
 		/* 공지사항 삭제 */
 		DELETE 
 		  FROM TN_NOTICE 
-		 WHERE SEQ_NO = #SEQ_NO#
+		 WHERE SEQ_NO = #SEQ_NO#::int
 	]]>
 	</delete>
 	
@@ -170,7 +170,7 @@
 		/* noticeDAO.updateNotice */
 		/* 공지사항 수정 */
 		UPDATE TN_NOTICE
-		   SET POS = #POS#              /*POS*/
+		   SET POS = #POS#::int              /*POS*/
 				,SUB = 0              /*SUB*/
 				,DEP = 1              /*DEP*/
 				,WRTER = #WRTER#          /*작성자*/
@@ -179,7 +179,7 @@
 				,FILE_NM = #FILE_NM#      /*파일명*/
 				,POPUP_PD = #POPUP_PD#    /*팝업기간*/
 				,ORGINL_FILE_NM = #ORGINL_FILE_NM#    /*원본파일명*/
-		WHERE SEQ_NO = #SEQ_NO#
+		WHERE SEQ_NO = #SEQ_NO#::int
 	]]>
 	</update>
 	
@@ -188,8 +188,8 @@
 		/* noticeDAO.updateNoticeRdcnt */
 		/* 공지사항 조회수수정 */
 		UPDATE TN_NOTICE
-		   SET RDCNT = COALESCE(#RDCNT#,0)          /*조회수*/
-		WHERE SEQ_NO = #SEQ_NO#
+		   SET RDCNT = COALESCE(#RDCNT#::int,0)          /*조회수*/
+		WHERE SEQ_NO = #SEQ_NO#::int
 	]]>
 	</update>
 	

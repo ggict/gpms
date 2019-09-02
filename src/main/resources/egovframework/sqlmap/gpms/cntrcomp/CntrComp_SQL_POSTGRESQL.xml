@@ -42,15 +42,15 @@
 			, UPDUSR_NO /* 공사업체정보.수정자_번호 */
 			, UPDT_DT /* 공사업체정보.수정_일시 */
 		) VALUES (
-			#CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
+			#CNTRWK_ACMSLT_NO#::int /* 공사업체정보.공사_실적_번호 */
 			, #CNTRWK_ID# /* 공사업체정보.공사_ID */
-			, #CO_NO# /* 공사업체정보.업체_번호 */
+			, #CO_NO#::int /* 공사업체정보.업체_번호 */
 			, #EXEC_SE# /* 공사업체정보.이행_구분 */
 			, 'Y' /* 공사업체정보.사용_여부 */
 			, 'N' /* 공사업체정보.삭제_여부 */
-			, #CRTR_NO# /* 공사업체정보.생성자_번호 */
+			, #CRTR_NO#::int /* 공사업체정보.생성자_번호 */
 			, NOW() /* 공사업체정보.생성_일시 */
-			, #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
+			, #UPDUSR_NO#::int /* 공사업체정보.수정자_번호 */
 			, NOW() /* 공사업체정보.수정_일시 */
 		)
 ]]>
@@ -63,14 +63,14 @@
 		UPDATE TN_CNTR_COMP SET
 
 CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
-, CO_NO = #CO_NO# /* 공사업체정보.업체_번호 */
+, CO_NO = #CO_NO#::int /* 공사업체정보.업체_번호 */
 , EXEC_SE = #EXEC_SE# /* 공사업체정보.이행_구분 */
 , USE_AT = #USE_AT# /* 공사업체정보.사용_여부 */
-, UPDUSR_NO = #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 공사업체정보.수정자_번호 */
 , UPDT_DT = NOW() /* 공사업체정보.수정_일시 */
 			
 		WHERE 1 = 1
-		AND CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
+		AND CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO#::int /* 공사업체정보.공사_실적_번호 */
 ]]>
 	</update>
 
@@ -79,11 +79,11 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 		UPDATE TN_CNTR_COMP SET
 
 	 	 DELETE_AT = 'Y' /* 공사업체정보.삭제_여부 */
-		, UPDUSR_NO = #UPDUSR_NO# /* 공사업체정보.수정자_번호 */
+		, UPDUSR_NO = #UPDUSR_NO#::int /* 공사업체정보.수정자_번호 */
 		, UPDT_DT = NOW() /* 공사업체정보.수정_일시 */
 			
 		WHERE 1 = 1
-		AND CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
+		AND CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO#::int /* 공사업체정보.공사_실적_번호 */
 ]]>
 	</delete>
 
@@ -104,7 +104,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 			, tncntrcomp.UPDT_DT /* 공사업체정보.수정_일시 */
 		FROM TN_CNTR_COMP tncntrcomp
 		WHERE 1 = 1
-		AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# /* 공사업체정보.공사_실적_번호 */
+		AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO#::int /* 공사업체정보.공사_실적_번호 */
 		AND tncntrcomp.DELETE_AT = 'N'
 ]]>
 	</select>
@@ -113,20 +113,20 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 		WHERE 1 = 1
  		AND tncntrcomp.DELETE_AT = 'N'
 		<isEqual property="searchCondition" compareValue="0">
-			AND tncntrcomp.CNTRWK_ACMSLT_NO = #searchKeyword#
+			AND tncntrcomp.CNTRWK_ACMSLT_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			AND tncntrcomp.CNTRWK_ID LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		<isNotEmpty property="CNTRWK_ACMSLT_NO"><![CDATA[ /* 공사업체정보.공사_실적_번호 */ AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CNTRWK_ACMSLT_NO"><![CDATA[ /* 공사업체정보.공사_실적_번호 */ AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTRWK_ID"><![CDATA[ /* 공사업체정보.공사_ID */ AND tncntrcomp.CNTRWK_ID = #CNTRWK_ID# ]]></isNotEmpty>
-		<isNotEmpty property="CO_NO"><![CDATA[ /* 공사업체정보.업체_번호 */ AND tncntrcomp.CO_NO = #CO_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CO_NO"><![CDATA[ /* 공사업체정보.업체_번호 */ AND tncntrcomp.CO_NO = #CO_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="EXEC_SE"><![CDATA[ /* 공사업체정보.이행_구분 */ AND tncntrcomp.EXEC_SE = #EXEC_SE# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 공사업체정보.사용_여부 */ AND tncntrcomp.USE_AT = #USE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 공사업체정보.삭제_여부 */ AND tncntrcomp.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공사업체정보.생성자_번호 */ AND tncntrcomp.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공사업체정보.생성자_번호 */ AND tncntrcomp.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 공사업체정보.생성_일시 */ AND tncntrcomp.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공사업체정보.수정자_번호 */ AND tncntrcomp.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공사업체정보.수정자_번호 */ AND tncntrcomp.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 공사업체정보.수정_일시 */ AND tncntrcomp.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -155,7 +155,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tncntrcomp.CNTRWK_ACMSLT_NO = #searchKeyword#
+			AND tncntrcomp.CNTRWK_ACMSLT_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
@@ -165,7 +165,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 			<isNotEmpty property="CNTRWK_ACMSLT_NO">
 				<![CDATA[
 					/* 공사업체정보.공사_실적_번호 */
-					AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO#
+					AND tncntrcomp.CNTRWK_ACMSLT_NO = #CNTRWK_ACMSLT_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -179,7 +179,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 			<isNotEmpty property="CO_NO">
 				<![CDATA[
 					/* 공사업체정보.업체_번호 */
-					AND tncntrcomp.CO_NO = #CO_NO#
+					AND tncntrcomp.CO_NO = #CO_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -207,7 +207,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 공사업체정보.생성자_번호 */
-					AND tncntrcomp.CRTR_NO = #CRTR_NO#
+					AND tncntrcomp.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -221,7 +221,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사업체정보.공사_ID */
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 공사업체정보.수정자_번호 */
-					AND tncntrcomp.UPDUSR_NO = #UPDUSR_NO#
+					AND tncntrcomp.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

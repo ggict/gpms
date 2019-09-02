@@ -38,14 +38,14 @@
 			, UPDT_DT /* 분류코드.수정_일시 */
 		) VALUES (
 			#CL_CODE# /* 분류코드.분류_코드 */
-			, #PRIOR_RANK# /* 분류코드.우선_순위 */
+			, #PRIOR_RANK#::int /* 분류코드.우선_순위 */
 			, #CL_CODE_NM# /* 분류코드.분류_코드_명 */
 			, #CN# /* 분류코드.내용 */
 			, #USE_AT# /* 분류코드.사용_여부 */
 			, 'N' /* 분류코드.삭제_여부 */
-			, #CRTR_NO# /* 분류코드.생성자_번호 */
+			, #CRTR_NO#::int /* 분류코드.생성자_번호 */
 			, NOW() /* 분류코드.생성_일시 */
-			, #UPDUSR_NO# /* 분류코드.수정자_번호 */
+			, #UPDUSR_NO#::int /* 분류코드.수정자_번호 */
 			, NOW() /* 분류코드.수정_일시 */
 		)
 ]]>
@@ -57,7 +57,7 @@
 		/* 분류코드 수정 */
 		UPDATE TC_CL_CODE SET
 		
-PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */			
+PRIOR_RANK = #PRIOR_RANK#::int /* 분류코드.우선_순위 */			
 
 , CL_CODE_NM = #CL_CODE_NM# /* 분류코드.분류_코드_명 */		
 
@@ -65,7 +65,7 @@ PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */
 
 , USE_AT = #USE_AT# /* 분류코드.사용_여부 */
 
-, UPDUSR_NO = #UPDUSR_NO# /* 분류코드.수정자_번호 */			
+, UPDUSR_NO = #UPDUSR_NO#::int /* 분류코드.수정자_번호 */			
 
 , UPDT_DT = NOW() /* 분류코드.수정_일시 */			
 		WHERE 1 = 1
@@ -115,17 +115,17 @@ PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */
 			AND tcclcode.CL_CODE = #searchKeyword#
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
-			AND tcclcode.PRIOR_RANK LIKE '%' || #searchKeyword# || '%'
+			AND tcclcode.PRIOR_RANK LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
 		<isNotEmpty property="CL_CODE"><![CDATA[ /* 분류코드.분류_코드 */ AND tcclcode.CL_CODE = #CL_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="PRIOR_RANK"><![CDATA[ /* 분류코드.우선_순위 */ AND tcclcode.PRIOR_RANK = #PRIOR_RANK# ]]></isNotEmpty>
+		<isNotEmpty property="PRIOR_RANK"><![CDATA[ /* 분류코드.우선_순위 */ AND tcclcode.PRIOR_RANK = #PRIOR_RANK#::int ]]></isNotEmpty>
 		<isNotEmpty property="CL_CODE_NM"><![CDATA[ /* 분류코드.분류_코드_명 */ AND tcclcode.CL_CODE_NM LIKE '%' || #CL_CODE_NM# || '%' ]]></isNotEmpty>
 		<isNotEmpty property="CN"><![CDATA[ /* 분류코드.내용 */ AND tcclcode.CN = #CN# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 분류코드.사용_여부 */ AND tcclcode.USE_AT = #USE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 분류코드.삭제_여부 */ AND tcclcode.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 분류코드.생성자_번호 */ AND tcclcode.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 분류코드.생성자_번호 */ AND tcclcode.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 분류코드.생성_일시 */ AND tcclcode.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 분류코드.수정자_번호 */ AND tcclcode.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 분류코드.수정자_번호 */ AND tcclcode.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 분류코드.수정_일시 */ AND tcclcode.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 </sql>
 
@@ -158,7 +158,7 @@ PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
-			AND tcclcode.PRIOR_RANK LIKE '%' || #searchKeyword# || '%'
+			AND tcclcode.PRIOR_RANK LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
 		
 			<isNotEmpty property="CL_CODE">
@@ -171,7 +171,7 @@ PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */
 			<isNotEmpty property="PRIOR_RANK">
 				<![CDATA[
 					/* 분류코드.우선_순위 */
-					AND tcclcode.PRIOR_RANK = #PRIOR_RANK#
+					AND tcclcode.PRIOR_RANK = #PRIOR_RANK#::int
 				]]>
 			</isNotEmpty>
 		
@@ -206,7 +206,7 @@ PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */
 			<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 분류코드.생성자_번호 */
-					AND tcclcode.CRTR_NO = #CRTR_NO#
+					AND tcclcode.CRTR_NO = #CRTR_NO#::int
 				]]>
 			</isNotEmpty>
 		
@@ -220,7 +220,7 @@ PRIOR_RANK = #PRIOR_RANK# /* 분류코드.우선_순위 */
 			<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 분류코드.수정자_번호 */
-					AND tcclcode.UPDUSR_NO = #UPDUSR_NO#
+					AND tcclcode.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
 			</isNotEmpty>
 		

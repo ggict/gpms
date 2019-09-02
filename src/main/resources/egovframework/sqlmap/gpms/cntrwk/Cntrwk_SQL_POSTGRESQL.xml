@@ -112,35 +112,35 @@
 			, #HT_SE# /* 공사정보.반기_구분 */
 			, #SPRVISR_NM# /* 공사정보.감독원_명 */
 			, #SPRVISR_TELNO# /* 공사정보.감독원_전화번호 */
-			, #SPRVISN_CO_NO# /* 공사정보.감리_업체_번호 */
+			, #SPRVISN_CO_NO#::int /* 공사정보.감리_업체_번호 */
 			, #SPRVISN_CO_NM# /* 공사정보.감리_업체_명 */
 			, #SPRVISN_CO_RPRSNT_TELNO# /* 공사정보.감리_업체_대표_전화번호 */
 			, #SPRVISN_CO_RPRSNTV_NM# /* 공사정보.감리_업체_대표자_명 */
-			, #CNSTRCT_CO_NO# /* 공사정보.시공_업체_번호 */
+			, #CNSTRCT_CO_NO#::int /* 공사정보.시공_업체_번호 */
 			, #CNSTRCT_CO_NM# /* 공사정보.시공_업체_명 */
 			, #CNSTRCT_CO_RPRSNTV_NM# /* 공사정보.시공_업체_대표자_명 */
 			, #CNSTRCT_CO_TELNO# /* 공사정보.시공_업체_전화번호 */
 			, #SPT_AGENT_NM# /* 공사정보.현장_대리인_명 */
 			, #SPT_AGENT_TELNO# /* 공사정보.현장_대리인_전화번호 */
-			, #TRACK_LEN# /* 공사정보.1차로_연장 */
+			, #TRACK_LEN#::int /* 공사정보.1차로_연장 */
 			, #STRWRK_DE# /* 공사정보.착공_일자 */
 			, #COMPET_DE# /* 공사정보.준공_일자 */
 			, #CNTRWK_OPERT_CN# /* 공사정보.공사_작업_내용 */
 			, #FLAW_BEGIN_DE# /* 공사정보.하자_시작_일자 */
 			, #FLAW_END_DE# /* 공사정보.하자_종료_일자 */
-			, #TOT_AMOUNT# /* 공사정보.총_금액 */
+			, #TOT_AMOUNT#::int /* 공사정보.총_금액 */
 			, #RPAIR_THICK_DC# /* 공사정보.보수_두께_설명 */
-			, #RPAIR_THICK# /* 공사정보.보수_두께 */
-			, #RPAIR_AR# /* 공사정보.보수_면적 */
-			, #RPAIR_BT# /* 공사정보.보수_폭 */
+			, #RPAIR_THICK#::int /* 공사정보.보수_두께 */
+			, #RPAIR_AR#::int /* 공사정보.보수_면적 */
+			, #RPAIR_BT#::int /* 공사정보.보수_폭 */
 			, 'Y' /* 공사정보.사용_여부 */
 			, 'N' /* 공사정보.삭제_여부 */
-			, #CRTR_NO# /* 공사정보.생성자_번호 */
+			, #CRTR_NO#::int /* 공사정보.생성자_번호 */
 			, NOW() /* 공사정보.생성_일시 */
-			, #UPDUSR_NO# /* 공사정보.수정자_번호 */
+			, #UPDUSR_NO#::int /* 공사정보.수정자_번호 */
 			, NOW() /* 공사정보.수정_일시 */
 			, #EXTRL_REGIST_AT# /* 공사정보.외부_등록_여부 */
-			, #FILE_NO# /* 공사정보.파일_번호 */
+			, #FILE_NO#::int /* 공사정보.파일_번호 */
 		)
 ]]>
 	</insert>
@@ -180,7 +180,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 , SPRVISR_TELNO = #SPRVISR_TELNO# /* 공사정보.감독원_전화번호 */
 
 
-, SPRVISN_CO_NO = #SPRVISN_CO_NO# /* 공사정보.감리_업체_번호 */
+, SPRVISN_CO_NO = #SPRVISN_CO_NO#::int /* 공사정보.감리_업체_번호 */
 
 
 , SPRVISN_CO_NM = #SPRVISN_CO_NM# /* 공사정보.감리_업체_명 */
@@ -192,7 +192,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 , SPRVISN_CO_RPRSNTV_NM = #SPRVISN_CO_RPRSNTV_NM# /* 공사정보.감리_업체_대표자_명 */
 
 
-, CNSTRCT_CO_NO = #CNSTRCT_CO_NO# /* 공사정보.시공_업체_번호 */
+, CNSTRCT_CO_NO = #CNSTRCT_CO_NO#::int /* 공사정보.시공_업체_번호 */
 
 
 , CNSTRCT_CO_NM = #CNSTRCT_CO_NM# /* 공사정보.시공_업체_명 */
@@ -210,7 +210,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 , SPT_AGENT_TELNO = #SPT_AGENT_TELNO# /* 공사정보.현장_대리인_전화번호 */
 
 
-, TRACK_LEN = #TRACK_LEN# /* 공사정보.1차로_연장 */
+, TRACK_LEN = #TRACK_LEN#::int /* 공사정보.1차로_연장 */
 
 
 , STRWRK_DE = #STRWRK_DE# /* 공사정보.착공_일자 */
@@ -228,20 +228,20 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 , FLAW_END_DE = #FLAW_END_DE# /* 공사정보.하자_종료_일자 */
 
 
-, TOT_AMOUNT = #TOT_AMOUNT# /* 공사정보.총_금액 */
+, TOT_AMOUNT = #TOT_AMOUNT#::int /* 공사정보.총_금액 */
 
 
 , RPAIR_THICK_DC = #RPAIR_THICK_DC# /* 공사정보.보수_두께_설명 */
 
 
-, RPAIR_THICK = #RPAIR_THICK# /* 공사정보.보수_두께 */
+, RPAIR_THICK = #RPAIR_THICK#::int /* 공사정보.보수_두께 */
 
 
-, RPAIR_AR = #RPAIR_AR# /* 공사정보.보수_면적 */
+, RPAIR_AR = #RPAIR_AR#::int /* 공사정보.보수_면적 */
 
-, RPAIR_BT = #RPAIR_BT# /* 공사정보.보수_폭 */
+, RPAIR_BT = #RPAIR_BT#::int /* 공사정보.보수_폭 */
 
-, UPDUSR_NO = #UPDUSR_NO# /* 공사정보.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::int /* 공사정보.수정자_번호 */
 
 
 , UPDT_DT = NOW() /* 공사정보.수정_일시 */
@@ -250,7 +250,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 , EXTRL_REGIST_AT = #EXTRL_REGIST_AT# /* 공사정보.외부_등록_여부 */
 
 
-, FILE_NO = #FILE_NO# /* 공사정보.파일_번호 */
+, FILE_NO = #FILE_NO#::int /* 공사정보.파일_번호 */
 
 		WHERE 1 = 1
 		AND CNTRWK_ID = #CNTRWK_ID# /* 공사정보.공사_ID */
@@ -360,11 +360,11 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		<isNotEmpty property="HT_SE"><![CDATA[ /* 공사정보.반기_구분 */ AND tncntrwk.HT_SE = #HT_SE# ]]></isNotEmpty>
 		<isNotEmpty property="SPRVISR_NM"><![CDATA[ /* 공사정보.감독원_명 */ AND tncntrwk.SPRVISR_NM = #SPRVISR_NM# ]]></isNotEmpty>
 		<isNotEmpty property="SPRVISR_TELNO"><![CDATA[ /* 공사정보.감독원_전화번호 */ AND tncntrwk.SPRVISR_TELNO = #SPRVISR_TELNO# ]]></isNotEmpty>
-		<isNotEmpty property="SPRVISN_CO_NO"><![CDATA[ /* 공사정보.감리_업체_번호 */ AND tncntrwk.SPRVISN_CO_NO = #SPRVISN_CO_NO# ]]></isNotEmpty>
+		<isNotEmpty property="SPRVISN_CO_NO"><![CDATA[ /* 공사정보.감리_업체_번호 */ AND tncntrwk.SPRVISN_CO_NO = #SPRVISN_CO_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="SPRVISN_CO_NM"><![CDATA[ /* 공사정보.감리_업체_명 */ AND tncntrwk.SPRVISN_CO_NM = #SPRVISN_CO_NM# ]]></isNotEmpty>
 		<isNotEmpty property="SPRVISN_CO_RPRSNT_TELNO"><![CDATA[ /* 공사정보.감리_업체_대표_전화번호 */ AND tncntrwk.SPRVISN_CO_RPRSNT_TELNO = #SPRVISN_CO_RPRSNT_TELNO# ]]></isNotEmpty>
 		<isNotEmpty property="SPRVISN_CO_RPRSNTV_NM"><![CDATA[ /* 공사정보.감리_업체_대표자_명 */ AND tncntrwk.SPRVISN_CO_RPRSNTV_NM = #SPRVISN_CO_RPRSNTV_NM# ]]></isNotEmpty>
-		<isNotEmpty property="CNSTRCT_CO_NO"><![CDATA[ /* 공사정보.시공_업체_번호 */ AND tncntrwk.CNSTRCT_CO_NO = #CNSTRCT_CO_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CNSTRCT_CO_NO"><![CDATA[ /* 공사정보.시공_업체_번호 */ AND tncntrwk.CNSTRCT_CO_NO = #CNSTRCT_CO_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="SCH_CO_NM"><![CDATA[ /* 공사정보.시공_업체_명 */]]> AND tncntrwk.CNSTRCT_CO_NM LIKE '%' || #SCH_CO_NM# || '%'</isNotEmpty>
 		<isNotEmpty property="CNSTRCT_CO_RPRSNTV_NM"><![CDATA[ /* 공사정보.시공_업체_대표자_명 */ AND tncntrwk.CNSTRCT_CO_RPRSNTV_NM = #CNSTRCT_CO_RPRSNTV_NM# ]]></isNotEmpty>
 		<isNotEmpty property="CNSTRCT_CO_TELNO"><![CDATA[ /* 공사정보.시공_업체_전화번호 */ AND tncntrwk.CNSTRCT_CO_TELNO = #CNSTRCT_CO_TELNO# ]]></isNotEmpty>
@@ -376,19 +376,19 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		<isNotEmpty property="CNTRWK_OPERT_CN"><![CDATA[ /* 공사정보.공사_작업_내용 */ AND tncntrwk.CNTRWK_OPERT_CN = #CNTRWK_OPERT_CN# ]]></isNotEmpty>
 		<isNotEmpty property="FLAW_BEGIN_DE"><![CDATA[ /* 공사정보.하자_시작_일자 */ AND tncntrwk.FLAW_BEGIN_DE = #FLAW_BEGIN_DE# ]]></isNotEmpty>
 		<isNotEmpty property="FLAW_END_DE"><![CDATA[ /* 공사정보.하자_종료_일자 */ AND tncntrwk.FLAW_END_DE = #FLAW_END_DE# ]]></isNotEmpty>
-		<isNotEmpty property="TOT_AMOUNT"><![CDATA[ /* 공사정보.총_금액 */ AND tncntrwk.TOT_AMOUNT = #TOT_AMOUNT# ]]></isNotEmpty>
+		<isNotEmpty property="TOT_AMOUNT"><![CDATA[ /* 공사정보.총_금액 */ AND tncntrwk.TOT_AMOUNT = #TOT_AMOUNT#::int ]]></isNotEmpty>
 		<isNotEmpty property="RPAIR_THICK_DC"><![CDATA[ /* 공사정보.보수_두께_설명 */ AND tncntrwk.RPAIR_THICK_DC = #RPAIR_THICK_DC# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_THICK"><![CDATA[ /* 공사정보.보수_두께 */ AND tncntrwk.RPAIR_THICK = #RPAIR_THICK# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_AR"><![CDATA[ /* 공사정보.보수_면적 */ AND tncntrwk.RPAIR_AR = #RPAIR_AR# ]]></isNotEmpty>
-		<isNotEmpty property="RPAIR_BT"><![CDATA[ /* 공사정보.보수_폭 */ AND tncntrwk.RPAIR_BT = #RPAIR_BT# ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_THICK"><![CDATA[ /* 공사정보.보수_두께 */ AND tncntrwk.RPAIR_THICK = #RPAIR_THICK#::int ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_AR"><![CDATA[ /* 공사정보.보수_면적 */ AND tncntrwk.RPAIR_AR = #RPAIR_AR#::int ]]></isNotEmpty>
+		<isNotEmpty property="RPAIR_BT"><![CDATA[ /* 공사정보.보수_폭 */ AND tncntrwk.RPAIR_BT = #RPAIR_BT#::int ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 공사정보.사용_여부 */ AND tncntrwk.USE_AT = #USE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 공사정보.삭제_여부 */ AND tncntrwk.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공사정보.생성자_번호 */ AND tncntrwk.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 공사정보.생성자_번호 */ AND tncntrwk.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 공사정보.생성_일시 */ AND tncntrwk.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공사정보.수정자_번호 */ AND tncntrwk.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 공사정보.수정자_번호 */ AND tncntrwk.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 공사정보.수정_일시 */ AND tncntrwk.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="EXTRL_REGIST_AT"><![CDATA[ /* 공사정보.외부_등록_여부 */ AND tncntrwk.EXTRL_REGIST_AT = #EXTRL_REGIST_AT# ]]></isNotEmpty>
-		<isNotEmpty property="FILE_NO"><![CDATA[ /* 공사정보.파일_번호 */ AND tncntrwk.FILE_NO = #FILE_NO# ]]></isNotEmpty>
+		<isNotEmpty property="FILE_NO"><![CDATA[ /* 공사정보.파일_번호 */ AND tncntrwk.FILE_NO = #FILE_NO#::int ]]></isNotEmpty>
 </sql>
 
 	<select id="cntrwkDAO.selectCntrwkListPage"
@@ -1164,48 +1164,32 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		       , COALESCE(tncntrwkdtl.RPAIR_AR,0) RPAIR_AR
 		       , COALESCE(tncntrwkdtl.CNTRWK_AMOUNT,0) CNTRWK_AMOUNT
 		       , tncntrwkdtl.RPAIR_MATRL_PRDCT_CO_NM
-			   , CASE WHEN 
-			   		tncntrwkdtl.CNSTRCT_CO_NO = NULL
-			   	 THEN
-			   	 	tncntrwkdtl.CNSTRCT_CO_NM
-			   	 ELSE
-			   	 	(SELECT tncompany.CO_NM FROM TN_COMPANY tncompany
-					  WHERE tncompany.USE_AT='Y' AND tncompany.DELETE_AT='N'
-					    AND tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO)
-				 END CNSTRCT_CO_NM
+		       , DECODE(tncntrwkdtl.CNSTRCT_CO_NO, NULL, tncntrwkdtl.CNSTRCT_CO_NM
+					  , (SELECT tncompany.CO_NM FROM TN_COMPANY tncompany
+						  WHERE tncompany.USE_AT='Y' AND tncompany.DELETE_AT='N'
+						    AND tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO)
+				 ) CNSTRCT_CO_NM
 		       , COALESCE(tncntrwkdtl.BEFORE_PAV_YEAR, '없음') BEFORE_PAV_YEAR
 		       , TO_CHAR(TO_DATE(tncntrwkdtl.RPAIR_BEGIN_DE), 'YYYY-MM-DD') RPAIR_BEGIN_DE
 		       , TO_CHAR(TO_DATE(tncntrwkdtl.RPAIR_END_DE), 'YYYY-MM-DD') RPAIR_END_DE
 		       , tncntrwkdtl.RPAIR_THICK_ASCON
 		       , tncntrwkdtl.RPAIR_THICK_CNTR
 		       , tncntrwkdtl.RPAIR_THICK_BASE
-			   , CASE WHEN
-			   		tncntrwkdtl.PAV_MATRL_ASCON_CODE = 'PM00000008'
-			   	 THEN
-			   	 	PAV_MATRL_ASCON_ETC
-			   	 ELSE
-			   	 	(SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
-					  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_ASCON_CODE
-						AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
-				 END PAV_MATRL_ASCON_NM 
-				, CASE WHEN
-			   		tncntrwkdtl.PAV_MATRL_CNTR_CODE = 'PM00000008'
-			   	 THEN
-			   	 	PAV_MATRL_CNTR_ETC
-			   	 ELSE
-			   	 	(SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
-						WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_CNTR_CODE
+		       , DECODE(tncntrwkdtl.PAV_MATRL_ASCON_CODE, 'PM00000008', PAV_MATRL_ASCON_ETC
+					  , (SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
+						  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_ASCON_CODE
 							AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
-				 END PAV_MATRL_CNTR_NM 
-			   , CASE WHEN
-			   		tncntrwkdtl.PAV_MATRL_BASE_CODE = 'PM00000008'
-			   	 THEN
-			   	 	PAV_MATRL_BASE_ETC
-			   	 ELSE
-			   	 	(SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
-					  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_BASE_CODE
-						AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
-				 END PAV_MATRL_BASE_NM
+				 ) PAV_MATRL_ASCON_NM
+		       , DECODE(tncntrwkdtl.PAV_MATRL_CNTR_CODE, 'PM00000008', PAV_MATRL_CNTR_ETC
+					  , (SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
+						  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_CNTR_CODE
+							AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
+				 ) PAV_MATRL_CNTR_NM
+		       , DECODE(tncntrwkdtl.PAV_MATRL_BASE_CODE, 'PM00000008', PAV_MATRL_BASE_ETC
+					  , (SELECT tcpavmatrl.PAV_MATRL_NM FROM TC_PAV_MATRL tcpavmatrl
+						  WHERE tcpavmatrl.PAV_MATRL_CODE = tncntrwkdtl.PAV_MATRL_BASE_CODE
+							AND tcpavmatrl.USE_AT='Y' AND tcpavmatrl.DELETE_AT = 'N')
+				 ) PAV_MATRL_BASE_NM
 		       , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
 				   WHERE tcdept.DEPT_CODE = tncntrwk.DEPT_CODE
 					 AND tcdept.USE_AT='Y' AND tcdept.DELETE_AT = 'N') DEPT_NM

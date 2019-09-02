@@ -702,12 +702,9 @@
 							, tnsrvydtaexcel.FILE_NO
 							, tnsrvydtaexcel.SRVY_NO
 					        , COALESCE((
-                               SELECT CASE 
-		                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0002' THEN '성공'
-		                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0003' THEN '실패'
-		                              END FROM(
+                               SELECT DECODE(tlsrvydtalog.PROCESS_STTUS, 'PCST0002', '성공', 'PCST0003', '실패') FROM(
                                   SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
-                                         PROCESS_SE, PROCESS_STTUS, SRVY_NO
+                                        PROCESS_SE, PROCESS_STTUS, SRVY_NO
                                   FROM TL_SRVY_DTA_LOG
                                   WHERE PROCESS_SE = 'PCSE0003'
                               ) tlsrvydtalog
@@ -715,10 +712,7 @@
                               AND tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO
                               ), '미평가') EVL_PROCESS
                             , COALESCE((
-                               SELECT CASE 
-		                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0002' THEN '성공'
-		                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0003' THEN '실패'
-		                              END FROM(
+                               SELECT DECODE(tlsrvydtalog.PROCESS_STTUS, 'PCST0002', '성공', 'PCST0003', '실패') FROM(
                                   SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
                                         PROCESS_SE, PROCESS_STTUS, SRVY_NO
                                   FROM TL_SRVY_DTA_LOG
@@ -728,10 +722,7 @@
                               AND tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO
                               ), '미평가') GPS_CORTN_PROCESS
                             , COALESCE((
-                               SELECT CASE 
-		                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0002' THEN '성공'
-		                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0003' THEN '실패'
-		                              END FROM(
+                               SELECT DECODE(tlsrvydtalog.PROCESS_STTUS, 'PCST0002', '성공', 'PCST0003', '실패') FROM(
                                   SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
                                         PROCESS_SE, PROCESS_STTUS, SRVY_NO
                                   FROM TL_SRVY_DTA_LOG
@@ -1082,10 +1073,7 @@
 			     , TO_CHAR(add_months(NOW(), 12), 'YYYY') || '~' || TO_CHAR(add_months(NOW(), 120), 'YYYY') PREDCT_DE
 			     , tnsrvydtaexcel.DATA_CO
 			     , COALESCE((
-			           SELECT CASE 
-                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0002' THEN '성공'
-                               	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0003' THEN '실패'
-                              END FROM(
+			           SELECT DECODE(tlsrvydtalog.PROCESS_STTUS, 'PCST0002', '성공', 'PCST0003', '실패') FROM(
 			              SELECT ROW_NUMBER() OVER(PARTITION BY SRVY_NO ORDER BY END_DT DESC) RN,
 			                    PROCESS_SE, PROCESS_STTUS, SRVY_NO
 			              FROM TL_SRVY_DTA_LOG
@@ -1149,24 +1137,15 @@
 				, ( SELECT code.CODE_NM
 	                FROM TC_CODE code
 	                WHERE code.CODE_VAL = sect.ROAD_GRAD ) AS ROAD_GRAD /* 셀.도로등급 */
-				, CASE 
-				    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
-						 WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) = 'AC' THEN '거북등균열' 
-				    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
-						 WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) = 'BC' THEN '블럭균열' 
-				    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
-						 WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) = 'LC' THEN '선형균열' 
-				    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
-						 WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) = 'PTCHG' THEN '패칭' 
-				    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
-						 WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) = 'POTHOLE' THEN '포트홀' 
-				    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
-						 WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) = 'RD' THEN '소성변형' 
-				    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
-						 WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) = 'RCI' THEN '종단평탄성' 
-				    WHEN (SELECT tccode.CODE_NM FROM TC_CODE tccode
-						 WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) = 'IRI' THEN '종단평탄성' 
-				  END AS CR 
+				, DECODE
+				    (
+                        (
+	                    SELECT tccode.CODE_NM
+	                    FROM TC_CODE tccode
+	                    WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT
+	                    )
+	                    , 'AC','거북등균열','BC','블럭균열','LC','선형균열','PTCHG','패칭','POTHOLE','포트홀','RD','소성변형','RCI','종단평탄성','IRI','종단평탄성'
+                    ) AS CR
 		        , CASE WHEN DMG_CUZ_CLMT > DMG_CUZ_VMTC  AND DMG_CUZ_CLMT > DMG_CUZ_ETC THEN '기후'
 			           WHEN DMG_CUZ_VMTC > DMG_CUZ_CLMT  AND DMG_CUZ_VMTC > DMG_CUZ_ETC THEN '교통량/하부불량'
 			           WHEN DMG_CUZ_ETC > DMG_CUZ_CLMT AND DMG_CUZ_VMTC < DMG_CUZ_ETC THEN '기타'
