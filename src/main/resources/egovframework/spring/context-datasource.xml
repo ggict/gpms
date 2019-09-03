@@ -32,23 +32,23 @@
 	    <property name="url" value="${Globals.Url}" />
 	    <property name="username" value="${Globals.UserName}" />
 	    <property name="password" value="${Globals.Password}" />
-	    <!-- Connection pool -->
+<!-- 	    Connection pool
 	    <property name="initialSize" value="10" />
     	<property name="maxActive" value="50" />
     	<property name="maxIdle" value="50" />
     	<property name="minIdle" value="50" />
     	<property name="maxWait" value="60000" />
-	    <!-- connection verification -->
+	    connection verification
 	    <property name="testOnBorrow" value="true" />
 	    <property name="testOnReturn" value="false" />
 	    <property name="validationQuery" value=" SELECT 1" />
 	    <property name="testWhileIdle" value="true" />
 	    <property name="timeBetweenEvictionRunsMillis" value="600000" />
-	    <!-- abandoned connection -->
+	    abandoned connection
 	    <property name="removeAbandonedTimeout" value="60" />
 	    <property name="removeAbandoned" value="true" />
 	    <property name="logAbandoned" value="true" />
-	    <property name="defaultAutoCommit" value="true" />
+	    <property name="defaultAutoCommit" value="true" /> -->
 	</bean>
    
 </beans>
