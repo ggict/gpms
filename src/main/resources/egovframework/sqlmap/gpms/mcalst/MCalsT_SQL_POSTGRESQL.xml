@@ -18,7 +18,7 @@
 				mcalst.TYPE_NAME,/*교량정보.관할구분명*/
 				mcalst.BRDG_TYPENM,/*교량정보.교량유형명*/
 				mcalst.BJNAME,/*교량정보.법정동명*/
-				TO_NUMBER(MIN(mbrggt.SPAN_NUM))||'~'||TO_NUMBER(MAX(mbrggt.SPAN_NUM)) AS SPAN_NUM,/*교량구조.경간번호*/
+				MIN(mbrggt.SPAN_NUM)::int ||'~'|| MAX(mbrggt.SPAN_NUM)::int AS SPAN_NUM,/*교량구조.경간번호*/
 				mbrggt.DECK_PAVTY_NAME,/*교량구조.바닥판포장명*/
 				mbrggt.DECK_PAV/*교량구조.바닥판포장두께*/
 			FROM M_CALS_T mcalst LEFT OUTER JOIN M_BRGG_T mbrggt ON mbrggt.BRDG_SEQ =  mcalst.BRDG_SEQ
@@ -53,7 +53,7 @@
 				mcalst.TYPE_NAME,/*교량정보.관할구분명*/
 				mcalst.BRDG_TYPENM,/*교량정보.교량유형명*/
 				mcalst.BJNAME,/*교량정보.법정동명*/
-				TO_NUMBER(MIN(mbrggt.SPAN_NUM))||'~'||TO_NUMBER(MAX(mbrggt.SPAN_NUM)) AS SPAN_NUM,/*교량구조.경간번호*/
+				MIN(mbrggt.SPAN_NUM)::int ||'~'|| MAX(mbrggt.SPAN_NUM)::int AS SPAN_NUM,/*교량구조.경간번호*/
 				mbrggt.DECK_PAVTY_NAME,/*교량구조.바닥판포장명*/
 				mbrggt.DECK_PAV/*교량구조.바닥판포장두께*/
 			FROM M_CALS_T mcalst LEFT OUTER JOIN M_BRGG_T mbrggt ON mbrggt.BRDG_SEQ =  mcalst.BRDG_SEQ

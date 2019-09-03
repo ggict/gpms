@@ -1378,7 +1378,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                 , tnsmdtagnlsttus.SRVY_YEAR
                 , tnsmdtagnlsttus.SRVY_MT
                 , tnsmdtagnlsttus.ROUTE_CODE AS ROAD_NO
-                , TO_NUMBER(tnsmdtagnlsttus.ROUTE_CODE) AS ROAD_NO_VAL
+                , tnsmdtagnlsttus.ROUTE_CODE::int AS ROAD_NO_VAL
                 , road.ROAD_NAME AS ROAD_NM
                 , CASE tnsmdtagnlsttus.DIRECT_CODE
                     WHEN 'S' THEN '상행'
@@ -1453,7 +1453,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			    , tnmummsctnsrvydta.SRVY_YEAR
 			    , tnmummsctnsrvydta.SRVY_MT
 			    , tnmummsctnsrvydta.ROUTE_CODE AS ROAD_NO
-			    , TO_NUMBER(tnmummsctnsrvydta.ROUTE_CODE) AS ROAD_NO_VAL
+			    , tnmummsctnsrvydta.ROUTE_CODE::int AS ROAD_NO_VAL
                 , road.ROAD_NAME AS ROAD_NM
                 , CASE tnmummsctnsrvydta.DIRECT_CODE
                     WHEN 'S' THEN '상행'
@@ -1563,7 +1563,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                     , cell.CELL_ID /* CELL_10.셀_아이디 */
                     , cell.ROAD_GRAD /* 노선정보.노선_등급 */
                     , tnrouteinfo.ROAD_NAME /* 노선정보.노선명 */
-                    , TO_NUMBER(tnmummsctnsrvydta.ROUTE_CODE) ROAD_NO_VAL
+                    , tnmummsctnsrvydta.ROUTE_CODE::int ROAD_NO_VAL
                 FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
                 LEFT OUTER JOIN CELL_10 cell
                         ON tnmummsctnsrvydta.ROUTE_CODE = cell.ROUTE_CODE
