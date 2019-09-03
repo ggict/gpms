@@ -147,7 +147,7 @@
 
         <isEqual property="searchCondition" compareValue="0">
             <![CDATA[
-                AND cell10.GID = #searchKeyword#
+                AND cell10.GID = #searchKeyword#::int
             ]]>
         </isEqual>
         <!-- 추후변경_sdh
@@ -162,15 +162,15 @@
         <isNotEmpty property="ROUTE_CODE"><![CDATA[ /* CELL_10.ROUTE_CODE */ AND cell10.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
         <isNotEmpty property="DIRECT_CODE"><![CDATA[ /* CELL_10.DIRECT_CODE */ AND cell10.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
         <isNotEmpty property="TRACK"><![CDATA[ /* CELL_10.TRACK */ AND cell10.TRACK = #TRACK# ]]></isNotEmpty>
-        <isNotEmpty property="STRTPT"><![CDATA[ /* CELL_10.STRTPT */ AND cell10.STRTPT >= #STRTPT# ]]></isNotEmpty>
-        <isNotEmpty property="ENDPT"><![CDATA[ /* CELL_10.ENDPT */ AND cell10.ENDPT <= #ENDPT# ]]></isNotEmpty>
-        <isNotEmpty property="DEPT_CODE"><![CDATA[ /* CELL_10.DEPT_CODE */ AND cell10.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+        <isNotEmpty property="STRTPT"><![CDATA[ /* CELL_10.STRTPT */ AND cell10.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
+        <isNotEmpty property="ENDPT"><![CDATA[ /* CELL_10.ENDPT */ AND cell10.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE"><![CDATA[ /* CELL_10.DEPT_CODE */ AND cell10.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
         <isNotEmpty property="CELL_TYPE"><![CDATA[ /* CELL_10.CELL_TYPE */ AND cell10.CELL_TYPE = #CELL_TYPE# ]]></isNotEmpty>
         <isNotEmpty property="VMTC_GRAD"><![CDATA[ /* CELL_10.VMTC_GRAD */ AND cell10.VMTC_GRAD = #VMTC_GRAD# ]]></isNotEmpty>
         <isNotEmpty property="ROAD_GRAD"><![CDATA[ /* CELL_10.ROAD_GRAD */ AND cell10.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
         <isNotEmpty property="ADM_CODE"><![CDATA[ /* CELL_10.ADM_CODE */ AND cell10.ADM_CODE = #ADM_CODE# ]]></isNotEmpty>
         <isNotEmpty property="CREAT_DT"><![CDATA[ /* CELL_10.CREAT_DT */ AND cell10.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-        <isNotEmpty property="UPDUSR_NO"><![CDATA[ /* CELL_10.UPDUSR_NO */ AND cell10.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+        <isNotEmpty property="UPDUSR_NO"><![CDATA[ /* CELL_10.UPDUSR_NO */ AND cell10.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
         <isNotEmpty property="UPDT_DT"><![CDATA[ /* CELL_10.UPDT_DT */ AND cell10.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
         <isNotEmpty property="CELL_ID"><![CDATA[ /* CELL_10.CELL_ID */ AND cell10.CELL_ID = #CELL_ID# ]]></isNotEmpty>
         <isNotEmpty property="CELL_ID_LIST"><![CDATA[ /* CELL_10.CELL_ID */ ]]> <iterate close=")" conjunction="," open="(" prepend=" AND CELL_ID IN " property="CELL_ID_LIST"> #CELL_ID_LIST[]# </iterate></isNotEmpty>
@@ -195,7 +195,7 @@
                 , cell10.STRTPT /* CELL_10.STRTPT */
                 , cell10.ENDPT /* CELL_10.ENDPT */
                 , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
-                    WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE
+                    WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE::text
                       AND tcdept.DELETE_AT='N' AND tcdept.USE_AT='Y') DEPT_CODE /* CELL_10.DEPT_CODE */
                 , (SELECT tccode.CODE_NM FROM TC_CODE tccode
                     WHERE tccode.CODE_VAL = cell10.CELL_TYPE AND tccode.CL_CODE = 'CELT'
@@ -221,7 +221,7 @@
 <![CDATA[
         ORDER BY
                 cell10.ROUTE_CODE, cell10.DIRECT_CODE, cell10.TRACK, cell10.STRTPT, cell10.ENDPT ASC
-        ) tb) WHERE 1=1
+        ) tb) as sub_tb WHERE 1=1
 ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
         <![CDATA[
@@ -414,7 +414,7 @@
             /* 포장상태조사구간 관리기관별 통계 조회*/
             SELECT
                 cell10.DEPT_CODE,
-                ( SELECT lowest_dept_nm FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE) AS DEPT_NM,
+                ( SELECT lowest_dept_nm FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE::text) AS DEPT_NM,
                 SUM(ROAD_L)/1000 AS LEN
             FROM  CELL_10 cell10
                 LEFT OUTER JOIN TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
@@ -426,9 +426,9 @@
                 AND tnmummsctnsrvydta.USE_AT = 'Y'
                 AND tnmummsctnsrvydta.DELETE_AT = 'N'
             WHERE 1 = 1
-                AND cell10.DEPT_CODE  IN ('6411399','6411799')/* 6411399:도로건설과/6411799:북부도로과 */
+                AND cell10.DEPT_CODE::text  IN ('6411399','6411799')/* 6411399:도로건설과/6411799:북부도로과 */
         ]]>
-            <isNotEmpty property="SCH_DEPT_CODE1"><![CDATA[ AND cell10.DEPT_CODE = #SCH_DEPT_CODE1# ]]></isNotEmpty>
+            <isNotEmpty property="SCH_DEPT_CODE1"><![CDATA[ AND cell10.DEPT_CODE = #SCH_DEPT_CODE1#::int ]]></isNotEmpty>
             <isNotEmpty property="SCH_STRSRVY_DE"><![CDATA[ AND tnmummsctnsrvydta.SRVY_DE >= #SCH_STRSRVY_DE# ]]></isNotEmpty>
             <isNotEmpty property="SCH_ENDSRVY_DE"><![CDATA[ AND tnmummsctnsrvydta.SRVY_DE <= #SCH_ENDSRVY_DE# ]]></isNotEmpty>
         <![CDATA[
@@ -442,7 +442,7 @@
             /* 포장상태조사구간 관리기관별 통계 엑셀 조회*/
             SELECT
                 cell10.DEPT_CODE,
-                ( SELECT lowest_dept_nm FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE) AS DEPT_NM,
+                ( SELECT lowest_dept_nm FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE::text) AS DEPT_NM,
                 SUM(ROAD_L)/1000 AS LEN
             FROM  CELL_10 cell10
                 LEFT OUTER JOIN TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
@@ -454,9 +454,9 @@
                 AND tnmummsctnsrvydta.USE_AT = 'Y'
                 AND tnmummsctnsrvydta.DELETE_AT = 'N'
             WHERE 1 = 1
-                AND cell10.DEPT_CODE  IN ('6411399','6411799')/* 6411399:도로건설과/6411799:북부도로과 */
+                AND cell10.DEPT_CODE::text  IN ('6411399','6411799')/* 6411399:도로건설과/6411799:북부도로과 */
         ]]>
-            <isNotEmpty property="SCH_DEPT_CODE1"><![CDATA[ AND cell10.DEPT_CODE = #SCH_DEPT_CODE1# ]]></isNotEmpty>
+            <isNotEmpty property="SCH_DEPT_CODE1"><![CDATA[ AND cell10.DEPT_CODE = #SCH_DEPT_CODE1#::int ]]></isNotEmpty>
             <isNotEmpty property="SCH_STRSRVY_DE"><![CDATA[ AND tnmummsctnsrvydta.SRVY_DE >= #SCH_STRSRVY_DE# ]]></isNotEmpty>
             <isNotEmpty property="SCH_ENDSRVY_DE"><![CDATA[ AND tnmummsctnsrvydta.SRVY_DE <= #SCH_ENDSRVY_DE# ]]></isNotEmpty>
         <![CDATA[
@@ -554,11 +554,11 @@
             /* cell10DAO.selectDeptLenStatsResult */
             /* 통계 > 노선현황 > 관리기관별 통계 목록을 조회한다 */
                SELECT cell10.DEPT_CODE,
-                    ( SELECT LOWEST_DEPT_NM FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE) AS DEPT_NM,
+                    ( SELECT LOWEST_DEPT_NM FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE::text) AS DEPT_NM,
                      SUM(ROAD_L) /1000 AS LEN
                FROM CELL_10 cell10
               WHERE 1 = 1
-                AND cell10.DEPT_CODE IN('6411399', '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
+                AND cell10.DEPT_CODE::text IN('6411399', '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
               GROUP BY cell10.DEPT_CODE
         ]]>
     </select>
@@ -582,11 +582,11 @@
             /* cell10DAO.selectDeptLenStatsResultExcel */
             /* 통계 > 노선현황 > 관리기관별 통계 엑셀목록을 조회한다. */
               SELECT cell10.DEPT_CODE,
-                    ( SELECT LOWEST_DEPT_NM FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE) AS DEPT_NM,
+                    ( SELECT LOWEST_DEPT_NM FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE::text) AS DEPT_NM,
                      SUM(ROAD_L) AS LEN
                FROM CELL_10 cell10
               WHERE 1 = 1
-                AND cell10.DEPT_CODE IN('6411399', '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
+                AND cell10.DEPT_CODE::text IN('6411399', '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
               GROUP BY cell10.DEPT_CODE
               ORDER BY  DEPT_NM
         ]]>

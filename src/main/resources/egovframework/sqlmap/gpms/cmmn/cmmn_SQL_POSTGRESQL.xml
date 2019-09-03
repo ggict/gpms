@@ -114,7 +114,7 @@
 		/* 행정구역 코드 조회 */
 		SELECT SUBSTR(BJCD,0,5) AS CODE_VAL, NAME AS CODE_NM
 		  FROM N3A_G0100000
-		 WHERE SUBSTR(BJCD,5,1) = 0
+		 WHERE SUBSTR(BJCD,5,1) = '0'
 		 ORDER BY CODE_NM
 	]]>
 		</select>
