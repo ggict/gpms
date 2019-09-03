@@ -629,7 +629,7 @@
 			/* 포장상태 평가 - 노선단위 수시병가 대상 목록 */
 			SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN, tb.* FROM (
 				SELECT tnrouteinfo.ROAD_NO
-				     , TO_NUMBER(tnrouteinfo.ROAD_NO) ROAD_NO_VAL
+				     , tnrouteinfo.ROAD_NO::int ROAD_NO_VAL
 				     , tnrouteinfo.ROAD_NAME
 				     , TO_CHAR(NOW(), 'YYYY') CALC_YEAR
 				     , TO_CHAR(NOW(), 'MM') CALC_MT
@@ -733,7 +733,7 @@
 		SELECT  tb.* FROM (
 		SELECT tnsmdtalaststtus.SM_NO
 		, tnsmdtalaststtus.CALC_YEAR
-		, TO_NUMBER(tnsmdtalaststtus.ROUTE_CODE) AS ROAD_NO_VAL
+		, tnsmdtalaststtus.ROUTE_CODE::int AS ROAD_NO_VAL
 		, ( SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo
 		WHERE tnrouteinfo.ROAD_NO = tnsmdtalaststtus.ROUTE_CODE ) AS ROAD_NAME
 		, ( SELECT code.CODE_NM FROM TC_CODE code WHERE sect.ROAD_GRAD =
@@ -835,7 +835,7 @@
 				    , sect.CELL_ID
 				    , tnsmdtalaststtus.CALC_YEAR
 				    , tnsmdtalaststtus.ROUTE_CODE
-				    , TO_NUMBER(tnsmdtalaststtus.ROUTE_CODE) AS ROAD_NO_VAL
+				    , tnsmdtalaststtus.ROUTE_CODE::int AS ROAD_NO_VAL
 				    , ( SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo
 				        WHERE tnrouteinfo.ROAD_NO = tnsmdtalaststtus.ROUTE_CODE
 				    ) AS ROAD_NAME
@@ -936,7 +936,7 @@
                     , sect.CELL_ID
                     , tnsmdtalaststtus.CALC_YEAR
                     , tnsmdtalaststtus.ROUTE_CODE
-                    , TO_NUMBER(tnsmdtalaststtus.ROUTE_CODE) AS ROAD_NO_VAL
+                    , tnsmdtalaststtus.ROUTE_CODE::int AS ROAD_NO_VAL
                     , ( SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo
                         WHERE tnrouteinfo.ROAD_NO = tnsmdtalaststtus.ROUTE_CODE
                     ) AS ROAD_NAME

@@ -152,7 +152,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 		/* 공통코드 조회 */
 		SELECT
 		     tcclcode.CL_CODE /* 공통코드.분류_코드 */
-		    , tcclcode.CL_CODE || LPAD( TO_NUMBER( COALESCE(MAX(SUBSTR(tccode.CODE_VAL, 5)),'0') )+1, 4, '0') CODE_VAL /* 공통코드.코드_값 */
+		    , tcclcode.CL_CODE || LPAD(  COALESCE(MAX(SUBSTR(tccode.CODE_VAL, 5)),'0')::int +1, 4, '0') CODE_VAL /* 공통코드.코드_값 */
 		    , COALESCE(MAX(tccode.PRIOR_RANK),0)+1 PRIOR_RANK /* 공통코드.우선_순위 */
 		    , MAX( tccode.ATRB_VAL ) ATRB_VAL /* 공통코드.속성_값 */
 		FROM TC_CL_CODE tcclcode
