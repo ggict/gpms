@@ -528,7 +528,7 @@
 			sValue = parent.GUtil.fn_set_lpad(_param.routeCode, 4, "0");
 		}
 
-
+		//prefix가 붙지 않는 경우가 있어 or 조건 추가
 		if(sNm == "sld:NamedLayer" || sNm == "NamedLayer") {
 			var sLyrNm = arrEle[0].elements[0].text;
 			if(sLyrNm == _targetLyr) {

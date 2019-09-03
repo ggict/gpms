@@ -186,6 +186,30 @@ var CONFIG = (function($, undefined){
 	         'layerType' : '3',
 	     },
 	     
+	     "MV_SRVYDTA_10_2017" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3758',
+	         'table' : 'MV_SRVYDTA_10_2017',
+	         'theme' : 'MV_SRVYDTA_10_2017',
+	         'alias' : '10m셀_포장상태_2017',
+	         'seq' : '3758',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	 
+	     "MV_SRVYDTA_10_2018" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3759',
+	         'table' : 'MV_SRVYDTA_10_2018',
+	         'theme' : 'MV_SRVYDTA_10_2018',
+	         'alias' : '10m셀_포장상태_2018',
+	         'seq' : '3759',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },	     
+	     
 	     /*
 	     "SIGUNGU" : {
 	         
@@ -223,29 +247,7 @@ var CONFIG = (function($, undefined){
 	         'layerType' : '3',
 	     },
 	 
-	     "MV_SRVYDTA_10_2017" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3758',
-	         'table' : 'MV_SRVYDTA_10_2017',
-	         'theme' : 'MV_SRVYDTA_10_2017',
-	         'alias' : '10m셀_포장상태_2017',
-	         'seq' : '3758',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
-	 
-	     "MV_SRVYDTA_10_2018" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3759',
-	         'table' : 'MV_SRVYDTA_10_2018',
-	         'theme' : 'MV_SRVYDTA_10_2018',
-	         'alias' : '10m셀_포장상태_2018',
-	         'seq' : '3759',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
+
 	 
 
 	 
