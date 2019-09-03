@@ -182,8 +182,7 @@
         resultClass="cell10VO">
 <![CDATA[
         /* cell10DAO.selectCell10List */
-        /* CELL_10 조회 */
-        SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
+        /* CELL_10 조회1 */
             SELECT
                 cell10.GID /* CELL_10.GID */
                 , cell10.OBJECT_ID /* CELL_10.OBJECT_ID */
@@ -221,11 +220,10 @@
 <![CDATA[
         ORDER BY
                 cell10.ROUTE_CODE, cell10.DIRECT_CODE, cell10.TRACK, cell10.STRTPT, cell10.ENDPT ASC
-        ) tb) as sub_tb WHERE 1=1
 ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
         <![CDATA[
-            AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+            LIMIT #recordCountPerPage# OFFSET #firstIndex#
         ]]>
         </isEqual>
 <![CDATA[
