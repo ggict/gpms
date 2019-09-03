@@ -225,7 +225,7 @@
 		SELECT COUNT(*) AS totCnt
 		FROM DWG_INFO dwginfo
 ]]>		
-		<include refid="dwgInfoDAO.selectDwgInfoList.where" />
+		<include refid="dwgInfoDAO.selectDwgInfoList.where" /> 
 <![CDATA[		
 			AND COALESCE(dwginfo.SEQID::int,0) = COALESCE( (SELECT MAX(dwg.SEQID) 
 											   FROM DWG_INFO dwg 

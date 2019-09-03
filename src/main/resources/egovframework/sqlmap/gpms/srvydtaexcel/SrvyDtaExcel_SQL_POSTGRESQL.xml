@@ -1234,7 +1234,7 @@
 	                tnsmdtagnlsttus.SRVY_NO /* 최소_구간_조사_자료.조사번호 */
 	                , sect.OBJECT_ID
 	                , sect.CELL_ID
-	                , tnsmdtagnlsttus.SM_NO
+	                , tnsmdtagnlsttus.SM_NO 
 	                , tnsmdtagnlsttus.SRVY_YEAR || '.' || tnsmdtagnlsttus.SRVY_MT AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
 	                , tnsmdtagnlsttus.SRVY_YEAR
 	                , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
