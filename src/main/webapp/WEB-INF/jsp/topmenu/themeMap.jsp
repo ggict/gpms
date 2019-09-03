@@ -530,7 +530,7 @@
 			sValue = parent.GUtil.fn_set_lpad(_param.routeCode, 4, "0");
 		}
 
-
+		//sld에 prefix 가 붙지 않는 경우가 있어서 or 조건 추가
 		if(sNm == "sld:NamedLayer" || sNm == "NamedLayer") {
 			var sLyrNm = arrEle[0].elements[0].text;
 			if(sLyrNm == _targetLyr) {
@@ -543,7 +543,7 @@
 					for(var k in arrEl) {
 						var thisEl = arrEl[k];
 						var sElNm = thisEl.name;
-						if(sElNm == "ogc:Filter") {
+						if(sElNm == "ogc:Filter" || sElNm == "Filter") {
 							var oQ1 = thisEl.elements;
 							if(oQ1[0].name == "ogc:And" || oQ1[0].name == "And") {
 								var isPropertyIsLike = false;

@@ -27,6 +27,7 @@ GWMS = OpenLayers.Class(OpenLayers.Layer.WMS, {
 		request: "GetMap",
 		styles: "",
 		exceptions: "application/vnd.ogc.se_inimage",
+		//exceptions: "application/vnd.ogc.se_blank",
 		format: "image/jpeg",
 		crs : "SR_ORG:6640",
 		transparent: true
