@@ -74,21 +74,21 @@
 			, #ROUTE_CODE# /* 집계_산정_예측.노선_코드 */
 			, #DIRECT_CODE# /* 집계_산정_예측.행선_코드 */
 			, #TRACK# /* 집계_산정_예측.차로 */
-			, #STRTPT# /* 집계_산정_예측.시점 */
-			, #ENDPT# /* 집계_산정_예측.종점 */
-			, #AC_IDX# /* 집계_산정_예측.거북등균열_지수 */
-			, #LC_IDX# /* 집계_산정_예측.종방향균열_지수 */
-			, #TC_IDX# /* 집계_산정_예측.횡방향균열_지수 */
-			, #BC_IDX# /* 집계_산정_예측.블럭균열_지수 */
-			, #PTCHG_IDX# /* 집계_산정_예측.패칭_지수 */
-			, #POTHOLE_IDX# /* 집계_산정_예측.포트홀_지수 */
-			, #RCI# /* 집계_산정_예측.표면_조도_지수 */
-			, #SCR# /* 집계_산정_예측.표면_상태_지수 */
-			, #GPCI# /* 집계_산정_예측.GPCI */
+			, #STRTPT#::int /* 집계_산정_예측.시점 */
+			, #ENDPT#::int /* 집계_산정_예측.종점 */
+			, #AC_IDX#::int /* 집계_산정_예측.거북등균열_지수 */
+			, #LC_IDX#::int /* 집계_산정_예측.종방향균열_지수 */
+			, #TC_IDX#::int /* 집계_산정_예측.횡방향균열_지수 */
+			, #BC_IDX#::int /* 집계_산정_예측.블럭균열_지수 */
+			, #PTCHG_IDX#::int /* 집계_산정_예측.패칭_지수 */
+			, #POTHOLE_IDX#::int /* 집계_산정_예측.포트홀_지수 */
+			, #RCI#::int /* 집계_산정_예측.표면_조도_지수 */
+			, #SCR#::int /* 집계_산정_예측.표면_상태_지수 */
+			, #GPCI#::int /* 집계_산정_예측.GPCI */
 			, #SRVY_YEAR# /* 집계_산정_예측.조사_년도 */
 			, #SRVY_MT# /* 집계_산정_예측.조사_월 */
-			, #PREDCT_NO# /* 집계_산정_예측.예측_번호 */
-			, #RD_IDX# /* 집계_산정_예측.소성변형지수 */
+			, #PREDCT_NO#::int /* 집계_산정_예측.예측_번호 */
+			, #RD_IDX#::int /* 집계_산정_예측.소성변형지수 */
 		)
 ]]>
 	</insert>
@@ -105,22 +105,22 @@
 		, ROUTE_CODE = #ROUTE_CODE# /* 집계_산정_예측.노선_코드 */
 		, DIRECT_CODE = #DIRECT_CODE# /* 집계_산정_예측.행선_코드 */
 		, TRACK = #TRACK# /* 집계_산정_예측.차로 */
-		, STRTPT = #STRTPT# /* 집계_산정_예측.시점 */
-		, ENDPT = #ENDPT# /* 집계_산정_예측.종점 */
-		, AC_IDX = #AC_IDX# /* 집계_산정_예측.거북등균열_지수 */
-		, LC_IDX = #LC_IDX# /* 집계_산정_예측.종방향균열_지수 */
-		, TC_IDX = #TC_IDX# /* 집계_산정_예측.횡방향균열_지수 */
-		, BC_IDX = #BC_IDX# /* 집계_산정_예측.블럭균열_지수 */
-		, PTCHG_IDX = #PTCHG_IDX# /* 집계_산정_예측.패칭_지수 */
-		, POTHOLE_IDX = #POTHOLE_IDX# /* 집계_산정_예측.포트홀_지수 */
-		, RCI = #RCI# /* 집계_산정_예측.표면_조도_지수 */
-		, SCR = #SCR# /* 집계_산정_예측.표면_상태_지수 */
-		, GPCI = #GPCI# /* 집계_산정_예측.GPCI */
+		, STRTPT = #STRTPT#::int /* 집계_산정_예측.시점 */
+		, ENDPT = #ENDPT#::int /* 집계_산정_예측.종점 */
+		, AC_IDX = #AC_IDX#::int /* 집계_산정_예측.거북등균열_지수 */
+		, LC_IDX = #LC_IDX#::int /* 집계_산정_예측.종방향균열_지수 */
+		, TC_IDX = #TC_IDX#::int /* 집계_산정_예측.횡방향균열_지수 */
+		, BC_IDX = #BC_IDX#::int /* 집계_산정_예측.블럭균열_지수 */
+		, PTCHG_IDX = #PTCHG_IDX#::int /* 집계_산정_예측.패칭_지수 */
+		, POTHOLE_IDX = #POTHOLE_IDX#::int /* 집계_산정_예측.포트홀_지수 */
+		, RCI = #RCI#::int /* 집계_산정_예측.표면_조도_지수 */
+		, SCR = #SCR#::int /* 집계_산정_예측.표면_상태_지수 */
+		, GPCI = #GPCI#::int /* 집계_산정_예측.GPCI */
 		, SRVY_YEAR = #SRVY_YEAR# /* 집계_산정_예측.조사_년도 */
 		, SRVY_MT = #SRVY_MT# /* 집계_산정_예측.조사_월 */
-		, RD_IDX = #RD_IDX# /* 집계_산정_예측.소성변형지수 */
+		, RD_IDX = #RD_IDX#::int /* 집계_산정_예측.소성변형지수 */
 		WHERE 1 = 1
-		AND PREDCT_NO = #PREDCT_NO# /* 집계_산정_예측.예측_번호 */
+		AND PREDCT_NO = #PREDCT_NO#::int /* 집계_산정_예측.예측_번호 */
 ]]>
 	</update>
 
@@ -130,7 +130,7 @@
 		/* 집계_산정_예측 삭제 */
 		DELETE FROM TN_SM_CALC_PREDCT
 		WHERE 1 = 1
-		AND PREDCT_NO = #PREDCT_NO# /* 집계_산정_예측.예측_번호 */
+		AND PREDCT_NO = #PREDCT_NO#::int /* 집계_산정_예측.예측_번호 */
 ]]>
 	</delete>
 
@@ -164,7 +164,7 @@
 			, tnsmcalcpredct.RD_IDX /* 집계_산정_예측.소성변형지수 */
 		FROM TN_SM_CALC_PREDCT tnsmcalcpredct
 		WHERE 1 = 1
-		AND tnsmcalcpredct.PREDCT_NO = #PREDCT_NO# /* 집계_산정_예측.예측_번호 */
+		AND tnsmcalcpredct.PREDCT_NO = #PREDCT_NO#::int /* 집계_산정_예측.예측_번호 */
 ]]>
 	</select>
 
@@ -188,21 +188,21 @@
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 집계_산정_예측.노선_코드 */ AND tnsmcalcpredct.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 집계_산정_예측.행선_코드 */ AND tnsmcalcpredct.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ /* 집계_산정_예측.차로 */ AND tnsmcalcpredct.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ /* 집계_산정_예측.시점 */ AND tnsmcalcpredct.STRTPT = #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ /* 집계_산정_예측.종점 */ AND tnsmcalcpredct.ENDPT = #ENDPT# ]]></isNotEmpty>
-		<isNotEmpty property="AC_IDX"><![CDATA[ /* 집계_산정_예측.거북등균열_지수 */ AND tnsmcalcpredct.AC_IDX = #AC_IDX# ]]></isNotEmpty>
-		<isNotEmpty property="LC_IDX"><![CDATA[ /* 집계_산정_예측.종방향균열_지수 */ AND tnsmcalcpredct.LC_IDX = #LC_IDX# ]]></isNotEmpty>
-		<isNotEmpty property="TC_IDX"><![CDATA[ /* 집계_산정_예측.횡방향균열_지수 */ AND tnsmcalcpredct.TC_IDX = #TC_IDX# ]]></isNotEmpty>
-		<isNotEmpty property="BC_IDX"><![CDATA[ /* 집계_산정_예측.블럭균열_지수 */ AND tnsmcalcpredct.BC_IDX = #BC_IDX# ]]></isNotEmpty>
-		<isNotEmpty property="PTCHG_IDX"><![CDATA[ /* 집계_산정_예측.패칭_지수 */ AND tnsmcalcpredct.PTCHG_IDX = #PTCHG_IDX# ]]></isNotEmpty>
-		<isNotEmpty property="POTHOLE_IDX"><![CDATA[ /* 집계_산정_예측.포트홀_지수 */ AND tnsmcalcpredct.POTHOLE_IDX = #POTHOLE_IDX# ]]></isNotEmpty>
-		<isNotEmpty property="RCI"><![CDATA[ /* 집계_산정_예측.표면_조도_지수 */ AND tnsmcalcpredct.RCI = #RCI# ]]></isNotEmpty>
-		<isNotEmpty property="SCR"><![CDATA[ /* 집계_산정_예측.표면_상태_지수 */ AND tnsmcalcpredct.SCR = #SCR# ]]></isNotEmpty>
-		<isNotEmpty property="GPCI"><![CDATA[ /* 집계_산정_예측.GPCI */ AND tnsmcalcpredct.GPCI = #GPCI# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 집계_산정_예측.시점 */ AND tnsmcalcpredct.STRTPT = #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 집계_산정_예측.종점 */ AND tnsmcalcpredct.ENDPT = #ENDPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="AC_IDX"><![CDATA[ /* 집계_산정_예측.거북등균열_지수 */ AND tnsmcalcpredct.AC_IDX = #AC_IDX#::int ]]></isNotEmpty>
+		<isNotEmpty property="LC_IDX"><![CDATA[ /* 집계_산정_예측.종방향균열_지수 */ AND tnsmcalcpredct.LC_IDX = #LC_IDX#::int ]]></isNotEmpty>
+		<isNotEmpty property="TC_IDX"><![CDATA[ /* 집계_산정_예측.횡방향균열_지수 */ AND tnsmcalcpredct.TC_IDX = #TC_IDX#::int ]]></isNotEmpty>
+		<isNotEmpty property="BC_IDX"><![CDATA[ /* 집계_산정_예측.블럭균열_지수 */ AND tnsmcalcpredct.BC_IDX = #BC_IDX#::int ]]></isNotEmpty>
+		<isNotEmpty property="PTCHG_IDX"><![CDATA[ /* 집계_산정_예측.패칭_지수 */ AND tnsmcalcpredct.PTCHG_IDX = #PTCHG_IDX#::int ]]></isNotEmpty>
+		<isNotEmpty property="POTHOLE_IDX"><![CDATA[ /* 집계_산정_예측.포트홀_지수 */ AND tnsmcalcpredct.POTHOLE_IDX = #POTHOLE_IDX#::int ]]></isNotEmpty>
+		<isNotEmpty property="RCI"><![CDATA[ /* 집계_산정_예측.표면_조도_지수 */ AND tnsmcalcpredct.RCI = #RCI#::int ]]></isNotEmpty>
+		<isNotEmpty property="SCR"><![CDATA[ /* 집계_산정_예측.표면_상태_지수 */ AND tnsmcalcpredct.SCR = #SCR#::int ]]></isNotEmpty>
+		<isNotEmpty property="GPCI"><![CDATA[ /* 집계_산정_예측.GPCI */ AND tnsmcalcpredct.GPCI = #GPCI#::int ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_YEAR"><![CDATA[ /* 집계_산정_예측.조사_년도 */ AND tnsmcalcpredct.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_MT"><![CDATA[ /* 집계_산정_예측.조사_월 */ AND tnsmcalcpredct.SRVY_MT = #SRVY_MT# ]]></isNotEmpty>
-		<isNotEmpty property="PREDCT_NO"><![CDATA[ /* 집계_산정_예측.예측_번호 */ AND tnsmcalcpredct.PREDCT_NO = #PREDCT_NO# ]]></isNotEmpty>
-		<isNotEmpty property="RD_IDX"><![CDATA[ /* 집계_산정_예측.소성변형지수 */ AND tnsmcalcpredct.RD_IDX = #RD_IDX# ]]></isNotEmpty>
+		<isNotEmpty property="PREDCT_NO"><![CDATA[ /* 집계_산정_예측.예측_번호 */ AND tnsmcalcpredct.PREDCT_NO = #PREDCT_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="RD_IDX"><![CDATA[ /* 집계_산정_예측.소성변형지수 */ AND tnsmcalcpredct.RD_IDX = #RD_IDX#::int ]]></isNotEmpty>
 	</sql>
 
 	<select id="smCalcPredctDAO.selectSmCalcPredctList"

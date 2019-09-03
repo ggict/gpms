@@ -69,14 +69,14 @@
 			, UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
 			, UPDT_DT /* 조사_자료_엑셀.수정_일시 */
 		) VALUES (
-			#SRVY_NO# /* 조사_자료_엑셀.조사_번호 */
-			, #FILE_NO# /* 조사_자료_엑셀.파일_번호 */
-			, #DATA_CO# /* 조사_자료_엑셀.데이터_건수 */
+			#SRVY_NO#::int /* 조사_자료_엑셀.조사_번호 */
+			, #FILE_NO#::int /* 조사_자료_엑셀.파일_번호 */
+			, #DATA_CO#::int /* 조사_자료_엑셀.데이터_건수 */
 			, #ROUTE_CODE# /* 조사_자료_엑셀.노선_코드 */
 			, #DIRECT_CODE# /* 조사_자료_엑셀.행선_코드 */
 			, #TRACK# /* 조사_자료_엑셀.차로 */
-			, #STRTPT# /* 조사_자료_엑셀.시점 */
-			, #ENDPT# /* 조사_자료_엑셀.종점 */
+			, #STRTPT#::int /* 조사_자료_엑셀.시점 */
+			, #ENDPT#::int /* 조사_자료_엑셀.종점 */
 			, #SRVY_DE# /* 조사_자료_엑셀.조사_일자 */
 			, #SRVY_NM# /* 조사_자료_엑셀.조사_명 */
 			, #EXMNR_NM# /* 조사_자료_엑셀.조사자_명 */
@@ -87,7 +87,7 @@
 			, #VAL_EVL_AT# /* 조사_자료_엑셀.유효성_평가_여부 */
 			, #DELETE_AT# /* 조사_자료_엑셀.삭제_여부 */
 			, #USE_AT# /* 조사_자료_엑셀.사용_여부 */
-			, #CRTR_NO# /* 조사_자료_엑셀.생성자_번호 */
+			, #CRTR_NO#::int /* 조사_자료_엑셀.생성자_번호 */
 			, NOW() /* 조사_자료_엑셀.생성_일시 */
 			, #UPDUSR_NO# /* 조사_자료_엑셀.수정자_번호 */
 			, NOW() /* 조사_자료_엑셀.수정_일시 */
@@ -105,12 +105,12 @@
 ]]>
 
 		<isNotEmpty property="FILE_NO">
-			, FILE_NO = #FILE_NO# /*
+			, FILE_NO = #FILE_NO#::int /*
 			조사_자료_엑셀.파일_번호 */
 		</isNotEmpty>
 
 		<isNotEmpty property="DATA_CO">
-			, DATA_CO = #DATA_CO# /*
+			, DATA_CO = #DATA_CO#::int /*
 			조사_자료_엑셀.데이터_건수 */
 		</isNotEmpty>
 
@@ -129,11 +129,11 @@
 		</isNotEmpty>
 
 		<isNotEmpty property="STRTPT">
-			, STRTPT = #STRTPT# /* 조사_자료_엑셀.시점 */
+			, STRTPT = #STRTPT#::int /* 조사_자료_엑셀.시점 */
 		</isNotEmpty>
 
 		<isNotEmpty property="ENDPT">
-			, ENDPT = #ENDPT# /* 조사_자료_엑셀.종점 */
+			, ENDPT = #ENDPT#::int /* 조사_자료_엑셀.종점 */
 		</isNotEmpty>
 
 		<isNotEmpty property="SRVY_DE">
@@ -190,7 +190,7 @@
 		</isNotEmpty>
 
 		<isNotEmpty property="CRTR_NO">
-			, CRTR_NO = #CRTR_NO# /*
+			, CRTR_NO = #CRTR_NO#::int /*
 			조사_자료_엑셀.생성자_번호 */
 		</isNotEmpty>
 
@@ -200,7 +200,7 @@
 		</isNotEmpty>
 <![CDATA[
 		WHERE 1 = 1
-		AND SRVY_NO = #SRVY_NO# /* 조사_자료_엑셀.조사_번호 */
+		AND SRVY_NO = #SRVY_NO#::int /* 조사_자료_엑셀.조사_번호 */
 ]]>
 	</update>
 
@@ -210,7 +210,7 @@
 		/* 조사_자료_엑셀 삭제 */
 		DELETE FROM TN_SRVY_DTA_EXCEL
 		WHERE 1 = 1
-		AND SRVY_NO = #SRVY_NO# /* 조사_자료_엑셀.조사_번호 */
+		AND SRVY_NO = #SRVY_NO#::int /* 조사_자료_엑셀.조사_번호 */
 	]]>
 	</delete>
 
@@ -243,7 +243,7 @@
 			, tnsrvydtaexcel.UPDT_DT /* 조사_자료_엑셀.수정_일시 */
 		FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
 		WHERE 1 = 1
-		AND tnsrvydtaexcel.SRVY_NO = #SRVY_NO# /* 조사_자료_엑셀.조사_번호 */
+		AND tnsrvydtaexcel.SRVY_NO = #SRVY_NO#::int /* 조사_자료_엑셀.조사_번호 */
 ]]>
 	</select>
 
@@ -252,20 +252,20 @@
 
 		<isEqual property="searchCondition" compareValue="0">
 			AND
-			tnsrvydtaexcel.SRVY_NO = #searchKeyword#
+			tnsrvydtaexcel.SRVY_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
 			AND
-			tnsrvydtaexcel.FILE_NO LIKE '%' || #searchKeyword# || '%'
+			tnsrvydtaexcel.FILE_NO LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
-		<isNotEmpty property="SRVY_NO"><![CDATA[ /* 조사_자료_엑셀.조사_번호 */ AND tnsrvydtaexcel.SRVY_NO = #SRVY_NO# ]]></isNotEmpty>
-		<isNotEmpty property="FILE_NO"><![CDATA[ /* 조사_자료_엑셀.파일_번호 */ AND tnsrvydtaexcel.FILE_NO = #FILE_NO# ]]></isNotEmpty>
-		<isNotEmpty property="DATA_CO"><![CDATA[ /* 조사_자료_엑셀.데이터_건수 */ AND tnsrvydtaexcel.DATA_CO = #DATA_CO# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_NO"><![CDATA[ /* 조사_자료_엑셀.조사_번호 */ AND tnsrvydtaexcel.SRVY_NO = #SRVY_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="FILE_NO"><![CDATA[ /* 조사_자료_엑셀.파일_번호 */ AND tnsrvydtaexcel.FILE_NO = #FILE_NO#::int ]]></isNotEmpty>
+		<isNotEmpty property="DATA_CO"><![CDATA[ /* 조사_자료_엑셀.데이터_건수 */ AND tnsrvydtaexcel.DATA_CO = #DATA_CO#::int ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ /* 조사_자료_엑셀.노선_코드 */ AND tnsrvydtaexcel.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ /* 조사_자료_엑셀.행선_코드 */ AND tnsrvydtaexcel.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ /* 조사_자료_엑셀.차로 */ AND tnsrvydtaexcel.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ /* 조사_자료_엑셀.시점 */ AND tnsrvydtaexcel.STRTPT = #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ /* 조사_자료_엑셀.종점 */ AND tnsrvydtaexcel.ENDPT = #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ /* 조사_자료_엑셀.시점 */ AND tnsrvydtaexcel.STRTPT = #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ /* 조사_자료_엑셀.종점 */ AND tnsrvydtaexcel.ENDPT = #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_DE"><![CDATA[ /* 조사_자료_엑셀.조사_일자 */ AND tnsrvydtaexcel.SRVY_DE = #SRVY_DE# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_NM"><![CDATA[ /* 조사_자료_엑셀.조사_명 */ AND tnsrvydtaexcel.SRVY_NM = #SRVY_NM# ]]></isNotEmpty>
 		<isNotEmpty property="EXMNR_NM"><![CDATA[ /* 조사_자료_엑셀.조사자_명 */ AND tnsrvydtaexcel.EXMNR_NM = #EXMNR_NM# ]]></isNotEmpty>
@@ -276,7 +276,7 @@
 		<isNotEmpty property="VAL_EVL_AT"><![CDATA[ /* 조사_자료_엑셀.유효성_평가_여부 */ AND tnsrvydtaexcel.VAL_EVL_AT = #VAL_EVL_AT# ]]></isNotEmpty>
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 조사_자료_엑셀.삭제_여부 */ AND tnsrvydtaexcel.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="USE_AT"><![CDATA[ /* 조사_자료_엑셀.사용_여부 */ AND tnsrvydtaexcel.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 조사_자료_엑셀.생성자_번호 */ AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 조사_자료_엑셀.생성자_번호 */ AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 조사_자료_엑셀.생성_일시 */ AND tnsrvydtaexcel.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 조사_자료_엑셀.수정자_번호 */ AND tnsrvydtaexcel.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 조사_자료_엑셀.수정_일시 */ AND tnsrvydtaexcel.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
@@ -327,32 +327,32 @@
 
 		<isEqual property="searchCondition" compareValue="0">
 			AND
-			tnsrvydtaexcel.SRVY_NO = #searchKeyword#
+			tnsrvydtaexcel.SRVY_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
 			AND
-			tnsrvydtaexcel.FILE_NO LIKE '%' || #searchKeyword# || '%'
+			tnsrvydtaexcel.FILE_NO LIKE '%' || #searchKeyword#::int || '%'
 		</isEqual>
 
 		<isNotEmpty property="SRVY_NO">
 				<![CDATA[
 					/* 조사_자료_엑셀.조사_번호 */
-					AND tnsrvydtaexcel.SRVY_NO = #SRVY_NO#
+					AND tnsrvydtaexcel.SRVY_NO = #SRVY_NO#::int
 				]]>
 		</isNotEmpty>
 
 		<isNotEmpty property="FILE_NO">
 				<![CDATA[
 					/* 조사_자료_엑셀.파일_번호 */
-					AND tnsrvydtaexcel.FILE_NO = #FILE_NO#
+					AND tnsrvydtaexcel.FILE_NO = #FILE_NO#::int
 				]]>
 		</isNotEmpty>
 
 		<isNotEmpty property="DATA_CO">
 				<![CDATA[
 					/* 조사_자료_엑셀.데이터_건수 */
-					AND tnsrvydtaexcel.DATA_CO = #DATA_CO#
+					AND tnsrvydtaexcel.DATA_CO = #DATA_CO#::int
 				]]>
 		</isNotEmpty>
 
@@ -380,14 +380,14 @@
 		<isNotEmpty property="STRTPT">
 				<![CDATA[
 					/* 조사_자료_엑셀.시점 */
-					AND tnsrvydtaexcel.STRTPT = #STRTPT#
+					AND tnsrvydtaexcel.STRTPT = #STRTPT#::int
 				]]>
 		</isNotEmpty>
 
 		<isNotEmpty property="ENDPT">
 				<![CDATA[
 					/* 조사_자료_엑셀.종점 */
-					AND tnsrvydtaexcel.ENDPT = #ENDPT#
+					AND tnsrvydtaexcel.ENDPT = #ENDPT#::int
 				]]>
 		</isNotEmpty>
 
@@ -464,7 +464,7 @@
 		<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 조사_자료_엑셀.생성자_번호 */
-					AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#
+					AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#::int
 				]]>
 		</isNotEmpty>
 
@@ -658,7 +658,7 @@
 			 	AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 			 	AND tlsrvydtalog.PROCESS_STTUS = #PROCESS_STTUS#
 			 	AND TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD') = #CREAT_DT#
-			 	AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#
+			 	AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#::int
 		) tnsrvydtaexcel  WHERE 1=1
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
@@ -682,7 +682,7 @@
 		   AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 	 	   AND tlsrvydtalog.PROCESS_STTUS = #PROCESS_STTUS#
 	 	   AND TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD') = #CREAT_DT#
-	 	   AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#
+	 	   AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#::int
 ]]>
 	</select>
 
@@ -1208,8 +1208,8 @@
         <isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtagnlsttus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
         <isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtagnlsttus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
         <isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtagnlsttus.TRACK = #TRACK# ]]></isNotEmpty>
-        <isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT# ]]></isNotEmpty>
-        <isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT# ]]></isNotEmpty>
+        <isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
+        <isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
         <isNotEmpty property="CNTL_DFECT"><![CDATA[ AND tnsmdtagnlsttus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
         <isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI# ]]></isNotEmpty>
         <isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI# ]]></isNotEmpty>
@@ -1291,8 +1291,8 @@
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtagnlsttus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtagnlsttus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtagnlsttus.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND tnsmdtagnlsttus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
 		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI# ]]></isNotEmpty>
 		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI# ]]></isNotEmpty>
@@ -1381,8 +1381,8 @@
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtagnlsttus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtagnlsttus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtagnlsttus.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT# ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND tnsmdtagnlsttus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
 		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI# ]]></isNotEmpty>
 		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI# ]]></isNotEmpty>

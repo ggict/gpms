@@ -286,7 +286,7 @@
 
 <![CDATA[
 
-        ) tb) WHERE 1=1
+        ) tb) as sub_totCnt WHERE 1=1
 ]]>
 	</select>
 
