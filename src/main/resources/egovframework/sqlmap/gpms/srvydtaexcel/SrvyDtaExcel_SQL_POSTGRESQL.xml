@@ -1145,7 +1145,7 @@
 				, tnsmdtagnlsttus.SRVY_YEAR || '.' || tnsmdtagnlsttus.SRVY_MT AS		SRVY_DE /* 최소_구간_조사_자료.조사월 */
 				, ( SELECT tcdept.LOWEST_DEPT_NM
 	                FROM TC_DEPT tcdept
-	                WHERE tcdept.DEPT_CODE = sect.DEPT_CODE ) AS DEPT_CODE /* 셀.부서코드 */
+	                WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */
 				, ( SELECT code.CODE_NM
 	                FROM TC_CODE code
 	                WHERE code.CODE_VAL = sect.ROAD_GRAD ) AS ROAD_GRAD /* 셀.도로등급 */
@@ -1178,7 +1178,7 @@
 	               END
 	            AS CUZ
 				, sect.ADM_CODE /* 셀.행정구역코드 */
-				, TO_NUMBER(tnsmdtagnlsttus.ROUTE_CODE) AS ROAD_NO_VAL
+				, tnsmdtagnlsttus.ROUTE_CODE::int AS ROAD_NO_VAL
 				, tnrouteinfo.ROAD_NAME AS ROAD_NM
 				, CASE tnsmdtagnlsttus.DIRECT_CODE
 						WHEN 'S' THEN '상행'
@@ -1238,12 +1238,12 @@
 	                , tnsmdtagnlsttus.SRVY_YEAR || '.' || tnsmdtagnlsttus.SRVY_MT AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
 	                , tnsmdtagnlsttus.SRVY_YEAR
 	                , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
-	                    WHERE tcdept.DEPT_CODE = sect.DEPT_CODE ) AS DEPT_CODE /* 셀.부서코드 */
+	                    WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */
 	                , ( SELECT code.CODE_NM FROM TC_CODE code
 	                    WHERE code.CODE_VAL = sect.ROAD_GRAD ) AS ROAD_GRAD /* 셀.도로등급 */
 	                , sect.ADM_CODE /* 셀.행정구역코드 */
 	                , tnsmdtagnlsttus.ROUTE_CODE AS ROAD_NO /* 최소_구간_조사_자료.노선번호 */
-	                , TO_NUMBER(tnsmdtagnlsttus.ROUTE_CODE) AS ROAD_NO_VAL
+	                , tnsmdtagnlsttus.ROUTE_CODE::int AS ROAD_NO_VAL
 	                , tnrouteinfo.ROAD_NAME AS ROAD_NM
 	                , CASE tnsmdtagnlsttus.DIRECT_CODE
 	                    WHEN 'S' THEN '상행'
@@ -1326,12 +1326,12 @@
                     , tnsmdtagnlsttus.SRVY_YEAR || '.' || tnsmdtagnlsttus.SRVY_MT AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
                     , tnsmdtagnlsttus.SRVY_YEAR
                     , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
-                        WHERE tcdept.DEPT_CODE = sect.DEPT_CODE ) AS DEPT_CODE /* 셀.부서코드 */
+                        WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */
                     , ( SELECT code.CODE_NM FROM TC_CODE code
                         WHERE code.CODE_VAL = sect.ROAD_GRAD ) AS ROAD_GRAD /* 셀.도로등급 */
                     , sect.ADM_CODE /* 셀.행정구역코드 */
                     , tnsmdtagnlsttus.ROUTE_CODE AS ROAD_NO /* 최소_구간_조사_자료.노선번호 */
-                    , TO_NUMBER(tnsmdtagnlsttus.ROUTE_CODE) AS ROAD_NO_VAL
+                    , tnsmdtagnlsttus.ROUTE_CODE::int AS ROAD_NO_VAL
                     , tnrouteinfo.ROAD_NAME AS ROAD_NM
                     , CASE tnsmdtagnlsttus.DIRECT_CODE
                         WHEN 'S' THEN '상행'

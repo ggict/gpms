@@ -198,13 +198,13 @@
 		<include refid="dwgInfoDAO.selectDwgInfoList.where" />
 
 <![CDATA[
-			AND COALESCE(dwginfo.SEQID,0) = COALESCE( (SELECT MAX(dwg.SEQID) 
+			AND COALESCE(dwginfo.SEQID::int,0) = COALESCE( (SELECT MAX(dwg.SEQID) 
 											   FROM DWG_INFO dwg 
 											  WHERE dwg.ROAD_NO = dwginfo.ROAD_NO 
 											  	AND dwg.SECT = dwginfo.SECT 
-											  	AND dwg.DWG_NAME = dwginfo.DWG_NAME),0 )
+											  	AND dwg.DWG_NAME = dwginfo.DWG_NAME)::int,0 )
  
-		) tb) WHERE 1=1 
+		) tb) as sub_dwginfo WHERE 1=1 
 ]]>
 		<isEqual prepend="AND" property="usePage" compareValue="true">
 		<![CDATA[
@@ -227,11 +227,11 @@
 ]]>		
 		<include refid="dwgInfoDAO.selectDwgInfoList.where" />
 <![CDATA[		
-			AND COALESCE(dwginfo.SEQID,0) = COALESCE( (SELECT MAX(dwg.SEQID) 
+			AND COALESCE(dwginfo.SEQID::int,0) = COALESCE( (SELECT MAX(dwg.SEQID) 
 											   FROM DWG_INFO dwg 
 											  WHERE dwg.ROAD_NO = dwginfo.ROAD_NO 
 											  	AND dwg.SECT = dwginfo.SECT 
-											  	AND dwg.DWG_NAME = dwginfo.DWG_NAME),0 )
+											  	AND dwg.DWG_NAME = dwginfo.DWG_NAME)::int,0 )
 ]]>		
 	</select>
 	
