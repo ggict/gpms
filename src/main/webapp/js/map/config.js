@@ -210,6 +210,18 @@ var CONFIG = (function($, undefined){
 	         'layerType' : '3',
 	     },
 	     
+	     "MV_THM_YEAR_10" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3767',
+	         'table' : 'MV_THM_YEAR_10',
+	         'theme' : 'MV_THM_YEAR_10',
+	         'alias' : '10m셀_테마지도',
+	         'seq' : '3767',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },	     
+	     
 	     /*
 	     "SIGUNGU" : {
 	         
@@ -243,24 +255,6 @@ var CONFIG = (function($, undefined){
 	         'theme' : 'N3A_B0010000',
 	         'alias' : '건물',
 	         'seq' : '3755',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
-	 
-
-	 
-
-	 
-
-	 
-	     "MV_THM_YEAR_10" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3767',
-	         'table' : 'MV_THM_YEAR_10',
-	         'theme' : 'MV_THM_YEAR_10',
-	         'alias' : '10m셀_테마지도',
-	         'seq' : '3767',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
