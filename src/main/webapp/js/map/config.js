@@ -208,7 +208,7 @@ var CONFIG = (function($, undefined){
 	         'seq' : '3759',
 	         'show' : '1',
 	         'layerType' : '3',
-	     },	     
+	     },
 	     
 	     /*
 	     "SIGUNGU" : {

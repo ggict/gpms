@@ -502,6 +502,7 @@
         parent.MAP.LAYER.fn_redraw_wms("themeLayer");
 	}
 
+
 	//노선번호 적용된 sldbody 생성
 	function fn_setRouteCodeToSld(_sldJson, _targetLyr, _param) {
 
@@ -516,6 +517,7 @@
 		return _sldJson;
 	}
 
+
 	//트리 탐색해서 sld변경
 	function fn_serSldJson(_sldJson, _targetLyr, _param) {
 		var arrEle = _sldJson.elements;
@@ -528,7 +530,7 @@
 			sValue = parent.GUtil.fn_set_lpad(_param.routeCode, 4, "0");
 		}
 
-		//prefix가 붙지 않는 경우가 있어 or 조건 추가
+		//sld에 prefix 가 붙지 않는 경우가 있어서 or 조건 추가
 		if(sNm == "sld:NamedLayer" || sNm == "NamedLayer") {
 			var sLyrNm = arrEle[0].elements[0].text;
 			if(sLyrNm == _targetLyr) {
@@ -541,7 +543,7 @@
 					for(var k in arrEl) {
 						var thisEl = arrEl[k];
 						var sElNm = thisEl.name;
-						if(sElNm == "ogc:Filter") {
+						if(sElNm == "ogc:Filter" || sElNm == "Filter") {
 							var oQ1 = thisEl.elements;
 							if(oQ1[0].name == "ogc:And" || oQ1[0].name == "And") {
 								var isPropertyIsLike = false;
