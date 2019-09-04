@@ -1005,15 +1005,15 @@
                         FROM ( SELECT CELL10A.DEPT_CODE,
                                       ( SELECT LOWEST_DEPT_NM
                                            FROM TC_DEPT TCDEPT
-                                          WHERE TCDEPT.DEPT_CODE = CELL10A.DEPT_CODE) AS DEPT_NM,
+                                          WHERE TCDEPT.DEPT_CODE::int = CELL10A.DEPT_CODE) AS DEPT_NM,
                                       SUM(ROAD_L) AS SUM_LEN
                                  FROM CELL_10 CELL10A
                                 WHERE CELL10A.DEPT_CODE IN('6411399',
                                       '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
                                 GROUP BY CELL10A.DEPT_CODE) C10A,
-                             ( SELECT NULL AS NJR_LEN
+                             ( SELECT 0 AS NJR_LEN
                                   ) NJR,/*GPMS 중용구간 국지도*/
-                             ( SELECT NULL AS JBR_LEN
+                             ( SELECT 0 AS JBR_LEN
                                   ) JBR,/*GPMS 중용구간 지방도*/
                              ( SELECT CELL10B.DEPT_CODE,
                                        SUM(ROAD_L) AS UNTRACK_LEN
@@ -1023,8 +1023,10 @@
                                    AND CELL10B.CELL_TYPE = 'CELT0013'
                                  GROUP BY CELL10B.DEPT_CODE) C10B
                        WHERE C10A.DEPT_CODE = C10B.DEPT_CODE
-                       ORDER BY C10A.DEPT_NM DESC )
+                       ORDER BY C10A.DEPT_NM DESC ) AS SUB_DEPT
+                       
               UNION ALL
+              
              SELECT '경기도 건설 본부 전체' AS DEPT_NM,
                     COALESCE(SUM(UNI.SUM_L),0) AS SUM_L,
                     COALESCE(SUM(UNI.OP_L),0) AS OP_L,
@@ -1047,9 +1049,9 @@
                          FROM CELL_10 CELL10A
                         WHERE CELL10A.DEPT_CODE IN('6411399',
                               '6411799') /* 6411399:도로건설과/6411799:북부도로과 */ ) C10A,
-                    ( SELECT NULL AS NJR_LEN
+                    ( SELECT 0 AS NJR_LEN
                          ) NJR,/*GPMS 중용구간 국지도*/
-                    ( SELECT NULL AS JBR_LEN
+                    ( SELECT 0 AS JBR_LEN
                          ) JBR,/*GPMS 중용구간 지방도*/
                     ( SELECT SUM(ROAD_L) AS UNTRACK_LEN
                          FROM CELL_10 CELL10B
@@ -1075,15 +1077,15 @@
                         FROM ( SELECT CELL10A.DEPT_CODE,
                                       ( SELECT LOWEST_DEPT_NM
                                            FROM TC_DEPT TCDEPT
-                                          WHERE TCDEPT.DEPT_CODE = CELL10A.DEPT_CODE) AS DEPT_NM,
+                                          WHERE TCDEPT.DEPT_CODE::int = CELL10A.DEPT_CODE) AS DEPT_NM,
                                       SUM(ROAD_L) AS SUM_LEN
                                  FROM CELL_10 CELL10A
                                 WHERE CELL10A.DEPT_CODE IN('6411399',
                                       '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
                                 GROUP BY CELL10A.DEPT_CODE) C10A,
-                             ( SELECT NULL AS NJR_LEN
+                             ( SELECT 0 AS NJR_LEN
                                   ) NJR,/*GPMS 중용구간 국지도*/
-                             ( SELECT NULL AS JBR_LEN
+                             ( SELECT 0 AS JBR_LEN
                                   ) JBR,/*GPMS 중용구간 지방도*/
                              ( SELECT CELL10B.DEPT_CODE,
                                        SUM(ROAD_L) AS UNTRACK_LEN
@@ -1093,8 +1095,10 @@
                                    AND CELL10B.CELL_TYPE = 'CELT0013'
                                  GROUP BY CELL10B.DEPT_CODE) C10B
                        WHERE C10A.DEPT_CODE = C10B.DEPT_CODE
-                       ORDER BY C10A.DEPT_NM DESC )
+                       ORDER BY C10A.DEPT_NM DESC ) AS SUB_DEPT
+                       
               UNION ALL
+              
              SELECT '경기도 건설 본부 전체' AS DEPT_NM,
                     COALESCE(SUM(UNI.SUM_L),0) AS SUM_L,
                     COALESCE(SUM(UNI.OP_L),0) AS OP_L,
@@ -1117,9 +1121,9 @@
                          FROM CELL_10 CELL10A
                         WHERE CELL10A.DEPT_CODE IN('6411399',
                               '6411799') /* 6411399:도로건설과/6411799:북부도로과 */ ) C10A,
-                    ( SELECT NULL AS NJR_LEN
+                    ( SELECT 0 AS NJR_LEN
                          ) NJR,/*GPMS 중용구간 국지도*/
-                    ( SELECT NULL AS JBR_LEN
+                    ( SELECT 0 AS JBR_LEN
                          ) JBR,/*GPMS 중용구간 지방도*/
                     ( SELECT SUM(ROAD_L) AS UNTRACK_LEN
                          FROM CELL_10 CELL10B
@@ -1653,8 +1657,10 @@
                     COALESCE(SUM(NJR.NJR_LEN),0) AS NJR_LEN,
                     COALESCE(SUM(JBR.JBR_LEN),0) AS JBR_LEN,
                     COALESCE(SUM(C10B.UNTRACK_LEN),0) AS UNTRACK_LEN
-               FROM (SELECT N3A.BJCD,N3A.NAME AS ADM_NM
-                     FROM N3A_G0100000 N3A) NGB,
+               FROM ( SELECT N3A.BJCD,N3A.NAME AS ADM_NM
+                        FROM N3A_G0100000 N3A
+                    ) NGB
+                    LEFT OUTER JOIN
                     ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
                              ADM_NAME AS ADM_NM,
                              SUM_L,
@@ -1665,25 +1671,26 @@
         ]]>
             <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
         <![CDATA[
-                        ) NJD,
+                    ) NJD ON NGB.BJCD = NJD.ADM_CODE
+                    LEFT OUTER JOIN
                     ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
                               SUM(ROAD_L) AS SUM_LEN
                          FROM CELL_10 CELL10A
-                        GROUP BY CELL10A.ADM_CODE) C10A,
-                    ( SELECT 0 AS NJR_LEN
-                         ) NJR,/*GPMS 중용구간 국지도*/
-                    ( SELECT 0 AS JBR_LEN
-                         ) JBR,/*GPMS 중용구간 지방도*/
+                        GROUP BY CELL10A.ADM_CODE
+                    ) C10A ON NJD.ADM_CODE = C10A.ADM_CODE
+                    LEFT OUTER JOIN
                     ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
                               SUM(ROAD_L) AS UNTRACK_LEN
                          FROM CELL_10 CELL10B
                         WHERE CELL10B.CELL_TYPE = 'CELT0013' /*CELT0013 : 미개설구간*/
-                        GROUP BY CELL10B.ADM_CODE) C10B
-              WHERE NGB.BJCD = NJD.ADM_CODE(+ )
-                AND NJD.ADM_CODE = C10A.ADM_CODE (+ )
-                AND NJD.ADM_CODE = C10B.ADM_CODE (+ )
+                        GROUP BY CELL10B.ADM_CODE
+                    ) C10B ON NJD.ADM_CODE = C10B.ADM_CODE,
+                    ( SELECT 0 AS NJR_LEN
+                         ) NJR,/*GPMS 중용구간 국지도*/
+                    ( SELECT 0 AS JBR_LEN
+                         ) JBR /*GPMS 중용구간 지방도*/
               GROUP BY ROLLUP (NGB.ADM_NM)
-              HAVING GROUPING_ID(NGB.ADM_NM) IN(0, 1)
+              /* HAVING GROUPING_ID(NGB.ADM_NM) IN(0, 1) */
               ORDER BY NGB.ADM_NM
         ]]>
     </select>
@@ -1700,8 +1707,10 @@
                     COALESCE(SUM(NJR.NJR_LEN),0) AS NJR_LEN,
                     COALESCE(SUM(JBR.JBR_LEN),0) AS JBR_LEN,
                     COALESCE(SUM(C10B.UNTRACK_LEN),0) AS UNTRACK_LEN
-               FROM (SELECT N3A.BJCD,N3A.NAME AS ADM_NM
-                     FROM N3A_G0100000 N3A) NGB,
+               FROM ( SELECT N3A.BJCD,N3A.NAME AS ADM_NM
+                      FROM N3A_G0100000 N3A
+                    ) NGB
+                    LEFT OUTER JOIN
                     ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
                              ADM_NAME AS ADM_NM,
                              SUM_L,
@@ -1712,25 +1721,26 @@
         ]]>
             <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
         <![CDATA[
-                        ) NJD,
+                    ) NJD ON NGB.BJCD = NJD.ADM_CODE
+                    LEFT OUTER JOIN
                     ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
                               SUM(ROAD_L) AS SUM_LEN
                          FROM CELL_10 CELL10A
-                        GROUP BY CELL10A.ADM_CODE) C10A,
-                    ( SELECT 0 AS NJR_LEN
-                         ) NJR,/*GPMS 중용구간 국지도*/
-                    ( SELECT 0 AS JBR_LEN
-                         ) JBR,/*GPMS 중용구간 지방도*/
+                        GROUP BY CELL10A.ADM_CODE
+                    ) C10A ON NJD.ADM_CODE = C10A.ADM_CODE
+                    LEFT OUTER JOIN
                     ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
                               SUM(ROAD_L) AS UNTRACK_LEN
                          FROM CELL_10 CELL10B
                         WHERE CELL10B.CELL_TYPE = 'CELT0013' /*CELT0013 : 미개설구간*/
-                        GROUP BY CELL10B.ADM_CODE) C10B
-              WHERE NGB.BJCD = NJD.ADM_CODE(+ )
-                AND NJD.ADM_CODE = C10A.ADM_CODE (+ )
-                AND NJD.ADM_CODE = C10B.ADM_CODE (+ )
+                        GROUP BY CELL10B.ADM_CODE
+                    ) C10B ON NJD.ADM_CODE = C10B.ADM_CODE,
+                    ( SELECT 0 AS NJR_LEN
+                         ) NJR,/*GPMS 중용구간 국지도*/
+                    ( SELECT 0 AS JBR_LEN
+                         ) JBR /*GPMS 중용구간 지방도*/
               GROUP BY ROLLUP (NGB.ADM_NM)
-              HAVING GROUPING_ID(NGB.ADM_NM) IN(0, 1)
+              /* HAVING GROUPING_ID(NGB.ADM_NM) IN(0, 1) */
               ORDER BY NGB.ADM_NM
     ]]>
         </select>
