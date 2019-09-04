@@ -800,8 +800,8 @@ public class MummSctnSrvyDtaController {
 				.mummRoutCntStatsExcel(mummSctnSrvyDtaVO);
 
 		String[] excel_title = { "노선번호", "노선명", "GPCI", "교통량/하부불량", "기후", "기타" };
-		String[] excel_column = { "ROUTE_CODE", "ROAD_NM", "GPCI",
-				"DMG_CUZ_VMTC", "DMG_CUZ_CLMT", "DMG_CUZ_ETC" };
+		String[] excel_column = { "route_code", "road_nm", "gpci",
+				"dmg_cuz_vmtc", "dmg_cuz_clmt", "dmg_cuz_etc" };
 
 		model.addAttribute("file_name",
 				"포장상태평가_노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -894,8 +894,8 @@ public class MummSctnSrvyDtaController {
 
 		String[] excel_title = { "관리부서코드", "관리부서명", "GPCI", "교통량/하부불량", "기후",
 				"기타" };
-		String[] excel_column = { "DEPT_CODE", "DEPT_NM", "GPCI",
-				"DMG_CUZ_VMTC", "DMG_CUZ_CLMT", "DMG_CUZ_ETC" };
+		String[] excel_column = { "dept_code", "dept_nm", "gpci",
+				"dmg_cuz_vmtc", "dmg_cuz_clmt", "dmg_cuz_etc" };
 
 		model.addAttribute("file_name",
 				"포장상태평가_관리기관별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -928,10 +928,10 @@ public class MummSctnSrvyDtaController {
         		"조사명" , "당해년도"      , "예측1년" , "예측2년"  , "예측3년" , "예측4년" , "예측5년" , "예측6년"  , "예측7년" , "예측8년"
         		, "예측9년"    , "예측10년"
         		};
-        String[] excel_column = {"ROAD_GRAD", "ROUTE_CODE", "ROAD_NAME", "DIRECT_CODE", "TRACK", "STRTPT", "ENDPT","TRTS_BAC_CR","BLOCK_CR","VRTCAL_CR",
-        		"HRZNTAL_CR","PTCHG_CR","POTHOLE_CR","RD_VAL","IRI_VAL","AC_IDX","BC_IDX","LC_IDX","TC_IDX","PTCHG_IDX"
-        		,"POTHOLE_IDX","RD_IDX","RCI","SCR","GPCI","CNTL_DFECT","YEAR_MT","SRVY_YEAR","SRVY_MT"
-        		,"SRVY_NO", "SRVY_NM","PREDCT0","PREDCT1","PREDCT2","PREDCT3","PREDCT4","PREDCT5","PREDCT6","PREDCT7","PREDCT8","PREDCT9","PREDCT10"  //42
+        String[] excel_column = {"road_grad", "route_code", "road_name", "direct_code", "track", "strtpt", "endpt","trts_bac_cr","block_cr","vrtcal_cr",
+        		"hrzntal_cr","ptchg_cr","pothole_cr","rd_val","iri_val","ac_idx","bc_idx","lc_idx","tc_idx","ptchg_idx"
+        		,"pothole_idx","rd_idx","rci","scr","gpci","cntl_dfect","year_mt","srvy_year","srvy_mt"
+        		,"srvy_no", "srvy_nm","predct0","predct1","predct2","predct3","predct4","predct5","predct6","predct7","predct8","predct9","predct10"  //42
         	};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));

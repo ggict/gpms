@@ -1191,7 +1191,7 @@ public class SrvyDtaController extends BaseController {
 
 		List dataList = srvyDtaExcelService.selectSrvyDtaEvlInfoListExcel(mummSctnSrvyDtaVO);
 		String[] excel_title = { "조사번호", "조사년도", "관리기관", "도로등급", "노선번호", "노선명", "행선", "차로", "시점(km)", "종점(km)", "GPCI", "주파손", "파손원인" };
-		String[] excel_column = { "SRVY_NO", "SRVY_DE", "DEPT_CODE", "ROAD_GRAD", "ROAD_NO_VAL", "ROAD_NM", "DIRECT_CODE", "TRACK", "STRTPT", "ENDPT", "GPCI", "CR", "CUZ" };
+		String[] excel_column = { "srvy_no", "srvy_de", "dept_code", "road_grad", "road_no_val", "road_nm", "direct_code", "track", "strtpt", "endpt", "gpci", "cr", "cuz" };
 
 		model.addAttribute("file_name", "포장상태평가조회");
 		model.addAttribute("file_name", "포장상태평가조회");
@@ -1352,7 +1352,7 @@ public class SrvyDtaController extends BaseController {
 		srvyDtaExcelVO.setSCH_SRVY_DE2(schSrbyDE2);
 		List dataList = srvyDtaExcelService.srvyDtaExcelListExcelDownload(srvyDtaExcelVO);
 		String[] excel_title = { "파일명", "조사일자", "자료건수", "포장상태 평가 여부" };
-		String[] excel_column = { "FILE_NM", "SRVY_DE", "DATA_CO", "EVL_PROCESS_AT" };
+		String[] excel_column = { "file_nm", "srvy_de", "data_co", "evl_process_at" };
 
 		model.addAttribute("file_name", "조사자료 이력조회");
 		model.addAttribute("file_name", "조사자료 이력조회");

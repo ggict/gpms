@@ -427,7 +427,7 @@ public class Cell10Controller extends BaseController {
         List dataList = cell10Service.selectSrvyRoutLenStatsExcel(cell10VO);
 
         String[] excel_title  = {"노선번호","노선명","연장(m)"};
-        String[] excel_column = {"ROUTE_CODE","ROAD_NAME", "LEN"};
+        String[] excel_column = {"route_code","road_name", "len"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "포장상태조사구간_노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -461,7 +461,7 @@ public class Cell10Controller extends BaseController {
         List dataList = cell10Service.selectSrvyDeptLenStatsExcel(cell10VO);
 
         String[] excel_title  = {"관리기관번호","관리기관명","연장(m)"};
-        String[] excel_column = {"DEPT_CODE","DEPT_NM", "LEN"};
+        String[] excel_column = {"dept_code","dept_nm", "len"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "포장상태조사구간_관리기관별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -495,7 +495,7 @@ public class Cell10Controller extends BaseController {
         List dataList = cell10Service.selectSrvyRoadLenStatsExcel(cell10VO);
 
         String[] excel_title  = {"도로등급명","연장(m)"};
-        String[] excel_column = {"ROAD_NAME", "LEN"};
+        String[] excel_column = {"road_name", "len"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "포장상태조사구간_도로등급별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -531,7 +531,7 @@ public class Cell10Controller extends BaseController {
 		List dataList = cell10Service.selectRoutLenStatsResultExcel(cell10VO);
 
         String[] excel_title  = {"노선번호","노선명","연장(m)"};
-        String[] excel_column = {"ROAD_NO","ROAD_NAME", "LEN"};
+        String[] excel_column = {"road_no","road_name", "len"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "노선현황_노선별GPMS총연장_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -573,7 +573,7 @@ public class Cell10Controller extends BaseController {
 		List dataList = cell10Service.selectDeptLenStatsResultExcel(cell10VO);
 
         String[] excel_title  = {"관리기관명","연장(m)"};
-        String[] excel_column = {"DEPT_NM", "LEN"};
+        String[] excel_column = {"dept_nm", "len"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "노선현황_관리기관별GPMS총연장_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -1290,7 +1290,7 @@ public class Cell10Controller extends BaseController {
         List dataList = cell10Service.selectTrackLenStatsResultExcel(cell10VO);
 
         String[] excel_title  = {"차로","연장(m)"};
-        String[] excel_column = {"TRACK", "LEN"};
+        String[] excel_column = {"track", "len"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "노선현황_차로별_GPMS총연장_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -1632,7 +1632,7 @@ public class Cell10Controller extends BaseController {
         List dataList = cell10Service.selectAdmLenStatsResultExcel(cell10VO);
 
         String[] excel_title  = {"시·군구명","연장(m)"};
-        String[] excel_column = {"ADM_NM", "LEN"};
+        String[] excel_column = {"adm_nm", "len"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "노선현황_시군구별_GPMS총연장_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));

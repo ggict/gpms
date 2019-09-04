@@ -739,7 +739,7 @@
 		, ( SELECT code.CODE_NM FROM TC_CODE code WHERE sect.ROAD_GRAD =
 		code.CODE_VAL ) AS ROAD_GRAD
 		, ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept WHERE sect.DEPT_CODE =
-		dept.DEPT_CODE ) AS DEPT_CODE
+		dept.DEPT_CODE::int ) AS DEPT_CODE
 		, ( SELECT code.CODE_NM FROM TC_CODE code WHERE code.CODE_VAL =
 		sect.CELL_TYPE ) AS SECT_SE
 		, CASE tnsmdtalaststtus.DIRECT_CODE
@@ -807,7 +807,7 @@
         <isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
         <isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
         <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-        <isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
         <isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
         <isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
         <isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
@@ -817,7 +817,7 @@
 		, tnsmdtalaststtus.DIRECT_CODE DESC */
 		) tb
 		ORDER BY $orderByColumn$ $orderByType$
-		) WHERE 1=1
+		) as sub_tb WHERE 1=1
 		]]>
 	</select>
 
@@ -843,7 +843,7 @@
 				        WHERE sect.ROAD_GRAD = code.CODE_VAL
 				    ) AS ROAD_GRAD
 				    , ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept
-				        WHERE sect.DEPT_CODE = dept.DEPT_CODE
+				        WHERE sect.DEPT_CODE = dept.DEPT_CODE::int
 				    ) AS DEPT_CODE
 				    , ( SELECT code.CODE_NM FROM TC_CODE code
 				        WHERE code.CODE_VAL = sect.CELL_TYPE
@@ -894,7 +894,7 @@
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
 		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
 		<isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
@@ -911,7 +911,7 @@
             ]]>
         </isNotEmpty>
         <![CDATA[
-            ) WHERE 1=1
+            ) as sub_tb WHERE 1=1
         ]]>
 
 		<isEqual prepend=" " property="usePage" compareValue="true">
@@ -944,7 +944,7 @@
                         WHERE sect.ROAD_GRAD = code.CODE_VAL
                     ) AS ROAD_GRAD
                     , ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept
-                        WHERE sect.DEPT_CODE = dept.DEPT_CODE
+                        WHERE sect.DEPT_CODE = dept.DEPT_CODE::int
                     ) AS DEPT_CODE
                     , ( SELECT code.CODE_NM FROM TC_CODE code
                         WHERE code.CODE_VAL = sect.CELL_TYPE
@@ -995,7 +995,7 @@
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
 		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
 		<isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
@@ -1004,7 +1004,7 @@
                 ORDER BY
                     tnsmdtalaststtus.STRTPT ASC
                     , tnsmdtalaststtus.SM_NO ASC
-            ) tb) WHERE 1=1
+            ) tb) as sub_cnt WHERE 1=1
         ]]>
 	</select>
 
@@ -1043,7 +1043,7 @@
 		                AND sect.OBJECT_ID = #OBJECT_ID#
 		            ORDER BY sect.STRTPT, tncntrwkdtl.STRTPT
 	            ) tb
-	        ) WHERE 1=1
+	        ) as sub_tb WHERE 1=1
 	    ]]>
 
 		<isEqual prepend=" " property="usePage" compareValue="true">
@@ -1088,7 +1088,7 @@
 	                    AND sect.OBJECT_ID = #OBJECT_ID#
 	                ORDER BY sect.STRTPT, tncntrwkdtl.STRTPT
 	            ) tb
-	        ) WHERE 1=1
+	        ) as sub_cnt WHERE 1=1
         ]]>
 	</select>
 
@@ -1190,13 +1190,13 @@
 			    , COALESCE(tnsmdtalaststtus.RD_IDX, 0) AS RD_IDX
 			    , COALESCE(tnsmdtalaststtus.RCI, 0) AS RCI
 			    , COALESCE(tnsmdtalaststtus.SCR, 0) AS SCR
-			    , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.AC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) AC_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.BC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) BC_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.LC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) LC_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.PTCHG_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) PTCHG_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.POTHOLE_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) POT_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RD_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) RD_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RCI, 0, 0, cellsect.CELL_TYPE, 'RCI', 0) RCI_RATE
+			    , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.AC_IDX, '0','0', cellsect.CELL_TYPE, 'SCR', 0) AC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.BC_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) BC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.LC_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) LC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.PTCHG_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) PTCHG_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.POTHOLE_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) POT_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RD_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) RD_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RCI, '0', '0', cellsect.CELL_TYPE, 'RCI', 0) RCI_RATE
 			FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
 			LEFT OUTER JOIN CELL_SECT cellsect
 			    ON cellsect.ROUTE_CODE = tnsmdtalaststtus.ROUTE_CODE
@@ -1211,17 +1211,17 @@
         ),
         RESULTLIST AS (
             SELECT tb.*
-                 , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 SUM_RATE
+                 , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 END SUM_RATE
               FROM LASTLIST tb
         )
         SELECT tb.*
-            , FN_GET_GPCI_RDUCT_RATE(tb.AC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) AC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.BC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) BC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.LC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) LC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.PTCHG_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) PTCHG_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.POTHOLE_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) POT_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.RD_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) RD_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.RCI, 0, 0, tb.CELL_TYPE, 'RCI', tb.SUM_RATE) RCI_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.AC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) AC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.BC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) BC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.LC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) LC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.PTCHG_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) PTCHG_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.POTHOLE_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) POT_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.RD_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) RD_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.RCI, '0', '0', tb.CELL_TYPE, 'RCI', tb.SUM_RATE) RCI_RDUCT_RATE
           FROM RESULTLIST tb
         ]]>
 	</select>

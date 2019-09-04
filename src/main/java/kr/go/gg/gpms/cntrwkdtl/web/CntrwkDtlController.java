@@ -440,7 +440,7 @@ public class CntrwkDtlController  extends BaseController {
         List dataList = cntrwkDtlService.selectCntrwkDtlListExcel(cntrwkDtlVO);
 
         String[] excel_title  = {"세부위치","노선번호","노선명","행선","차로","시점(m)","종점(m)","작업시작일","작업완료일","공사비(천원)","연장(m)","보수폭(m)","보수면적(㎡)","보수표층두께(cm)","보수중간층두께(cm)","보수기층두께(cm)"};
-        String[] excel_column = {"DETAIL_CNTRWK_NM","ROUTE_CODE","ROUTE_NM","DIRECT_NM","TRACK","STRTPT","ENDPT","RPAIR_BEGIN_DE","RPAIR_END_DE","CNTRWK_AMOUNT","TRACK_LEN","RPAIR_BT","RPAIR_AR","RPAIR_THICK_ASCON","RPAIR_THICK_CNTR","RPAIR_THICK_BASE"};
+        String[] excel_column = {"detail_cntrwk_nm","route_code","route_nm","direct_nm","track","strtpt","endpt","rpair_begin_de","rpair_end_de","cntrwk_amount","track_len","rpair_bt","rpair_ar","rpair_thick_ascon","rpair_thick_cntr","rpair_thick_base"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "세부공사목록_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -628,7 +628,7 @@ public class CntrwkDtlController  extends BaseController {
         List dataList = cntrwkDtlService.cntrwkRoutCntStatsExcel(cntrwkDtlVO);
 
         String[] excel_title  = {"노선번호","노선명","공사건수(건)","연장(m)","공사비(천원)","공사빈도(%)"};
-        String[] excel_column = {"ROUTE_CODE","ROUTE_NM", "CNT", "TRACK_LEN", "CNTRWK_AMOUNT", "PERC"};
+        String[] excel_column = {"route_code","route_nm", "cnt", "track_len", "cntrwk_amount", "perc"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -649,7 +649,7 @@ public class CntrwkDtlController  extends BaseController {
         List dataList = cntrwkDtlService.cntrwkDeptCntStatsExcel(cntrwkDtlVO);
 
         String[] excel_title  = {"관리기관명","공사건수(건)","연장(m)","공사비(천원)","공사빈도(%)"};
-        String[] excel_column = {"DEPT_NM", "CNT", "TRACK_LEN", "CNTRWK_AMOUNT", "PERC"};
+        String[] excel_column = {"dept_nm", "cnt", "track_len", "cntrwk_amount", "perc"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "관리기관별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -670,7 +670,7 @@ public class CntrwkDtlController  extends BaseController {
         List dataList = cntrwkDtlService.cntrwkMthdCntStatsExcel(cntrwkDtlVO);
 
         String[] excel_title  = {"공법명","공사건수(건)","연장(m)","공사비(천원)","공사빈도(%)"};
-        String[] excel_column = {"RPAIR_MTHD_NM", "CNT", "TRACK_LEN", "CNTRWK_AMOUNT", "PERC"};
+        String[] excel_column = {"rpair_mthd_nm", "cnt", "track_len", "cntrwk_amount", "perc"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "포장공법별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));

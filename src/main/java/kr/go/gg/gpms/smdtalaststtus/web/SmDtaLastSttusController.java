@@ -448,9 +448,9 @@ public class SmDtaLastSttusController extends BaseController {
 				.selectSmDtaLastSttusListExcel(smDtaLastSttusVO);
 		String[] excel_title = { "집계번호", "산정년도", "노선번호", "노선명", "도로등급", "관리기관", 
 				"섹션구분", "행선", "차로", "시점(km)", "종점(km)", "GPCI", "주파손","파손원인", "보수도래시기" };
-		String[] excel_column = { "SM_NO", "CALC_YEAR", "ROAD_NO_VAL",
-				"ROAD_NAME", "ROAD_GRAD", "DEPT_CODE", "SECT_SE",
-				"DIRECT_CODE", "TRACK", "STRTPT", "ENDPT", "GPCI","CR","CUZ","RPAIR_TA" };
+		String[] excel_column = { "sm_no", "calc_year", "road_no_val",
+				"road_name", "road_grad", "dept_code", "sect_se",
+				"direct_code", "track", "strtpt", "endpt", "gpci","cr","cuz","rpair_ta" };
 
 		model.addAttribute("file_name", "포장상태예측조회");
 		model.addAttribute("file_name", "포장상태예측조회");
@@ -669,8 +669,8 @@ public class SmDtaLastSttusController extends BaseController {
 
 		String FileNm = "포장상태예측_도로구분별통계_";
 		String[] excel_title = { "예측년도", "국지도 GPCI", "지방도 GPCI", "경기도 전체 GPCI" };
-		String[] excel_column = { "PREDCT_YEAR", "ROAD_GPCI_1", "ROAD_GPCI_2",
-				"ROAD_GPCI_3" };
+		String[] excel_column = { "predct_year", "road_gpci_1", "road_gpci_2",
+				"road_gpci_3" };
 
 		model.addAttribute("file_name",
 				FileNm + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -700,7 +700,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 		String FileNm = "포장상태예측_노선별통계_";
 		String[] excel_title = { "예측년도", "노선번호", "GPCI" };
-		String[] excel_column = { "PREDCT_YEAR", "ROUTE_CODE", "GPCI" };
+		String[] excel_column = { "predct_year", "route_code", "gpci" };
 
 		model.addAttribute("file_name",
 				FileNm + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -747,8 +747,8 @@ public class SmDtaLastSttusController extends BaseController {
 		String FileNm = "포장상태예측_관리기관별_전체_통계_";
 		String[] excel_title = { "예측년도", "북부도로과 GPCI", "도로건설과 GPCI",
 				"경기도 전체 GPCI" };
-		String[] excel_column = { "PREDCT_YEAR", "DEPT_GPCI_1", "DEPT_GPCI_2",
-				"DEPT_GPCI_3" };
+		String[] excel_column = { "predct_year", "dept_gpci_1", "dept_gpci_2",
+				"dept_gpci_3" };
 
 		model.addAttribute("file_name",
 				FileNm + DateUtil.getCurrentDateString("yyyy-MM-dd"));
@@ -778,7 +778,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 		String FileNm = "포장상태예측_관리기관별_통계_";
 		String[] excel_title = { "예측년도", "관리기관명", "GPCI" };
-		String[] excel_column = { "PREDCT_YEAR", "DEPT_NM", "GPCI" };
+		String[] excel_column = { "predct_year", "dept_nm", "gpci" };
 
 		model.addAttribute("file_name",
 				FileNm + DateUtil.getCurrentDateString("yyyy-MM-dd"));

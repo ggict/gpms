@@ -589,7 +589,7 @@ public class RpairTrgetGroupController  extends BaseController {
 		List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectRpairTrgetDeptStatistics(rpairTrgetGroupVO);
 
         String[] excel_title  = {"예산집행기관","예산(원)"};
-        String[] excel_column = {"DEPT_NM","AMOUNT_CALC"};        
+        String[] excel_column = {"dept_nm","amount_calc"};        
  
         Long total_amount_calc = new Long(0);
         if(items!=null && items.size()>0){
@@ -627,7 +627,7 @@ public class RpairTrgetGroupController  extends BaseController {
 		List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectRpairTrgetMethodStatistics(rpairTrgetGroupVO);
 		
 		String[] excel_title  = {"보수공법종류","예산(원)"};
-        String[] excel_column = {"MSRC_CL_NM","AMOUNT_CALC"};        
+        String[] excel_column = {"msrc_cl_nm","amount_calc"};        
  
         Long total_amount_calc = new Long(0);
         if(items!=null && items.size()>0){
@@ -662,7 +662,7 @@ public class RpairTrgetGroupController  extends BaseController {
 		List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectRpairTrgetAdminStatistics(rpairTrgetGroupVO);
 		
 		String[] excel_title  = {"단위행정구역","예산(원)"};
-        String[] excel_column = {"ADM_NM","AMOUNT_CALC"};        
+        String[] excel_column = {"adm_nm","amount_calc"};        
  
         Long total_amount_calc = new Long(0);
         if(items!=null && items.size()>0){
@@ -697,7 +697,7 @@ public class RpairTrgetGroupController  extends BaseController {
 		List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectRpairTrgetDeptStatistics(rpairTrgetGroupVO);
 
         String[] excel_title  = {"예산집행기관","예산(원)"};
-        String[] excel_column = {"DEPT_NM","AMOUNT_CALC"};        
+        String[] excel_column = {"dept_nm","amount_calc"};        
  
         Long total_amount_calc = new Long(0);
         if(items!=null && items.size()>0){
@@ -766,7 +766,7 @@ public class RpairTrgetGroupController  extends BaseController {
 		List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectRpairTrgetMethodStatistics(rpairTrgetGroupVO);
 		
 		String[] excel_title  = {"보수공법종류","예산(원)"};
-        String[] excel_column = {"MSRC_CL_NM","AMOUNT_CALC"};        
+        String[] excel_column = {"msrc_cl_nm","amount_calc"};        
  
         Long total_amount_calc = new Long(0);
         if(items!=null && items.size()>0){
@@ -832,7 +832,7 @@ public class RpairTrgetGroupController  extends BaseController {
 		List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectRpairTrgetAdminStatistics(rpairTrgetGroupVO);
 		
 		String[] excel_title  = {"단위행정구역","예산(원)"};
-        String[] excel_column = {"ADM_NM","AMOUNT_CALC"};        
+        String[] excel_column = {"adm_nm","amount_calc"};        
  
         Long total_amount_calc = new Long(0);
         if(items!=null && items.size()>0){

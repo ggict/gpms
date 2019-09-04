@@ -412,7 +412,7 @@ public class FlawCntrwkController  extends BaseController {
 		List dataList = flawCntrwkService.selectFlawCntrwkListExcel(flawCntrwkVO);
 
         String[] excel_title  = {"노선번호","노선명","행선","차로","보수공법","보수재료","보수일자","연장(m)","폭(m)","면적(㎡)","보수표층두께(cm)","보수중간층두께(cm)","보수기층두께(cm)"};
-        String[] excel_column = {"ROUTE_CODE","ROUTE_NM","DIRECT_NM","TRACK","RPAIR_MTHD_NM","PAV_MATRL_ASCON_NM","RPAIR_DE","RPAIR_LEN","RPAIR_BT","RPAIR_AR","RPAIR_THICK_ASCON","RPAIR_THICK_CNTR","RPAIR_THICK_BASE"};
+        String[] excel_column = {"route_code","route_nm","direct_nm","track","rpair_mthd_nm","pav_matrl_ascon_nm","rpair_de","rpair_len","rpair_bt","rpair_ar","rpair_thick_ascon","rpair_thick_cntr","rpair_thick_base"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "하자보수공사목록_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
