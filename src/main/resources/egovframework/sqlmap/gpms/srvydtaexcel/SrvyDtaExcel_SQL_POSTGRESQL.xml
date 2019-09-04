@@ -1081,7 +1081,7 @@
 			     , tnattachfile.ORGINL_FILE_NM FILE_NM
 			     , SUBSTR(tnsrvydtaexcel.SRVY_DE, 0, 4) || '년 ' || SUBSTR(tnsrvydtaexcel.SRVY_DE, 5, 2) || '월' SRVY_DE
 			     , TO_CHAR(NOW(), 'YYYY') || '년 ' || TO_CHAR(NOW(), 'MM') || '월' CALC_DE
-			     , TO_CHAR(add_months(NOW(), 12), 'YYYY') || '~' || TO_CHAR(add_months(NOW(), 120), 'YYYY') PREDCT_DE
+			     , to_char(now()::timestamp + '12 month', 'YYYY') || '~' || to_char(now()::timestamp + '120 month', 'YYYY') PREDCT_DE
 			     , tnsrvydtaexcel.DATA_CO
 			     , COALESCE((
 			           SELECT CASE 
