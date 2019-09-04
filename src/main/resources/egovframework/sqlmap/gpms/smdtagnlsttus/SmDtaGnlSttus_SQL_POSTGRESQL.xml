@@ -892,13 +892,13 @@
             , ( SELECT n3a.NAME FROM N3A_G0100000 n3a
                     WHERE SUBSTR(n3a.BJCD, 0, 5) = sect.ADM_CODE ) AS ADM_CODE
             , sect.CELL_ID
-            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.AC_IDX, 0, 0, sect.CELL_TYPE, 'SCR', 0) AC_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.BC_IDX, 0, 0, sect.CELL_TYPE, 'SCR', 0) BC_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.LC_IDX, 0, 0, sect.CELL_TYPE, 'SCR', 0) LC_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.PTCHG_IDX, 0, 0, sect.CELL_TYPE, 'SCR', 0) PTCHG_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.POTHOLE_IDX, 0, 0, sect.CELL_TYPE, 'SCR', 0) POT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.RD_IDX, 0, 0, sect.CELL_TYPE, 'SCR', 0) RD_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.RCI, 0, 0, sect.CELL_TYPE, 'RCI', 0) RCI_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.AC_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) AC_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.BC_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) BC_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.LC_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) LC_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.PTCHG_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) PTCHG_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.POTHOLE_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) POT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.RD_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) RD_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.RCI, '0', '0', sect.CELL_TYPE, 'RCI', 0) RCI_RATE
         FROM TN_SM_DTA_GNL_STTUS tnsmdtagnlsttus
            INNER JOIN CELL_SECT sect
               ON tnsmdtagnlsttus.DIRECT_CODE = sect.DIRECT_CODE
@@ -919,17 +919,17 @@
         )
         , RESULTLIST AS (
             SELECT tb.*
-                 , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 SUM_RATE
+                 , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 END SUM_RATE
              FROM LASTLIST tb
          )
          SELECT tb.*
-            , FN_GET_GPCI_RDUCT_RATE(tb.AC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) AC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.BC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) BC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.LC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) LC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.PTCHG_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) PTCHG_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.POTHOLE_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) POT_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.RD_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) RD_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.RCI, 0, 0, tb.CELL_TYPE, 'RCI', tb.SUM_RATE) RCI_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.AC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) AC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.BC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) BC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.LC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) LC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.PTCHG_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) PTCHG_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.POTHOLE_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) POT_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.RD_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) RD_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.RCI, '0', '0', tb.CELL_TYPE, 'RCI', tb.SUM_RATE) RCI_RDUCT_RATE
             , RCI_RATE RCI_RDUCT_RATE
            FROM RESULTLIST tb
            INNER JOIN CELL_SECT sect

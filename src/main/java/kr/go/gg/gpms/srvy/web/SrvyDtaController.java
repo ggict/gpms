@@ -1191,7 +1191,7 @@ public class SrvyDtaController extends BaseController {
 
 		List dataList = srvyDtaExcelService.selectSrvyDtaEvlInfoListExcel(mummSctnSrvyDtaVO);
 		String[] excel_title = { "조사번호", "조사년도", "관리기관", "도로등급", "노선번호", "노선명", "행선", "차로", "시점(km)", "종점(km)", "GPCI", "주파손", "파손원인" };
-		String[] excel_column = { "SRVY_NO", "SRVY_DE", "DEPT_CODE", "ROAD_GRAD", "ROAD_NO_VAL", "ROAD_NM", "DIRECT_CODE", "TRACK", "STRTPT", "ENDPT", "GPCI", "CR", "CUZ" };
+		String[] excel_column = { "srvy_no", "srvy_de", "dept_code", "road_grad", "road_no_val", "road_nm", "direct_code", "track", "strtpt", "endpt", "gpci", "cr", "cuz" };
 
 		model.addAttribute("file_name", "포장상태평가조회");
 		model.addAttribute("file_name", "포장상태평가조회");

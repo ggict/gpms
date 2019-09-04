@@ -1190,13 +1190,13 @@
 			    , COALESCE(tnsmdtalaststtus.RD_IDX, 0) AS RD_IDX
 			    , COALESCE(tnsmdtalaststtus.RCI, 0) AS RCI
 			    , COALESCE(tnsmdtalaststtus.SCR, 0) AS SCR
-			    , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.AC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) AC_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.BC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) BC_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.LC_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) LC_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.PTCHG_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) PTCHG_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.POTHOLE_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) POT_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RD_IDX, 0, 0, cellsect.CELL_TYPE, 'SCR', 0) RD_RATE
-	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RCI, 0, 0, cellsect.CELL_TYPE, 'RCI', 0) RCI_RATE
+			    , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.AC_IDX, '0','0', cellsect.CELL_TYPE, 'SCR', 0) AC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.BC_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) BC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.LC_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) LC_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.PTCHG_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) PTCHG_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.POTHOLE_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) POT_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RD_IDX, '0', '0', cellsect.CELL_TYPE, 'SCR', 0) RD_RATE
+	            , FN_GET_GPCI_RDUCT_RATE(tnsmdtalaststtus.RCI, '0', '0', cellsect.CELL_TYPE, 'RCI', 0) RCI_RATE
 			FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
 			LEFT OUTER JOIN CELL_SECT cellsect
 			    ON cellsect.ROUTE_CODE = tnsmdtalaststtus.ROUTE_CODE
@@ -1211,17 +1211,17 @@
         ),
         RESULTLIST AS (
             SELECT tb.*
-                 , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 SUM_RATE
+                 , CASE WHEN tb.SCR = 0 THEN (tb.AC_RATE + tb.BC_RATE + tb.LC_RATE + tb.PTCHG_RATE + tb.POT_RATE + tb.RD_RATE) ELSE 0 END SUM_RATE
               FROM LASTLIST tb
         )
         SELECT tb.*
-            , FN_GET_GPCI_RDUCT_RATE(tb.AC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) AC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.BC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) BC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.LC_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) LC_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.PTCHG_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) PTCHG_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.POTHOLE_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) POT_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.RD_IDX, 0, 0, tb.CELL_TYPE, 'SCR', tb.SUM_RATE) RD_RDUCT_RATE
-            , FN_GET_GPCI_RDUCT_RATE(tb.RCI, 0, 0, tb.CELL_TYPE, 'RCI', tb.SUM_RATE) RCI_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.AC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) AC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.BC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) BC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.LC_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) LC_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.PTCHG_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) PTCHG_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.POTHOLE_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) POT_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.RD_IDX, '0', '0', tb.CELL_TYPE, 'SCR', tb.SUM_RATE) RD_RDUCT_RATE
+            , FN_GET_GPCI_RDUCT_RATE(tb.RCI, '0', '0', tb.CELL_TYPE, 'RCI', tb.SUM_RATE) RCI_RDUCT_RATE
           FROM RESULTLIST tb
         ]]>
 	</select>
