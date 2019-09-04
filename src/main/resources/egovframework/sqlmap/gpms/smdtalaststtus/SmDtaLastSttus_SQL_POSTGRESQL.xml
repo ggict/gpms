@@ -739,7 +739,7 @@
 		, ( SELECT code.CODE_NM FROM TC_CODE code WHERE sect.ROAD_GRAD =
 		code.CODE_VAL ) AS ROAD_GRAD
 		, ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept WHERE sect.DEPT_CODE =
-		dept.DEPT_CODE ) AS DEPT_CODE
+		dept.DEPT_CODE::int ) AS DEPT_CODE
 		, ( SELECT code.CODE_NM FROM TC_CODE code WHERE code.CODE_VAL =
 		sect.CELL_TYPE ) AS SECT_SE
 		, CASE tnsmdtalaststtus.DIRECT_CODE
@@ -807,7 +807,7 @@
         <isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
         <isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
         <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-        <isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
         <isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
         <isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
         <isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
@@ -817,7 +817,7 @@
 		, tnsmdtalaststtus.DIRECT_CODE DESC */
 		) tb
 		ORDER BY $orderByColumn$ $orderByType$
-		) WHERE 1=1
+		) as sub_tb WHERE 1=1
 		]]>
 	</select>
 
@@ -843,7 +843,7 @@
 				        WHERE sect.ROAD_GRAD = code.CODE_VAL
 				    ) AS ROAD_GRAD
 				    , ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept
-				        WHERE sect.DEPT_CODE = dept.DEPT_CODE
+				        WHERE sect.DEPT_CODE = dept.DEPT_CODE::int
 				    ) AS DEPT_CODE
 				    , ( SELECT code.CODE_NM FROM TC_CODE code
 				        WHERE code.CODE_VAL = sect.CELL_TYPE
@@ -894,7 +894,7 @@
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
 		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
 		<isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
@@ -911,7 +911,7 @@
             ]]>
         </isNotEmpty>
         <![CDATA[
-            ) WHERE 1=1
+            ) as sub_tb WHERE 1=1
         ]]>
 
 		<isEqual prepend=" " property="usePage" compareValue="true">
@@ -944,7 +944,7 @@
                         WHERE sect.ROAD_GRAD = code.CODE_VAL
                     ) AS ROAD_GRAD
                     , ( SELECT dept.LOWEST_DEPT_NM FROM TC_DEPT dept
-                        WHERE sect.DEPT_CODE = dept.DEPT_CODE
+                        WHERE sect.DEPT_CODE = dept.DEPT_CODE::int
                     ) AS DEPT_CODE
                     , ( SELECT code.CODE_NM FROM TC_CODE code
                         WHERE code.CODE_VAL = sect.CELL_TYPE
@@ -995,7 +995,7 @@
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
 		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
 		<isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtalaststtus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtalaststtus.TRACK = #TRACK# ]]></isNotEmpty>
@@ -1004,7 +1004,7 @@
                 ORDER BY
                     tnsmdtalaststtus.STRTPT ASC
                     , tnsmdtalaststtus.SM_NO ASC
-            ) tb) WHERE 1=1
+            ) tb) as sub_cnt WHERE 1=1
         ]]>
 	</select>
 
@@ -1043,7 +1043,7 @@
 		                AND sect.OBJECT_ID = #OBJECT_ID#
 		            ORDER BY sect.STRTPT, tncntrwkdtl.STRTPT
 	            ) tb
-	        ) WHERE 1=1
+	        ) as sub_tb WHERE 1=1
 	    ]]>
 
 		<isEqual prepend=" " property="usePage" compareValue="true">
@@ -1088,7 +1088,7 @@
 	                    AND sect.OBJECT_ID = #OBJECT_ID#
 	                ORDER BY sect.STRTPT, tncntrwkdtl.STRTPT
 	            ) tb
-	        ) WHERE 1=1
+	        ) as sub_cnt WHERE 1=1
         ]]>
 	</select>
 

@@ -864,7 +864,7 @@ public class SysUserController extends BaseController {
         List dataList = sysUserService.selectSysUserLogListExcel(sysUserVO);
 
         String[] excel_title  = {"사용자ID","사용자명","소속기관","접속메뉴","접속일시"};
-        String[] excel_column = {"USER_ID","USER_NM","DEPT_NM","MENU_NM","CREAT_DT"};
+        String[] excel_column = {"user_id","user_nm","dept_nm","menu_nm","creat_dt"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "사용자접속로그_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));

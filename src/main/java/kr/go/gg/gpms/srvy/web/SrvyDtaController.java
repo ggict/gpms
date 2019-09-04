@@ -1352,7 +1352,7 @@ public class SrvyDtaController extends BaseController {
 		srvyDtaExcelVO.setSCH_SRVY_DE2(schSrbyDE2);
 		List dataList = srvyDtaExcelService.srvyDtaExcelListExcelDownload(srvyDtaExcelVO);
 		String[] excel_title = { "파일명", "조사일자", "자료건수", "포장상태 평가 여부" };
-		String[] excel_column = { "FILE_NM", "SRVY_DE", "DATA_CO", "EVL_PROCESS_AT" };
+		String[] excel_column = { "file_nm", "srvy_de", "data_co", "evl_process_at" };
 
 		model.addAttribute("file_name", "조사자료 이력조회");
 		model.addAttribute("file_name", "조사자료 이력조회");

@@ -503,7 +503,7 @@ public class CntrwkController  extends BaseController {
         List dataList = cntrwkService.selectCntrwkListExcel(cntrwkVO);
         
         String[] excel_title  = {"공사구분","공사명","착공일","준공일","하자시작일","하자종료일","시공사","총 공사연장(km)","총 보수금액(천원)","총 공사면적(m²)"};
-        String[] excel_column = {"CNTRWK_SE","FULL_CNTRWK_NM","STRWRK_DE","COMPET_DE","FLAW_BEGIN_DE","FLAW_END_DE","CNSTRCT_CO_NM","TRACK_LEN","TOT_AMOUNT","RPAIR_AR"};
+        String[] excel_column = {"cntrwk_se","full_cntrwk_nm","strwrk_de","compet_de","flaw_begin_de","flaw_end_de","cnstrct_co_nm","track_len","tot_amount","rpair_ar"};
 
         //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
         model.addAttribute("file_name",    "포장공사목록_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
