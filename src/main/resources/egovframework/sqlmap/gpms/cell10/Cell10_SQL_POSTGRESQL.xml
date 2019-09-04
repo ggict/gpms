@@ -1200,7 +1200,7 @@
             <![CDATA[
                 /* cell10DAO.selectTrakStatsPageList */
                 /* 통계 > 노선현황 > 차로별 통계 목록을 조회한다.*/
-                    SELECT ADM_NM,
+                  SELECT ADM_NM,
                         COALESCE(ROAD_GRAD,'전체') AS ROAD_GRAD,
                         SUM(SUM_L) AS SUM_L,
                         SUM(TRACK2_L) AS TRACK2_L,
@@ -1215,7 +1215,7 @@
                         SUM(TRACK8) AS TRACK8,
                         SUM(TRACK10) AS TRACK10,
                         SUM(JR_LEN) AS JR_LEN
-               FROM ( SELECT NGA.ADM_NM,
+              FROM ( SELECT NGA.ADM_NM,
                              COALESCE(NJB.ROAD_GRAD,'국지도') AS ROAD_GRAD,
                              COALESCE(NJB.SUM_L,0) AS SUM_L,
                              COALESCE(TRACK2_L,0) AS TRACK2_L,
@@ -1229,10 +1229,11 @@
                              COALESCE(C10A.TRACK6,0) AS TRACK6,
                              COALESCE(C10A.TRACK8,0) AS TRACK8,
                              COALESCE(C10A.TRACK10,0) AS TRACK10,
-                             JR.JR_LEN /*중용구간*/
+                             0 AS JR_LEN /*중용구간*/
                         FROM ( SELECT N3A.NAME AS ADM_NM,
                                       N3A.BJCD
-                                 FROM N3A_G0100000 N3A) NGA,
+                                 FROM N3A_G0100000 N3A) NGA
+                        LEFT OUTER JOIN
                              ( SELECT '국지도' AS ROAD_GRAD,
                                        ADM_CODE || '00000' AS ADM_CODE,
                                        ADM_NAME,
@@ -1247,7 +1248,9 @@
             ]]>
                 <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
             <![CDATA[
-                                  ) NJB,
+                                  ) NJB
+                          ON NGA.BJCD = NJB.ADM_CODE
+                          LEFT OUTER JOIN
                              ( SELECT ADM_CODE,
                                        (TRACK2 + TRACK4 + TRACK6 + TRACK8 + TRACK10 + ODD_L) AS SUM_G,
                                        TRACK2,
@@ -1270,13 +1273,13 @@
                                                          CASE WHEN TRACK = '10' THEN ROAD_L END AS TRACK10,
                                                          CASE WHEN TRACK NOT IN('2','4','6','8','10') THEN ROAD_L  END  AS ODD_L
                                                     FROM CELL_10 CELL10A
-                                                   WHERE CELL10A.ROAD_GRAD = 'RDGD0001')
-                                          GROUP BY ADM_CODE) ) C10A,
-                             ( SELECT 0 AS JR_LEN
-                                  ) JR /*중용구간*/
-                       WHERE NGA.BJCD = NJB.ADM_CODE (+ )
-                         AND NGA.BJCD = C10A.ADM_CODE (+ )
+                                                   WHERE CELL10A.ROAD_GRAD = 'RDGD0001') AS SUB_CELL10
+                                          GROUP BY ADM_CODE ) AS SUB_C10A
+                              ) C10A
+                          ON NGA.BJCD = C10A.ADM_CODE
+
                        UNION ALL
+
                       SELECT NGB.ADM_NM,
                              COALESCE(JB.ROAD_GRAD,'지방도') AS ROAD_GRAD,
                              COALESCE(JB.SUM_L,0) AS SUM_L,
@@ -1291,10 +1294,11 @@
                              COALESCE(C10A.TRACK6,0) AS TRACK6,
                              COALESCE(C10A.TRACK8,0) AS TRACK8,
                              COALESCE(C10A.TRACK10,0) AS TRACK10,
-                             JR.JR_LEN /*중용구간*/
+                             0 AS JR_LEN /*중용구간*/
                         FROM ( SELECT N3A.NAME AS ADM_NM,
                                       N3A.BJCD
-                                 FROM N3A_G0100000 N3A) NGB,
+                                 FROM N3A_G0100000 N3A) NGB
+                        LEFT OUTER JOIN
                              ( SELECT '지방도' AS ROAD_GRAD,
                                        ADM_CODE || '00000' AS ADM_CODE,
                                        ADM_NAME,
@@ -1309,7 +1313,9 @@
                 ]]>
                     <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
                 <![CDATA[
-                                  ) JB,
+                                  ) JB
+                          ON NGB.BJCD = JB.ADM_CODE
+                          LEFT OUTER JOIN
                              ( SELECT ADM_CODE,
                                        (TRACK2 + TRACK4 + TRACK6 + TRACK8 + TRACK10 + ODD_L) AS SUM_G,
                                        TRACK2,
@@ -1332,14 +1338,15 @@
                                                          CASE WHEN TRACK = '10' THEN ROAD_L END AS TRACK10,
                                                          CASE WHEN TRACK NOT IN('2','4','6','8','10') THEN ROAD_L  END  AS ODD_L
                                                     FROM CELL_10 CELL10A
-                                                   WHERE CELL10A.ROAD_GRAD = 'RDGD0002')
-                                          GROUP BY ADM_CODE) ) C10A,
-                             ( SELECT 0 AS JR_LEN
-                                  ) JR /*중용구간*/
-                       WHERE NGB.BJCD = JB.ADM_CODE (+ )
-                         AND NGB.BJCD = C10A.ADM_CODE (+ ) )
-            GROUP BY  ROLLUP(ADM_NM,ROAD_GRAD) HAVING GROUPING_ID(ADM_NM,ROAD_GRAD) IN (0,3)
-              ORDER BY ADM_NM
+                                                   WHERE CELL10A.ROAD_GRAD = 'RDGD0002') AS SUB_CELL10
+                                          GROUP BY ADM_CODE ) AS SUB_C10A ) C10A
+                           ON NGB.BJCD = C10A.ADM_CODE
+            ) AS SUB
+            GROUP BY  ROLLUP(ADM_NM,ROAD_GRAD)
+            /*  HAVING GROUPING_ID(ADM_NM,ROAD_GRAD) IN (0,3)  */
+            HAVING ( ADM_NM IS NULL AND ROAD_GRAD IS NULL )             /*  GROUPING_ID(ADM_NM, ROAD_GRAD) = 00 = 0  */
+                OR ( ADM_NM IS NOT NULL AND ROAD_GRAD IS NOT NULL )     /*  GROUPING_ID(ADM_NM, ROAD_GRAD) = 11 = 3  */
+            ORDER BY ADM_NM, ROAD_GRAD
             ]]>
         </select>
 
