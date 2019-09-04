@@ -1300,7 +1300,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 					  AND cellsect.CELL_ID = #CELL_ID#
 					ORDER BY tncntrwkdtl.DETAIL_CNTRWK_ID, cell10.CELL_ID
                 ) tb
-            ) WHERE 1=1
+            )as sub_CntrwkList WHERE 1=1
         ]]>
 
         <isEqual prepend=" " property="usePage" compareValue="true">
@@ -1344,7 +1344,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
                       AND cellsect.CELL_ID = #CELL_ID#
                     ORDER BY tncntrwkdtl.DETAIL_CNTRWK_ID, cell10.CELL_ID
                 ) tb
-            ) WHERE 1=1
+            )as sub_CntrwkListCount WHERE 1=1
         ]]>
     </select>
 
