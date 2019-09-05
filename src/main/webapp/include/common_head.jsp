@@ -66,6 +66,7 @@
 <script type="text/javascript" src="<c:url value='/extLib/openlayers3/canvas-toBlob.js'/>" charset='utf-8'></script> <!-- YYK. 지도저장 toBlob (ie용) -->
 
 
+<script src="<c:url value='/extLib/polyfill.min.js'/>"></script>
 
 <!-- Openlayer -->
 <%-- <script type="text/javascript" src="<c:url value='/extLib/openlayers/OpenLayers.debug.js'/>"></script> --%>

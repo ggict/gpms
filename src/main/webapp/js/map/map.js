@@ -1273,9 +1273,7 @@ function($,undefined){
                                     }
 
                                     if ( _oZoom != false ) {
-
                                        _oMap.zoomToExtent(_oMap.getLayerByName('GAttrLayer').getDataExtent());
-
                                     }
 
                                 }

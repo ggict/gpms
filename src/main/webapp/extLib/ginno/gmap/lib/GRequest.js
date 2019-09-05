@@ -741,7 +741,8 @@ GRequest.WFS = {
 	format : {
 		gml : new OpenLayers.Format.GML(),
 		filter : new OpenLayers.Format.Filter({ version : "1.1.0" }),
-		xml : new OpenLayers.Format.XML()
+		xml : new OpenLayers.Format.XML(),
+		geojson: new OpenLayers.Format.GeoJSON()
 	},
 
 	getCapability : function(serviceUrl, callback) {
@@ -788,10 +789,10 @@ GRequest.WFS = {
 		}
 
 	},
-
+	
 	getSortBy : function(fields, orders) {
 		var str = "";
-
+		
 		str += "<ogc:SortBy>";
 
 		for(var i=0, len=fields.length; i < len; i++) {
@@ -853,7 +854,7 @@ GRequest.WFS = {
         $.extend(params, parameters);
         var queryStr = "";
         var useDomain = params.useDomain ? 'useDomain="true"' : "";
-        queryStr += '<wfs:Query typeName="' + params.prefix + ":" + params.tables[0] + '" ' + useDomain + "  >";
+        queryStr += '<wfs:Query typeName="' + params.prefix + ":" + params.tables[0] + '" ' + useDomain + ">";
         queryStr += '<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">';
         for (var i = 0, len = params.values.length; i < len; i++) {
             queryStr += '<ogc:FeatureId fid="' + params.tables[0] + "." + params.values[i] + '"/>';
@@ -878,11 +879,12 @@ GRequest.WFS = {
 		};
 
 		this.extendParams(params, parameters);
-
+		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
+		
 		var queryStr = '';
 		for(var i=0, len=params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
-			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
+			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '>';
 
 			var filter;
 
@@ -1166,10 +1168,11 @@ GRequest.WFS = {
 		var queryStr = '';
 		for (var i = 0, len = params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
-			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
+			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '>';
 			var filter = new OpenLayers.Filter.Spatial({
 				type: params.type,
-				property : "G2_SPATIAL",
+				//property : "G2_SPATIAL",
+				property : "geom",
 				value: params.values[0]
 			});
 
@@ -1179,7 +1182,7 @@ GRequest.WFS = {
 
 			if(params.sortFields.length > 0)
 				queryStr += this.getSortBy(params.sortFields, params.sortOrders);
-
+				
 			queryStr += '</wfs:Query>';
 		}
 		this.getFeature(serviceUrl, params, queryStr, callback, options, sync);
@@ -1188,28 +1191,109 @@ GRequest.WFS = {
 
 
 	getFeature : function(serviceUrl, params, filter, callback, options, sync) {
+		var control = this;
+		var prefix = params.prefix;
+		var namespace = 'xmlns:'+prefix+'="http://www.openplans.org/'+prefix;
 		var wfsStr = '';
-		wfsStr += '<wfs:GetFeature service="WFS" version="1.1.0" maxFeatures="' + params.maxFeatures + '" xmlns:ehmp="http://health-e-waterways.org" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">';
+		//wfsStr += '<wfs:GetFeature service="WFS" version="1.1.0" maxFeatures="' + params.maxFeatures + '" xmlns:ehmp="http://health-e-waterways.org" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">';
+		//wfsStr += '<wfs:GetFeature strict="true" service="WFS" version="1.1.0" maxFeatures="' + params.maxFeatures + '" '+namespace+'" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">';
+		wfsStr += '<wfs:GetFeature service="WFS" outputFormat="application/json" version="1.1.0" maxFeatures="' + params.maxFeatures + '" '+namespace+'" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">';
 		wfsStr += filter;
 		wfsStr += '</wfs:GetFeature>';
+		
+//		if(sync){
+//			GMapUtil.sendProxyPostSync(
+//					serviceUrl,
+//					wfsStr,
+//					function(res) {
+//						control.parseGetFeature(res, callback, options);
+//					}
+//				);
+//		}else{
+//			GMapUtil.sendProxyPost(
+//					serviceUrl,
+//					wfsStr,
+//					function(res) {
+//						control.parseGetFeature(res, callback, options);
+//					}
+//				);
+//		}
+		
+		var ogcProxy = contextPath + 'ogcProxy.jsp?'
+		var url = ogcProxy + serviceUrl;
+		fetch(url, {
+			method: 'POST',
+			body: wfsStr
+		}).then(function(response) {
+			return response.json();
+		}).then(function(res) {
+			console.log(res);
+			control.parseJsonFeature(res, callback, options);
+		});
+		
+	},
+	
+	parseJsonFeature: function(res, callback, options){
+		var arr = [];
+		var success = true;
+		var featureCollection;
 
-		var control = this;
-		if(sync){
-			GMapUtil.sendProxyPostSync(
-					serviceUrl,
-					wfsStr,
-					function(res) {
-						control.parseGetFeature(res, callback, options);
-					}
-				);
-		}else{
-			GMapUtil.sendProxyPost(
-					serviceUrl,
-					wfsStr,
-					function(res) {
-						control.parseGetFeature(res, callback, options);
-					}
-				);
+		var features = res.features;
+		var featuresLen = features.length;
+		
+		if(!featuresLen) success = false;
+		
+		for (var i = 0; i < featuresLen; i++) {
+			var feature = features[i];
+			var tableid = feature.id;
+			var geometry = feature.geometry;
+			var properties = feature.properties;
+			
+			var tmpArr = tableid.split(".");
+			var tmpTable = tmpArr[0];
+			
+			//같은 테이블인지 체크 후 테이블 아래로 여러 레코드 들이 들어가게 함
+			var index = null;
+			for(var j in arr) {
+				if(arr[j].table == tmpTable) {
+					index = j;
+					break;
+				};
+			}
+			
+			if(!index) {
+				var obj = {
+					table : tmpTable,	//테이블 명
+					results : []		//레코드 들
+				};
+				arr.push(obj);
+			}else {
+				obj = arr[index];
+			}
+			
+			//한개의 레코드
+			var result = {
+				g2id : tmpArr[1],	//G2_ID 필드 (PK)
+				feature : this.format.geojson.read(res)[0],	//도형
+				title : tmpArr[1],	//제목
+				fields : properties //필드들
+			};
+			result.feature.fid = feature.id;
+			obj.results.push(result);
+		}
+
+		console.log(obj);
+		
+		if(options && options.alias) {
+			this.getRequestAlias(arr, success, callback, options);
+		}
+		else {
+			callback({
+				data : arr,
+				success : function() {
+					return success;
+				}
+			});
 		}
 	},
 

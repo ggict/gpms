@@ -662,6 +662,21 @@ GUtil = {
 	
 	fn_get_random : function(max) {
 		return Math.floor(Math.random() * max);
+	},
+	
+	//value값을 소문자 변환
+	fn_lowercase: function(obj){
+		if(obj instanceof Array) {
+			var temp = [];
+			for (var i = 0; i < obj.length; i++) {
+				var value = obj[i].toLowerCase();
+				temp.push(value);
+			}
+			return temp;
+		}
+		else {
+			return obj.toLowerCase();
+		}
 	}
 }
 
@@ -804,6 +819,7 @@ var Base64 = {
 		}
 		return string;
 	}
+
 };
 
 
@@ -870,6 +886,7 @@ GUtil.Array = {
 			return false;
 		}
 	}
+	
 };
 
 
