@@ -243,8 +243,7 @@ function($,undefined){
         });
         gMap.addLayer(oWmsLayer);
 
-// 지도 인쇄/저장용
-
+	// 지도 인쇄/저장용
 		var oBGLayer = new GWMS("backgroundLayer", CONFIG.fn_get_serviceUrl(), {
             layers : "SIGUNGU,N3A_B0010000,DORO_A001" ,
             styles : "" ,

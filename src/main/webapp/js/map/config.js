@@ -39,6 +39,7 @@ var CONFIG = (function($, undefined){
 	var sServiceUrl        = "http://192.168.0.206:18080/geoserver/wms?";
 	var wfsServiceUrl        = "http://192.168.0.206:18080/geoserver/wfs?";
 
+
 	// real server
 	//var sServiceUrl        = "http://105.0.111.9:8089/G2DataService/GService?";
 

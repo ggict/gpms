@@ -763,6 +763,7 @@ MAP.LAYER = (function($,undefined){
 			else if ( chkBrowser == 'msie11') { // ie 11
 				sSldBody = new XMLSerializer().serializeToString(layerTool.getSld_body(true));
 				
+				
 				//IE 문제 해결을 위해 (네임스페이스에 공백이 들어가는 문제 해결을 하기 위해 조치)
 				//<sld:NamedLayer> 기준으로 앞을 자르고 새로운 styledLayerDescriptor 붙인다.
 				var styledLayerDescriptor = '<sld:StyledLayerDescriptor xmlns:sld="http://www.opengis.net/sld" version="1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/sld http://schemas.opengis.net/sld/1.0.0/StyledLayerDescriptor.xsd" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml">';
