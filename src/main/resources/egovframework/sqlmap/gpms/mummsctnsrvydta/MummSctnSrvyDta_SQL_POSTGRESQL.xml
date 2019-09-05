@@ -1643,10 +1643,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			    tnrouteinfo.ROAD_GRAD
 			    , tnrouteinfo.ROAD_NO AS ROUTE_CODE
 			    , tnrouteinfo.ROAD_NAME AS ROAD_NM
-			    , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI), 2), 0) AS GPCI
-			    , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC), 2), 0) AS DMG_CUZ_VMTC
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT), 2), 0) AS DMG_CUZ_CLMT
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC), 2), 0) AS DMG_CUZ_ETC
+			    , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI)::numeric, 2), 0) AS GPCI
+			    , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC)::numeric, 2), 0) AS DMG_CUZ_VMTC
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT)::numeric, 2), 0) AS DMG_CUZ_CLMT
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC)::numeric, 2), 0) AS DMG_CUZ_ETC
 			FROM
 			    TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
 			RIGHT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
@@ -1676,10 +1676,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                 tnrouteinfo.ROAD_GRAD
                 , tnrouteinfo.ROAD_NO AS ROUTE_CODE
                 , tnrouteinfo.ROAD_NAME AS ROAD_NM
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI), 2), 0) AS GPCI
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC), 2), 0) AS DMG_CUZ_VMTC
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT), 2), 0) AS DMG_CUZ_CLMT
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC), 2), 0) AS DMG_CUZ_ETC
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI)::numeric, 2), 0) AS GPCI
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC)::numeric, 2), 0) AS DMG_CUZ_VMTC
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT)::numeric, 2), 0) AS DMG_CUZ_CLMT
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC)::numeric, 2), 0) AS DMG_CUZ_ETC
             FROM
                 TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
             RIGHT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
@@ -1720,10 +1720,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			LEFT OUTER jOIN (
 			        SELECT
 			            tb.DEPT_CODE
-			            , ROUND(AVG(tb.GPCI), 2) AS GPCI
-			            , ROUND(AVG(tb.DMG_CUZ_CLMT), 2) AS DMG_CUZ_CLMT
-			            , ROUND(AVG(tb.DMG_CUZ_VMTC), 2) AS DMG_CUZ_VMTC
-			            , ROUND(AVG(tb.DMG_CUZ_ETC), 2) AS DMG_CUZ_ETC
+			            , ROUND(AVG(tb.GPCI)::numeric, 2) AS GPCI
+			            , ROUND(AVG(tb.DMG_CUZ_CLMT)::numeric, 2) AS DMG_CUZ_CLMT
+			            , ROUND(AVG(tb.DMG_CUZ_VMTC)::numeric, 2) AS DMG_CUZ_VMTC
+			            , ROUND(AVG(tb.DMG_CUZ_ETC)::numeric, 2) AS DMG_CUZ_ETC
 			        FROM (
 			            SELECT
 			                cell10.DEPT_CODE
@@ -1744,7 +1744,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			            AND tb.DEPT_CODE IS NOT NULL
 			        GROUP BY tb.DEPT_CODE
 			    ) mumm
-			    ON dept.DEPT_CODE = mumm.DEPT_CODE
+			    ON dept.DEPT_CODE = mumm.DEPT_CODE::text
 			WHERE 1=1
 		]]>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND dept.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
@@ -1771,10 +1771,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
             LEFT OUTER jOIN (
                     SELECT
                         tb.DEPT_CODE
-                        , ROUND(AVG(tb.GPCI), 2) AS GPCI
-                        , ROUND(AVG(tb.DMG_CUZ_CLMT), 2) AS DMG_CUZ_CLMT
-                        , ROUND(AVG(tb.DMG_CUZ_VMTC), 2) AS DMG_CUZ_VMTC
-                        , ROUND(AVG(tb.DMG_CUZ_ETC), 2) AS DMG_CUZ_ETC
+                        , ROUND(AVG(tb.GPCI)::numeric, 2) AS GPCI
+                        , ROUND(AVG(tb.DMG_CUZ_CLMT)::numeric, 2) AS DMG_CUZ_CLMT
+                        , ROUND(AVG(tb.DMG_CUZ_VMTC)::numeric, 2) AS DMG_CUZ_VMTC
+                        , ROUND(AVG(tb.DMG_CUZ_ETC)::numeric, 2) AS DMG_CUZ_ETC
                     FROM (
                         SELECT
                             cell10.DEPT_CODE
@@ -1795,7 +1795,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                         AND tb.DEPT_CODE IS NOT NULL
                     GROUP BY tb.DEPT_CODE
                 ) mumm
-                ON dept.DEPT_CODE = mumm.DEPT_CODE
+                ON dept.DEPT_CODE = mumm.DEPT_CODE::text
             WHERE 1=1
         ]]>
         <isNotEmpty property="DEPT_CODE"><![CDATA[ AND dept.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>

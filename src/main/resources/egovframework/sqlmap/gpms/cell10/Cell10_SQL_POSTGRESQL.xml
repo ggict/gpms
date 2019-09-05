@@ -311,7 +311,7 @@
             /* cell10DAO.selectSrvyRoutLenStatsResult */
             /* 포장상태조사구간 노선별 통계 조회*/
              SELECT tnrouteinfo.ROAD_NO::int as ROUTE_CODE,
-                    COALESCE(tnrouteinfo.ROAD_NAME,tnrouteinfo.ROAD_NO::int) as ROAD_NAME,
+                    COALESCE(tnrouteinfo.ROAD_NAME,tnrouteinfo.ROAD_NO::int::text) as ROAD_NAME,
                     COALESCE(SUM(cell10.ROAD_L) / 1000, 0) AS LEN
                FROM TN_ROUTE_INFO tnrouteinfo LEFT OUTER JOIN CELL_10 cell10 ON tnrouteinfo.ROAD_NO = cell10.ROUTE_CODE
                     LEFT OUTER JOIN TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta ON cell10.ROUTE_CODE = tnmummsctnsrvydta.ROUTE_CODE
@@ -412,7 +412,7 @@
             /* 포장상태조사구간 관리기관별 통계 조회*/
             SELECT
                 cell10.DEPT_CODE,
-                ( SELECT lowest_dept_nm FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE::text) AS DEPT_NM,
+                ( SELECT lowest_dept_nm FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE::int = cell10.DEPT_CODE) AS DEPT_NM,
                 SUM(ROAD_L)/1000 AS LEN
             FROM  CELL_10 cell10
                 LEFT OUTER JOIN TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
@@ -424,13 +424,14 @@
                 AND tnmummsctnsrvydta.USE_AT = 'Y'
                 AND tnmummsctnsrvydta.DELETE_AT = 'N'
             WHERE 1 = 1
-                AND cell10.DEPT_CODE::text  IN ('6411399','6411799')/* 6411399:도로건설과/6411799:북부도로과 */
+                AND cell10.DEPT_CODE  IN ('6411399','6411799')/* 6411399:도로건설과/6411799:북부도로과 */
         ]]>
             <isNotEmpty property="SCH_DEPT_CODE1"><![CDATA[ AND cell10.DEPT_CODE = #SCH_DEPT_CODE1#::int ]]></isNotEmpty>
             <isNotEmpty property="SCH_STRSRVY_DE"><![CDATA[ AND tnmummsctnsrvydta.SRVY_DE >= #SCH_STRSRVY_DE# ]]></isNotEmpty>
             <isNotEmpty property="SCH_ENDSRVY_DE"><![CDATA[ AND tnmummsctnsrvydta.SRVY_DE <= #SCH_ENDSRVY_DE# ]]></isNotEmpty>
         <![CDATA[
             GROUP BY cell10.DEPT_CODE
+            ORDER BY cell10.DEPT_CODE
         ]]>
     </select>
 
@@ -464,7 +465,7 @@
 
     <select id="cell10DAO.selectSrvyRoadLenStatsResult" parameterClass="cell10VO" resultClass="cell10VO">
         <![CDATA[
-            /* cell10DAO.selectSrvyDeptLenStatsResult */
+            /* cell10DAO.selectSrvyRoadLenStatsResult */
             /* 포장상태조사구간 도로등급별 통계 조회*/
             SELECT
                 cell10.ROAD_GRAD,
