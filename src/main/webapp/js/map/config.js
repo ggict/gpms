@@ -9,14 +9,18 @@ var CONFIG = (function($, undefined){
 	* @member {String} sPostProxyUrl
 	*/
 	var sPostProxyUrl 		= "/gpms/proxyPost.do";
-
+	
 	/**
-	* 프로시 서비스 URL(GET)
-
-	* @member {String} sPostProxyUrl
-	*/
+	 * 프로시 서비스 URL(GET)
+	 * @member {String} sPostProxyUrl
+	 */
 	var sGetProxyUrl 		= "/gpms/proxyGet.do";
-
+	
+	/**
+	 * 프로시 서비스 URL
+	 * @member {String} geoProxyUrl
+	 */
+	var geoProxyUrl 		= 'ogcProxy.jsp?';
 	
 	/**
 	* 공간서버, DataHouse(=> wfs prefix로 사용될) 이름
@@ -329,6 +333,10 @@ var CONFIG = (function($, undefined){
 	var fn_get_getProxyUrl = function (){
 		return sGetProxyUrl;
 	};
+	
+	var fn_get_geoProxyUrl = function (){
+		return contextPath + geoProxyUrl;
+	};
 
 	/**
 	* @description 지도 서비스URL 리턴
@@ -434,6 +442,7 @@ var CONFIG = (function($, undefined){
 		fn_get_getMapInfo			: fn_get_getMapInfo,
 		fn_get_postProxyUrl			: fn_get_postProxyUrl,
 		fn_get_getProxyUrl			: fn_get_getProxyUrl,
+		fn_get_geoProxyUrl			: fn_get_geoProxyUrl,
 		fn_get_mapPrecision			: fn_get_mapPrecision,
 		fn_get_deactiveControls		: fn_get_deactiveControls,
 		fn_get_layerList 			: fn_get_layerList,

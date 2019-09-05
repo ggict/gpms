@@ -8,7 +8,7 @@ GRequest.WMS = {
 
 	//version : "1.3.0",
 	version : "1.1.1",
-
+	
 	request : null,
 
 	//format : new OpenLayers.Format.SLD.v1_1_0(),
@@ -737,6 +737,9 @@ GRequest.WFS = {
 	VERSION : "1.1.0",
 
 	REQUEST : null,
+	
+	//geometryCN : 'G2_SPATIAL',
+	geometryCN : 'geom',
 
 	format : {
 		gml : new OpenLayers.Format.GML(),
@@ -823,7 +826,8 @@ GRequest.WFS = {
 		};
 
 		this.extendParams(params, parameters);
-
+		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
+		
 		var queryStr = '';
 		for(var i=0, len=params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
@@ -1041,7 +1045,10 @@ GRequest.WFS = {
             sortOrders: [],
             useDomain: false
         };
+        
         this.extendParams(params, parameters);
+		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
+        
         var queryStr = "";
         var oXMLHttpRequest = window.XMLHttpRequest;
         var bGecko = !!window.controllers,
@@ -1053,7 +1060,8 @@ GRequest.WFS = {
                 params.prefix + ":" + params.tables[i] + '" ' + useDomain + "  >";
             var filter = new OpenLayers.Filter.Spatial({
                 type: params.type,
-                property: "G2_SPATIAL",
+                //property: "G2_SPATIAL",
+                property: this.geometryCN,
                 value: params.values[0],
             });
             if (oXMLHttpRequest && !bIE7) queryStr += this.format.xml.write(this.format.filter.write(filter));
@@ -1076,6 +1084,8 @@ GRequest.WFS = {
             useDomain: false
         };
         this.extendParams(params, parameters);
+		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
+        
         var queryStr = "";
         var oXMLHttpRequest = window.XMLHttpRequest;
         var bGecko = !!window.controllers,
@@ -1087,7 +1097,8 @@ GRequest.WFS = {
                 params.prefix + ":" + params.tables[i] + '" ' + useDomain + "  >";
             var filter = new OpenLayers.Filter.Spatial({
                 type: params.type,
-                property: "G2_SPATIAL",
+                //property: "G2_SPATIAL",
+                property: this.geometryCN,
                 value: params.values[0],
             });
             if (oXMLHttpRequest && !bIE7) queryStr += this.format.xml.write(this.format.filter.write(filter));
@@ -1112,6 +1123,7 @@ GRequest.WFS = {
 		};
 
 		this.extendParams(params, parameters);
+		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
 
 		var queryStr = '';
 		var oXMLHttpRequest    = window.XMLHttpRequest;
@@ -1124,7 +1136,8 @@ GRequest.WFS = {
 			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
 			var filter = new OpenLayers.Filter.Spatial({
 				type: params.type,
-				property : "G2_SPATIAL",
+				//property : "G2_SPATIAL",
+				property: this.geometryCN,
 				value: params.values[0],
 				distance: params.distance,
 				distanceUnits: 'm'
@@ -1164,7 +1177,8 @@ GRequest.WFS = {
 		};
 
 		this.extendParams(params, parameters);
-
+		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
+		
 		var queryStr = '';
 		for (var i = 0, len = params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
@@ -1172,7 +1186,7 @@ GRequest.WFS = {
 			var filter = new OpenLayers.Filter.Spatial({
 				type: params.type,
 				//property : "G2_SPATIAL",
-				property : "geom",
+				property: this.geometryCN,
 				value: params.values[0]
 			});
 
@@ -1219,15 +1233,14 @@ GRequest.WFS = {
 //				);
 //		}
 		
-		var ogcProxy = contextPath + 'ogcProxy.jsp?'
-		var url = ogcProxy + serviceUrl;
+		var url = CONFIG.fn_get_geoProxyUrl() + serviceUrl;
 		fetch(url, {
 			method: 'POST',
 			body: wfsStr
 		}).then(function(response) {
 			return response.json();
 		}).then(function(res) {
-			console.log(res);
+			//console.log(res);
 			control.parseJsonFeature(res, callback, options);
 		});
 		
@@ -1281,8 +1294,6 @@ GRequest.WFS = {
 			result.feature.fid = feature.id;
 			obj.results.push(result);
 		}
-
-		console.log(obj);
 		
 		if(options && options.alias) {
 			this.getRequestAlias(arr, success, callback, options);
@@ -1467,9 +1478,11 @@ GRequest.WFS = {
 		wfsStr += '<wfs:Transaction xmlns:wfs="http://www.opengis.net/wfs" service="WFS" version="1.1.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ogc="http://www.opengis.net/ogc" xmlns:sf="http://cite.opengeospatial.org/gmlsf">';
 		wfsStr += '<wfs:Insert>';
 		wfsStr += '<' + prefix + ':' + table + ' xmlns:' + prefix + '="http://geogate.g-inno.com/dataserver/' + prefix + '">';
-		wfsStr += '<' + prefix + ':G2_SPATIAL>';
+		//wfsStr += '<' + prefix + ':G2_SPATIAL>';
+		wfsStr += '<' + prefix + ':'+ this.geometryCN +'>';
 		wfsStr += this.createGmlXml(features);
-		wfsStr += '</' + prefix + ':G2_SPATIAL>';
+		//wfsStr += '</' + prefix + ':G2_SPATIAL>';
+		wfsStr += '</' + prefix + ':'+ this.geometryCN +'>';
 		if(fields && fields.length > 0) wfsStr += this.createAttrXml(prefix, fields, values);
 		wfsStr += '</' + prefix + ':' + table + '>';
 		wfsStr += '</wfs:Insert>';
@@ -1519,7 +1532,8 @@ GRequest.WFS = {
 
 		wfsStr += '<wfs:Update typeName="' + prefix + ':' + table + '" xmlns:' + prefix + '="http://geogate.g-inno.com/dataserver/' + prefix + '">';
 		wfsStr += '<wfs:Property>';
-		wfsStr += '<wfs:Name>G2_SPATIAL</wfs:Name>';
+		//wfsStr += '<wfs:Name>G2_SPATIAL</wfs:Name>';
+		wfsStr += '<wfs:Name>'+ this.geometryCN +'</wfs:Name>';
 		wfsStr += '<wfs:Value>';
 		wfsStr += this.createGmlXml(features);
 		wfsStr += '</wfs:Value>';
