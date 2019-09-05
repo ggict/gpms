@@ -120,8 +120,8 @@
 		/* rpairMthdFrmulaDAO.updateRpairMthdFrmula */
 		/* 보수_공법_수식_관리 수정 */
 		UPDATE TN_RPAIR_MTHD_FRMULA SET
-		  BEGIN_VAL = #BEGIN_VAL#::int /* 보수_공법_수식_관리.시작_값 */
-		, END_VAL = #END_VAL#::int /* 보수_공법_수식_관리.종료_값 */
+		  BEGIN_VAL = (CASE WHEN length(#BEGIN_VAL#) = 0 THEN NULL ELSE #BEGIN_VAL# END)::numeric(10,2) /* 보수_공법_수식_관리.시작_값 */
+		, END_VAL = (CASE WHEN length(#END_VAL#) = 0 THEN NULL ELSE #END_VAL# END)::numeric(10,2) /* 보수_공법_수식_관리.종료_값 */
 		, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_공법_수식_관리.수정자_번호 */
 		, UPDT_DT = NOW() /* 보수_공법_수식_관리.수정_일시 */
 		WHERE 1 = 1
