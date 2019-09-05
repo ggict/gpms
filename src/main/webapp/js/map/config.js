@@ -34,9 +34,10 @@ var CONFIG = (function($, undefined){
 	// 2018.11.02 도메인호스트 변경에 의한 변경
 	//var sServiceUrl        = "http://test.muhanit.kr:18079/G2DataService/GService?";
 	//var sServiceUrl        = "http://127.0.0.1:18080/geoserver/"+sDataHouse+"/wms?";
-	var sServiceUrl        = "http://192.168.0.206:18080/geoserver/"+sDataHouse+"/wms?";
 	//var sServiceUrl        = "http://www.muhanit.kr:18079/G2DataService/GService?";
-
+	//var sServiceUrl        = "http://192.168.0.206:18080/geoserver/"+sDataHouse+"/wms?";
+	var sServiceUrl        = "http://192.168.0.206:18080/geoserver/wms?";
+	var wfsServiceUrl        = "http://192.168.0.206:18080/geoserver/wfs?";
 
 	// real server
 	//var sServiceUrl        = "http://105.0.111.9:8089/G2DataService/GService?";
@@ -220,9 +221,8 @@ var CONFIG = (function($, undefined){
 	         'seq' : '3767',
 	         'show' : '1',
 	         'layerType' : '3',
-	     },	     
+	     },
 	     
-	     /*
 	     "SIGUNGU" : {
 	         
 	         'tmapid' : '870',
@@ -258,7 +258,8 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	 
+	     
+	     /*
 	     "CMPTNC_ZONE" : {
 	         
 	         'tmapid' : '870',
@@ -334,6 +335,10 @@ var CONFIG = (function($, undefined){
 	*/
 	var fn_get_serviceUrl = function (){
 		return sServiceUrl;
+	};
+	
+	var fn_get_wfsServiceUrl = function (){
+		return wfsServiceUrl;
 	};
 
 	/**
@@ -421,6 +426,7 @@ var CONFIG = (function($, undefined){
 
 	return{
 		fn_get_serviceUrl 			: fn_get_serviceUrl,
+		fn_get_wfsServiceUrl 		: fn_get_wfsServiceUrl,
 		fn_get_dataHouseName 		: fn_get_dataHouseName,
 		fn_get_dataHouseCrs 		: fn_get_dataHouseCrs,
 		fn_get_requestCrs 			: fn_get_requestCrs,

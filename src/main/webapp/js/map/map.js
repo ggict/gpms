@@ -232,7 +232,7 @@ function($,undefined){
         	,crs : new OpenLayers.Projection(sRequestCrs)
         ,transparent : true
         ,dataHouse : CONFIG.fn_get_dataHouseName()
-        ,sld_body : sSldBody
+        //,sld_body : sSldBody
         }, {
         	isBaseLayer : true,
         	singleTile : true,
@@ -1209,7 +1209,8 @@ function($,undefined){
                 _oMap.getLayerByName('GAttrLayer').features);
 
         var feature = GRequest.WFS.getFeatureByComparison(
-                            CONFIG.fn_get_serviceUrl(),
+                            //CONFIG.fn_get_serviceUrl(),
+        					CONFIG.fn_get_wfsServiceUrl(),
                                 {
                                     maxFeatures : 9999,
                                     prefix : CONFIG.fn_get_dataHouseName(),
