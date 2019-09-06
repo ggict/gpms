@@ -1129,6 +1129,7 @@ GRequest.WFS = {
 		bIE        = window.document.all && !window.opera,
 		bIE7    = bIE && ((window.navigator.userAgent.match(/MSIE ([\.0-9]+)/) && RegExp.$1 == 7) ||(window.navigator.userAgent.match("rv:11.0")));
 
+
 		var srsName = CONFIG.fn_get_requestCrs();
 		for (var i = 0, len = params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';

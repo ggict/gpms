@@ -1150,6 +1150,7 @@ MAP.CONTROL = (function($, undefined){
 		}
 	};
 
+
 	var init_cellSelLonLat = function(){
         var selControls = {
                 point : new GGetFeature(GPoint, {

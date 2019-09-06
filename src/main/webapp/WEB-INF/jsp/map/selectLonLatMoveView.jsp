@@ -127,8 +127,6 @@ function fnShowList() {
     fn_search(cellId);
 }
 
-
-
 function fnGridArea(cell_id) {
 
     var postData = null;
