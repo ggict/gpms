@@ -1138,30 +1138,17 @@
             <![CDATA[
                 /* cell10DAO.selectTrackLenStatsResult */
                 /* 통계 > 노선현황 > 차로별 GPMS 총연장 통계*/
-                   SELECT TBA.TRACK,
-                        COALESCE(TBB.LEN,0) AS LEN
-                   FROM (WITH TTB AS ( SELECT 2 C1,
-                                              4 C2,
-                                              6 C3,
-                                              8 C4,
-                                              10 C5
-                                         ) SELECT LV,
-                                                           DECODE(LV, 2, C1, 4, C2, 6, C3, 8, C4, 10, C5) TRACK /*차로*/
-                                                      FROM TTB,
-                                                           ( SELECT LEVEL LV
-                                                                 CONNECT BY LEVEL <= 10)
-                                                     ORDER BY LV) TBA,
-                        ( SELECT CELL10.TRACK,
-                                  SUM(ROAD_L) / 1000 AS LEN
-                             FROM CELL_10 CELL10
-                            WHERE 1 = 1
-                              AND CELL10.TRACK IN('2',
-                                  '4',
-                                  '6',
-                                  '8',
-                                  '10')
-                            GROUP BY CELL10.TRACK) TBB
-                  WHERE TBA.TRACK = TBB.TRACK (+ )
+                   SELECT TBA.TRACK, COALESCE(TBB.LEN,0) AS LEN
+				   FROM (WITH TTB AS ( SELECT 2 C1, 4 C2, 6 C3, 8 C4, 10 C5)  
+	  								   SELECT LV, case LV when 2 then C1 when 4 then C2 when 6 then C3 when 8 then C4 when 10 then C5 end TRACK /*차로*/
+      					               FROM TTB, ( SELECT generate_series(1,10)as LV )as sub_TrackLenStats
+      					               ORDER BY LV) TBA 
+				   LEFT JOIN ( SELECT CELL10.TRACK, SUM(ROAD_L) / 1000 AS LEN
+            				   FROM CELL_10 CELL10
+            				   WHERE 1 = 1
+            				   AND CELL10.TRACK IN('2', '4', '6', '8', '10')
+                               GROUP BY CELL10.TRACK) TBB
+ 				   ON TBA.TRACK = TBB.TRACK::int
             ]]>
         </select>
 
@@ -1179,12 +1166,10 @@
         ]]>
             <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
         <![CDATA[
-                 ) SELECT LV AS TRACK,/*차로*/
-                                                    DECODE(LV, 2, C1, 4, C2, 6, C3, 8, C4, 10, C5) LEN/*연장*/
-                                               FROM TEST,
-                                                    ( SELECT LEVEL LV
-                                                          CONNECT BY LEVEL <= 10)
-                                              ORDER BY LV
+ 				) SELECT LV AS TRACK,/*차로*/
+                   		 case LV when 2 then C1 when 4 then C2 when 6 then C3 when 8 then C4 when 10 then C5 end LEN/*연장*/
+                  FROM TEST,( SELECT generate_series(1,10) as LV)as sub_UniTrackLenStats
+                  ORDER BY LV
             ]]>
         </select>
 
@@ -1536,8 +1521,8 @@
                              COALESCE(NJB.SUM_L, 0) AS SUM_L
                         FROM ( SELECT N3A.NAME AS ADM_NM,
                                       N3A.BJCD
-                                 FROM N3A_G0100000 N3A) NGA,
-                             ( SELECT '국지도' AS ROAD_GRAD,
+                                 FROM N3A_G0100000 N3A) NGA
+                        LEFT JOIN( SELECT '국지도' AS ROAD_GRAD,
                                        ADM_CODE || '00000' AS ADM_CODE,
                                        ADM_NAME,
                                        SUM_L
@@ -1547,15 +1532,15 @@
                 <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
             <![CDATA[
                                   ) NJB
-                       WHERE NGA.BJCD = NJB.ADM_CODE (+ )
+                       ON NGA.BJCD = NJB.ADM_CODE
                        UNION ALL
                       SELECT NGB.ADM_NM,
                              COALESCE(JB.ROAD_GRAD, '지방도') AS ROAD_GRAD,
                              COALESCE(JB.SUM_L, 0) AS SUM_L
                         FROM ( SELECT N3A.NAME AS ADM_NM,
                                       N3A.BJCD
-                                 FROM N3A_G0100000 N3A) NGB,
-                             ( SELECT '지방도' AS ROAD_GRAD,
+                                 FROM N3A_G0100000 N3A) NGB
+                        LEFT JOIN ( SELECT '지방도' AS ROAD_GRAD,
                                        ADM_CODE || '00000' AS ADM_CODE,
                                        ADM_NAME,
                                        SUM_L
@@ -1565,7 +1550,7 @@
                 <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
             <![CDATA[
                                   ) JB
-                       WHERE NGB.BJCD = JB.ADM_CODE (+ ) )
+                       ON NGB.BJCD = JB.ADM_CODE )as sub_UniAdm
               GROUP BY ADM_NM,
                     ROAD_GRAD
               ORDER BY ADM_NM
@@ -1584,26 +1569,25 @@
                              COALESCE(C10A.ROAD_L,0) AS SUM_L
                         FROM ( SELECT N3A.NAME AS ADM_NM,
                                       N3A.BJCD
-                                 FROM N3A_G0100000 N3A) NGA,
-                             ( SELECT '국지도' AS ROAD_GRAD,
-                                       ADM_CODE || '00000' AS ADM_CODE,
-                                       ROAD_L
+                                 FROM N3A_G0100000 N3A) NGA
+                        LEFT JOIN( SELECT '국지도' AS ROAD_GRAD,
+                                       ADM_CODE || '00000' AS ADM_CODE, ROAD_L
                                   FROM CELL_10
                                  WHERE ROAD_GRAD = 'RDGD0001') C10A
-                       WHERE NGA.BJCD = C10A.ADM_CODE (+ )
+					     ON NGA.BJCD = C10A.ADM_CODE
                        UNION ALL
                       SELECT NGA.ADM_NM,
                              COALESCE(C10A.ROAD_GRAD,'지방도') AS ROAD_GRAD,
                              COALESCE(C10A.ROAD_L,0) AS SUM_L
                         FROM ( SELECT N3A.NAME AS ADM_NM,
                                       N3A.BJCD
-                                 FROM N3A_G0100000 N3A) NGA,
-                             ( SELECT '지방도' AS ROAD_GRAD,
+                                 FROM N3A_G0100000 N3A) NGA
+                        LEFT JOIN( SELECT '지방도' AS ROAD_GRAD,
                                        ADM_CODE || '00000' AS ADM_CODE,
                                        ROAD_L
                                   FROM CELL_10
                                  WHERE ROAD_GRAD = 'RDGD0002') C10A
-                       WHERE NGA.BJCD = C10A.ADM_CODE (+ ) )
+                       ON NGA.BJCD = C10A.ADM_CODE)as sub_Adm
               GROUP BY ADM_NM,
                     ROAD_GRAD
               ORDER BY ADM_NM
@@ -1619,8 +1603,8 @@
                     COALESCE(UNI.LEN,0) AS LEN
                FROM ( SELECT N3A.BJCD,
                              N3A.NAME AS ADM_NM
-                        FROM N3A_G0100000 N3A) NGB,
-                    ( SELECT UNIADMST.ADM_CODE || '00000' AS ADM_CODE,
+                        FROM N3A_G0100000 N3A) NGB
+               LEFT JOIN ( SELECT UNIADMST.ADM_CODE || '00000' AS ADM_CODE,
                              (SUM(UNIADMST.SUM_L) / 1000) AS LEN
                          FROM UNI_ADM_ST UNIADMST
                      WHERE 1=1
@@ -1628,7 +1612,7 @@
             <isNotEmpty property="STATS_YEAR"><![CDATA[ AND UNIADMST.STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
         <![CDATA[
                         GROUP BY UNIADMST.ADM_CODE) UNI
-              WHERE NGB.BJCD = UNI.ADM_CODE (+ )
+              ON NGB.BJCD = UNI.ADM_CODE
               ORDER BY NGB.ADM_NM
         ]]>
     </select>
