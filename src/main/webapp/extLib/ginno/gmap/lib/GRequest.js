@@ -1121,9 +1121,7 @@ GRequest.WFS = {
 			sortOrders : [],
 			useDomain : false
 		};
-
 		this.extendParams(params, parameters);
-		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
 
 		var queryStr = '';
 		var oXMLHttpRequest    = window.XMLHttpRequest;
@@ -1131,9 +1129,10 @@ GRequest.WFS = {
 		bIE        = window.document.all && !window.opera,
 		bIE7    = bIE && ((window.navigator.userAgent.match(/MSIE ([\.0-9]+)/) && RegExp.$1 == 7) ||(window.navigator.userAgent.match("rv:11.0")));
 
+		var srsName = CONFIG.fn_get_requestCrs();
 		for (var i = 0, len = params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
-			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
+			queryStr += '<wfs:Query srsName="'+srsName+'" typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
 			var filter = new OpenLayers.Filter.Spatial({
 				type: params.type,
 				//property : "G2_SPATIAL",

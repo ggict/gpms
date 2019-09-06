@@ -1154,7 +1154,8 @@ MAP.CONTROL = (function($, undefined){
         var selControls = {
                 point : new GGetFeature(GPoint, {
                     persist : true,
-                    serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
                     prefix : CONFIG.fn_get_dataHouseName(),
                     tables : ["CELL_10"],
                     excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -1394,7 +1395,7 @@ MAP.CONTROL = (function($, undefined){
 	* @param {String} _sTargetLayer : 대상레이어
 	*/
 	var add_feature = function(_oFeature, _oEvt, _sTargetLayer){
-		var fid = _oFeature.data.CELL_ID;
+		var fid = _oFeature.data.CELL_ID || _oFeature.data.cell_id;
 		// 기존에 remove_feature는 GAttrLayer에서 하고 addFeature는 GAttrLayerMulti에서 하고 있음. 확인 필요
 		if(_sTargetLayer == null || _sTargetLayer == "") _sTargetLayer = "GAttrLayer";
 

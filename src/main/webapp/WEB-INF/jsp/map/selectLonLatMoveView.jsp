@@ -117,7 +117,8 @@ function fnShowList() {
     }
 
     for(var i=0; i<features.length; i++){
-        cellId.push(features[0].data.CELL_ID);
+    	var cell_id = features[0].data.CELL_ID || features[0].data.cell_id;
+        cellId.push(cell_id);
     }
 
     parent.gMap.activeControls("drag");
