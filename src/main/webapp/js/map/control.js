@@ -506,7 +506,8 @@ MAP.CONTROL = (function($, undefined){
 
 			for(var i in features){
 				if(i!=0){cellIds += ","}
-				cellIds += features[i].data.CELL_ID;
+				var cell_id = features[i].data.CELL_ID || features[i].data.cell_id;
+				cellIds += cell_id;
 			}
 
 			option.cellCount = features.length;
@@ -682,7 +683,8 @@ MAP.CONTROL = (function($, undefined){
 		//속성조회 컨트롤 생성
 		attrControls = {
 			point : new GGetFeature(GPoint, {
-				serviceUrl : CONFIG.fn_get_serviceUrl(),
+	            //serviceUrl : CONFIG.fn_get_serviceUrl(),
+	            serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 				prefix : CONFIG.fn_get_dataHouseName(),
 				tables : table,
 				persist	: true,
@@ -693,7 +695,8 @@ MAP.CONTROL = (function($, undefined){
 			}),
 			polygon : new GGetFeature(GPolygon, {
 				persist	: false,
-				serviceUrl : CONFIG.fn_get_serviceUrl(),
+	            //serviceUrl : CONFIG.fn_get_serviceUrl(),
+	            serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 				prefix : CONFIG.fn_get_dataHouseName(),
 				tables : table,
 				excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -1110,7 +1113,8 @@ MAP.CONTROL = (function($, undefined){
 		var selControls = {
 				point : new GGetFeature(GPoint, {
 					persist	: false,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+		            //serviceUrl : CONFIG.fn_get_serviceUrl(),
+		            serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["CELL_10"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -1119,7 +1123,8 @@ MAP.CONTROL = (function($, undefined){
 				//polygon : new GGetFeature(GPolygon, {
 				polygon : new GGetFeature(OpenLayers.Handler.Polygon, {
 					persist	: false,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+		            //serviceUrl : CONFIG.fn_get_serviceUrl(),
+		            serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["CELL_10"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -1130,7 +1135,8 @@ MAP.CONTROL = (function($, undefined){
 		        //line : new GGetFeature(GPath, {
 				line : new GGetFeature(OpenLayers.Handler.Path, {
 		            persist : false,
-		            serviceUrl : CONFIG.fn_get_serviceUrl(),
+		            //serviceUrl : CONFIG.fn_get_serviceUrl(),
+		            serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 		            prefix : CONFIG.fn_get_dataHouseName(),
 		            tables : [ "CELL_10" ],
 		            excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -1423,7 +1429,7 @@ MAP.CONTROL = (function($, undefined){
     * @param {Object} _oEvt : 컨트롤 event
     */
     var add_feature_multi = function(_oFeature, _oEvt){
-        var fid = _oFeature.data.CELL_ID;
+        var fid = _oFeature.data.CELL_ID || _oFeature.data.cell_id;
 
         if(_oEvt != undefined && _oEvt.ctrlKey){
             remove_feature(fid);
@@ -1634,7 +1640,7 @@ MAP.CONTROL = (function($, undefined){
 			if((_sTargetLayer == "SttemntLayer") || (_sTargetLayer == "DmgtLayer")){
 				chkId = feature.data.pthRgNo;
 			} else{
-				chkId = feature.data.CELL_ID;
+				chkId = feature.data.CELL_ID || feature.data.cell_id;
 			}
 
 			if(chkId != _sFid){continue;}
@@ -1861,7 +1867,7 @@ MAP.CONTROL = (function($, undefined){
 			var feature = res[i].feature;
 
 			if(i != 0){cellIds += ",";}
-			cellIds += feature.data.CELL_ID;
+			cellIds += feature.data.CELL_ID || feature.data.cell_id;
 		}
 
 		return cellIds;
@@ -1894,7 +1900,8 @@ MAP.CONTROL = (function($, undefined){
         var selControls = {
                 point : new GGetFeature(GPoint, {
                     persist : true,
-                    serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
                     prefix : CONFIG.fn_get_dataHouseName(),
                     tables : ["DORO_TOT_GRS80_50"],
                     excepts : [ "boundedby", "objectid", "shape_area", "shape_len"],
@@ -1902,7 +1909,8 @@ MAP.CONTROL = (function($, undefined){
                 }),
                 polygon : new GGetFeature(GPolygon, {
                     persist : false,
-                    serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
                     prefix : CONFIG.fn_get_dataHouseName(),
                     tables : ["DORO_TOT_GRS80_50"],
                     excepts : [ "boundedby", "objectid", "shape_area", "shape_len"],
@@ -2011,7 +2019,8 @@ MAP.CONTROL = (function($, undefined){
         var selControls = {
                 point : new GGetFeature(GPoint, {
                     persist : true,
-                    serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
                     prefix : CONFIG.fn_get_dataHouseName(),
                     tables : ["CELL_10"],
                     excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -2019,7 +2028,8 @@ MAP.CONTROL = (function($, undefined){
                 }),
                 polygon : new GGetFeature(GPolygon, {
                     persist : false,
-                    serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
                     prefix : CONFIG.fn_get_dataHouseName(),
                     tables : ["CELL_10"],
                     excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -2147,14 +2157,16 @@ MAP.CONTROL = (function($, undefined){
         var selControls = {
                 point : new GGetFeature(GPoint, {
                     persist : true,
-                    serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
                     prefix : CONFIG.fn_get_dataHouseName(),
                     excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
                     id : "selPointSttemnt"
                 }),
                 polygon : new GGetFeature(GPolygon, {
                     persist : false,
-                    serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
+                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
                     prefix : CONFIG.fn_get_dataHouseName(),
                     excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
                     id : "selPolygonSttemnt"
@@ -2196,7 +2208,8 @@ MAP.CONTROL = (function($, undefined){
         var selPthEditControls = {
 				point : new GGetFeature(GPoint, {
 					persist	: true,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+					//serviceUrl : CONFIG.fn_get_serviceUrl(),
+					serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["PTH_CTSMNT"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -2337,7 +2350,9 @@ MAP.CONTROL = (function($, undefined){
 
 			//관할구역 확인
  			GRequest.WFS.getFeatureByGeometry(
-				CONFIG.fn_get_serviceUrl(),{
+				//CONFIG.fn_get_serviceUrl(),
+	            CONFIG.fn_get_wfsServiceUrl(),
+				{
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["CMPTNC_ZONE"],
 					values : [matchArr[0].geometry]
@@ -2755,11 +2770,11 @@ MAP.CONTROL = (function($, undefined){
 
           for ( var i = 0; i < _oData.length; i++ ) {
 
-              var cellId = _oData[i].CELL_ID;
+              var cellId = _oData[i].CELL_ID ||  _oData[i].cell_id;
               var feats = [];
 
               html += "<tr class='tr_SctnInfosRows'>"
-                    + "    <td style='display: none;'>" + _oData[i].CELL_ID + "</td>"
+                    + "    <td style='display: none;'>" + cellId + "</td>"
                     + "    <td>" + _oData[i].ROAD_NO_VAL + "</td>"
                     + "    <td>" + _oData[i].ROAD_NM + "</td>"
                     + "    <td>" + _oData[i].ROAD_GRAD + "</td>"
@@ -2860,6 +2875,7 @@ MAP.CONTROL = (function($, undefined){
       var get_multiCellFeat = function(_sCellId){
           var feats = [];
           for(var i = 0; i<multiCellList.length; i++) {
+        	  var cell_id = multiCellList[i].CELL_ID || multiCellList[i].cell_id;
               if(multiCellList[i].CELL_ID == _sCellId) {
                   feats = multiCellList[i].feats;
                   break;
@@ -2878,7 +2894,8 @@ MAP.CONTROL = (function($, undefined){
 		var selControls = {
 				point : new GGetFeature(GPoint, {
 					persist	: true,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+					//serviceUrl : CONFIG.fn_get_serviceUrl(),
+					serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["CELL_10"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -2886,7 +2903,8 @@ MAP.CONTROL = (function($, undefined){
 				}),
 				polygon : new GGetFeature(GPolygon, {
 					persist	: false,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+					//serviceUrl : CONFIG.fn_get_serviceUrl(),
+					serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["CELL_10"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -2896,7 +2914,8 @@ MAP.CONTROL = (function($, undefined){
 	            // 선형선택 컨트롤 추가
 	            line : new GGetFeature(GPath, {
 	                persist : false,
-	                serviceUrl : CONFIG.fn_get_serviceUrl(),
+	                //serviceUrl : CONFIG.fn_get_serviceUrl(),
+	                serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 	                prefix : CONFIG.fn_get_dataHouseName(),
 	                tables : [ "CELL_10" ],
 	                excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -2919,7 +2938,8 @@ MAP.CONTROL = (function($, undefined){
         //통합정보조회 노선선택 컨트롤 추가
         var selRouteControl = new GGetFeature(GPoint, {
             persist : true,
-            serviceUrl : CONFIG.fn_get_serviceUrl(),
+            //serviceUrl : CONFIG.fn_get_serviceUrl(),
+            serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
             prefix : CONFIG.fn_get_dataHouseName(),
             tables : [ "CELL_10" ],
             excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -3255,7 +3275,8 @@ MAP.CONTROL = (function($, undefined){
     	var selBrdgControls = {
 				point : new GGetFeature(GPoint, {
 					persist	: true,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+					//serviceUrl : CONFIG.fn_get_serviceUrl(),
+					serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["M_CALS_T"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -3263,7 +3284,8 @@ MAP.CONTROL = (function($, undefined){
 				}),
 				polygon : new GGetFeature(GPolygon, {
 					persist	: false,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+					//serviceUrl : CONFIG.fn_get_serviceUrl(),
+					serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["M_CALS_T"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -3486,7 +3508,9 @@ MAP.CONTROL = (function($, undefined){
 
 			// 1. 관할구역 확인
  			GRequest.WFS.getFeatureByGeometry(
-				CONFIG.fn_get_serviceUrl(),{
+				//CONFIG.fn_get_serviceUrl(),
+				CONFIG.fn_get_wfsServiceUrl(),
+				{
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["CMPTNC_ZONE"],
 					values : [pointfeature.geometry]
@@ -3534,7 +3558,8 @@ MAP.CONTROL = (function($, undefined){
 
 				 				//포트홀 위치 등록
 				 				GRequest.WFS.insert(
-				 						CONFIG.fn_get_serviceUrl(),
+				 						//CONFIG.fn_get_serviceUrl(),
+				 						CONFIG.fn_get_wfsServiceUrl(),
 				 						pointfeature,
 				 						CONFIG.fn_get_dataHouseName(),
 				 						"PTH_CTSMNT",
@@ -3629,7 +3654,8 @@ MAP.CONTROL = (function($, undefined){
   			try{
   				//포트홀 위치 수정
   				GRequest.WFS.update(
-  						CONFIG.fn_get_serviceUrl(),
+  						//CONFIG.fn_get_serviceUrl(),
+  						CONFIG.fn_get_wfsServiceUrl(),
   						pointfeature,
   						CONFIG.fn_get_dataHouseName(),
   						"PTH_CTSMNT",
@@ -3738,7 +3764,8 @@ MAP.CONTROL = (function($, undefined){
 				try{
 					//포트홀 위치 수정
 					GRequest.WFS.update(
-							CONFIG.fn_get_serviceUrl(),
+							//CONFIG.fn_get_serviceUrl(),
+							CONFIG.fn_get_wfsServiceUrl(),
 							pointfeature,
 							CONFIG.fn_get_dataHouseName(),
 							"PTH_CTSMNT",
@@ -3887,7 +3914,8 @@ MAP.CONTROL = (function($, undefined){
 		var selSectControls = {
 				point : new GGetFeature(GPoint, {
 					persist	: true,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+					//serviceUrl : CONFIG.fn_get_serviceUrl(),
+					serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["CELL_SECT"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
@@ -3895,7 +3923,8 @@ MAP.CONTROL = (function($, undefined){
 				}),
 				polygon : new GGetFeature(GPolygon, {
 					persist	: false,
-					serviceUrl : CONFIG.fn_get_serviceUrl(),
+					//serviceUrl : CONFIG.fn_get_serviceUrl(),
+					serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
 					tables : ["CELL_SECT"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],

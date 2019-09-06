@@ -666,6 +666,7 @@ GUtil = {
 	
 	//value값을 소문자 변환
 	fn_lowercase: function(obj){
+		if(!obj) return ;
 		if(obj instanceof Array) {
 			var temp = [];
 			for (var i = 0; i < obj.length; i++) {

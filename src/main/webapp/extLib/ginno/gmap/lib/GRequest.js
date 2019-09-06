@@ -829,9 +829,10 @@ GRequest.WFS = {
 		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
 		
 		var queryStr = '';
+		var srsName = CONFIG.fn_get_requestCrs();
 		for(var i=0, len=params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
-			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
+			queryStr += '<wfs:Query srsName="'+srsName+'" typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
 
 			if(i < params.values.length)
 				queryStr += '<ogc:Filter xmlns:ogc=\"http://www.opengis.net/ogc\"><ogc:FeatureId fid=\"' + params.tables[i] + '.' + params.values[i] + '\"/></ogc:Filter>';
@@ -857,8 +858,9 @@ GRequest.WFS = {
         };
         $.extend(params, parameters);
         var queryStr = "";
+        var srsName = CONFIG.fn_get_requestCrs();
         var useDomain = params.useDomain ? 'useDomain="true"' : "";
-        queryStr += '<wfs:Query typeName="' + params.prefix + ":" + params.tables[0] + '" ' + useDomain + ">";
+        queryStr += '<wfs:Query srsName="'+srsName+'" typeName="' + params.prefix + ":" + params.tables[0] + '" ' + useDomain + ">";
         queryStr += '<ogc:Filter xmlns:ogc="http://www.opengis.net/ogc">';
         for (var i = 0, len = params.values.length; i < len; i++) {
             queryStr += '<ogc:FeatureId fid="' + params.tables[0] + "." + params.values[i] + '"/>';
@@ -886,9 +888,10 @@ GRequest.WFS = {
 		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
 		
 		var queryStr = '';
+		var srsName = CONFIG.fn_get_requestCrs();
 		for(var i=0, len=params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
-			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '>';
+			queryStr += '<wfs:Query srsName="'+srsName+'" typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '>';
 
 			var filter;
 
@@ -971,9 +974,10 @@ GRequest.WFS = {
 		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
 
 		var queryStr = '';
+		var srsName = CONFIG.fn_get_requestCrs();
 		for(var i=0, len=params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
-			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
+			queryStr += '<wfs:Query srsName="'+srsName+'" typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '  >';
 
 			var filter;
 
@@ -1055,9 +1059,11 @@ GRequest.WFS = {
         var bGecko = !!window.controllers,
             bIE = window.document.all && !window.opera,
             bIE7 = bIE && (window.navigator.userAgent.match(/MSIE ([\.0-9]+)/) && RegExp.$1 == 7 || window.navigator.userAgent.match("rv:11.0"));
+        
+        var srsName = CONFIG.fn_get_requestCrs();
         for (var i = 0, len = params.tables.length; i < len; i++) {
             var useDomain = params.useDomain ? 'useDomain="true"' : "";
-            queryStr += '<wfs:Query typeName="' +
+            queryStr += '<wfs:Query srsName="'+srsName+'" typeName="' +
                 params.prefix + ":" + params.tables[i] + '" ' + useDomain + "  >";
             var filter = new OpenLayers.Filter.Spatial({
                 type: params.type,
@@ -1092,9 +1098,11 @@ GRequest.WFS = {
         var bGecko = !!window.controllers,
             bIE = window.document.all && !window.opera,
             bIE7 = bIE && (window.navigator.userAgent.match(/MSIE ([\.0-9]+)/) && RegExp.$1 == 7 || window.navigator.userAgent.match("rv:11.0"));
+        
+        var srsName = CONFIG.fn_get_requestCrs();
         for (var i = 0, len = params.tables.length; i < len; i++) {
             var useDomain = params.useDomain ? 'useDomain="true"' : "";
-            queryStr += '<wfs:Query typeName="' +
+            queryStr += '<wfs:Query srsName="'+srsName+'" typeName="' +
                 params.prefix + ":" + params.tables[i] + '" ' + useDomain + "  >";
             var filter = new OpenLayers.Filter.Spatial({
                 type: params.type,
@@ -1176,14 +1184,13 @@ GRequest.WFS = {
 			sortOrders : [],
 			useDomain : false
 		};
-
 		this.extendParams(params, parameters);
-		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
 		
 		var queryStr = '';
+		var srsName = CONFIG.fn_get_requestCrs();
 		for (var i = 0, len = params.tables.length; i < len; i++) {
 			var useDomain = params.useDomain?'useDomain="true"':'';
-			queryStr += '<wfs:Query typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '>';
+			queryStr += '<wfs:Query srsName="'+srsName+'" typeName="' + params.prefix + ':' + params.tables[i] + '" ' + useDomain + '>';
 			var filter = new OpenLayers.Filter.Spatial({
 				type: params.type,
 				//property : "G2_SPATIAL",
