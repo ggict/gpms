@@ -1919,7 +1919,7 @@
     <isEmpty property="CELL_ID_ARR">
     <![CDATA[
 		AND ST_INTERSECTS(
-			st_setSrid(cell.geom, 5181)
+			cell.geom
 			,ST_Transform(ST_GeomFromText(concat('POINT(', #lon#, ' ', #lat#, ')'), 4326), 5181)
 			
 		) =  'true'
@@ -1968,7 +1968,7 @@
     <isEmpty property="CELL_ID_ARR">
     <![CDATA[
 		AND ST_INTERSECTS(
-			st_setSrid(cell.geom, 5181)
+			cell.geom
 			,ST_Transform(ST_GeomFromText(concat('POINT(', #lon#, ' ', #lat#, ')'), 4326), 5181)
 			
 		) =  'true'
