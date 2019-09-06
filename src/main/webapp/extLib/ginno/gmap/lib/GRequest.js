@@ -968,6 +968,7 @@ GRequest.WFS = {
 		};
 
 		this.extendParambounds(params, parameters);
+		params.fields = GUtil.fn_lowercase(params.fields); //필드명 소문자 치환
 
 		var queryStr = '';
 		for(var i=0, len=params.tables.length; i < len; i++) {

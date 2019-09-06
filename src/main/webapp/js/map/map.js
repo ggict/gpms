@@ -1333,7 +1333,8 @@ function($,undefined){
                 _oMap.getLayerByName('GAttrLayerMulti').features);
 
         var feature = GRequest.WFS.getFeatureByComparison(
-                            CONFIG.fn_get_serviceUrl(),
+                            	//CONFIG.fn_get_serviceUrl(),
+        						CONFIG.fn_get_wfsServiceUrl(),
                                 {
                                     maxFeatures : 9999,
                                     prefix : CONFIG.fn_get_dataHouseName(),
@@ -1413,7 +1414,8 @@ function($,undefined){
                 _oMap.getLayerByName('GAttrLayer').features);
 
         var feature = GRequest.WFS.getFeatureByBoundary(
-                            CONFIG.fn_get_serviceUrl(),
+                            //CONFIG.fn_get_serviceUrl(),
+        					CONFIG.fn_get_wfsServiceUrl(),
                                 {
                                     maxFeatures : 9999,
                                     prefix : CONFIG.fn_get_dataHouseName(),
@@ -1656,7 +1658,10 @@ function($,undefined){
         }
 
         //WFS요청 전송
-        var feature = GRequest.WFS.getFeatureByComparison(CONFIG.fn_get_serviceUrl(), {
+        var feature = GRequest.WFS.getFeatureByComparison(
+        //CONFIG.fn_get_serviceUrl(),
+        CONFIG.fn_get_wfsServiceUrl(),
+        {
             maxFeatures : 9999,
             prefix : CONFIG.fn_get_dataHouseName(),
             type : oParam.types,
@@ -1769,7 +1774,8 @@ function($,undefined){
     	 //alert("table : " + table + " / value : " + value);
 
     	 GRequest.WFS.del(
-    			    CONFIG.fn_get_serviceUrl(),
+    			    //CONFIG.fn_get_serviceUrl(),
+    			 	CONFIG.fn_get_wfsServiceUrl(),
 					CONFIG.fn_get_dataHouseName(),
 					table,
 					value,
