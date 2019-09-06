@@ -74,7 +74,7 @@ function fnCheckFeatures() {
 // 조사정보 Section Select
 function fnSelectSection() {
 
-    var cell_id = features[0].data.CELL_ID;
+    var cell_id = features[0].data.CELL_ID || features[0].data.cell_id;
 
     // 전송 데이터 조합
     var postData = { "CELL_ID" : cell_id };
@@ -94,8 +94,8 @@ function fnSelectSection() {
 
                 parent.gMap.cleanMap();
 
-                var objId = jdata.SECT_CELL_ID;
-                var cellId = jdata.CELL_ID;
+                var objId = jdata.SECT_CELL_ID || jdata.sect_cell_id;
+                var cellId = jdata.CELL_ID || jdata.cell_id;
 
                 // Section 그리기
                 var tables_base = ["CELL_SECT"];
