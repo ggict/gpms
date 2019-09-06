@@ -370,10 +370,10 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , DETAIL_CNTRWK_NM = #DETAIL_CNTRWK_NM# /* 공사상세정보.세부_공사_명 */
 			
 
-, TRACK_LEN = #TRACK_LEN#::int /* 공사상세정보.1차로_연장 */
+, TRACK_LEN = (CASE WHEN length(#TRACK_LEN#) = 0 THEN NULL ELSE #TRACK_LEN# END)::numeric /* 공사상세정보.1차로_연장 */
 			
 
-, SPRVISN_CO_NO = #SPRVISN_CO_NO#::int /* 공사상세정보.감리_업체_번호 */
+, SPRVISN_CO_NO = (CASE WHEN length(#SPRVISN_CO_NO#) = 0 THEN NULL ELSE #SPRVISN_CO_NO# END)::numeric /* 공사상세정보.감리_업체_번호 */
 			
 
 , SPRVISN_CO_NM = #SPRVISN_CO_NM# /* 공사상세정보.감리_업체_명 */
@@ -391,7 +391,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , SPRVISOR_TELNO = #SPRVISOR_TELNO# /* 공사상세정보.감리원_전화번호 */
 			
 
-, CNSTRCT_CO_NO = #CNSTRCT_CO_NO#::int /* 공사상세정보.시공_업체_번호 */
+, CNSTRCT_CO_NO = (CASE WHEN length(#CNSTRCT_CO_NO#) = 0 THEN NULL ELSE #CNSTRCT_CO_NO# END)::numeric /* 공사상세정보.시공_업체_번호 */
 			
 
 , CNSTRCT_CO_NM = #CNSTRCT_CO_NM# /* 공사상세정보.시공_업체_명 */
@@ -424,10 +424,10 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , TRACK = #TRACK# /* 공사상세정보.차로 */
 			
 
-, STRTPT = #STRTPT#::int /* 공사상세정보.시점 */
+, STRTPT = (CASE WHEN length(#STRTPT#) = 0 THEN NULL ELSE #STRTPT# END)::numeric /* 공사상세정보.시점 */
 			
 
-, ENDPT = #ENDPT#::int /* 공사상세정보.종점 */
+, ENDPT = (CASE WHEN length(#ENDPT#) = 0 THEN NULL ELSE #ENDPT# END)::numeric /* 공사상세정보.종점 */
 			
 
 , CNTRWK_STRTPT_NM = #CNTRWK_STRTPT_NM# /* 공사상세정보.공사_시점_명 */
@@ -436,16 +436,16 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , CNTRWK_ENDPT_NM = #CNTRWK_ENDPT_NM# /* 공사상세정보.공사_종점_명 */
 			
 
-, CNTRWK_AMOUNT = #CNTRWK_AMOUNT#::int /* 공사상세정보.공사_금액 */
+, CNTRWK_AMOUNT = (CASE WHEN length(#CNTRWK_AMOUNT#) = 0 THEN NULL ELSE #CNTRWK_AMOUNT# END)::numeric /* 공사상세정보.공사_금액 */
 			
 
-, GVSLCT = #GVSLCT#::int /* 공사상세정보.관급비 */
+, GVSLCT = (CASE WHEN length(#GVSLCT#) = 0 THEN NULL ELSE #GVSLCT# END)::numeric /* 공사상세정보.관급비 */
 			
 
-, OUTSRCCT = #OUTSRCCT#::int /* 공사상세정보.도급비 */
+, OUTSRCCT = (CASE WHEN length(#OUTSRCCT#) = 0 THEN NULL ELSE #OUTSRCCT# END)::numeric /* 공사상세정보.도급비 */
 			
 
-, ETC_RLOCATCT = #ETC_RLOCATCT#::int /* 공사상세정보.기타_이설비 */
+, ETC_RLOCATCT = (CASE WHEN length(#ETC_RLOCATCT#) = 0 THEN NULL ELSE #ETC_RLOCATCT# END)::numeric /* 공사상세정보.기타_이설비 */
 			
 
 , CNTRWK_TMPRT = #CNTRWK_TMPRT# /* 공사상세정보.공사_기온 */
@@ -472,10 +472,10 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , RPAIR_END_DE = #RPAIR_END_DE# /* 공사상세정보.보수_종료_일자 */
 			
 
-, RPAIR_AR = #RPAIR_AR#::int /* 공사상세정보.보수_면적 */
-			
+, RPAIR_AR = (CASE WHEN length(#RPAIR_AR#) = 0 THEN NULL ELSE #RPAIR_AR# END)::numeric /* 공사상세정보.보수_면적 */
 
-, RPAIR_BT = #RPAIR_BT#::int /* 공사상세정보.보수_폭 */
+
+, RPAIR_BT = (CASE WHEN length(#RPAIR_BT#) = 0 THEN NULL ELSE #RPAIR_BT# END)::numeric /* 공사상세정보.보수_폭 */
 			
 
 , PAV_STLE_CODE = #PAV_STLE_CODE# /* 공사상세정보.포장_형태_코드 */
@@ -487,16 +487,16 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , RPAIR_THICK_DC = #RPAIR_THICK_DC# /* 공사상세정보.보수_두께_설명 */
 			
 
-, RPAIR_THICK = #RPAIR_THICK#::int /* 공사상세정보.보수_두께 */
+, RPAIR_THICK = (CASE WHEN length(#RPAIR_THICK#) = 0 THEN NULL ELSE #RPAIR_THICK# END)::numeric /* 공사상세정보.보수_두께 */
 			
 
-, RPAIR_THICK_BASE = #RPAIR_THICK_BASE#::int /* 공사상세정보.보수_두께_기층 */
+, RPAIR_THICK_BASE = (CASE WHEN length(#RPAIR_THICK_BASE#) = 0 THEN NULL ELSE #RPAIR_THICK_BASE# END)::numeric /* 공사상세정보.보수_두께_기층 */
 			
 
-, RPAIR_THICK_CNTR = #RPAIR_THICK_CNTR#::int /* 공사상세정보.보수_두께_중간층 */
+, RPAIR_THICK_CNTR = (CASE WHEN length(#RPAIR_THICK_CNTR#) = 0 THEN NULL ELSE #RPAIR_THICK_CNTR# END)::numeric /* 공사상세정보.보수_두께_중간층 */
 			
 
-, RPAIR_THICK_ASCON = #RPAIR_THICK_ASCON#::int /* 공사상세정보.보수_두께_표층 */
+, RPAIR_THICK_ASCON = (CASE WHEN length(#RPAIR_THICK_ASCON#) = 0 THEN NULL ELSE #RPAIR_THICK_ASCON# END)::numeric /* 공사상세정보.보수_두께_표층 */
 			
 
 , PAV_MATRL_ASCON_ETC = #PAV_MATRL_ASCON_ETC# /* 공사상세정보.포장_재료_표층_기타 */
@@ -532,14 +532,13 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , PROCESS_RESULT_MSSAGE = #PROCESS_RESULT_MSSAGE# /* 공사상세정보.처리_결과_메세지 */
 			
 
-, OPERT_BFE_PHOTO_NO = #OPERT_BFE_PHOTO_NO#::int /* 공사상세정보.작업_전_사진_번호 */
+, OPERT_BFE_PHOTO_NO = (CASE WHEN length(#OPERT_BFE_PHOTO_NO#) = 0 THEN NULL ELSE #OPERT_BFE_PHOTO_NO# END)::numeric /* 공사상세정보.작업_전_사진_번호 */
 			
 
-, OPERT_AFT_PHOTO_NO = #OPERT_AFT_PHOTO_NO#::int /* 공사상세정보.작업_후_사진_번호 */
+, OPERT_AFT_PHOTO_NO = (CASE WHEN length(#OPERT_AFT_PHOTO_NO#) = 0 THEN NULL ELSE #OPERT_AFT_PHOTO_NO# END)::numeric /* 공사상세정보.작업_후_사진_번호 */
 			
 
-, FILE_NO = #FILE_NO#::int /* 공사상세정보.파일_번호 */
-			
+, FILE_NO = (CASE WHEN length(#FILE_NO#) = 0 THEN NULL ELSE #FILE_NO# END)::numeric /* 공사상세정보.파일_번호 */
 
 , CONFM_STTUS_CODE = #CONFM_STTUS_CODE# /* 공사상세정보.승인_상태_코드 */
 			
@@ -547,17 +546,16 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , CONFM_DT = #CONFM_DT# /* 공사상세정보.승인_일시 */
 			
 
-, CONFMER_NO = #CONFMER_NO#::int /* 공사상세정보.승인자_번호 */
+, CONFMER_NO = (CASE WHEN length(#CONFMER_NO#) = 0 THEN NULL ELSE #CONFMER_NO# END)::numeric /* 공사상세정보.승인자_번호 */
 			
 
 , EXTRL_REGIST_AT = #EXTRL_REGIST_AT# /* 공사상세정보.외부_등록_여부 */
 			
- 
+, UPDUSR_NO = (CASE WHEN length(#UPDUSR_NO#) = 0 THEN NULL ELSE #UPDUSR_NO# END)::numeric /* 공사상세정보.수정자_번호 */
 
-, UPDUSR_NO = #UPDUSR_NO#::int /* 공사상세정보.수정자_번호 */
-			
 
 , UPDT_DT = NOW() /* 공사상세정보.수정_일시 */
+			
 			
 , PAV_MATRL_ASCON_CODE = #PAV_MATRL_ASCON_CODE# /* 공사상세정보.포장_재료_표층_코드 */
 			
@@ -565,40 +563,40 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 , PAINT_MSRC = #PAINT_MSRC# /* 공사상세정보.차선_도색_공법 */
 			
 
-, PAINT_YLWSLLN_AR = #PAINT_YLWSLLN_AR#::int /* 공사상세정보.차선_도색_황색실선_면적 */
+, PAINT_YLWSLLN_AR = (CASE WHEN length(#PAINT_YLWSLLN_AR#) = 0 THEN NULL ELSE #PAINT_YLWSLLN_AR# END)::numeric /* 공사상세정보.차선_도색_황색실선_면적 */
 			
 
 , PAINT_YLWDASHLN_AR = #PAINT_YLWDASHLN_AR#::int /* 공사상세정보.차선_도색_황색파선_면적 */
 			
 
-, PAINT_WHSLLN_AR = #PAINT_WHSLLN_AR#::int /* 공사상세정보.차선_도색_백색실선_면적 */
+, PAINT_WHSLLN_AR = (CASE WHEN length(#PAINT_WHSLLN_AR#) = 0 THEN NULL ELSE #PAINT_WHSLLN_AR# END)::numeric /* 공사상세정보.차선_도색_백색실선_면적 */
 			
 
-, PAINT_CRSLK_CO = #PAINT_CRSLK_CO#::int /* 공사상세정보.차선_도색_횡단보도_개수 */
+, PAINT_CRSLK_CO = (CASE WHEN length(#PAINT_CRSLK_CO#) = 0 THEN NULL ELSE #PAINT_CRSLK_CO# END)::numeric /* 공사상세정보.차선_도색_횡단보도_개수 */
 			
 
-, PAINT_STOPLN_CO = #PAINT_STOPLN_CO#::int /* 공사상세정보.차선_도색_정지선_개수 */
+, PAINT_STOPLN_CO = (CASE WHEN length(#PAINT_STOPLN_CO#) = 0 THEN NULL ELSE #PAINT_STOPLN_CO# END)::numeric /* 공사상세정보.차선_도색_정지선_개수 */
 			
 
-, PAINT_STOPLN_AR = #PAINT_STOPLN_AR#::int /* 공사상세정보.차선_도색_정지선_면적 */
+, PAINT_STOPLN_AR = (CASE WHEN length(#PAINT_STOPLN_AR#) = 0 THEN NULL ELSE #PAINT_STOPLN_AR# END)::numeric /* 공사상세정보.차선_도색_정지선_면적 */
 			
 
-, PAINT_SPDBMP_CO = #PAINT_SPDBMP_CO#::int /* 공사상세정보.차선_도색_방지턱_개수 */
+, PAINT_SPDBMP_CO = (CASE WHEN length(#PAINT_SPDBMP_CO#) = 0 THEN NULL ELSE #PAINT_SPDBMP_CO# END)::numeric /* 공사상세정보.차선_도색_방지턱_개수 */
 			
 
-, PAINT_SPDBMP_AR = #PAINT_SPDBMP_AR#::int /* 공사상세정보.차선_도색_방지턱_면적 */
+, PAINT_SPDBMP_AR = (CASE WHEN length(#PAINT_SPDBMP_AR#) = 0 THEN NULL ELSE #PAINT_SPDBMP_AR# END)::numeric /* 공사상세정보.차선_도색_방지턱_면적 */
 			
 
-, PAINT_WHDASHLN_AR = #PAINT_WHDASHLN_AR#::int /* 공사상세정보.차선_도색_백색파선_면적 */
+, PAINT_WHDASHLN_AR = (CASE WHEN length(#PAINT_WHDASHLN_AR#) = 0 THEN NULL ELSE #PAINT_WHDASHLN_AR# END)::numeric /* 공사상세정보.차선_도색_백색파선_면적 */
 			
 
-, PAINT_CHRCTRSYMBL_CO = #PAINT_CHRCTRSYMBL_CO#::int /* 공사상세정보.차선_도색_문자기호_개수 */
+, PAINT_CHRCTRSYMBL_CO = (CASE WHEN length(#PAINT_CHRCTRSYMBL_CO#) = 0 THEN NULL ELSE #PAINT_CHRCTRSYMBL_CO# END)::numeric /* 공사상세정보.차선_도색_문자기호_개수 */
 			
 
-, PAINT_CHRCTRSYMBL_AR = #PAINT_CHRCTRSYMBL_AR#::int /* 공사상세정보.차선_도색_문자기호_면적 */
+, PAINT_CHRCTRSYMBL_AR = (CASE WHEN length(#PAINT_CHRCTRSYMBL_AR#) = 0 THEN NULL ELSE #PAINT_CHRCTRSYMBL_AR# END)::numeric /* 공사상세정보.차선_도색_문자기호_면적 */
 			
 
-, PAINT_CRSLK_AR = #PAINT_CRSLK_AR#::int /* 공사상세정보.차선_도색_횡단보도_면적 */
+, PAINT_CRSLK_AR = (CASE WHEN length(#PAINT_CRSLK_AR#) = 0 THEN NULL ELSE #PAINT_CRSLK_AR# END)::numeric /* 공사상세정보.차선_도색_횡단보도_면적 */
 			
 			
 		WHERE 1 = 1

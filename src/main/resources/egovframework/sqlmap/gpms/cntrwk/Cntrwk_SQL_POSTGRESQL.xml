@@ -112,35 +112,35 @@
 			, #HT_SE# /* 공사정보.반기_구분 */
 			, #SPRVISR_NM# /* 공사정보.감독원_명 */
 			, #SPRVISR_TELNO# /* 공사정보.감독원_전화번호 */
-			, #SPRVISN_CO_NO#::int /* 공사정보.감리_업체_번호 */
+			, (CASE WHEN length(#SPRVISN_CO_NO#) = 0 THEN NULL ELSE #SPRVISN_CO_NO# END)::int /* 공사정보.감리_업체_번호 */
 			, #SPRVISN_CO_NM# /* 공사정보.감리_업체_명 */
 			, #SPRVISN_CO_RPRSNT_TELNO# /* 공사정보.감리_업체_대표_전화번호 */
 			, #SPRVISN_CO_RPRSNTV_NM# /* 공사정보.감리_업체_대표자_명 */
-			, #CNSTRCT_CO_NO#::int /* 공사정보.시공_업체_번호 */
+			, (CASE WHEN length(#CNSTRCT_CO_NO#) = 0 THEN NULL ELSE #CNSTRCT_CO_NO# END)::int /* 공사정보.시공_업체_번호 */
 			, #CNSTRCT_CO_NM# /* 공사정보.시공_업체_명 */
 			, #CNSTRCT_CO_RPRSNTV_NM# /* 공사정보.시공_업체_대표자_명 */
 			, #CNSTRCT_CO_TELNO# /* 공사정보.시공_업체_전화번호 */
 			, #SPT_AGENT_NM# /* 공사정보.현장_대리인_명 */
 			, #SPT_AGENT_TELNO# /* 공사정보.현장_대리인_전화번호 */
-			, #TRACK_LEN#::int /* 공사정보.1차로_연장 */
+			, (CASE WHEN length(#TRACK_LEN#) = 0 THEN NULL ELSE #TRACK_LEN# END)::int /* 공사정보.1차로_연장 */
 			, #STRWRK_DE# /* 공사정보.착공_일자 */
 			, #COMPET_DE# /* 공사정보.준공_일자 */
 			, #CNTRWK_OPERT_CN# /* 공사정보.공사_작업_내용 */
 			, #FLAW_BEGIN_DE# /* 공사정보.하자_시작_일자 */
 			, #FLAW_END_DE# /* 공사정보.하자_종료_일자 */
-			, #TOT_AMOUNT#::int /* 공사정보.총_금액 */
+			, (CASE WHEN length(#TOT_AMOUNT#) = 0 THEN NULL ELSE #TOT_AMOUNT# END)::int /* 공사정보.총_금액 */
 			, #RPAIR_THICK_DC# /* 공사정보.보수_두께_설명 */
-			, #RPAIR_THICK#::int /* 공사정보.보수_두께 */
-			, #RPAIR_AR#::int /* 공사정보.보수_면적 */
-			, #RPAIR_BT#::int /* 공사정보.보수_폭 */
+			, (CASE WHEN length(#RPAIR_THICK#) = 0 THEN NULL ELSE #RPAIR_THICK# END)::int /* 공사정보.보수_두께 */
+			, (CASE WHEN length(#RPAIR_AR#) = 0 THEN NULL ELSE #RPAIR_AR# END)::int /* 공사정보.보수_면적 */
+			, (CASE WHEN length(#RPAIR_BT#) = 0 THEN NULL ELSE #RPAIR_BT# END)::int /* 공사정보.보수_폭 */
 			, 'Y' /* 공사정보.사용_여부 */
 			, 'N' /* 공사정보.삭제_여부 */
-			, #CRTR_NO#::int /* 공사정보.생성자_번호 */
+			, (CASE WHEN length(#CRTR_NO#) = 0 THEN NULL ELSE #CRTR_NO# END)::int /* 공사정보.생성자_번호 */
 			, NOW() /* 공사정보.생성_일시 */
-			, #UPDUSR_NO#::int /* 공사정보.수정자_번호 */
+			, (CASE WHEN length(#UPDUSR_NO#) = 0 THEN NULL ELSE #UPDUSR_NO# END)::int /* 공사정보.수정자_번호 */
 			, NOW() /* 공사정보.수정_일시 */
 			, #EXTRL_REGIST_AT# /* 공사정보.외부_등록_여부 */
-			, #FILE_NO#::int /* 공사정보.파일_번호 */
+			, (CASE WHEN length(#FILE_NO#) = 0 THEN NULL ELSE #FILE_NO# END)::int /* 공사정보.파일_번호 */
 		)
 ]]>
 	</insert>
@@ -182,7 +182,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 
 , SPRVISN_CO_NO = (CASE WHEN length(#SPRVISN_CO_NO#) = 0 THEN NULL ELSE #SPRVISN_CO_NO# END)::int /* 공사정보.감리_업체_번호 */
 
-
+	
 , SPRVISN_CO_NM = #SPRVISN_CO_NM# /* 공사정보.감리_업체_명 */
 
 
@@ -1144,7 +1144,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		<include refid="cntrwkDAO.selectCntrwkHistExcel.where" />
 <![CDATA[
 				 GROUP BY tncntrwk.CNTRWK_SE, tncntrwkdtl.ROUTE_CODE
-		)
+		) as sub_tncntrwk
 ]]>
 	</select>
 

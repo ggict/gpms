@@ -183,7 +183,7 @@
 		</isNotEmpty>
 <![CDATA[
 		    GROUP BY  PAV_CELL_ID
-		) tb) WHERE 1=1 
+		) tb) as sub_tb WHERE 1=1 
 ]]>
 		<isEqual prepend=" AND" property="usePage" compareValue="true">
 		<![CDATA[
@@ -231,8 +231,7 @@
 		</isNotEmpty>
 <![CDATA[
 		  GROUP BY tncntrwkcellinfo.PAV_CELL_ID
-		 )
-		 ORDER BY PAV_YEAR desc, PAV_CELL_ID
+		 ) as sub_cnt
 ]]>		
 	</select>
 </sqlMap>
