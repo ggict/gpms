@@ -464,7 +464,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			    , STRTPT /* 최소_구간_조사_자료.시점 */
 			    , ENDPT  /* 최소_구간_조사_자료.종점 */
 			    , MEMO /* 최소_구간_조사_자료.메모 */
-			    , TO_CHAR(TO_DATE(SRVY_DE), 'yyyy-mm-dd') AS SRVY_DE /* 최소_구간_조사_자료.조사_일 */
+			    , TO_CHAR(date(SRVY_DE), 'yyyy-mm-dd') AS SRVY_DE /* 최소_구간_조사_자료.조사_일 */
 			    , TRACK /* 최소_구간_조사_자료.차로*/
 			    , DIRECT_CODE /* 최소_구간_조사_자료.행선_코드*/
 			FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
@@ -579,7 +579,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 		    , ENDPT
 		    , (ENDPT - STRTPT) AS LENGTH
 		    , MEMO
-		    , MAX(TO_CHAR(TO_DATE(SRVY_DE), 'yyyy-mm-dd')) AS SRVY_DE
+		    , MAX(TO_CHAR(date(SRVY_DE), 'yyyy-mm-dd')) AS SRVY_DE
 		FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
 		WHERE 1 = 1
 		AND SRVY_DE = #SRVY_DE#

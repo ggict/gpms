@@ -1174,8 +1174,8 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 					    AND tncompany.CO_NO = tncntrwkdtl.CNSTRCT_CO_NO)
 				 END CNSTRCT_CO_NM
 		       , COALESCE(tncntrwkdtl.BEFORE_PAV_YEAR, '없음') BEFORE_PAV_YEAR
-		       , TO_CHAR(TO_DATE(tncntrwkdtl.RPAIR_BEGIN_DE), 'YYYY-MM-DD') RPAIR_BEGIN_DE
-		       , TO_CHAR(TO_DATE(tncntrwkdtl.RPAIR_END_DE), 'YYYY-MM-DD') RPAIR_END_DE
+		       , TO_CHAR(date(tncntrwkdtl.RPAIR_BEGIN_DE), 'YYYY-MM-DD') RPAIR_BEGIN_DE
+		       , TO_CHAR(date(tncntrwkdtl.RPAIR_END_DE), 'YYYY-MM-DD') RPAIR_END_DE
 		       , tncntrwkdtl.RPAIR_THICK_ASCON
 		       , tncntrwkdtl.RPAIR_THICK_CNTR
 		       , tncntrwkdtl.RPAIR_THICK_BASE

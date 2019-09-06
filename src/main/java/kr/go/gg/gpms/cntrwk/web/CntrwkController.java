@@ -566,11 +566,11 @@ public class CntrwkController  extends BaseController {
 	        List<?> dataList; HashMap hMap;
    	 		
 	        hMap = cntrwkService.selectCntrwkHistTotalExcel(cntrwkVO);
-	        sheet.getRow(4).getCell(4).setCellValue(hMap.get("ROUTE_CN").toString() + "개 노선 " + hMap.get("DETAIL_CNTRWK_CN").toString() + "개소 정비");
-	        sheet.getRow(4).getCell(5).setCellValue(nvl(hMap.get("MIN_RPAIR_BT")) + "-" + nvl(hMap.get("MAX_RPAIR_BT")));
-	        sheet.getRow(4).getCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("RPAIR_LEN")));
-	        sheet.getRow(4).getCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("RPAIR_AR")) / 100);
-	        sheet.getRow(4).getCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("CNTRWK_AMOUNT")) / 1000000);
+	        sheet.getRow(4).getCell(4).setCellValue(hMap.get("route_cn").toString() + "개 노선 " + hMap.get("detail_cntrwk_cn").toString() + "개소 정비");
+	        sheet.getRow(4).getCell(5).setCellValue(nvl(hMap.get("min_rpair_bt")) + "-" + nvl(hMap.get("MAX_RPAIR_BT")));
+	        sheet.getRow(4).getCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_len")));
+	        sheet.getRow(4).getCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_ar")) / 100);
+	        sheet.getRow(4).getCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("cntrwk_amount")) / 1000000);
 	        
 	        //노후포장도로 정비
 	        cntrwkVO.setCNTRWK_SE("CWSE0001");
@@ -676,7 +676,7 @@ public class CntrwkController  extends BaseController {
 	    	model.addAttribute("resultCode", "ERROR");
 	    	model.addAttribute("resultMsg", "엑셀저장 오류발생");
 	    	model.addAttribute("callBackFunction", nvl(cntrwkVO.getCallBackFunction()));	// 처리후 호출 함수
-
+	    	
 	    	return "/cmmn/commonMsg";
 	    	
    	 	} finally {
@@ -688,11 +688,11 @@ public class CntrwkController  extends BaseController {
 	
 	 private int setHeaderCell(HSSFSheet sheet, int fixedLoc, HashMap hMap, int iBaseCursor, String subTitle, HSSFWorkbook wb) throws Exception{
 	    	//상단
-		 	sheet.getRow(fixedLoc).getCell(4).setCellValue(hMap.get("ROUTE_CN").toString() + "개 노선 " + hMap.get("DETAIL_CNTRWK_CN").toString() + "개소 정비");
-	        sheet.getRow(fixedLoc).getCell(5).setCellValue(nvl(hMap.get("MIN_RPAIR_BT")) + "-" + nvl(hMap.get("MAX_RPAIR_BT")));
-	        sheet.getRow(fixedLoc).getCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("RPAIR_LEN")));
-	        sheet.getRow(fixedLoc).getCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("RPAIR_AR")) / 100);
-	        sheet.getRow(fixedLoc).getCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("CNTRWK_AMOUNT")) / 1000000);
+		 	sheet.getRow(fixedLoc).getCell(4).setCellValue(hMap.get("route_cn").toString() + "개 노선 " + hMap.get("detail_cntrwk_cn").toString() + "개소 정비");
+	        sheet.getRow(fixedLoc).getCell(5).setCellValue(nvl(hMap.get("min_rpair_bt")) + "-" + nvl(hMap.get("max_rpair_bt")));
+	        sheet.getRow(fixedLoc).getCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_len")));
+	        sheet.getRow(fixedLoc).getCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_ar")) / 100);
+	        sheet.getRow(fixedLoc).getCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("cntrwk_amount")) / 1000000);
 	        //하부
 	        iBaseCursor = iBaseCursor + 1;
 			HSSFRow row = sheet.createRow(iBaseCursor);
@@ -700,11 +700,11 @@ public class CntrwkController  extends BaseController {
 			row.createCell(1).setCellValue("소 계");
 			row.createCell(2).setCellValue("");
 			row.createCell(3).setCellValue("");
-			row.createCell(4).setCellValue(hMap.get("ROUTE_CN").toString() + "개 노선 " + hMap.get("DETAIL_CNTRWK_CN").toString() + "개소 정비");
-			row.createCell(5).setCellValue(nvl(hMap.get("MIN_RPAIR_BT")) + "-" + nvl(hMap.get("MAX_RPAIR_BT")));
-			row.createCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("RPAIR_LEN")));
-			row.createCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("RPAIR_AR")) / 100);
-			row.createCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("CNTRWK_AMOUNT")) / 1000000);
+			row.createCell(4).setCellValue(hMap.get("route_cn").toString() + "개 노선 " + hMap.get("detail_cntrwk_cn").toString() + "개소 정비");
+			row.createCell(5).setCellValue(nvl(hMap.get("min_rpair_bt")) + "-" + nvl(hMap.get("max_rpair_bt")));
+			row.createCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_len")));
+			row.createCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_ar")) / 100);
+			row.createCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("cntrwk_amount")) / 1000000);
 			row.createCell(9).setCellValue("");
 			row.createCell(10).setCellValue("");
 			row.createCell(11).setCellValue("");
@@ -727,27 +727,27 @@ public class CntrwkController  extends BaseController {
 	    }
 	    
 	    private void setLoopCell(HSSFRow row, Map map) throws Exception {
-			row.createCell(1).setCellValue(nvl(map.get("ROUTE_NM")));
-			row.createCell(2).setCellValue(nvl(map.get("ROAD_NM")));
-			row.createCell(3).setCellValue(nvl(map.get("CNTRWK_CL_NM")));
-			row.createCell(4).setCellValue(nvl(map.get("DETAIL_CNTRWK_NM")));
-			row.createCell(5).setCellValue(NumberUtil.parseDouble(map.get("RPAIR_BT")));
-			row.createCell(6).setCellValue(NumberUtil.parseDouble(map.get("RPAIR_LEN")));
-			row.createCell(7).setCellValue(NumberUtil.parseDouble(map.get("RPAIR_AR")) / 100);
-			row.createCell(8).setCellValue(NumberUtil.parseDouble(map.get("CNTRWK_AMOUNT")) / 1000000);
-			row.createCell(9).setCellValue(nvl(map.get("RPAIR_MATRL_PRDCT_CO_NM")));
-			row.createCell(10).setCellValue(nvl(map.get("CNSTRCT_CO_NM")));
-			row.createCell(11).setCellValue(nvl(map.get("BEFORE_PAV_YEAR")));
-			row.createCell(12).setCellValue(nvl(map.get("RPAIR_BEGIN_DE")));
-			row.createCell(13).setCellValue(nvl(map.get("RPAIR_END_DE")));
-			row.createCell(14).setCellValue(NumberUtil.parseDouble(map.get("RPAIR_THICK_ASCON")));
-			row.createCell(15).setCellValue(NumberUtil.parseDouble(map.get("RPAIR_THICK_CNTR")));
-			row.createCell(16).setCellValue(NumberUtil.parseDouble(map.get("RPAIR_THICK_BASE")));
-			row.createCell(17).setCellValue(nvl(map.get("PAV_MATRL_ASCON_NM")));
-			row.createCell(18).setCellValue(nvl(map.get("PAV_MATRL_CNTR_NM")));
-			row.createCell(19).setCellValue(nvl(map.get("PAV_MATRL_BASE_NM")));
-			row.createCell(20).setCellValue(nvl(map.get("DEPT_NM")));
-			row.createCell(21).setCellValue(nvl(map.get("FULL_CNTRWK_NM")));
+			row.createCell(1).setCellValue(nvl(map.get("route_nm")));
+			row.createCell(2).setCellValue(nvl(map.get("road_nm")));
+			row.createCell(3).setCellValue(nvl(map.get("cntrwk_cl_nm")));
+			row.createCell(4).setCellValue(nvl(map.get("detail_cntrwk_nm")));
+			row.createCell(5).setCellValue(NumberUtil.parseDouble(map.get("rpair_bt")));
+			row.createCell(6).setCellValue(NumberUtil.parseDouble(map.get("rpair_len")));
+			row.createCell(7).setCellValue(NumberUtil.parseDouble(map.get("rpair_ar")) / 100);
+			row.createCell(8).setCellValue(NumberUtil.parseDouble(map.get("cntrwk_amount")) / 1000000);
+			row.createCell(9).setCellValue(nvl(map.get("rpair_matrl_prdct_co_nm")));
+			row.createCell(10).setCellValue(nvl(map.get("cnstrct_co_nm")));
+			row.createCell(11).setCellValue(nvl(map.get("before_pav_year")));
+			row.createCell(12).setCellValue(nvl(map.get("rpair_begin_de")));
+			row.createCell(13).setCellValue(nvl(map.get("rpair_end_de")));
+			row.createCell(14).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_ascon")));
+			row.createCell(15).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_cntr")));
+			row.createCell(16).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_base")));
+			row.createCell(17).setCellValue(nvl(map.get("pav_matrl_ascon_nm")));
+			row.createCell(18).setCellValue(nvl(map.get("pav_matrl_cntr_nm")));
+			row.createCell(19).setCellValue(nvl(map.get("pav_matrl_base_nm")));
+			row.createCell(20).setCellValue(nvl(map.get("dept_nm")));
+			row.createCell(21).setCellValue(nvl(map.get("full_cntrwk_nm")));
 	    }
 	    
 	    /**
