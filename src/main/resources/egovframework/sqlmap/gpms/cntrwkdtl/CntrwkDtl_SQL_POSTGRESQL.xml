@@ -2056,7 +2056,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 			<isNotEmpty prepend="AND" property="SCH_RPAIR_MTHD"><![CDATA[ tcrpairmthd.RPAIR_MTHD_CODE = #SCH_RPAIR_MTHD#]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="SCH_STRWRK_DE"><![CDATA[ tncntrwk.STRWRK_DE >= #SCH_STRWRK_DE#]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="SCH_COMPET_DE"><![CDATA[ tncntrwk.COMPET_DE <= #SCH_COMPET_DE#]]></isNotEmpty>
-		) GROUP BY RPAIR_MTHD_NM
+		)as sub_CntrwkMthd GROUP BY RPAIR_MTHD_NM
 		ORDER BY RPAIR_MTHD_NM
 	</select>
 	
@@ -2184,8 +2184,8 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				SELECT
 				    COUNT(DETAIL_CNTRWK_ID) AS CNT
 				    ,RPAIR_MTHD_NM/*공법명*/
-				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(COALESCE(SUM(CNTRWK_AMOUNT),0),0))), '([0-9]{3})','\1,')), '^,','') AS CNTRWK_AMOUNT/*공사비*/
-				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(COALESCE(SUM(TRACK_LEN),0),0))), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN/*연장*/
+				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(ROUND(COALESCE(SUM(CNTRWK_AMOUNT),0),0)::text), '([0-9]{3})','\1,')), '^,','') AS CNTRWK_AMOUNT/*공사비*/
+				    ,REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(ROUND(COALESCE(SUM(TRACK_LEN),0),0)::text), '([0-9]{3})','\1,')), '^,','') AS TRACK_LEN/*연장*/
 				    ,ROUND(100 * (COUNT(DETAIL_CNTRWK_ID) / SUM(COUNT(DETAIL_CNTRWK_ID) ) OVER() ),2) AS PERC/*빈도*/
 				FROM ( SELECT
 				            tccode.CODE_NM AS RPAIR_MTHD_NM,
@@ -2218,7 +2218,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 			<isNotEmpty prepend="AND" property="SCH_DEPT_CODE"><![CDATA[ tncntrwk.DEPT_CODE = #SCH_DEPT_CODE#]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="SCH_STRWRK_DE"><![CDATA[ tncntrwk.STRWRK_DE >= #SCH_STRWRK_DE#]]></isNotEmpty>
 			<isNotEmpty prepend="AND" property="SCH_COMPET_DE"><![CDATA[ tncntrwk.COMPET_DE <= #SCH_COMPET_DE#]]></isNotEmpty>
-		) GROUP BY RPAIR_MTHD_NM
+		)as sub_cntrwkMthd GROUP BY RPAIR_MTHD_NM
 		ORDER BY RPAIR_MTHD_NM
 	</select>
 

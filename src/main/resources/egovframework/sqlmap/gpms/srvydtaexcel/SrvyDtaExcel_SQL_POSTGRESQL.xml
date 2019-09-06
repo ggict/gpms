@@ -635,7 +635,7 @@
 		   	AND tnsrvydtaexcel.DELETE_AT = 'N'
 	        AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 		  GROUP BY TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD')
-		)
+		)as sub_SrvyDtaExcel
 ]]>
 	</select>
 
