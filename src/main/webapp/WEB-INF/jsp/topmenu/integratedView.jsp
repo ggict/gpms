@@ -1203,7 +1203,7 @@ function fnStep3StatusEvaluation() {
         if ( i != 0 ) {
             cellIds += ",";
         }
-        cellIds += features[i].data.CELL_ID;
+        cellIds += cell_id;
     }
 
     // 2018. 09. 13.
