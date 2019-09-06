@@ -809,7 +809,10 @@ function cbSetUserInputRoute(data) {
         var sHtml = '<option value="">노선 선택</option>';
         for(var i in list) {
             var oData = list[i];
-            sHtml += '<option value="' + fillLeft(oData.CODE_VAL, 4) + '">' + '[' +  oData.CODE_VAL + ']  ' + oData.CODE_NM + '</option>';
+            var code_val = oData.CODE_VAL || oData.code_val;
+            var code_nm = oData.CODE_NM || oData.code_nm;
+            
+            sHtml += '<option value="' + fillLeft(code_val, 4) + '">' + '[' +  code_val + ']  ' + code_nm + '</option>';
         }
         $('#sel_ms_ui_route').html(sHtml);
     } else {
@@ -976,7 +979,8 @@ function fnStep3RouteInfo() {
             routeCode += ",";
         }
         //routeCode += features[i].data.ROUTE_CODE;
-        routeCode += features[i].data.ROAD_NO;
+        var roadNo = features[i].data.ROAD_NO || features[i].data.road_no;
+        routeCode += roadNo;
     }
 
     // 전송 데이터 조합
@@ -1195,6 +1199,7 @@ function fnStep3StatusEvaluation() {
 
     // input cell Id from features
     for ( var i in features ) {
+        var cell_id = features[i].data.CELL_ID || features[i].data.cell_id;
         if ( i != 0 ) {
             cellIds += ",";
         }
@@ -1457,9 +1462,9 @@ function fnCreateBtnCell(cellValue, options, rowObject) {
 
     var btn = "";
     var nm = options.colModel.name;
-
+    var cell_id = rowObject.CELL_ID || rowObject.cell_id;
     if ( nm == "btn_loc" ) {
-        btn = "<a href='#' onclick=\"fnSelectCell('" + rowObject.CELL_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+        btn = "<a href='#' onclick=\"fnSelectCell('" + cell_id + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
     }
     return btn;
 }

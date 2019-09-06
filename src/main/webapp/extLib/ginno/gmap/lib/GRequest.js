@@ -1246,7 +1246,20 @@ GRequest.WFS = {
 			method: 'POST',
 			body: wfsStr
 		}).then(function(response) {
-			return response.json();
+			var json;
+			try{
+				json = response.json();
+			}catch(e){
+				console.log('getFeature error=', e);
+				json = undefined;
+				callback({
+					data : [],
+					success : function() {
+						return false;
+					}
+				});
+			}
+			return json;
 		}).then(function(res) {
 			//console.log(res);
 			control.parseJsonFeature(res, callback, options);
@@ -1261,8 +1274,7 @@ GRequest.WFS = {
 
 		var features = res.features;
 		var featuresLen = features.length;
-		
-		if(!featuresLen) success = false;
+		//if(!featuresLen) success = false;
 		
 		for (var i = 0; i < featuresLen; i++) {
 			var feature = features[i];

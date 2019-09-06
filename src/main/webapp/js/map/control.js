@@ -1951,7 +1951,9 @@ MAP.CONTROL = (function($, undefined){
         // 검색할 내용이 선택되지 않은 경우
         if( res.data == undefined || res.data.length < 1 ) {
 
-            if ( gMap.getLayerByName("GAttrLayerMulti").features.length == 0 ) {
+        	var features = gMap.getLayerByName("GAttrLayer").features;
+            //if ( gMap.getLayerByName("GAttrLayerMulti").features.length == 0 ) {
+        	if ( features.length == 0 ) {
                 if ( $("#btn_selPoint").parent().hasClass("on") ) {
                     gMap.activeControls("selPointRoad");
 
@@ -1992,7 +1994,8 @@ MAP.CONTROL = (function($, undefined){
                             strokeColor : '#0033ff'
                      };
                     //add_feature(res.data[i].results[j].feature, evt);
-                    gMap.getLayerByName('GAttrLayerMulti').addFeatures(feature);
+                    //gMap.getLayerByName('GAttrLayerMulti').addFeatures(feature);
+                    gMap.getLayerByName('GAttrLayer').addFeatures(feature);
 
                 }
 

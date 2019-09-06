@@ -665,19 +665,26 @@ GUtil = {
 	},
 	
 	//value값을 소문자 변환
-	fn_lowercase: function(obj){
-		if(!obj) return ;
-		if(obj instanceof Array) {
-			var temp = [];
-			for (var i = 0; i < obj.length; i++) {
-				var value = obj[i].toLowerCase();
-				temp.push(value);
+	fn_lowercase: function(arr){
+		if(!arr) return ;
+		var temp = [];
+		function convert(obj, t){
+			if(obj instanceof Array) {
+				var temp = [];
+				for (var i = 0; i < obj.length; i++) {
+					if(obj[i] instanceof Array) {
+						convert(obj[i], t);
+					}else{
+						var value = obj[i].toLowerCase();
+						t.push(value);
+					}
+				}
+			}else {
+				t = obj.toLowerCase();
 			}
-			return temp;
 		}
-		else {
-			return obj.toLowerCase();
-		}
+		convert(arr, temp);
+		return temp;
 	}
 }
 
