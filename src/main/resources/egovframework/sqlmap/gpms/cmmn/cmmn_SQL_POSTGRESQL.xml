@@ -10,15 +10,23 @@
 	<select id="cmmnDAO.selectCols" parameterClass="String" resultClass="egovMap">
 		<![CDATA[
 		/* cmmnDAO.selectCols */
-		/* 테이블 컬럼 정보 조회  */
+		/* 테이블 컬럼 정보 조회 
+			현재 DB컬럼 불일치 - 작업진행 후 쿼리 추가 수정_sdh		
+		 */
 		SELECT COLUMN_NAME
 			 , DATA_TYPE
-			 , DATA_LENGTH
-			 , DATA_PRECISION
-			 , DATA_SCALE
-		FROM USER_TAB_COLS
+			 , CASE WHEN DATA_TYPE = 'character varying' 
+                    THEN CHARACTER_MAXIMUM_LENGTH 
+                    ELSE NUMERIC_PRECISION              
+               END AS DATA_LENGTH
+			 , CASE WHEN NUMERIC_PRECISION = NULL 
+                    THEN NUMERIC_PRECISION_RADIX
+                    ELSE NUMERIC_PRECISION 
+               END AS DATA_PRECISION
+			 , NUMERIC_SCALE AS DATA_SCALE
+		FROM information_schema.columns
 		WHERE TABLE_NAME = #TABLE_NAME#
-		ORDER BY COLUMN_ID
+		ORDER BY ordinal_position
 		]]>
 	</select>
 
