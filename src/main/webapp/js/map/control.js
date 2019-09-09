@@ -1384,7 +1384,8 @@ MAP.CONTROL = (function($, undefined){
 		var result = false;
 
 		for(var i in _oResList){
-			routeCodeList.push(_oResList[i].fields.ROUTE_CODE);
+			var route_code = _oResList[i].fields.ROUTE_CODE || _oResList[i].fields.route_code;
+			routeCodeList.push(route_code);
 		}
 
 		var chkList = COMMON_UTIL.unique(routeCodeList);
