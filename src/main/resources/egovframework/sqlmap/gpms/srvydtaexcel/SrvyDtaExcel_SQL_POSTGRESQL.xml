@@ -937,7 +937,7 @@
 		<isNotEmpty property="SCH_SRVY_DE2"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND SRVY_DE <= #SCH_SRVY_DE2# ]]></isNotEmpty>
 
 		<![CDATA[
-		)
+		) as sub_tb
 		]]>
 	</select>
 
