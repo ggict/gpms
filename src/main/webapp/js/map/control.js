@@ -2788,8 +2788,8 @@ MAP.CONTROL = (function($, undefined){
                     + "</tr>";
 
               for ( var j = 0; j < _oRes.length; j++ ) {
-
-                  if(_oRes[j].feature.data.CELL_ID == cellId){
+            	  var cell_id = _oRes[j].feature.data.CELL_ID || _oRes[j].feature.data.cell_id;
+                  if(cell_id == cellId){
 
                       feats.push(_oRes[j].feature);
                       break;
@@ -2879,7 +2879,7 @@ MAP.CONTROL = (function($, undefined){
           var feats = [];
           for(var i = 0; i<multiCellList.length; i++) {
         	  var cell_id = multiCellList[i].CELL_ID || multiCellList[i].cell_id;
-              if(multiCellList[i].CELL_ID == _sCellId) {
+              if(cell_id == _sCellId) {
                   feats = multiCellList[i].feats;
                   break;
               }

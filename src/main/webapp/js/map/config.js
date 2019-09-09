@@ -264,6 +264,18 @@ var CONFIG = (function($, undefined){
 	         'layerType' : '3',
 	     },
 	     
+	     "M_CALS_T" : {
+	         
+	         'tmapid' : '870',
+	         'id' : '3775',
+	         'table' : 'M_CALS_T',
+	         'theme' : 'M_CALS_T',
+	         'alias' : 'M_CALS_T',
+	         'seq' : '3775',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	     
 	     /*
 	     "CMPTNC_ZONE" : {
 	         
@@ -285,18 +297,6 @@ var CONFIG = (function($, undefined){
 	         'theme' : 'MV_POTHOLE_STTEMNT',
 	         'alias' : '포트홀_신고_관리',
 	         'seq' : '3774',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
-	 
-	     "M_CALS_T" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3775',
-	         'table' : 'M_CALS_T',
-	         'theme' : 'M_CALS_T',
-	         'alias' : 'M_CALS_T',
-	         'seq' : '3775',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
