@@ -824,14 +824,14 @@ function cbSetUserInputRoute(data) {
 
 //노선방향검색 세팅
 function fnSetUserInputRouteDir(routeCode) {
+	
     $.ajax({
-        url : '<c:url value="/"/>' + 'api/ms/selRouteDirection.do',
+        url : contextPath + '/api/ms/selRouteDirection.do',
         type : 'POST',
         dataType : 'json',
         data : {ROUTE_CODE : routeCode},
         success : cbSetUserInputRouteDir,
         error : function(a, b, c) {
-            //error
         }
     });
 }
@@ -874,7 +874,7 @@ function cbSetUserInputTrack(data) {
         var sHtml = '';
         for(var i in list) {
             var oData = list[i];
-            sHtml += '<option value="' + oData.TRACK + '">' + oData.TRACK + '</option>';
+            sHtml += '<option value="' + oData.track + '">' + oData.track + '</option>';
         }
         $("#sel_ms_ui_track").html(sHtml);
         $("#sel_ms_ui_track option:eq(0)").trigger("change");

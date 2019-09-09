@@ -63,8 +63,8 @@ public class CmmnServiceImpl extends AbstractServiceImpl implements CmmnService 
 	 */
 	public List selectRln(HashMap paraMap) throws Exception {
 		List code_list = cmmnDAO.getSelectList("cmmnDAO.selectRln", paraMap);
-    	String val1 = (String) ((Map)code_list.get(0)).get("STRTPT_NM");
-    	String val2 = (String) ((Map)code_list.get(0)).get("ENDPT_NM");
+    	String val1 = (String) ((Map)code_list.get(0)).get("strtpt_nm");
+    	String val2 = (String) ((Map)code_list.get(0)).get("endpt_nm");
     	
     	code_list = new ArrayList<HashMap>();
     	HashMap code = new HashMap();
@@ -88,7 +88,7 @@ public class CmmnServiceImpl extends AbstractServiceImpl implements CmmnService 
 	 */
 	public List selectCtk(HashMap paraMap) throws Exception {
     	List code_list = cmmnDAO.getSelectList("cmmnDAO.selectCtk", paraMap);
-    	int charo = Integer.parseInt((String) ((Map)code_list.get(0)).get("CHAROSU"));
+    	int charo = Integer.parseInt((String) ((Map)code_list.get(0)).get("track"));
 
     	HashMap code = new HashMap();    	
     	
