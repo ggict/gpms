@@ -941,7 +941,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 
 		<![CDATA[
 					ORDER BY tncntrwkcellinfo.PAV_CELL_ID, tncntrwk.STRWRK_DE, tncntrwk.COMPET_DE
-				) tb )
+				) tb )as sub_Cntrwk
 			WHERE 1=1
 		]]>
 
@@ -984,7 +984,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		</iterate>
 		<![CDATA[
 					ORDER BY tncntrwkcellinfo.PAV_CELL_ID
-				) tb )
+				) tb )as sub_Cntrwk
 			WHERE 1=1
 		]]>
 
