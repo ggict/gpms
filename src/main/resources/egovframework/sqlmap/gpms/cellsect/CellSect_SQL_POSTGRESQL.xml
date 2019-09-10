@@ -73,7 +73,7 @@
                 , cellsect.STRTPT /* CELL_SECT.시점 */
                 , cellsect.ENDPT /* CELL_SECT.종점 */
                 , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept 
-                    WHERE tcdept.DEPT_CODE = cellsect.DEPT_CODE 
+                    WHERE tcdept.DEPT_CODE = cellsect.DEPT_CODE::text
                       AND tcdept.DELETE_AT='N' AND tcdept.USE_AT='Y') DEPT_CODE /* CELL_SECT.관리기관 */
                 , (SELECT tccode.CODE_NM FROM TC_CODE tccode 
                     WHERE tccode.CODE_VAL = cellsect.VMTC_GRAD AND tccode.CL_CODE = 'VNTC' 
@@ -97,7 +97,7 @@
             ORDER BY $orderByColumn$ $orderByType$
         </isNotEmpty>
         <![CDATA[
-                ) tb) WHERE 1=1 
+                ) tb)as sub_CellSect WHERE 1=1 
         ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
         <![CDATA[
@@ -124,7 +124,7 @@
                 , cellsect.STRTPT /* CELL_SECT.시점 */
                 , cellsect.ENDPT /* CELL_SECT.종점 */
                 , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept 
-                    WHERE tcdept.DEPT_CODE = cellsect.DEPT_CODE 
+                    WHERE tcdept.DEPT_CODE = cellsect.DEPT_CODE::text 
                       AND tcdept.DELETE_AT='N' AND tcdept.USE_AT='Y') DEPT_CODE /* CELL_SECT.관리기관 */
                 , (SELECT tccode.CODE_NM FROM TC_CODE tccode 
                     WHERE tccode.CODE_VAL = cellsect.VMTC_GRAD AND tccode.CL_CODE = 'VNTC' 
