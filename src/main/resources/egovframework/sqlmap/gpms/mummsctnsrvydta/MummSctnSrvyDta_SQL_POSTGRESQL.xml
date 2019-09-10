@@ -1453,7 +1453,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			    , tnmummsctnsrvydta.SRVY_YEAR
 			    , tnmummsctnsrvydta.SRVY_MT
 			    , tnmummsctnsrvydta.ROUTE_CODE AS ROAD_NO
-			    , tnmummsctnsrvydta.ROUTE_CODE::int AS ROAD_NO_VAL
+			    , tnmummsctnsrvydta.ROUTE_CODE AS ROAD_NO_VAL
                 , road.ROAD_NAME AS ROAD_NM
                 , CASE tnmummsctnsrvydta.DIRECT_CODE
                     WHEN 'S' THEN '상행'
@@ -1467,7 +1467,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                 , tnmummsctnsrvydta.STRTPT
                 , tnmummsctnsrvydta.ENDPT
                 , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
-                    WHERE tcdept.DEPT_CODE = cell.DEPT_CODE ) AS DEPT_CODE
+                    WHERE tcdept.DEPT_CODE = cell.DEPT_CODE::text ) AS DEPT_CODE
                 , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
                     WHERE tccode.CODE_VAL = cell.CELL_TYPE ) AS CELL_TYPE
                 , ( SELECT tccode.CODE_NM FROM TC_CODE tccode

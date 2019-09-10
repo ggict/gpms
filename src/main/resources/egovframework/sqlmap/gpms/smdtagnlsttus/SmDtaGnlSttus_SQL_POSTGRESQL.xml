@@ -943,7 +943,7 @@
 <![CDATA[
         /* smDtaGnlSttusDAO.selectSmDtaGnlSttusYearListByCellId */
         /* 최소구간 조사년도 목록 조회 */
-        SELECT DISTINCT SRVY_YEAR SRVY_YEAR
+        SELECT DISTINCT ON (SRVY_YEAR) SRVY_YEAR
           FROM TN_SM_DTA_GNL_STTUS tnsmdtagnlsttus
           INNER JOIN CELL_SECT cellsect
                 ON cellsect.ROUTE_CODE = tnsmdtagnlsttus.ROUTE_CODE
@@ -957,7 +957,7 @@
             AND tnsmdtagnlsttus.USE_AT = 'Y' /* 최소_구간_조사_자료.사용_여부 */
 ]]>
 <![CDATA[
-        ORDER BY tnsmdtagnlsttus.SRVY_YEAR
+        ORDER BY SRVY_YEAR
 ]]>
     </select>
 
