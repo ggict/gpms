@@ -20,7 +20,7 @@ var CONFIG = (function($, undefined){
 	 * 프로시 서비스 URL
 	 * @member {String} geoProxyUrl
 	 */
-	var geoProxyUrl 		= 'ogcProxy.jsp?';
+	var geoProxyUrl 		= 'geoProxyPost.do?';
 	
 	/**
 	* 공간서버, DataHouse(=> wfs prefix로 사용될) 이름

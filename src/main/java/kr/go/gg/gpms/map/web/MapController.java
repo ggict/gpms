@@ -1,11 +1,9 @@
 package kr.go.gg.gpms.map.web;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -24,6 +22,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.security.service.impl.CustomAuthenticationProvider;
 import kr.go.gg.gpms.base.web.BaseController;
 import kr.go.gg.gpms.cell10.service.Cell10Service;
 import kr.go.gg.gpms.cell10.service.model.Cell10VO;
@@ -40,21 +49,6 @@ import kr.go.gg.gpms.rpairmthd.service.RpairMthdService;
 import kr.go.gg.gpms.rpairmthd.service.model.RpairMthdVO;
 import kr.go.gg.gpms.sysuser.service.SysUserService;
 import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
-import kr.go.gg.gpms.sysuser.service.model.SysUserVO;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.net.util.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
-import egovframework.security.service.impl.CustomAuthenticationProvider;
 //import org.springframework.security.core.context.SecurityContextHolder;
 
 @Controller("mapController")
@@ -191,6 +185,56 @@ public class MapController extends BaseController{
 		IOUtils.copy(huc.getInputStream(), ios);
 
 		ios.close();
+	}
+	
+	@RequestMapping(value="/geoProxyPost.do")
+	public void geoProxyPost(HttpServletRequest request, HttpServletResponse res) throws Exception {
+		try {
+			String reqUrl = request.getQueryString();
+			reqUrl = java.net.URLDecoder.decode(reqUrl);
+			
+			URL url = new URL(reqUrl);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			//con.setConnectTimeout(1000*30);
+			con.setDoOutput(true);
+			con.setRequestMethod(request.getMethod());
+			
+			if (request.getContentType() != null) {
+				con.setRequestProperty("Content-Type", request.getContentType());
+			}
+	
+			con.setRequestProperty("Referer", request.getHeader("Referer"));
+			int clength = request.getContentLength();
+			if (clength > 0) {
+				con.setDoInput(true);
+				InputStream istream = request.getInputStream();
+				OutputStream os = con.getOutputStream();
+				final int length = 5000;
+				byte[] bytes = new byte[length];
+				int bytesRead = 0;
+				while ((bytesRead = istream.read(bytes, 0, length)) > 0) {
+					os.write(bytes, 0, bytesRead);
+				}
+			} else {
+				con.setRequestMethod("GET");
+			}
+			
+			//out.clear();
+			//out = pageContext.pushBody();
+			res.reset();
+			OutputStream ostream = res.getOutputStream();
+			res.setContentType(con.getContentType());
+			InputStream in = con.getInputStream();
+			final int length = 5000;
+			byte[] bytes = new byte[length];
+			int bytesRead = 0;
+			while ((bytesRead = in.read(bytes, 0, length)) > 0) {
+				ostream.write(bytes, 0, bytesRead);
+			}
+	
+		} catch (IOException e) {
+			int no = 0;
+		}
 	}
 
 	@RequestMapping(value = "/gmap/attr/getAlias.do")
