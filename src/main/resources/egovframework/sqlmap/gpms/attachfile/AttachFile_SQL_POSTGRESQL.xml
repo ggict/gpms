@@ -130,7 +130,7 @@ FILE_NM = #FILE_NM# /* 공통첨부파일.파일_명 */
 			, tnattachfile.UPDT_DT /* 공통첨부파일.수정_일시 */
 		FROM TN_ATTACH_FILE tnattachfile
 		WHERE 1 = 1
-		AND tnattachfile.FILE_NO = #FILE_NO#::int /* 공통첨부파일.파일_번호 */
+		AND tnattachfile.FILE_NO = (CASE WHEN length(#FILE_NO#) = 0 THEN NULL ELSE #FILE_NO# END)::int /* 공통첨부파일.파일_번호 */
 ]]>
 	</select>
 
