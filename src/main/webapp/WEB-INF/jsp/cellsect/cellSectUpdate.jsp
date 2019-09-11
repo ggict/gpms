@@ -446,7 +446,7 @@ function setSelectCombo(data) {
     result += '<option value="">==선택==</option>';
 
     for(var i=0; i < value.typeList.length; i++) {
-        result += '<option value="' + value.typeList[i].CODE_VAL + '">' + value.typeList[i].CODE_NM + '</option>';
+        result += '<option value="' + value.typeList[i].code_val + '">' + value.typeList[i].code_nm + '</option>';
     }
     result += '</select>';
 
