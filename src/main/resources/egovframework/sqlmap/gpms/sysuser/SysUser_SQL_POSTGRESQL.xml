@@ -46,7 +46,7 @@
     </resultMap>
 
     <insert id="sysUserDAO.insertSysUser">
-        <selectKey resultClass="int" keyProperty="USER_NO">
+        <selectKey resultClass="String" keyProperty="USER_NO">
   <![CDATA[
   select nextval('SEQ_TN_SYS_USER')
   ]]>
@@ -98,8 +98,8 @@
             , #STPLAT_AGRE_AT# /* 시스템사용자.약관_동의_여부 */
             , #USER_SE_CODE# /* 시스템사용자.사용자_구분_코드 */
             , #CONFM_AT# /* 시스템사용자.승인_여부 */
-            , #CONFM_DT# /* 시스템사용자.승인_일시 */
-            , #CO_NO#::int /* 시스템사용자.업체_번호 */
+            , #CONFM_DT# /* 시스템사용자.승인_일시 */            
+            , (CASE WHEN length(#CO_NO#) = 0 THEN NULL ELSE #CO_NO# END)::int /* 시스템사용자.업체_번호 */
             , NOW() /* 시스템사용자.약관_동의_일시 */
             , #RM# /* 시스템사용자.비고 */
             , #CNTRCT_NM# /* 시스템사용자.계약_명 */
@@ -110,9 +110,9 @@
             , #BRTHDY# /* 시스템사용자.생년월일 */
             , #CHRG_JOB# /* 시스템사용자.담당_업무 */
             , 'N' /* 시스템사용자.삭제_여부 */
-            , #UPDUSR_NO#::int /* 시스템사용자.수정자_번호 */
+            , (CASE WHEN length(#UPDUSR_NO#) = 0 THEN NULL ELSE #UPDUSR_NO# END)::int /* 시스템사용자.수정자_번호 */
             , NOW() /* 시스템사용자.수정_일시 */
-            , #CRTR_NO#::int /* 시스템사용자.생성자_번호 */
+            , (CASE WHEN length(#CRTR_NO#) = 0 THEN NULL ELSE #CRTR_NO# END)::int /* 시스템사용자.생성자_번호 */        
             , NOW() /* 시스템사용자.생성_일시 */
             , #PASSWORD_CHANGE_DT# /* 시스템사용자.암호_변경_일시 */
             , #DELETE_DT# /* 시스템사용자.삭제_일시 */
