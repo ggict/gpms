@@ -769,7 +769,7 @@ MAP.LAYER = (function($,undefined){
 				var styledLayerDescriptor = '<sld:StyledLayerDescriptor xmlns:sld="http://www.opengis.net/sld" version="1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/sld http://schemas.opengis.net/sld/1.0.0/StyledLayerDescriptor.xsd" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml">';
 				var namedLayer = '<sld:NamedLayer>';
 				var namedLayerLength = namedLayer.length;
-				var namedLayerIndex = sSldBody.indexOf('<sld:NamedLayer>');
+				var namedLayerIndex = sSldBody.indexOf(namedLayer);
 				sSldBody = styledLayerDescriptor + sSldBody.substring(namedLayerIndex - namedLayerLength);
 			}
 			else{
