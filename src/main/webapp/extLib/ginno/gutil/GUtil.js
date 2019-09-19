@@ -667,13 +667,14 @@ GUtil = {
 	//value값을 소문자 변환
 	fn_lowercase: function(arr){
 		if(!arr) return ;
-		var temp = [];
+		var res = [];
 		function convert(obj, t){
 			if(obj instanceof Array) {
-				var temp = [];
+				var tmp = [];
 				for (var i = 0; i < obj.length; i++) {
 					if(obj[i] instanceof Array) {
-						convert(obj[i], t);
+						res.push(tmp);
+						convert(obj[i], tmp);
 					}else{
 						var value = obj[i].toLowerCase();
 						t.push(value);
@@ -683,8 +684,8 @@ GUtil = {
 				t = obj.toLowerCase();
 			}
 		}
-		convert(arr, temp);
-		return temp;
+		convert(arr, res);
+		return res;
 	}
 }
 

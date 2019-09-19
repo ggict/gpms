@@ -11,13 +11,13 @@ var CONFIG = (function($, undefined){
 	var sPostProxyUrl 		= "/gpms/proxyPost.do";
 	
 	/**
-	 * 프로시 서비스 URL(GET)
+	 * 프록시 서비스 URL(GET)
 	 * @member {String} sPostProxyUrl
 	 */
 	var sGetProxyUrl 		= "/gpms/proxyGet.do";
 	
 	/**
-	 * 프로시 서비스 URL
+	 * 프록시 서비스 URL
 	 * @member {String} geoProxyUrl
 	 */
 	var geoProxyUrl 		= 'geoProxyPost.do?';
@@ -81,6 +81,7 @@ var CONFIG = (function($, undefined){
 
 
 	var aLayerList = ['CELL_10','CELL_SECT']; // ,'M_CALS_T'
+	//var aLayerList = ['CELL_10','CELL_SECT','CELL_200']; // ,'M_CALS_T'
 
 	// 2018.02.07 YYK 관할구역관리 레이어 추가
 	//var cLayerList = ['CMPTNC_ZONE'];
@@ -155,7 +156,19 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     
+	    /* 
+	     "CELL_200" : {
+	    	 
+	    	 'tmapid' : '870',
+	    	 'id' : '3800',
+	    	 'table' : 'CELL_200',
+	    	 'theme' : 'CELL_200',
+	    	 'alias' : 'CELL_200',
+	    	 'seq' : '3800',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
+	     },
+	     */
 	     "MV_CELL_SECT_TYPE" : {
 	         
 	         'tmapid' : '870',
