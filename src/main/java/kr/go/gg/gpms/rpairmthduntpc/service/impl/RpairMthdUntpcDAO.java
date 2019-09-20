@@ -129,7 +129,7 @@ public class RpairMthdUntpcDAO extends BaseDAO {
     	param.put("p_DEPT_CODE", rpairMthdUntpcVO.getDEPT_CODE());
     	param.put("p_MODE", "NONE");
     	
-    	return (List<RpairMthdUntpcVO>) procForList("rpairMthdUntpcDAO.PRC_STAT_UNTPC", param);
+    	return (List<RpairMthdUntpcVO>) list("rpairMthdUntpcDAO.PRC_STAT_UNTPC", param);
 	}
 
 }
