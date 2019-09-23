@@ -81,6 +81,7 @@ var CONFIG = (function($, undefined){
 
 
 	var aLayerList = ['CELL_10','CELL_SECT']; // ,'M_CALS_T'
+	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T'];
 	//var aLayerList = ['CELL_10','CELL_SECT','CELL_200']; // ,'M_CALS_T'
 
 	// 2018.02.07 YYK 관할구역관리 레이어 추가

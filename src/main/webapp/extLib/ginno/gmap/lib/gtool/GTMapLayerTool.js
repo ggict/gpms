@@ -474,6 +474,7 @@ GTMapLayerTool = OpenLayers.Class({
 
 						    if (options.layer == undefined ) {
 						    	if ( table == "CELL_10" || table == "CELL_SECT" ) { // || table == "M_CALS_T"
+						    	//if ( table == "CELL_10" || table == "CELL_SECT" || table == "M_CALS_T") { 
 						        //if ( table == "CELL_10" || table == "CELL_SECT" || table == "CELL_200" ) { // || table == "M_CALS_T"
 						            arr.push(this.layers[i]);
 						        }

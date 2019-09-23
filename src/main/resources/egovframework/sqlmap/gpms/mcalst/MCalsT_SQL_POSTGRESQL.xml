@@ -25,14 +25,14 @@
 		]]>			
 		<!-- 	<include refid="cellSectDAO.selectCellSectList.where" /> -->
 		<![CDATA[
-				WHERE 1=1 AND mcalst.BRDG_SEQ IN ($BRDG_SEQ$)
+				WHERE 1=1 AND mcalst.BRDG_SEQ::int IN ($BRDG_SEQ$)
 				GROUP BY mcalst.BRDG_SEQ,mcalst.BRDG_NAME,mcalst.ROAD_NAME,mcalst.TYPE_NAME,mcalst.BRDG_TYPENM,mcalst.BJNAME,mbrggt.DECK_PAVTY_NAME,mbrggt.DECK_PAV
 		]]>
 		<isNotEmpty property="orderByColumn">
 			ORDER BY $orderByColumn$ $orderByType$
 		</isNotEmpty>
 		<![CDATA[
-				) tb) WHERE 1=1 
+				) tb) as sub_mCals WHERE 1=1 
 		]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 			<![CDATA[
@@ -60,11 +60,11 @@
 		]]>			
 		<!-- 	<include refid="cellSectDAO.selectCellSectList.where" /> -->
 		<![CDATA[
-				WHERE 1=1 AND mcalst.BRDG_SEQ IN ($BRDG_SEQ$)
+				WHERE 1=1 AND mcalst.BRDG_SEQ::int IN ($BRDG_SEQ$)
 				GROUP BY mcalst.BRDG_SEQ,mcalst.BRDG_NAME,mcalst.ROAD_NAME,mcalst.TYPE_NAME,mcalst.BRDG_TYPENM,mcalst.BJNAME,mbrggt.DECK_PAVTY_NAME,mbrggt.DECK_PAV
 		]]>
 		<![CDATA[
-				) tb)
+				) tb) as sub_mcals
 		]]>
 	</select>
 
