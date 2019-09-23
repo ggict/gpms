@@ -1579,7 +1579,7 @@ function fnStep3BridgeInfo() {
 
         }
 
-        brdgSeq += features[i].data.BRDG_SEQ;
+        brdgSeq += features[i].data.BRDG_SEQ || features[i].data.brdg_seq;
 
     }
 
@@ -1721,7 +1721,7 @@ function fnSelectBrdg(brdgSeq) {
     for ( var i = 0; i < features.length; i++ ) {
 
         fArr[i] = "BRDG_SEQ";
-        vArr[i] = features[i].data.BRDG_SEQ;
+        vArr[i] = features[i].data.BRDG_SEQ || features[i].data.brdg_seq;
 
     }
 

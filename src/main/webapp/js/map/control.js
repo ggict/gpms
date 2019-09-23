@@ -1456,7 +1456,7 @@ MAP.CONTROL = (function($, undefined){
 	*/
     //181107 wijy : GAttrLayer사용하도록 수정
 	var add_brdg_feature = function(_oFeature, _oEvt){
-		var fid = _oFeature.data.BRDG_SEQ;
+		var fid = _oFeature.data.BRDG_SEQ || _oFeature.data.brdg_seq;
 
 		if(_oEvt != undefined && _oEvt.ctrlKey){
 			remove_feature(fid);
