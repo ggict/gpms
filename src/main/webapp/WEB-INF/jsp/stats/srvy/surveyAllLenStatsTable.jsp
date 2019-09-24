@@ -145,7 +145,7 @@ function drawTable(dataList,se){
 			tHtml	+= '<tr>';
 			tHtml	+= '<td align="center" class="bg">'				+	fn_castRouteCode(mainData[i].ROUTE_CODE)+ '</td>';
 			tHtml	+= '<td align="center" class="bg">'				+	mainData[i].ROAD_NAME					+ '</td>';
-			tHtml	+= '<td style="text-align:right" class="bg2">'	+	mainData[i].LEN					        + '</td>';
+			tHtml	+= '<td style="text-align:right" class="bg2">'	+	Number(mainData[i].LEN)					        + '</td>';
 			tHtml	+= '</tr>';
 		}
 		
@@ -155,7 +155,7 @@ function drawTable(dataList,se){
 		for(var i=0; i<mainData.length; i++){
 			tHtml	+= '<tr>';
 			tHtml	+= '<td align="center" class="bg">'				+	mainData[i].DEPT_NM						+ '</td>';
-			tHtml	+= '<td style="text-align:right" class="bg2">'	+	mainData[i].LEN					        + '</td>';
+			tHtml	+= '<td style="text-align:right" class="bg2">'	+	Number(mainData[i].LEN)					        + '</td>';
 			tHtml	+= '</tr>';
 		}
 		
@@ -164,7 +164,7 @@ function drawTable(dataList,se){
 		for(var i=0; i<mainData.length; i++){
 			tHtml	+= '<tr>';
 			tHtml	+= '<td align="center" class="bg">'				+	mainData[i].ROAD_NAME					+ '</td>';
-			tHtml	+= '<td style="text-align:right" class="bg2">'	+	mainData[i].LEN					        + '</td>';
+			tHtml	+= '<td style="text-align:right" class="bg2">'	+	Number(mainData[i].LEN)					        + '</td>';
 			tHtml	+= '</tr>';
 		}
 		

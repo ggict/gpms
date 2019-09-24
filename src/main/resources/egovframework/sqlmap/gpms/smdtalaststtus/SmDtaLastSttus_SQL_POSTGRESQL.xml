@@ -1118,19 +1118,17 @@
 			jdbcType="VARCHAR" mode="IN" />
 		<parameter property="p_MODE" javaType="java.lang.String"
 			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="o_OUTPUT" javaType="java.sql.ResultSet"
-			jdbcType="ORACLECURSOR" mode="OUT" />
 	</parameterMap>
-	<procedure id="smDtaLastSttusDAO.PRC_STAT_PREDCT"
+	<select id="smDtaLastSttusDAO.PRC_STAT_PREDCT"
 		parameterMap="prc_stat_predct" resultMap="mapSmDtaLastSttusVO">
-		{ call
-		PRC_STAT_PREDCT(?,?,?,?) }
-	</procedure>
+		select * from PRC_STAT_PREDCT(?,?,?) 
+	</select>
+	
+	
 
 	<procedure id="smDtaLastSttusDAO.PRC_STAT_PREDCT_EXCEL"
 		parameterMap="prc_stat_predct" resultClass="hashMap">
-		{ call
-		PRC_STAT_PREDCT(?,?,?,?) }
+		{ call	PRC_STAT_PREDCT(?,?,?,?) }
 	</procedure>
 
 	<select id="smDtaLastSttusDAO.selectSmDtaGnlGPCIList"

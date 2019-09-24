@@ -257,15 +257,6 @@
 ]]>		
 	</select>
 	
-<!-- 	<resultMap id="mapRpairMthdUntpcVO" class="rpairMthdUntpcVO">
-		 <result property="PREDCT_YEAR" column="PREDCT_YEAR" />COMMENTS
-		 <result property="CNTRWK_UNTPC" column="CNTRWK_UNTPC" />COMMENTS
-		 <result property="GPCI" column="GPCI" />COMMENTS
-		 <result property="resultMSG" column="PROCMSG" />COMMENTS
-		 <result property="resultSuccess" column="PROCCODE" />COMMENTS
-		 
-	</resultMap> -->
-	
 	<!-- 입력한 조사자료 엑셀 데이터를 시스템에 반영한다. -->
 	<parameterMap id="prc_stat_untpc" class="java.util.Map">
 		<parameter property="p_UNTPCS" javaType="java.lang.String"
@@ -274,14 +265,7 @@
 			jdbcType="VARCHAR" mode="IN" />
 		<parameter property="p_MODE" javaType="java.lang.String"
 			jdbcType="VARCHAR" mode="IN" />
-<!-- 		<parameter property="o_OUTPUT" javaType="java.sql.ResultSet"
-			jdbcType="CURSOR" mode="OUT" /> -->
 	</parameterMap>
-<!-- 	<procedure id="rpairMthdUntpcDAO.PRC_STAT_UNTPC"
-		parameterMap="prc_stat_untpc" resultMap="mapRpairMthdUntpcVO">
-		{ call PRC_STAT_UNTPC(?,?,?) }
-	</procedure> -->
-
 
 	<select id="rpairMthdUntpcDAO.PRC_STAT_UNTPC"
 		parameterMap="prc_stat_untpc"

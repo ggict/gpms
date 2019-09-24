@@ -146,7 +146,7 @@
 												   FROM STR_DWG dwg 
 												  WHERE dwg.ROAD_NO = strdwg.ROAD_NO 
 												  	AND dwg.SECT = strdwg.SECT 
-												  	AND dwg.DWG_FILE = strdwg.DWG_FILE),0 )
+												  	AND dwg.DWG_FILE = strdwg.DWG_FILE) as sub_STR_DWG_MAX,0 )
  
 		) tb) WHERE 1=1 
 ]]>

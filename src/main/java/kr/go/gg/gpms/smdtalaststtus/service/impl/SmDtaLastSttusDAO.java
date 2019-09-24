@@ -214,7 +214,7 @@ public class SmDtaLastSttusDAO extends BaseDAO {
     	param.put("p_DEPT_CODE", smDtaLastSttusVO.getDEPT_CODE());
     	param.put("p_MODE", mode);
     	
-    	return (List<SmDtaLastSttusVO>) procForList("smDtaLastSttusDAO.PRC_STAT_PREDCT", param);
+    	return (List<SmDtaLastSttusVO>) list("smDtaLastSttusDAO.PRC_STAT_PREDCT", param);
 	}
     
     /**
