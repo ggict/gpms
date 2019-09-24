@@ -1274,7 +1274,12 @@ GRequest.WFS = {
 
 		var features = res.features;
 		var featuresLen = features.length;
-		//if(!featuresLen) success = false;
+		if(!featuresLen){
+			alert("위치정보가 존재하지 않습니다.");			
+			success = false;
+		}
+		
+		
 		
 		for (var i = 0; i < featuresLen; i++) {
 			var feature = features[i];
