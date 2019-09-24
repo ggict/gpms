@@ -25,7 +25,7 @@ $( document ).ready(function() {
 		//,postData: JSON.stringify( $("#frm").cmSerializeObject()) 
 		,postData: postData
 		,ignoreCase: true
-		,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)","전산화</br>완료연장(km)aaaaaa","도면다운로드","위치보기"]
+		,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)","전산화</br>완료연장(km)","도면다운로드","위치보기"]
 	   	,colModel:[
 	   	    {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
 	   	 	,{name:'ROAD_NO_VAL',index:'ROAD_NO_VAL', align:'center', width:50, sortable:true}

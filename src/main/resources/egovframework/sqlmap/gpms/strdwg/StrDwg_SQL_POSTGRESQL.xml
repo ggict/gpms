@@ -142,13 +142,13 @@
 		<include refid="strDwgDAO.selectStrDwgList.where" />
 
 <![CDATA[
-			AND COALESCE(strdwg.SEQID,0) = COALESCE( (SELECT MAX(dwg.SEQID) 
+			AND COALESCE(strdwg.SEQID, '0') = COALESCE( (SELECT MAX(dwg.SEQID) 
 												   FROM STR_DWG dwg 
 												  WHERE dwg.ROAD_NO = strdwg.ROAD_NO 
 												  	AND dwg.SECT = strdwg.SECT 
-												  	AND dwg.DWG_FILE = strdwg.DWG_FILE) as sub_STR_DWG_MAX,0 )
+												  	AND dwg.DWG_FILE = strdwg.DWG_FILE) , '0' )
  
-		) tb) WHERE 1=1 
+		) tb ) as sub  WHERE 1=1 
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 		<![CDATA[
