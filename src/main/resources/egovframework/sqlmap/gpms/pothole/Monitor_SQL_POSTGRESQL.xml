@@ -81,7 +81,7 @@
 	    </isNotEmpty>
 	<![CDATA[
 	    ) tb
-	)
+	) as sub_list
     WHERE rnum BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
     ]]>
     </select>
