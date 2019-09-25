@@ -578,8 +578,8 @@ public class SrvyDtaController extends BaseController {
 								srvyDtaExcelOne.setRECORDSET(excelXml);
 								HashMap prc_result = srvyDtaExcelService.procSaveSurveyData(srvyDtaExcelOne);
 
-								o_PROCCODE = prc_result.get("o_PROCCODE").toString();
-								o_PROCMSG = prc_result.get("o_PROCMSG").toString();
+								o_PROCCODE = prc_result.get("o_proccode").toString();
+								o_PROCMSG = prc_result.get("o_procmsg").toString();
 
 								if (!o_PROCCODE.equals("true")) {
 									continue;
@@ -609,8 +609,8 @@ public class SrvyDtaController extends BaseController {
 
 						HashMap prc_result = srvyDtaExcelService.procSrvyDtaSysReflct(srvyDtaExcelOne);
 
-						o_PROCCODE = prc_result.get("o_PROCCODE").toString();
-						o_PROCMSG = prc_result.get("o_PROCMSG").toString();
+						o_PROCCODE = prc_result.get("o_proccode").toString();
+						o_PROCMSG = prc_result.get("o_procmsg").toString();
 
 						if (!o_PROCCODE.equals("true")) {
 							continue;
@@ -623,8 +623,8 @@ public class SrvyDtaController extends BaseController {
 					// 집계 처리
 					if (srvyDtaExcelOne.getSM_PROCESS_AT().equals("N")) {
 						HashMap prc_result = srvyDtaExcelService.procAggregateGeneral(srvyDtaExcelOne);
-						o_PROCCODE = (String) prc_result.get("o_PROCCODE");
-						o_PROCMSG = (String) prc_result.get("o_PROCMSG");
+						o_PROCCODE = (String) prc_result.get("o_proccode");
+						o_PROCMSG = (String) prc_result.get("o_procmsg");
 
 						if (!o_PROCCODE.equals("true")) {
 							continue;

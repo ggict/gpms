@@ -812,50 +812,44 @@
 	<!-- 입력한 조사자료 엑셀 데이터를 시스템에 반영한다. -->
 	<parameterMap id="prc_srvy_dta_sys_reflct_map" class="java.util.Map">
 		<parameter property="p_USER_NO" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
+			jdbcType="VARCHAR" />
 		<parameter property="p_SRVY_NO" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="o_PROCCODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="OUT" />
-		<parameter property="o_PROCMSG" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="OUT" />
+			jdbcType="VARCHAR" />
 	</parameterMap>
-	<procedure id="srvyDtaExcelDAO.PRC_SRVY_DTA_SYS_REFLCT"
-		parameterMap="prc_srvy_dta_sys_reflct_map">
-		{ call PRC_SRVY_DTA_SYS_REFLCT(?,?,?,?) }
-	</procedure>
+	
+	<select id="srvyDtaExcelDAO.PRC_SRVY_DTA_SYS_REFLCT"
+			parameterMap="prc_srvy_dta_sys_reflct_map"
+			resultClass="hashMap">
+		SELECT * FROM PRC_SRVY_DTA_SYS_REFLCT(?::text,?::text)
+	</select>
 
 	<!-- 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다. -->
 	<parameterMap id="prc_aggregate_general_map" class="java.util.Map">
 		<parameter property="p_USER_NO" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
+			jdbcType="VARCHAR" />
 		<parameter property="p_SRVY_NO" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
+			jdbcType="VARCHAR" />
 		<parameter property="p_ROUTE_CODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
+			jdbcType="VARCHAR" />
 		<parameter property="p_DIRECT_CODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
+			jdbcType="VARCHAR" />
 		<parameter property="p_TRACK" javaType="java.lang.String"
-			jdbcType="NUMERIC" mode="IN" />
+			jdbcType="NUMERIC" />
 		<parameter property="p_STRTPT" javaType="java.math.BigDecimal"
-			jdbcType="NUMERIC" mode="IN" />
+			jdbcType="NUMERIC" />
 		<parameter property="p_ENDPT" javaType="java.math.BigDecimal"
-			jdbcType="NUMERIC" mode="IN" />
+			jdbcType="NUMERIC" />
 		<parameter property="p_FRMULA_NM" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
+			jdbcType="VARCHAR" />
 		<parameter property="p_MODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="o_PROCCODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="OUT" />
-		<parameter property="o_PROCMSG" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="OUT" />
-
+			jdbcType="VARCHAR" />
 	</parameterMap>
 
-	<procedure id="srvyDtaExcelDAO.PRC_AGGREGATE_GENERAL" parameterMap="prc_aggregate_general_map">
-		{ call PRC_AGGREGATE_GENERAL(?,?,?,?,?,?,?,?,?,?,?) }
-	</procedure>
-
+	<select id="srvyDtaExcelDAO.PRC_AGGREGATE_GENERAL"
+			parameterMap="prc_aggregate_general_map"
+			resultClass="hashMap">
+		SELECT * FROM PRC_AGGREGATE_GENERAL(?::text,?::text,?::text,?::text,?::text,?::numeric,?::numeric,?::text,?::text)
+	</select>
 
 	<select id="srvyDtaExcelDAO.selectSrvyDtaSrvyNoList"
 		parameterClass="srvyDtaExcelVO" resultClass="srvyDtaExcelVO">

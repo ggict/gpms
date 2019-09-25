@@ -284,8 +284,8 @@ public class SmDtaLastSttusController extends BaseController {
 		HashMap result = smDtaLastSttusService
 				.prcClacPredctRouteSrvyEvl(smDtaLastSttusVO);
 
-		model.addAttribute("PROCCODE", result.get("o_PROCCODE"));
-		model.addAttribute("PROCMSG", result.get("o_PROCMSG"));
+		model.addAttribute("PROCCODE", result.get("o_proccode"));
+		model.addAttribute("PROCMSG", result.get("o_procmsg"));
 
 		return "jsonView";
 	}
@@ -376,7 +376,7 @@ public class SmDtaLastSttusController extends BaseController {
 				HashMap result = smDtaLastSttusService
 						.prcClacPredctLast(smDtaLastSttusVO);
 
-				if (result.get("o_PROCCODE").equals("true")) {
+				if (result.get("o_proccode").equals("true")) {
 					successCnt++;
 				}
 			}

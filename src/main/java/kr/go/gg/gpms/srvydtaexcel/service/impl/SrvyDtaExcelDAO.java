@@ -185,10 +185,12 @@ public class SrvyDtaExcelDAO extends BaseDAO {
 	 */
 	public HashMap procSrvyDtaSysReflct(SrvyDtaExcelVO srvyDtaExcelOne) {
 		HashMap param = new HashMap();
-
+		
     	param.put("p_USER_NO", srvyDtaExcelOne.getCRTR_NO());
     	param.put("p_SRVY_NO", srvyDtaExcelOne.getSRVY_NO());
-    	HashMap resultVO = (HashMap) call("srvyDtaExcelDAO.PRC_SRVY_DTA_SYS_REFLCT", param);
+    	
+    	HashMap resultVO = (HashMap) select("srvyDtaExcelDAO.PRC_SRVY_DTA_SYS_REFLCT", param);
+    	logger.info("procSrvyDtaSysReflctResultVO: " + resultVO.toString());
     	return resultVO;
 	}
 
@@ -210,7 +212,8 @@ public class SrvyDtaExcelDAO extends BaseDAO {
     	param.put("p_FRMULA_NM", srvyDtaExcelOne.getFRMULA_NM());
     	param.put("p_MODE", "NONE");
 
-    	HashMap resultVO = (HashMap) call("srvyDtaExcelDAO.PRC_AGGREGATE_GENERAL", param);
+    	HashMap resultVO = (HashMap) select("srvyDtaExcelDAO.PRC_AGGREGATE_GENERAL", param);
+    	logger.info("procAggregateGeneralVO: " + resultVO.toString());
     	return resultVO;
 	}
 
