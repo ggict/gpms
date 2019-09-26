@@ -566,14 +566,18 @@
 			dept_code, dept_nm, lowest_dept_nm, odr, ord, sehigh_dept_code, 
 			top_dept_code, psitn_dept_odr, rprsnt_dept_code, istdr_clsf_nm, adstrd_code, 
 			zip, fax_no, creat_de, abl_de, last_opert_de, instt_ty, prev_instt, edc_traing_instt_at, 
-			use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no, LEVEL
+			use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no
+			,UPPER_SEHIGH_DEPT_CODE	
+			,LEVEL
 		) AS
 		(
 			SELECT
 				dept_code, dept_nm, lowest_dept_nm, odr, ord, sehigh_dept_code, 
 				top_dept_code, psitn_dept_odr, rprsnt_dept_code, istdr_clsf_nm, adstrd_code, 
 				zip, fax_no, creat_de, abl_de, last_opert_de, instt_ty, prev_instt, edc_traing_instt_at, 
-				use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no, 0
+				use_at, delete_at, crtr_no, creat_dt, updusr_no, updt_dt, tel_no
+				, (SELECT subtcdept.SEHIGH_DEPT_CODE FROM TC_DEPT subtcdept WHERE subtcdept.DEPT_CODE = tc_dept.SEHIGH_DEPT_CODE AND subtcdept.USE_AT='Y' AND subtcdept.DELETE_AT='N') AS UPPER_SEHIGH_DEPT_CODE
+				, 0
 			FROM
 				tc_dept
 			WHERE
@@ -583,7 +587,9 @@
 				a.dept_code, a.dept_nm, a.lowest_dept_nm, a.odr, a.ord, a.sehigh_dept_code, 
 				a.top_dept_code, a.psitn_dept_odr, a.rprsnt_dept_code, a.istdr_clsf_nm, a.adstrd_code, 
 				a.zip, a.fax_no, a.creat_de, a.abl_de, a.last_opert_de, a.instt_ty, a.prev_instt, a.edc_traing_instt_at, 
-				a.use_at, a.delete_at, a.crtr_no, a.creat_dt, a.updusr_no, a.updt_dt, a.tel_no, LEVEL+1
+				a.use_at, a.delete_at, a.crtr_no, a.creat_dt, a.updusr_no, a.updt_dt, a.tel_no
+				, (SELECT subtcdept.SEHIGH_DEPT_CODE FROM TC_DEPT subtcdept WHERE subtcdept.DEPT_CODE = a.SEHIGH_DEPT_CODE AND subtcdept.USE_AT='Y' AND subtcdept.DELETE_AT='N') AS UPPER_SEHIGH_DEPT_CODE	
+				, LEVEL+1
 			FROM
 				tc_dept a, tcdept b
 			WHERE
