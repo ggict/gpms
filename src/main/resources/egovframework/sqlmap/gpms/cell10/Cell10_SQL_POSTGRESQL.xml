@@ -614,7 +614,7 @@
                FROM ( SELECT 
 							'국지도' AS ROAD_NAME
 							,(SUM(UNI.SUM_L) / 1000) AS LEN
-							,SUM(SUM_LEN) AS SUM_LEN
+							,(SUM(SUM_LEN)   / 1000) AS SUM_LEN
                         FROM ( SELECT ROUTE_CODE,
                                       SUM_L
                                  FROM UNI_ROUTE_ST
@@ -640,7 +640,7 @@
                FROM ( SELECT 
                				'지방도' AS ROAD_NAME
                             ,(SUM(UNI.SUM_L) / 1000) AS LEN
-                            ,SUM(SUM_LEN) AS SUM_LEN
+                            ,(SUM(SUM_LEN)   / 1000) AS SUM_LEN
                         FROM ( SELECT ROUTE_CODE,
                                       SUM_L
                                  FROM UNI_ROUTE_ST
