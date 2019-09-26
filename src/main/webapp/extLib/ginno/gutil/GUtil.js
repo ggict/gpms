@@ -674,7 +674,7 @@ GUtil = {
 				var tmp = [];
 				for (var i = 0; i < obj.length; i++) {
 					if(obj[i] instanceof Array) {
-						res.push(tmp);
+						t.push(tmp);
 						convert(obj[i], tmp);
 					}else{
 						var value = obj[i].toLowerCase();
