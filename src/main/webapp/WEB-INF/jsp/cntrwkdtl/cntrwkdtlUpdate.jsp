@@ -46,7 +46,7 @@
 				<!-- 필수 파라메터(END) --> 
 				<input type="hidden" id="CNTRWK_ID" name="CNTRWK_ID" value="${cntrwkDtlVO.CNTRWK_ID}"/>
 				<input type="hidden" id="PAV_CELL_ID" name="PAV_CELL_ID" value=""/>
-				<form:form commandName="cntrwkDtlVO" id="cntrwkdtl_Regist-form">
+				<form:form commandName="searchVO" id="cntrwkdtl_Regist-form">
 					<div class="titbx">			
 						<h4>기본정보</h4>
 				        <table class="tbview" summary="포장 세부공사 기본정보를 조회한다.">
