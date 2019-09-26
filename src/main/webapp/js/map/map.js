@@ -1224,7 +1224,10 @@ function($,undefined){
 
                                 },
                                 function(res) {
-                                    if(res.data.length < 1){return;}
+                                    if(res.data.length < 1){
+                                    	alert("위치정보가 존재하지 않습니다.");
+                                    	return;
+                                    }
                                     var attribute = null;
 
                                     var attrExistYn = false;

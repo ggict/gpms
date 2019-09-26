@@ -1275,7 +1275,7 @@ GRequest.WFS = {
 		var features = res.features;
 		var featuresLen = features.length;
 		if(!featuresLen){
-		 success = false;
+			success = false;
 		}
 		
 		for (var i = 0; i < featuresLen; i++) {
