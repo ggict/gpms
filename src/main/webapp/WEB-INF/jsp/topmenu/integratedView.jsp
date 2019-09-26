@@ -1091,7 +1091,7 @@ function fnSearchRoute(routeCode) {
 
             for ( var i = 0 ; i < features.length ; i++ ) {
                 fArr[i] = "ROAD_NO";
-                vArr[i] = features[i].data.ROAD_NO;
+                vArr[i] = features[i].data.ROAD_NO || features[i].data.road_no;
             }
 
             var tables_base = ["DORO_TOT_GRS80_50"];
@@ -1481,7 +1481,7 @@ function fnSelectCell(cell_id) {
 
     for ( var i = 0 ; i < features.length ; i++ ) {
         fArr[i] = "CELL_ID";
-        vArr[i] = features[i].data.CELL_ID;
+        vArr[i] = features[i].data.CELL_ID || features[i].data.cell_id;
     }
 
     var tables_base = ["CELL_10"];
