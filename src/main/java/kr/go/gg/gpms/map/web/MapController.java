@@ -234,6 +234,7 @@ public class MapController extends BaseController{
 	
 		} catch (IOException e) {
 			throw e;
+			
 		}
 	}
 
