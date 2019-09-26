@@ -877,7 +877,7 @@
              ELSE LOWEST_DEPT_NM END AS LOWEST_DEPT_NM
 	    FROM TC_DEPT
 	   WHERE 1=1
-         AND (DEPT_CODE < 6410000 AND ODR = 2)
+         AND (DEPT_CODE < '6410000' AND ODR = 2)
           OR (DEPT_CODE in ('3750000','3760000','3770000','5610000'  /* 수원시 구 추가 */
               ,'3790000','3800000','3810000'  /* 성남시 구 추가 */
               ,'3950000','3960100','4100100'  /* 고양시 구 추가 */
