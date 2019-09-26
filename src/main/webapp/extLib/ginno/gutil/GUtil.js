@@ -669,6 +669,7 @@ GUtil = {
 		if(!arr) return ;
 		var res = [];
 		function convert(obj, t){
+			if(!obj) return ;
 			if(obj instanceof Array) {
 				var tmp = [];
 				for (var i = 0; i < obj.length; i++) {
