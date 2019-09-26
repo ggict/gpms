@@ -479,24 +479,22 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 	
 	<!-- 보수대상 선정 범위내 선정 -->
 	<parameterMap id="prc_repair_target_range_select_params" class="java.util.Map">		
-		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />			
-		<parameter property="p_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
-		<parameter property="p_SLCTN_BUDGET" javaType="java.lang.Long" jdbcType="NUMERIC" mode="IN" />
-		<parameter property="p_DEPT_CODE" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
-		<parameter property="p_DECSN_MTHD_1_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" mode="IN" />
-		<parameter property="p_DECSN_MTHD_2_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" mode="IN" />
-		<parameter property="p_DECSN_MTHD_3_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" mode="IN" />
-		<parameter property="p_DECSN_MTHD_4_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" mode="IN" />
-		<parameter property="p_DECSN_MTHD_5_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" mode="IN" />			
-		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />
-		<parameter property="o_PROCCODE" javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
-		<parameter property="o_PROCMSG" javaType="java.lang.String" jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="p_USER_NO" javaType="java.lang.Long" jdbcType="NUMERIC" />			
+		<parameter property="p_TRGET_SLCTN_NO" javaType="java.lang.Long" jdbcType="NUMERIC" />
+		<parameter property="p_SLCTN_BUDGET" javaType="java.lang.Long" jdbcType="NUMERIC" />
+		<parameter property="p_DEPT_CODE" javaType="java.lang.String" jdbcType="VARCHAR"  />
+		<parameter property="p_DECSN_MTHD_1_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
+		<parameter property="p_DECSN_MTHD_2_RATE" javaType="java.lang.Long" jdbcType="NUMERIC"  />
+		<parameter property="p_DECSN_MTHD_3_RATE" javaType="java.lang.Long" jdbcType="NUMERIC"  />
+		<parameter property="p_DECSN_MTHD_4_RATE" javaType="java.lang.Long" jdbcType="NUMERIC"  />
+		<parameter property="p_DECSN_MTHD_5_RATE" javaType="java.lang.Long" jdbcType="NUMERIC"  />			
+		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
 	</parameterMap>
-	<procedure id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT"
-		parameterMap="prc_repair_target_range_select_params">
-		{ call PRC_REPAIR_TARGET_RANGE_SELECT(?,?,?,?,?,?,?,?,?,?,?,?) }
-	</procedure>
-	
+	<select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT"
+		parameterMap="prc_repair_target_range_select_params" resultClass="hashMap">
+		SELECT o_proccode, o_procmsg FROM PRC_REPAIR_TARGET_RANGE_SELECT(?,?,?,?,?,?,?,?,?,?)
+	</select>
+    
 	<!-- 연속구간 연결 및 보수공법 재선정 -->
 	<parameterMap id="prc_repair_target_range_string_params" class="java.util.Map">		
 		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN" />			

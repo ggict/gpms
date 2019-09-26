@@ -120,8 +120,8 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 	 */
 	public HashMap procRepairTargetRangeSelect(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
 		HashMap param = new HashMap();
-		param.put("p_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
-		param.put("p_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
+		param.put("p_USER_NO", Long.parseLong(rpairTrgetSlctnVO.getCRTR_NO()));
+		param.put("p_TRGET_SLCTN_NO", Long.parseLong(rpairTrgetSlctnVO.getTRGET_SLCTN_NO()));
 		param.put("p_SLCTN_BUDGET", rpairTrgetSlctnVO.getSLCTN_BUDGET());
 		param.put("p_DEPT_CODE", rpairTrgetSlctnVO.getDEPT_CODE());
 		param.put("p_DECSN_MTHD_1_RATE", rpairTrgetSlctnVO.getDECSN_MTHD_1_RATE());
@@ -130,7 +130,7 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 		param.put("p_DECSN_MTHD_4_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_4_RATE());
 		param.put("p_DECSN_MTHD_5_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_5_RATE());
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) call("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT", param);
+    	HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT", param);
     	return resultVO;
 	}
 
