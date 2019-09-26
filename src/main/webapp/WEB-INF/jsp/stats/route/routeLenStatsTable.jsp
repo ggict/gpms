@@ -252,7 +252,8 @@ function fnExcel() {
  	
  	var lenData	= [];
  	for(var i=0; i<dataList.length; i++){
- 		lenData.push({"value" : dataList[i].SUM_L, "name" : dataList[i].ROAD_GRAD});
+ 		//lenData.push({"value" : dataList[i].SUM_L, "name" : dataList[i].ROAD_GRAD});
+ 		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].ROAD_NAME});
  	}
 
  	require([	'echarts','echarts/chart/pie'	],
@@ -316,7 +317,8 @@ function fnExcel() {
  function drawGpmsGradLenChart(dataList,rw){
  	var lenData	= [];
  	for(var i=0; i<dataList.length; i++){
- 		lenData.push({"value" : dataList[i].SUM_LEN, "name" : dataList[i].ROAD_GRAD});
+ 		//lenData.push({"value" : dataList[i].SUM_LEN, "name" : dataList[i].ROAD_GRAD});
+ 		lenData.push({"value" : dataList[i].SUM_LEN, "name" : dataList[i].ROAD_NAME});
  	}
  	require([	'echarts','echarts/chart/pie'	],
  	        function (ec) {
@@ -376,8 +378,10 @@ function fnExcel() {
  		degree = 0;
  	}
  	for(var i=0; i<dataList.length; i++){
- 			gRouteNm.push(dataList[i].ROUTE_CODE+" "+ dataList[i].ROUTE_NAME);
- 			lenData.push(dataList[i].SUM_L);
+ 			//gRouteNm.push(dataList[i].ROUTE_CODE+" "+ dataList[i].ROUTE_NAME);
+ 			//lenData.push(dataList[i].SUM_L);
+ 			gRouteNm.push(dataList[i].ROUTE_CODE+" "+ dataList[i].ROAD_NAME);
+ 			lenData.push(dataList[i].LEN);
  			GpmlenData.push(dataList[i].SUM_LEN);
  	}
  	require([	'echarts','echarts/chart/bar'	],

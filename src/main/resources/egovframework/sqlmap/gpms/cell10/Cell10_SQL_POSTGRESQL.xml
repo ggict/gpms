@@ -610,9 +610,11 @@
         <![CDATA[
             /* cell10DAO.selectSrvyUniRoadLenStatsResult */
             /* 통계 > 노선현황 > 국토부 도로등급 통계 목록을 조회한다. */
-              SELECT ROAD_NAME, LEN
-               FROM ( SELECT '국지도' AS ROAD_NAME,
-                             (SUM(UNI.SUM_L) / 1000) AS LEN
+              SELECT ROAD_NAME, LEN, SUM_LEN
+               FROM ( SELECT 
+							'국지도' AS ROAD_NAME
+							,(SUM(UNI.SUM_L) / 1000) AS LEN
+							,SUM(SUM_LEN) AS SUM_LEN
                         FROM ( SELECT ROUTE_CODE,
                                       SUM_L
                                  FROM UNI_ROUTE_ST
@@ -622,7 +624,9 @@
         <![CDATA[
                     ) UNI
                     JOIN
-                    ( SELECT CELL10A.ROUTE_CODE
+                    ( SELECT 
+                    		 CELL10A.ROUTE_CODE
+                    		,SUM(CELL10A.ROAD_L) AS SUM_LEN
                         FROM CELL_10 CELL10A
                        WHERE CELL10A.ROAD_GRAD = 'RDGD0001'
                        GROUP BY CELL10A.ROUTE_CODE
@@ -632,9 +636,11 @@
                        
               UNION ALL
               
-             SELECT ROAD_NAME, LEN
-               FROM ( SELECT '지방도' AS ROAD_NAME,
-                             (SUM(UNI.SUM_L) / 1000) AS LEN
+             SELECT ROAD_NAME, LEN, SUM_LEN
+               FROM ( SELECT 
+               				'지방도' AS ROAD_NAME
+                            ,(SUM(UNI.SUM_L) / 1000) AS LEN
+                            ,SUM(SUM_LEN) AS SUM_LEN
                         FROM ( SELECT ROUTE_CODE,
                                       SUM_L
                                  FROM UNI_ROUTE_ST
@@ -644,7 +650,9 @@
         <![CDATA[
                   ) UNI
                   JOIN
-                  ( SELECT CELL10A.ROUTE_CODE
+                  ( SELECT 
+                  			CELL10A.ROUTE_CODE
+                  			,SUM(CELL10A.ROAD_L) AS SUM_LEN
                       FROM CELL_10 CELL10A
                      WHERE CELL10A.ROAD_GRAD = 'RDGD0002'
                      GROUP BY CELL10A.ROUTE_CODE
@@ -658,9 +666,11 @@
         <![CDATA[
             /* cell10DAO.selectSrvyUniRoutLenStatsResult */
             /* 통계 > 노선현황 > 국토부 노선별 전체 통계 목록을 조회한다. */
-               SELECT UNI.ROUTE_CODE::int AS ROUTE_CODE,
-                    C10A.ROAD_NAME,
-                    (SUM(UNI.SUM_L) / 1000) AS LEN
+               SELECT 
+               		UNI.ROUTE_CODE::int AS ROUTE_CODE
+                    ,C10A.ROAD_NAME
+                    ,(SUM(UNI.SUM_L) / 1000) AS LEN
+                    , SUM(SUM_LEN) AS SUM_LEN
                FROM ( SELECT ROUTE_CODE,
                              SUM_L
                         FROM UNI_ROUTE_ST
@@ -670,8 +680,10 @@
         <![CDATA[
 
                     ) UNI,
-                    ( SELECT CELL10A.ROUTE_CODE,
-                              COALESCE( ( SELECT ROAD_NAME
+                    ( SELECT 
+                    		CELL10A.ROUTE_CODE 
+                    		,SUM(CELL10A.ROAD_L) AS SUM_LEN
+                            ,COALESCE( ( SELECT ROAD_NAME
                                         FROM TN_ROUTE_INFO TNROUTEINFO
                                        WHERE TNROUTEINFO.ROAD_NO = CELL10A.ROUTE_CODE),
                               CELL10A.ROUTE_CODE ) AS ROAD_NAME
