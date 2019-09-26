@@ -18,6 +18,14 @@ var chkcell={cellId:undefined, chkval:undefined};
 var nYear;
 var rw;
 var rw1;
+
+var routeStatsTable_Utils = {
+	toFiexd : function(arg, n){
+		var formatNum = (arg) ? arg : 0;  
+		return Number.parseFloat(formatNum).toFixed(n);
+	}	 
+ };
+	 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
     
@@ -249,11 +257,13 @@ function fnExcel() {
  
 //국토부 총연장 PIE 그래프 그리기 
  function drawGradLenChart(dataList,rw){
- 	
+
+
+	
  	var lenData	= [];
  	for(var i=0; i<dataList.length; i++){
  		//lenData.push({"value" : dataList[i].SUM_L, "name" : dataList[i].ROAD_GRAD});
- 		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].ROAD_NAME});
+ 		lenData.push({"value" : routeStatsTable_Utils.toFiexd(dataList[i].LEN, 3), "name" : dataList[i].ROAD_NAME});
  	}
 
  	require([	'echarts','echarts/chart/pie'	],
@@ -318,7 +328,7 @@ function fnExcel() {
  	var lenData	= [];
  	for(var i=0; i<dataList.length; i++){
  		//lenData.push({"value" : dataList[i].SUM_LEN, "name" : dataList[i].ROAD_GRAD});
- 		lenData.push({"value" : dataList[i].SUM_LEN, "name" : dataList[i].ROAD_NAME});
+ 		lenData.push({"value" : routeStatsTable_Utils.toFiexd(dataList[i].SUM_LEN, 3), "name" : dataList[i].ROAD_NAME});
  	}
  	require([	'echarts','echarts/chart/pie'	],
  	        function (ec) {
