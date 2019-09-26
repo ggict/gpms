@@ -233,7 +233,7 @@ public class MapController extends BaseController{
 			}
 	
 		} catch (IOException e) {
-			int no = 0;
+			throw e;
 		}
 	}
 
