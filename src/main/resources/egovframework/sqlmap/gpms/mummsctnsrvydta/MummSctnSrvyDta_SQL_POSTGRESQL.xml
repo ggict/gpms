@@ -1826,18 +1826,16 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 	<!-- 입력한 조사자료 엑셀 데이터를 시스템에 반영한다. -->
 	<parameterMap id="prc_clac_predct_evl" class="java.util.Map">
 		<parameter property="p_CELL_IDS" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
+			jdbcType="VARCHAR" />
 		<parameter property="p_PREDCT_CEN" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
+			jdbcType="VARCHAR" />
 		<parameter property="p_MODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="o_OUTPUT" javaType="java.sql.ResultSet"
-			jdbcType="ORACLECURSOR" mode="OUT" />
+			jdbcType="VARCHAR" />
 	</parameterMap>
-	<procedure id="mummSctnSrvyDtaDAO.PRC_CLAC_PREDCT_EVL"
+	<select id="mummSctnSrvyDtaDAO.PRC_CLAC_PREDCT_EVL"
 		parameterMap="prc_clac_predct_evl" resultMap="mapMummSctnSrvyDtaVO">
-		{ call PRC_CLAC_PREDCT_EVL(?,?,?,?) }
-	</procedure>
+		select predct_year, predct_mt, ac_idx, bc_idx, lc_idx, tc_idx, rd_idx, ptchg_idx, pothole_idx, scr, rci, gpci, cntl_dfect, dmg_cuz_clmt, dmg_cuz_vmtc, dmg_cuz_etc, rpair_ta_at from PRC_CLAC_PREDCT_EVL(?::text,?::text,?::text)
+	</select>
 
     <select id="mummSctnSrvyDtaDAO.integratedListExcel"
             parameterClass="mummSctnSrvyDtaVO" resultClass="hashMap">

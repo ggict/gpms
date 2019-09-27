@@ -132,7 +132,11 @@ public class MummSctnSrvyDtaDAO extends BaseDAO {
     	param.put("p_PREDCT_CEN", predctCen);
     	param.put("p_MODE", "NONE");
     	
-    	return (List<MummSctnSrvyDtaVO>) list("mummSctnSrvyDtaDAO.PRC_CLAC_PREDCT_EVL", param);
+    	List tmpList = (List<MummSctnSrvyDtaVO>) list("mummSctnSrvyDtaDAO.PRC_CLAC_PREDCT_EVL", param);
+    	
+    	System.out.println("tmpList: " + tmpList.toString());
+    	
+    	return tmpList;
 	}
 	
 	

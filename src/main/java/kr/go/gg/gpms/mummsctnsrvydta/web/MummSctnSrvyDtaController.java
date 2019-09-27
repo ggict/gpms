@@ -415,7 +415,7 @@ public class MummSctnSrvyDtaController {
 		// 데이터 조회
 		MummSctnSrvyDtaVO avg = mummSctnSrvyDtaService.prcClacPredctEvl(
 				mummSctnSrvyDtaVO).get(0);
-
+		
 		// 코드명 받아오기
 		CodeVO codeVO = new CodeVO();
 		codeVO.setCODE_VAL(avg.getCNTL_DFECT());
@@ -588,10 +588,10 @@ public class MummSctnSrvyDtaController {
 	public @ResponseBody MummSctnSrvyDtaVO selectMummSctnSrvyDtaListByItgrtnAvg(
 			@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model,
 			HttpSession session) throws Exception {
-
+		
+		
 		// 데이터 조회
-		MummSctnSrvyDtaVO avg = mummSctnSrvyDtaService.prcClacPredctEvl(
-				mummSctnSrvyDtaVO).get(0);
+		MummSctnSrvyDtaVO avg = mummSctnSrvyDtaService.prcClacPredctEvl(mummSctnSrvyDtaVO).get(0);
 
 		// 코드명 받아오기
 		CodeVO codeVO = new CodeVO();
