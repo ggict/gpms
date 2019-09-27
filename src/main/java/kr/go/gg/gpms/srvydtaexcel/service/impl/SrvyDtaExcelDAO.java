@@ -168,15 +168,18 @@ public class SrvyDtaExcelDAO extends BaseDAO {
 	 * 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다.
 	 */
 	public HashMap procSaveSurveyData(SrvyDtaExcelVO srvyDtaExcelOne) {
+		logger.info("[SrvyDtaExcelVO result] " + srvyDtaExcelOne.toString());
+		
 		HashMap param = new HashMap();
-
     	param.put("p_USER_NO", srvyDtaExcelOne.getCRTR_NO());
     	param.put("p_SRVY_NO", srvyDtaExcelOne.getSRVY_NO());
     	param.put("p_FRMULA_NM", srvyDtaExcelOne.getFRMULA_NM());
     	param.put("P_ROW_COUNT", srvyDtaExcelOne.getDATA_CO());
     	param.put("p_RECORDSET", srvyDtaExcelOne.getRECORDSET());
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) call("srvyDtaExcelDAO.PRC_SAVESURVEYDATA", param);
+    	HashMap resultVO = (HashMap) select("srvyDtaExcelDAO.PRC_SAVESURVEYDATA", param);
+    	
+    	logger.info("[SrvyDtaExcelVO result] " + resultVO.toString());
     	return resultVO;
 	}
 
@@ -184,8 +187,9 @@ public class SrvyDtaExcelDAO extends BaseDAO {
 	 * 입력한 조사자료 엑셀 데이터를 시스템에 반영한다.
 	 */
 	public HashMap procSrvyDtaSysReflct(SrvyDtaExcelVO srvyDtaExcelOne) {
-		HashMap param = new HashMap();
+		logger.info("[procSrvyDtaSysReflctResultVO params] " + srvyDtaExcelOne.toString());
 		
+		HashMap param = new HashMap();
     	param.put("p_USER_NO", srvyDtaExcelOne.getCRTR_NO());
     	param.put("p_SRVY_NO", srvyDtaExcelOne.getSRVY_NO());
     	

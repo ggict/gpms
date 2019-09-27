@@ -132,7 +132,7 @@ public class MummSctnSrvyDtaDAO extends BaseDAO {
     	param.put("p_PREDCT_CEN", predctCen);
     	param.put("p_MODE", "NONE");
     	
-    	return (List<MummSctnSrvyDtaVO>) procForList("mummSctnSrvyDtaDAO.PRC_CLAC_PREDCT_EVL", param);
+    	return (List<MummSctnSrvyDtaVO>) list("mummSctnSrvyDtaDAO.PRC_CLAC_PREDCT_EVL", param);
 	}
 	
 	

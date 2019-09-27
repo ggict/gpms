@@ -706,23 +706,14 @@
 
 	<!-- 10년치 예측 데이터를 생성한다. -->
 	<parameterMap id="prc_clac_predct_last" class="java.util.Map">
-		<parameter property="p_ROUTE_CODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="p_SRVY_NO" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="p_USER_NO" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="p_MODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="o_PROCCODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="OUT" />
-		<parameter property="o_PROCMSG" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="p_ROUTE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_SRVY_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
 	</parameterMap>
-	<procedure id="smDtaLastSttusDAO.PRC_CLAC_PREDCT_LAST"
-		parameterMap="prc_clac_predct_last">
-		{ call PRC_CLAC_PREDCT_LAST(?,?,?,?,?,?) }
-	</procedure>
+	<select id="smDtaLastSttusDAO.PRC_CLAC_PREDCT_LAST" parameterMap="prc_clac_predct_last" resultClass="hashMap" >
+		SELECT o_PROCCODE, o_PROCMSG PRC_CLAC_PREDCT_LAST(?, ?, ?::numeric, ?)
+	</select>
 
 
 

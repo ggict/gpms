@@ -130,13 +130,16 @@ public class SmDtaLastSttusDAO extends BaseDAO {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
     public HashMap prcClacPredctRouteSrvyEvl(SmDtaLastSttusVO smDtaLastSttusVO) {
+		logger.info("[smDtaLastSttusVO params] " + smDtaLastSttusVO.toString());
+		
 		HashMap param = new HashMap();
- 
 		param.put("p_ROUTE_CODE", smDtaLastSttusVO.getROAD_NO());
 		param.put("p_SRVY_NO", smDtaLastSttusVO.getSRVY_NO());
     	param.put("p_USER_NO", smDtaLastSttusVO.getCRTR_NO());
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) call("smDtaLastSttusDAO.PRC_CLAC_PREDCT_ROUTE_SRVY_EVL", param);
+    	HashMap resultVO = (HashMap) select("smDtaLastSttusDAO.PRC_CLAC_PREDCT_ROUTE_SRVY_EVL", param);
+    	
+    	logger.info("[smDtaLastSttusVO result] " + resultVO.toString());
     	return resultVO;
 	}
 	
@@ -145,13 +148,16 @@ public class SmDtaLastSttusDAO extends BaseDAO {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
     public HashMap prcClacPredctLast(SmDtaLastSttusVO smDtaLastSttusVO) {
+        logger.info("[smDtaLastSttusVO params] " + smDtaLastSttusVO.toString());
+        
 		HashMap param = new HashMap();
-
 		param.put("p_ROUTE_CODE", smDtaLastSttusVO.getROAD_NO());
 		param.put("p_SRVY_NO", smDtaLastSttusVO.getSRVY_NO());
     	param.put("p_USER_NO", smDtaLastSttusVO.getCRTR_NO());
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) call("smDtaLastSttusDAO.PRC_CLAC_PREDCT_LAST", param);
+    	HashMap resultVO = (HashMap) select("smDtaLastSttusDAO.PRC_CLAC_PREDCT_LAST", param);
+    	
+        logger.info("[smDtaLastSttusVO result] " + resultVO.toString());
     	return resultVO;
 	}
 
@@ -234,7 +240,7 @@ public class SmDtaLastSttusDAO extends BaseDAO {
     	param.put("p_DEPT_CODE", smDtaLastSttusVO.getDEPT_CODE());
     	param.put("p_MODE", mode);
     	
-    	return (List) procForList("smDtaLastSttusDAO.PRC_STAT_PREDCT_EXCEL", param);
+    	return (List) list("smDtaLastSttusDAO.PRC_STAT_PREDCT_EXCEL", param);
 	}
     
     /**
