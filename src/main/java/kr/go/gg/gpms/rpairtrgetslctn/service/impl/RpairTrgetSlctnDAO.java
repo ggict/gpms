@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import egovframework.example.cmmn.impl.BaseDAO;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
+import kr.go.gg.gpms.cell10.service.model.Cell10VO;
 import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 
 /**
@@ -95,6 +96,7 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 	 * 보수대상선정 항목을 집계한다.
 	 */
 	public HashMap procClacprcRepairTargets(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
+		logger.info("procClacprcRepairTargetsVO: " + rpairTrgetSlctnVO.toString());
 		HashMap param = new HashMap();
 		param.put("p_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
 		param.put("p_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
@@ -103,7 +105,9 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 		param.put("p_ST_RATE",  Float.parseFloat(rpairTrgetSlctnVO.getST_RATE()));
 		param.put("p_PM_RATE",  Float.parseFloat(rpairTrgetSlctnVO.getPM_RATE()));
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) call("rpairTrgetSlctnDAO.PRC_REPAIR_TARGETS", param);
+
+    	HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGETS", param);
+    	logger.info("procClacprcRepairTargetsResultVO: " + resultVO.toString());
     	return resultVO;
 	}
 
@@ -119,9 +123,10 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 	 * @return
 	 */
 	public HashMap procRepairTargetRangeSelect(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
+		logger.info("procRepairTargetRangeSelectVO: " + rpairTrgetSlctnVO.toString());
 		HashMap param = new HashMap();
-		param.put("p_USER_NO", Long.parseLong(rpairTrgetSlctnVO.getCRTR_NO()));
-		param.put("p_TRGET_SLCTN_NO", Long.parseLong(rpairTrgetSlctnVO.getTRGET_SLCTN_NO()));
+		param.put("p_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
+		param.put("p_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
 		param.put("p_SLCTN_BUDGET", rpairTrgetSlctnVO.getSLCTN_BUDGET());
 		param.put("p_DEPT_CODE", rpairTrgetSlctnVO.getDEPT_CODE());
 		param.put("p_DECSN_MTHD_1_RATE", rpairTrgetSlctnVO.getDECSN_MTHD_1_RATE());
@@ -130,7 +135,9 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 		param.put("p_DECSN_MTHD_4_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_4_RATE());
 		param.put("p_DECSN_MTHD_5_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_5_RATE());
     	param.put("p_MODE", "NONE");
+    	
     	HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT", param);
+    	logger.info("procRepairTargetRangeSelectResultVO: " + resultVO.toString());
     	return resultVO;
 	}
 
@@ -140,6 +147,7 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 	 * @return
 	 */
 	public HashMap procRepairTargetRangeString(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
+		logger.info("procRepairTargetRangeStringVO: " + rpairTrgetSlctnVO.toString());
 		HashMap param = new HashMap();
 		param.put("p_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
 		param.put("p_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
@@ -151,7 +159,9 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 		param.put("p_DECSN_MTHD_4_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_4_RATE());
 		param.put("p_DECSN_MTHD_5_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_5_RATE());
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) call("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_STRING", param);
+    	
+    	HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_STRING", param);
+    	logger.info("procRepairTargetRangeStringResultVO: " + resultVO.toString());
     	return resultVO;
 	}
 	/**
@@ -160,6 +170,7 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 	 * @return
 	 */
 	public HashMap procRepairTargetBudgetRate(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
+		logger.info("procRepairTargetBudgetRateVO: " + rpairTrgetSlctnVO.toString());
 		HashMap param = new HashMap();
 		param.put("p_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
 		param.put("p_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
@@ -171,17 +182,21 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 		param.put("p_DECSN_MTHD_4_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_4_RATE());
 		param.put("p_DECSN_MTHD_5_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_5_RATE());
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) call("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_BUDGET_RATE", param);
+
+    	HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_BUDGET_RATE", param);
+    	logger.info("procRepairTargetBudgetRateResultVO: " + resultVO.toString());
     	return resultVO;
 	}
 
 	public HashMap procRepairTargetComplete(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
+		logger.info("procRepairTargetCompleteVO: " + rpairTrgetSlctnVO.toString());
 		HashMap param = new HashMap();
 		param.put("p_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
 		param.put("p_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
 		param.put("p_MODE", "NONE");
 
-    	HashMap resultVO = (HashMap) call("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_COMPLETE", param);
+    	HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_COMPLETE", param);
+    	logger.info("procRepairTargetCompleteResultVO: " + resultVO.toString());
     	return resultVO;
 	}
 
