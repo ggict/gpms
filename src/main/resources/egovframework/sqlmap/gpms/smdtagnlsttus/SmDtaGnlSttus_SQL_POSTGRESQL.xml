@@ -743,14 +743,14 @@
             , tnsmdtagnlsttus.GPCI /* 집계_자료_일반_현황.GPCI */
             , tnsmdtagnlsttus.PC_GRAD /* 집계_자료_일반_현황.포장상태등급 */
             , tnsmdtagnlsttus.BC_IDX /* 집계_자료_일반_현황.블럭균열_지수 */
-            , TO_NUMBER(tnsmdtagnlsttus.ROUTE_CODE) AS ROAD_NO_VAL
+            , tnsmdtagnlsttus.ROUTE_CODE::int AS ROAD_NO_VAL
             , road.ROAD_NAME AS ROAD_NM
             , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
                         WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) AS CNTL_DFECT_NM
             , ( SELECT code.CODE_NM FROM TC_CODE code
                     WHERE code.CODE_VAL = road.ROAD_GRAD ) AS ROAD_GRAD
             , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
-                    WHERE tcdept.DEPT_CODE = sect.DEPT_CODE ) AS DEPT_CODE
+                    WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE
             , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
                     WHERE tccode.CODE_VAL = sect.CELL_TYPE ) AS CELL_TYPE
             , ( SELECT tccode.CODE_NM FROM TC_CODE tccode

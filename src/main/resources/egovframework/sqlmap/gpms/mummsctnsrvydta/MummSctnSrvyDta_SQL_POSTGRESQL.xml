@@ -442,7 +442,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			, tnmummsctnsrvydta.LAST_DTA_AT /* 최소_구간_조사_자료.최종_자료_여부 */
 		FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
 		WHERE 1 = 1
-		AND tnmummsctnsrvydta.DTA_NO = #DTA_NO# /* 최소_구간_조사_자료.자료_번호 */
+		AND tnmummsctnsrvydta.DTA_NO = #DTA_NO#::int /* 최소_구간_조사_자료.자료_번호 */
 		AND tnmummsctnsrvydta.DELETE_AT = 'N' /* 최소_구간_조사_자료.삭제_여부 */
 		AND tnmummsctnsrvydta.USE_AT = 'Y' /* 최소_구간_조사_자료.사용_여부 */
 ]]>
