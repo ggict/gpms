@@ -76,7 +76,7 @@ $( document ).ready(function() {
 function fnSelectAvg(param) {
 
 	var postDatas = { "CELL_ID": param.CELL_ID };
-
+	
 	$.ajax({
 	    url: "<c:url value='/api/mummsctnsrvydta/selectMummSctnSrvyDtaListByItgrtnAvg.do' />",
         contentType: 'application/json',

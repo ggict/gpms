@@ -142,7 +142,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 			AND tnsysuser.USE_AT = 'Y' AND tnsysuser.CONFM_AT = 'Y' AND tnsysuser.DELETE_AT = 'N' )	UPDUSR_ID
 		FROM TC_CODE tccode
 		WHERE 1 = 1
-		AND tccode.CODE_VAL = #CODE_VAL# /* 공통코드.코드_값 */
+		AND tccode.CODE_VAL = UPPER(#CODE_VAL#) /* 공통코드.코드_값 */
 ]]>
 	</select>
 	
