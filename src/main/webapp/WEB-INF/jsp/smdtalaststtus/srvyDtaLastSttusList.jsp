@@ -204,7 +204,8 @@ $( document ).ready(function() {
 		    var objId = $("#gridArea").getRowData(rowId).OBJECT_ID;
 		    var cellId = $("#gridArea").getRowData(rowId).CELL_ID;
 		    var smNo = $("#gridArea").getRowData(rowId).SM_NO;
-		    fnSelectLoc(objId);
+		    //fnSelectLoc(objId);
+		    fnSelectLoc(cellId);
 		    parent.COMMON_UTIL.cmMenuUrlContent('smdtalaststtus/selectSrvyDtaLastSttusDetail.do?SM_NO=' + smNo + '&OBJECT_ID=' + objId + '&CELL_ID=' + cellId + param, true);
 
 		}

@@ -822,7 +822,7 @@
 		    FROM (
 			    SELECT
 				    tnsmdtalaststtus.SM_NO
-				    , sect.OBJECT_ID
+				    , sect.OBJECT_ID::text
 				    , sect.CELL_ID
 				    , tnsmdtalaststtus.CALC_YEAR
 				    , tnsmdtalaststtus.ROUTE_CODE
@@ -883,7 +883,7 @@
 
 		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND sect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
-		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID#::int ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
 		<isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
@@ -984,7 +984,7 @@
 
 		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND sect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
-		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+		<isNotEmpty property="OBJECT_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID#::int ]]></isNotEmpty>
 		<isNotEmpty property="ROUTE_CODE"><![CDATA[ AND tnsmdtalaststtus.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE#::int ]]></isNotEmpty>
 		<isNotEmpty property="SECT_SE"><![CDATA[ AND sect.CELL_TYPE = #SECT_SE# ]]></isNotEmpty>
