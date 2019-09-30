@@ -1782,7 +1782,8 @@ MAP.CONTROL = (function($, undefined){
 				"</tr>" +
 			"</tbody>";
 
-		if(_oRes[0].feature.data.ROUTE_CODE == routeCd){
+		var route_code = _oRes[0].feature.data.ROUTE_CODE || _oRes[0].feature.data.route_code;
+		if(route_code == routeCd){
 			feats.push(_oRes[0].feature);
 		}
 
@@ -1831,7 +1832,10 @@ MAP.CONTROL = (function($, undefined){
 			"</tbody>";
 
 		for(var j=0; j <_oRes.length; j++){
-			if(_oRes[j].feature.data.ROUTE_CODE != routeCd){continue;}
+			var route_code = _oRes[j].feature.data.ROUTE_CODE || _oRes[j].feature.data.route_code;
+			if(route_code != routeCd){
+				continue; 
+			}
 			feats.push(_oRes[j].feature);
 		}
 
