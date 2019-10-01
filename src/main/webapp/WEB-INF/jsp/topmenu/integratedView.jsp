@@ -1336,7 +1336,7 @@ function fnSearchStatus(cellIds) {
                      // 주 파손
                      var crVal = "";
 
-                     if ( avg.CNTL_DFECT != "DFCT0009" ) {
+                     if ( avg.CNTL_DFECT != "dfct0009" ) {
                          var codeNm = avg.CODE_NM;
 
                          if ( codeNm == "AC" ) {
@@ -1380,7 +1380,7 @@ function fnSearchStatus(cellIds) {
                              for ( var i = 0; i < valArr.length; i++ ) {
 
                                  // max값과 같은 경우 텍스트 추가
-                                 if ( valArr[i] == minVal ) {
+                                 if ( valArr[i] == maxVal ) {
 
                                      if ( i != 0 ) {
                                          crVal += ", ";
@@ -1436,7 +1436,7 @@ function fnSearchStatus(cellIds) {
 
                      // 평가정보
                      $("#gpci").text( parseFloat(avg.GPCI).toFixed(2) );
-                     $("#crVal").text(crVal);
+                     $("#crVal").html(crVal);
                      $("#dmgCuz").html(cuz);
                 }
              }

@@ -100,7 +100,7 @@ function fnSelectAvg(param) {
 	   		    // 주 파손
 	   		    var crVal = "";
 
-	   		    if ( jdata.CNTL_DFECT != "DFCT0009" ) {
+	   		    if ( jdata.CNTL_DFECT != "dfct0009" ) {
 					var codeNm = jdata.CODE_NM;
 
 					if ( codeNm == "AC" ) {
@@ -140,7 +140,7 @@ function fnSelectAvg(param) {
 
 				   		for ( var i = 0; i < valArr.length; i++ ) {
 				   		    // max값과 같은 경우 텍스트 추가
-				   		    if ( valArr[i] == minVal ) {
+				   		    if ( valArr[i] == maxVal ) {
 				   		     	if ( i != 0 ) {
 					   		        crVal += ", ";
 					   		    }
