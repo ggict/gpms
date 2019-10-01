@@ -1405,7 +1405,7 @@ function fnSearchStatus(cellIds) {
                              cuz = "파손없음";
 
                          } else if ( etc != 0 ) {
-                             cuz = "<br />교통량/하부불량,<br />기후, 기타";
+                             cuz = "<br/>교통량/하부불량,<br/> 기후, 기타";
                              $("#dmgCuz").css({"line-height": "15px", "font-size": "19px"});
                          }
 
@@ -1437,7 +1437,7 @@ function fnSearchStatus(cellIds) {
                      // 평가정보
                      $("#gpci").text( parseFloat(avg.GPCI).toFixed(2) );
                      $("#crVal").text(crVal);
-                     $("#dmgCuz").text(cuz);
+                     $("#dmgCuz").html(cuz);
                 }
              }
          }
