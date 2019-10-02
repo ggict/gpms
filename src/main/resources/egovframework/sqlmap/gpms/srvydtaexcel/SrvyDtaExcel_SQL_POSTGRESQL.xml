@@ -681,7 +681,7 @@
 		   AND tnsrvydtaexcel.DELETE_AT = 'N'
 		   AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 	 	   AND tlsrvydtalog.PROCESS_STTUS = #PROCESS_STTUS#
-	 	   AND TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD') = TO_CHAR(cast(#CREAT_DT# as date), 'YYYY-MM-DD')
+	 	   AND TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD') = #CREAT_DT#
 	 	   AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#::int
 ]]>
 	</select>
