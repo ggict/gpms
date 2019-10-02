@@ -230,9 +230,9 @@ function($,undefined){
         	,format : sGetMapImageFormat
         	,version : sGetMapVersion
         	,crs : new OpenLayers.Projection(sRequestCrs)
-	        ,transparent : true
-	        ,dataHouse : CONFIG.fn_get_dataHouseName()
-	        //,sld_body : sSldBody
+        	,transparent : true
+        	,dataHouse : CONFIG.fn_get_dataHouseName()
+        	//,sld_body : sSldBody
         }, {
         	isBaseLayer : true,
         	singleTile : true,
