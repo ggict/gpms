@@ -298,11 +298,11 @@
         /* CELL_TYPE에 따른  CELL_TYPE 수정*/
         UPDATE CELL_10
            SET CELL_TYPE = (#CELL_TYPE#)
-         WHERE ROUTE_CODE::int = #ROUTE_CODE#
+         WHERE ROUTE_CODE = #ROUTE_CODE#
            AND DIRECT_CODE = #DIRECT_CODE#
            AND TRACK = #TRACK#
-           AND STRTPT >= #STRTPT#
-           AND ENDPT <= #ENDPT#
+           AND STRTPT >= #STRTPT#::int
+           AND ENDPT <= #ENDPT#::int
     ]]>
     </update>
 
