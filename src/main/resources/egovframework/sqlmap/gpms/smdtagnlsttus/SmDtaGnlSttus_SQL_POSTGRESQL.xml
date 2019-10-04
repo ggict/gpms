@@ -407,7 +407,7 @@
             , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
                     WHERE tccode.CODE_VAL = sect.VMTC_GRAD ) AS VMTC_GRAD
             , ( SELECT n3a.NAME FROM N3A_G0100000 n3a
-                    WHERE SUBSTR(n3a.BJCD, 0, 5) = sect.ADM_CODE ) AS ADM_CODE
+                    WHERE SUBSTR(n3a.BJCD, 1, 5) = sect.ADM_CODE ) AS ADM_CODE
             , sect.CELL_ID
             , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.AC_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) AC_RATE
             , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.BC_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) BC_RATE
@@ -890,7 +890,7 @@
             , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
                     WHERE tccode.CODE_VAL = sect.VMTC_GRAD ) AS VMTC_GRAD
             , ( SELECT n3a.NAME FROM N3A_G0100000 n3a
-                    WHERE SUBSTR(n3a.BJCD, 0, 5) = sect.ADM_CODE ) AS ADM_CODE
+                    WHERE SUBSTR(n3a.BJCD, 1, 5) = sect.ADM_CODE ) AS ADM_CODE
             , sect.CELL_ID
             , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.AC_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) AC_RATE
             , FN_GET_GPCI_RDUCT_RATE(tnsmdtagnlsttus.BC_IDX, '0', '0', sect.CELL_TYPE, 'SCR', 0) BC_RATE

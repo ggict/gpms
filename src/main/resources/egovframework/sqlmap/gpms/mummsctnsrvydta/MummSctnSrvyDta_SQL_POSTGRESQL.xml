@@ -1398,7 +1398,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                 , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
                     WHERE tccode.CODE_VAL = sect.VMTC_GRAD ) AS VMTC_GRAD
                 , ( SELECT n3a.NAME FROM N3A_G0100000 n3a
-                    WHERE SUBSTR(n3a.BJCD, 0, 5) = sect.ADM_CODE ) AS ADM_CODE
+                    WHERE SUBSTR(n3a.BJCD, 1, 5) = sect.ADM_CODE ) AS ADM_CODE
                 , tnsmdtagnlsttus.AC_LOW
                 , tnsmdtagnlsttus.AC_MED
                 , tnsmdtagnlsttus.AC_HI
@@ -1473,7 +1473,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                 , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
                     WHERE tccode.CODE_VAL = cell.VMTC_GRAD ) AS VMTC_GRAD
                 , ( SELECT n3a.NAME FROM N3A_G0100000 n3a
-                    WHERE SUBSTR(n3a.BJCD, 0, 5) = cell.ADM_CODE ) AS ADM_CODE
+                    WHERE SUBSTR(n3a.BJCD, 1, 5) = cell.ADM_CODE ) AS ADM_CODE
                 , tnmummsctnsrvydta.AC_LOW
                 , tnmummsctnsrvydta.BLOCK_CR_LOW
                 , tnmummsctnsrvydta.LC_LOW

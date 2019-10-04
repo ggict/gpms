@@ -205,7 +205,7 @@
                 , (SELECT tccode.CODE_NM FROM TC_CODE tccode
                     WHERE tccode.CODE_VAL = cell10.ROAD_GRAD AND tccode.CL_CODE = 'RDGD'
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') ROAD_GRAD /* CELL_10.ROAD_GRAD */
-                , (SELECT n3a.NAME FROM N3A_G0100000 n3a WHERE SUBSTR(n3a.BJCD,0,5) = cell10.ADM_CODE) ADM_NM /* CELL_10.ADM_CODE */
+                , (SELECT n3a.NAME FROM N3A_G0100000 n3a WHERE SUBSTR(n3a.BJCD,1,5) = cell10.ADM_CODE) ADM_NM /* CELL_10.ADM_CODE */
                 , cell10.CREAT_DT /* CELL_10.CREAT_DT */
                 , cell10.UPDUSR_NO /* CELL_10.UPDUSR_NO */
                 , cell10.UPDT_DT /* CELL_10.UPDT_DT */

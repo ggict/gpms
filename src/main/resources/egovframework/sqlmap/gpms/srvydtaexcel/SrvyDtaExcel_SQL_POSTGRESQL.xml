@@ -1056,7 +1056,7 @@
 		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN, tb.* FROM (
 			SELECT tnsrvydtaexcel.SRVY_NO
 			     , tnattachfile.ORGINL_FILE_NM FILE_NM
-			     , SUBSTR(tnsrvydtaexcel.SRVY_DE, 0, 4) || '년 ' || SUBSTR(tnsrvydtaexcel.SRVY_DE, 5, 2) || '월' SRVY_DE
+			     , SUBSTR(tnsrvydtaexcel.SRVY_DE, 1, 4) || '년 ' || SUBSTR(tnsrvydtaexcel.SRVY_DE, 5, 2) || '월' SRVY_DE
 			     , TO_CHAR(NOW(), 'YYYY') || '년 ' || TO_CHAR(NOW(), 'MM') || '월' CALC_DE
 			     , to_char(now()::timestamp + '12 month', 'YYYY') || '~' || to_char(now()::timestamp + '120 month', 'YYYY') PREDCT_DE
 			     , tnsrvydtaexcel.DATA_CO
