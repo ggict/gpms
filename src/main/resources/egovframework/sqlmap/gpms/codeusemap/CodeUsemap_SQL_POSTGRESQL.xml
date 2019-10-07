@@ -89,9 +89,17 @@
 			tccodeusemap.TABLE_NM /* 코드사용맵.테이블_명 */
 			, tccodeusemap.COLMN_NM /* 코드사용맵.칼럼_명 */
 			, tccodeusemap.CL_CODE /* 코드사용맵.분류_코드 */
-			, (SELECT UTC.COMMENTS FROM USER_TAB_COMMENTS UTC WHERE UTC.TABLE_NAME = tccodeusemap.TABLE_NM) TABLE_COMMENTS
-    		, (SELECT UCC.COMMENTS FROM USER_COL_COMMENTS UCC WHERE UCC.TABLE_NAME = tccodeusemap.TABLE_NM AND tccodeusemap.COLMN_NM = UCC.COLUMN_NAME) COLUMN_COMMENTS
-
+			, (SELECT obj_description(c.oid) 
+                        FROM   pg_catalog.pg_class c inner join pg_catalog.pg_namespace n on c.relnamespace=n.oid
+                        WHERE  c.relname = tccodeusemap.table_nm
+					   	 AND c.relkind = 'r'
+						 AND nspname='gpms') TABLE_COMMENTS
+    		, (SELECT (select col_description(a.attrelid, a.attnum)) 
+                        FROM   pg_catalog.pg_class c inner join pg_catalog.pg_attribute a on a.attrelid = c.oid 
+                        WHERE  c.relname = tccodeusemap.table_nm 
+                               AND tccodeusemap.colmn_nm = a.attname
+					   		   AND a.attnum > 0) 
+                       COLUMN_COMMENTS
 			, tccodeusemap.USE_AT /* 코드사용맵.사용_여부 */
 			, tccodeusemap.CRTR_NO /* 코드사용맵.생성자_번호 */
 			, tccodeusemap.CREAT_DT /* 코드사용맵.생성_일시 */
@@ -115,10 +123,12 @@
 
 	/* codeUsemapDAO.selectTables */
 		/* 테이블 조회 */
-		SELECT DISTINCT UT.TABLE_NAME TABLE_NM,   UT.COMMENTS || ' ' || UT.TABLE_NAME TABLE_COMMENTS
-		FROM USER_TAB_COMMENTS UT
-		WHERE ( UT.TABLE_NAME LIKE 'T%' OR UT.TABLE_NAME IN ('CELL_10','CELL_SECT') )
-		AND  UT.TABLE_NAME  NOT IN ('TOAD_PLAN_TABLE')
+		SELECT DISTINCT c.relname TABLE_NM,  COALESCE (obj_description(c.oid)|| '  ' || c.relname, c.relname) TABLE_COMMENTS
+		FROM pg_catalog.pg_class c inner join pg_catalog.pg_namespace n on c.relnamespace=n.oid
+		WHERE ( c.relname LIKE 't%' OR obj_description(c.oid) IN ('CELL_10','CELL_SECT') )
+		AND  c.relname  NOT IN ('TOAD_PLAN_TABLE')
+		AND c.relkind = 'r'
+		AND nspname='gpms'
 		ORDER BY TABLE_COMMENTS  ASC
 ]]>
 	</select>
@@ -131,18 +141,18 @@
 	<![CDATA[
 		/* codeUsemapDAO.selectColumnList */
 		/* 테이블 조회 */
-		SELECT UTC.TABLE_NAME TABLE_NM , UTC.COLUMN_NAME COLMN_NM, UCC.COMMENTS  || ' ' || UTC.COLUMN_NAME  COLUMN_COMMENTS
-		FROM USER_TAB_COLS UTC
-		LEFT OUTER JOIN USER_COL_COMMENTS UCC
-		ON UTC.TABLE_NAME = UCC.TABLE_NAME
-		AND UTC.COLUMN_NAME = UCC.COLUMN_NAME
-		WHERE 1=1
-		AND ( UTC.TABLE_NAME LIKE 'T%' OR UTC.TABLE_NAME IN ('CELL_10','CELL_SECT') )
-		AND UTC.TABLE_NAME  NOT IN ('TOAD_PLAN_TABLE')
-		AND UTC.COLUMN_NAME NOT IN ('USE_AT','DELETE_AT','CREAT_DT','CRTR_NO','UPDT_DT','UPDUSR_NO')
-	    AND utc.column_name NOT LIKE 'SYS_%' /*시스템에서 사용하지 않는 컬럼 항목 제외*/
-		AND UTC.TABLE_NAME = #TABLE_NM#
-		ORDER BY COLUMN_COMMENTS ASC
+		select c.relname table_nm, a.attname colmn_nm, (select col_description(a.attrelid, a.attnum)) || ' ' || a.attname column_comments
+		from
+   			pg_catalog.pg_class c
+    		inner join pg_catalog.pg_attribute a on a.attrelid = c.oid
+		where 1=1
+		 and ( c.relname like 't%' or c.relname in ('cell_10','cell_sect') )
+		 and c.relname  not in ('toad_plan_table')
+		 and a.attname not in ('use_at','delete_at','creat_dt','crtr_no','updt_dt','updusr_no')
+	     and a.attname not like 'sys_%' /*시스템에서 사용하지 않는 컬럼 항목 제외*/
+		 and c.relname = #TABLE_NM#
+		 and a.attnum > 0
+		order by column_comments asc
 ]]>
 	</select>
 
@@ -266,9 +276,16 @@
 										tccodeusemap.TABLE_NM /* 코드사용맵.테이블_명 */
 											, tccodeusemap.COLMN_NM /* 코드사용맵.칼럼_명 */
 											, tccodeusemap.CL_CODE /* 코드사용맵.분류_코드 */
-											, (SELECT UTC.COMMENTS FROM USER_TAB_COMMENTS UTC WHERE UTC.TABLE_NAME = tccodeusemap.TABLE_NM) TABLE_COMMENTS
-    										, (SELECT UCC.COMMENTS FROM USER_COL_COMMENTS UCC WHERE UCC.TABLE_NAME = tccodeusemap.TABLE_NM AND tccodeusemap.COLMN_NM = UCC.COLUMN_NAME) COLUMN_COMMENTS
-
+											, (SELECT obj_description(c.oid) 
+                        						FROM   pg_catalog.pg_class c inner join pg_catalog.pg_namespace n on c.relnamespace=n.oid
+                        						WHERE  c.relname = tccodeusemap.table_nm
+					   							 AND c.relkind = 'r'
+												 AND nspname='gpms') TABLE_COMMENTS
+    										, (SELECT (select col_description(a.attrelid, a.attnum)) 
+                        						FROM   pg_catalog.pg_class c inner join pg_catalog.pg_attribute a on a.attrelid = c.oid 
+                        						WHERE  c.relname = tccodeusemap.table_nm 
+                              					 AND tccodeusemap.colmn_nm = a.attname
+					   		  					 AND a.attnum > 0) COLUMN_COMMENTS
 											, tccodeusemap.USE_AT /* 코드사용맵.사용_여부 */
 											, tccodeusemap.CRTR_NO /* 코드사용맵.생성자_번호 */
 											, tccodeusemap.CREAT_DT /* 코드사용맵.생성_일시 */
@@ -322,9 +339,17 @@
 				tccodeusemap.TABLE_NM /* 코드사용맵.테이블_명 */
 				, tccodeusemap.COLMN_NM /* 코드사용맵.칼럼_명 */
 				, tccodeusemap.CL_CODE /* 코드사용맵.분류_코드 */
-				, (SELECT UTC.COMMENTS FROM USER_TAB_COMMENTS UTC WHERE UTC.TABLE_NAME = tccodeusemap.TABLE_NM) TABLE_COMMENTS
-    			, (SELECT UCC.COMMENTS FROM USER_COL_COMMENTS UCC WHERE UCC.TABLE_NAME = tccodeusemap.TABLE_NM AND tccodeusemap.COLMN_NM = UCC.COLUMN_NAME) COLUMN_COMMENTS
-
+				, (SELECT obj_description(c.oid) 
+                        FROM   pg_catalog.pg_class c inner join pg_catalog.pg_namespace n on c.relnamespace=n.oid
+                        WHERE  c.relname = tccodeusemap.table_nm
+					   	 AND c.relkind = 'r'
+						 AND nspname='gpms') TABLE_COMMENTS
+    			, (SELECT (select col_description(a.attrelid, a.attnum)) 
+                        FROM   pg_catalog.pg_class c inner join pg_catalog.pg_attribute a on a.attrelid = c.oid 
+                        WHERE  c.relname = tccodeusemap.table_nm 
+                               AND tccodeusemap.colmn_nm = a.attname
+					   		   AND a.attnum > 0) 
+                       COLUMN_COMMENTS
 				, tccodeusemap.USE_AT /* 코드사용맵.사용_여부 */
 				, tccodeusemap.CRTR_NO /* 코드사용맵.생성자_번호 */
 				, tccodeusemap.CREAT_DT /* 코드사용맵.생성_일시 */
