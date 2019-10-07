@@ -8,8 +8,8 @@
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	-->
-	
-	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">		
+									
+	<bean id="sqlMapClient" class="egovframework.rte.psl.orm.ibatis.SqlMapClientFactoryBean">		
 		<property name="dataSource" ref="dataSource"/>
 		<!-- <property name="configLocation" value="classpath:/egovframework/sqlmap/example/sql-map-config.xml"/> -->
 		<property name="configLocations">
@@ -21,7 +21,7 @@
             </list>
         </property>
 	</bean>
-	<bean id="sqlMapClientMySQL" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">        
+	<bean id="sqlMapClientMySQL" class="egovframework.rte.psl.orm.ibatis.SqlMapClientFactoryBean">        
         <property name="dataSource" ref="dataSourceMySQL"/>
         <property name="configLocations">
             <list>

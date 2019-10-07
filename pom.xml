@@ -19,9 +19,9 @@
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<egovframework.rte.version>3.0.0</egovframework.rte.version>
-		<spring.maven.artifact.version>3.2.9.RELEASE</spring.maven.artifact.version>
-		<springframework.version>3.2.9.RELEASE</springframework.version>
+		<egovframework.rte.version>3.8.0</egovframework.rte.version>
+		<spring.maven.artifact.version>4.3.16.RELEASE</spring.maven.artifact.version>
+		<springframework.version>4.3.16.RELEASE</springframework.version>
 		<org.springframework.security-version>3.2.7.RELEASE</org.springframework.security-version>
 
 		<!-- egovframework
@@ -41,7 +41,7 @@
 		<hibernate.version>4.2.1.Final</hibernate.version>
 
 		<!-- json -->
-		<jackson.databind-version>2.2.3</jackson.databind-version>
+		<jackson.databind-version>2.5.1</jackson.databind-version>
 		<!-- tiles -->
 		<org.apache.tiles-version>3.0.0</org.apache.tiles-version>
 		<!-- Logging -->
@@ -377,6 +377,13 @@
 			<artifactId>gson</artifactId>
 			<version>2.2.4</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.5.1</version>
+		</dependency>
+		
 		<!-- HttpClient 추가 -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
