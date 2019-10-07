@@ -250,8 +250,8 @@
             <ul class="sch">
                 <li class="wid100">
                     <label>도로등급</label>
-                    <!-- <select name="PREDCT_ROAD_GRAD" id="PREDCT_ROAD_GRAD" style="width: 120px;"  onchange="COMMON_UTIL.fn_change_roadNo('PREDCT_ROAD_GRAD', 'PREDCT_ROAD_NO', 'PREDCT_ROAD_NAME');"> -->
-                    <select name="PREDCT_ROAD_GRAD" id="PREDCT_ROAD_GRAD" style="width: 120px;"  onchange="fn_change_roadNo();">
+                    <select name="PREDCT_ROAD_GRAD" id="PREDCT_ROAD_GRAD" style="width: 120px;"  onchange="COMMON_UTIL.fn_change_roadNo('PREDCT_ROAD_GRAD', 'PREDCT_ROAD_NO', 'PREDCT_ROAD_NAME');">
+                    <!-- <select name="PREDCT_ROAD_GRAD" id="PREDCT_ROAD_GRAD" style="width: 120px;"  onchange="fn_change_roadNo();"> -->
                         <option value="">== 전체 ==</option>
                         <c:forEach var="roadGrad" items="${ roadGradList }">
                             <option value="${ roadGrad.CODE_VAL }">${ roadGrad.CODE_NM }</option>
@@ -260,9 +260,9 @@
                 </li>
                 <li class="wid100">
                     <label>노선번호</label>
-                    <!-- <select id="PREDCT_ROAD_NO" name="PREDCT_ROAD_NO" alt="노선번호" onchange="COMMON_UTIL.fn_change_roadNm('PREDCT_ROAD_NO', 'PREDCT_ROAD_NAME', 'PREDCT_ROAD_GRAD');" style="width: 120px;" class="input">-->                        <option value="">== 전체 ==</option>
-                       <select id="PREDCT_ROAD_NO" name="PREDCT_ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" style="width: 120px;" class="input">
-                       
+                    <select id="PREDCT_ROAD_NO" name="PREDCT_ROAD_NO" alt="노선번호" onchange="COMMON_UTIL.fn_change_roadNm('PREDCT_ROAD_NO', 'PREDCT_ROAD_NAME', 'PREDCT_ROAD_GRAD');" style="width: 120px;" class="input">                        
+					<!-- <select id="PREDCT_ROAD_NO" name="PREDCT_ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" style="width: 120px;" class="input"> -->
+	                    <option value="">== 전체 ==</option>
                         <c:forEach items="${ roadNoList }" var="roadNo">
                             <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
                         </c:forEach>
