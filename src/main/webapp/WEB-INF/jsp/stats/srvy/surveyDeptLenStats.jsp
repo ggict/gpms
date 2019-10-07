@@ -91,7 +91,7 @@ function fnDeptLenSearch(deptCd,strDt,endDt,rw) {
 function drawDeptLenChart(dataList,rw){
 	var lenData	= [];
 	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].DEPT_NM});
+		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].DEPT_NM});
 	}
 	require([	'echarts','echarts/chart/pie'	],
 	        function (ec) {

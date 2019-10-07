@@ -50,6 +50,7 @@ import org.springframework.web.servlet.View;
 
 import egovframework.cmmn.util.DateUtil;
 import egovframework.cmmn.util.ExcelView;
+import egovframework.cmmn.util.NumberUtil;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -263,15 +264,15 @@ public class Cell10Controller extends BaseController {
 
         	 objRow = objSheet.createRow(i+2);
              objCell = objRow.createCell(0);
-             objCell.setCellValue(tempMap.get("ROUTE_CODE").toString());
+             objCell.setCellValue(tempMap.get("route_code").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("ROAD_NAME").toString());
+             objCell.setCellValue(tempMap.get("road_name").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(2);
-             objCell.setCellValue(tempMap.get("LEN").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -292,11 +293,11 @@ public class Cell10Controller extends BaseController {
 
         	 objRow = objSheet.createRow(++rowDept);
              objCell = objRow.createCell(0);
-             objCell.setCellValue(tempMap.get("DEPT_NM").toString());
+             objCell.setCellValue(tempMap.get("dept_nm").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("LEN").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -318,11 +319,11 @@ public class Cell10Controller extends BaseController {
 
         	 objRow = objSheet.createRow(++rowRout);
              objCell = objRow.createCell(0);
-             objCell.setCellValue(tempMap.get("ROAD_NAME").toString());
+             objCell.setCellValue(tempMap.get("road_name").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("LEN").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("len")));
              objCell.setCellStyle(styleHd);
          }
 
