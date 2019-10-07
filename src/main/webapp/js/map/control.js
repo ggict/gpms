@@ -3962,6 +3962,7 @@ MAP.CONTROL = (function($, undefined){
 	*/
 	var event_selSectFeature = function(res){
 		$("#dvMapLoading").hide();
+		
 		if (res.success()) {
 			if (res.data.length == "0") {
 				//영역내에 해당하는 자료가 없음
