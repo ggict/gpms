@@ -254,7 +254,7 @@
                     <select name="PREDCT_ROAD_GRAD" id="PREDCT_ROAD_GRAD" style="width: 120px;"  onchange="fn_change_roadNo();">
                         <option value="">== 전체 ==</option>
                         <c:forEach var="roadGrad" items="${ roadGradList }">
-                            <option value="${ selectData.CODE_VAL }">${ selectData.CODE_NM }</option>
+                            <option value="${ roadGrad.CODE_VAL }">${ roadGrad.CODE_NM }</option>
                         </c:forEach>
                     </select>
                 </li>
