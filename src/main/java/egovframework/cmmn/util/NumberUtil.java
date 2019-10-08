@@ -53,7 +53,10 @@ public class NumberUtil {
 	 */
 	public static String stripTrailingZeros(Object obj) throws Exception {
 		
-		if (obj instanceof BigDecimal) {
+		if (obj instanceof String) {
+			return String.valueOf(obj);
+			
+		} else if (obj instanceof BigDecimal) {
 			Double bigDecimalSrc = parseDouble(obj);
 			if (bigDecimalSrc != 0d) {
 				return BigDecimal.valueOf(bigDecimalSrc).stripTrailingZeros().toPlainString();
@@ -70,7 +73,7 @@ public class NumberUtil {
 			}
 			
 		} else if (obj instanceof Integer) {
-			return obj.toString();
+			return String.valueOf(obj);
 		}
 		
 		return "0";
