@@ -338,8 +338,8 @@
             /* cell10DAO.selectSrvyRoutLenStatsExcelResult */
             /* 포장상태조사구간 노선별 통계 엑셀 목록 조회*/
              SELECT tnrouteinfo.ROAD_NO::int as ROUTE_CODE,
-                    COALESCE(SUM(cell10.ROAD_L)/1000, 0) AS LEN
                     COALESCE(tnrouteinfo.ROAD_NAME,tnrouteinfo.ROAD_NO::text) as ROAD_NAME,
+                    COALESCE(SUM(cell10.ROAD_L)/1000, 0) AS LEN
                FROM TN_ROUTE_INFO tnrouteinfo LEFT OUTER JOIN CELL_10 cell10 ON tnrouteinfo.ROAD_NO = cell10.ROUTE_CODE
                     LEFT OUTER JOIN TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta ON cell10.ROUTE_CODE = tnmummsctnsrvydta.ROUTE_CODE
                 AND cell10.DIRECT_CODE = tnmummsctnsrvydta.DIRECT_CODE

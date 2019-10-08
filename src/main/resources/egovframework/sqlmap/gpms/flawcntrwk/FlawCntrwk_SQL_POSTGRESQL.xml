@@ -1100,9 +1100,9 @@
 				, tnflawcntrwk.PAV_MSRC_ETC /* 하자_보수_공사.포장_공법_기타 */
 				, tnflawcntrwk.RPAIR_THICK_DC /* 하자_보수_공사.보수_두께_설명 */
 				, tnflawcntrwk.RPAIR_THICK /* 하자_보수_공사.보수_두께 */
-				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tnflawcntrwk.RPAIR_AR,2))), '([0-9]{3})','\1,')), '^,','') AS RPAIR_AR /* 하자_보수_공사.보수_면적 */
+				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tnflawcntrwk.RPAIR_AR,2))), '([0-9]{3})','\1,','g')), '^,','') AS RPAIR_AR /* 하자_보수_공사.보수_면적 */
 				, tnflawcntrwk.RPAIR_BT /* 하자_보수_공사.보수_폭 */
-				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tnflawcntrwk.RPAIR_LEN,0))), '([0-9]{3})','\1,')), '^,','') AS RPAIR_LEN /* 하자_보수_공사.보수_연장 */
+				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tnflawcntrwk.RPAIR_LEN,0))), '([0-9]{3})','\1,','g')), '^,','') AS RPAIR_LEN /* 하자_보수_공사.보수_연장 */
 				, tnflawcntrwk.RPAIR_LC /* 하자_보수_공사.보수_위치 */
 				, tnflawcntrwk.RPAIR_DE /* 하자_보수_공사.보수_일자 */
 				, tnflawcntrwk.RPAIR_MATRL_DETAIL_NM /* 하자_보수_공사.보수_재료_세부_명 */
