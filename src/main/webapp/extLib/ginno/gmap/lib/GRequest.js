@@ -1214,8 +1214,8 @@ GRequest.WFS = {
 
 	getFeature : function(serviceUrl, params, filter, callback, options, sync) {
 		var control = this;
-		var prefix = params.prefix;
-		var namespace = 'xmlns:'+prefix+'="http://www.openplans.org/'+prefix;
+		var namespace = CONFIG.fn_getNamespace(params.prefix);
+		
 		var wfsStr = '';
 		//wfsStr += '<wfs:GetFeature service="WFS" version="1.1.0" maxFeatures="' + params.maxFeatures + '" xmlns:ehmp="http://health-e-waterways.org" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">';
 		//wfsStr += '<wfs:GetFeature strict="true" service="WFS" version="1.1.0" maxFeatures="' + params.maxFeatures + '" '+namespace+'" xmlns:wfs="http://www.opengis.net/wfs" xmlns:ogc="http://www.opengis.net/ogc" xmlns:gml="http://www.opengis.net/gml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd">';
