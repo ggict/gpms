@@ -135,118 +135,122 @@
 	<select id="menuDAO.selectMenuList" parameterClass="menuVO"
 		resultClass="menuVO">
 		<![CDATA[ 		
-			/* menuDAO.selectMenuList */
-			WITH TT AS (
-with a as(
-SELECT tnmenu.*, 
-       (SELECT tnsysuser.user_id /* 시스템사용자.사용자_ID */ 
-        FROM   tn_sys_user tnsysuser 
-        WHERE  1 = 1 
-               AND tnsysuser.user_no = tnmenu.updusr_no 
-               /* 시스템사용자.사용자_번호 */ 
-               AND tnsysuser.use_at = 'Y' 
-               AND tnsysuser.confm_at = 'Y' 
-               AND tnsysuser.delete_at = 'N') UPDUSR_ID 
-FROM   (SELECT ROW_NUMBER() OVER() AS rn, 
-               tb.* 
-        FROM   
-			(SELECT tnmenu.menu_id /* 시스템메뉴.메뉴_ID */, 
-                       tnmenu.upper_menu_id 
-                       /* 시스템메뉴.상위_메뉴_ID */, 
-                       tnmenu.use_at /* 시스템메뉴.사용_여부 */, 
-                       tnmenu.delete_at /* 시스템메뉴.삭제_여부 */, 
-                       tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */, 
-                       tnmenu.updt_dt /* 시스템메뉴.수정_일시 */, 
-                       tnmenu.menu_nm MENU_NM 
-                       /* 시스템메뉴.메뉴_명 */, 
-                       tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */, 
-                       tnmenu.creat_dt /* 시스템메뉴.생성_일시 */, 
-                       tnmenu.url /* 시스템메뉴.URL */, 
-                       tnmenu.menu_dc /* 시스템메뉴.메뉴_설명 */, 
-                       tnmenu.sys_code/* 시스템메뉴.시스템_코드 */, 
-                       tnmenu.menu_dp/* 시스템메뉴.시스템_레벨 */ 
-                FROM   tn_menu tnmenu 
+		/* menuDAO.selectMenuList */
+		with b (RN,menu_id, upper_menu_id, use_at, delete_at, updusr_no, updt_dt, menu_nm, crtr_no, creat_dt, url, menu_dc, sys_code, menu_dp, updusr_id) as(
+			with a as(
+				SELECT tnmenu.*, 
+					(SELECT tnsysuser.user_id /* 시스템사용자.사용자_ID */ 
+					 FROM   tn_sys_user tnsysuser 
+					 WHERE  1 = 1 
+		               AND tnsysuser.user_no = tnmenu.updusr_no /* 시스템사용자.사용자_번호 */ 
+		               AND tnsysuser.use_at = 'Y' 
+		               AND tnsysuser.confm_at = 'Y' 
+		               AND tnsysuser.delete_at = 'N') UPDUSR_ID 
+				FROM   
+					(SELECT ROW_NUMBER() OVER() AS rn, tb.* 
+					 FROM   
+						(SELECT tnmenu.menu_id /* 시스템메뉴.메뉴_ID */, 
+		                       tnmenu.upper_menu_id /* 시스템메뉴.상위_메뉴_ID */, 
+		                       tnmenu.use_at /* 시스템메뉴.사용_여부 */, 
+		                       tnmenu.delete_at /* 시스템메뉴.삭제_여부 */, 
+		                       tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */, 
+		                       tnmenu.updt_dt /* 시스템메뉴.수정_일시 */, 
+		                       tnmenu.menu_nm MENU_NM /* 시스템메뉴.메뉴_명 */, 
+		                       tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */, 
+		                       tnmenu.creat_dt /* 시스템메뉴.생성_일시 */, 
+		                       tnmenu.url /* 시스템메뉴.URL */, 
+		                       tnmenu.menu_dc /* 시스템메뉴.메뉴_설명 */, 
+		                       tnmenu.sys_code/* 시스템메뉴.시스템_코드 */, 
+		                       tnmenu.menu_dp/* 시스템메뉴.시스템_레벨 */ 
+		                 FROM  tn_menu tnmenu
 		]]>
 		<include refid="menuDAO.selectMenuList.where" />
 		<isNotEmpty property="SCH_MENU_S">
 			<![CDATA[
-				 AND tnmenu.MENU_ID = #SCH_MENU_S#
-               ) tb) tnmenu 
-	)
-SELECT tnmenu.*, 
-       (SELECT tnsysuser.user_id /* 시스템사용자.사용자_ID */ 
-        FROM   tn_sys_user tnsysuser 
-        WHERE  1 = 1 
-               AND tnsysuser.user_no = tnmenu.updusr_no 
-               /* 시스템사용자.사용자_번호 */ 
-               AND tnsysuser.use_at = 'Y' 
-               AND tnsysuser.confm_at = 'Y' 
-               AND tnsysuser.delete_at = 'N') UPDUSR_ID 
-FROM   (SELECT ROW_NUMBER() OVER() AS rn, 
-               tb.* 
-        FROM   
-			(SELECT tnmenu.menu_id /* 시스템메뉴.메뉴_ID */, 
-                       tnmenu.upper_menu_id 
-                       /* 시스템메뉴.상위_메뉴_ID */, 
-                       tnmenu.use_at /* 시스템메뉴.사용_여부 */, 
-                       tnmenu.delete_at /* 시스템메뉴.삭제_여부 */, 
-                       tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */, 
-                       tnmenu.updt_dt /* 시스템메뉴.수정_일시 */, 
-                       tnmenu.menu_nm MENU_NM 
-                       /* 시스템메뉴.메뉴_명 */, 
-                       tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */, 
-                       tnmenu.creat_dt /* 시스템메뉴.생성_일시 */, 
-                       tnmenu.url /* 시스템메뉴.URL */, 
-                       tnmenu.menu_dc /* 시스템메뉴.메뉴_설명 */, 
-                       tnmenu.sys_code/* 시스템메뉴.시스템_코드 */, 
-                       tnmenu.menu_dp/* 시스템메뉴.시스템_레벨 */ 
-                FROM   tn_menu tnmenu 
+						  AND tnmenu.MENU_ID = #SCH_MENU_S#
+		               order by menu_id
+	               ) tb) tnmenu
+			)
+			SELECT tnmenu.*, 
+				(SELECT tnsysuser.user_id /* 시스템사용자.사용자_ID */ 
+				 FROM   tn_sys_user tnsysuser 
+				 WHERE  1 = 1 
+	               AND tnsysuser.user_no = tnmenu.updusr_no 
+	               /* 시스템사용자.사용자_번호 */ 
+	               AND tnsysuser.use_at = 'Y' 
+	               AND tnsysuser.confm_at = 'Y' 
+	               AND tnsysuser.delete_at = 'N') UPDUSR_ID 
+			FROM   
+				(SELECT ROW_NUMBER() OVER() AS rn, tb.* 
+				 FROM   
+					(SELECT tnmenu.menu_id /* 시스템메뉴.메뉴_ID */, 
+	                       tnmenu.upper_menu_id /* 시스템메뉴.상위_메뉴_ID */, 
+	                       tnmenu.use_at /* 시스템메뉴.사용_여부 */, 
+	                       tnmenu.delete_at /* 시스템메뉴.삭제_여부 */, 
+	                       tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */, 
+	                       tnmenu.updt_dt /* 시스템메뉴.수정_일시 */, 
+	                       tnmenu.menu_nm MENU_NM 
+	                       /* 시스템메뉴.메뉴_명 */, 
+	                       tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */, 
+	                       tnmenu.creat_dt /* 시스템메뉴.생성_일시 */, 
+	                       tnmenu.url /* 시스템메뉴.URL */, 
+	                       tnmenu.menu_dc /* 시스템메뉴.메뉴_설명 */, 
+	                       tnmenu.sys_code/* 시스템메뉴.시스템_코드 */, 
+	                       tnmenu.menu_dp/* 시스템메뉴.시스템_레벨 */ 
+	                 FROM   tn_menu tnmenu 
 				    	  
 			]]>
 		<include refid="menuDAO.selectMenuList.where" />
 		</isNotEmpty>
 		<isEmpty property="SCH_MENU_S">
 			<![CDATA[
-				     AND  upper_menu_id IS NULL 
-               ) tb) tnmenu 
-	)
-SELECT tnmenu.*, 
-       (SELECT tnsysuser.user_id /* 시스템사용자.사용자_ID */ 
-        FROM   tn_sys_user tnsysuser 
-        WHERE  1 = 1 
-               AND tnsysuser.user_no = tnmenu.updusr_no 
-               /* 시스템사용자.사용자_번호 */ 
-               AND tnsysuser.use_at = 'Y' 
-               AND tnsysuser.confm_at = 'Y' 
-               AND tnsysuser.delete_at = 'N') UPDUSR_ID 
-FROM   (SELECT ROW_NUMBER() OVER() AS rn, 
-               tb.* 
-        FROM   
-			(SELECT tnmenu.menu_id /* 시스템메뉴.메뉴_ID */, 
-                       tnmenu.upper_menu_id 
-                       /* 시스템메뉴.상위_메뉴_ID */, 
-                       tnmenu.use_at /* 시스템메뉴.사용_여부 */, 
-                       tnmenu.delete_at /* 시스템메뉴.삭제_여부 */, 
-                       tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */, 
-                       tnmenu.updt_dt /* 시스템메뉴.수정_일시 */, 
-                       tnmenu.menu_nm MENU_NM 
-                       /* 시스템메뉴.메뉴_명 */, 
-                       tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */, 
-                       tnmenu.creat_dt /* 시스템메뉴.생성_일시 */, 
-                       tnmenu.url /* 시스템메뉴.URL */, 
-                       tnmenu.menu_dc /* 시스템메뉴.메뉴_설명 */, 
-                       tnmenu.sys_code/* 시스템메뉴.시스템_코드 */, 
-                       tnmenu.menu_dp/* 시스템메뉴.시스템_레벨 */ 
-                FROM   tn_menu tnmenu 
+						 AND  upper_menu_id IS NULL
+					 order by menu_id
+	               ) tb) tnmenu
+			)
+			SELECT tnmenu.*, 
+				(SELECT tnsysuser.user_id /* 시스템사용자.사용자_ID */ 
+				 FROM   tn_sys_user tnsysuser 
+				 WHERE  1 = 1 
+	               AND tnsysuser.user_no = tnmenu.updusr_no 
+	               /* 시스템사용자.사용자_번호 */ 
+	               AND tnsysuser.use_at = 'Y' 
+	               AND tnsysuser.confm_at = 'Y' 
+	               AND tnsysuser.delete_at = 'N') UPDUSR_ID 
+			FROM   
+				(SELECT ROW_NUMBER() OVER() AS rn, tb.* 
+				 FROM   
+					(SELECT tnmenu.menu_id /* 시스템메뉴.메뉴_ID */, 
+	                       tnmenu.upper_menu_id /* 시스템메뉴.상위_메뉴_ID */, 
+	                       tnmenu.use_at /* 시스템메뉴.사용_여부 */, 
+	                       tnmenu.delete_at /* 시스템메뉴.삭제_여부 */, 
+	                       tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */, 
+	                       tnmenu.updt_dt /* 시스템메뉴.수정_일시 */, 
+	                       tnmenu.menu_nm MENU_NM 
+	                       /* 시스템메뉴.메뉴_명 */, 
+	                       tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */, 
+	                       tnmenu.creat_dt /* 시스템메뉴.생성_일시 */, 
+	                       tnmenu.url /* 시스템메뉴.URL */, 
+	                       tnmenu.menu_dc /* 시스템메뉴.메뉴_설명 */, 
+	                       tnmenu.sys_code/* 시스템메뉴.시스템_코드 */, 
+	                       tnmenu.menu_dp/* 시스템메뉴.시스템_레벨 */ 
+	                 FROM   tn_menu tnmenu 
 			]]>
-		</isEmpty>	
 		<include refid="menuDAO.selectMenuList.where" />
+		</isEmpty>	
 		<![CDATA[
-				 ) tb) tnmenu 
-			LEFT join a on a.menu_id = tnmenu.upper_menu_id
-		)
-				SELECT * FROM TT
+						 order by menu_id
+						) tb) tnmenu
+			left join a on a.menu_id = tnmenu.upper_menu_id
+			)
+				select * from b
+			
 		]]>
+		<isNotEqual prepend=" " property="usePage" compareValue="true">
+		<![CDATA[
+		  	 ORDER BY MENU_ID
+		]]>	
+		</isNotEqual>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 		<![CDATA[
 		    WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage# ORDER BY MENU_ID

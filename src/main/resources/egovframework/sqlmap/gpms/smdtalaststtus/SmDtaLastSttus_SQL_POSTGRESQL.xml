@@ -1119,7 +1119,7 @@
 
 	<procedure id="smDtaLastSttusDAO.PRC_STAT_PREDCT_EXCEL"
 		parameterMap="prc_stat_predct" resultClass="hashMap">
-		{ call	PRC_STAT_PREDCT(?,?,?,?) }
+		 select * from	PRC_STAT_PREDCT(?,?,?) 
 	</procedure>
 
 	<select id="smDtaLastSttusDAO.selectSmDtaGnlGPCIList"

@@ -92,7 +92,7 @@ function drawRoutLenChart(dataList,rw){
 	for(var i=0; i<dataList.length; i++){
 		
 		gRouteNm.push(dataList[i].ROAD_NAME + "(" + dataList[i].ROUTE_CODE + ")");
-		lenData.push(dataList[i].LEN);
+		lenData.push(Number(dataList[i].LEN));
 	}
 	require([	'echarts','echarts/chart/bar'	],
 	        function (ec) {
@@ -184,7 +184,7 @@ function fnDeptLenSearch(rw) {
 function drawDeptLenChart(dataList,rw){
 	var lenData	= [];
 	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].DEPT_NM});
+		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].DEPT_NM});
 	}
 	require([	'echarts','echarts/chart/pie'	],
 	        function (ec) {
@@ -265,7 +265,7 @@ function fnRoadLenSearch(rw) {
 function drawRoadLenChart(dataList,rw){
 	var lenData	= [];
 	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].ROAD_NAME});
+		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].ROAD_NAME});
 	}
 	require([	'echarts','echarts/chart/pie'	],
 	        function (ec) {

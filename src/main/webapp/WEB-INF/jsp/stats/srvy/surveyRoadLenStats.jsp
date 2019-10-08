@@ -87,7 +87,7 @@ function fnRoadLenSearch(roadCd,strDt,endDt,rw) {
 function drawDeptLenChart(dataList,rw){
 	var lenData	= [];
 	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].ROAD_NAME});
+		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].ROAD_NAME});
 	}
 	require([	'echarts','echarts/chart/pie'	],
 	        function (ec) {

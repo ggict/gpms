@@ -96,7 +96,7 @@ function fnGradLenSearch(sYear,rw) {
 function drawGradLenChart(dataList,rw){
 	var lenData	= [];
 	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].ROAD_NAME});
+		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].ROAD_NAME});
 	}
 	require([	'echarts','echarts/chart/pie'	],
 	        function (ec) {
@@ -184,7 +184,7 @@ function drawGpmsGradLenChart(dataList,rw){
 	var lenData	= [];
 	for(var i=0; i<dataList.length; i++){
 		if(dataList[i].ROAD_NAME != '' && dataList[i].ROAD_NAME != null){
-			lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].ROAD_NAME});
+			lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].ROAD_NAME});
 		}
 	}
 	require([	'echarts','echarts/chart/pie'	],
@@ -280,7 +280,7 @@ function drawLenChart(dataList,rw){
 	for(var i=0; i<dataList.length; i++){
 		if(dataList[i].ADM_NM != '' && dataList[i].ADM_NM != null){
 			gRouteNm.push(dataList[i].ADM_NM);
-			lenData.push(dataList[i].LEN);
+			lenData.push(Number(dataList[i].LEN));
 		}
 	}
 	require([	'echarts','echarts/chart/bar'	],
@@ -377,7 +377,7 @@ function drawGpmsLenChart(dataList,rw){
 	for(var i=0; i<dataList.length; i++){
 		if(dataList[i].ADM_NM != '' && dataList[i].ADM_NM != null){
 			gAdmNm.push(dataList[i].ADM_NM);
-			lenData.push(dataList[i].LEN);
+			lenData.push(Number(dataList[i].LEN));
 		}
 	}
 	require([	'echarts','echarts/chart/bar'	],

@@ -105,7 +105,7 @@ function drawRoutLenChart(dataList,rw){
 	for(var i=0; i<dataList.length; i++){
 		if(dataList[i].ROAD_NAME != '' && dataList[i].ROAD_NAME != null){
 			gRouteNm.push(dataList[i].ROAD_NAME + "(" + dataList[i].ROUTE_CODE + ")");
-			lenData.push(dataList[i].LEN);
+			lenData.push(Number(dataList[i].LEN));
 		}
 	}
 	require([	'echarts','echarts/chart/bar'	],
