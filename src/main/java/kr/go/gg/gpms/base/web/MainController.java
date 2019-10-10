@@ -41,6 +41,13 @@ public class MainController extends BaseController{
 		return "/main";
 	}
 	
+	@RequestMapping(value = "/iasp.do")
+	public String iasp(@ModelAttribute NoticeVO noticeVO, MemberInfo memberInfoVO,  ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		// SayHello sayHello = new SayHello();
+		
+		return "/main_iasp";
+	}
+	
 	@RequestMapping(value = "/pothole-main.do")
     public String potholeLogin(@ModelAttribute NoticeVO noticeVO, MemberInfo memberInfoVO,  ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
         // SayHello sayHello = new SayHello();
