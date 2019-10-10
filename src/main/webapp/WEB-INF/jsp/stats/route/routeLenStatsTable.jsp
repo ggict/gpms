@@ -263,7 +263,7 @@ function fnExcel() {
  	var lenData	= [];
  	for(var i=0; i<dataList.length; i++){
  		//lenData.push({"value" : dataList[i].SUM_L, "name" : dataList[i].ROAD_GRAD});
- 		lenData.push({"value" : routeStatsTable_Utils.toFiexd(dataList[i].LEN, 3), "name" : dataList[i].ROAD_NAME});
+ 		lenData.push({"value" : routeStatsTable_Utils.toFiexd(Number(dataList[i].LEN), 3), "name" : dataList[i].ROAD_NAME});
  	}
 
  	require([	'echarts','echarts/chart/pie'	],
@@ -328,7 +328,7 @@ function fnExcel() {
  	var lenData	= [];
  	for(var i=0; i<dataList.length; i++){
  		//lenData.push({"value" : dataList[i].SUM_LEN, "name" : dataList[i].ROAD_GRAD});
- 		lenData.push({"value" : routeStatsTable_Utils.toFiexd(dataList[i].SUM_LEN, 3), "name" : dataList[i].ROAD_NAME});
+ 		lenData.push({"value" : routeStatsTable_Utils.toFiexd(Number(dataList[i].SUM_LEN), 3), "name" : dataList[i].ROAD_NAME});
  	}
  	require([	'echarts','echarts/chart/pie'	],
  	        function (ec) {
@@ -391,8 +391,8 @@ function fnExcel() {
  			//gRouteNm.push(dataList[i].ROUTE_CODE+" "+ dataList[i].ROUTE_NAME);
  			//lenData.push(dataList[i].SUM_L);
  			gRouteNm.push(dataList[i].ROUTE_CODE+" "+ dataList[i].ROAD_NAME);
- 			lenData.push(dataList[i].LEN);
- 			GpmlenData.push(dataList[i].SUM_LEN);
+ 			lenData.push(Number(dataList[i].LEN));
+ 			GpmlenData.push(Number(dataList[i].SUM_LEN));
  	}
  	require([	'echarts','echarts/chart/bar'	],
  	        function (ec) {

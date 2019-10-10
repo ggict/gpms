@@ -3963,6 +3963,8 @@ MAP.CONTROL = (function($, undefined){
 	* @description 셀 속성 컨트롤 event
 	*/
 	var event_selSectFeature = function(res){
+		$("#dvMapLoading").hide();
+		
 		if (res.success()) {
 			if (res.data.length == "0") {
 				//영역내에 해당하는 자료가 없음

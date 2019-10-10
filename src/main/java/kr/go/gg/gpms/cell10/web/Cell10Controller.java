@@ -50,6 +50,7 @@ import org.springframework.web.servlet.View;
 
 import egovframework.cmmn.util.DateUtil;
 import egovframework.cmmn.util.ExcelView;
+import egovframework.cmmn.util.NumberUtil;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -263,15 +264,15 @@ public class Cell10Controller extends BaseController {
 
         	 objRow = objSheet.createRow(i+2);
              objCell = objRow.createCell(0);
-             objCell.setCellValue(tempMap.get("ROUTE_CODE").toString());
+             objCell.setCellValue(tempMap.get("route_code").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("ROAD_NAME").toString());
+             objCell.setCellValue(tempMap.get("road_name").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(2);
-             objCell.setCellValue(tempMap.get("LEN").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -292,11 +293,11 @@ public class Cell10Controller extends BaseController {
 
         	 objRow = objSheet.createRow(++rowDept);
              objCell = objRow.createCell(0);
-             objCell.setCellValue(tempMap.get("DEPT_NM").toString());
+             objCell.setCellValue(tempMap.get("dept_nm").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("LEN").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -318,11 +319,11 @@ public class Cell10Controller extends BaseController {
 
         	 objRow = objSheet.createRow(++rowRout);
              objCell = objRow.createCell(0);
-             objCell.setCellValue(tempMap.get("ROAD_NAME").toString());
+             objCell.setCellValue(tempMap.get("road_name").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("LEN").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -850,31 +851,31 @@ public class Cell10Controller extends BaseController {
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(tempMap.get("sum_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(tempMap.get("op_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("op_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(tempMap.get("nop_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("nop_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(tempMap.get("sum_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(tempMap.get("njr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("njr_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(8);
-             objCell.setCellValue(tempMap.get("jbr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jbr_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(9);
-             objCell.setCellValue(tempMap.get("untrack_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("untrack_len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -895,31 +896,31 @@ public class Cell10Controller extends BaseController {
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(tempMap.get("sum_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(tempMap.get("op_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("op_l")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(tempMap.get("nop_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("nop_l")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(tempMap.get("sum_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(tempMap.get("njr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("njr_len")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(8);
-             objCell.setCellValue(tempMap.get("jbr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jbr_len")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(9);
-             objCell.setCellValue(tempMap.get("untrack_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("untrack_len")));
              objCell.setCellStyle(styleHd1);
          }
 
@@ -947,31 +948,31 @@ public class Cell10Controller extends BaseController {
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(tempMap.get("sum_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(tempMap.get("op_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("op_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(tempMap.get("nop_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("nop_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(tempMap.get("sum_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(tempMap.get("njr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("njr_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(8);
-             objCell.setCellValue(tempMap.get("jbr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jbr_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(9);
-             objCell.setCellValue(tempMap.get("untrack_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("untrack_len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -990,31 +991,31 @@ public class Cell10Controller extends BaseController {
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(tempMap.get("sum_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(tempMap.get("op_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("op_l")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(tempMap.get("nop_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("nop_l")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(tempMap.get("sum_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(tempMap.get("njr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("njr_len")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(8);
-             objCell.setCellValue(tempMap.get("jbr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jbr_len")));
              objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(9);
-             objCell.setCellValue(tempMap.get("untrack_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("untrack_len")));
              objCell.setCellStyle(styleHd1);
          }
 
@@ -1196,31 +1197,31 @@ public class Cell10Controller extends BaseController {
     		 objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("sum_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(2);
-             objCell.setCellValue(tempMap.get("op_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("op_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(tempMap.get("nop_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("nop_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(tempMap.get("sum_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(tempMap.get("njr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("njr_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(tempMap.get("jbr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jbr_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(tempMap.get("untrack_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("untrack_len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -1469,63 +1470,63 @@ public class Cell10Controller extends BaseController {
 
         	 objRow = objSheet.createRow(iRow++);
     		 objCell = objRow.createCell(0);
-			 objCell.setCellValue(tempMap.get("ADM_NM").toString());
+			 objCell.setCellValue(tempMap.get("adm_nm").toString());
     		 objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("ROAD_GRAD").toString());
+             objCell.setCellValue(tempMap.get("road_grad").toString());
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(2);
-             objCell.setCellValue(tempMap.get("SUM_L").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(tempMap.get("TRACK2_L").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track2_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(tempMap.get("TRACK4_L").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track4_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(tempMap.get("TRACK6_L").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track6_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(tempMap.get("TRACK8_L").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track8_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(tempMap.get("TRACK10_L").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track10_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(8);
-             objCell.setCellValue(tempMap.get("SUM_LEN").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(9);
-             objCell.setCellValue(tempMap.get("TRACK2").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track2")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(10);
-             objCell.setCellValue(tempMap.get("TRACK4").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track4")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(11);
-             objCell.setCellValue(tempMap.get("TRACK6").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track6")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(12);
-             objCell.setCellValue(tempMap.get("TRACK8").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track8")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(13);
-             objCell.setCellValue(tempMap.get("TRACK10").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track10")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(14);
-             objCell.setCellValue(tempMap.get("JR_LEN").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jr_len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -1768,31 +1769,31 @@ public class Cell10Controller extends BaseController {
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("sum_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(2);
-             objCell.setCellValue(tempMap.get("op_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("op_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(tempMap.get("nop_l").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("nop_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(tempMap.get("sum_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(tempMap.get("njr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("njr_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(tempMap.get("jbr_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jbr_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(tempMap.get("untrack_len").toString());
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("untrack_len")));
              objCell.setCellStyle(styleHd);
          }
 

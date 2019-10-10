@@ -572,6 +572,13 @@ public class SrvyDtaController extends BaseController {
 						if (fileExcel.exists() && fileExcel.isFile()) {
 							// 엑셀 POI 읽기
 							String excelXml = getReadXLData(fileName, sheetName);
+							/*
+							String excelDB = getReadDbData(fileName, sheetName);
+							
+							if(StringUtils.isNotEmpty(excelDB)) {
+								//srvyDtaExcelService.insertSrvyDtaDetailExcel(srvyDtaExcelOne);	
+							}
+							*/
 							if (StringUtils.isNotEmpty(excelXml)) {
 								excelXml = excelXml.replaceAll("\"", "");
 								// LOGGER.info(excelXml);
@@ -905,6 +912,70 @@ public class SrvyDtaController extends BaseController {
 
 		return result;
 	}
+	
+	//엑셀자료 DB INSERT
+	private String getReadDbData(String fileName, String sheetName) throws Exception {
+
+		// 엑셀파일 실행
+		FileInputStream fis = new FileInputStream(checkFilePath(fileName, "path"));
+
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sheet = wb.getSheet(sheetName);
+
+		String result = "";
+
+		try {
+			
+			// 엑셀데이터 row, cell 건수 확인
+			int rowNum = sheet.getPhysicalNumberOfRows();
+			int cellNum = sheet.getRow(0).getLastCellNum();
+
+			// 엑셀 식(formula)으로 된 데이터 읽기
+			FormulaEvaluator formulaEval = wb.getCreationHelper().createFormulaEvaluator();
+
+			// i => 엑셀 row의 수
+			for (int i = 1; i < rowNum; i++) { // 헤더제외. 1부터 시작
+
+				if (!formulaEval.evaluate(sheet.getRow(i).getCell(0)).formatAsString().equals("0.0")) {
+
+					// j => 엑셀 cell의 수
+					for (int j = 0; j < cellNum; j++) {
+						//Element cellData = doc.createElement(sheet.getRow(0).getCell(j).getStringCellValue()); // row(0).cell(j).getValue()
+
+						String val = formulaEval.evaluate(sheet.getRow(i).getCell(j)) == null ? "" : formulaEval.evaluate(sheet.getRow(i).getCell(j)).formatAsString();
+
+						if (val.contains(".") && val.split("[.]")[1].equals("0")) {
+							val = val.split("[.]")[0];
+						}
+
+						//cellData.appendChild(doc.createTextNode(val));
+
+						//xlData.appendChild(cellData);
+					}
+				}
+			}
+
+			StringWriter writer = new StringWriter();
+			try {
+				
+				result = writer.getBuffer().toString();
+			} catch (Exception e) {
+				LOGGER.debug("예외발생내역:" + e);
+			} finally {
+				writer.close();
+			}
+			// http://theeye.pe.kr/archives/1437
+		} catch (Exception e) {
+
+			fis.close();
+			LOGGER.debug("예외발생내역:" + e);
+
+		} finally {
+			fis.close();
+		}
+
+		return result;
+	}
 
 	// 엑셀파일 건수 가져오기
 	private int getReadXLDataCnt(String fileName, String sheetName) throws Exception {
@@ -945,7 +1016,7 @@ public class SrvyDtaController extends BaseController {
 
 		String srvyDe = "";
 
-		List<EgovMap> cols = cmmnService.selectCols("TN_MUMM_SCTN_SRVY_DTA");
+		List<EgovMap> cols = cmmnService.selectCols("tn_mumm_sctn_srvy_dta");
 
 		// 엑셀파일 실행
 		FileInputStream fis = new FileInputStream(checkFilePath(fileName, "path"));
@@ -1109,7 +1180,7 @@ public class SrvyDtaController extends BaseController {
 
 		for (EgovMap col : colList) {
 			String colNm = col.get("columnName") == null ? null : col.get("columnName").toString();
-			if (colNm.equals(colName)) {
+			if (colNm.equalsIgnoreCase(colName)) {
 				colInfo = col;
 				break;
 			}

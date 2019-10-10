@@ -770,16 +770,8 @@ GTMapLayerTool = OpenLayers.Class({
 	},
 
 	getSld_body : function(ruleView, baseLayer) {
-		//geoserver 저장소 이름을 붙여준다.
-		var prefixAppandName = function(name){
-			if(name){
-				var dataHouseName = CONFIG.fn_get_dataHouseName();
-				if(dataHouseName){
-					return dataHouseName + ':' + name;
-				}
-			}
-			return name
-		};
+		//geoserver 네임스페이스 명칭.
+		var prefixAppandName = CONFIG.fn_prefixAppandName;
 		
 		var tempXml = this.sld.xml.cloneNode(true);
 

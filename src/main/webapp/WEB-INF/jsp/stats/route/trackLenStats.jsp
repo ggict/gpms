@@ -102,7 +102,7 @@ function fnGradLenSearch(sYear,rw) {
 function drawGradLenChart(dataList,rw){
 	var lenData	= [];
 	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].ROAD_NAME});
+		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].ROAD_NAME});
 	}
 	require([	'echarts','echarts/chart/pie'	],
 	        function (ec) {
@@ -191,7 +191,7 @@ function fnGpmsGradLenSearch(deptCd,strDt,endDt,rw) {
 function drawGpmsGradLenChart(dataList,rw){
 	var lenData	= [];
 	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : dataList[i].LEN, "name" : dataList[i].ROAD_NAME});
+		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].ROAD_NAME});
 	}
 	require([	'echarts','echarts/chart/pie'	],
 	        function (ec) {
@@ -290,7 +290,7 @@ function drawLenChart(dataList,rw){
 	for(var i=0; i<dataList.length; i++){
 		if(dataList[i].LEN != '' && dataList[i].LEN != null){
 			gNm.push(dataList[i].TRACK+'차로');
-			lenData.push(dataList[i].LEN);
+			lenData.push(Number(dataList[i].LEN));
 		}
 	}
 
@@ -381,7 +381,7 @@ function drawGpmsLenChart(dataList,rw){
 	for(var i=0; i<dataList.length; i++){
 		if(dataList[i].TRACK != '' && dataList[i].TRACK != null){
 			gNm.push(dataList[i].TRACK+'차로');
-			lenData.push(dataList[i].LEN);
+			lenData.push(Number(dataList[i].LEN));
 		}
 	}
 	require([	'echarts','echarts/chart/bar'	],
@@ -479,7 +479,7 @@ function drawUniLenChart(dataList,rw){
 			for(var i=0; i<dataList.length; i++){
 				if(dataList[i].ROAD_GRAD == '국지도'){
 					admNm.push(dataList[i].ADM_NM);
-					admLen.push(dataList[i].LEN);
+					admLen.push(Number(dataList[i].LEN));
 				}
 			}
 			
@@ -495,7 +495,7 @@ function drawUniLenChart(dataList,rw){
 			rowData.stack = 'bar';
 			for(var i=0; i<dataList.length; i++){
 				if(dataList[i].ROAD_GRAD == '지방도'){
-					admLen.push(dataList[i].LEN);
+					admLen.push(Number(dataList[i].LEN));
 				}
 			}
 			
@@ -588,7 +588,7 @@ function drawDeptGpmsLenChart(dataList,rw){
 		for(var i=0; i<dataList.length; i++){
 			if(dataList[i].ROAD_GRAD == '국지도'){
 				admNm.push(dataList[i].ADM_NM);
-				admLen.push(dataList[i].LEN);
+				admLen.push(Number(dataList[i].LEN));
 			}
 		}
 		
@@ -604,7 +604,7 @@ function drawDeptGpmsLenChart(dataList,rw){
 		rowData.stack = 'bar';
 		for(var i=0; i<dataList.length; i++){
 			if(dataList[i].ROAD_GRAD == '지방도'){
-				admLen.push(dataList[i].LEN);
+				admLen.push(Number(dataList[i].LEN));
 			}
 		}
 		

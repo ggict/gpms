@@ -47,7 +47,7 @@ var CONFIG = (function($, undefined){
 	var sServiceUrl        = "http://1.221.39.242:21525/geoserver/wms?";
 	var wfsServiceUrl        = "http://1.221.39.242:21525/geoserver/wfs?";
 	
-
+	
 	// real server
 	//var sServiceUrl        = "http://105.0.111.9:8089/G2DataService/GService?";
 
@@ -445,10 +445,35 @@ var CONFIG = (function($, undefined){
     	return tLayerList;
     }
     
+    /**
+     * @description  지도서비스 레이어 목록
+     * @returns {Object} 레이어 목록
+     */    
     var fn_get_serviceLayerInfo = function (){
     	return serviceLayerInfo;
     }
     
+    
+    /**
+     * @description 네임스페이스에 레이어 명칭을 합친다
+     * @return {String} 네임스페이스:레이어 명칭
+     * */
+    var fn_prefixAppandName = function(name){
+    	if(!name) return '';
+		return sDataHouse + ':' + name;
+	};
+	
+	
+    /**
+     * @description 레이어의 네임스페이스 url 생성
+     * @return {String} 네임스페이스 url
+     * */
+	var fn_getNamespace = function(prefix){
+		var _prefix = (prefix) ? prefix :sDataHouse;
+		var namespace = 'xmlns:'+_prefix+'="http://www.openplans.org/'+_prefix;
+		return namespace;
+	}
+	
     
 
 	return{
@@ -468,6 +493,8 @@ var CONFIG = (function($, undefined){
 		fn_get_mlayerList 			: fn_get_mlayerList,
 		fn_get_tlayerList           : fn_get_tlayerList,
 		fn_get_exceptLayerList      : fn_get_exceptLayerList,
-		fn_get_serviceLayerInfo		: fn_get_serviceLayerInfo
+		fn_get_serviceLayerInfo		: fn_get_serviceLayerInfo,
+		fn_prefixAppandName			: fn_prefixAppandName,
+		fn_getNamespace				: fn_getNamespace
 	}
 }(jQuery));

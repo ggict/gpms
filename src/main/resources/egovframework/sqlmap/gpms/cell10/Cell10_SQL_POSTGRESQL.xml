@@ -338,7 +338,7 @@
             /* cell10DAO.selectSrvyRoutLenStatsExcelResult */
             /* 포장상태조사구간 노선별 통계 엑셀 목록 조회*/
              SELECT tnrouteinfo.ROAD_NO::int as ROUTE_CODE,
-                    COALESCE(tnrouteinfo.ROAD_NAME,tnrouteinfo.ROAD_NO::int) as ROAD_NAME,
+                    COALESCE(tnrouteinfo.ROAD_NAME,tnrouteinfo.ROAD_NO::text) as ROAD_NAME,
                     COALESCE(SUM(cell10.ROAD_L)/1000, 0) AS LEN
                FROM TN_ROUTE_INFO tnrouteinfo LEFT OUTER JOIN CELL_10 cell10 ON tnrouteinfo.ROAD_NO = cell10.ROUTE_CODE
                     LEFT OUTER JOIN TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta ON cell10.ROUTE_CODE = tnmummsctnsrvydta.ROUTE_CODE
@@ -441,7 +441,7 @@
             /* 포장상태조사구간 관리기관별 통계 엑셀 조회*/
             SELECT
                 cell10.DEPT_CODE,
-                ( SELECT lowest_dept_nm FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE::text) AS DEPT_NM,
+                ( SELECT lowest_dept_nm FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE::numeric = cell10.DEPT_CODE) AS DEPT_NM,
                 SUM(ROAD_L)/1000 AS LEN
             FROM  CELL_10 cell10
                 LEFT OUTER JOIN TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
@@ -453,7 +453,7 @@
                 AND tnmummsctnsrvydta.USE_AT = 'Y'
                 AND tnmummsctnsrvydta.DELETE_AT = 'N'
             WHERE 1 = 1
-                AND cell10.DEPT_CODE::text  IN ('6411399','6411799')/* 6411399:도로건설과/6411799:북부도로과 */
+                AND cell10.DEPT_CODE::int::text  IN ('6411399','6411799')/* 6411399:도로건설과/6411799:북부도로과 */
         ]]>
             <isNotEmpty property="SCH_DEPT_CODE1"><![CDATA[ AND cell10.DEPT_CODE = #SCH_DEPT_CODE1#::int ]]></isNotEmpty>
             <isNotEmpty property="SCH_STRSRVY_DE"><![CDATA[ AND tnmummsctnsrvydta.SRVY_DE >= #SCH_STRSRVY_DE# ]]></isNotEmpty>
@@ -493,7 +493,7 @@
 
     <select id="cell10DAO.selectSrvyRoadLenStatsExcel" parameterClass="cell10VO" resultClass="hashMap">
         <![CDATA[
-            /* cell10DAO.selectSrvyDeptLenStatsResult */
+            /* cell10DAO.selectSrvyRoadLenStatsExcel */
             /* 포장상태조사구간 도로등급별 통계 엑셀조회*/
             SELECT
                 cell10.ROAD_GRAD,
@@ -915,7 +915,7 @@
                  COALESCE(SUM(C10A.SUM_LEN),0) AS SUM_LEN,
                  0 AS NJR_LEN,      /*GPMS 중용구간 국지도*/
                  0 AS JBR_LEN,      /*GPMS 중용구간 지방도*/
-                 COALESCE(SUM(C10B.UNTRACK_LEN),0)::int AS UNTRACK_LEN
+                 COALESCE(SUM(C10B.UNTRACK_LEN),0) AS UNTRACK_LEN
             FROM ( SELECT ROUTE_CODE::int || '호선' AS ROUTE_CODE,
                           SUM_L,
                           OP_L,

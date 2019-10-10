@@ -608,6 +608,7 @@
 	     		 , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydtaexcel.CRTR_NO and tnsysuser.USE_AT = 'Y' and tnsysuser.DELETE_AT = 'N') CRTR_NM
 			FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel, TL_SRVY_DTA_LOG tlsrvydtalog
 		   WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
+		   	 AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
 		   	 AND tnsrvydtaexcel.USE_AT = 'Y'
 		   	 AND tnsrvydtaexcel.DELETE_AT = 'N'
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
@@ -631,6 +632,7 @@
 			FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
 			   , TL_SRVY_DTA_LOG tlsrvydtalog
 	      WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
+	      	AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
 	      	AND tnsrvydtaexcel.USE_AT = 'Y'
 		   	AND tnsrvydtaexcel.DELETE_AT = 'N'
 	        AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
@@ -653,6 +655,7 @@
 			       , tlsrvydtalog.LOG_MSSAGE
 			   FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel, TL_SRVY_DTA_LOG tlsrvydtalog
 			  WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
+			  	AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
 			 	AND tnsrvydtaexcel.USE_AT = 'Y'
 		   	 	AND tnsrvydtaexcel.DELETE_AT = 'N'
 			 	AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
@@ -677,6 +680,7 @@
 	      FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
 	      	 , TL_SRVY_DTA_LOG tlsrvydtalog
 	     WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
+	       AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
 	       AND tnsrvydtaexcel.USE_AT = 'Y'
 		   AND tnsrvydtaexcel.DELETE_AT = 'N'
 		   AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
@@ -1407,11 +1411,11 @@
         /* srvyDtaExcelDAO.selectPavFrmulaNo */
         /* JOY_관리자 수식관리.수식번호 조회 */
         SELECT
-		    tnpavfrmula.FRMULA_NO
+		    FRMULA_NO
 		FROM
-		    TN_PAV_FRMULA tnpavfrmula
+		    TN_PAV_FRMULA
 		WHERE 1=1
-		    AND tnpavfrmula.FRMULA_NM LIKE #FRMULA_NM# || '%'
+		    AND FRMULA_NM LIKE #FRMULA_NM# || '%'
     ]]>
 	</select>
 
@@ -1420,29 +1424,29 @@
         /* srvyDtaExcelDAO.updatePavFrmulaVar */
         /* 평가정보 수식 변수 변경 */
         UPDATE
-		    TN_PAV_FRMULA_IDX tnpavfrmulaidx
+		    TN_PAV_FRMULA_IDX
 		SET
 	]]>
-		<isNotEmpty property="VAR"><![CDATA[ tnpavfrmulaidx.IDX_VAL = #VAR# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ , tnpavfrmulaidx.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="VAR"><![CDATA[ IDX_VAL = #VAR# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ , UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
         <![CDATA[
         ,UPDT_DT = NOW()
 		WHERE 1=1
     	]]>
 		<isNotEmpty property="VAR">
 		<![CDATA[
-            AND tnpavfrmulaidx.FRMULA_NO = #FRMULA_NO#
+            AND FRMULA_NO = #FRMULA_NO#
         ]]>
 	        <isNotEqual property="FRMULA_NM" compareValue="TRUE">
 	        <![CDATA[
-	            AND tnpavfrmulaidx.IDX_NM LIKE '%' || #VAR_INDEX#
+	            AND IDX_NM LIKE '%' || #VAR_INDEX#
 	        ]]>
 	        </isNotEqual>
 	        <isEqual property="FRMULA_NM" compareValue="TRUE">
 	        <![CDATA[
-	            AND (tnpavfrmulaidx.IDX_NM LIKE '%' || #VAR_INDEX#
-			        OR tnpavfrmulaidx.IDX_NM LIKE '%' || '지수4'
-			        OR tnpavfrmulaidx.IDX_NM LIKE '%' || '지수5')
+	            AND (IDX_NM LIKE '%' || #VAR_INDEX#
+			        OR IDX_NM LIKE '%' || '지수4'
+			        OR IDX_NM LIKE '%' || '지수5')
 	        ]]>
 	        </isEqual>
 		</isNotEmpty>

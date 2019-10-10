@@ -254,14 +254,14 @@ function fnSelectSrvy(cellId, srvyYear) {
         success: function (data) {
             var srvydta = $("#mummAvgSrvyData").find("tbody td");
 
-            srvydta.eq(0).html(data.TRTS_BAC_CR);
-            srvydta.eq(1).html(data.VRTCAL_CR);
-            srvydta.eq(2).html(data.BLOCK_CR);
-            srvydta.eq(3).html(data.HRZNTAL_CR);
-            srvydta.eq(4).html(data.PTCHG_CR);
-            srvydta.eq(5).html(data.POTHOLE_CR);
-            srvydta.eq(6).html(data.RD_VAL);
-            srvydta.eq(7).html(data.TRTS_BAC_CR);
+            srvydta.eq(0).html(Number(data.TRTS_BAC_CR));
+            srvydta.eq(1).html(Number(data.VRTCAL_CR));
+            srvydta.eq(2).html(Number(data.BLOCK_CR));
+            srvydta.eq(3).html(Number(data.HRZNTAL_CR));
+            srvydta.eq(4).html(Number(data.PTCHG_CR));
+            srvydta.eq(5).html(Number(data.POTHOLE_CR));
+            srvydta.eq(6).html(Number(data.RD_VAL));
+            srvydta.eq(7).html(Number(data.TRTS_BAC_CR));
         },
         error: function () {
 

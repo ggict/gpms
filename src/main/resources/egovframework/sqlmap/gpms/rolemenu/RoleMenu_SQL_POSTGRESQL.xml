@@ -2,13 +2,15 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="roleMenuDAO">
- 
-	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
-	<typeAlias  alias="roleMenuSerarchVO" type="kr.go.gg.gpms.rolemenu.service.model.RoleMenuDefaultVO"/>
-	<typeAlias alias="roleMenuVO"	type="kr.go.gg.gpms.rolemenu.service.model.RoleMenuVO" />
 
-	<resultMap id="roleMenu.resultMap"
-		class="roleMenuVO">
+	<typeAlias alias="egovMap"
+		type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="roleMenuSerarchVO"
+		type="kr.go.gg.gpms.rolemenu.service.model.RoleMenuDefaultVO" />
+	<typeAlias alias="roleMenuVO"
+		type="kr.go.gg.gpms.rolemenu.service.model.RoleMenuVO" />
+
+	<resultMap id="roleMenu.resultMap" class="roleMenuVO">
 		<result property="ROLE_NO" column="ROLE_NO" columnIndex="1" /> <!-- 권한역할메뉴.역할_번호 -->
 		<result property="AUTHOR_ID" column="AUTHOR_ID" columnIndex="2" /> <!-- 권한역할메뉴.권한_ID -->
 		<result property="MENU_ID" column="MENU_ID" columnIndex="3" /> <!-- 권한역할메뉴.메뉴_ID -->
@@ -20,11 +22,11 @@
 	</resultMap>
 
 	<insert id="roleMenuDAO.insertRoleMenu">
-    <selectKey resultClass="String" keyProperty="ROLE_NO">
+		<selectKey resultClass="String" keyProperty="ROLE_NO">
 	  <![CDATA[
 		select nextval('SEQ_TN_ROLE_MENU') AS ROLE_NO
 	  ]]>
-	</selectKey>
+		</selectKey>
 	<![CDATA[ 
 		/* roleMenuDAO.insertRoleMenu */
 		/* 권한역할메뉴 등록 */		
@@ -64,8 +66,7 @@
 	]]>
 	</delete>
 
-	<select id="roleMenuDAO.selectRoleMenu"
-		resultClass="roleMenuVO">
+	<select id="roleMenuDAO.selectRoleMenu" resultClass="roleMenuVO">
 	<![CDATA[ 
 		/* roleMenuDAO.selectRoleMenu */
 		/* 권한역할메뉴 조회 */
@@ -83,9 +84,9 @@
 		AND tnrolemenu.ROLE_NO = #ROLE_NO#::int /* 권한역할메뉴.역할_번호 */
 ]]>
 	</select>
-	
-	
-		<select id="roleMenuDAO.selectRoleMenuURLList"
+
+
+	<select id="roleMenuDAO.selectRoleMenuURLList"
 		resultClass="roleMenuVO">
 	<![CDATA[ 
 		 /* authorityDAO.selectAuthority */
@@ -114,10 +115,12 @@
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnrolemenu.ROLE_NO = #searchKeyword#::int
+			AND
+			tnrolemenu.ROLE_NO = #searchKeyword#::int
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
-			AND tnrolemenu.AUTHOR_ID LIKE '%' || #searchKeyword# || '%'
+			AND
+			tnrolemenu.AUTHOR_ID LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
 		<isNotEmpty property="ROLE_NO"><![CDATA[ /* 권한역할메뉴.역할_번호 */ AND tnrolemenu.ROLE_NO = #ROLE_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="AUTHOR_ID"><![CDATA[ /* 권한역할메뉴.권한_ID */ AND tnrolemenu.AUTHOR_ID = #AUTHOR_ID# ]]></isNotEmpty>
@@ -127,11 +130,10 @@
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 권한역할메뉴.삭제_여부 */ AND tnrolemenu.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 권한역할메뉴.수정자_번호 */ AND tnrolemenu.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 권한역할메뉴.수정_일시 */ AND tnrolemenu.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
-</sql>
+	</sql>
 
 	<select id="roleMenuDAO.selectRoleMenuListPage"
-		parameterClass="roleMenuVO"
-		resultClass="roleMenuVO">
+		parameterClass="roleMenuVO" resultClass="roleMenuVO">
 <![CDATA[ 		
 		/* roleMenuDAO.selectRoleMenuListPage */
 		/* 권한역할메뉴 조회(페이징) */
@@ -148,72 +150,74 @@
 				, tnrolemenu.UPDT_DT /* 권한역할메뉴.수정_일시 */
 			
 			FROM TN_ROLE_MENU tnrolemenu
-]]>			
+]]>
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
-			AND tnrolemenu.ROLE_NO = #searchKeyword#::int
+			AND
+			tnrolemenu.ROLE_NO = #searchKeyword#::int
 		</isEqual>
 
 		<isEqual property="searchCondition" compareValue="1">
-			AND tnrolemenu.AUTHOR_ID LIKE '%' || #searchKeyword# || '%'
+			AND
+			tnrolemenu.AUTHOR_ID LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		
-			<isNotEmpty property="ROLE_NO">
+
+		<isNotEmpty property="ROLE_NO">
 				<![CDATA[
 					/* 권한역할메뉴.역할_번호 */
 					AND tnrolemenu.ROLE_NO = #ROLE_NO#::int
 				]]>
-			</isNotEmpty>
-		
-			<isNotEmpty property="AUTHOR_ID">
+		</isNotEmpty>
+
+		<isNotEmpty property="AUTHOR_ID">
 				<![CDATA[
 					/* 권한역할메뉴.권한_ID */
 					AND tnrolemenu.AUTHOR_ID = #AUTHOR_ID#
 				]]>
-			</isNotEmpty>
-		
-			<isNotEmpty property="MENU_ID">
+		</isNotEmpty>
+
+		<isNotEmpty property="MENU_ID">
 				<![CDATA[
 					/* 권한역할메뉴.메뉴_ID */
 					AND tnrolemenu.MENU_ID = #MENU_ID#
 				]]>
-			</isNotEmpty>
-		
-			<isNotEmpty property="CRTR_NO">
+		</isNotEmpty>
+
+		<isNotEmpty property="CRTR_NO">
 				<![CDATA[
 					/* 권한역할메뉴.생성자_번호 */
 					AND tnrolemenu.CRTR_NO = #CRTR_NO#::int
 				]]>
-			</isNotEmpty>
-		
-			<isNotEmpty property="CREAT_DT">
+		</isNotEmpty>
+
+		<isNotEmpty property="CREAT_DT">
 				<![CDATA[
 					/* 권한역할메뉴.생성_일시 */
 					AND tnrolemenu.CREAT_DT = #CREAT_DT#
 				]]>
-			</isNotEmpty>
-		
-			<isNotEmpty property="DELETE_AT">
+		</isNotEmpty>
+
+		<isNotEmpty property="DELETE_AT">
 				<![CDATA[
 					/* 권한역할메뉴.삭제_여부 */
 					AND tnrolemenu.DELETE_AT = #DELETE_AT#
 				]]>
-			</isNotEmpty>
-		
-			<isNotEmpty property="UPDUSR_NO">
+		</isNotEmpty>
+
+		<isNotEmpty property="UPDUSR_NO">
 				<![CDATA[
 					/* 권한역할메뉴.수정자_번호 */
 					AND tnrolemenu.UPDUSR_NO = #UPDUSR_NO#::int
 				]]>
-			</isNotEmpty>
-		
-			<isNotEmpty property="UPDT_DT">
+		</isNotEmpty>
+
+		<isNotEmpty property="UPDT_DT">
 				<![CDATA[
 					/* 권한역할메뉴.수정_일시 */
 					AND tnrolemenu.UPDT_DT = #UPDT_DT#
 				]]>
-			</isNotEmpty>
+		</isNotEmpty>
 	<![CDATA[		
 		)
 		SELECT tnrolemenu.* FROM
@@ -240,62 +244,92 @@
 ]]>	  		
 <![CDATA[
 		AND  tnrolemenu.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
-]]>	
-	
+]]>
 
-	</select>	
- 
+
+	</select>
+
 	<select id="roleMenuDAO.authorityList" resultClass="codeVO">
-	    /* roleMenuDAO.authorityList */
+		/* roleMenuDAO.authorityList */
 		/* 권한코드 조회 */
 		SELECT AUTHOR_ID AS CODE_VAL
-		     , AUTHOR_NM AS CODE_NM 
-		  FROM TN_AUTHORITY
-		 WHERE USE_AT = 'Y'
-		   AND DELETE_AT = 'N' 
+		, AUTHOR_NM AS CODE_NM
+		FROM TN_AUTHORITY
+		WHERE USE_AT = 'Y'
+		AND DELETE_AT = 'N'
 	</select>
-	
-	<select id="roleMenuDAO.selectRoleMenuYList"	parameterClass="roleMenuVO" resultClass="roleMenuVO">
+
+	<select id="roleMenuDAO.selectRoleMenuYList"
+		parameterClass="roleMenuVO" resultClass="roleMenuVO">
 	<![CDATA[ 		
 		/* roleMenuDAO.selectRoleMenuYList */
 		/* 권한이 있는 메뉴 조회 */
-		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
-			SELECT tnmenu.MENU_ID	/*시스템메뉴.메뉴ID*/
-				      ,LPAD(' ', 4 *(LEVEL - 1)) || tnmenu.MENU_NM	MENU_NM /*시스템메뉴.메뉴명*/
-				      ,tnmenu.MENU_DC	/*시스템메뉴.메뉴설명*/
-				      ,tnmenu.CREAT_DT	/*시스템메뉴.생성_일시*/
-				      ,tnmenu.USE_AT	/*시스템메뉴.사용여부*/
-				      ,tnmenu.CRTR_NO	/*시스템메뉴.생성자번호*/
-				      ,tnmenu.UPDUSR_NO /*시스템메뉴.수정자번호*/
-				      ,tnmenu.UPDT_DT	/*시스템메뉴.수정일*/          
-				  FROM TN_MENU tnmenu
-				 WHERE EXISTS(
-				          SELECT 't'
-				            FROM TN_ROLE_MENU tnrolemenu 
-				           WHERE tnrolemenu.DELETE_AT = 'N'
-	                         AND tnrolemenu.MENU_ID = tnmenu.MENU_ID
+		WITH B AS(
+			WITH A AS(
+				SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
+					SELECT tnmenu.MENU_ID	/*시스템메뉴.메뉴ID*/
+				     	 ,tnmenu.MENU_NM	MENU_NM /*시스템메뉴.메뉴명*/
+				     	 ,tnmenu.MENU_DC	/*시스템메뉴.메뉴설명*/
+				     	 ,tnmenu.CREAT_DT	/*시스템메뉴.생성_일시*/
+				     	 ,tnmenu.USE_AT	/*시스템메뉴.사용여부*/
+				     	 ,tnmenu.CRTR_NO	/*시스템메뉴.생성자번호*/
+				      	,tnmenu.UPDUSR_NO /*시스템메뉴.수정자번호*/
+				     	 ,tnmenu.UPDT_DT	/*시스템메뉴.수정일*/          
+				  	FROM TN_MENU tnmenu
+				  	WHERE EXISTS(
+			          SELECT 't'
+			            FROM TN_ROLE_MENU tnrolemenu 
+				 		 WHERE DELETE_AT = 'N'
+	]]>
+	<isNotEmpty property="SCH_AUTH"><![CDATA[ /* 권한역할그룹.권한_ID */ AND tnrolemenu.AUTHOR_ID = #SCH_AUTH# ]]></isNotEmpty>
+	<![CDATA[			 	     
+						 AND tnrolemenu.MENU_ID = tnmenu.MENU_ID
+						 AND 1=1
+				        ) 
+			    	 AND tnmenu.UPPER_MENU_ID IS NULL 
+					 AND tnmenu.DELETE_AT = 'N'
+	                 AND tnmenu.USE_AT = 'Y'
+				) tb) tnrolemenu )
+				SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
+					SELECT tnmenu.MENU_ID	/*시스템메뉴.메뉴ID*/
+				      	,tnmenu.MENU_NM	MENU_NM /*시스템메뉴.메뉴명*/
+				     	,tnmenu.MENU_DC	/*시스템메뉴.메뉴설명*/
+				      	,tnmenu.CREAT_DT	/*시스템메뉴.생성_일시*/
+				      	,tnmenu.USE_AT	/*시스템메뉴.사용여부*/
+				      	,tnmenu.CRTR_NO	/*시스템메뉴.생성자번호*/
+				      	,tnmenu.UPDUSR_NO /*시스템메뉴.수정자번호*/
+				     	 ,tnmenu.UPDT_DT	/*시스템메뉴.수정일*/          
+				  	FROM TN_MENU tnmenu	
+				  	LEFT JOIN A ON A.MENU_ID = tnmenu.MENU_ID	
+				  	 WHERE EXISTS(
+			          SELECT 't'
+			            FROM TN_ROLE_MENU tnrolemenu 
+				 		 WHERE DELETE_AT = 'N'
+	]]>
+	<isNotEmpty property="SCH_AUTH"><![CDATA[ /* 권한역할그룹.권한_ID */ AND tnrolemenu.AUTHOR_ID = #SCH_AUTH# ]]></isNotEmpty>					 
+	<![CDATA[ 
+						 AND tnrolemenu.MENU_ID = tnmenu.MENU_ID
+						 AND 1=1
+				        ) 
+					 AND tnmenu.DELETE_AT = 'N'
+					 AND tnmenu.USE_AT = 'Y'
+				) tb) tnrolemenu
+			)	
+		SELECT * FROM B WHERE 1 = 1
 		]]>
-			<isNotEmpty property="SCH_AUTH"><![CDATA[ /* 권한역할그룹.권한_ID */ AND tnrolemenu.AUTHOR_ID = #SCH_AUTH# ]]></isNotEmpty>
-			<![CDATA[
-				)
-				   AND tnmenu.DELETE_AT = 'N'
-	               AND tnmenu.USE_AT = 'Y'
-	             START WITH tnmenu.UPPER_MENU_ID IS NULL
-	      	   CONNECT BY PRIOR tnmenu.MENU_ID = tnmenu.UPPER_MENU_ID
-	      	  ]]>
-		<isNotEmpty property="orderByColumn">
-			ORDER BY $orderByColumn$ $orderByType$
-		</isNotEmpty>
-		<![CDATA[ ) tb) tnrolemenu  WHERE 1=1]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 	<![CDATA[
-    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+    	AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
 	]]>
-		</isEqual>		
+		</isEqual>
+	<isNotEmpty property="orderByColumn">
+					ORDER BY $orderByColumn$ $orderByType$
+	</isNotEmpty>
 	</select>
-	
-		
-	<select id="roleMenuDAO.selectRoleMenuListYTotalCount"	parameterClass="roleMenuVO"	resultClass="int">
+
+
+	<select id="roleMenuDAO.selectRoleMenuListYTotalCount"
+		parameterClass="roleMenuVO" resultClass="int">
 	<![CDATA[ 		
 			SELECT COUNT(*)
 			  FROM TN_MENU tnmenu          
@@ -312,47 +346,76 @@
                AND tnmenu.USE_AT = 'Y'
 	]]>
 	</select>
-	
-	
-	<select id="roleMenuDAO.selectRoleMenuNList"	parameterClass="roleMenuVO" resultClass="roleMenuVO">
-	<![CDATA[ 		
-		/* roleMenuDAO.selectRoleMenuNList */
-		/* 권한이 없는메뉴 조회 */
-		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
-			SELECT tnmenu.MENU_ID	/*시스템메뉴.메뉴ID*/
-			      ,LPAD(' ', 4 *(LEVEL - 1)) || tnmenu.MENU_NM	MENU_NM /*시스템메뉴.메뉴명*/
-			      ,tnmenu.MENU_DC	/*시스템메뉴.메뉴설명*/
-			      ,tnmenu.CREAT_DT	/*시스템메뉴.생성_일시*/
-			      ,tnmenu.USE_AT	/*시스템메뉴.사용여부*/
-			      ,tnmenu.CRTR_NO	/*시스템메뉴.생성자번호*/
-			      ,tnmenu.UPDUSR_NO /*시스템메뉴.수정자번호*/
-			      ,tnmenu.UPDT_DT	/*시스템메뉴.수정일*/          
-			  FROM TN_MENU tnmenu
-			 WHERE NOT EXISTS(
+
+
+	<select id="roleMenuDAO.selectRoleMenuNList"
+		parameterClass="roleMenuVO" resultClass="roleMenuVO">
+	<![CDATA[
+	 	/* roleMenuDAO.selectRoleMenuNList */
+	 	/* 권한이 없는 메뉴 조회 */
+		WITH A AS(
+			WITH B AS(
+				SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
+					SELECT tnmenu.MENU_ID	/*시스템메뉴.메뉴ID*/
+			      		,tnmenu.MENU_NM	MENU_NM /*시스템메뉴.메뉴명*/
+			     		 ,tnmenu.MENU_DC	/*시스템메뉴.메뉴설명*/
+			     		 ,tnmenu.CREAT_DT	/*시스템메뉴.생성_일시*/
+			     		 ,tnmenu.USE_AT	/*시스템메뉴.사용여부*/
+			      		 ,tnmenu.CRTR_NO	/*시스템메뉴.생성자번호*/
+			     		 ,tnmenu.UPDUSR_NO /*시스템메뉴.수정자번호*/
+			     		 ,tnmenu.UPDT_DT	/*시스템메뉴.수정일*/          
+			  		FROM TN_MENU tnmenu
+			 		WHERE NOT EXISTS(
 			          SELECT 't'
 			            FROM TN_ROLE_MENU tnrolemenu 
-			           WHERE tnrolemenu.DELETE_AT = 'N'
-                         AND tnrolemenu.MENU_ID = tnmenu.MENU_ID
+				 		 WHERE DELETE_AT = 'N'
 	]]>
-		<isNotEmpty property="SCH_AUTH"><![CDATA[ /* 권한역할그룹.권한_ID */ AND tnrolemenu.AUTHOR_ID = #SCH_AUTH# ]]></isNotEmpty>
-		)
-			   AND tnmenu.DELETE_AT = 'N'
-               AND tnmenu.USE_AT = 'Y'
-             START WITH tnmenu.UPPER_MENU_ID IS NULL
-      	   CONNECT BY PRIOR tnmenu.MENU_ID = tnmenu.UPPER_MENU_ID
-		<isNotEmpty property="orderByColumn">
-			ORDER BY $orderByColumn$ $orderByType$
-		</isNotEmpty>
-		) tb) tnrolemenu  WHERE 1=1
-		<isEqual prepend=" " property="usePage" compareValue="true">
+	 <isNotEmpty property="SCH_AUTH"><![CDATA[ /* 권한역할그룹.권한_ID */ AND tnrolemenu.AUTHOR_ID = #SCH_AUTH# ]]></isNotEmpty>
 	<![CDATA[
-    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+						  AND tnrolemenu.MENU_ID = tnmenu.MENU_ID
+						  AND 1 =1
+				        ) 
+			   			AND tnmenu.UPPER_MENU_ID IS NULL
+						AND tnmenu.DELETE_AT = 'N'
+						AND tnmenu.USE_AT = 'Y'
+					) tb) tnrolemenu)
+			SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
+					SELECT tnmenu.MENU_ID	/*시스템메뉴.메뉴ID*/
+			      		,tnmenu.MENU_NM	MENU_NM /*시스템메뉴.메뉴명*/
+			     		 ,tnmenu.MENU_DC	/*시스템메뉴.메뉴설명*/
+			     		 ,tnmenu.CREAT_DT	/*시스템메뉴.생성_일시*/
+			     		 ,tnmenu.USE_AT	/*시스템메뉴.사용여부*/
+			     		 ,tnmenu.CRTR_NO	/*시스템메뉴.생성자번호*/
+			      		 ,tnmenu.UPDUSR_NO /*시스템메뉴.수정자번호*/
+			      		 ,tnmenu.UPDT_DT	/*시스템메뉴.수정일*/          
+			  		FROM TN_MENU tnmenu
+					LEFT JOIN B ON B.MENU_ID = tnmenu.MENU_ID
+					WHERE NOT EXISTS(
+			          SELECT 't'
+			            FROM TN_ROLE_MENU tnrolemenu 
+				 		 WHERE DELETE_AT = 'N'
 	]]>
-		</isEqual>		
-	</select>	
-	
-	
-	<select id="roleMenuDAO.selectRoleMenuNListTotalCount"	parameterClass="roleMenuVO"	resultClass="int">
+	 <isNotEmpty property="SCH_AUTH"><![CDATA[ /* 권한역할그룹.권한_ID */ AND tnrolemenu.AUTHOR_ID = #SCH_AUTH# ]]></isNotEmpty>
+						 AND tnrolemenu.MENU_ID = tnmenu.MENU_ID
+						 AND 1 =1
+				        ) 	
+					 AND tnmenu.DELETE_AT = 'N'
+					 AND tnmenu.USE_AT = 'Y'
+				) tb) tnrolemenu
+			)	
+		SELECT * FROM A WHERE 1 = 1
+	<isEqual prepend=" " property="usePage" compareValue="true">
+	<![CDATA[
+    	AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+	]]>
+	</isEqual>
+	<isNotEmpty property="orderByColumn">
+			ORDER BY $orderByColumn$ $orderByType$
+	</isNotEmpty>
+	</select>
+
+	<select id="roleMenuDAO.selectRoleMenuNListTotalCount"
+		parameterClass="roleMenuVO" resultClass="int">
 	<![CDATA[ 		
 			SELECT COUNT(*)
 			  FROM TN_MENU tnmenu
