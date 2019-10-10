@@ -107,7 +107,7 @@
 	</select>
 	-->
 	
-	<select id="cmmnDAO.selectCodeName" parameterClass="java.util.HashMap" resultClass="codeVO">
+	<select id="cmmnDAO.selectCodeName"   parameterClass="java.util.HashMap" resultClass="codeVO">
 	    SELECT DISTINCT $COLUM_VAL$ AS CODE_VAL , $CODE_NM$ AS CODE_NM
 		  FROM $TABLE_NM$
 		WHERE 1 = 1
@@ -115,7 +115,16 @@
 		   AND $COLUM_VAL$= #CODE_VAL#
 	    </isNotEmpty>
 	</select>
-
+	
+     
+     <select id="cmmnDAO.selectAdmguCodeList" parameterClass="codeVO" resultClass="codeVO">
+      <![CDATA[
+		SELECT NAME,BJCD FROM N3A_G0100000 WHERE 
+		]]> 
+		<isNotEmpty property="CODE_VAL">
+		<![CDATA[ BJCD LIKE  #CODE_VAL# || '%']]>
+		</isNotEmpty>
+		</select>
 	<select id="cmmnDAO.selectAdmCodeList" parameterClass="codeVO" resultClass="codeVO">
 	<![CDATA[
 		/* cmmnDAO.selectAdmCodeList */

@@ -8,7 +8,6 @@
 <%@ include file="/include/common_head.jsp" %>
 </head>
 <body id="wrap">
-
 <!-- 필수 파라메터(START) -->
 <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
 <input type="hidden" id="opener_id" name="opener_id" value=""/>

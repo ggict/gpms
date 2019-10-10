@@ -25,11 +25,16 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.security.service.impl.CustomAuthenticationProvider;
@@ -296,6 +301,53 @@ public class MapController extends BaseController{
 
 		return "/map/mapLocationList" ;
 	}
+	/**
+	 * iasp 위치검색을 한다.
+	 * @param
+	 * @return "/gmap/selectLocation_iasp.do"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/gmap/selectLocation_iasp.do" } )
+	public String selectLocation_iasp(@RequestParam Map<String, Object> param,  ModelMap model, 
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+  
+		CodeVO codeVO = new CodeVO();
+		try {
+			model.addAttribute("admCodeList", cmmnService.selectAdmCodeList(codeVO));
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "/map/mapLocationList_iasp" ;
+		}
+	
+	@RequestMapping(value = { "/gmap/selectGuLocation_iasp.do" } )
+	public String selectGuLocation_iasp(CodeVO codeVO,  ModelMap model, 
+			HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+		String cd = codeVO.getADM_CODE().substring(0, 4);
+		try {
+		    
+			codeVO.setCODE_VAL(cd);
+			List<CodeVO> sigungu = cmmnService.selectAdmguCodeList(codeVO);
+			sigungu.remove(0);
+			model.addAttribute("admCodeGuList", sigungu);
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "jsonView" ;
+		}
+		
+	@RequestMapping(value = { "/gmap/selectGungGuList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody List<CodeVO> selectGungGuList(@RequestBody CodeVO codeVO, ModelMap model) throws Exception {
+		codeVO.getADM_CODE();
+		List<CodeVO> items = cmmnService.selectAdmguCodeList(codeVO);
+		
+		return items;
+	}
+
 
 	/**
 	 * 지도 이미지를 base64로 리턴해주는 함수

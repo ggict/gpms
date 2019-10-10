@@ -306,7 +306,9 @@ MAP.CONTROL = (function($, undefined){
 
 		//위치 통합조회
 		$("#mCtrlLocSearch").bind("click", function(){
+			debugger;
 			COMMON_UTIL.cmWindowOpen('위치 통합검색(키워드검색)', contextPath + 'gmap/selectLocation.do',322, 100, false, null, 'locsearch');
+		
 		});
 
 		/**

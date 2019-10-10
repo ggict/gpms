@@ -146,7 +146,10 @@ public class CmmnServiceImpl extends AbstractServiceImpl implements CmmnService 
 	public List<CodeVO> selectAdmCodeList(CodeVO codeVO) throws Exception {
 		return cmmnDAO.selectAdmCodeList(codeVO);
 	}
-	
+	//구코드 조회
+		public List<CodeVO> selectAdmguCodeList(CodeVO codeVO) throws Exception {
+			return cmmnDAO.selectAdmGuCodeList(codeVO);
+		}
 	/**
 	 * 레이어목록을 조회한다.
 	 */
@@ -180,4 +183,6 @@ public class CmmnServiceImpl extends AbstractServiceImpl implements CmmnService 
     public List<?> selectTrackFrom20(HashMap<String, Object> paramMap) {
         return cmmnDAO.selectTrackFrom20("cmmnDAO.selectTrackFrom20", paramMap);
     }
+
+    
 }

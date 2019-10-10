@@ -112,6 +112,9 @@ public class CmmnDAO extends BaseDAO {
 	public List<CodeVO> selectAdmCodeList(CodeVO codeVO) {
 		return (List<CodeVO>)list("cmmnDAO.selectAdmCodeList", codeVO);
 	}
+	public List<CodeVO> selectAdmGuCodeList(CodeVO codeVO) {
+		return (List<CodeVO>)list("cmmnDAO.selectAdmguCodeList", codeVO);
+	}
 	
 	/**
 	 * 레이어목록을 조회한다.

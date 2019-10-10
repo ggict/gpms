@@ -544,7 +544,67 @@ var COMMON_UTIL = (function($,undefined){
         }
         return text;
     };
+    /**
+     * @description div 팝업을 생성한다.
+     * @param {String} _oDivTitle : div 상단 타이틀명
+     * @param {String} _oCallUrl : 호출 url
+     * @param {integer} _oWidth : div 넓이
+     * @param {integer} _oHeight : div 높이
+     * @param {boolean} _oModal : modal 여부
+     * @param {String} _oOpenerId : div를 호출하는 opener id
+     * @param {String} _oPosition : div position
+     * @param {Object} _oInitData : 초기 데이터
+     * @param {String} _oSeesionChek : 세션 체크 여부
+     */
+     var cmWindowOpenIasp = function(_oDivTitle, _oCallUrl, _oWidth, _oHeight, _oModal, _oOpenerId, _oPosition, _oInitData , _oSeesionChek){
 
+         var strUrl = "";
+
+         if(_oCallUrl.startsWith(contextPath)){
+             _oCallUrl = _oCallUrl.replace(contextPath, "");
+         }
+
+         if(!_oCallUrl.startsWith("/")){
+             _oCallUrl = "/"+_oCallUrl;
+         }
+
+
+         if(_oCallUrl.indexOf("?") > -1){
+             strUrl = _oCallUrl.substring(0, _oCallUrl.indexOf("?"));
+         }else{
+             strUrl = _oCallUrl;
+         }
+
+
+         $.ajax({
+             url: contextPath + 'userauth/checkAuth.do'
+             ,type: 'post'
+             ,dataType: 'json'
+             ,data : {"url" : strUrl}
+             ,success: function(res){
+                 if(!res.result){
+                     alert("접근 권한이 없습니다. 자세한 사항은 관리자에게 문의하시기 바랍니다.");
+                     return;
+                 }
+
+                 _oCallUrl = contextPath + _oCallUrl.substring(1);
+
+                 try {
+                     if( _oModal ) {
+                         parent.wDialogOpen( _oDivTitle, _oCallUrl, _oWidth, _oHeight, _oModal, _oOpenerId, _oInitData   );
+                     } else {
+                         parent.wWindowOpen( _oDivTitle, _oCallUrl, _oWidth, _oHeight, _oModal, _oOpenerId, _oPosition, _oInitData  );
+                     }
+                 } catch(E) {
+                     alert('오류가 발생하였습니다. : ' +E);
+                 }
+             }
+             ,error: function(a,b,msg){
+
+             }
+         });
+
+     };
     /**
     * @description div 팝업을 생성한다.
     * @param {String} _oDivTitle : div 상단 타이틀명
@@ -2170,8 +2230,9 @@ var COMMON_UTIL = (function($,undefined){
         fn_set_grid_noRowMsg        :           fn_set_grid_noRowMsg,
 
         fn_change_roadNo            :           fn_change_roadNo,
-        fn_change_roadNm            :           fn_change_roadNm
-        ,cmWindowOpen2              :           cmWindowOpen2
+        fn_change_roadNm            :           fn_change_roadNm,
+        cmWindowOpen2              :           cmWindowOpen2,
+        cmWindowOpenIasp            :           cmWindowOpenIasp
     }
 }(jQuery));
 

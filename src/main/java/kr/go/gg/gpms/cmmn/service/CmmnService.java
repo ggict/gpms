@@ -85,6 +85,10 @@ public interface CmmnService {
 	List<CodeVO> selectAdmCodeList(CodeVO codeVO) throws Exception;
 	
 	/**
+	 * 구 코드를 조회한다
+	 * */
+	List<CodeVO> selectAdmguCodeList(CodeVO codeVO) throws Exception;
+	/**
 	 * 레이어목록을 조회한다.
 	 */
 	List<EgovMap> selectLaygerList(EgovMap map) throws Exception;

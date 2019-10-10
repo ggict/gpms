@@ -40,6 +40,7 @@
 <script src="<c:url value='/extLib/window/jquery.window.js'/>" charset='utf-8'></script>
 <%-- <script src="<c:url value='/extLib/echarts/echarts.min.js'/>"></script> --%>
 <script src="<c:url value='/extLib/window.util.js'/>" charset='utf-8'></script>
+<script src="<c:url value='/js/iasp.js'/>" charset='utf-8'></script>
 
 <!-- ì§ë ê´ë ¨ ì¤í¬ë¦½í¸ -->
 <script src="<c:url value='/js/map/config.js'/>" charset='utf-8'></script>
@@ -78,6 +79,7 @@
 <script type="text/javascript" src="<c:url value='/extLib/ginno/gmap/lib/gmashup/util/GMahsupUtil.js'/>" charset='utf-8'></script>
 <script type="text/javascript" src="<c:url value='/extLib/ginno/gmap/lib/gmashup/GDaumMap.js'/>" charset='utf-8'></script>
 <script type="text/javascript" src="<c:url value='/extLib/ginno/gutil/GError.js'/>" charset='utf-8'></script>
+
 <!-- =======openlayers end================= -->
 
 <script type="text/javascript" src="<c:url value='/extLib/excel/jquery.techbytarun.excelexportjs.js'/>" charset='utf-8'></script>
@@ -102,7 +104,7 @@
 <!-- 개발키 -->
 <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=673dc0ed61508aed5450602c57997402&libraries=services" charset='utf-8'></script>  -->
 <!-- [2019-08-21] local서버 개발용 임시 key 발급 by yslee -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bda4bc1894a124439b9eb7d1350555b4&libraries=services" charset='utf-8'></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61cea915165ed9516e107ce6b620ef06&libraries=services" charset='utf-8'></script>
 
 <!-- 새 kakkao api 2018.06.05 김태규 -->
 <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61cea915165ed9516e107ce6b620ef06&libraries=services"></script> -->

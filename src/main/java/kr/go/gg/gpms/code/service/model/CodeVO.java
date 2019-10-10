@@ -139,6 +139,58 @@ public class CodeVO extends ClCodeVO {
 	private java.lang.String COLUM_VAL;
 
 	/**
+	 * 코드 컬럼명
+	 */
+	@XmlElement
+	private java.lang.String ADM_CODE;
+
+	/**
+	 * 코드 컬럼명
+	 */
+	@XmlElement
+	private java.lang.String BJCD;
+
+	/**
+	 * 코드 컬럼명
+	 */
+	@XmlElement
+	private java.lang.String NAME;
+	public java.lang.String getBJCD() {
+		return BJCD;
+	}
+
+	public void setBJCD(java.lang.String bJCD) {
+		BJCD = bJCD;
+	}
+
+	public java.lang.String getNAME() {
+		return NAME;
+	}
+
+	public void setNAME(java.lang.String nAME) {
+		NAME = nAME;
+	}
+
+	/**
+	 * TC_CODE.CODE_VAL,
+	 * 공통코드.코드_값 값읽기
+	 * @return
+	 */
+	@JsonProperty(value="ADM_CODE")
+	public java.lang.String getADM_CODE() {
+		return this.ADM_CODE;
+	}
+
+	 /**
+	 * TC_CODE.CODE_VAL,
+	 * 공통코드.코드_값 값설정
+	 * @param codeValue
+	 */
+	public void setADM_CODE(java.lang.String ADM_CODE) {
+		this.ADM_CODE = ADM_CODE;
+	}
+
+	/**
 	 * TC_CODE.CODE_VAL,
 	 * 공통코드.코드_값 값읽기
 	 * @return

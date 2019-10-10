@@ -36,13 +36,17 @@ var CONFIG = (function($, undefined){
 	// local server
 	//var sServiceUrl 		= "http://192.168.0.205:8079/G2DataService/GService?";
 	// 2018.11.02 도메인호스트 변경에 의한 변경
-	//var sServiceUrl        = "http://test.muhanit.kr:18079/G2DataService/GService?";
+	//var sServiceUrl        = "http://192.168.0.206:18080/geoserver/wms?";
+	//var wfsServiceUrl        = "http://192.168.0.206:18080/geoserver/wfs?";
 	//var sServiceUrl        = "http://127.0.0.1:18080/geoserver/"+sDataHouse+"/wms?";
 	//var sServiceUrl        = "http://www.muhanit.kr:18079/G2DataService/GService?";
 	//var sServiceUrl        = "http://192.168.0.206:18080/geoserver/"+sDataHouse+"/wms?";
-	var sServiceUrl        = "http://192.168.0.206:18080/geoserver/wms?";
-	var wfsServiceUrl        = "http://192.168.0.206:18080/geoserver/wfs?";
-
+	/*var sServiceUrl        = "http://192.168.0.206:18080/geoserver/wms?";
+	var wfsServiceUrl        = "http://192.168.0.206:18080/geoserver/wfs?";*/
+ 
+	var sServiceUrl        = "http://1.221.39.242:21525/geoserver/wms?";
+	var wfsServiceUrl        = "http://1.221.39.242:21525/geoserver/wfs?";
+	
 
 	// real server
 	//var sServiceUrl        = "http://105.0.111.9:8089/G2DataService/GService?";
