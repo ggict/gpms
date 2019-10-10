@@ -19,17 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import egovframework.rte.fdl.property.EgovPropertyService;
 //import org.springframework.security.core.context.SecurityContextHolder;
 
-
-
 @Controller("mainController")
 public class MainController extends BaseController{
 
-	public static final String IS_MOBILE = "MOBILE";
-	private static final String IS_PHONE = "PHONE";
-	public static final String IS_TABLET = "TABLET";
-	public static final String IS_PC = "PC";
-
-	
 	@Resource(name = "sysUserService")
 	private SysUserService sysUserService;
 	
@@ -48,25 +40,6 @@ public class MainController extends BaseController{
 		
 		return "/main";
 	}
-	
-	/**
-	 * 지능형 사고예방 접속 페이지
-	 * @param req
-	 * @return
-	 */
-	@RequestMapping(value = "/iasp.do")
-	public String login2(@ModelAttribute NoticeVO noticeVO, MemberInfo memberInfoVO,  ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
-		 String userAgent = request.getHeader("User-Agent").toUpperCase();
-			
-		    if(userAgent.indexOf(IS_MOBILE) > -1) {
-		        if(userAgent.indexOf(IS_PHONE) == -1)
-			    return "/m_main_iasp";
-			else
-			    return "/m_main_iasp";
-		    } else
-		return "/main_iasp";
-	}
-	
 	
 	@RequestMapping(value = "/pothole-main.do")
     public String potholeLogin(@ModelAttribute NoticeVO noticeVO, MemberInfo memberInfoVO,  ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
