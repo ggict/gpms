@@ -608,6 +608,7 @@
 	     		 , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydtaexcel.CRTR_NO and tnsysuser.USE_AT = 'Y' and tnsysuser.DELETE_AT = 'N') CRTR_NM
 			FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel, TL_SRVY_DTA_LOG tlsrvydtalog
 		   WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
+		   	 AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
 		   	 AND tnsrvydtaexcel.USE_AT = 'Y'
 		   	 AND tnsrvydtaexcel.DELETE_AT = 'N'
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
@@ -631,6 +632,7 @@
 			FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
 			   , TL_SRVY_DTA_LOG tlsrvydtalog
 	      WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
+	      	AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
 	      	AND tnsrvydtaexcel.USE_AT = 'Y'
 		   	AND tnsrvydtaexcel.DELETE_AT = 'N'
 	        AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
@@ -653,6 +655,7 @@
 			       , tlsrvydtalog.LOG_MSSAGE
 			   FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel, TL_SRVY_DTA_LOG tlsrvydtalog
 			  WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
+			  	AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
 			 	AND tnsrvydtaexcel.USE_AT = 'Y'
 		   	 	AND tnsrvydtaexcel.DELETE_AT = 'N'
 			 	AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
@@ -677,6 +680,7 @@
 	      FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
 	      	 , TL_SRVY_DTA_LOG tlsrvydtalog
 	     WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
+	       AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
 	       AND tnsrvydtaexcel.USE_AT = 'Y'
 		   AND tnsrvydtaexcel.DELETE_AT = 'N'
 		   AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
