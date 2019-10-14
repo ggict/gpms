@@ -1250,19 +1250,21 @@ GRequest.WFS = {
 			try{
 				json = response.json();
 			}catch(e){
-				console.log('getFeature error=', e);
 				json = undefined;
+			}
+			return json;
+		}).then(function(res) {
+			//console.log(res);
+			if(res){
+				control.parseJsonFeature(res, callback, options);
+			}else{
 				callback({
 					data : [],
 					success : function() {
 						return false;
 					}
-				});
+				});				
 			}
-			return json;
-		}).then(function(res) {
-			//console.log(res);
-			control.parseJsonFeature(res, callback, options);
 		});
 		
 	},

@@ -203,27 +203,7 @@ function($,undefined){
 			}
         }
 
-//		var oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
-//            layers : sThemeList
-//            //,styles : sThemeList
-//            ,format : sGetMapImageFormat
-//            ,version : sGetMapVersion
-//            ,crs : new OpenLayers.Projection(sRequestCrs)
-//            ,transparent : true
-//            ,dataHouse : CONFIG.fn_get_dataHouseName()
-//            ,sld_body : sSldBody
-//        }, {
-//            isBaseLayer : true,
-//            singleTile : true,
-//            transitionEffect : 'resize',
-//            tileOptions: {maxGetUrlLength: 2048},
-//            projection : new OpenLayers.Projection(sDataHouseCrs),
-//            ratio : 1.0
-//        });
-//
-//        gMap.addLayer(oWmsLayer);
-        //gMap.layers[0].setVisibility(false);
-        
+        // 베이스 레이어 설정 
         var oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
         	layers : sThemeList
         	,styles : sThemeList
@@ -243,7 +223,7 @@ function($,undefined){
         });
         gMap.addLayer(oWmsLayer);
 
-	// 지도 인쇄/저장용
+        // 지도 인쇄/저장용
 		var oBGLayer = new GWMS("backgroundLayer", CONFIG.fn_get_serviceUrl(), {
             layers : "SIGUNGU,N3A_B0010000,DORO_A001" ,
             styles : "" ,

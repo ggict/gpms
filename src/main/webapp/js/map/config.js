@@ -48,11 +48,14 @@ var CONFIG = (function($, undefined){
 	var sServiceUrl        = "http://1.221.39.242:21525/geoserver/wms?";
 	var wfsServiceUrl        = "http://1.221.39.242:21525/geoserver/wfs?";
 	
+<<<<<<< HEAD
 
 	/*var sServiceUrl        = "http://192.168.0.206:18080/geoserver/wms?";
 	var wfsServiceUrl        = "http://192.168.0.206:18080/geoserver/wfs?";
 */
 
+=======
+>>>>>>> branch 'develop' of https://github.com/ggict/gpms.git
 	
 	// real server
 	//var sServiceUrl        = "http://105.0.111.9:8089/G2DataService/GService?";
