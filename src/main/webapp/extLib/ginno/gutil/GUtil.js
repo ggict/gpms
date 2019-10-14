@@ -670,10 +670,10 @@ GUtil = {
 		var res = [];
 		function convert(obj, t){
 			if(!obj) return ;
-			if(obj instanceof Array) {
+			if(typeof obj === 'object'){
 				var tmp = [];
-				for (var i = 0; i < obj.length; i++) {
-					if(obj[i] instanceof Array) {
+				for (var i = 0; i < obj.length; i++){
+					if(typeof obj[i] === 'object'){
 						t.push(tmp);
 						convert(obj[i], tmp);
 					}else{
