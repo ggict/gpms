@@ -664,6 +664,7 @@ GUtil = {
 		return Math.floor(Math.random() * max);
 	},
 	
+	
 	//value값을 소문자 변환
 	fn_lowercase: function(arr){
 		if(!arr) return ;
