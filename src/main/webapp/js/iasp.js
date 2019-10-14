@@ -134,8 +134,8 @@
 	    object = obj;
 
 	    var juso = '';
-	    	juso += $("#ADM_CODE option:selected").text()+
-	    	$("#GU_CODE option:selected").text()+
+	    	juso += $("#ADM_CODE1 option:selected").text()+
+	    	$("#GU_CODE1 option:selected").text()+
 	    	$("#RO").val()+ 
 	    	$("#BON").val();
 	    	if($("#BU").val()!=''){
