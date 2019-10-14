@@ -145,9 +145,9 @@
 			<div class="fl bgsch" style="width: 500px">
 					<div class="schbx mt10">
 						<ul class="sch">
-							<span class="wid100"> <label>시</label> <select
-								id="ADM_CODE" name="ADM_CODE" alt="시"
-								onchange="fn_change_sigungu();" class="input"
+							<span class="wid100"> <label>시</label> 
+							<select	id="ADM_CODE1" name="ADM_CODE1" alt="시"
+								onchange="fn_change_newsigungu();" class="input"
 								style="width: 100px;">
 									<option value="">== 전체 ==</option>
 									<c:forEach items="${admCodeList}" var="admCode">
@@ -156,7 +156,7 @@
 							</select>
 							</span>
 							<span class="wid100"> <label>구/군</label> <select
-								id="GU_CODE" name="GU_CODE" alt="구/군" class="input"
+								id="GU_CODE1" name="GU_CODE1" alt="구/군" class="input"
 								style="width: 100px;">
 									<option value="">== 전체 ==</option>
 							</select>

@@ -155,6 +155,20 @@ public class CodeVO extends ClCodeVO {
 	 */
 	@XmlElement
 	private java.lang.String NAME;
+	
+	public java.lang.String getADM_CODE1() {
+		return ADM_CODE1;
+	}
+
+	public void setADM_CODE1(java.lang.String aDM_CODE1) {
+		ADM_CODE1 = aDM_CODE1;
+	}
+
+	/**
+	 * 코드 컬럼명
+	 */
+	@XmlElement
+	private java.lang.String ADM_CODE1;
 	public java.lang.String getBJCD() {
 		return BJCD;
 	}

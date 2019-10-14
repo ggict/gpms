@@ -14,6 +14,7 @@
 	        ,dataType: 'json'
 	//        ,contentType : 'application/json'
 	        ,data : {'ADM_CODE' : adm_code}
+	    	,cache : false
 	        ,success: function(data){
 	        	debugger;
 	        	var txtHtml;
@@ -30,6 +31,43 @@
 	        }
 	        ,error: function(a,b,msg){
 	            $("#GU_CODE").val("");
+	        }
+	    });
+	    
+	    return false;
+	 
+	}
+	
+	function fn_change_newsigungu() {
+	    var adm_code = $("#ADM_CODE1").val();
+	    if(adm_code == "") {
+	        $("#ADM_CODE1").val("");
+	        return;
+	    }
+	    debugger;
+	    
+	  
+	    $.ajax({
+	        url: contextPath + 'gmap/selectnewGuLocation_iasp.do'
+	        ,type: 'POST'
+	        ,dataType: 'json'
+	//        ,contentType : 'application/json'
+	        ,data : {'ADM_CODE1' : adm_code}
+	        ,success: function(data){
+	        	debugger;
+	        	var txtHtml;
+	        	if(data.admCodeGuList.length==0){
+	        		 txtHtml += "<option value=''></option>";
+	        	}else{
+	        		 for(var i=0; i < data.admCodeGuList.length; i++){
+		                   txtHtml += "<option value='" + data.admCodeGuList[i].bjcd+ "'>" + data.admCodeGuList[i].name + "</option>";
+		               }
+	        	}
+	        	   $("#GU_CODE1").html(txtHtml);
+	        	   
+	        }
+	        ,error: function(a,b,msg){
+	            $("#GU_CODE1").val("");
 	        }
 	    });
 	    
@@ -96,8 +134,8 @@
 	    object = obj;
 
 	    var juso = '';
-	    	juso += $("#ADM_CODE option:selected").text()+
-	    	$("#GU_CODE option:selected").text()+
+	    	juso += $("#ADM_CODE1 option:selected").text()+
+	    	$("#GU_CODE1 option:selected").text()+
 	    	$("#RO").val()+ 
 	    	$("#BON").val();
 	    	if($("#BU").val()!=''){
