@@ -100,7 +100,7 @@ function fnSelectAvg(param) {
 	   		    // 주 파손
 	   		    var crVal = "";
 
-	   		    if ( jdata.CNTL_DFECT != "dfct0009" ) {
+	   		    if ( jdata.CNTL_DFECT != "DFCT0009" ) {
 					var codeNm = jdata.CODE_NM;
 
 					if ( codeNm == "AC" ) {

@@ -1336,7 +1336,7 @@ function fnSearchStatus(cellIds) {
                      // 주 파손
                      var crVal = "";
 
-                     if ( avg.CNTL_DFECT != "dfct0009" ) {
+                     if ( avg.CNTL_DFECT != "DFCT0009" ) {
                          var codeNm = avg.CODE_NM;
 
                          if ( codeNm == "AC" ) {

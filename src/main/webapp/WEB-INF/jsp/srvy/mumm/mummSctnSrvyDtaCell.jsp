@@ -297,30 +297,30 @@ function fnSelectAvg(cellId) {
 	   		    // 주 파손
 	   		    var crVal = "";
 
-	   		    if ( evldata.CNTL_DFECT != "dfct0009" ) {
+	   		    if ( evldata.CNTL_DFECT != "DFCT0009" ) {
 					var codeNm = evldata.CNTL_DFECT;
 					if ( codeNm == "dfct0001" ) {
 					    crVal = "거북등균열";
 
-					} else if ( codeNm == "dfct0008" ) {
+					} else if ( codeNm == "DFCT0008" ) {
 					    crVal = "블럭균열";
 
-					} else if ( codeNm == "dfct0002" ) {
+					} else if ( codeNm == "DFCT0002" ) {
 					    crVal = "종방향균열";
 
-					} else if ( codeNm == "dfct0003" ) {
+					} else if ( codeNm == "DFCT0003" ) {
 					    crVal = "횡방향균열";
 
-					} else if ( codeNm == "dfct0004" ) {
+					} else if ( codeNm == "DFCT0004" ) {
 					    crVal = "패칭";
 
-					} else if ( codeNm == "dfct0005" ) {
+					} else if ( codeNm == "DFCT0005" ) {
 					    crVal = "포트홀";
 
-					} else if ( codeNm == "dfct0006" ) {
+					} else if ( codeNm == "DFCT0006" ) {
 					    crVal = "소성변형";
 
-					} else if ( codeNm == "dfct0007" ) {
+					} else if ( codeNm == "DFCT0007" ) {
 					    crVal = "종단평탄성";
 
 					}
