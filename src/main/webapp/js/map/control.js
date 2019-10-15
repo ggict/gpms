@@ -1336,6 +1336,7 @@ MAP.CONTROL = (function($, undefined){
 
         if (!res.success()) {return;}
 
+        
      // 검색 조건 피쳐 삭제
         if( gMap.getControl(res.object.id)
                 && gMap.getControl(res.object.id).handler

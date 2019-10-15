@@ -1308,6 +1308,7 @@ GRequest.WFS = {
 				obj = arr[index];
 			}
 			
+			
 			//한개의 레코드
 			var result = {
 				g2id : tmpArr[1],	//G2_ID 필드 (PK)
