@@ -473,9 +473,9 @@ GTMapLayerTool = OpenLayers.Class({
 						    var table = this.layers[i]["table"];
 
 						    if (options.layer == undefined ) {
-						    	if ( table == "CELL_10" || table == "CELL_SECT" ) { // || table == "M_CALS_T"
+						    	//if ( table == "CELL_10" || table == "CELL_SECT" ) { // || table == "M_CALS_T"
 						    	//if ( table == "CELL_10" || table == "CELL_SECT" || table == "M_CALS_T") { 
-						        //if ( table == "CELL_10" || table == "CELL_SECT" || table == "CELL_200" ) { // || table == "M_CALS_T"
+						        if ( table == "CELL_10" || table == "CELL_SECT" || table == "CELL_10_1015" || table == "CELL_10_4K" ) {
 						            arr.push(this.layers[i]);
 						        }
 						    }

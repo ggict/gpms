@@ -85,9 +85,9 @@ var CONFIG = (function($, undefined){
 	var exceptLayerList = ['GAttrLayerBase','GAttrLayer','GStatusLayerBase' ,'GStatusLayer','GTypeLayer', 'SttemntLayer', 'DmgtLayer', 'GOverlapLayer' ];
 
 
-	var aLayerList = ['CELL_10','CELL_SECT']; // ,'M_CALS_T'
+	//var aLayerList = ['CELL_10','CELL_SECT']; // ,'M_CALS_T'
 	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T'];
-	//var aLayerList = ['CELL_10','CELL_SECT','CELL_200']; // ,'M_CALS_T'
+	var aLayerList = ['CELL_10','CELL_SECT','CELL_10_4K','CELL_10_1015'];
 
 	// 2018.02.07 YYK 관할구역관리 레이어 추가
 	//var cLayerList = ['CMPTNC_ZONE'];
@@ -162,7 +162,8 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	    /* 
+	     
+	     /* 
 	     "CELL_200" : {
 	    	 
 	    	 'tmapid' : '870',
@@ -175,6 +176,31 @@ var CONFIG = (function($, undefined){
 	    	 'layerType' : '3',
 	     },
 	     */
+	     
+	     "CELL_10_1015" : {
+	    	 
+	    	 'tmapid' : '870',
+	    	 'id' : '3801',
+	    	 'table' : 'CELL_10_1015',
+	    	 'theme' : 'CELL_10_1015',
+	    	 'alias' : 'CELL_10_1015',
+	    	 'seq' : '3801',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
+	     },
+	     
+	     "CELL_10_4K" : {
+	    	 
+	    	 'tmapid' : '870',
+	    	 'id' : '3802',
+	    	 'table' : 'CELL_10_4K',
+	    	 'theme' : 'CELL_10_4K',
+	    	 'alias' : 'CELL_10_4K',
+	    	 'seq' : '3802',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
+	     },
+
 	     "MV_CELL_SECT_TYPE" : {
 	         
 	         'tmapid' : '870',
