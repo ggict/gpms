@@ -1311,7 +1311,7 @@ GRequest.WFS = {
 			//한개의 레코드
 			var result = {
 				g2id : tmpArr[1],	//G2_ID 필드 (PK)
-				feature : this.format.geojson.read(res)[0],	//도형
+				feature : this.format.geojson.read(feature)[0],	//도형
 				title : tmpArr[1],	//제목
 				fields : properties //필드들
 			};

@@ -1286,6 +1286,9 @@ MAP.CONTROL = (function($, undefined){
 	* @description 포장셀 컨트롤 event
 	*/
 	var event_selFeature = function(res){
+		//로딩바 숨김
+		$("#dvMapLoading").hide();
+		
 		if (!res.success()) {return;}
 
 		//검색 조건 피쳐 삭제
