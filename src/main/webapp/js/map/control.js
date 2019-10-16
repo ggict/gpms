@@ -3020,12 +3020,8 @@ MAP.CONTROL = (function($, undefined){
 
                 //기존 데이터의 노선, 방향, 차로값 검색
                 var o1stData = oTempLyr.features[0];
-                var _o1stAttr = o1stData.data;
-                var _oAttr = oData.fields;
-                
-                var o1stAttr = jsonKeyUpperCase(_o1stAttr);
-                var oAttr = jsonKeyUpperCase(_oAttr);
-                
+                var o1stAttr = jsonKeyUpperCase(o1stData.data);
+                var oAttr = jsonKeyUpperCase(oData.fields);
                 
                 if(o1stAttr.ROUTE_CODE == oAttr.ROUTE_CODE && o1stAttr.DIRECT_CODE == oAttr.DIRECT_CODE && o1stAttr.TRACK == oAttr.TRACK) {
                     //동일값이 선택된 경우
@@ -3045,11 +3041,8 @@ MAP.CONTROL = (function($, undefined){
                 $("#dvMapLoading").show();
 
                 //선택된 셀 정보로 공간조회하여 가운데 있는 셀 목록까지 모두 가져옴
-                var _o1stCell = oTempLyr.features[0];
-                var _o2ndCell = oTempLyr.features[1];
-                
-                var o1stCell = jsonKeyUpperCase(_o1stCell.data);
-                var o2ndCell = jsonKeyUpperCase(_o2ndCell.data);
+                var o1stCell = jsonKeyUpperCase(oTempLyr.features[0].data);
+                var o2ndCell = jsonKeyUpperCase(oTempLyr.features[1].data);
 
                 var nStrtpt = o1stCell.STRTPT;
                 if(nStrtpt > o2ndCell.STRTPT) nStrtpt = o2ndCell.STRTPT;
