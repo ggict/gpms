@@ -2965,6 +2965,19 @@ MAP.CONTROL = (function($, undefined){
     //통합정보조회 노선선택 컨트롤 callback
     var cb_selRouteControl =  function(res) {
         if(!res.success()) return;
+        
+        
+        //json key 명칭을 대문자 치환
+        var jsonKeyUpperCase = function(obj){
+        	var newJson = {};
+        	for(var key in obj){
+        		if(!key) continue;
+        		var upperKeyName = key.toUpperCase();
+        		newJson[''+upperKeyName] = obj[key]; 
+        	}
+        	return newJson;
+        }
+        
 
         // 검색 조건 피쳐 삭제
         if (gMap.getControl(res.object.id) && gMap.getControl(res.object.id).handler && gMap.getControl(res.object.id).handler.layer && gMap.getControl(res.object.id).handler.layer.features && gMap.getControl(res.object.id).handler.layer.features.length > 0) {
@@ -2996,9 +3009,13 @@ MAP.CONTROL = (function($, undefined){
 
                 //기존 데이터의 노선, 방향, 차로값 검색
                 var o1stData = oTempLyr.features[0];
-                var o1stAttr = o1stData.data;
-
-                var oAttr = oData.fields;
+                var _o1stAttr = o1stData.data;
+                var _oAttr = oData.fields;
+                
+                var o1stAttr = jsonKeyUpperCase(_o1stAttr);
+                var oAttr = jsonKeyUpperCase(_oAttr);
+                
+                
                 if(o1stAttr.ROUTE_CODE == oAttr.ROUTE_CODE && o1stAttr.DIRECT_CODE == oAttr.DIRECT_CODE && o1stAttr.TRACK == oAttr.TRACK) {
                     //동일값이 선택된 경우
                     oTempLyr.addFeatures(oData.feature);
@@ -3017,13 +3034,16 @@ MAP.CONTROL = (function($, undefined){
                 $("#dvMapLoading").show();
 
                 //선택된 셀 정보로 공간조회하여 가운데 있는 셀 목록까지 모두 가져옴
-                var o1stCell = oTempLyr.features[0];
-                var o2ndCell = oTempLyr.features[1];
+                var _o1stCell = oTempLyr.features[0];
+                var _o2ndCell = oTempLyr.features[1];
+                
+                var o1stCell = jsonKeyUpperCase(_o1stCell.data);
+                var o2ndCell = jsonKeyUpperCase(_o2ndCell.data);
 
-                var nStrtpt = o1stCell.data.STRTPT;
-                if(nStrtpt > o2ndCell.data.STRTPT) nStrtpt = o2ndCell.data.STRTPT;
-                var nEndpt = o1stCell.data.ENDPT;
-                if(nEndpt < o1stCell.data.ENDPT) nEndpt = o2stCell.data.ENDPT;
+                var nStrtpt = o1stCell.STRTPT;
+                if(nStrtpt > o2ndCell.STRTPT) nStrtpt = o2ndCell.STRTPT;
+                var nEndpt = o1stCell.ENDPT;
+                if(nEndpt < o1stCell.ENDPT) nEndpt = o2stCell.data.ENDPT;
 
                 //도형검색하여 multilayer에 추가
                 MAP.fn_get_getFeatureAndDrawByAttr({
@@ -3032,7 +3052,7 @@ MAP.CONTROL = (function($, undefined){
                     types : [["==", "==", "==", ">=", "<="]],
                     tables : ["CELL_10"],
                     fields : [["ROUTE_CODE", "DIRECT_CODE", "TRACK", "STRTPT", "ENDPT"]],
-                    values : [[o1stCell.data.ROUTE_CODE, o1stCell.data.DIRECT_CODE, o1stCell.data.TRACK, nStrtpt, nEndpt]],
+                    values : [[o1stCell.ROUTE_CODE, o1stCell.DIRECT_CODE, o1stCell.TRACK, nStrtpt, nEndpt]],
                     attribute : {
                         attributes : {
                              fillColor : '#0033ff',
@@ -3045,9 +3065,9 @@ MAP.CONTROL = (function($, undefined){
 
                 //속성검색하여 selectbox등 세팅
                 fn_set_ui_selects({
-                    route_code : o1stCell.data.ROUTE_CODE,
-                    direct_code : o1stCell.data.DIRECT_CODE,
-                    track : o1stCell.data.TRACK,
+                    route_code : o1stCell.ROUTE_CODE,
+                    direct_code : o1stCell.DIRECT_CODE,
+                    track : o1stCell.TRACK,
                     strtpt : nStrtpt,
                     endpt : nEndpt
                 });
