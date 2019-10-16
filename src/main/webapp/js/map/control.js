@@ -2969,13 +2969,24 @@ MAP.CONTROL = (function($, undefined){
         
         //json key 명칭을 대문자 치환
         var jsonKeyUpperCase = function(obj){
-        	var newJson = {};
-        	for(var key in obj){
-        		if(!key) continue;
-        		var upperKeyName = key.toUpperCase();
-        		newJson[''+upperKeyName] = obj[key]; 
+        	var retJson = {};
+        	function execute(obj, newJson){
+        		for(var key in obj){
+        			if(!key) continue;
+        			
+        			var value = obj[key];
+        			var upperKeyName = key.toUpperCase();
+        			
+        			if(typeof value === 'object' && !Array.isArray(value)){
+        				newJson[''+upperKeyName] = {};
+        				execute(value, newJson[''+upperKeyName]);
+        			}else{
+        				newJson[''+upperKeyName] = obj[key]; 
+        			}
+        		}
         	}
-        	return newJson;
+        	execute(obj, retJson);
+        	return retJson;
         }
         
 
