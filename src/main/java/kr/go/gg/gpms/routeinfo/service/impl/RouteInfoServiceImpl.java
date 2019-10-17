@@ -89,7 +89,29 @@ public class RouteInfoServiceImpl extends AbstractServiceImpl implements RouteIn
 	public List<RouteInfoVO> selectRouteInfoList(RouteInfoVO routeInfoVO) throws Exception {
 		return routeInfoDAO.selectRouteInfoList( routeInfoVO);
 	}
+	
+	/**
+	 * 노선_정보(TN_ROUTE_INFO)을 상세조회한다.
+	 * @param routeInfoVO - 조회할 정보가 담긴 RouteInfoVO
+	 * @return 조회한 TN_ROUTE_INFO
+	 * @exception Exception
+	 */
+	public RouteInfoVO RouteInfoView(RouteInfoVO routeInfoVO) throws Exception {
+		RouteInfoVO resultVO = routeInfoDAO.RouteInfoView(routeInfoVO);
+		 
+		return resultVO;
+	}
 
+	/**
+	 * 노선_정보(TN_ROUTE_INFO)을 상세조회 후 수정한다.
+	 * @param routeInfoVO - 조회할 정보가 담긴 RouteInfoVO
+	 * @return 조회한 TN_ROUTE_INFO
+	 * @exception Exception
+	 */
+	public int updateRouteInfoView(RouteInfoVO routeInfoVO) throws Exception {
+		return routeInfoDAO.updateRouteInfoView(routeInfoVO);
+	}
+	
 	/**
 	 * 노선_정보(TN_ROUTE_INFO) 총 갯수를 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 routeInfoVO

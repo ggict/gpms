@@ -65,6 +65,22 @@ public interface RouteInfoService {
 	List<RouteInfoVO> selectRouteInfoList(RouteInfoVO routeInfoVO) throws Exception;
 
 	/**
+	 * 노선_정보(TN_ROUTE_INFO)을 상세 조회한다.
+	 * @param routeInfoVO - 조회할 정보가 담긴 RouteInfoVO
+	 * @return 조회한 TN_ROUTE_INFO
+	 * @exception Exception
+	 */
+	RouteInfoVO RouteInfoView(RouteInfoVO routeInfoVO) throws Exception;
+	
+	/**
+	 * 노선_정보(TN_ROUTE_INFO)을 상세 조회 후 수정한다.
+	 * @param routeInfoVO - 조회할 정보가 담긴 RouteInfoVO
+	 * @return 조회한 TN_ROUTE_INFO
+	 * @exception Exception
+	 */
+	int updateRouteInfoView(RouteInfoVO routeInfoVO) throws Exception;
+	
+	/**
 	 * 노선_정보(TN_ROUTE_INFO) 총 갯수를 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 routeInfoVO
 	 * @return TN_ROUTE_INFO 총 갯수

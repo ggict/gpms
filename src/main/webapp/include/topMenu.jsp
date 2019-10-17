@@ -79,15 +79,16 @@
             <div id="gnb">
                 <ul>
                     <li class="noSub"><a href="#" class="menu1 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_route', '<c:url value="routeinfo/selectRouteInfoList.do"/>')"><span class="hidden">노선검색</span></a></li>
+                    <li class="noSub"><a href="#" class="menu7 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_reg_srvy', '<c:url value="srvy/selectSrvyExcelList.do"/>')"><span class="hidden">조사자료 관리</span></a></li>
                     <li class="noSub"><a href="#" class="menu2 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_srvyEvl', '<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>')"><span class="hidden">포장상태 평가</span></a></li>
-                    <li class="noSub"><a href="#" class="menu3 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_srvyPredct', '<c:url value="smdtalaststtus/selectSrvyDtaLastSttusList.do"/>')"><span class="hidden">포장상태 예측</span></a></li>
+                    <%-- <li class="noSub"><a href="#" class="menu3 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_srvyPredct', '<c:url value="smdtalaststtus/selectSrvyDtaLastSttusList.do"/>')"><span class="hidden">포장상태 예측</span></a></li> --%>
                     <%--/* full windows style 적용    */ --%>
                     <li>
                         <a href="#" class="menu4 top" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_repairtargets','<c:url value="rpairtrgetslctn/intro.do"/>')"><span class="hidden">보수대상 선정</span></a>
                         <div class="submenu sub4" id="sub4">
                             <ul>
                                 <li class=""><a href="#" class="sm9 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_repairtargets','<c:url value="rpairtrgetslctn/intro.do"/>')">보수대상 선정</a></li>
-                                <li><a href="#" class="sm4 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_unptcSenario','<c:url value="rpairmthduntpc/selectRpairMthdUntpcSenario.do"/>', 'repairUntpc')">예산 수준별 시나리오 분석</a></li>
+                                <%-- <li><a href="#" class="sm4 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_unptcSenario','<c:url value="rpairmthduntpc/selectRpairMthdUntpcSenario.do"/>', 'repairUntpc')">예산 수준별 시나리오 분석</a></li> --%>
                             </ul>
                         </div>
                     </li>
@@ -96,7 +97,7 @@
                         <div class="submenu sub5" id="sub5">
                             <ul>
                                 <li><a href="#" class="sm7 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_cntrwk', '<c:url value="cntrwk/selectCntrwkList.do"/>')">포장공사 이력관리</a></li>
-                                <li><a href="#" class="sm5 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat', '<c:url value="cntrwkdtl/selectCntrwkRoutCntStats.do"/>')">포장공사 통계조회</a></li>
+                                <%-- <li><a href="#" class="sm5 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat', '<c:url value="cntrwkdtl/selectCntrwkRoutCntStats.do"/>')">포장공사 통계조회</a></li> --%>
                                 <li><a href="#" class="sm4 sub" onclick="COMMON_UTIL.cmWindowOpen('유지보수 실적집계 엑셀출력', contextPath +'/cntrwk/setDownloadReport.do', 390, 150, true, null, 'center');">유지보수 실적집계</a></li>
                             </ul>
                         </div>
@@ -105,16 +106,15 @@
                         <a href="#" class="menu6 top" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_stat_route', '<c:url value="stats/selectRouteAllStats.do"/>')"><span class="hidden">통계</span></a>
                         <div class="submenu sub6" id="sub6">
                             <ul>
-                                <li><a href="#" class="sm10 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_route', '<c:url value="stats/selectRouteAllStats.do"/>')">노선 현황</a></li>
-                                <li><a href="#" class="sm7 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat', '<c:url value="cntrwkdtl/selectCntrwkRoutCntStats.do"/>')">포장공사 이력</a></li>
-                                <li><a href="#" class="sm7 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_survey', '<c:url value="stats/selectSurveyAllLenStatsTable.do"/>')">포장상태 조사구간</a></li>
+                                <li><a href="#" class="sm10 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_route', '<c:url value="stats/selectRouteAllStats.do"/>')">노선별 현황</a></li>
                                 <li><a href="#" class="sm11 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_mumm', '<c:url value="mumm/mummRoutCntStats.do"/>')">포장상태 평가</a></li>
+                                <li><a href="#" class="sm7 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat', '<c:url value="cntrwkdtl/selectCntrwkRoutCntStats.do"/>')">포장공사 이력</a></li>
+                                <%-- <li><a href="#" class="sm7 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_survey', '<c:url value="stats/selectSurveyAllLenStatsTable.do"/>')">포장상태 조사구간</a></li>
                                 <li><a href="#" class="sm12 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_predct', '<c:url value="smdtalaststtus/selectSmDtaLastRoutCntStats.do"/>')">포장상태 예측</a></li>
-                                <li><a href="#" class="sm13 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_unptcSenario','<c:url value="rpairmthduntpc/selectRpairMthdUntpcSenario.do"/>', 'statUntpc')">예산 수준별 시나리오 분석</a></li>
+                                <li><a href="#" class="sm13 sub" onclick="COMMON_UTIL.fn_set_subMenu('sub_unptcSenario','<c:url value="rpairmthduntpc/selectRpairMthdUntpcSenario.do"/>', 'statUntpc')">예산 수준별 시나리오 분석</a></li> --%>
                             </ul>
                         </div>
                     </li>
-                    <li class="noSub"><a href="#" class="menu7 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_reg_srvy', '<c:url value="srvy/selectSrvyExcelList.do"/>')"><span class="hidden">조사자료 관리</span></a></li>
                 </ul>
             </div>
             <div class="submenubg"></div>

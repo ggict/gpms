@@ -233,9 +233,9 @@
 		        </table>
 		    </div>
 
-		    <div class="mt5 tr">
+		    <!-- <div class="mt5 tr">
                 <a href="#"><input type="button" id="changeBtn" class="schbtn" onclick="fnChangeSystem($(this));" style="font-size: 13px; pointer: cursor;" /></a>
-            </div>
+            </div> -->
 
             <div class="uinfobx mt5">
 			※ <font color="red">*</font> 는 필수입력사항입니다.<br/>

@@ -4,29 +4,43 @@
 package kr.go.gg.gpms.routeinfo.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.cntrwk.service.model.CntrwkVO;
 import kr.go.gg.gpms.code.service.model.CodeVO;
+import kr.go.gg.gpms.company.service.model.CompanyVO;
+import kr.go.gg.gpms.dept.service.model.DeptVO;
 import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
 import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
+import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 
+import egovframework.cmmn.web.SessionManager;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -125,6 +139,58 @@ public class RouteInfoController extends BaseController {
 		map.put("search", routeInfoVO);
 
 		return map;
+	}
+	
+	@RequestMapping(value = { "/routeinfo/routeInfoView.do" })
+	public String routeInfoView(@ModelAttribute("searchVO") RouteInfoVO routeInfoVO, ModelMap model, HttpSession session) throws Exception {
+		String result = "";
+		
+		routeInfoVO.setUsePage(false);
+		routeInfoVO.setSidx("ROAD_NO");
+		RouteInfoVO ee = routeInfoService.RouteInfoView(routeInfoVO);
+		model.addAttribute("routeInfoVO", ee);
+		
+		String user = SessionManager.getCurrentUser().getREQ_USER_GRP();
+		if(user.equals("ROLE_ADMIN")){
+			 result =  "/routeinfo/routeinfoUpdate";
+		 }else {
+			 result = "/routeinfo/routeinfoView";
+		 }
+		 
+		 return result;
+	}
+	
+	@RequestMapping(value = { "/routeinfo/updateRouteInfo.do" })
+	public String updateRouteInfoView(@ModelAttribute RouteInfoVO routeInfoVO, ModelMap model,BindingResult bindingResult,HttpServletRequest request, SessionStatus status, HttpSession session) throws Exception {
+		Map<String, String> req = requestToHashMap(request);
+		
+		String action_flag = StringUtils.isNotEmpty(req.get("action_flag"))?
+				req.get("action_flag").trim():"UPDATE" ;
+		// common 결과처리 변수 [수정X]
+		String resultCode = "";
+		String resultMsg = "";
+		try {
+			resultCode = "UPDATE_SUCCESS";
+			BindBeansToActiveUser(routeInfoVO);
+			routeInfoService.updateRouteInfoView(routeInfoVO);
+			routeInfoVO.setResultSuccess("true");
+			routeInfoVO.setResultMSG("정상 수정되었습니다.");
+			
+			// 결과 처리용 [수정X]
+	    	model.addAttribute("resultCode", resultCode);
+	    	model.addAttribute("resultMsg", resultMsg);
+	    	model.addAttribute("callBackFunction", StringUtils.isNotEmpty(routeInfoVO.getCallBackFunction()) ?
+	    			routeInfoVO.getCallBackFunction().trim():"" );	// 처리후 호출 함수
+
+	    	status.setComplete();	//Double Submit 방지
+		} catch (Exception e) {
+			resultCode = "ERROR";
+    		resultMsg = "노선정보 수정 오류";
+    		LOGGER.error("노선정보 수정 오류", e);    		
+		}
+		
+		return "/cmmn/commonMsg";
+	 
 	}
 	
 	/**

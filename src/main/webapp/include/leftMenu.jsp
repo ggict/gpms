@@ -8,7 +8,7 @@
         <h2>노선 검색</h2>
         <ul class="btab_menu">
             <li style="height:145px"><a href="#" class="tab1" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="routeinfo/selectRouteInfoList.do"/>');">노선 데이터로<br />검색</a></li>
-            <li style="height:146px"><a href="#" class="tab2" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cell10/selectCell10List.do"/>');">10m셀로<br />검색</a></li>
+            <li style="height:146px"><a href="#" class="tab2" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cell10/selectCell10List.do"/>');">셀단위로<br />검색</a></li>
         </ul>
     </div>
 

@@ -8,6 +8,7 @@
 <%@ include file="/include/common_head.jsp" %>
 </head>
 <body id="wrap">
+
 <!-- 필수 파라메터(START) -->
 <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
@@ -125,7 +126,7 @@ $( document ).ready(function() {
         ,emptyrecords: "검색된 데이터가 없습니다."
         ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
         ,ondblClickRow: function(rowId) {       // 더블클릭 처리
-            //fnView(rowId);    // 대장 조회
+        	fnUpdate(rowId);  
         }
         ,onSelectRow: function(rowId) {     // 클릭 처리
             if( rowId != null ) {
@@ -207,7 +208,20 @@ function fn_search() {
         }
     }).trigger("reloadGrid");
 }
+// 수정
+function fnUpdate(rowId) {
+	if( $.type(rowId) === "undefined" || rowId=="" )
+		 rowId = $("#gridArea").getGridParam( "selrow" );
 
+	if( rowId != null ) {
+		var rowData = $("#gridArea").getRowData(rowId);
+		var roadNo = rowData["ROAD_NO"];
+
+		COMMON_UTIL.cmMoveUrl("/routeinfo/routeInfoView.do?ROAD_NO="+roadNo);
+	}
+	else
+		alert('<spring:message code="warn.checkplz.msg" />');
+}
 //도면 다운로드, 위치이동 버튼 생성
 function fn_create_btn(cellValue, options, rowObject) {
     var btn = "";

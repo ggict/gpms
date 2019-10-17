@@ -24,7 +24,7 @@
     <img src="<c:url value='/images/login_logo.png'/>" alt="경기도" class="glogo" />
         <div class="login">
             <img src="<c:url value='/images/login_logo3.png'/>" alt="경기도 포장관리시스템(PMS)" class="logo" id="gpmsLogo"/>
-            <%-- <img src="<c:url value='/images/login_logo2.png'/>" alt="경기도로 모니터링단 시스템" class="logo" id="goodLogo" style="display: none;"/> --%>
+           <%--  <img src="<c:url value='/images/login_logo2.png'/>" alt="경기도로 모니터링단 시스템" class="logo" id="goodLogo" style="display: none;"/> --%>
             <div class="loginbx">
                 <img src="<c:url value='/images/login_tit.png'/>" alt="로그인" class="tit" style="display: none;"/>
 
@@ -58,14 +58,14 @@
                         </c:forEach> --%>
                     </ul>
                 </div>
-                <!--  
+                  
                 <ul class="bn">
                     <li><a href="#"><img src="<c:url value='/images/bn_login1.gif'/>" alt="도로대장관리 시스템" title="도로대장관리 시스템" onclick="window.open('http://105.0.111.83:3200')"/></a></li>
                     <li><a href="#"><img src="<c:url value='/images/bn_login2.gif'/>" alt="교량관리 시스템" title="교량관리 시스템" onclick="window.open('http://nbms.kict.re.kr/nbms/index.jsp')"/></a></li>
                     <li><a href="#"><img src="<c:url value='/images/bn_login3.gif'/>" alt="TMS 시스템" title="TMS 시스템" onclick="window.open('http://gits.gg.go.kr/web/main/index.do')"/></a></li>
                     <li><a href="#"><img src="<c:url value='/images/bn_login4_good.gif'/>" alt="포트홀신고 시스템" title="포트홀신고 시스템" id="good"  onclick="location.href='<c:url value="/pothole-main.do"/>'"/></a></li>
                 </ul>
-                -->
+                
             </div>
         </div>
         <!-- 공통 (START)-->

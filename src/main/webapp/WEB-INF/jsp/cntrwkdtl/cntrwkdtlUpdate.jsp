@@ -621,8 +621,17 @@ $(document).ready(function(){
 	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 180);
 	
 	fn_search();
+	
+	//fn_tmp('');
+	
+	var rpairBeginDe = '<c:out value="${cntrwkDtlVO}"/>';
+	
+	var size = rpairBeginDe.length;
+		alert(rpairBeginDe.keys(0));	
+
 });
 
+ 
 //위치이동 버튼 생성
 function fn_create_btn(cellValue, options, rowObject) {
 	var btn = "";

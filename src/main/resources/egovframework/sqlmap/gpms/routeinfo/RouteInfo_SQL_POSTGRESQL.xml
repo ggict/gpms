@@ -170,7 +170,7 @@
 			]]>
 		</isEqual>
 		<isNotEmpty property="ROAD_NO"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND tnrouteinfo.ROAD_NO = #ROAD_NO# ]]></isNotEmpty>
-<isNotEmpty property="ROAD_NO_VAL"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND cast(tnrouteinfo.ROAD_NO as integer) = #ROAD_NO_VAL# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_NO_VAL"><![CDATA[ /* 노선_대장_마스터.노선_번호 */ AND cast(tnrouteinfo.ROAD_NO as integer) = #ROAD_NO_VAL# ]]></isNotEmpty>
 		<isNotEmpty property="INPUT_DATE"><![CDATA[ /* 노선_대장_마스터.입력일 */ AND tnrouteinfo.INPUT_DATE = #INPUT_DATE# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_NAME"><![CDATA[ /* 노선_대장_마스터.도로_명 */ AND tnrouteinfo.ROAD_NAME LIKE '%'|| #ROAD_NAME# ||'%' ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_TYPE"><![CDATA[ /* 노선_대장_마스터.도로_종류 */ AND tnrouteinfo.ROAD_TYPE = #ROAD_TYPE# ]]></isNotEmpty>
@@ -219,9 +219,9 @@
 				, tnrouteinfo.IMPOPASS /* 노선_대장_마스터.IMPOPASS */
 				, tnrouteinfo.REM /* 노선_대장_마스터.REM */
 				, tnrouteinfo.JUN /* 노선_대장_마스터.JUN */
-				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y /* 노선_대장_마스터.도로_총_연장_중용포함 */
-				, tnrouteinfo.ROAD_TOT_LEN_JYG_N /* 노선_대장_마스터.도로_총_연장_중용비포함 */
-				, tnrouteinfo.ROAD_LEN_CMPT /* 노선_대장_마스터.도로_연장_전산화완료 */
+				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y::numeric /* 노선_대장_마스터.도로_총_연장_중용포함 */
+				, tnrouteinfo.ROAD_TOT_LEN_JYG_N::numeric /* 노선_대장_마스터.도로_총_연장_중용비포함 */
+				, tnrouteinfo.ROAD_LEN_CMPT::numeric /* 노선_대장_마스터.도로_연장_전산화완료 */
 				, tnrouteinfo.ROAD_GRAD /* 노선_대장_마스터.도로등급 */
 			FROM ( SELECT ROAD_NO FROM DORO_TOT_GRS80_50 GROUP BY ROAD_NO ORDER BY ROAD_NO ) doro
 			LEFT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
@@ -245,6 +245,60 @@
 ]]>
 	</select>
 
+<select id="routeInfoDAO.RouteInfoView"
+		parameterClass="routeInfoVO"
+		resultClass="routeInfoVO">
+<![CDATA[
+		/* routeInfoDAO.selectRouteInfoList */
+		/* 노선_대장_마스터 조회 */
+		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN, tb.* FROM (
+            SELECT * FROM (
+			SELECT
+				doro.ROAD_NO /* 노선_대장_마스터.노선_번호 */
+				, cast(doro.ROAD_NO as integer) as ROAD_NO_VAL
+				, tnrouteinfo.INPUT_DATE /* 노선_대장_마스터.입력일 */
+				, tnrouteinfo.ROAD_NAME /* 노선_대장_마스터.도로_명 */
+				, tnrouteinfo.ROAD_TYPE /* 노선_대장_마스터.도로_종류 */
+				, tnrouteinfo.MCO /* 노선_대장_마스터.MCO */
+				, tnrouteinfo.DSGDATE /* 노선_대장_마스터.DSGDATE */
+				, tnrouteinfo.D_DATE /* 노선_대장_마스터.D_DATE */
+				, tnrouteinfo.J_DATE /* 노선_대장_마스터.J_DATE */
+				, tnrouteinfo.JJ_DATE /* 노선_대장_마스터.JJ_DATE */
+				, tnrouteinfo.ST_POINT /* 노선_대장_마스터.시점_명 */
+				, tnrouteinfo.ST_PIC_FILE /* 노선_대장_마스터.ST_PIC_FILE */
+				, tnrouteinfo.ED_POINT /* 노선_대장_마스터.종점_명 */
+				, tnrouteinfo.ED_PIC_FILE /* 노선_대장_마스터.ED_PIC_FILE */
+				, tnrouteinfo.IMPOPASS /* 노선_대장_마스터.IMPOPASS */
+				, tnrouteinfo.REM /* 노선_대장_마스터.REM */
+				, tnrouteinfo.JUN /* 노선_대장_마스터.JUN */
+				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y::numeric /* 노선_대장_마스터.도로_총_연장_중용포함 */
+				, tnrouteinfo.ROAD_TOT_LEN_JYG_N::numeric /* 노선_대장_마스터.도로_총_연장_중용비포함 */
+				, tnrouteinfo.ROAD_LEN_CMPT::numeric /* 노선_대장_마스터.도로_연장_전산화완료 */
+				, tnrouteinfo.ROAD_GRAD /* 노선_대장_마스터.도로등급 */
+			FROM ( SELECT ROAD_NO FROM DORO_TOT_GRS80_50 GROUP BY ROAD_NO ORDER BY ROAD_NO ) doro
+			LEFT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
+			ON doro.ROAD_NO = tnrouteinfo.ROAD_NO
+			) tnrouteinfo
+]]>
+
+		<include refid="routeInfoDAO.selectRouteInfoList.where" />
+
+<![CDATA[
+
+		) tb) as sub_all 
+		WHERE 1=1
+]]>
+
+	</select>
+	
+	<update id="routeInfoDAO.updateRouteInfoView">
+		UPDATE TN_ROUTE_INFO SET ROAD_NAME = #ROAD_NAME# 
+							 , ST_POINT = #ST_POINT# 
+							 , ED_POINT = #ED_POINT# 
+							 , ROAD_TOT_LEN_JYG_Y = #ROAD_TOT_LEN_JYG_Y#
+							 , ROAD_LEN_CMPT = #ROAD_LEN_CMPT#
+							 WHERE ROAD_NO = #ROAD_NO#
+	</update>
 
 	<select id="routeInfoDAO.selectRouteInfoListTotalCount"
 		parameterClass="routeInfoVO"

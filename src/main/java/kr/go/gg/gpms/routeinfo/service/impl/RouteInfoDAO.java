@@ -80,6 +80,25 @@ public class RouteInfoDAO extends BaseDAO {
 	}
 
 	/**
+	 * 노선_정보(TN_ROUTE_INFO)을 상세조회한다.
+	 * @param routeInfoVO - 조회할 정보가 담긴 RouteInfoVO
+	 * @return 조회한 TN_ROUTE_INFO
+	 * @exception Exception
+	 */
+	public RouteInfoVO RouteInfoView(RouteInfoVO routeInfoVO) throws Exception {
+		return (RouteInfoVO) select("routeInfoDAO.RouteInfoView", routeInfoVO);
+	}
+	
+	/**
+	 * 노선_정보(TN_ROUTE_INFO)을 상세조회 후 수정한다.
+	 * @param routeInfoVO - 조회할 정보가 담긴 RouteInfoVO
+	 * @return 조회한 TN_ROUTE_INFO
+	 * @exception Exception
+	 */
+	public int updateRouteInfoView(RouteInfoVO routeInfoVO) throws Exception {
+		return update("routeInfoDAO.updateRouteInfoView", routeInfoVO);
+	}
+	/**
 	 * 노선_정보(TN_ROUTE_INFO) 총 갯수를 조회한다.
 	 * @param routeInfoVO - 조회할 정보가 담긴 RouteInfoVO
 	 * @return TN_ROUTE_INFO 총 갯수

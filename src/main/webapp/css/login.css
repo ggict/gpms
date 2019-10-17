@@ -30,13 +30,13 @@ body{}
 .bn li:nth-child(2n){margin-left:10px;}
 .bn li:nth-child(3),.bn li:nth-child(4){margin-top:10px;}
 
-.notice{width:600px;float:left}
+.notice{width:320px;float:left}
 .notice h3{font-family:NanumGothicBold; color:#333;font-size:18px;border-bottom:1px solid #ddd;line-height:35px;}
 .notice h3 img{vertical-align:middle}
 .notice li{border-bottom:1px solid #ddd;line-height:47px;}
 .notice li:after{content:""; clear:both; display:block; }
 .notice li img{vertical-align:middle}
-.notice li .ntxt{float:left;display:block; width:475px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; font-size:15px; color:#333;background:url(../images/ic_notice.gif) 0 center no-repeat;text-indent:7px;}
+.notice li .ntxt{float:left;display:block; width:190px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; font-size:15px; color:#333;background:url(../images/ic_notice.gif) 0 center no-repeat;text-indent:7px;}
 .notice li .date{font-size:15px; color:#333;/* float:right */}
 
 #loginfooter{background:#eeeeee;height:60px;z-index:999;bottom:0px; left:0px; right:0; position:absolute;text-align:center;line-height:60px;}

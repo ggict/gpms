@@ -203,7 +203,7 @@ function fn_paintSum(){
 
 function fnUpdate(){
 	//COMMON_UTIL.cmMovePage('frm','<c:url value='/cntrwkdtl/updateCntrwkDtlView.do'/>?DETAIL_CNTRWK_ID='+$("#DETAIL_CNTRWK_ID").val());
-	COMMON_UTIL.cmMovePage('frm',"<c:url value='/cntrwkdtl/updateCntrwkDtlView.do'/>");
+	COMMON_UTIL.cmMovePage("frm","<c:url value='/cntrwkdtl/updateCntrwkDtlView.do'/>");
 }
 
 //위치조회
