@@ -295,8 +295,8 @@
 		UPDATE TN_ROUTE_INFO SET ROAD_NAME = #ROAD_NAME# 
 							 , ST_POINT = #ST_POINT# 
 							 , ED_POINT = #ED_POINT# 
-							 , ROAD_TOT_LEN_JYG_Y = #ROAD_TOT_LEN_JYG_Y#
-							 , ROAD_LEN_CMPT = #ROAD_LEN_CMPT#
+							 , ROAD_TOT_LEN_JYG_Y = #ROAD_TOT_LEN_JYG_Y#::float
+							 , ROAD_LEN_CMPT = #ROAD_LEN_CMPT#::float
 							 WHERE ROAD_NO = #ROAD_NO#
 	</update>
 

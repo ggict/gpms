@@ -169,28 +169,28 @@ public class RouteInfoController extends BaseController {
 		// common 결과처리 변수 [수정X]
 		String resultCode = "";
 		String resultMsg = "";
+		String callbackFunction = StringUtils.isNotEmpty(routeInfoVO.getCallBackFunction()) 
+									? routeInfoVO.getCallBackFunction().trim() : "";
+									
 		try {
 			resultCode = "UPDATE_SUCCESS";
+			resultMsg = "정상 수정되었습니다.";
 			BindBeansToActiveUser(routeInfoVO);
 			routeInfoService.updateRouteInfoView(routeInfoVO);
 			routeInfoVO.setResultSuccess("true");
-			routeInfoVO.setResultMSG("정상 수정되었습니다.");
-			
-			// 결과 처리용 [수정X]
-	    	model.addAttribute("resultCode", resultCode);
-	    	model.addAttribute("resultMsg", resultMsg);
-	    	model.addAttribute("callBackFunction", StringUtils.isNotEmpty(routeInfoVO.getCallBackFunction()) ?
-	    			routeInfoVO.getCallBackFunction().trim():"" );	// 처리후 호출 함수
-
+			routeInfoVO.setResultMSG(resultMsg);
 	    	status.setComplete();	//Double Submit 방지
 		} catch (Exception e) {
 			resultCode = "ERROR";
     		resultMsg = "노선정보 수정 오류";
     		LOGGER.error("노선정보 수정 오류", e);    		
 		}
-		
+
+		// 결과 처리용 [수정X]
+    	model.addAttribute("resultCode", resultCode);
+    	model.addAttribute("resultMsg", resultMsg);
+    	model.addAttribute("callBackFunction",  callbackFunction);	// 처리후 호출 함수    	
 		return "/cmmn/commonMsg";
-	 
 	}
 	
 	/**
