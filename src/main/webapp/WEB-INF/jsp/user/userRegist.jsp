@@ -216,7 +216,7 @@
                    			<th align="left" scope="row"><font color="red">*</font> 사용자 그룹</th>
                    			<td>
                    				<c:forEach items="${groupList }" var="group">
-                   				    <span class="authUser" id="${group.AUTHOR_ID}" <c:if test="${group.AUTHOR_ID == 'ROLE_USER_SGG' }">style="display: none;"</c:if>><input type="radio" name="REQ_USER_GRP" id="REQ_USER_GRP" style="margin-right:5px; " value="${group.AUTHOR_ID }" class="input notnull" <c:if test="${group.AUTHOR_ID == 'ROLE_USER' }">checked="checked"</c:if>/><c:out value="${group.AUTHOR_NM }" /><span style="margin-right:5px;"></span></span>
+                   				    <span class="authUser" id="${group.AUTHOR_ID}" <c:if test="${group.AUTHOR_ID == 'ROLE_USER_SGG' }">style="display: none;"</c:if>><input type="radio" name="REQ_USER_GRP" id="REQ_USER_GRP" style="margin-right:5px; " value="${group.AUTHOR_ID }" class="input notnull" <c:if test="${group.AUTHOR_ID == 'ROLE_ADMIN' }">checked="checked"</c:if>/><c:out value="${group.AUTHOR_NM }" /><span style="margin-right:5px;"></span></span>
                    				</c:forEach>
                    			</td>
                    		</tr>
@@ -225,7 +225,7 @@
                    			<td class="authCheck">
                    				<input type="hidden" name="REQ_MENUACC_ROLE" id="REQ_MENUACC_ROLE" value=""/>
                    				<c:forEach items="${menuAuthList }" var="menu">
-                   					<span class="authArea <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">pothole</c:if>" id="${menu.AUTHOR_ID}" <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">style="display: none;"</c:if> ><input type="checkbox" name="MENUACC" value="${menu.AUTHOR_ID }" style="margin-right:5px;" /><c:out value="${menu.AUTHOR_NM }" /><br/></span>
+                   					<span class="authArea <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">pothole</c:if>" id="${menu.AUTHOR_ID}" <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">style="display: none;"</c:if> ><input type="checkbox" id= "MENUACC" value="${menu.AUTHOR_ID }" style="margin-right:5px;" /><c:out value="${menu.AUTHOR_NM }" /><br/></span>
                    				</c:forEach>
                    			</td>
                    		</tr>
@@ -344,7 +344,27 @@ $(document).ready( function(){
         s = COMMON_UTIL.phoneNumFomatter(s);
         $(this).val(s);
     });
+    
+    $("input:radio[name=REQ_USER_GRP]").click(function(){
+			
+    	if($("input:radio[name=REQ_USER_GRP]:checked").val() == 'ROLE_USER'){
+    		var classnm = document.querySelectorAll('.authArea'),
+    	    i = 0,
+    	    l = classnm.length;
 
+    		for (i; i < l; i++) {
+    			classnm[i].style.display = 'none';
+    		}	
+		}else{
+			var classnm = document.querySelectorAll('.authArea'),
+    	    i = 0,
+    	    l = classnm.length;
+
+    		for (i; i < l; i++) {
+    			classnm[i].style.display = 'inline';
+    		}
+		} 
+    });	
     //사용자 구분에 따른 항목 변경
     fn_change_item();
 });

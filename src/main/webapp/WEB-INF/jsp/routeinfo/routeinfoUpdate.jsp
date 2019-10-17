@@ -42,7 +42,7 @@
 							<th scope="row">노선번호</th>
 							<td>
 								<label for="ROAD_NO_VAL"></label>
-								<input type="text" id="ROAD_NO_VAL" name="ROAD_NO_VAL" value="<c:out value="${routeInfoVO.ROAD_NO_VAL}"/>"disabled />
+								<c:out value="${routeInfoVO.ROAD_NO_VAL}"/>
 								<input type="hidden" id="ROAD_NO" name="ROAD_NO" value="<c:out value="${routeInfoVO.ROAD_NO}"/>"/>
 							</td>
 							<th scope="row"><span class="fcred"> *</span>노선명</th>
@@ -67,12 +67,12 @@
 							<th scope="row"><span class="fcred"> *</span>총 연장(km)</th>
 							<td>
 								<label for="ROAD_TOT_LEN_JYG_Y"></label>
-								<input type="number" id="ROAD_TOT_LEN_JYG_Y" name="ROAD_TOT_LEN_JYG_Y" value="<c:out value="${routeInfoVO.ROAD_TOT_LEN_JYG_Y}"/>"/>
+								<input type="number" class="MX_50 CS_25 input" id="ROAD_TOT_LEN_JYG_Y" name="ROAD_TOT_LEN_JYG_Y" value="<c:out value="${routeInfoVO.ROAD_TOT_LEN_JYG_Y}"/>"/>
 							</td>
 							<th scope="row"><span class="fcred"> *</span>전산화 완료연장(km)</th>
 							<td>
 								<label for="ROAD_LEN_CMPT"></label>
-								<input type="number" id="ROAD_LEN_CMPT" name="ROAD_LEN_CMPT" value="<c:out value="${routeInfoVO.ROAD_LEN_CMPT}"/>"/>
+								<input type="number" class="MX_50 CS_25 input" id="ROAD_LEN_CMPT" name="ROAD_LEN_CMPT" value="<c:out value="${routeInfoVO.ROAD_LEN_CMPT}"/>"/>
 							</td>
 						</tr>
 					</tbody>
