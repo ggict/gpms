@@ -147,8 +147,8 @@ public class RouteInfoController extends BaseController {
 		
 		routeInfoVO.setUsePage(false);
 		routeInfoVO.setSidx("ROAD_NO");
-		RouteInfoVO ee = routeInfoService.RouteInfoView(routeInfoVO);
-		model.addAttribute("routeInfoVO", ee);
+		RouteInfoVO routeinfoVO = routeInfoService.RouteInfoView(routeInfoVO);
+		model.addAttribute("routeInfoVO", routeinfoVO);
 		
 		String user = SessionManager.getCurrentUser().getREQ_USER_GRP();
 		if(user.equals("ROLE_ADMIN")){
