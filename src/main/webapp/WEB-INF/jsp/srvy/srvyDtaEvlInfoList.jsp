@@ -565,20 +565,13 @@ function fnFormatter(cellValue, options, rowObject) {
                 html += "파손없음";
 
             } else {
-                html += "복합파손 <br /> (";
-
-                for ( var i = 0; i < valArr.length; i++ ) {
-                    // min값과 같은 경우 텍스트 추가
-                    if ( valArr[i] == minVal ) {
-                        if ( i != 0 ) {
-                            html += ", ";
-                        }
-
-                        html += nameArr[i];
-                    }
+                html += "복합파손 <br />";
+                
+                // min값과 같은 경우 텍스트 추가
+                var minValNameIndex = valArr.indexOf(""+minVal);
+                if (minValNameIndex > -1) {
+                	html += " (" + nameArr[minValNameIndex] + ")";
                 }
-
-                html += ")";
             }
         }
     } else if ( nm == "CUZ" ) {

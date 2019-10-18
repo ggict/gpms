@@ -791,27 +791,16 @@
 
 	<!-- 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다. -->
 	<parameterMap id="prc_savesurveydata_map" class="java.util.Map">
-		<parameter property="p_USER_NO" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="p_SRVY_NO" javaType="java.lang.String"
-			jdbcType="NUMERIC" mode="IN" />
-		<parameter property="p_FRMULA_NM" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="P_ROW_COUNT" javaType="java.lang.String"
-			jdbcType="NUMERIC" mode="IN" />
-		<parameter property="p_RECORDSET" javaType="java.lang.String"
-			jdbcType="CLOB" mode="IN" />
-		<parameter property="p_MODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="IN" />
-		<parameter property="o_PROCCODE" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="OUT" />
-		<parameter property="o_PROCMSG" javaType="java.lang.String"
-			jdbcType="VARCHAR" mode="OUT" />
+		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_SRVY_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_FRMULA_NM" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="P_ROW_COUNT" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<!-- <parameter property="p_RECORDSET" javaType="java.lang.String" jdbcType="CLOB" /> -->
+		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
 	</parameterMap>
-	<procedure id="srvyDtaExcelDAO.PRC_SAVESURVEYDATA"
-		parameterMap="prc_savesurveydata_map">
-		{ call PRC_SAVESURVEYDATA(?,?,?,?,?,?,?,?) }
-	</procedure>
+    <select id="srvyDtaExcelDAO.PRC_SAVESURVEYDATA" parameterMap="prc_savesurveydata_map" resultClass="hashMap">
+        SELECT o_PROCCODE, o_PROCMSG FROM PRC_SAVESURVEYDATA(?::numeric, ?::numeric, ?, ?::numeric, ?)
+    </select>
 
 	<!-- 입력한 조사자료 엑셀 데이터를 시스템에 반영한다. -->
 	<parameterMap id="prc_srvy_dta_sys_reflct_map" class="java.util.Map">
