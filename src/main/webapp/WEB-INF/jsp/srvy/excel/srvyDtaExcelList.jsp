@@ -18,7 +18,7 @@ $( document ).ready(function() {
 
 
 	$("#addFile").change(function(){
-		var extn = ["xlsx"];
+		var extn = ["zip"];
 		COMMON_FILE.setMultiFiles('#file_list', this, extn, 'N', 50);
 	});
 
@@ -199,7 +199,7 @@ function fn_upd_res_log(creatDt, creatNum, type, cnt){
 	<div class="fl bgsch">
 			<h3>파일첨부
 				<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
-				<input multiple="multiple" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
+				<input multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
 			</h3>
 			<div class="schbx mt10">
 			    <ul class="sch">

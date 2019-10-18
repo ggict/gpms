@@ -2,9 +2,8 @@ package kr.go.gg.gpms.srvy.web;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.OutputStream;
+import java.io.FileOutputStream;
 import java.io.StringWriter;
-import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +27,36 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.View;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import egovframework.cmmn.util.ExcelView;
+import egovframework.cmmn.util.FileUploadUtils;
+import egovframework.cmmn.web.SessionManager;
+import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.rte.psl.dataaccess.util.EgovMap;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import egovframework.security.service.impl.CustomAuthenticationProvider;
 import kr.go.gg.gpms.attachfile.service.AttachFileService;
 import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 import kr.go.gg.gpms.base.web.BaseController;
@@ -54,43 +83,8 @@ import kr.go.gg.gpms.srvydtasttus.service.SrvyDtaSttusService;
 import kr.go.gg.gpms.srvydtasttus.service.model.SrvyDtaSttusVO;
 import kr.go.gg.gpms.sysuser.service.SysUserService;
 import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.View;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import egovframework.cmmn.util.DateUtil;
-import egovframework.cmmn.util.ExcelView;
-import egovframework.cmmn.util.FileUploadUtils;
-import egovframework.cmmn.web.SessionManager;
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-import egovframework.security.service.impl.CustomAuthenticationProvider;
+import net.sf.jazzlib.ZipEntry;
+import net.sf.jazzlib.ZipInputStream;
 
 //import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -212,6 +206,18 @@ public class SrvyDtaController extends BaseController {
 
 				String sheetName = "DBLoading";
 				String fileName = filePath + file.getFILE_COURS() + File.separator + file.getFILE_NM();
+				//String fileName = file.getFILE_NM();
+				//String fileCours = filePath + file.getFILE_COURS();
+						
+				int resultZipCnt = getReadZipDataCnt(fileName, filePath);
+				
+				//System.out.println("resultZipCnt: " + resultZipCnt);
+				
+				//zip 파일 전송 완료 추후 로직 수정
+				String tmp1 = "end";
+				if("end".equals(tmp1)) {
+					return "jsonView";  
+				}
 
 				// 전송한 엑셀 파일의 개수
 				int resultCnt = getReadXLDataCnt(fileName, sheetName);
@@ -517,8 +523,8 @@ public class SrvyDtaController extends BaseController {
 				return map;
 			}
 			String filePath = pathInfoProperties.getProperty("file.upload.path");
-
 			String frmula_nm = egovPropertyService.getString("FRMULA_NM", "NHPCI");
+			
 			if (StringUtils.isEmpty(pavFrmulaVO.getFRMULA_NM())) {
 				pavFrmulaVO.setFRMULA_NM(frmula_nm);
 			}
@@ -528,6 +534,7 @@ public class SrvyDtaController extends BaseController {
 			String sheetName = "DBLoading";
 
 			PavFrmulaVO pavFrmulaOne = pavFrmulaService.selectPavFrmula(pavFrmulaVO);
+			
 			// 산출식이 없으면 종료
 			if (pavFrmulaOne == null || StringUtils.isEmpty(pavFrmulaOne.getFRMULA_NM())) {
 				map.put("result", "noformula");
@@ -568,21 +575,31 @@ public class SrvyDtaController extends BaseController {
 
 						fileName = checkFilePath(filePath + attachFileOne.getFILE_COURS(), "path") + File.separator + checkFilePath(attachFileOne.getFILE_NM(), "name");
 						fileName = fileName.replace("/", File.separator).replace("\\\\", File.separator);
+						
 						File fileExcel = new File(fileName);
+						
 						if (fileExcel.exists() && fileExcel.isFile()) {
 							// 엑셀 POI 읽기
-							String excelXml = getReadXLData(fileName, sheetName);
-							/*
+							//String excelXml = getReadXLData(fileName, sheetName);
+							
+							//sdh
+							if (fileExcel.exists() && fileExcel.isFile()) {
+							
 							String excelDB = getReadDbData(fileName, sheetName);
 							
+							return map;
+							}
+							
+							/*
 							if(StringUtils.isNotEmpty(excelDB)) {
 								//srvyDtaExcelService.insertSrvyDtaDetailExcel(srvyDtaExcelOne);	
 							}
 							*/
-							if (StringUtils.isNotEmpty(excelXml)) {
-								excelXml = excelXml.replaceAll("\"", "");
+							
+							if (StringUtils.isNotEmpty("")) {
+								//excelXml = excelXml.replaceAll("\"", "");
 								// LOGGER.info(excelXml);
-								srvyDtaExcelOne.setRECORDSET(excelXml);
+								//srvyDtaExcelOne.setRECORDSET(excelXml);
 								HashMap prc_result = srvyDtaExcelService.procSaveSurveyData(srvyDtaExcelOne);
 
 								o_PROCCODE = prc_result.get("o_proccode").toString();
@@ -647,7 +664,7 @@ public class SrvyDtaController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+
 		} finally {
 			map.put("totCount", totCount);
 			map.put("successCount", successCount);
@@ -819,6 +836,8 @@ public class SrvyDtaController extends BaseController {
 		// XFFS : .xlsx
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sheet = wb.getSheet(sheetName);
+		
+		XSSFCell cur;
 
 		String result = "";
 
@@ -923,6 +942,7 @@ public class SrvyDtaController extends BaseController {
 		XSSFSheet sheet = wb.getSheet(sheetName);
 
 		String result = "";
+		String colName = "";
 
 		try {
 			
@@ -930,45 +950,35 @@ public class SrvyDtaController extends BaseController {
 			int rowNum = sheet.getPhysicalNumberOfRows();
 			int cellNum = sheet.getRow(0).getLastCellNum();
 
+			Map<String, Object> params = new HashMap<String, Object>();
+
 			// 엑셀 식(formula)으로 된 데이터 읽기
 			FormulaEvaluator formulaEval = wb.getCreationHelper().createFormulaEvaluator();
 
 			// i => 엑셀 row의 수
 			for (int i = 1; i < rowNum; i++) { // 헤더제외. 1부터 시작
-
 				if (!formulaEval.evaluate(sheet.getRow(i).getCell(0)).formatAsString().equals("0.0")) {
 
 					// j => 엑셀 cell의 수
 					for (int j = 0; j < cellNum; j++) {
-						//Element cellData = doc.createElement(sheet.getRow(0).getCell(j).getStringCellValue()); // row(0).cell(j).getValue()
-
+						colName = sheet.getRow(0).getCell(j).getStringCellValue();
+						
+						//셀 열 vo
 						String val = formulaEval.evaluate(sheet.getRow(i).getCell(j)) == null ? "" : formulaEval.evaluate(sheet.getRow(i).getCell(j)).formatAsString();
-
 						if (val.contains(".") && val.split("[.]")[1].equals("0")) {
 							val = val.split("[.]")[0];
 						}
-
-						//cellData.appendChild(doc.createTextNode(val));
-
-						//xlData.appendChild(cellData);
+						params.put(colName, val);
 					}
+					//srvyDtaExcelService.insertSrvyDtaDetailExcel(params);
 				}
 			}
 
-			StringWriter writer = new StringWriter();
-			try {
-				
-				result = writer.getBuffer().toString();
-			} catch (Exception e) {
-				LOGGER.debug("예외발생내역:" + e);
-			} finally {
-				writer.close();
-			}
-			// http://theeye.pe.kr/archives/1437
 		} catch (Exception e) {
 
 			fis.close();
 			LOGGER.debug("예외발생내역:" + e);
+			e.printStackTrace();
 
 		} finally {
 			fis.close();
@@ -1197,6 +1207,84 @@ public class SrvyDtaController extends BaseController {
 			return false;
 		}
 	}
+	
+	// 엑셀파일 건수 가져오기
+		private int getReadZipDataCnt(String fileName, String filePath) throws Exception {
+			
+			String path = checkFilePath(fileName, "path");
+			String fileNm = "";
+	        int cnt = 0;
+	        
+	        Date currentDate = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sdf.format(currentDate);
+			filePath += File.separator + "srvy" + File.separator + date;
+			
+			// 폴더 경로
+			File uploadFolder =  new File(checkFilePath(filePath,"path"));
+	        File zipFile = new File(path);
+	        FileInputStream fis = null;
+	        ZipInputStream zis = null;
+	        ZipEntry zipentry = null;
+	        
+	        try {
+	        	//파일 스트림
+	            fis = new FileInputStream(zipFile);
+	            
+	            //Zip 파일 스트림
+	            zis = new ZipInputStream(fis);
+	            
+	            //entry가 없을때까지 뽑기
+	            while ((zipentry = zis.getNextEntry()) != null) {
+	                fileNm = zipentry.getName();
+	                File file = new File(uploadFolder, fileNm);
+	                //entiry가 폴더면 폴더 생성
+	                if (zipentry.isDirectory()) {
+	                    file.mkdirs();
+	                } else {
+	                    //파일이면 파일 만들기
+	                    createFile(file, zis);
+	                }
+	            }
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (zis != null)
+	                zis.close();
+
+	            if (fis != null)
+	                fis.close();
+			}
+			return cnt;
+		}
+		
+		private static void createFile(File file, ZipInputStream zis) throws Exception {
+
+	        //디렉토리 확인
+	        File parentDir = new File(file.getParent());
+
+	        //디렉토리가 없으면 생성하자
+	        if (!parentDir.exists()) {
+	            parentDir.mkdirs();
+	        }
+
+	        //파일 스트림 선언
+	        FileOutputStream fos = null;
+	        try {
+	        	fos = new FileOutputStream(file); 
+	            byte[] buffer = new byte[256];
+	            int size = 0;
+	            //Zip스트림으로부터 byte뽑아내기
+	            while ((size = zis.read(buffer)) > 0) {
+	                //byte로 파일 만들기
+	                fos.write(buffer, 0, size);
+	            }
+	        } catch (Exception e) {
+	        	fos.close();
+	            e.printStackTrace();
+	        }
+	    }
+	
 
 	@RequestMapping(value = "/selectSrvyExcelList.do")
 	public String selectSrvyDtaList(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {

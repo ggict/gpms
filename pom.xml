@@ -23,6 +23,7 @@
 		<spring.maven.artifact.version>4.3.16.RELEASE</spring.maven.artifact.version>
 		<springframework.version>4.3.16.RELEASE</springframework.version>
 		<org.springframework.security-version>3.2.7.RELEASE</org.springframework.security-version>
+		<project.lib.path>${project.basedir}/src/main/webapp/WEB-INF/lib</project.lib.path>
 
 		<!-- egovframework
 		<egovframework.rte.version>3.5.0</egovframework.rte.version>
@@ -467,6 +468,14 @@
 			<artifactId>postgresql</artifactId>
 			<version>9.1-901-1.jdbc4</version>
 			<!-- <version>9.4.1208</version> -->
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.sf</groupId>
+		    <artifactId>jazzlib</artifactId>
+		    <version>1.0</version>
+		    <scope>system</scope>
+		    <systemPath>${project.lib.path}/jazzlib.jar</systemPath>
 		</dependency>
 
 	</dependencies>
