@@ -828,14 +828,14 @@
 		<parameter property="p_SRVY_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_ROUTE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_DIRECT_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
-		<parameter property="p_TRACK" javaType="java.lang.String" jdbcType="NUMERIC" />
+		<parameter property="p_TRACK" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_STRTPT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
 		<parameter property="p_ENDPT" javaType="java.math.BigDecimal" jdbcType="NUMERIC" />
 		<parameter property="p_FRMULA_NM" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
 	</parameterMap>
 	<select id="srvyDtaExcelDAO.PRC_AGGREGATE_GENERAL" parameterMap="prc_aggregate_general_map" resultClass="hashMap">
-		SELECT o_PROCCODE, o_PROCMSG FROM PRC_AGGREGATE_GENERAL(?::numeric, ?, ?, ?, ?::numeric, ?, ?, ?, ?)
+		SELECT o_PROCCODE, o_PROCMSG FROM PRC_AGGREGATE_GENERAL(?::numeric, ?::numeric, ?, ?, ?, ?, ?, ?, ?)
 	</select>
 
 	<select id="srvyDtaExcelDAO.selectSrvyDtaSrvyNoList"
