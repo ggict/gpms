@@ -647,7 +647,7 @@ public class SrvyDtaController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
 			map.put("totCount", totCount);
 			map.put("successCount", successCount);

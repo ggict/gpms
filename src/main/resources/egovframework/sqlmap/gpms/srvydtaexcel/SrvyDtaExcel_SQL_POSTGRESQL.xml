@@ -282,7 +282,7 @@
 		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 조사_자료_엑셀.수정_일시 */ AND tnsrvydtaexcel.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_NO_LIST">
 		<![CDATA[ /* 조사_자료_엑셀.조사_번호 */  ]]>
-			<iterate close=")" conjunction="," open="("
+			<iterate close="::numeric)" conjunction="::numeric," open="("
 				prepend=" AND tnsrvydtaexcel.SRVY_NO IN " property="SRVY_NO_LIST">
 				#SRVY_NO_LIST[]#
 			</iterate>
