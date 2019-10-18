@@ -431,7 +431,7 @@ function fnSelectData() {
 
                 // 평가정보
                 $("#gpci").text(fnFloat("${smDtaGnlSttusVO.GPCI}"));
-                $("#crVal").text(crVal);
+                $("#crVal").html(crVal);
                 $("#dmgCuz").text(cuz);
 
                 /* tb.eq(0).html(fnFloat(AC_IDX));
