@@ -726,12 +726,12 @@ MAP.CONTROL = (function($, undefined){
 				//영역내에 해당하는 자료가 없음
 				alert('검색 결과가 없습니다.');
 
-				 //거리 표시 삭제
-				 for(var i=gMap.popups.length-1; i >=0; i--) {
-					 if(gMap.popups[i].type == "attrCircle") {
-						 gMap.removePopup(gMap.popups[i]);
-					 }
-				 }
+				//거리 표시 삭제
+				for(var i=gMap.popups.length-1; i >=0; i--) {
+					if(gMap.popups[i].type == "attrCircle") {
+						gMap.removePopup(gMap.popups[i]);
+					}
+				}
 
 				//검색 조건 피쳐 삭제
 				/*if(gMap.getControl("attrPoint") && gMap.getControl("attrPoint").handler && gMap.getControl("attrPoint").handler.layer && gMap.getControl("attrPoint").handler.layer.features && gMap.getControl("attrPoint").handler.layer.features.length > 0) {
@@ -746,8 +746,6 @@ MAP.CONTROL = (function($, undefined){
 			//요청 실패
 			alert('요청 실패');
 		}
-
-		if(typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
 	};
 
 	/**
