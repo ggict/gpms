@@ -720,6 +720,7 @@ MAP.CONTROL = (function($, undefined){
 	* @description 속성 조회 callback
 	*/
 	var fn_event_attr = function(res) {
+		if(typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
 		if (res.success()) {
 			if (res.data.length == "0") {
 				//영역내에 해당하는 자료가 없음
@@ -3343,7 +3344,7 @@ MAP.CONTROL = (function($, undefined){
 
 	//통합조회_교량
 	var event_selFeatureBrdg = function(res) {
-
+		if(typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
 		if (res.success()) {
 			if (res.data.length == "0") {
 				//영역내에 해당하는 자료가 없음
@@ -3358,8 +3359,7 @@ MAP.CONTROL = (function($, undefined){
 				if(gMap.getControl("selBrdgPolygon") && gMap.getControl("selBrdgPolygon").handler && gMap.getControl("selBrdgPolygon").handler.layer && gMap.getControl("selBrdgPolygon").handler.layer.features && gMap.getControl("selBrdgPolygon").handler.layer.features.length > 0) {
 					gMap.getControl("selBrdgPolygon").handler.layer.removeAllFeatures();
 				}
-
-				if(typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
+				
 			}else {
 				try {
 
@@ -3989,8 +3989,7 @@ MAP.CONTROL = (function($, undefined){
 	* @description 셀 속성 컨트롤 event
 	*/
 	var event_selSectFeature = function(res){
-		$("#dvMapLoading").hide();
-		
+		if(typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
 		if (res.success()) {
 			if (res.data.length == "0") {
 				//영역내에 해당하는 자료가 없음
@@ -4005,8 +4004,7 @@ MAP.CONTROL = (function($, undefined){
 				if(gMap.getControl("selSectPolygon") && gMap.getControl("selSectPolygon").handler && gMap.getControl("selSectPolygon").handler.layer && gMap.getControl("selSectPolygon").handler.layer.features && gMap.getControl("selSectPolygon").handler.layer.features.length > 0) {
 					gMap.getControl("selSectPolygon").handler.layer.removeAllFeatures();
 				}
-
-				if(typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
+				
 			}else {
 				try {
 				 // 검색할 내용이 선택된 경우
