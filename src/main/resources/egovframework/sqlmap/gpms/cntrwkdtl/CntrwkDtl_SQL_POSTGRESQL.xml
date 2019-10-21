@@ -265,14 +265,14 @@
 			, #RPAIR_MTHD_CODE# /* 공사상세정보.보수_공법_코드 */
 			, #DETAIL_CNTRWK_GROUP# /* 공사상세정보.세부_공사_그룹 */
 			, #DETAIL_CNTRWK_NM# /* 공사상세정보.세부_공사_명 */
-			, #TRACK_LEN#::int /* 공사상세정보.1차로_연장 */
-			, #SPRVISN_CO_NO#::int /* 공사상세정보.감리_업체_번호 */
+			, #TRACK_LEN#::numeric /* 공사상세정보.1차로_연장 */
+			, #SPRVISN_CO_NO#::numeric /* 공사상세정보.감리_업체_번호 */
 			, #SPRVISN_CO_NM# /* 공사상세정보.감리_업체_명 */
 			, #SPRVISN_CO_RPRSNT_NO# /* 공사상세정보.감리_업체_대표_번호 */
 			, #SPRVISN_CO_RPRSNTV_NM# /* 공사상세정보.감리_업체_대표자_명 */
 			, #SPRVISOR_NM# /* 공사상세정보.감리원_명 */
 			, #SPRVISOR_TELNO# /* 공사상세정보.감리원_전화번호 */
-			, #CNSTRCT_CO_NO#::int /* 공사상세정보.시공_업체_번호 */
+			, #CNSTRCT_CO_NO#::numeric /* 공사상세정보.시공_업체_번호 */
 			, #CNSTRCT_CO_NM# /* 공사상세정보.시공_업체_명 */
 			, #CNSTRCT_CO_RPRSNTV_NM# /* 공사상세정보.시공_업체_대표자_명 */
 			, #CNSTRCT_CO_TELNO# /* 공사상세정보.시공_업체_전화번호 */
@@ -283,14 +283,14 @@
 			, #ROUTE_CODE# /* 공사상세정보.노선_코드 */
 			, #DIRECT_CODE# /* 공사상세정보.행선_코드 */
 			, #TRACK# /* 공사상세정보.차로 */
-			, #STRTPT#::int /* 공사상세정보.시점 */
-			, #ENDPT#::int /* 공사상세정보.종점 */
+			, #STRTPT#::numeric /* 공사상세정보.시점 */
+			, #ENDPT#::numeric /* 공사상세정보.종점 */
 			, #CNTRWK_STRTPT_NM# /* 공사상세정보.공사_시점_명 */
 			, #CNTRWK_ENDPT_NM# /* 공사상세정보.공사_종점_명 */
-			, #CNTRWK_AMOUNT#::int /* 공사상세정보.공사_금액 */
-			, #GVSLCT#::int /* 공사상세정보.관급비 */
-			, #OUTSRCCT#::int /* 공사상세정보.도급비 */
-			, #ETC_RLOCATCT#::int /* 공사상세정보.기타_이설비 */
+			, #CNTRWK_AMOUNT#::numeric /* 공사상세정보.공사_금액 */
+			, #GVSLCT#::numeric /* 공사상세정보.관급비 */
+			, #OUTSRCCT#::numeric /* 공사상세정보.도급비 */
+			, #ETC_RLOCATCT#::numeric /* 공사상세정보.기타_이설비 */
 			, #CNTRWK_TMPRT# /* 공사상세정보.공사_기온 */
 			, #CNTRWK_WETHR# /* 공사상세정보.공사_날씨 */
 			, #CNTRWK_TIME# /* 공사상세정보.공사_시간 */
@@ -299,15 +299,15 @@
 			, #BEFORE_PAV_YEAR# /* 공사상세정보.직전_포장_연도 */
 			, #RPAIR_BEGIN_DE# /* 공사상세정보.보수_시작_일자 */
 			, #RPAIR_END_DE# /* 공사상세정보.보수_종료_일자 */
-			, #RPAIR_AR#::int /* 공사상세정보.보수_면적 */
-			, #RPAIR_BT#::int /* 공사상세정보.보수_폭 */
+			, #RPAIR_AR#::numeric /* 공사상세정보.보수_면적 */
+			, #RPAIR_BT#::numeric /* 공사상세정보.보수_폭 */
 			, #PAV_STLE_CODE# /* 공사상세정보.포장_형태_코드 */
 			, #PAV_MSRC_ETC# /* 공사상세정보.포장_공법_기타 */
 			, #RPAIR_THICK_DC# /* 공사상세정보.보수_두께_설명 */
-			, #RPAIR_THICK#::int /* 공사상세정보.보수_두께 */
-			, #RPAIR_THICK_BASE#::int /* 공사상세정보.보수_두께_기층 */
-			, #RPAIR_THICK_CNTR#::int /* 공사상세정보.보수_두께_중간층 */
-			, #RPAIR_THICK_ASCON#::int /* 공사상세정보.보수_두께_표층 */
+			, #RPAIR_THICK#::numeric /* 공사상세정보.보수_두께 */
+			, #RPAIR_THICK_BASE#::numeric /* 공사상세정보.보수_두께_기층 */
+			, #RPAIR_THICK_CNTR#::numeric /* 공사상세정보.보수_두께_중간층 */
+			, #RPAIR_THICK_ASCON#::numeric /* 공사상세정보.보수_두께_표층 */
 			, #PAV_MATRL_ASCON_ETC# /* 공사상세정보.포장_재료_표층_기타 */
 			, #PAV_MATRL_BASE_CODE# /* 공사상세정보.포장_재료_기층_코드 */
 			, #PAV_MATRL_BASE_ETC# /* 공사상세정보.포장_재료_기층_기타 */
@@ -319,33 +319,34 @@
 			, #ASPAT_RNS_CRRSPND_AT# /* 공사상세정보.아스팔트_실명제_해당_여부 */
 			, #RM# /* 공사상세정보.비고 */
 			, #PROCESS_RESULT_MSSAGE# /* 공사상세정보.처리_결과_메세지 */
-			, #OPERT_BFE_PHOTO_NO#::int /* 공사상세정보.작업_전_사진_번호 */
-			, #OPERT_AFT_PHOTO_NO#::int /* 공사상세정보.작업_후_사진_번호 */
-			, #FILE_NO#::int /* 공사상세정보.파일_번호 */
+			, #OPERT_BFE_PHOTO_NO#::numeric /* 공사상세정보.작업_전_사진_번호 */
+			, #OPERT_AFT_PHOTO_NO#::numeric /* 공사상세정보.작업_후_사진_번호 */
+			, #FILE_NO#::numeric /* 공사상세정보.파일_번호 */
 			, #CONFM_STTUS_CODE# /* 공사상세정보.승인_상태_코드 */
 			, #CONFM_DT# /* 공사상세정보.승인_일시 */
-			, #CONFMER_NO#::int /* 공사상세정보.승인자_번호 */
+			, #CONFMER_NO#::numeric /* 공사상세정보.승인자_번호 */
 			, #EXTRL_REGIST_AT# /* 공사상세정보.외부_등록_여부 */
 			, 'Y' /* 공사상세정보.사용_여부 */
 			, 'N' /* 공사상세정보.삭제_여부 */
-			, #CRTR_NO#::int /* 공사상세정보.생성자_번호 */
+			, #CRTR_NO#::numeric /* 공사상세정보.생성자_번호 */
 			, NOW() /* 공사상세정보.생성_일시 */
-			, #UPDUSR_NO#::int /* 공사상세정보.수정자_번호 */
+			, #UPDUSR_NO#::numeric /* 공사상세정보.수정자_번호 */
 			, NOW() /* 공사상세정보.수정_일시 */
 			, #PAV_MATRL_ASCON_CODE# /* 공사상세정보.포장_재료_표층_코드 */
 			, #PAINT_MSRC# /* 공사상세정보.차선_도색_공법 */
-			, #PAINT_YLWSLLN_AR#::int /* 공사상세정보.차선_도색_황색실선_면적 */
-			, #PAINT_YLWDASHLN_AR#::int /* 공사상세정보.차선_도색_황색파선_면적 */
-			, #PAINT_WHSLLN_AR#::int /* 공사상세정보.차선_도색_백색실선_면적 */
-			, #PAINT_CRSLK_CO#::int /* 공사상세정보.차선_도색_횡단보도_개수 */
-			, #PAINT_STOPLN_CO#::int /* 공사상세정보.차선_도색_정지선_개수 */
-			, #PAINT_STOPLN_AR#::int /* 공사상세정보.차선_도색_정지선_면적 */
-			, #PAINT_SPDBMP_CO#::int /* 공사상세정보.차선_도색_방지턱_개수 */
-			, #PAINT_SPDBMP_AR#::int /* 공사상세정보.차선_도색_방지턱_면적 */
-			, #PAINT_WHDASHLN_AR#::int /* 공사상세정보.차선_도색_백색파선_면적 */
-			, #PAINT_CHRCTRSYMBL_CO#::int /* 공사상세정보.차선_도색_문자기호_개수 */
-			, #PAINT_CHRCTRSYMBL_AR#::int /* 공사상세정보.차선_도색_문자기호_면적 */
-			, #PAINT_CRSLK_AR#::int /* 공사상세정보.차선_도색_횡단보도_면적 */	
+			, #PAINT_YLWSLLN_AR#::numeric /* 공사상세정보.차선_도색_황색실선_면적 */
+			, #PAINT_YLWDASHLN_AR#::numeric /* 공사상세정보.차선_도색_황색파선_면적 */
+			, #PAINT_WHSLLN_AR#::numeric /* 공사상세정보.차선_도색_백색실선_면적 */
+			, #PAINT_CRSLK_CO#::numeric /* 공사상세정보.차선_도색_횡단보도_개수 */
+			, #PAINT_STOPLN_CO#::numeric /* 공사상세정보.차선_도색_정지선_개수 */
+			, #PAINT_STOPLN_AR#::numeric /* 공사상세정보.차선_도색_정지선_면적 */
+			, #PAINT_SPDBMP_CO#::numeric /* 공사상세정보.차선_도색_방지턱_개수 */
+			, #PAINT_SPDBMP_AR#::numeric /* 공사상세정보.차선_도색_방지턱_면적 */
+			, #PAINT_WHDASHLN_AR#::numeric /* 공사상세정보.차선_도색_백색파선_면적 */
+			, #PAINT_CHRCTRSYMBL_CO#::numeric /* 공사상세정보.
+			차선_도색_문자기호_개수 */
+			, #PAINT_CHRCTRSYMBL_AR#::numeric /* 공사상세정보.차선_도색_문자기호_면적 */
+			, #PAINT_CRSLK_AR#::numeric /* 공사상세정보.차선_도색_횡단보도_면적 */	
 		)
 ]]>
 	</insert>

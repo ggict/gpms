@@ -6,6 +6,7 @@
 <head>
 <title>노선 통합 검색</title>
 <%@ include file="/include/common_head.jsp" %>
+<script src="<c:url value='/js/common/cu_alert.js'/>"></script>
 </head>
 <body>
 
