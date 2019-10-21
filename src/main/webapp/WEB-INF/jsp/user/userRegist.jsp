@@ -345,10 +345,10 @@ $(document).ready( function(){
         $(this).val(s);
     });
     
-    $("input:radio[name=REQ_USER_GRP]").click(function(){
+     $("input:radio[name=REQ_USER_GRP]").click(function(){
 			
     	if($("input:radio[name=REQ_USER_GRP]:checked").val() == 'ROLE_USER'){
-    		var classnm = document.querySelectorAll('.authArea'),
+    		var classnm = document.querySelectorAll('.authArea');
     	    i = 0,
     	    l = classnm.length;
 
@@ -356,15 +356,19 @@ $(document).ready( function(){
     			classnm[i].style.display = 'none';
     		}	
 		}else{
-			var classnm = document.querySelectorAll('.authArea'),
+			var classnm = document.querySelectorAll('.authArea');
+			var pothole = document.querySelector('#ROLE_USER_POTHOLE')
     	    i = 0,
     	    l = classnm.length;
 
     		for (i; i < l; i++) {
+    
     			classnm[i].style.display = 'inline';
+    			
     		}
+    		pothole.style.display='none';
 		} 
-    });	
+    }); 	
     //사용자 구분에 따른 항목 변경
     fn_change_item();
 });

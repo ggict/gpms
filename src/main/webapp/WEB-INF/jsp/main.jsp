@@ -63,7 +63,7 @@
                     <li><a href="#"><img src="<c:url value='/images/bn_login1.gif'/>" alt="도로대장관리 시스템" title="도로대장관리 시스템" onclick="window.open('http://105.0.111.83:3200')"/></a></li>
                     <li><a href="#"><img src="<c:url value='/images/bn_login2.gif'/>" alt="교량관리 시스템" title="교량관리 시스템" onclick="window.open('http://nbms.kict.re.kr/nbms/index.jsp')"/></a></li>
                     <li><a href="#"><img src="<c:url value='/images/bn_login3.gif'/>" alt="TMS 시스템" title="TMS 시스템" onclick="window.open('http://gits.gg.go.kr/web/main/index.do')"/></a></li>
-                    <li><a href="#"><img src="<c:url value='/images/bn_login4_good.gif'/>" alt="포트홀신고 시스템" title="포트홀신고 시스템" id="good"  onclick="location.href='<c:url value="/pothole-main.do"/>'"/></a></li>
+                    <li><a href="#"><img src="<c:url value='/images/bn_login4_good.gif'/>" alt="포트홀신고 시스템" title="포트홀신고 시스템" id="good"  onclick="window.open('http://105.0.111.7/gpms/')"/></a></li>
                 </ul>
                 
             </div>

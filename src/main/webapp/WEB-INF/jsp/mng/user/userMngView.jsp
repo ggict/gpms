@@ -176,7 +176,7 @@
 			                   			<th align="center" scope="row">메뉴접근 권한</th>
 			                   			<td>
 			                   				<c:forEach items="${menuAuthList }" var="menu">
-			                   					<input type="checkbox" name="APPLY_MENUACC" style="margin-right:5px;" value="${menu.AUTHOR_ID }" <c:if test="${fn: indexOf(result.REQ_MENUACC_ROLE, menu.AUTHOR_ID) > -1}">checked="checked"</c:if>/><c:out value="${menu.AUTHOR_NM }" /><br/>
+			                   					<span class = "authArea" id="${menu.AUTHOR_ID }" <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">style="display: none;"</c:if> ><input type="checkbox" name="APPLY_MENUACC" style="margin-right:5px;" value="${menu.AUTHOR_ID }" <c:if test="${fn: indexOf(result.REQ_MENUACC_ROLE, menu.AUTHOR_ID) > -1}">checked="checked"</c:if>/><c:out value="${menu.AUTHOR_NM }" /><br/></span>
 			                   				</c:forEach>
 			                   			</td>
 			                   		</tr>
@@ -389,7 +389,7 @@
 			                   			<th align="center" scope="row"><font color="red">*</font> 사용자 그룹</th>
 			                   			<td>
 			                   				<c:forEach items="${groupList }" var="group">
-			                   					<input type="radio" name="USER_GRP" id="USER_GRP" style="margin-right:5px;" value="${group.AUTHOR_ID }" class="input notnull" title="${result.USER_GRP}" <c:if test="${group.AUTHOR_ID == result.USER_GRP }">checked="checked"</c:if>/><c:out value="${group.AUTHOR_NM }" /><span style="margin-right:5px;"></span>
+			                   					<input type="radio" name="USER_GRP" id="USER_GRP" style="margin-right:5px;" value="${group.AUTHOR_ID }" class="input notnull" title="${result.USER_GRP}" <c:if test="${group.AUTHOR_ID == 'ROLE_ADMIN' }">checked="checked"</c:if><c:if test="${group.AUTHOR_ID == result.USER_GRP }">checked="checked"</c:if>/><c:out value="${group.AUTHOR_NM }" /><span style="margin-right:5px;"></span>
 			                   				</c:forEach>
 			                   			</td>
 			                   		</tr>
@@ -398,7 +398,7 @@
 			                   			<td>
 			                   				<input type="hidden" name="MENUACC_ROLE" id="MENUACC_ROLE" value="" />
 			                   				<c:forEach items="${menuAuthList }" var="menu">
-			                   					<input type="checkbox" name="MENUACC" value="${menu.AUTHOR_ID }" style="margin-right:5px;" <c:if test="${fn: indexOf(result.MENUACC_ROLE, menu.AUTHOR_ID) > -1}">checked="checked"</c:if>/><c:out value="${menu.AUTHOR_NM }" /><br/>
+			                   					<span class = "authArea" id="${menu.AUTHOR_ID }" <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">style="display: none;"</c:if> ><input type="checkbox" name="MENUACC" value="${menu.AUTHOR_ID }" style="margin-right:5px;" <c:if test="${fn: indexOf(result.MENUACC_ROLE, menu.AUTHOR_ID) > -1}">checked="checked"</c:if>/><c:out value="${menu.AUTHOR_NM }"/><br/></span>
 			                   				</c:forEach>
 			                   			</td>
 			                   		</tr>
@@ -457,7 +457,7 @@ $(document).ready(function() {
 
     $("#BRTHDY").keyup(function(e){
         COMMON_UTIL.removeChar(e);
-    })
+    })	
 
 });
 

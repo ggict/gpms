@@ -55,7 +55,7 @@ function fn_regUser() {
 
 // 아이디 / 비밀번호 문의
 function fn_selUserInfo() {
-	alert("아이디 및 비밀번호 문의는 관리자 이메일로 요청 바랍니다.\n관리자 이메일 : 0000@0000.00");
+	alert("아이디 및 비밀번호 문의는 관리자 이메일로 요청 바랍니다.\n관리자 이메일 : parkchg@gg.go.kr");
 }
 
 function fn_selUserInfoPth() {
