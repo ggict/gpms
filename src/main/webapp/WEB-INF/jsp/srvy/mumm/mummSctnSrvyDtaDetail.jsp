@@ -191,18 +191,23 @@ function fnSelectEvaluationDetail() {
 
                     } else {
                         crVal += "<br />복합파손 <br /> (";
+                        var codeNames = [];
 
                         for ( var i = 0; i < valArr.length; i++ ) {
                             // max값과 같은 경우 텍스트 추가
                             if ( valArr[i] == minVal ) {
-                                if ( i != 0 ) {
+                                /* 
+                            	if ( i != 0 ) {
                                     crVal += ", ";
 
                                 }
                                 crVal += nameArr[i];
+ 								*/
+                            	codeNames.push(nameArr[i]);
                             }
                         }
 
+                        crVal += codeNames.join(',');
                         crVal += ")";
 
                         $("#crVal").css({"line-height": "11px", "font-size": "14px"});
@@ -338,18 +343,23 @@ function fnSelectLastSttus(obj) {
 
 	                    } else {
 	                        crVal += "<br />복합파손 <br /> (";
-
+							var codeNames = [];
 	                        for ( var i = 0; i < valArr.length; i++ ) {
 
 	                            // max값과 같은 경우 텍스트 추가
 	                            if ( valArr[i] == minVal ) {
+	                            	/* 
 	                                if ( i != 0 ) {
 	                                    crVal += ", ";
 	                                }
 	                                crVal += nameArr[i];
+	                                 */
+	                                 codeNames.push(nameArr[i]);
 
 	                            }
 	                        }
+	                        
+	                        crVal += codeNames.join(',');
 	                        crVal += ")";
 	                        $("#crVal").css({"line-height": "11px", "font-size": "14px"});
 	                    }
