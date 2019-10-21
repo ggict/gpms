@@ -1855,13 +1855,14 @@ function fnClearStep1Data() {
 function fnClearStep2Data() {
 
     parent.bottomHide();
+	$('#dv_multiSelectTools').hide();
 
     // STEP 2 초기화
     $("#btn_selPoint").parent().removeClass("on");
     $("#btn_selPolygon").parent().removeClass("on");
     $("#btn_selRelease").parent().removeClass("on");
     $("#btn_selEnd").parent().removeClass("on");
-
+    
     // STEP 3 초기화
     $("#step3").css("display", "none");
     $("#divRouteInfo").css("display", "none");
