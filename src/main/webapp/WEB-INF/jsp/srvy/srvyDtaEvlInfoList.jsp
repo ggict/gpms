@@ -566,18 +566,21 @@ function fnFormatter(cellValue, options, rowObject) {
 
             } else {
                 html += "복합파손 <br /> (";
+                var codeNames = [];
 
                 for ( var i = 0; i < valArr.length; i++ ) {
                     // min값과 같은 경우 텍스트 추가
                     if ( valArr[i] == minVal ) {
+                    	/* 
                         if ( i != 0 ) {
                             html += ", ";
                         }
-
                         html += nameArr[i];
+                        */
+                    	codeNames.push(nameArr[i]);
                     }
                 }
-
+                html += codeNames.join(',');
                 html += ")";
             }
         }

@@ -366,23 +366,27 @@ function fnSelectData() {
                     var valArr = [ AC_IDX, BC_IDX, LC_IDX, PTCHG_IDX, POTHOLE_IDX, RD_IDX, RCI ];
 
                     if ( maxVal == 0 ) {
-
                         // max 값이 0인 경우는 파손없음
                         crVal += "파손없음";
 
                     } else {
                         crVal += "<br />복합파손 <br /> (";
-
+                        var codeNames = [];
                         for ( var i = 0; i < valArr.length; i++ ) {
                             // max값과 같은 경우 텍스트 추가
                             //if ( valArr[i] == minVal ) {
                             if ( valArr[i] == maxVal ) {
-                                if ( i != 0 ) {
+                                /* 
+                            	if ( i != 0 ) {
                                     crVal += ", ";
                                 }
                                 crVal += nameArr[i];
+                                 */
+                                codeNames.push(nameArr[i]);
                             }
                         }
+                            
+                        crVal += codeNames.join(',');
                         crVal += ")";
                         $("#crVal").css({"line-height": "11px", "font-size": "14px"});
                     }
@@ -431,7 +435,7 @@ function fnSelectData() {
 
                 // 평가정보
                 $("#gpci").text(fnFloat("${smDtaGnlSttusVO.GPCI}"));
-                $("#crVal").text(crVal);
+                $("#crVal").html(crVal);
                 $("#dmgCuz").text(cuz);
 
                 /* tb.eq(0).html(fnFloat(AC_IDX));
@@ -664,10 +668,12 @@ function fnSelectLastSttus(obj) {
 
 	                    } else {
 	                        crVal += "<br />복합파손 <br /> (";
+	                        var codeNames = [];
 
 	                        for ( var i = 0; i < valArr.length; i++ ) {
 
 	                            // max값과 같은 경우 텍스트 추가
+	                            /* 	
 	                            //if ( valArr[i] == minVal ) {
 	                            if ( valArr[i] == maxVal ) {
 	                                if ( i != 0 ) {
@@ -676,7 +682,11 @@ function fnSelectLastSttus(obj) {
 	                                }
 	                                crVal += nameArr[i];
 	                            }
+ 								*/
+ 								codeNames.push(nameArr[i]);
 	                        }
+	                            
+	                        crVal += codeNames.join(',');
 	                        crVal += ")";
 	                        $("#crVal").css({"line-height": "11px", "font-size": "14px"});
 	                    }
