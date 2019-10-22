@@ -299,7 +299,7 @@ function fnSelectAvg(cellId) {
 
 	   		    if ( evldata.CNTL_DFECT != "DFCT0009" ) {
 					var codeNm = evldata.CNTL_DFECT;
-					if ( codeNm == "dfct0001" ) {
+					if ( codeNm == "DFCT0001" ) {
 					    crVal = "거북등균열";
 
 					} else if ( codeNm == "DFCT0008" ) {
