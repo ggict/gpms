@@ -1842,109 +1842,105 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
         <![CDATA[
             /* mummSctnSrvyDtaDAO.integratedListExcel */
             /* JOY_통합정보조회 - 상태평가 : 엑셀저장 */
-            SELECT * FROM (                 SELECT ROW_NUMBER() OVER(ORDER BY cell.CELL_ID ASC) AS RN
-   , (SELECT CODE_NM FROM TC_CODE WHERE cell.ROAD_GRAD = TC_CODE.CODE_VAL )  ROAD_GRAD
-   , tnmummsctnsrvydta.ROUTE_CODE
-   , tnrouteinfo.ROAD_NAME /* 노선정보.노선명 */
-   , CASE
-   WHEN tnmummsctnsrvydta.DIRECT_CODE = 'S'
-   THEN '상행'
-   WHEN tnmummsctnsrvydta.DIRECT_CODE = 'E'
-   THEN '하행'
-   ELSE ''
-   END DIRECT_CODE
-   , tnmummsctnsrvydta.TRACK
-   , tnmummsctnsrvydta.STRTPT / 1000 STRTPT
-   , tnmummsctnsrvydta.ENDPT / 1000 ENDPT
-        , tnmummsctnsrvydta.TRTS_BAC_CR
-              , tnmummsctnsrvydta.BLOCK_CR
-              , tnmummsctnsrvydta.VRTCAL_CR
-              , tnmummsctnsrvydta.HRZNTAL_CR
-              , tnmummsctnsrvydta.PTCHG_CR
-              , tnmummsctnsrvydta.POTHOLE_CR
-              , tnmummsctnsrvydta.RD_VAL
-              , tnmummsctnsrvydta.IRI_VAL
-              , tnmummsctnsrvydta.AC_IDX
-              , tnmummsctnsrvydta.BC_IDX
-              , tnmummsctnsrvydta.LC_IDX
-              , tnmummsctnsrvydta.TC_IDX
-              , tnmummsctnsrvydta.PTCHG_IDX
-              , tnmummsctnsrvydta.POTHOLE_IDX
-              , tnmummsctnsrvydta.RD_IDX
-              , tnmummsctnsrvydta.RCI
-              , tnmummsctnsrvydta.SCR
-              , tnmummsctnsrvydta.GPCI
-              , tnmummsctnsrvydta.CNTL_DFECT
- , ( SELECT tccode.CN
-                  FROM TC_CODE tccode
-                  WHERE tccode.CODE_VAL = tnmummsctnsrvydta.CNTL_DFECT
-              ) CNTL_DFECT_NM
-              , tnmummsctnsrvydta.DMG_CUZ_CLMT
-              , tnmummsctnsrvydta.DMG_CUZ_VMTC
-              , tnmummsctnsrvydta.DMG_CUZ_ETC
-  , CASE
-                  WHEN tnmummsctnsrvydta.DMG_CUZ_CLMT = tnmummsctnsrvydta.DMG_CUZ_VMTC
-                  AND tnmummsctnsrvydta.DMG_CUZ_VMTC = tnmummsctnsrvydta.DMG_CUZ_ETC
-                      THEN
-                          CASE
-                              WHEN tnmummsctnsrvydta.DMG_CUZ_ETC = 0
-                                  THEN '파손없음'
-                              ELSE '교통량/하부불량, 기후, 기타'
-                          END
-                  WHEN tnmummsctnsrvydta.DMG_CUZ_CLMT > tnmummsctnsrvydta.DMG_CUZ_VMTC
-                  AND tnmummsctnsrvydta.DMG_CUZ_CLMT > tnmummsctnsrvydta.DMG_CUZ_ETC
-                      THEN '기후'
-                  WHEN tnmummsctnsrvydta.DMG_CUZ_VMTC > tnmummsctnsrvydta.DMG_CUZ_CLMT
-                  AND tnmummsctnsrvydta.DMG_CUZ_VMTC > tnmummsctnsrvydta.DMG_CUZ_ETC
-                      THEN '교통량/하부불량'
-                  WHEN tnmummsctnsrvydta.DMG_CUZ_ETC > tnmummsctnsrvydta.DMG_CUZ_CLMT
-                  AND tnmummsctnsrvydta.DMG_CUZ_ETC > tnmummsctnsrvydta.DMG_CUZ_VMTC
-                      THEN '기타'
-                  WHEN tnmummsctnsrvydta.DMG_CUZ_CLMT = tnmummsctnsrvydta.DMG_CUZ_VMTC
-                  AND tnmummsctnsrvydta.DMG_CUZ_CLMT > tnmummsctnsrvydta.DMG_CUZ_ETC
-                      THEN '교통량/하부불량, 기후'
-                  WHEN tnmummsctnsrvydta.DMG_CUZ_CLMT = tnmummsctnsrvydta.DMG_CUZ_ETC
-                  AND tnmummsctnsrvydta.DMG_CUZ_CLMT > tnmummsctnsrvydta.DMG_CUZ_VMTC
-                      THEN '기후, 기타'
-                  WHEN tnmummsctnsrvydta.DMG_CUZ_VMTC = tnmummsctnsrvydta.DMG_CUZ_ETC
-                  AND tnmummsctnsrvydta.DMG_CUZ_VMTC > tnmummsctnsrvydta.DMG_CUZ_CLMT
-                      THEN '교통량/하부불량, 기타'
-                  ELSE ''
-              END DMG_CUZ /*파손원인*/
-              , tnmummsctnsrvydta.CREAT_DT
-               , tnmummsctnsrvydta.UPDT_DT
-               , CASE
-                   WHEN tnmummsctnsrvydta.UPDT_DT is NULL
-                       THEN TO_CHAR( tnmummsctnsrvydta.CREAT_DT, 'YYYY.MM' )
-                   ELSE TO_CHAR( tnmummsctnsrvydta.UPDT_DT, 'YYYY.MM' )
-               END YEAR_MT,
-               /* 조사자료 */
-             tnmummsctnsrvydta.SRVY_YEAR
-             ,tnmummsctnsrvydta.SRVY_MT
-				,tnmummsctnsrvydta.SRVY_NM
-             ,tnmummsctnsrvydta.SRVY_NO
-          , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+            SELECT *
+            FROM (
+                SELECT ROW_NUMBER() OVER(ORDER BY cell.CELL_ID ASC) AS RN
+                , (SELECT CODE_NM FROM TC_CODE WHERE cell.ROAD_GRAD = TC_CODE.CODE_VAL )  ROAD_GRAD
+                , tnmummsctnsrvydta.ROUTE_CODE
+                , tnrouteinfo.ROAD_NAME /* 노선정보.노선명 */
+                , CASE
+                    WHEN tnmummsctnsrvydta.DIRECT_CODE = 'S' THEN '상행'
+                    WHEN tnmummsctnsrvydta.DIRECT_CODE = 'E' THEN '하행'
+                    ELSE '' 
+                  END as DIRECT_CODE
+                , tnmummsctnsrvydta.TRACK
+                , to_char(tnmummsctnsrvydta.STRTPT / 1000, 'FM999990.00') STRTPT
+                , to_char(tnmummsctnsrvydta.ENDPT / 1000, 'FM999990.00') ENDPT
+                , tnmummsctnsrvydta.TRTS_BAC_CR
+                , tnmummsctnsrvydta.BLOCK_CR
+                , tnmummsctnsrvydta.VRTCAL_CR
+                , tnmummsctnsrvydta.HRZNTAL_CR
+                , tnmummsctnsrvydta.PTCHG_CR
+                , tnmummsctnsrvydta.POTHOLE_CR
+                , tnmummsctnsrvydta.RD_VAL
+                , tnmummsctnsrvydta.IRI_VAL
+                , tnmummsctnsrvydta.AC_IDX
+                , tnmummsctnsrvydta.BC_IDX
+                , tnmummsctnsrvydta.LC_IDX
+                , tnmummsctnsrvydta.TC_IDX
+                , tnmummsctnsrvydta.PTCHG_IDX
+                , tnmummsctnsrvydta.POTHOLE_IDX
+                , tnmummsctnsrvydta.RD_IDX
+                , tnmummsctnsrvydta.RCI
+                , tnmummsctnsrvydta.SCR
+                , tnmummsctnsrvydta.GPCI
+                , tnmummsctnsrvydta.CNTL_DFECT
+                , ( SELECT tccode.CN FROM TC_CODE tccode WHERE tccode.CODE_VAL = tnmummsctnsrvydta.CNTL_DFECT ) CNTL_DFECT_NM
+                , tnmummsctnsrvydta.DMG_CUZ_CLMT
+                , tnmummsctnsrvydta.DMG_CUZ_VMTC
+                , tnmummsctnsrvydta.DMG_CUZ_ETC
+                , CASE
+                    WHEN tnmummsctnsrvydta.DMG_CUZ_CLMT = tnmummsctnsrvydta.DMG_CUZ_VMTC
+                        AND tnmummsctnsrvydta.DMG_CUZ_VMTC = tnmummsctnsrvydta.DMG_CUZ_ETC
+                    THEN
+                        CASE
+                            WHEN tnmummsctnsrvydta.DMG_CUZ_ETC = 0 THEN '파손없음'
+                            ELSE '교통량/하부불량, 기후, 기타'
+                        END
+                    WHEN tnmummsctnsrvydta.DMG_CUZ_CLMT > tnmummsctnsrvydta.DMG_CUZ_VMTC
+                         AND tnmummsctnsrvydta.DMG_CUZ_CLMT > tnmummsctnsrvydta.DMG_CUZ_ETC
+                    THEN '기후'
+                    WHEN tnmummsctnsrvydta.DMG_CUZ_VMTC > tnmummsctnsrvydta.DMG_CUZ_CLMT
+                         AND tnmummsctnsrvydta.DMG_CUZ_VMTC > tnmummsctnsrvydta.DMG_CUZ_ETC
+                    THEN '교통량/하부불량'
+                    WHEN tnmummsctnsrvydta.DMG_CUZ_ETC > tnmummsctnsrvydta.DMG_CUZ_CLMT
+                         AND tnmummsctnsrvydta.DMG_CUZ_ETC > tnmummsctnsrvydta.DMG_CUZ_VMTC
+                    THEN '기타'
+                    WHEN tnmummsctnsrvydta.DMG_CUZ_CLMT = tnmummsctnsrvydta.DMG_CUZ_VMTC
+                        AND tnmummsctnsrvydta.DMG_CUZ_CLMT > tnmummsctnsrvydta.DMG_CUZ_ETC
+                    THEN '교통량/하부불량, 기후'
+                    WHEN tnmummsctnsrvydta.DMG_CUZ_CLMT = tnmummsctnsrvydta.DMG_CUZ_ETC
+                        AND tnmummsctnsrvydta.DMG_CUZ_CLMT > tnmummsctnsrvydta.DMG_CUZ_VMTC
+                    THEN '기후, 기타'
+                    WHEN tnmummsctnsrvydta.DMG_CUZ_VMTC = tnmummsctnsrvydta.DMG_CUZ_ETC
+                        AND tnmummsctnsrvydta.DMG_CUZ_VMTC > tnmummsctnsrvydta.DMG_CUZ_CLMT
+                    THEN '교통량/하부불량, 기타'
+                    ELSE ''
+                  END DMG_CUZ /*파손원인*/
+                , tnmummsctnsrvydta.CREAT_DT
+                , tnmummsctnsrvydta.UPDT_DT
+                , CASE
+                    WHEN tnmummsctnsrvydta.UPDT_DT is NULL
+                        THEN TO_CHAR( tnmummsctnsrvydta.CREAT_DT, 'YYYY.MM' )
+                    ELSE TO_CHAR( tnmummsctnsrvydta.UPDT_DT, 'YYYY.MM' )
+                  END YEAR_MT
+                /* 조사자료 */
+                , tnmummsctnsrvydta.SRVY_YEAR
+                , tnmummsctnsrvydta.SRVY_MT
+				, tnmummsctnsrvydta.SRVY_NM
+                , tnmummsctnsrvydta.SRVY_NO
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
                              , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 0) PREDCT0
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
                              , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 1) PREDCT1
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
                              , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 2) PREDCT2
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
                              , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 3) PREDCT3
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
                              , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 4) PREDCT4
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
                              , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 5) PREDCT5
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
                              , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 6) PREDCT6
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
                              , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 7) PREDCT7
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
-             , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 8) PREDCT8
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
-          , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 9) PREDCT9
-              , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
-             , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 10) PREDCT10
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                             , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 8) PREDCT8
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                             , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 9) PREDCT9
+                , FN_GET_GPCI_INTEG( tnmummsctnsrvydta.ROUTE_CODE, tnmummsctnsrvydta.DIRECT_CODE, tnmummsctnsrvydta.TRACK
+                             , tnmummsctnsrvydta.STRTPT, tnmummsctnsrvydta.ENDPT, 10) PREDCT10
 
                 FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
                 LEFT OUTER JOIN CELL_10 cell
