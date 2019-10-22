@@ -1246,27 +1246,18 @@ GRequest.WFS = {
 			method: 'POST',
 			body: wfsStr
 		}).then(function(response) {
-			var json;
-			try{
-				json = response.json();
-			}catch(e){
-				json = undefined;
-			}
-			return json;
+			return response.json();
 		}).then(function(res) {
-			//console.log(res);
-			if(res){
-				control.parseJsonFeature(res, callback, options);
-			}else{
-				callback({
-					data : [],
-					success : function() {
-						return false;
-					}
-				});				
-			}
-		});
-		
+			control.parseJsonFeature(res, callback, options);
+		}).catch(function(e) {
+	        console.log('getFeature error = ', e);
+	        callback({
+				data : [],
+				success : function() {
+					return false;
+				}
+			});	
+	    });
 	},
 	
 	parseJsonFeature: function(res, callback, options){
