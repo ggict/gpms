@@ -263,7 +263,7 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		/* 공사정보 삭제 */
 		UPDATE TN_CNTRWK SET
   DELETE_AT = 'Y' /* 공사정보.삭제_여부 */
-, UPDUSR_NO = #UPDUSR_NO# /* 공사정보.수정자_번호 */
+, UPDUSR_NO = #UPDUSR_NO#::numeric /* 공사정보.수정자_번호 */
 , UPDT_DT = NOW() /* 공사정보.수정_일시 */
 		WHERE 1 = 1
 		AND CNTRWK_ID = #CNTRWK_ID# /* 공사정보.공사_ID */
