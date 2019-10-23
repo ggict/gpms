@@ -1,8 +1,10 @@
 package kr.go.gg.gpms.srvy.web;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -11,7 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -27,9 +28,12 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -75,6 +79,7 @@ import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
 import kr.go.gg.gpms.smdtagnlsttus.service.SmDtaGnlSttusService;
 import kr.go.gg.gpms.smdtagnlsttus.service.model.SmDtaGnlSttusVO;
 import kr.go.gg.gpms.smdtalaststtus.service.SmDtaLastSttusService;
+import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
 import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 import kr.go.gg.gpms.srvydtalog.service.SrvyDtaLogService;
@@ -136,6 +141,9 @@ public class SrvyDtaController extends BaseController {
 
 	@Resource(name = "codeService")
 	private CodeService codeService;
+	
+	@Resource(name = "srvyDtaService")
+	private SrvyDtaService srvyDtaService;
 
 	@Autowired
 	SessionManager sessionManager;
@@ -187,7 +195,7 @@ public class SrvyDtaController extends BaseController {
 			resultCode = "ERROR";
 			resultMsg = "등록오류발생";
 		} else {
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh24:mm:ss", Locale.KOREA);
+			//SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh24:mm:ss", Locale.KOREA);
 
 			for (AttachFileVO file : fileList) {
 				String logCode = "PCST0001"; // 진행
@@ -199,20 +207,111 @@ public class SrvyDtaController extends BaseController {
 				file.setCRTR_NO(userNo);
 				file.setUPDUSR_NO(userNo);
 
-				// 코드 값 불러오는 쿼리 필요
-
 				// 파일 정보 DB 저장
 				String fileNo = attachFileService.insertAttachFile(file);
 
 				String sheetName = "DBLoading";
-				String fileName = filePath + file.getFILE_COURS() + File.separator + file.getFILE_NM();
-				//String fileName = file.getFILE_NM();
-				//String fileCours = filePath + file.getFILE_COURS();
-						
-				int resultZipCnt = getReadZipDataCnt(fileName, filePath);
+				String filePathName = filePath + file.getFILE_COURS() + File.separator + file.getFILE_NM();
+				String bakFilePath = filePath + File.separator + "srvy" + File.separator + "bak" + File.separator + file.getFILE_NM();
 				
-				//System.out.println("resultZipCnt: " + resultZipCnt);
+				//파일경로+파일명
+				String fileName = checkFilePath(filePathName, "path");
 				
+		        Date currentDate = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+				String date = sdf.format(currentDate);
+				filePath += File.separator + "srvy" + File.separator + date;
+				
+				//업로드 폴더 경로
+				File uploadFolder =  new File(checkFilePath(filePath,"path"));
+				
+				//압축풀기(파일경로+파일명, 업로드폴더)
+				srvyDtaService.decmprsFile(fileName, uploadFolder);
+				
+				//원본파일
+				File orgnFile = new File(fileName);
+				
+				//이동되는 파일
+				File moveFile = new File(bakFilePath);
+				
+				//zip 파일이동
+				FileUtils.moveFile(orgnFile, moveFile);
+				
+				String seDirNm = "";
+				String seFileNm = "";
+				int csvCount = 0;
+				String csvFileNm = "";
+				String csvFilePath = "";
+		        
+				//하위의 모든 디렉토리
+		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
+		        				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+		        	seDirNm = seDirs.getName();
+		        	
+		        	if(seDirs.isDirectory()) {
+		            	if("분석결과".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+		            		//하위의 모든 파일
+		            		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+                					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+		            			seFileNm = seFiles.getName();
+		            			//csv파일 갯수 체크
+		            			if("csv".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
+		            				csvCount++; 
+	                    		}
+		            		}
+		            		if(csvCount > 1 ) {
+		            			resultCode = "tempMsg";
+		        				resultMsg = "csv파일 2개";
+		        				model.addAttribute("resultCode", resultCode);
+		        				model.addAttribute("resultMsg", resultMsg);
+		            			return "jsonView";
+		            		}
+		            		
+		            		//_분석결과 폴더 하위 모든 파일
+		                    for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+		                    					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+		                    	seFileNm = seFiles.getName();
+		                    	//_분석_보고서.csv 파일 찾기
+		                    	if("분석_보고서".equals(seFileNm.substring(seFileNm.lastIndexOf("_")-2,seFileNm.lastIndexOf(".")))) {
+		                    		if("csv".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
+		                    			csvFileNm = filePath + File.separator + seDirNm + File.separator + seFileNm;
+		                    			csvFilePath = filePath + File.separator + seDirNm + File.separator;
+		                    			
+		                    			//csv파일 -> xlsx 파일로 변환
+		                    			//srvyDtaService.convertExcel(csvFileNm, csvFilePath);
+		                    			
+		                    			XSSFWorkbook wb = new XSSFWorkbook();
+		                    	        XSSFSheet sheet = wb.createSheet("분석자료");
+		                    	        String currentLine=null;
+		                    	        int RowNum=-1;
+		                    	        BufferedReader br = new BufferedReader(new FileReader(csvFileNm));
+		                    	        while ((currentLine = br.readLine()) != null) {
+		                    	            String str[] = currentLine.split(",");
+		                    	            RowNum++;
+		                    	            XSSFRow currentRow=sheet.createRow(RowNum);
+		                    	            for(int i=0;i<str.length;i++){
+		                    	                currentRow.createCell(i).setCellValue(str[i]);
+		                    	            }
+		                    	        }
+
+		                    	        FileOutputStream fileOutputStream =  new FileOutputStream(csvFilePath + "엑셀변환.xlsx");
+		                    	        wb.write(fileOutputStream);
+		                    	        fileOutputStream.close();
+		                    		} 
+		                    		
+		                    	}
+		                    }
+		            	}
+		                //System.out.println(info.getName());
+		            }
+		        }
+				
+		        resultCode = "tempMsg";
+				resultMsg = "디렉토리 없음";
+				
+				model.addAttribute("resultCode", resultCode);
+				model.addAttribute("resultMsg", resultMsg);
+		        
 				//zip 파일 전송 완료 추후 로직 수정
 				String tmp1 = "end";
 				if("end".equals(tmp1)) {
@@ -330,7 +429,7 @@ public class SrvyDtaController extends BaseController {
 
 	@RequestMapping(value = "/srvyDtaUploadResultList.do")
 	public String srvyDtaUploadResultList(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
-
+		
 		return "/srvy/srvyDtaUploadResultList";
 	}
 
@@ -1208,81 +1307,10 @@ public class SrvyDtaController extends BaseController {
 		}
 	}
 	
-	// 엑셀파일 건수 가져오기
-		private int getReadZipDataCnt(String fileName, String filePath) throws Exception {
+		//압축풀기
+		private void getReadZipDataCnt(String fileName, String filePath) throws Exception {
 			
-			String path = checkFilePath(fileName, "path");
-			String fileNm = "";
-	        int cnt = 0;
-	        
-	        Date currentDate = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String date = sdf.format(currentDate);
-			filePath += File.separator + "srvy" + File.separator + date;
 			
-			// 폴더 경로
-			File uploadFolder =  new File(checkFilePath(filePath,"path"));
-	        File zipFile = new File(path);
-	        FileInputStream fis = null;
-	        ZipInputStream zis = null;
-	        ZipEntry zipentry = null;
-	        
-	        try {
-	        	//파일 스트림
-	            fis = new FileInputStream(zipFile);
-	            
-	            //Zip 파일 스트림
-	            zis = new ZipInputStream(fis);
-	            
-	            //entry가 없을때까지 뽑기
-	            while ((zipentry = zis.getNextEntry()) != null) {
-	                fileNm = zipentry.getName();
-	                File file = new File(uploadFolder, fileNm);
-	                //entiry가 폴더면 폴더 생성
-	                if (zipentry.isDirectory()) {
-	                    file.mkdirs();
-	                } else {
-	                    //파일이면 파일 만들기
-	                    createFile(file, zis);
-	                }
-	            }
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				if (zis != null)
-	                zis.close();
-
-	            if (fis != null)
-	                fis.close();
-			}
-			return cnt;
-		}
-		
-		private static void createFile(File file, ZipInputStream zis) throws Exception {
-
-	        //디렉토리 확인
-	        File parentDir = new File(file.getParent());
-
-	        //디렉토리가 없으면 생성하자
-	        if (!parentDir.exists()) {
-	            parentDir.mkdirs();
-	        }
-
-	        //파일 스트림 선언
-	        FileOutputStream fos = null;
-	        try {
-	        	fos = new FileOutputStream(file); 
-	            byte[] buffer = new byte[256];
-	            int size = 0;
-	            //Zip스트림으로부터 byte뽑아내기
-	            while ((size = zis.read(buffer)) > 0) {
-	                //byte로 파일 만들기
-	                fos.write(buffer, 0, size);
-	            }
-	        } catch (Exception e) {
-	        	fos.close();
-	            e.printStackTrace();
-	        }
 	    }
 	
 

@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -31,7 +32,7 @@ public class FileUploadUtils {
 		List<AttachFileVO> fileList = new ArrayList<AttachFileVO>();
 		
 		Date currentDate = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
 		String date = sdf.format(currentDate);
 		uploadPath += File.separator + kind + File.separator + date;
 		
