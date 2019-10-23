@@ -163,7 +163,14 @@
 
             <!-- 포장상태 평가자료 START -->
             <div id="mummAvg" style="width:25%; float: left; height: 210px; padding-right: 10px; border-radius: 5px;">
-                <h3 style="line-height: 30px; font-size: 15px; padding-right: 0px;"><span>포장상태 평가정보 <span style="line-height: 30px; font-size: 13px;">(평가단위:section셀)</span></span><a href="#" style="float:right; line-height: 11px; margin-top: 5px;" class="titbtn" onclick="fnSelectLastSttus($(this));">수시평가정보조회</a></h3>
+                <h3 style="line-height: 30px; font-size: 15px; padding-right: 0px; border-bottom: 0px;"><span>포장상태 평가정보 <span style="line-height: 30px; font-size: 13px;">(평가단위:section셀)</span></span></h3>
+		        <div class="ytabbx" style="height: 27px;">
+		            <ul class="ytab fl" style="margin-top: 0px;">
+	                    <li class="on"><a href="javascript:;" onclick="fnSelectLastSttus($(this), 1);" style="font-size: 13px;" >조사평가정보조회</a></li>
+	                    <li><a href="javascript:;" onclick="fnSelectLastSttus($(this), 2);" style="font-size: 13px;">수시평가정보조회</a></li>
+		            </ul>
+		        </div>
+                <!-- <a href="#" style="float:right; line-height: 11px; margin-top: 5px;" class="titbtn" onclick="">수시평가정보조회</a> -->
                 <ul class="tblst mt15">
                     <li style="width:21%;border-left:0px" class="brl tc">
                         <span class="circle bc6" id="gpci" style="width: 85%; height: 40px; line-height: 40px; font-size: 16px;">0</span>
@@ -608,9 +615,16 @@ function fnView ( rowId ) {
 }
 
 // 현행정보조회
-function fnSelectLastSttus(obj) {
+function fnSelectLastSttus(obj, idx) {
 
-    if ( !obj.hasClass("on") ) {
+    if (obj.closest('li').hasClass('on')) {
+    	return;
+    } else {
+        obj.closest('ul').find('li').removeClass('on');
+        obj.closest('li').addClass("on");
+    }
+	
+	if ( idx === 2 ) {
 
 	    var postDatas = { "CELL_ID" : cellId };
 
@@ -752,8 +766,8 @@ function fnSelectLastSttus(obj) {
 	                tb.eq(5).html(fnFloat(jdata.RD_RDUCT_RATE));
 	                tb.eq(6).html(fnFloat(jdata.RCI_RDUCT_RATE));
 
-	                obj.addClass("on");
-	                obj.text("조사평가정보조회");
+	                //obj.addClass("on");
+	                //obj.text("조사평가정보조회");
 	            }
 	        },
 	        error: function () {
@@ -778,8 +792,8 @@ function fnSelectLastSttus(obj) {
         tb.eq(5).html(fnFloat("${smDtaGnlSttusVO.RD_RDUCT_RATE}"));
         tb.eq(6).html(fnFloat("${smDtaGnlSttusVO.RCI_RDUCT_RATE}"));
 
-        obj.removeClass("on");
-        obj.text("수시평가정보조회");
+        //obj.removeClass("on");
+        //obj.text("수시평가정보조회");
     }
 }
 
