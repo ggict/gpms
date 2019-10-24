@@ -27,6 +27,13 @@ public interface SrvyDtaService {
 	 */
 	void decmprsFile(String fileName, File uploadFolder) throws Exception;
 
+	/**
+	 * cvs -> excel 파일변환
+	 * @param String csvFileNm, String excelFileNm
+	 * @return void
+	 * @exception Exception
+	 */
+	void convertExcel(String csvFileNm, String excelFileNm) throws Exception;
 	
 }
 

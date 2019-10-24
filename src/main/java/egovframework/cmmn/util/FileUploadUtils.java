@@ -32,7 +32,7 @@ public class FileUploadUtils {
 		List<AttachFileVO> fileList = new ArrayList<AttachFileVO>();
 		
 		Date currentDate = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf.format(currentDate);
 		uploadPath += File.separator + kind + File.separator + date;
 		

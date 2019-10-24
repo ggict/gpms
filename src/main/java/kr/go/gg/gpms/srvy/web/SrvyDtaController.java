@@ -218,7 +218,7 @@ public class SrvyDtaController extends BaseController {
 				String fileName = checkFilePath(filePathName, "path");
 				
 		        Date currentDate = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 				String date = sdf.format(currentDate);
 				filePath += File.separator + "srvy" + File.separator + date;
 				
@@ -241,7 +241,7 @@ public class SrvyDtaController extends BaseController {
 				String seFileNm = "";
 				int csvCount = 0;
 				String csvFileNm = "";
-				String csvFilePath = "";
+				String excelFileNm = "";
 		        
 				//하위의 모든 디렉토리
 		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
@@ -275,36 +275,17 @@ public class SrvyDtaController extends BaseController {
 		                    	if("분석_보고서".equals(seFileNm.substring(seFileNm.lastIndexOf("_")-2,seFileNm.lastIndexOf(".")))) {
 		                    		if("csv".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
 		                    			csvFileNm = filePath + File.separator + seDirNm + File.separator + seFileNm;
-		                    			csvFilePath = filePath + File.separator + seDirNm + File.separator;
+		                    			String _csvFileNm = seFileNm.substring(0,seFileNm.lastIndexOf("."));
+		                    			excelFileNm = filePath + File.separator + seDirNm + File.separator + _csvFileNm + ".xlsx";
 		                    			
 		                    			//csv파일 -> xlsx 파일로 변환
-		                    			//srvyDtaService.convertExcel(csvFileNm, csvFilePath);
-		                    			
-		                    			XSSFWorkbook wb = new XSSFWorkbook();
-		                    	        XSSFSheet sheet = wb.createSheet("분석자료");
-		                    	        String currentLine=null;
-		                    	        int RowNum=-1;
-		                    	        BufferedReader br = new BufferedReader(new FileReader(csvFileNm));
-		                    	        while ((currentLine = br.readLine()) != null) {
-		                    	            String str[] = currentLine.split(",");
-		                    	            RowNum++;
-		                    	            XSSFRow currentRow=sheet.createRow(RowNum);
-		                    	            for(int i=0;i<str.length;i++){
-		                    	                currentRow.createCell(i).setCellValue(str[i]);
-		                    	            }
-		                    	        }
-
-		                    	        FileOutputStream fileOutputStream =  new FileOutputStream(csvFilePath + "엑셀변환.xlsx");
-		                    	        wb.write(fileOutputStream);
-		                    	        fileOutputStream.close();
-		                    		} 
-		                    		
+		                    			srvyDtaService.convertExcel(csvFileNm, excelFileNm);
+		                    		}
 		                    	}
 		                    }
 		            	}
-		                //System.out.println(info.getName());
 		            }
-		        }
+		        }//하위의 모든 디렉토리
 				
 		        resultCode = "tempMsg";
 				resultMsg = "디렉토리 없음";

@@ -1,9 +1,14 @@
 package kr.go.gg.gpms.srvy.service.impl;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
@@ -68,7 +73,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                 }
             }
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.getMessage();
+			//e.printStackTrace();
 		} finally {
 			if (zis != null)
                 zis.close();
@@ -103,6 +109,45 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
         	fos.close();
             e.printStackTrace();
         }
+	}
+	
+	/**
+	 * cvs -> excel 파일변환
+	 * @param String csvFileNm, String excelFileNm
+	 * @return void
+	 * @exception Exception
+	 */
+	@Override
+	public void convertExcel(String csvFileNm, String excelFileNm) throws Exception {
+		
+		XSSFWorkbook wb = new XSSFWorkbook();
+		FileOutputStream fos = null;
+        try {
+	        XSSFSheet sheet = wb.createSheet("분석자료");
+	        String currentLine=null;
+	        int RowNum=-1;
+	        BufferedReader br = new BufferedReader(new FileReader(csvFileNm));
+	        while ((currentLine = br.readLine()) != null) {
+	            String str[] = currentLine.split(",");
+	            RowNum++;
+	            XSSFRow currentRow=sheet.createRow(RowNum);
+	            for(int i=0;i<str.length;i++){
+	                currentRow.createCell(i).setCellValue(str[i]);
+	            }
+	        }
+	        fos = new FileOutputStream(excelFileNm);
+	        wb.write(fos);
+	        fos.flush();
+	        fos.close();
+		} catch (Exception e) {
+			e.getMessage();
+			fos.flush();
+			fos.close();
+			//e.printStackTrace();
+		} finally {
+			fos.flush();
+			fos.close();
+		}
 	}
 	
 }
