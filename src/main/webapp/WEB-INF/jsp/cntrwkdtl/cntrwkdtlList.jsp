@@ -252,7 +252,7 @@ function fnWrite() {
 //엑셀 출력
 function fn_cntrwkExcel(){
 	if( confirm("엑셀 파일로 저장하시겠습니까?") ) {
-		COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/cntrwkdtl/downloadexcel.do'/>?CNTRWK_ID=${cntrwkDtlVO.CNTRWK_ID}", "");
+		COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/cntrwkdtl/downloadexcel.do'/>", "");
 	}
 }
 

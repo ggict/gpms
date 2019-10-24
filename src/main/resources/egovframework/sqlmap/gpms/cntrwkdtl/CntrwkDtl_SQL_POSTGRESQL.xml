@@ -1806,14 +1806,31 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 <![CDATA[ 		
 		/* cntrwkDtlDAO.selectCntrwkDtlListExcel */
 		/* 상세정보목록 엑셀조회 */
-		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
+		SELECT
+            tncntrwkdtl.detail_cntrwk_nm,
+            tncntrwkdtl.route_code,
+            tncntrwkdtl.route_nm,
+            tncntrwkdtl.direct_nm,
+            tncntrwkdtl.track,
+            tncntrwkdtl.strtpt,
+            tncntrwkdtl.endpt,
+            tncntrwkdtl.rpair_begin_de,
+            tncntrwkdtl.rpair_end_de,
+            tncntrwkdtl.cntrwk_amount,
+            tncntrwkdtl.track_len,
+            tncntrwkdtl.rpair_bt,
+            tncntrwkdtl.rpair_ar,
+            tncntrwkdtl.rpair_thick_ascon,
+            tncntrwkdtl.rpair_thick_cntr,
+            tncntrwkdtl.rpair_thick_base
+        FROM (SELECT /* ROW_NUMBER() OVER(order by 1) AS rn, */ tb.* FROM (
 			SELECT
 				tncntrwkdtl.DETAIL_CNTRWK_ID /* 공사상세정보.세부_공사_ID */
 				, tncntrwkdtl.CNTRWK_ID /* 공사상세정보.공사_ID */
 				, tncntrwkdtl.RPAIR_MTHD_CODE /* 공사상세정보.보수_공법_코드 */
 				, tncntrwkdtl.DETAIL_CNTRWK_GROUP /* 공사상세정보.세부_공사_그룹 */
 				, tncntrwkdtl.DETAIL_CNTRWK_NM /* 공사상세정보.세부_공사_명 */
-				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tncntrwkdtl.TRACK_LEN,0))), '([0-9]{3})','\1,','g')), '^,','') AS TRACK_LEN  /* 공사상세정보.1차로_연장 */
+				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(ROUND(tncntrwkdtl.TRACK_LEN,0)::text), '([0-9]{3})','\1,','g')), '^,','') AS TRACK_LEN  /* 공사상세정보.1차로_연장 */
 				, tncntrwkdtl.SPRVISN_CO_NO /* 공사상세정보.감리_업체_번호 */
 				, COALESCE((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwkdtl.SPRVISN_CO_NO), tncntrwkdtl.SPRVISN_CO_NM) AS SPRVISN_CO_NM /* 공사상세정보.감리_업체_명 */
 				, tncntrwkdtl.SPRVISN_CO_RPRSNT_NO /* 공사상세정보.감리_업체_대표_번호 */
@@ -1833,11 +1850,11 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				, tncntrwkdtl.DIRECT_CODE/* 공사상세정보.행선_코드 */
 				, CASE WHEN tncntrwkdtl.DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END AS DIRECT_NM/* 행선명 */
 				, tncntrwkdtl.TRACK /* 공사상세정보.차로 */
-				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tncntrwkdtl.STRTPT,0))), '([0-9]{3})','\1,','g')), '^,','') AS STRTPT /* 공사상세정보.시점 */
-				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tncntrwkdtl.ENDPT,0))), '([0-9]{3})','\1,','g')), '^,','') AS ENDPT /* 공사상세정보.종점 */
+				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(ROUND(tncntrwkdtl.STRTPT,0)::text), '([0-9]{3})','\1,','g')), '^,','') AS STRTPT /* 공사상세정보.시점 */
+				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(ROUND(tncntrwkdtl.ENDPT,0)::text), '([0-9]{3})','\1,','g')), '^,','') AS ENDPT /* 공사상세정보.종점 */
 				, tncntrwkdtl.CNTRWK_STRTPT_NM /* 공사상세정보.공사_시점_명 */
 				, tncntrwkdtl.CNTRWK_ENDPT_NM /* 공사상세정보.공사_종점_명 */
-				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tncntrwkdtl.CNTRWK_AMOUNT,0))), '([0-9]{3})','\1,','g')), '^,','') AS CNTRWK_AMOUNT /* 공사상세정보.공사_금액 */
+				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(ROUND(tncntrwkdtl.CNTRWK_AMOUNT,0)::text), '([0-9]{3})','\1,','g')), '^,','') AS CNTRWK_AMOUNT /* 공사상세정보.공사_금액 */
 				, tncntrwkdtl.GVSLCT /* 공사상세정보.관급비 */
 				, tncntrwkdtl.OUTSRCCT /* 공사상세정보.도급비 */
 				, tncntrwkdtl.ETC_RLOCATCT /* 공사상세정보.기타_이설비 */
@@ -1849,7 +1866,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 				, tncntrwkdtl.BEFORE_PAV_YEAR /* 공사상세정보.직전_포장_연도 */
 				, tncntrwkdtl.RPAIR_BEGIN_DE /* 공사상세정보.보수_시작_일자 */
 				, tncntrwkdtl.RPAIR_END_DE /* 공사상세정보.보수_종료_일자 */
-				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(TO_CHAR(ROUND(tncntrwkdtl.RPAIR_AR,2))), '([0-9]{3})','\1,','g')), '^,','') AS RPAIR_AR  /*공사상세정보.보수_면적 */
+				, REGEXP_REPLACE(REVERSE(REGEXP_REPLACE( REVERSE(ROUND(tncntrwkdtl.RPAIR_AR,2)::text), '([0-9]{3})','\1,','g')), '^,','') AS RPAIR_AR  /*공사상세정보.보수_면적 */
 				, tncntrwkdtl.RPAIR_BT /* 공사상세정보.보수_폭 */
 				, tncntrwkdtl.PAV_STLE_CODE /* 공사상세정보.포장_형태_코드 */
 				, tncntrwkdtl.PAV_MSRC_ETC /* 공사상세정보.포장_공법_기타 */
