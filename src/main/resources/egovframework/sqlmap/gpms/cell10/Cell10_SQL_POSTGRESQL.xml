@@ -316,6 +316,92 @@
           GROUP BY cell10.ROUTE_CODE, tnrouteinfo.ROAD_NAME, tccode.code_nm
 ]]>
     </select>
+    
+    <select id="cell10DAO.selectRouteInfoListByCellID" parameterClass="cell10VO" resultClass="cell10VO">
+<![CDATA[
+        /* cell10DAO.selectRouteInfoListByCellID */
+        /* CELL_10 리스트 조회 - 포장공사 이력관리 > 세부공사 CELL 선택용 */
+        SELECT cell10.CELL_ID
+             , cell10.ROUTE_CODE
+             , tnrouteinfo.ROAD_NAME
+             , tccode.code_nm ROAD_GRAD
+             , cell10.direct_code DIRECT_CODE
+             , CASE cell10.DIRECT_CODE WHEN 'S' THEN '상행' WHEN 'E' THEN '하행' WHEN 'SE' THEN '양방향' ELSE '' END DIRECT_NM
+             , cell10.TRACK TRACK
+             , cell10.STRTPT STRTPT
+             , cell10.ENDPT ENDPT
+          FROM(
+                    SELECT CELL_ID
+                         , ROUTE_CODE
+                         , DIRECT_CODE
+                         , TRACK
+                         , STRTPT
+                         , ENDPT
+                         , ROAD_GRAD
+                    FROM CELL_10
+                    WHERE 1=1
+]]>
+                    <isNotEmpty property="CELL_ID_LIST">
+                        <iterate close=")" conjunction="," open="("
+                            prepend=" AND CELL_ID IN " property="CELL_ID_LIST">
+                            #CELL_ID_LIST[]#
+                        </iterate>
+                    </isNotEmpty>
+<![CDATA[
+               ) cell10
+               , TN_ROUTE_INFO tnrouteinfo
+               , TC_CODE tccode
+          WHERE cell10.ROUTE_CODE = tnrouteinfo.ROAD_NO
+            AND CELL10.ROAD_GRAD = tccode.CODE_VAL
+]]>
+            <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND cell10.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+<![CDATA[
+            AND tccode.USE_AT = 'Y'
+            AND tccode.DELETE_AT = 'N'
+          ORDER BY tnrouteinfo.ROAD_NO, cell10.STRTPT, cell10.DIRECT_CODE, cell10.TRACK
+]]>
+        <isEqual prepend=" " property="usePage" compareValue="true">
+        <![CDATA[
+            LIMIT #recordCountPerPage# OFFSET #firstIndex#
+        ]]>
+        </isEqual>
+    </select>
+    
+    <select id="cell10DAO.selectRouteInfoListByCellIDTotalCount" parameterClass="cell10VO" resultClass="int">
+<![CDATA[
+        /* cell10DAO.selectRouteInfoListByCellID */
+        /* CELL_10 리스트 조회 - 포장공사 이력관리 > 세부공사 CELL 선택용 */
+        SELECT count(*)
+          FROM(
+                    SELECT CELL_ID
+                         , ROUTE_CODE
+                         , DIRECT_CODE
+                         , TRACK
+                         , STRTPT
+                         , ENDPT
+                         , ROAD_GRAD
+                    FROM CELL_10
+                    WHERE 1=1
+]]>
+                    <isNotEmpty property="CELL_ID_LIST">
+                        <iterate close=")" conjunction="," open="("
+                            prepend=" AND CELL_ID IN " property="CELL_ID_LIST">
+                            #CELL_ID_LIST[]#
+                        </iterate>
+                    </isNotEmpty>
+<![CDATA[
+               ) cell10
+               , TN_ROUTE_INFO tnrouteinfo
+               , TC_CODE tccode
+          WHERE cell10.ROUTE_CODE = tnrouteinfo.ROAD_NO
+            AND CELL10.ROAD_GRAD = tccode.CODE_VAL
+]]>
+            <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND cell10.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+<![CDATA[
+            AND tccode.USE_AT = 'Y'
+            AND tccode.DELETE_AT = 'N'
+]]>
+    </select>
 
     <update id="cell10DAO.updateCell10Type">
     <![CDATA[

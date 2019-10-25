@@ -185,6 +185,34 @@ public class Cell10Controller extends BaseController {
 		List<Cell10VO> items = cell10Service.selectRouteInfoByCellID(cell10VO);
 		return items;
 	}
+	
+	@RequestMapping(value = { "/api/cell10/selectRouteInfoListByCellIds.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public  @ResponseBody Map<String, Object> selectCntrwkCellInfoListRest(@RequestBody Cell10VO cell10VO, ModelMap model) throws Exception {
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(cell10VO.getPage());
+		paginationInfo.setRecordCountPerPage(cell10VO.getPageUnit());
+		paginationInfo.setPageSize(cell10VO.getRows());
+		cell10VO.setUsePage(true);
+		
+		cell10VO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		cell10VO.setLastIndex(paginationInfo.getLastRecordIndex());
+		cell10VO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		List<Cell10VO> items = cell10Service.selectRouteInfoListByCellID(cell10VO);
+		int total_count = cell10Service.selectRouteInfoListByCellIDTotalCount(cell10VO);
+		int total_page = 0;
+		if (total_count > 0)
+			total_page = (int) Math.ceil((float) total_count / (float) cell10VO.getPageSize());
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		map.put("page", cell10VO.getPage());
+		map.put("total", total_page);
+		map.put("records", total_count);
+		map.put("rows", items);
+
+		return map;
+	}
 
 	/**
 	 * 통계 > 포장상태 조사구간 > 노선별/관리기관별/도로등급별 통계 테이블 목록을 조회한다.
