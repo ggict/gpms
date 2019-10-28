@@ -490,6 +490,7 @@ MAP.CONTROL = (function($, undefined){
 			gMap.activeControls("drag");
 
 			var cellIds = "";
+
 			
 			// 수정 사유: 멀티노선을 선택하였을 경우 - 노선 선택 팝업창에서 GAttrLayer 레이어를 사용하고 있어서 기능이 제대로 작동하지 않는다.
 			//var features = gMap.getLayerByName('GAttrLayerMulti').features;
