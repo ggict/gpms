@@ -1208,8 +1208,8 @@
 ]]>
             <isNotEmpty property="SCH_MENU_ID"><![CDATA[  AND tlsysconnect.MENU_ID = #SCH_MENU_ID# ]]></isNotEmpty>
             <isNotEmpty property="SCH_MENU_NM"><![CDATA[  AND tnmenu.MENU_NM LIKE '%' ||  #SCH_MENU_NM# || '%' ]]></isNotEmpty>
-            <isNotEmpty property="SCH_STRCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT >= #SCH_STRCON_DE#::date  ]]></isNotEmpty>
-            <isNotEmpty property="SCH_ENDCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT <= #SCH_ENDCON_DE#::date ]]></isNotEmpty>
+            <isNotEmpty property="SCH_STRCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT >= #SCH_STRCON_DE#::timestamp  ]]></isNotEmpty>
+            <isNotEmpty property="SCH_ENDCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT <= #SCH_ENDCON_DE#::timestamp ]]></isNotEmpty>
          )as sub_totCnt
     </select>
 

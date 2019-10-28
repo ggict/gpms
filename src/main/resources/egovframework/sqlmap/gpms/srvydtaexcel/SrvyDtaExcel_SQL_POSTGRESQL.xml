@@ -958,9 +958,9 @@
 		) tb
 		WHERE PROCESS_STTUS ='완료'
 		<isNotEmpty property="ROAD_NO"><![CDATA[ /* 조사_자료_엑셀.노선_코드 */ AND tb.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
-		<isNotEmpty property="SRVY_DE"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND  TO_CHAR(SRVY_DE::date,'YYYY-MM-DD') = #SRVY_DE# ]]></isNotEmpty>
-		<isEmpty property="SRVY_DE"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND TO_CHAR(SRVY_DE::date,'YYYY-MM-DD') >= #SCH_SRVY_DE1#
-   																AND TO_CHAR(SRVY_DE::date,'YYYY-MM-DD') <= #SCH_SRVY_DE2#]]></isEmpty>
+		<isNotEmpty property="SRVY_DE"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND  TO_CHAR(SRVY_DE::timestamp,'YYYY-MM-DD') = #SRVY_DE# ]]></isNotEmpty>
+		<isEmpty property="SRVY_DE"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND TO_CHAR(SRVY_DE::timestamp,'YYYY-MM-DD') >= #SCH_SRVY_DE1#
+   																AND TO_CHAR(SRVY_DE::timestamp,'YYYY-MM-DD') <= #SCH_SRVY_DE2#]]></isEmpty>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 <![CDATA[
     )as sub_srvyDtaExcelList
@@ -1012,9 +1012,9 @@
 		 WHERE PROCESS_STTUS ='완료'
 ]]>
 		<isNotEmpty property="ROAD_NO"><![CDATA[ /* 조사_자료_엑셀.노선_코드 */ AND  tb.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
-		<isNotEmpty property="SRVY_DE"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND  TO_CHAR(SRVY_DE::date,'YYYY-MM-DD') = #SRVY_DE# ]]></isNotEmpty>
-		<isEmpty property="SRVY_DE"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND TO_CHAR(SRVY_DE::date,'YYYY-MM-DD') >= #SCH_SRVY_DE1#
-   																AND TO_CHAR(SRVY_DE::date,'YYYY-MM-DD') <= #SCH_SRVY_DE2#]]></isEmpty>
+		<isNotEmpty property="SRVY_DE"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND  TO_CHAR(SRVY_DE::timestamp,'YYYY-MM-DD') = #SRVY_DE# ]]></isNotEmpty>
+		<isEmpty property="SRVY_DE"><![CDATA[ /* 최소_구간_조사_자료.조사_기간 */ AND TO_CHAR(SRVY_DE::timestamp,'YYYY-MM-DD') >= #SCH_SRVY_DE1#
+   																AND TO_CHAR(SRVY_DE::timestamp,'YYYY-MM-DD') <= #SCH_SRVY_DE2#]]></isEmpty>
 	</select>
 
 	<select id="srvyDtaExcelDAO.searchCreatDt" parameterClass="srvyDtaExcelVO"
@@ -1025,7 +1025,7 @@
 			SELECT SRVY_DE FROM (
 				SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 					SELECT DISTINCT
-					   to_char(tnsrvydtaexcel.SRVY_DE::date,'YYYY-MM-DD') AS SRVY_DE /* 조사_자료_엑셀.조사_일시 */
+					   to_char(tnsrvydtaexcel.SRVY_DE::timestamp,'YYYY-MM-DD') AS SRVY_DE /* 조사_자료_엑셀.조사_일시 */
 		            , (SELECT CODE_NM FROM TC_CODE  tccode WHERE tccode.CODE_VAL = tlsrvydtalog.PROCESS_STTUS) AS PROCESS_STTUS
 		            , SRVY_NM
 		            , tnsrvydtaexcel.ROUTE_CODE
