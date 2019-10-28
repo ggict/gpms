@@ -490,7 +490,10 @@ MAP.CONTROL = (function($, undefined){
 			gMap.activeControls("drag");
 
 			var cellIds = "";
-			var features = gMap.getLayerByName('GAttrLayerMulti').features;
+			
+			// 수정 사유: 멀티노선을 선택하였을 경우 - 노선 선택 팝업창에서 GAttrLayer 레이어를 사용하고 있어서 기능이 제대로 작동하지 않는다.
+			//var features = gMap.getLayerByName('GAttrLayerMulti').features;
+			var features = gMap.getLayerByName('GAttrLayer').features;
 
 			/* 2018.11.05 200개 제한 제거
 			if(features.length > 200){
@@ -1313,11 +1316,14 @@ MAP.CONTROL = (function($, undefined){
 			}
 
 			//181107 wijy 수정 : targetLayer 파라미터 추가
+			// 수정 사유: 멀티노선을 선택하였을 경우 - 노선 선택 팝업창에서 GAttrLayer 레이어를 사용하고 있어서 기능이 제대로 작동하지 않는다.
 			if(res.object.id == "cellPoint"){
-				add_feature(res.data[i].results[0].feature, evt, "GAttrLayerMulti");
+				//add_feature(res.data[i].results[0].feature, evt, "GAttrLayerMulti");
+				add_feature(res.data[i].results[0].feature, evt, "GAttrLayer");
 			}else{
 				for(var j=0; j<res.data[i].results.length; j++){
-					add_feature(res.data[i].results[j].feature, evt, "GAttrLayerMulti");
+					//add_feature(res.data[i].results[j].feature, evt, "GAttrLayerMulti");
+					add_feature(res.data[i].results[j].feature, evt, "GAttrLayer");
 				}
 			}
 		}
