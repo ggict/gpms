@@ -128,7 +128,9 @@
                     <li><a href="#" class="t9 maptool" id="mCtrlMesureLength" title="거리"><span class="hidden">거리</span></a></li>
                     <li><a href="#" class="t10 maptool" id="mCtrlMesureArea" title="면적"><span class="hidden">면적</span></a></li>
                     <li><a href="#" class="t11 maptool" id="mCtrlClear" title="초기화"><span class="hidden">초기화</span></a></li>
+                    <!-- 
                     <li><a href="#" class="t12 maptool" id="mCtrlMapPrint" title="현재화면 인쇄"><span class="hidden">인쇄</span></a></li>
+                     -->
                     <li><a href="#" class="t13 maptool" id="mCtrlPrint" title="현재화면 저장"><span class="hidden">저장</span></a></li>
                 </ul>
 

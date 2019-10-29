@@ -220,6 +220,13 @@ MAP.CONTROL = (function($, undefined){
 
 		// 지도 이미지
 		$("#mCtrlPrint").bind("click", function() {
+			
+			var zoom = parent.gMap.getZoom();
+			if(zoom < 2){
+				alert('지도를 확대 해주십시오.');
+				return ;		
+			}
+			
 			var mapType;
 			if($("#mCtrlSateliteMap").hasClass("selected_btn") == true){
 				mapType = "skyView";

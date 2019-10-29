@@ -17,7 +17,7 @@ GSaveTool = OpenLayers.Class( {
 		this.parseLayer();
 		this.parseVector();
 		this.parsePopup();
-		//this.parseMashupLayer(mashupLayer);
+		this.parseMashupLayer(mashupLayer);
 
 		this.xml += "</LAYERS>";
 		return this.xml;

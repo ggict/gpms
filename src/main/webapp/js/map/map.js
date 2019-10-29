@@ -155,6 +155,8 @@ function($,undefined){
                     'SLD_BODY': gMap.baseLayer.params.SLD_BODY
                 });
             }
+            //화면 리사이즈 할때 다음맵이 일반맵으로 되돌아가는 현상 수정
+            $('.select_map').find('.selected_btn').click();
         }
     };
 
