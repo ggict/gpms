@@ -284,13 +284,23 @@ var MAIN = (function(_mod_map, $, undefined) {
 	});
 
 	//레이어 관리
-	var divLayerToolDialog = $("#divLayerTool").dialog({
+	$("#divLayerTool").dialog({
 		title: '레이어 관리',
 		resizable: false,
 		height: 300,
 		width: 210,
 		open: function(e, ui){
-			$("#divLayerTool").parent().offset({top:110, left:55});
+			var obj = $("#divLayerTool").parent();
+			obj.offset({top:110, left:55});
+		},
+		dragStop: function( event, ui ) {
+			var obj = $("#divLayerTool").parent();
+			var offset = obj.offset();
+			var top = offset['top'];
+			var left = offset['left'];
+			if(top < 110){
+				obj.offset({top:110, left:55});
+			} 
 		}
 	});
 		
