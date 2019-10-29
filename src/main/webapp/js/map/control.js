@@ -226,6 +226,8 @@ MAP.CONTROL = (function($, undefined){
 				alert('지도를 확대 해주십시오.');
 				return ;		
 			}
+			$.window.closeAll();
+			gMap.cleanMap()
 			
 			var mapType;
 			if($("#mCtrlSateliteMap").hasClass("selected_btn") == true){
