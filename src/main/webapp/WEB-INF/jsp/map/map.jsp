@@ -167,6 +167,7 @@
 							</div>
                         </div>
                     </dd>
+                    <!-- 
                     <dt>레이어관리</dt>
                     <dd>
 						<div class="inBx" id="toolArea">
@@ -174,7 +175,14 @@
 							</div>
 						</div>
                     </dd>
+                     -->
                 </dl>
+                
+                <div id="divLayerTool" >
+	                <div id="dvLayerList" class="LayerList">
+	                </div>
+                </div>
+                
 			</div>
 
 
@@ -265,7 +273,7 @@ var MAIN = (function(_mod_map, $, undefined) {
 			},
 		</c:forEach>
 		]; */
-
+	
 	layerTool = new GTMapLayerTool(oLayerInfoList, oTmapInfoList, oTmapGroupInfoList, oLayerGroups, {
 		tMapId : 1,
 		serviceUrl : CONFIG.fn_get_serviceUrl(),	// GeoGate 주소
@@ -274,6 +282,18 @@ var MAIN = (function(_mod_map, $, undefined) {
 		},
 		userStyle : ''
 	});
+
+	//레이어 관리
+	var divLayerToolDialog = $("#divLayerTool").dialog({
+		title: '레이어 관리',
+		resizable: false,
+		height: 300,
+		width: 210,
+		open: function(e, ui){
+			$("#divLayerTool").parent().offset({top:110, left:55});
+		}
+	});
+		
 
 	var fn_get_layerInfoList = function (_oLayer){
 		return oLayerInfoList[_oLayer];
