@@ -22,7 +22,7 @@
 		<egovframework.rte.version>3.8.0</egovframework.rte.version>
 		<spring.maven.artifact.version>4.3.16.RELEASE</spring.maven.artifact.version>
 		<springframework.version>4.3.16.RELEASE</springframework.version>
-		<org.springframework.security-version>3.2.7.RELEASE</org.springframework.security-version>
+		<org.springframework.security-version>5.2.0.RELEASE</org.springframework.security-version>
 		<project.lib.path>${project.basedir}/src/main/webapp/WEB-INF/lib</project.lib.path>
 
 		<!-- egovframework
