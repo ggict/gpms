@@ -1111,6 +1111,7 @@ MAP.CONTROL = (function($, undefined){
 		            //serviceUrl : CONFIG.fn_get_serviceUrl(),
 		            serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
 					prefix : CONFIG.fn_get_dataHouseName(),
+					distance: 0,
 					tables : ["CELL_10"],
 					excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
 					id : "cellPoint"
@@ -1710,7 +1711,7 @@ MAP.CONTROL = (function($, undefined){
 			,type: 'post'
 			,dataType: 'json'
 			,contentType : 'application/json'
-			,data: JSON.stringify( {CELL_IDS : _sCellIds})
+			,data: JSON.stringify( {CELL_IDS : _sCellIds, usePage: false})
 			,success: function(data){
 				if(data.length < 2){ return; }
 				crossCellList = [];
@@ -1768,31 +1769,39 @@ MAP.CONTROL = (function($, undefined){
 					"</thead>";
 
 		for(var i = 0; i <_oData.length; i++) {
-		var routeCd = parseInt(_oData[i].ROUTE_CODE);
-		var feats = [];
-
-		html +=
-			"<tbody>" +
-				"<tr class='tr_nsInfosRow'>" +
-					"<td>" + routeCd + "</td>" +
-					"<td>" + _oData[i].ROAD_NAME + "</td>" +
-					"<td>" + _oData[i].DIRECT_NM + "</td>" +
-					"<td>" + _oData[i].TRACK + "</td>" +
-					"<td>" + _oData[i].STRTPT + "</td>" +
-					"<td>" + _oData[i].ENDPT + "</td>" +
-					"<td>" + _oData[i].ROAD_GRAD + "</td>" +
-				"</tr>" +
-			"</tbody>";
-
-		var route_code = _oRes[0].feature.data.ROUTE_CODE || _oRes[0].feature.data.route_code;
-		if(route_code == routeCd){
-			feats.push(_oRes[0].feature);
-		}
-
-		crossCellList.push({
-			routeCd	:	routeCd,
-			feats	:	feats
-		});
+			var routeCd = parseInt(_oData[i].ROUTE_CODE);
+			var feats = [];
+	
+			html +=
+				"<tbody>" +
+					"<tr class='tr_nsInfosRow'>" +
+						"<td>" + routeCd + "</td>" +
+						"<td>" + _oData[i].ROAD_NAME + "</td>" +
+						"<td>" + _oData[i].DIRECT_NM + "</td>" +
+						"<td>" + _oData[i].TRACK + "</td>" +
+						"<td>" + _oData[i].STRTPT * 1 + "</td>" +
+						"<td>" + _oData[i].ENDPT * 1 + "</td>" +
+						"<td>" + _oData[i].ROAD_GRAD + "</td>" +
+					"</tr>" +
+				"</tbody>";
+			/*
+			var route_code = _oRes[0].feature.data.ROUTE_CODE || _oRes[0].feature.data.route_code;
+			if(route_code == routeCd){
+				feats.push(_oRes[0].feature);
+			}
+			*/
+			for(var j=0; j <_oRes.length; j++){
+				var route_code = _oRes[j].feature.data.ROUTE_CODE || _oRes[j].feature.data.route_code;
+				if(route_code != routeCd){
+					continue; 
+				}
+				feats.push(_oRes[j].feature);
+			}
+	
+			crossCellList.push({
+				routeCd	:	routeCd,
+				feats	:	feats
+			});
 
 		}
 		html += "</table>";
@@ -1821,30 +1830,30 @@ MAP.CONTROL = (function($, undefined){
 					"</thead>";
 
 		for(var i = 0; i <_oData.length; i++) {
-		var routeCd = parseInt(_oData[i].ROUTE_CODE);
-		var feats = [];
-
-		html +=
-			"<tbody>" +
-				"<tr class='tr_nsInfosRow'>" +
-					"<td>" + routeCd + "</td>" +
-					"<td>" + _oData[i].ROAD_NAME + "</td>" +
-					"<td>" + _oData[i].ROAD_GRAD + "</td>" +
-				"</tr>" +
-			"</tbody>";
-
-		for(var j=0; j <_oRes.length; j++){
-			var route_code = _oRes[j].feature.data.ROUTE_CODE || _oRes[j].feature.data.route_code;
-			if(route_code != routeCd){
-				continue; 
+			var routeCd = parseInt(_oData[i].ROUTE_CODE);
+			var feats = [];
+	
+			html +=
+				"<tbody>" +
+					"<tr class='tr_nsInfosRow'>" +
+						"<td>" + routeCd + "</td>" +
+						"<td>" + _oData[i].ROAD_NAME + "</td>" +
+						"<td>" + _oData[i].ROAD_GRAD + "</td>" +
+					"</tr>" +
+				"</tbody>";
+	
+			for(var j=0; j <_oRes.length; j++){
+				var route_code = _oRes[j].feature.data.ROUTE_CODE || _oRes[j].feature.data.route_code;
+				if(route_code != routeCd){
+					continue; 
+				}
+				feats.push(_oRes[j].feature);
 			}
-			feats.push(_oRes[j].feature);
-		}
-
-		crossCellList.push({
-			routeCd	:	routeCd,
-			feats	:	feats
-		});
+	
+			crossCellList.push({
+				routeCd	:	routeCd,
+				feats	:	feats
+			});
 
 		}
 		html += "</table>";
