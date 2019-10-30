@@ -231,52 +231,16 @@ $(document).ready(function() {
 //주석 레이어 해제
 function fn_unCheckLabel(){
 	$("#dvLayerList").find("li[id$='_text'] a ins.jstree-checkbox").click();
-
-
 }
 
 var MAIN = (function(_mod_map, $, undefined) {
 
 	//레이어 관리 목록 조회
-	var	oLayerInfoList,
-	oLayerInfoListTheme,
-	oTmapInfoList,
-	oTmapGroupInfoList,
-	oEditLayerInfoList,
-	oLayerGroups;
-
-	/* oLayerInfoListTheme = {
-	        <c:forEach items="${layerInfoList}" var="layerInfo" varStatus="status">
-		        "${layerInfo.table}" : {
-		            <c:forEach items="${layerInfo}" var="layer" >
-		            '${layer.key}' : '${layer.value}',</c:forEach>
-				},
-		    </c:forEach>
-	}; */
-/* 
-	oLayerInfoList = {
-            <c:forEach items="${layerInfoListTheme}" var="layerInfo" varStatus="status">
-                "${layerInfo.table}" : {
-                    <c:forEach items="${layerInfo}" var="layer" >
-                    '${layer.key}' : '${layer.value}',</c:forEach>
-                },
-            </c:forEach>
-    };
- */
- 	
- 	oLayerInfoList = CONFIG.fn_get_serviceLayerInfo();
- 
-	/* oLayerGroups =
-		[<c:forEach items="${layerGroupInfoList}" var="layerGroupInfo">
-			{<c:forEach items="${layerGroupInfo}" var="layerGroup" >
-				'${layerGroup.key}' : '${layerGroup.value}',</c:forEach>
-			},
-		</c:forEach>
-		]; */
-	
+	var oTmapInfoList, oTmapGroupInfoList, oLayerGroups;
+ 	var oLayerInfoList = CONFIG.fn_get_serviceLayerInfo();
 	layerTool = new GTMapLayerTool(oLayerInfoList, oTmapInfoList, oTmapGroupInfoList, oLayerGroups, {
 		tMapId : 1,
-		serviceUrl : CONFIG.fn_get_serviceUrl(),	// GeoGate 주소
+		serviceUrl : CONFIG.fn_get_serviceUrl(),
 		callback : function(_oRes, _bUserStyle){
 			MAP.fn_init_map(_oRes, _bUserStyle);
 		},
@@ -313,22 +277,8 @@ var MAIN = (function(_mod_map, $, undefined) {
 		return oLayerInfoList;
 	}
 
-	/* var fn_get_layerInfoListTheme = function (_oLayer){
-        return oLayerInfoListTheme[_oLayer];
-    }
-
-	var fn_get_layerTotInfoListTheme = function (){
-        return oLayerInfoListTheme;
-    } */
-
-	//------------------------------------------------------------------------------------------------------------------
-	//## public 메소드
-	//------------------------------------------MAP_EDITOR.fn_init_timeLine(); ------------------------------------------------------------------------
 	_mod_map.fn_get_layerInfoList			=	fn_get_layerInfoList;
 	_mod_map.fn_get_layerTotInfoList		=	fn_get_layerTotInfoList;
-	/* _mod_map.fn_get_layerInfoListTheme          =   fn_get_layerInfoListTheme;
-    _mod_map.fn_get_layerTotInfoListTheme        =   fn_get_layerTotInfoListTheme; */
-	//------------------------------------------------------------------------------------------------------------------
 
 	return _mod_map;
 

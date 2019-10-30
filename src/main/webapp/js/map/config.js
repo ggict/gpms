@@ -5,7 +5,6 @@ var CONFIG = (function($, undefined){
 
 	/**
 	* 프록시 서비스 URL(POST)
-
 	* @member {String} sPostProxyUrl
 	*/
 	var sPostProxyUrl 		= "/gpms/proxyPost.do";
@@ -36,18 +35,9 @@ var CONFIG = (function($, undefined){
 	// local server
 	//var sServiceUrl 		= "http://192.168.0.205:8079/G2DataService/GService?";
 	// 2018.11.02 도메인호스트 변경에 의한 변경
-	//var sServiceUrl        = "http://192.168.0.206:18080/geoserver/wms?";
-	//var wfsServiceUrl        = "http://192.168.0.206:18080/geoserver/wfs?";
-	//var sServiceUrl        = "http://127.0.0.1:18080/geoserver/"+sDataHouse+"/wms?";
 	//var sServiceUrl        = "http://www.muhanit.kr:18079/G2DataService/GService?";
-	//var sServiceUrl        = "http://192.168.0.206:18080/geoserver/"+sDataHouse+"/wms?";
-
-	/*var sServiceUrl        = "http://192.168.0.206:18080/geoserver/wms?";
-	var wfsServiceUrl        = "http://192.168.0.206:18080/geoserver/wfs?";*/
- 
 	var sServiceUrl        = "http://1.221.39.242:21525/geoserver/wms?";
 	var wfsServiceUrl        = "http://1.221.39.242:21525/geoserver/wfs?";
-
 	
 	// real server
 	//var sServiceUrl        = "http://105.0.111.9:8089/G2DataService/GService?";
@@ -85,12 +75,11 @@ var CONFIG = (function($, undefined){
 	var exceptLayerList = ['GAttrLayerBase','GAttrLayer','GStatusLayerBase' ,'GStatusLayer','GTypeLayer', 'SttemntLayer', 'DmgtLayer', 'GOverlapLayer' ];
 
 
-	//var aLayerList = ['CELL_10','CELL_SECT']; // ,'M_CALS_T'
+	//var aLayerList = ['CELL_10','CELL_SECT'];
 	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T'];
 	var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T','CELL_10_4K','CELL_10_0301'];
 
 	// 2018.02.07 YYK 관할구역관리 레이어 추가
-	//var cLayerList = ['CMPTNC_ZONE'];
 	var cLayerList = ['CMPTNC_ZONE'];
 
 	// 2018.02.07 YYK 신고관리(파손유형) 레이어 추가
@@ -109,11 +98,11 @@ var CONFIG = (function($, undefined){
 	var oGetMapInfo = {
 			"serviceExtent" : [158291.5,379574.3,270901.4,526533.0],	//지도서비스 최대 영역 Obj //전국 -30000, -60000, 494288, 988576
 			"initExtent" : [158291.5,379574.3,270901.4,526533.0],	//지도서비스 초기 영역 Obj
-			"maxResolution" : "256",	// 2048																//지도서비스 GetMap maxResolution
-			"zoomLevels" : "11",		// 14																//지도서비스 레벨 개수
-			"layerOrder" : "desc",																			//지도서비스 GetMap Layer Order
-			"imageFormat" : "image/jpeg",																	//지도서비스 GetMap 이미지 포맷 - image/jpeg , image/png, image/gif
-			//"version" : "1.3.0"																				//지도서비스 GetMap Version
+			"maxResolution" : "256",	// 2048, 지도서비스 GetMap maxResolution
+			"zoomLevels" : "11",		// 14, 지도서비스 레벨 개수
+			"layerOrder" : "desc", //지도서비스 GetMap Layer Order
+			"imageFormat" : "image/jpeg", //지도서비스 GetMap 이미지 포맷 - image/jpeg , image/png, image/gif
+			//"version" : "1.3.0" //지도서비스 GetMap Version
 			"version" : "1.1.0"
 	};
 
@@ -348,7 +337,6 @@ var CONFIG = (function($, undefined){
 	      */
 	};	
 	
-	
 
 	var fn_get_deactiveControls = function(){
 		return aSelectiveControls;
@@ -501,7 +489,6 @@ var CONFIG = (function($, undefined){
 		return namespace;
 	}
 	
-    
 
 	return{
 		fn_get_serviceUrl 			: fn_get_serviceUrl,
