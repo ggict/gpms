@@ -321,7 +321,6 @@ MAP.CONTROL = (function($, undefined){
 		/**
 		* 속성조회
 		*/
-		//속성창닫기
 		$(".btnCloseAttr").bind("click", function(){
 			$(".divAttr").hide();
 		});
@@ -329,7 +328,6 @@ MAP.CONTROL = (function($, undefined){
 		/**
 		* 포장 셀 등록
 		*/
-		// 포장 셀 등록
 		$("#dvChoiceNSRes").dialog({
 			width: 400,
 			height:150,
@@ -342,26 +340,19 @@ MAP.CONTROL = (function($, undefined){
 		//셀 단일 선택
 		$("#btn_cellSelectWithClick").bind("click", function(){
 			
-			//1뎁스 버튼 class 초기화
+			gMap.activeControls(["drag", "cellPoint"]);
+			
+			$("#dv_multiSelectPoly").slideUp();
+			$("#dv_cellSelectionHelp").slideDown();
 			var obj = $('#dvCellSelctionTool').find('a');
 			$.each(obj, function(i, v){
 				$(this).removeClass('on');
 			});
-			//2뎁스 닫기
-			$("#dv_multiSelectPoly").slideUp();
-			
-			//마우스 포인터 변경
-			gMap.activeControls(["drag", "cellPoint"]);
-			
-			//도움말
-			$("#dv_cellSelectionHelp span:eq(0)").css("display", "inline-block");
-			$("#dv_cellSelectionHelp span:eq(1)").css("display", "none");
 		});
 
 		//다중선택 Open
 		$("#btn_openMultiSelectDv").on("click", function(e) {
 			
-			//이벤트 초기화
 			gMap.activeControls("drag");
 			
 			//다중선택창 open
@@ -369,15 +360,10 @@ MAP.CONTROL = (function($, undefined){
 			if(bHasOn) {
 				$("#dv_multiSelectPoly").slideUp();
 				$(this).removeClass("on");
-
-				//노선검색부분
 				$("#dv_inputForSelectCells").slideUp();
-				//$("#btn_cellSelectWithInput").removeClass("on");
-				//$("#btn_cellSelectWithInput").parent().removeClass("sel");
-
-				//도움말
 				$("#dv_cellSelectionHelp").slideUp();
-			} else {
+				
+			}else{
 				$("#dv_multiSelectPoly").slideDown();
 				$(this).addClass("on");
 			}
@@ -411,34 +397,19 @@ MAP.CONTROL = (function($, undefined){
 
 		//다각형 선택 클릭
 		$("#btn_cellSelectWithPolygon").on("click", function(){
-			//노선검색부분
-			$("#dv_inputForSelectCells").slideUp();
-			//$("#btn_cellSelectWithInput").removeClass("on");
-			//$("#btn_cellSelectWithInput").parent().removeClass("sel");
-			//도움말
-			$("#dv_cellSelectionHelp").slideDown();
-
-			//컨트롤 On
-			gMap.activeControls(["drag", "cellPolygon"]);
+			$("#dv_inputForSelectCells").slideUp(); //노선검색부분
+			$("#dv_cellSelectionHelp").slideDown(); //도움말
+			gMap.activeControls(["drag", "cellPolygon"]); //컨트롤 On
 		});
 
 		//선형선택 클릭
 		$("#btn_cellSelectWithPolyline").on("click", function(e) {
-			//노선검색부분
-			$("#dv_inputForSelectCells").slideUp();
-			//$("#btn_cellSelectWithInput").removeClass("on");
-			//$("#btn_cellSelectWithInput").parent().removeClass("sel");
-
-			//도움말
-			$("#dv_cellSelectionHelp").slideDown();
-
-			//컨트롤 On
-			gMap.activeControls(["drag", "cellPath"]);
+			$("#dv_inputForSelectCells").slideUp(); //노선검색부분
+			$("#dv_cellSelectionHelp").slideDown(); //도움말
+			gMap.activeControls(["drag", "cellPath"]); //컨트롤 On
 		});
 
-
-		//노선검색 events
-		//노선 변경
+		//노선검색 events (노선 변경)
 		$("#sel_cs_route").on("change keyup", function(e) {
 			var sSelRoute = $("#sel_cs_route option:selected").val();
 			if(sSelRoute != "") fn_set_routeDir(sSelRoute);
@@ -498,25 +469,20 @@ MAP.CONTROL = (function($, undefined){
 			gMap.cleanMap();
 			gMap.activeControls("drag");
 			selectFidList = [];
-
-			//3뎁스 버튼 class 초기화
-			var obj = $('#dv_multiSelectPoly').find('li');
+			
+			$("#dv_cellSelectionHelp").slideUp();
+			$("#dv_multiSelectPoly").slideUp();
+			var obj = $('#dvCellSelctionTool').find('a');
 			$.each(obj, function(i, v){
-				$(this).removeClass('sel');
+				$(this).removeClass('on');
 			});
 			
-			//도움말
-			$("#dv_cellSelectionHelp").slideUp();
-			/*$("#dv_cellSelectionHelp span:eq(0)").css("display", "none");
-			$("#dv_cellSelectionHelp span:eq(1)").css("display", "none");*/
 		});
 
 		//선택 완료
 		$("#btn_cellSelectFinish").bind("click", function(){
+			
 			gMap.activeControls("drag");
-
-			var cellIds = "";
-
 			
 			// 수정 사유: 멀티노선을 선택하였을 경우 - 노선 선택 팝업창에서 GAttrLayer 레이어를 사용하고 있어서 기능이 제대로 작동하지 않는다.
 			//var features = gMap.getLayerByName('GAttrLayerMulti').features;
@@ -527,13 +493,21 @@ MAP.CONTROL = (function($, undefined){
 				alert("선택한 셀의 수가 너무 많습니다.\n공사구간을 나눠서 등록해주시기 바랍니다.(최대 200개)");
 				return;
 			}
-			 */
+			*/
 
 			if(features.length < 1){
+				$("#dv_cellSelectionHelp").slideUp();
+				$("#dv_multiSelectPoly").slideUp();
+				var obj = $('#dvCellSelctionTool').find('a');
+				$.each(obj, function(i, v){
+					$(this).removeClass('on');
+				});
+				
 				alert("선택된 데이터가 없습니다. 지도에서 선택을 해주십시오.");
 				return;
 			}
 
+			var cellIds = "";
 			for(var i in features){
 				if(i!=0){cellIds += ","}
 				var cell_id = features[i].data.CELL_ID || features[i].data.cell_id;
@@ -541,31 +515,23 @@ MAP.CONTROL = (function($, undefined){
 			}
 
 			option.cellCount = features.length;
-
 			try {
 				$("#dvCellSelctionTool").dialog("close");
 				$("#dvChoiceNSRes").dialog("close");		//혹시 열려있을 노선선택팝업
-
 				if(option.clearMap == undefined || option.clearMap){
 					gMap.cleanMap();
 				}
 				gMap.activeControls("drag");
-
 				option.iframe[option.callback](cellIds, option);
-
 				selectFidList = [];
-
 				wWindowShowAll();
 				bottomOpen();
-
 				$('#dvRestore').dialog();
 				$('#dvRestore').dialog('close');
-
+				
 			} catch(e){
-
 			    alert(e);
 			    return;
-
 			}
 		});
 
