@@ -664,12 +664,14 @@ function statsOpen() {
     $('#unptcSenario').addClass('hidden');
     $('#bottom').css("height", "0px");
     wWindowsResizeMinHeight(0);
+    $("#divLayerTool").dialog('close');
 }
 function statsClose() {
     $('#leftCloseSt').addClass('hidden');
     $('#leftOpenSt').removeClass('hidden');
     $('#stats').css("top", $(window).height()-55);
     wWindowsResizeMinHeight(50);
+    $("#divLayerTool").dialog('open');
 }
 /* full windows style 적용    */
 function repairtargetsOpen() {
@@ -698,12 +700,10 @@ function repairtargetsShow() {
     $('#leftCloseRt').removeClass('hidden');
     $('#leftOpenRt').addClass('hidden');
     $('#repairtargets').css("display", "");
-
-
     $('#repairtargets').removeClass('hidden');
     $('#repairtargets').css("top", "97px");
-
     wWindowsResizeMinHeight(0);
+    $("#divLayerTool").dialog('close');
 
 }
 function repairtargetsHideBottom() {
@@ -712,6 +712,7 @@ function repairtargetsHideBottom() {
     //$('#repairtargets').css("height", "50px");
     $('#repairtargets').css("top", $(window).height()-55);
     wWindowsResizeMinHeight(50);
+    $("#divLayerTool").dialog('open');
 }
 
 function unptcSenarioOpen(type) {
