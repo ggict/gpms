@@ -220,7 +220,7 @@ var COMMON_UTIL = (function($,undefined){
     * @description form 내의 모든 객체를 변경한다
     * @param {String} _oFormNm : 대상 form ID
     */
-    var cmFormObjectInit = function(_oFrmId){
+    var cmFormObjectInit = function(_oFrmId, noFocusScroll){
         $("#"+_oFrmId+" input[type='file'], input[type='text'], select, textarea").each(
                 function(i){
                     var inputObj = this;
@@ -357,8 +357,11 @@ var COMMON_UTIL = (function($,undefined){
 
             }
         });
-
-        $("#"+_oFrmId).find("input[type='text']:enabled").first().focus();
+        
+        if (typeof noFocusScroll === 'undefined') {
+        	$("#"+_oFrmId).find("input[type='text']:enabled").first().focus();
+        }
+        
     };
 
     /**

@@ -249,6 +249,10 @@ public class CntrwkDtlController  extends BaseController {
 		CntrwkVO cntrwkVO = new CntrwkVO();
 		cntrwkVO.setCNTRWK_ID(cntrwkDtlVO.getCNTRWK_ID());
 		model.addAttribute("cntrwkVO", cntrwkService.selectCntrwk(cntrwkVO));
+		
+		CntrwkCellInfoVO cntrwkCellInfoVO = new CntrwkCellInfoVO();
+		cntrwkCellInfoVO.setDETAIL_CNTRWK_ID(cntrwkDtlVO.getDETAIL_CNTRWK_ID());
+		model.addAttribute("cntrwkCellInfoList", cntrwkCellInfoService.selectCntrwkCellInfoList(cntrwkCellInfoVO));
 
 		Integer cntrwk_start_year  = egovPropertyService.getInt("CNTRWK_START_YEAR", 2017);
 		model.addAttribute("cntrwkYears", getYears(cntrwk_start_year));

@@ -347,15 +347,13 @@
                             #CELL_ID_LIST[]#
                         </iterate>
                     </isNotEmpty>
+                    <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 <![CDATA[
                ) cell10
                , TN_ROUTE_INFO tnrouteinfo
                , TC_CODE tccode
           WHERE cell10.ROUTE_CODE = tnrouteinfo.ROAD_NO
             AND CELL10.ROAD_GRAD = tccode.CODE_VAL
-]]>
-            <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND cell10.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-<![CDATA[
             AND tccode.USE_AT = 'Y'
             AND tccode.DELETE_AT = 'N'
           ORDER BY tnrouteinfo.ROAD_NO, cell10.STRTPT, cell10.DIRECT_CODE, cell10.TRACK
@@ -389,15 +387,13 @@
                             #CELL_ID_LIST[]#
                         </iterate>
                     </isNotEmpty>
+                    <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND cell10.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 <![CDATA[
                ) cell10
                , TN_ROUTE_INFO tnrouteinfo
                , TC_CODE tccode
           WHERE cell10.ROUTE_CODE = tnrouteinfo.ROAD_NO
             AND CELL10.ROAD_GRAD = tccode.CODE_VAL
-]]>
-            <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND cell10.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
-<![CDATA[
             AND tccode.USE_AT = 'Y'
             AND tccode.DELETE_AT = 'N'
 ]]>
