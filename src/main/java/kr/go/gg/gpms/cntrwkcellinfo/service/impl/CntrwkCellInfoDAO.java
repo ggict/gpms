@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import egovframework.example.cmmn.impl.BaseDAO;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
+import kr.go.gg.gpms.cell10.service.model.Cell10VO;
 import kr.go.gg.gpms.cntrwkcellinfo.service.model.CntrwkCellInfoVO;
 
 /**
@@ -109,6 +110,16 @@ public class CntrwkCellInfoDAO extends BaseDAO {
 	 */
 	public int selectPavYearListByCellIdTotalCount(CntrwkCellInfoVO cntrwkCellInfoVO) {
 		return (Integer) select("cntrwkCellInfoDAO.selectPavYearListByCellIdTotalCount", cntrwkCellInfoVO);
+	}
+	
+	/**
+	 * CELL_10(CELL_10) id에 따른 노선정보 리스트를 가져온다.
+	 * @param cntrwkCellInfoVO - 조회할 정보가 담긴 cntrwkCellInfoVO
+	 * @return CELL_10 노선정보 리스트
+	 * @exception
+	 */
+	public List<Cell10VO> selectRouteInfoListByCellID(CntrwkCellInfoVO cntrwkCellInfoVO) throws Exception {
+		return (List<Cell10VO>)list("cntrwkCellInfoDAO.selectRouteInfoListByCellID", cntrwkCellInfoVO);
 	}
 
 }

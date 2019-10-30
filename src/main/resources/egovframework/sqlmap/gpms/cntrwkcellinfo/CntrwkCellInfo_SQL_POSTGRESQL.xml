@@ -101,28 +101,21 @@
 <![CDATA[ 		
 		/* cntrwkCellInfoDAO.selectCntrwkCellInfoList */
 		/* 공사_셀_정보 조회 */
-		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
-			SELECT
-				tncntrwkcellinfo.DETAIL_CNTRWK_ID /* 공사_셀_정보.세부_공사_ID */
-				, tncntrwkcellinfo.PAV_CELL_ID /* 공사_셀_정보.포장_셀_ID */
-				, tncntrwkcellinfo.PAV_YEAR /* 공사_셀_정보.포장_년도 */
-				, tncntrwkcellinfo.CNTRWK_ID /* 공사_셀_정보.공사_ID */
-			FROM TN_CNTRWK_CELL_INFO tncntrwkcellinfo
+		SELECT
+			tncntrwkcellinfo.DETAIL_CNTRWK_ID /* 공사_셀_정보.세부_공사_ID */
+			, tncntrwkcellinfo.PAV_CELL_ID /* 공사_셀_정보.포장_셀_ID */
+			, tncntrwkcellinfo.PAV_YEAR /* 공사_셀_정보.포장_년도 */
+			, tncntrwkcellinfo.CNTRWK_ID /* 공사_셀_정보.공사_ID */
+		FROM TN_CNTRWK_CELL_INFO tncntrwkcellinfo
 ]]>			
-		
 		<include refid="cntrwkCellInfoDAO.selectCntrwkCellInfoList.where" />
-
 <![CDATA[
- 
 		ORDER BY  tncntrwkcellinfo.DETAIL_CNTRWK_ID DESC /* 공사_셀_정보.세부_공사_ID */
 				, tncntrwkcellinfo.PAV_CELL_ID DESC /* 공사_셀_정보.포장_셀_ID */
-
- 
-		) tb)as sub_CntrwkCellInfo WHERE 1=1 
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 		<![CDATA[
-			rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
 		]]>
 		</isEqual>
 <![CDATA[
@@ -234,4 +227,55 @@
 		 ) as sub_cnt
 ]]>		
 	</select>
+    
+    <select id="cntrwkCellInfoDAO.selectRouteInfoListByCellID" parameterClass="cntrwkCellInfoVO" resultClass="cell10VO">
+<![CDATA[
+        /* cntrwkCellInfoDAO.selectRouteInfoListByCellID */
+        /* CELL_10 리스트 조회 - 포장공사 이력관리 > 세부공사 CELL 선택용 */
+        SELECT cell10.CELL_ID
+             , cell10.ROUTE_CODE
+             , tnrouteinfo.ROAD_NAME
+             , tccode.code_nm ROAD_GRAD
+             , cell10.direct_code DIRECT_CODE
+             , CASE cell10.DIRECT_CODE WHEN 'S' THEN '상행' WHEN 'E' THEN '하행' WHEN 'SE' THEN '양방향' ELSE '' END DIRECT_NM
+             , cell10.TRACK TRACK
+             , cell10.STRTPT STRTPT
+             , cell10.ENDPT ENDPT
+          FROM(
+                    SELECT CELL_ID
+                         , ROUTE_CODE
+                         , DIRECT_CODE
+                         , TRACK
+                         , STRTPT
+                         , ENDPT
+                         , ROAD_GRAD
+                    FROM CELL_10
+                    WHERE 1=1
+]]>
+                    <isNotEmpty property="PAV_CELL_ID_LIST">
+                        <iterate close=")" conjunction="," open="("
+                            prepend=" AND CELL_ID IN " property="PAV_CELL_ID_LIST">
+                            #PAV_CELL_ID_LIST[]#
+                        </iterate>
+                    </isNotEmpty>
+                    <isNotEmpty property="DETAIL_CNTRWK_ID"> <![CDATA[
+                       AND CELL_ID IN ( SELECT PAV_CELL_ID FROM TN_CNTRWK_CELL_INFO WHERE DETAIL_CNTRWK_ID = #DETAIL_CNTRWK_ID# )
+                    ]]></isNotEmpty>
+                    <isNotEmpty property="CNTRWK_ID"><![CDATA[ AND ROUTE_CODE = #CNTRWK_ID# ]]></isNotEmpty>
+<![CDATA[
+               ) cell10
+               , TN_ROUTE_INFO tnrouteinfo
+               , TC_CODE tccode
+          WHERE cell10.ROUTE_CODE = tnrouteinfo.ROAD_NO
+            AND CELL10.ROAD_GRAD = tccode.CODE_VAL
+            AND tccode.USE_AT = 'Y'
+            AND tccode.DELETE_AT = 'N'
+          ORDER BY tnrouteinfo.ROAD_NO, cell10.STRTPT, cell10.DIRECT_CODE, cell10.TRACK
+]]>
+        <isEqual prepend=" " property="usePage" compareValue="true">
+        <![CDATA[
+            LIMIT #recordCountPerPage# OFFSET #firstIndex#
+        ]]>
+        </isEqual>
+    </select>
 </sqlMap>

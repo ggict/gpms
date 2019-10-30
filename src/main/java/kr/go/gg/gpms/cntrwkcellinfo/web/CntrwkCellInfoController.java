@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.cell10.service.model.Cell10VO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,6 +96,25 @@ public class CntrwkCellInfoController extends BaseController {
 		map.put("page", cntrwkCellInfoVO.getPage());
 		map.put("total", total_page);
 		map.put("records", total_count);
+		map.put("rows", items);
+
+		return map;
+	}
+	
+	/**
+	 * 공사_셀_정보(TN_CNTRWK_CELL_INFO) 목록을 조회한다. (no pageing)
+	 * @param cntrwkCellInfoVO - 조회할 정보가 담긴 CntrwkCellInfoVO
+	 * @return "/cntrwkcellinfo/CntrwkCellInfoList"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/api/cntrwkcellinfo/selectCntrwkCellInfoAllList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public  @ResponseBody Map<String, Object> selectCntrwkCellInfoAllListRest(@RequestBody CntrwkCellInfoVO cntrwkCellInfoVO, ModelMap model) throws Exception {
+		cntrwkCellInfoVO.setUsePage(false);
+		List<Cell10VO> items = cntrwkCellInfoService.selectRouteInfoListByCellID(cntrwkCellInfoVO);
+		
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("page", cntrwkCellInfoVO.getPage());
 		map.put("rows", items);
 
 		return map;

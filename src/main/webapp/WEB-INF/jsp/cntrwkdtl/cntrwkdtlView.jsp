@@ -71,8 +71,76 @@ $(document).ready(function() {
 				,multiboxonly: false
 				//,scroll: true
 			}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
+		 
+		    var detail_cntrwk_id = $('#DETAIL_CNTRWK_ID').val();
+		    var postData2 = {"DETAIL_CNTRWK_ID":detail_cntrwk_id};
+		    // 리스트에서 셀 선택 grid
+		    $("#gridArea2").jqGrid({
+		        url: '<c:url value="/"/>'+'api/cntrwkcellinfo/selectCntrwkCellInfoAllList.do'
+		        ,autoencode: true
+		        ,contentType : 'application/json'
+		        ,datatype: "local"
+		        ,mtype: "POST"
+		        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
+		        //,postData: $("#cellFrm2").cmSerializeObject()
+		        ,postData: postData2
+		        ,ignoreCase: true
+		        ,colNames:["CELL_ID","노선번호","노선명","행선","차로","시점(m)","종점(m)","위치보기"]
+		        ,colModel:[
+		            {name:'CELL_ID', index:'CELL_ID', hidden:true}
+		            ,{name:'ROUTE_CODE',index:'ROUTE_CODE', align:'center', width:50, sortable:false, formatter: 'integer'}
+		            ,{name:'ROAD_NAME',index:'ROAD_NAME', align:'center', width:70, sortable:false}
+		            //,{name:'ROAD_GRAD',index:'ROAD_GRAD', align:'center', width:70, sortable:false}
+		            ,{name:'DIRECT_NM',index:'DIRECT_NM', align:'center', width:70, sortable:false}
+		            ,{name:'TRACK',index:'TRACK', align:'center', width:70, sortable:false}
+		            ,{name:'STRTPT',index:'STRTPT', align:'center', width:70, sortable:false, formatter: 'integer'}
+		            ,{name:'ENDPT',index:'ENDPT', align:'center', width:70, sortable:false, formatter: 'integer'}
+		            ,{name:'btn_loc_cell',index:'btn_loc_cell', align:'center', width:70, sortable:false, formatter: fn_create_btn}
+		        ]
+		        ,async : false
+		        ,sortname: ''
+		        ,sortorder: ""
+		        ,rowNum: 99999
+		        ,rowList: []
+		        ,pgbuttons: false
+		        ,pgtext: null
+		        ,viewrecords: true
+		        ,pager: '#gridPager2'
+		        ,rownumbers: true
+		        ,loadtext: "검색 중입니다."
+		        ,emptyrecords: "검색된 데이터가 없습니다."
+		        ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
+		        ,ondblClickRow: function(rowId) {       // 더블클릭 처리
+		            //fn_view(rowId); // 대장 조회
+		        }
+		        ,onSelectRow: function(rowId, status, e) {     // 클릭 처리
+		            fnCalDetailInfo();
+		        }
+		        ,onSelectAll: function(aRowIds, status) {
+		            console.log('[onSelectAll] ' + status + ' = ' + aRowIds.length);
+		            fnCalDetailInfo();
+		        }
+		        ,loadBeforeSend:function(tsObj, ajaxParam, settings){
+		            if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){
+		                delete this.p.postData.nd;
+		                delete this.p.postData._search;
+		                this.p.postData.sidx = this.p.sortname;
+		                this.p.postData.sord = this.p.sortorder;
+		                if(this.p.postData.pageUnit != this.p.postData.rows){
+		                    this.p.postData.pageUnit = this.p.postData.rows;
+		                }
+		                ajaxParam.data = JSON.stringify(this.p.postData);
+		            }
+		        }
+		        ,multiselect: false
+		        ,multiboxonly: false
+		        ,loadonce: true
+		        //,scroll: true
+		    }).navGrid('#gridPager2',{edit:false,add:false,del:false,search:false,refresh:false});  
 			
 			COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 180);
+			
+			COMMON_UTIL.cmInitGridSize('gridArea2','div_grid2', 180);
 			
 			fn_search();	
 	 }, 300);
@@ -89,6 +157,9 @@ function fn_create_btn(cellValue, options, rowObject) {
 		case "btn_loc" :
 			btn = "<a href='#' onclick=\"fn_select_cell('" + rowObject.PAV_CELL_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
 			break;
+        case "btn_loc_cell" :
+            btn = "<a href='#' onclick=\"fn_select_cell('" + rowObject.CELL_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+            break;
 	}
 	
 	return btn;
@@ -131,6 +202,21 @@ function fn_search() {
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
 	   	}
 	}).trigger("reloadGrid");
+	
+    var detail_cntrwk_id = $('#DETAIL_CNTRWK_ID').val();
+    var postData2 = {"DETAIL_CNTRWK_ID":detail_cntrwk_id};
+    $("#gridArea2").jqGrid("setGridParam",{
+        datatype: "json"
+        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
+        ,contentType: "application/json"
+        ,page: 1
+        //,postData:   $("#cellFrm2").cmSerializeObject()
+        ,postData:   postData2
+        ,mtype: "POST"
+        ,loadComplete: function(data) {
+            COMMON_UTIL.fn_set_grid_noRowMsg('gridArea2', $("#gridArea2").jqGrid("getGridParam").emptyrecords, data.records);
+        }
+    }).trigger("reloadGrid");
 }
 
 // 삭제 처리 [수정:가능]
@@ -640,6 +726,18 @@ function fnViewLocation(){
 					</table>
 				</div>
 			</form>
+            <form id="cellFrm2">
+                <input type="hidden" id="CELL_IDS" name="CELL_IDS" value=""/>
+                <div class="titbx mt20">
+                    <h4>셀 선택</h4>
+                    <div style="width: 100%;">
+                        <div id="div_grid2" style="width:100%; height:240px;">
+                            <table id="gridArea2"></table>
+                            <div id="gridPager2"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>   
 			<form id="cellFrm">
 				<input type="hidden" name="DETAIL_CNTRWK_ID" value="${cntrwkDtlVO.DETAIL_CNTRWK_ID}"/>
 				<div class="titbx mt20">

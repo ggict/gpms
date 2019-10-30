@@ -79,22 +79,6 @@ public interface Cell10Service {
 	List<Cell10VO> selectRouteInfoByCellID(Cell10VO cell10VO) throws Exception;
 	
 	/**
-	 * CELL_10(CELL_10) id에 따른 노선정보 리스트를 가져온다.
-	 * @param cell10VO - 조회할 정보가 담긴 Cell10VO
-	 * @return CELL_10 노선정보 리스트
-	 * @exception Exception
-	 */
-	List<Cell10VO> selectRouteInfoListByCellID(Cell10VO cell10VO) throws Exception;
-	
-	/**
-	 * CELL_10(CELL_10) id에 따른 노선정보 총 갯수를 가져온다.
-	 * @param cell10VO - 조회할 정보가 담긴 Cell10VO
-	 * @return int 노선정보 총 갯수
-	 * @exception Exception
-	 */
-	int selectRouteInfoListByCellIDTotalCount(Cell10VO cell10VO) throws Exception;
-	
-	/**
 	 * CELL_10(CELL_10) 셀타입을 수정한다.
 	 * @param cellSectVO - 조회할 정보가 담긴 cellSectVO
 	 * @return int형

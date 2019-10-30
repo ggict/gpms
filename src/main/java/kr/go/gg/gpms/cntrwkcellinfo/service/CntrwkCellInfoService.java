@@ -2,6 +2,7 @@ package kr.go.gg.gpms.cntrwkcellinfo.service;
 
 import java.util.List;
 
+import kr.go.gg.gpms.cell10.service.model.Cell10VO;
 import kr.go.gg.gpms.cntrwkcellinfo.service.model.CntrwkCellInfoDefaultVO;
 import kr.go.gg.gpms.cntrwkcellinfo.service.model.CntrwkCellInfoVO;
 
@@ -87,6 +88,14 @@ public interface CntrwkCellInfoService {
 	 * @exception
 	 */
 	int selectPavYearListByCellIdTotalCount(CntrwkCellInfoVO cntrwkCellInfoVO);
+	
+	/**
+	 * CELL_10(CELL_10) id에 따른 노선정보 리스트를 가져온다.
+	 * @param cntrwkCellInfoVO - 조회할 정보가 담긴 cntrwkCellInfoVO
+	 * @return CELL_10 노선정보 리스트
+	 * @exception Exception
+	 */
+	List<Cell10VO> selectRouteInfoListByCellID(CntrwkCellInfoVO cntrwkCellInfoVO) throws Exception;
 
 }
 

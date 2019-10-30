@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
+import kr.go.gg.gpms.cell10.service.model.Cell10VO;
 import kr.go.gg.gpms.cntrwkcellinfo.service.CntrwkCellInfoService;
 import kr.go.gg.gpms.cntrwkcellinfo.service.model.CntrwkCellInfoVO;
 
@@ -116,6 +117,16 @@ public class CntrwkCellInfoServiceImpl extends AbstractServiceImpl implements Cn
 	 */
 	public int selectPavYearListByCellIdTotalCount(CntrwkCellInfoVO cntrwkCellInfoVO) {
 		return cntrwkCellInfoDAO.selectPavYearListByCellIdTotalCount( cntrwkCellInfoVO);
+	}
+	
+	/**
+	 * CELL_10(CELL_10) id에 따른 노선정보 리스트를 가져온다.
+	 * @param cntrwkCellInfoVO - 조회할 정보가 담긴 cntrwkCellInfoVO
+	 * @return CELL_10 노선정보 리스트
+	 * @exception Exception
+	 */
+	public List<Cell10VO> selectRouteInfoListByCellID(CntrwkCellInfoVO cntrwkCellInfoVO) throws Exception {
+		return cntrwkCellInfoDAO.selectRouteInfoListByCellID(cntrwkCellInfoVO);
 	}
 	
 }

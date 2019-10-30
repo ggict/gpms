@@ -660,10 +660,10 @@ $(document).ready(function() {
 	//var cell_id_arrays = parent.gMap.getLayerByName('GAttrLayer').features.map(function(elem) { return elem.data.CELL_ID || elem.data.cell_id })
 	var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
 	var route_code_value = $('#ROUTE_CODE').val();
-	var postData2 = {"ROUTE_CODE":route_code_value, "CELL_ID_LIST":cell_id_arrays};
+	var postData2 = {"CNTRWK_ID":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
 	// 리스트에서 셀 선택 grid
     $("#gridArea2").jqGrid({
-        url: '<c:url value="/"/>'+'api/cell10/selectRouteInfoListByCellIds.do'
+        url: '<c:url value="/"/>'+'api/cntrwkcellinfo/selectCntrwkCellInfoAllList.do'
         ,autoencode: true
         ,contentType : 'application/json'
         ,datatype: "local"
@@ -687,7 +687,7 @@ $(document).ready(function() {
         ,async : false
         ,sortname: ''
         ,sortorder: ""
-        ,rowNum: -1
+        ,rowNum: 99999
         ,rowList: []
         ,pgbuttons: false
         ,pgtext: null
@@ -759,6 +759,11 @@ function fn_select_cell(cell_id){
 	var fields = ["CELL_ID"];
 	var values = [cell_id];
 	
+    // 모든 팝업창 최소화
+    parent.wWindowHideAll();
+    // 하단 목록 창 내리기
+    parent.bottomClose();
+	
 	var attribute_base = {
 	        attributes : {
 	            fillColor : '#ffffff',
@@ -787,9 +792,9 @@ function fn_search() {
 	}).trigger("reloadGrid");
 	
 	//var cell_id_arrays = parent.gMap.getLayerByName('GAttrLayerMulti').features.map(function(elem) { return elem.data.CELL_ID || elem.data.cell_id })
-	var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
+    var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
     var route_code_value = $('#ROUTE_CODE').val();
-    var postData2 = {"ROUTE_CODE":route_code_value, "CELL_ID_LIST":cell_id_arrays};
+    var postData2 = {"CNTRWK_ID":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
     $("#gridArea2").jqGrid("setGridParam",{
         datatype: "json"
         ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
@@ -905,20 +910,16 @@ function addBtnEventHandler() {
 		}
 		if (search_strtpt && search_strtpt != '') {
 			f.rules.push({field: 'STRTPT', op: 'cn', data: search_strtpt});
-
 		}
 		if (search_endpt && search_endpt != '') {
 			f.rules.push({field: 'ENDPT', op: 'cn', data: search_endpt});
-
 		}
 		
+		// reload grid
 		var grid = $('#gridArea2'); 
 		grid[0].p.search = f.rules.length > 0; 
 		$.extend(grid[0].p.postData, { filters: JSON.stringify(f) }); 
 		grid.trigger("reloadGrid", [{ page: 1 }]);
-		
-
-		
 
 	})
 }

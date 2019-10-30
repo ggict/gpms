@@ -103,28 +103,6 @@ public class Cell10DAO extends BaseDAO {
 	}
 	
 	/**
-	 * CELL_10(CELL_10) id에 따른 노선정보 리스트를 가져온다.
-	 * @param cell10VO - 조회할 정보가 담긴 Cell10VO
-	 * @return CELL_10 노선정보 리스트
-	 * @exception
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Cell10VO> selectRouteInfoListByCellID(Cell10VO cell10VO) throws Exception {
-		return (List<Cell10VO>)list("cell10DAO.selectRouteInfoListByCellID", cell10VO);
-	}
-	
-	/**
-	 * CELL_10(CELL_10) id에 따른 노선정보 리스트 총 갯수를 가져온다.
-	 * @param cell10VO - 조회할 정보가 담긴 Cell10VO
-	 * @return int 총 갯수
-	 * @exception
-	 */
-	@SuppressWarnings("unchecked")
-	public int selectRouteInfoListByCellIDTotalCount(Cell10VO cell10VO) throws Exception {
-		return (Integer)select("cell10DAO.selectRouteInfoListByCellIDTotalCount", cell10VO);
-	}
-	
-	/**
 	 * CELL_10(CELL_10) 셀타입을 수정한다.
 	 * @param cellSectVO - 조회할 정보가 담긴 cellSectVO
 	 * @return int형
