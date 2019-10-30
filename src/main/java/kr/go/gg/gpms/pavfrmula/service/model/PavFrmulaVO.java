@@ -131,6 +131,12 @@ public class PavFrmulaVO extends BaseVO {
 	@XmlElement
     private java.lang.String VAR_INDEX;
 	
+	/** 
+	 * 수식_구분_코드
+	 */
+	@XmlElement
+    private java.lang.String FRMULA_SE_CODE;
+	
 	/**
 	 * TN_PAV_FRMULA.FRMULA_NO, 
 	 * 포장_수식.수식_번호 값읽기
@@ -402,5 +408,16 @@ public class PavFrmulaVO extends BaseVO {
     public void setVAR_INDEX(java.lang.String vAR_INDEX) {
         VAR_INDEX = vAR_INDEX;
     }
+
+    @JsonProperty(value="FRMULA_SE_CODE")
+	public java.lang.String getFRMULA_SE_CODE() {
+		return FRMULA_SE_CODE;
+	}
+
+	public void setFRMULA_SE_CODE(java.lang.String fRMULA_SE_CODE) {
+		FRMULA_SE_CODE = fRMULA_SE_CODE;
+	}
+    
+    
     
 }

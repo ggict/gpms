@@ -95,6 +95,8 @@ function fn_file_upload(){
     	formData.append("files", files[i]);
     	len ++;
     }
+    
+    formData.append("ROUTE_CODE", $('#ROUTE_CODE').val());
 
 	if(len < 1){
 		alert("조사자료 파일을 선택해주세요.");
@@ -195,22 +197,25 @@ function fn_upd_res_log(creatDt, creatNum, type, cnt){
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 </form>
+
+
+
 <div class="tabcont">
 	<div class="fl bgsch">
 			<h3>파일첨부
-				<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
+				<a href="#" class="whitebtn fr mt10" style="margin-top: 170px !important;" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
 				<input multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
 			</h3>
 			<div class="schbx mt10">
-			    <ul class="sch">
+			    <ul class="sch" style="padding: 140px 10px 5px;">
 			        <li>
-			            <div class="btfilebx scroll" style="width:258px; height:215px" id="file_list">
+			            <div class="btfilebx scroll" style="width:258px; height:60px" id="file_list">
 			            	<ul name="fileSet">
 			            	</ul>
 			            </div>
 			        </li>
 			        <li class="wid100 af">
-			        	※ 첨부 파일은 엑셀(xlsx) 파일만 업로드 가능합니다.
+			        	※ 첨부 파일은 압축(zip) 파일만 업로드 가능합니다.
 			        </li>
 			        <li class="wid100 af">
 			            <a href="#" onclick="fn_file_upload()" class="schbtn fr" style="width:43%">파일전송</a>
@@ -239,6 +244,17 @@ function fn_upd_res_log(creatDt, creatNum, type, cnt){
 	</div>
 
 </div>
+
+<form id="tmpFrm" name="tmpFrm" method="post" action="" >
+<div class="tabcont">
+<div class="fl bgsch">
+<div class="schbx mt10">
+노선코드
+<input type="text" name="ROUTE_CODE" id="ROUTE_CODE" title="노선번호" />
+</div>
+</div>
+</div>
+</form>
 
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>

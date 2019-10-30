@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="srvyDtaDAO">
+
+	<typeAlias alias="egovMap"
+		type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="srvyDtaVO"
+		type="kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO" />
+
+
+	<select id="srvyDtaDAO.selectSrvyDtaFrmulaList" resultClass="srvyDtaVO">
+		<![CDATA[
+		/* srvyDtaDAO.selectSrvyDtaFrmulaList */
+		/* 조사_자료_수식 조회 */
+			SELECT
+				 frmula_no /* 수식_번호 */
+				,frmula_nm /* 수식_명 */
+				,arith_frmla /* 산술_식 */
+				,dc /* 설명 */
+				,frmula_se_code /* 수식_구분_코드 */
+			FROM TN_SRVY_DTA_FRMULA
+			order by frmula_no
+		]]>
+	</select>
+	
+
+</sqlMap>

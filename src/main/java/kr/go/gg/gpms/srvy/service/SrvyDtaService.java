@@ -2,9 +2,11 @@ package kr.go.gg.gpms.srvy.service;
 
 import java.io.File;
 
+import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
+
 /**
  * 조사_자료
- * TN_SRVY_DTA_EXCEL
+ * TN_SRVY_DTA
  *
  * @Class Name : SrvyDtaService.java
  * @Description : SrvyDta Business class
@@ -18,7 +20,7 @@ import java.io.File;
  *  Copyright (C)  All right reserved.
  */
 public interface SrvyDtaService {
-
+	
 	/**
 	 * 조사자료 파일 압축풀기
 	 * @param String fileName, File uploadFolder
@@ -33,7 +35,7 @@ public interface SrvyDtaService {
 	 * @return void
 	 * @exception Exception
 	 */
-	void convertExcel(String csvFileNm, String excelFileNm) throws Exception;
+	void convertExcel(String csvFileNm, String excelFileNm, SrvyDtaExcelVO srvyDtaExcelVO) throws Exception;
 	
 }
 

@@ -1,10 +1,7 @@
 package kr.go.gg.gpms.srvy.web;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -33,7 +30,6 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
@@ -88,8 +84,6 @@ import kr.go.gg.gpms.srvydtasttus.service.SrvyDtaSttusService;
 import kr.go.gg.gpms.srvydtasttus.service.model.SrvyDtaSttusVO;
 import kr.go.gg.gpms.sysuser.service.SysUserService;
 import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
-import net.sf.jazzlib.ZipEntry;
-import net.sf.jazzlib.ZipInputStream;
 
 //import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -174,14 +168,14 @@ public class SrvyDtaController extends BaseController {
 
 		int successCnt = 0;
 		int failCnt = 0;
-
+		
 		String userNo = sessionManager.getUserNo();
 		String funCallback = srvyDtaExcelVO.getCallBackFunction() == null ? "" : srvyDtaExcelVO.getCallBackFunction();
-
+		
 		/** validate request type */
 		Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
 		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-
+		
 		/** extract files */
 		final List<MultipartFile> files = multiRequest.getFiles("files");
 		Assert.notNull(files, "files is null");
@@ -229,7 +223,8 @@ public class SrvyDtaController extends BaseController {
 				srvyDtaService.decmprsFile(fileName, uploadFolder);
 				
 				//원본파일
-				File orgnFile = new File(fileName);
+				File orgnFile = new 
+						File(fileName);
 				
 				//이동되는 파일
 				File moveFile = new File(bakFilePath);
@@ -279,7 +274,7 @@ public class SrvyDtaController extends BaseController {
 		                    			excelFileNm = filePath + File.separator + seDirNm + File.separator + _csvFileNm + ".xlsx";
 		                    			
 		                    			//csv파일 -> xlsx 파일로 변환
-		                    			srvyDtaService.convertExcel(csvFileNm, excelFileNm);
+		                    			srvyDtaService.convertExcel(csvFileNm, excelFileNm, srvyDtaExcelVO);
 		                    		}
 		                    	}
 		                    }
@@ -287,6 +282,9 @@ public class SrvyDtaController extends BaseController {
 		            }
 		        }//하위의 모든 디렉토리
 				
+		        String a = excelFileNm;
+		        
+		        
 		        resultCode = "tempMsg";
 				resultMsg = "디렉토리 없음";
 				
@@ -1287,13 +1285,6 @@ public class SrvyDtaController extends BaseController {
 			return false;
 		}
 	}
-	
-		//압축풀기
-		private void getReadZipDataCnt(String fileName, String filePath) throws Exception {
-			
-			
-	    }
-	
 
 	@RequestMapping(value = "/selectSrvyExcelList.do")
 	public String selectSrvyDtaList(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {

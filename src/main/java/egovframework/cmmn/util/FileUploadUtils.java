@@ -10,20 +10,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
-
-import javax.annotation.Resource;
-
-import kr.go.gg.gpms.attachfile.service.AttachFileService;
-import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
+
 public class FileUploadUtils {
-	
+
 	// 공통 파일 업로드
 	public static List<AttachFileVO> saveFileList(String uploadPath, String kind
 			, List<MultipartFile> files) throws Exception {
