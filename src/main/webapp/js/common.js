@@ -263,6 +263,20 @@ $.fn.accessibleDropDown = function () {
         }
 
         fnWindowPopupClose();
+        
+        //레이어 관리 show/hide
+        var layerBoxHiddenMenuList = ['menu4', 'menu6'];
+        var length = layerBoxHiddenMenuList.length;
+        for(var i=0; i<length; i++){
+        	var menu = layerBoxHiddenMenuList[i];
+        	var isMenuClass = $(this).find('a').hasClass(menu);
+        	if(isMenuClass){
+        		$("#divLayerTool").dialog('close');
+        		break;
+        	}else{
+        		$("#divLayerTool").dialog('open');
+        	}
+        }
 
     });
 
