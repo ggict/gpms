@@ -341,9 +341,18 @@ MAP.CONTROL = (function($, undefined){
 
 		//셀 단일 선택
 		$("#btn_cellSelectWithClick").bind("click", function(){
+			
+			//1뎁스 버튼 class 초기화
+			var obj = $('#dvCellSelctionTool').find('a');
+			$.each(obj, function(i, v){
+				$(this).removeClass('on');
+			});
+			//2뎁스 닫기
+			$("#dv_multiSelectPoly").slideUp();
+			
 			//마우스 포인터 변경
 			gMap.activeControls(["drag", "cellPoint"]);
-
+			
 			//도움말
 			$("#dv_cellSelectionHelp span:eq(0)").css("display", "inline-block");
 			$("#dv_cellSelectionHelp span:eq(1)").css("display", "none");
@@ -351,6 +360,10 @@ MAP.CONTROL = (function($, undefined){
 
 		//다중선택 Open
 		$("#btn_openMultiSelectDv").on("click", function(e) {
+			
+			//이벤트 초기화
+			gMap.activeControls("drag");
+			
 			//다중선택창 open
 			var bHasOn = $(this).hasClass("on");
 			if(bHasOn) {
@@ -480,18 +493,25 @@ MAP.CONTROL = (function($, undefined){
 	        });
 		});
 
-
+		//선택 초기화
 		$("#btn_cellSelectReset").bind("click", function(){
 			gMap.cleanMap();
 			gMap.activeControls("drag");
 			selectFidList = [];
 
+			//3뎁스 버튼 class 초기화
+			var obj = $('#dv_multiSelectPoly').find('li');
+			$.each(obj, function(i, v){
+				$(this).removeClass('sel');
+			});
+			
 			//도움말
 			$("#dv_cellSelectionHelp").slideUp();
 			/*$("#dv_cellSelectionHelp span:eq(0)").css("display", "none");
 			$("#dv_cellSelectionHelp span:eq(1)").css("display", "none");*/
 		});
 
+		//선택 완료
 		$("#btn_cellSelectFinish").bind("click", function(){
 			gMap.activeControls("drag");
 
