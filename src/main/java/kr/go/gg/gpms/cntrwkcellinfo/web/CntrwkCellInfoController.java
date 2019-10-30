@@ -110,6 +110,9 @@ public class CntrwkCellInfoController extends BaseController {
 	@RequestMapping(value = { "/api/cntrwkcellinfo/selectCntrwkCellInfoAllList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public  @ResponseBody Map<String, Object> selectCntrwkCellInfoAllListRest(@RequestBody CntrwkCellInfoVO cntrwkCellInfoVO, ModelMap model) throws Exception {
 		cntrwkCellInfoVO.setUsePage(false);
+		if (cntrwkCellInfoVO.getPAV_CELL_ID_LIST() != null) {
+			cntrwkCellInfoVO.setDETAIL_CNTRWK_ID(null);
+		}
 		List<Cell10VO> items = cntrwkCellInfoService.selectRouteInfoListByCellID(cntrwkCellInfoVO);
 		
 		// 결과 JSON 저장

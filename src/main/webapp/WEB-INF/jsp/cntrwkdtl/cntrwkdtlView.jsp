@@ -114,11 +114,11 @@ $(document).ready(function() {
 		            //fn_view(rowId); // 대장 조회
 		        }
 		        ,onSelectRow: function(rowId, status, e) {     // 클릭 처리
-		            fnCalDetailInfo();
+		            //fnCalDetailInfo();
 		        }
 		        ,onSelectAll: function(aRowIds, status) {
-		            console.log('[onSelectAll] ' + status + ' = ' + aRowIds.length);
-		            fnCalDetailInfo();
+		            //console.log('[onSelectAll] ' + status + ' = ' + aRowIds.length);
+		            //fnCalDetailInfo();
 		        }
 		        ,loadBeforeSend:function(tsObj, ajaxParam, settings){
 		            if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){

@@ -505,6 +505,61 @@
 					</div>
 				</form:form>
 			</form>
+            <form id="cellFrm2">
+                <input type="hidden" id="CELL_IDS" name="CELL_IDS" value=""/>
+                <div class="titbx mt20">
+                    <h4>셀 선택</h4>
+                    <table class="tbview" summary="포장 세부공사 위치정보를 조회한다.">
+                        <colgroup>
+                            <col width="10%" />
+                            <col width="10%" />
+                            <col width="10%" />
+                            <col width="10%" />
+                            <col width="10%" />
+                            <col width="10%" />
+                            <col width="10%" />
+                            <col width="10%" />
+                            <col width="20%" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th scope="row">행선</th>
+                                <td>
+                                    <select name="search_direct" id="search_direct" onchange="javascript:;" class="select" style="width: 100%;">
+                                        <option value="">전체</option>
+                                        <option value="상행">상행</option>
+                                        <option value="하행">하행</option>
+                                    </select>
+                                </td>
+                                <th scope="row">차로</th>
+                                <td>
+                                    <label for="search_track"></label>
+                                    <input type="text" name="search_track" id="search_track" value="" class="MX_100 CS_80 input" />
+                                </td>
+                                <th scope="row">시점(m)</th>
+                                <td>
+                                    <label for="search_strtpt"></label>
+                                    <input type="text" name="search_strtpt" id="search_strtpt" value="" class="MX_100 CS_80 input" />
+                                </td>
+                                <th scope="row">종점(m)</th>
+                                <td>
+                                    <label for="search_endpt"></label>
+                                    <input type="text" name="search_endpt" id="search_endpt" value="" class="MX_100 CS_80 input" />
+                                </td>
+                                <td>
+                                    <div class="fr"><input type="button" id="search_btn" class="schbtn" value="검색" /></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="width: 100%;">
+                        <div id="div_grid2" style="width:100%; height:240px;">
+                            <table id="gridArea2"></table>
+                            <div id="gridPager2"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>     
 			<form id="cellFrm">
 				<input type="hidden" id="PAV_CELL_IDS" name="PAV_CELL_IDS" value=""/>
 				<input type="hidden" name="DETAIL_CNTRWK_ID" value="${cntrwkDtlVO.DETAIL_CNTRWK_ID}"/>
@@ -618,9 +673,87 @@ $(document).ready(function(){
 		//,scroll: true
 	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 	
+    var postData2 = {};
+    var route_code_value = $('#ROUTE_CODE').val();
+    var detail_cntrwk_id = $('#DETAIL_CNTRWK_ID').val();
+	var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
+    if (cell_id_arrays.length > 0) {
+    	postData2['PAV_CELL_ID_LIST'] = cell_id_arrays;
+    	postData2['CNTRWK_ID'] = route_code_value;
+    } else {
+    	postData2['DETAIL_CNTRWK_ID'] = detail_cntrwk_id;
+    }
+    // 리스트에서 셀 선택 grid
+    $("#gridArea2").jqGrid({
+        url: '<c:url value="/"/>'+'api/cntrwkcellinfo/selectCntrwkCellInfoAllList.do'
+        ,autoencode: true
+        ,contentType : 'application/json'
+        ,datatype: "local"
+        ,mtype: "POST"
+        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
+        //,postData: $("#cellFrm2").cmSerializeObject()
+        ,postData: postData2
+        ,ignoreCase: true
+        ,colNames:["CELL_ID","노선번호","노선명","행선","차로","시점(m)","종점(m)","위치보기"]
+        ,colModel:[
+            {name:'CELL_ID', index:'CELL_ID', hidden:true}
+            ,{name:'ROUTE_CODE',index:'ROUTE_CODE', align:'center', width:50, sortable:false, formatter: 'integer'}
+            ,{name:'ROAD_NAME',index:'ROAD_NAME', align:'center', width:70, sortable:false}
+            //,{name:'ROAD_GRAD',index:'ROAD_GRAD', align:'center', width:70, sortable:false}
+            ,{name:'DIRECT_NM',index:'DIRECT_NM', align:'center', width:70, sortable:false}
+            ,{name:'TRACK',index:'TRACK', align:'center', width:70, sortable:false}
+            ,{name:'STRTPT',index:'STRTPT', align:'center', width:70, sortable:false, formatter: 'integer'}
+            ,{name:'ENDPT',index:'ENDPT', align:'center', width:70, sortable:false, formatter: 'integer'}
+            ,{name:'btn_loc_cell',index:'btn_loc_cell', align:'center', width:70, sortable:false, formatter: fn_create_btn}
+        ]
+        ,async : false
+        ,sortname: ''
+        ,sortorder: ""
+        ,rowNum: 99999
+        ,rowList: []
+        ,pgbuttons: false
+        ,pgtext: null
+        ,viewrecords: true
+        ,pager: '#gridPager2'
+        ,rownumbers: true
+        ,loadtext: "검색 중입니다."
+        ,emptyrecords: "검색된 데이터가 없습니다."
+        ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
+        ,ondblClickRow: function(rowId) {       // 더블클릭 처리
+            //fn_view(rowId); // 대장 조회
+        }
+        ,onSelectRow: function(rowId, status, e) {     // 클릭 처리
+            fnCalDetailInfo();
+        }
+        ,onSelectAll: function(aRowIds, status) {
+            console.log('[onSelectAll] ' + status + ' = ' + aRowIds.length);
+            fnCalDetailInfo();
+        }
+        ,loadBeforeSend:function(tsObj, ajaxParam, settings){
+            if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){
+                delete this.p.postData.nd;
+                delete this.p.postData._search;
+                this.p.postData.sidx = this.p.sortname;
+                this.p.postData.sord = this.p.sortorder;
+                if(this.p.postData.pageUnit != this.p.postData.rows){
+                    this.p.postData.pageUnit = this.p.postData.rows;
+                }
+                ajaxParam.data = JSON.stringify(this.p.postData);
+            }
+        }
+        ,multiselect: true
+        ,multiboxonly: false
+        ,loadonce: true
+        //,scroll: true
+    }).navGrid('#gridPager2',{edit:false,add:false,del:false,search:false,refresh:false});  
+	
 	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 180);
 	
-	fn_search();
+    COMMON_UTIL.cmInitGridSize('gridArea2','div_grid2', 180);
+	
+	setTimeout(function() { fn_search(); }, 500);
+	
+	addBtnEventHandler();
 	
 });
 
@@ -634,6 +767,9 @@ function fn_create_btn(cellValue, options, rowObject) {
 		case "btn_loc" :
 			btn = "<a href='#' onclick=\"fn_select_cell('" + rowObject.PAV_CELL_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
 			break;
+        case "btn_loc_cell" :
+            btn = "<a href='#' onclick=\"fn_select_cell('" + rowObject.CELL_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+            break;
 	}
 	
 	return btn;
@@ -675,6 +811,32 @@ function fn_search() {
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
 	   	}
 	}).trigger("reloadGrid");
+	
+    var postData2 = {};
+    var route_code_value = $('#ROUTE_CODE').val();
+    var detail_cntrwk_id = $('#DETAIL_CNTRWK_ID').val();
+    var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
+    if (cell_id_arrays.length > 0) {
+        postData2['PAV_CELL_ID_LIST'] = cell_id_arrays;
+        postData2['CNTRWK_ID'] = route_code_value;
+    } else {
+        postData2['DETAIL_CNTRWK_ID'] = detail_cntrwk_id;
+    }
+    $("#gridArea2").jqGrid("setGridParam",{
+        datatype: "json"
+        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
+        ,contentType: "application/json"
+        ,page: 1
+        //,postData:   $("#cellFrm2").cmSerializeObject()
+        ,postData:   postData2
+        ,mtype: "POST"
+        ,loadComplete: function(data) {
+            COMMON_UTIL.fn_set_grid_noRowMsg('gridArea2', $("#gridArea2").jqGrid("getGridParam").emptyrecords, data.records);
+        }
+        ,gridComplete: function() {
+            $("#cb_gridArea2").click();
+        }
+    }).trigger("reloadGrid");
 }
 
 /* 글 등록 function */
@@ -780,6 +942,102 @@ function fnSumRPAIR_AR() {
 		$('#RPAIR_AR').val( tot ).trigger('keyup');
 	} catch(E) {alert( E );}
 }
+//셀 선택에 따라 공사 위치정보 수치 자동 계산
+function fnCalDetailInfo() {
+    
+    var rowIds = $('#gridArea2').jqGrid('getGridParam', 'selarrrow');
+    if (rowIds && rowIds.length > 0 ) {
+        
+        var rowData = [];
+        rowIds.forEach(function(elem) { rowData.push($('#gridArea2').jqGrid('getRowData', elem)); });
+        
+        // 보수시점(m)
+        var strtptData = rowData.map(function(elem) { return elem.STRTPT });
+        var minStrtpt = strtptData.slice(0).sort(function compare(a,b) {return a-b;})[0];
+        $('#STRTPT_KM').val(minStrtpt);
+        $('#STRTPT').val(minStrtpt);
+        // 보수종점(m)
+        var endptData = rowData.map(function(elem) { return elem.ENDPT });
+        var maxEndpt = endptData.slice(0).sort(function compare(a,b) {return a-b;}).reverse()[0];
+        $('#ENDPT_KM').val(maxEndpt);
+        $('#ENDPT').val(maxEndpt);
+        // 공사연장(m)
+        var trackLen = Number(maxEndpt) - Number(minStrtpt);
+        $('#TRACK_LEN').val(trackLen >= 0 ? trackLen : 0);
+        // 공사차로수 / 공사폭(m) / 행선
+        var directAndTrackData = rowData.map(function(elem) { return ""+elem.DIRECT_NM+"_"+elem.TRACK });
+        var filteredData = directAndTrackData.filter(function(value, idx, self) { return self.indexOf(value) === idx });
+        $('#TRACK').val(filteredData.length);
+        $('#TRACK_LIST').val(filteredData.length);
+        var rpairBt = 3.5 * filteredData.length;
+        $('#RPAIR_BT').val(rpairBt);
+        var directData = filteredData.map(function(elem) { return elem.split("_")[0] })
+                                     .filter(function(value, idx, self) { return self.indexOf(value) === idx });
+        if (directData.length > 1) {
+            $('#DIRECT_NM').val('양방향');
+            $('#DIRECT_CODE').val('SE');
+        } else if (directData.length > 0 && directData[0] === '상행') {
+            $('#DIRECT_NM').val('상행');
+            $('#DIRECT_CODE').val('S');
+        } else if (directData.length > 0 && directData[0] === '하행') {
+            $('#DIRECT_NM').val('하행');
+            $('#DIRECT_CODE').val('E');             
+        }
+        fnSumRPAIR_AR();
+        
+    } else {
+        $('#STRTPT_KM').val(0);
+        $('#STRTPT').val(0);
+        $('#ENDPT_KM').val(0);
+        $('#ENDPT').val(0);
+        $('#TRACK_LEN').val(0);
+        $('#TRACK').val('');
+        $('#TRACK_LIST').val('');
+        $('#DIRECT_NM').val('');
+        $('#DIRECT_CODE').val('');
+        $('#RPAIR_BT').val(0);
+        $('#RPAIR_AR').val(0);
+    }
+    
+    COMMON_UTIL.cmFormObjectInit("frm", true);
+}
+function addBtnEventHandler() {
+    /*
+    $("#search_direct").on('change', function () { filterOfSelectedCells('DIRECT_NM'); });
+    $("#search_direct").on('change keyup paste', function () { SearchByEmployeeName('TRACK'); });
+    $("#search_direct").on('change keyup paste', function () { SearchByEmployeeName('STRTPT'); });
+    $("#search_direct").on('change keyup paste', function () { SearchByEmployeeName('ENDPT'); });
+    */
+    
+    $('#search_btn').click(function() {
+        var search_direct = $('#search_direct option:selected').val();
+        var search_track = $('#search_track').val();
+        var search_strtpt = $('#search_strtpt').val();
+        var search_endpt = $('#search_endpt').val();
+        
+        var f = { groupOp: "AND", rules: [] };
+        if (search_direct && search_direct != '') {
+            f.rules.push({field: 'DIRECT_NM', op: 'cn', data: search_direct});
+        }
+        if (search_track && search_track != '') {
+            f.rules.push({field: 'TRACK', op: 'cn', data: search_track});
+        }
+        if (search_strtpt && search_strtpt != '') {
+            f.rules.push({field: 'STRTPT', op: 'cn', data: search_strtpt});
+        }
+        if (search_endpt && search_endpt != '') {
+            f.rules.push({field: 'ENDPT', op: 'cn', data: search_endpt});
+        }
+        
+        // reload grid
+        var grid = $('#gridArea2'); 
+        grid[0].p.search = f.rules.length > 0; 
+        $.extend(grid[0].p.postData, { filters: JSON.stringify(f) }); 
+        grid.trigger("reloadGrid", [{ page: 1 }]);
+
+    })
+}
+
 
 //노선변호 String > Integer로 형변환
 function fn_castRouteCode(){
@@ -1225,6 +1483,18 @@ var vform = $('#'+frmId);
         
         
     } */
+    
+    // [2019-10-25] 셀 선택 체크 추가
+    var selectedCellArr = $('#gridArea2').jqGrid('getGridParam','selarrrow');
+    if (selectedCellArr && selectedCellArr.length > 0) {
+        var selectedCellArrToString = selectedCellArr.map(function(elem) { return $('#gridArea2').jqGrid('getRowData', elem).CELL_ID }).join();
+        $('#PAV_CELL_ID').val(selectedCellArrToString);
+    } else {
+        alert('셀을 한 개 이상 체크해주세요');
+        return false;       
+    }
+    
+    
     return true;
 
 }
@@ -1324,11 +1594,11 @@ function fn_update_cntrwkCell(cellIdList, param){
 			$("#TRACK").val(track);
 			$("#STRTPT").val(strtpt);
 			$("#ENDPT").val(endpt);
-			$("#STRTPT_KM").val(COMMON_UTIL.cmAddComma(strtpt));
-			$("#ENDPT_KM").val(COMMON_UTIL.cmAddComma(endpt));
-			$("#TRACK_LEN").val(COMMON_UTIL.cmAddComma(trackLen));
-			$("#RPAIR_BT").val(COMMON_UTIL.cmAddComma(rpairBt));
-			$("#RPAIR_AR").val(COMMON_UTIL.cmAddComma(rpairAr));
+			$("#STRTPT_KM").val(COMMON_UTIL.cmAddComma(Number(strtpt)));
+			$("#ENDPT_KM").val(COMMON_UTIL.cmAddComma(Number(endpt)));
+			$("#TRACK_LEN").val(COMMON_UTIL.cmAddComma(Number(trackLen)));
+			$("#RPAIR_BT").val(COMMON_UTIL.cmAddComma(Number(rpairBt)));
+			$("#RPAIR_AR").val(COMMON_UTIL.cmAddComma(Number(rpairAr)));
 			
 			fn_search();
 			

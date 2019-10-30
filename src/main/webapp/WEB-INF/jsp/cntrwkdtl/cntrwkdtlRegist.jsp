@@ -704,7 +704,7 @@ $(document).ready(function() {
             fnCalDetailInfo();
         }
         ,onSelectAll: function(aRowIds, status) {
-        	console.log('[onSelectAll] ' + status + ' = ' + aRowIds.length);
+        	//console.log('[onSelectAll] ' + status + ' = ' + aRowIds.length);
         	fnCalDetailInfo();
         }
         ,loadBeforeSend:function(tsObj, ajaxParam, settings){
@@ -882,6 +882,7 @@ function fnCalDetailInfo() {
         $('#DIRECT_NM').val('');
         $('#DIRECT_CODE').val('');
         $('#RPAIR_BT').val(0);
+        $('#RPAIR_AR').val(0);
     }
     
     COMMON_UTIL.cmFormObjectInit("frm", true);
