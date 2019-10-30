@@ -204,7 +204,7 @@ function fnExcel() {
 		<h3>관리기관별 도로연장 통계</h3>
 		<p class="location">
 			<span>통계</span>
-			<span>노션 현황</span>
+			<span>노선 현황</span>
 			<strong>관리기관별 통계</strong>
 		</p>
 	</div>

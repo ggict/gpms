@@ -102,7 +102,7 @@ $( document ).ready(function() {
         //,postData: JSON.stringify( $("#frm").cmSerializeObject())
         ,postData: postData
         ,ignoreCase: true
-        ,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)","전산화</br>완료연장(km)","도면다운로드","위치보기"]
+        ,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)","전산화</br>완료연장(km)","위치보기"]
         ,colModel:[
             {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
             ,{name:'ROAD_NO_VAL',index:'ROAD_NO_VAL', align:'center', width:50, sortable:true}
@@ -111,7 +111,7 @@ $( document ).ready(function() {
             ,{name:'ED_POINT',index:'ED_POINT', align:'left', width:120, sortable:true}
             ,{name:'ROAD_TOT_LEN_JYG_Y',index:'ROAD_TOT_LEN_JYG_Y', align:'center', width:80, sortable:true}
             ,{name:'ROAD_LEN_CMPT',index:'ROAD_LEN_CMPT', align:'center', width:80, sortable:true}
-            ,{name:'btn_down',index:'btn_down', align:'center', width:50, sortable:false, formatter: fn_create_btn}
+            /* ,{name:'btn_down',index:'btn_down', align:'center', width:50, sortable:false, formatter: fn_create_btn} */
             ,{name:'btn_loc',index:'btn_loc', align:'center', width:50, sortable:false, formatter: fn_create_btn}
         ]
         ,async : false

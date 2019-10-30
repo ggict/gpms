@@ -49,6 +49,7 @@
 				</div>
 				<div class="mt10 tc">
 		            <div class="fr">
+		           		<a href="#" onclick="fnFileSave();" class="schbtn">엑셀업로드</a>
 		            	<a href="#" onclick="fn_cntrwkExcel();" class="schbtn">엑셀저장</a>
 		            	<a href="#" onclick="fnWrite();" class="schbtn" >등록</a>
 		            </div>
@@ -76,7 +77,7 @@ $( document ).ready(function() {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["CELL_ID","DETAIL_CNTRWK_ID","CNTRWK_ID","세부위치","노선번호","노선명","행선","차로","시점<br>(m)","종점<br>(m)","작업시작일","작업완료일","공사비<br>(천원)","연장<br>(m)","보수폭<br>(m)","보수면적<br>(㎡)","표층","중간층","기층","위치조회"]
+		,colNames:["CELL_ID","DETAIL_CNTRWK_ID","CNTRWK_ID","세부위치","노선번호","노선명","행선","차로","시점<br>(m)","종점<br>(m)","공사착공일","공사준공일","공사비<br>(천원)","연장<br>(m)","보수폭<br>(m)","보수면적<br>(㎡)","표층","중간층","기층","위치조회"]
 	   	,colModel:[
 	   	     {name:'CELL_ID',index:'CELL_ID', hidden: true}
 	   	    ,{name:'DETAIL_CNTRWK_ID',index:'DETAIL_CNTRWK_ID', hidden: true}
@@ -221,6 +222,15 @@ function fnView(rowId) {
 		alert('<spring:message code="warn.checkplz.msg" />');
 }
 
+//엑셀업로드
+function fnFileSave() {
+	var cntrwk_id = $("#CNTRWK_ID").val();
+	alert(cntrwk_id);
+	var url = "<c:url value='/cntrwkdtl/cntrwkDtlExcelUploadForm.do'/>?cntrwk_id="+cntrwk_id;
+					
+	COMMON_UTIL.cmWindowOpen('포장공사 이력 엑셀 업로드', url, 290, 380, true, $("#wnd_id").val(), 'center');	
+
+} 
 //신규 등록 화면 이동 [수정:선택] 키가 복수개 이거나 명칭이 다른 경우
 function fnWrite() {
 	$.ajax({
