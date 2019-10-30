@@ -342,7 +342,7 @@ MAP.CONTROL = (function($, undefined){
 		//셀 단일 선택
 		$("#btn_cellSelectWithClick").bind("click", function(){
 			//마우스 포인터 변경
-			gMap.activeControls("cellPoint");
+			gMap.activeControls(["drag", "cellPoint"]);
 
 			//도움말
 			$("#dv_cellSelectionHelp span:eq(0)").css("display", "inline-block");
