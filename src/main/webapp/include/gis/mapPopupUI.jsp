@@ -131,10 +131,10 @@
 <div id="dvCellSelctionTool" style="display: none;" title="포장셀 선택">
 	<div class="content">
 		<ul class="toolbtn dv_selCells">
-			<%-- <li>
+			<li>
 	            <a href="#" id="btn_cellSelectWithClick"><img src="<c:url value='/images/ic_t1.png'/>" alt="단일선택" /></a>
 	            <span>단일선택</span>
-	        </li> --%>
+	        </li>
 	        <li>
 	        	<a href="#" id="btn_openMultiSelectDv"><img src="<c:url value='/images/ic_t2.png'/>" alt="다중선택" /></a>
 	            <span>다중선택</span>

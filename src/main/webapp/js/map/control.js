@@ -339,8 +339,7 @@ MAP.CONTROL = (function($, undefined){
 			}
 		});
 
-		//사용안함
-		/*
+		//셀 단일 선택
 		$("#btn_cellSelectWithClick").bind("click", function(){
 			//마우스 포인터 변경
 			gMap.activeControls("cellPoint");
@@ -349,9 +348,7 @@ MAP.CONTROL = (function($, undefined){
 			$("#dv_cellSelectionHelp span:eq(0)").css("display", "inline-block");
 			$("#dv_cellSelectionHelp span:eq(1)").css("display", "none");
 		});
-		*/
 
-		//181106 wijy 추가
 		//다중선택 Open
 		$("#btn_openMultiSelectDv").on("click", function(e) {
 			//다중선택창 open
