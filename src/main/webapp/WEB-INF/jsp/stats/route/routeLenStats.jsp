@@ -480,7 +480,7 @@ function fn_msgNtc(){
         <h3>노선별 도로연장 통계</h3>
         <p class="location">
             <span>통계</span>
-            <span>노션 현황</span>
+            <span>노선 현황</span>
             <strong>노선별 통계</strong>
         </p>
     </div>
