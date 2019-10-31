@@ -78,6 +78,7 @@ var CONFIG = (function($, undefined){
 	//var aLayerList = ['CELL_10','CELL_SECT'];
 	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T'];
 	var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T','CELL_10_4K','CELL_10_0301'];
+	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T','CELL_10_4K','CELL_10_0301','MV_ROAD_CELT0012','MV_ROAD_CELT0002','MV_ROAD_CELT0005'];
 
 	// 2018.02.07 YYK 관할구역관리 레이어 추가
 	var cLayerList = ['CMPTNC_ZONE'];
@@ -308,6 +309,39 @@ var CONFIG = (function($, undefined){
 	         'seq' : '3775',
 	         'show' : '1',
 	         'layerType' : '3',
+	     },
+	     "MV_ROAD_CELT0002" : {
+	    	 
+	    	 'tmapid' : '870',
+	    	 'id' : '3776',
+	    	 'table' : 'MV_ROAD_CELT0002',
+	    	 'theme' : 'MV_ROAD_CELT0002',
+	    	 'alias' : '교차로',
+	    	 'seq' : '3776',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
+	     },
+	     "MV_ROAD_CELT0005" : {
+	    	 
+	    	 'tmapid' : '870',
+	    	 'id' : '3777',
+	    	 'table' : 'MV_ROAD_CELT0005',
+	    	 'theme' : 'MV_ROAD_CELT0005',
+	    	 'alias' : '터널',
+	    	 'seq' : '3777',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
+	     },
+	     "MV_ROAD_CELT0012" : {
+	    	 
+	    	 'tmapid' : '870',
+	    	 'id' : '3778',
+	    	 'table' : 'MV_ROAD_CELT0012',
+	    	 'theme' : 'MV_ROAD_CELT0012',
+	    	 'alias' : '특별관리구간',
+	    	 'seq' : '3778',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
 	     },
 	     
 	     /*

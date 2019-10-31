@@ -473,10 +473,11 @@ GTMapLayerTool = OpenLayers.Class({
 						    var table = this.layers[i]["table"];
 
 						    if (options.layer == undefined ) {
-						    	//if ( table == "CELL_10" || table == "CELL_SECT" ) { // || table == "M_CALS_T"
+						    	//if ( table == "CELL_10" || table == "CELL_SECT" ) {
 						    	//if ( table == "CELL_10" || table == "CELL_SECT" || table == "M_CALS_T") {
 						        if ( table == "CELL_10" || table == "CELL_SECT" 
-						        	 || table == "M_CALS_T" || table == "CELL_10_0301" || table == "CELL_10_4K" ) {
+						        	//|| table == "MV_ROAD_CELT0002" || table == "MV_ROAD_CELT0005" || table == "MV_ROAD_CELT0012"	 
+						        	|| table == "M_CALS_T" || table == "CELL_10_0301" || table == "CELL_10_4K") {
 						            arr.push(this.layers[i]);
 						        }
 						    }
