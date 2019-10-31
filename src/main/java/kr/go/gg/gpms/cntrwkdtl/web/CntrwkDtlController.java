@@ -5,6 +5,9 @@ package kr.go.gg.gpms.cntrwkdtl.web;
 
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,15 +17,52 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.View;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import egovframework.cmmn.util.DateUtil;
+import egovframework.cmmn.util.ExcelView;
+import egovframework.cmmn.util.FileUploadUtils;
+import egovframework.cmmn.web.SessionManager;
+import egovframework.rte.fdl.property.EgovPropertyService;
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+//import org.springframework.security.core.context.SecurityContextHolder;
 import kr.go.gg.gpms.attachfile.service.AttachFileService;
 import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.cntrcomp.service.model.CntrCompVO;
 import kr.go.gg.gpms.cntrwk.service.CntrwkService;
 import kr.go.gg.gpms.cntrwk.service.model.CntrwkVO;
 import kr.go.gg.gpms.cntrwkcellinfo.service.CntrwkCellInfoService;
 import kr.go.gg.gpms.cntrwkcellinfo.service.model.CntrwkCellInfoVO;
 import kr.go.gg.gpms.cntrwkdtl.service.CntrwkDtlService;
 import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
+import kr.go.gg.gpms.company.service.model.CompanyVO;
 import kr.go.gg.gpms.dept.service.DeptService;
 import kr.go.gg.gpms.dept.service.model.DeptVO;
 import kr.go.gg.gpms.flawcntrwk.service.FlawCntrwkService;
@@ -31,28 +71,6 @@ import kr.go.gg.gpms.pavmatrl.service.PavMatrlService;
 import kr.go.gg.gpms.pavmatrl.service.model.PavMatrlVO;
 import kr.go.gg.gpms.rpairmthd.service.RpairMthdService;
 import kr.go.gg.gpms.rpairmthd.service.model.RpairMthdVO;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.View;
-
-import egovframework.cmmn.util.DateUtil;
-import egovframework.cmmn.util.ExcelView;
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
-//import org.springframework.security.core.context.SecurityContextHolder;
 
 
 
@@ -88,7 +106,8 @@ public class CntrwkDtlController  extends BaseController {
 	protected DeptService deptService;
 	@Resource(name = "cntrwkCellInfoService")
 	private CntrwkCellInfoService cntrwkCellInfoService;
-
+	@Autowired
+	SessionManager sessionManager;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CntrwkDtlController.class);
 
@@ -438,6 +457,237 @@ public class CntrwkDtlController  extends BaseController {
 		cntrwkDtlVO.setResultMSG("정상 삭제되었습니다.");
 		return cntrwkDtlVO;
 	}
+	
+	//포장공사 이력 엑셀 업로드 화면
+		@RequestMapping(value = {"/cntrwkdtl/cntrwkDtlExcelUploadForm.do"})
+		public String excelUploadForm(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO,  ModelMap model,  BindingResult bindingResult) throws Exception {
+			
+			model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
+			
+			return "/cntrwkdtl/cntrwkdtlExcelUpload";
+		}
+			
+		//포장공사 이력 엑셀 업로드 
+		@RequestMapping(value = "/cntrwkdtl/cntrwkDtlExcelUpload.do", method=RequestMethod.POST)
+		public String excelUpload(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
+			String resultMsg = "";
+			String filePathNm = "";		
+			String userNo = sessionManager.getUserNo();
+			
+			/** validate request type */
+			Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
+			final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			
+			/** extract files */
+			final List<MultipartFile> files = multiRequest.getFiles("files");
+			Assert.notNull(files, "files is null");
+			Assert.state(files.size() > 0, "0 files exist");
+			
+			String filePath = pathInfoProperties.getProperty("file.upload.path");
+			List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwkDtl", files);
+				
+			Map<String, String> map = new HashMap<>();
+
+			try {
+					for (AttachFileVO file : fileList) {
+					
+					filePathNm = checkFilePath(filePath, "path") + File.separator + checkFilePath(file.getORGINL_FILE_NM(),"name");
+					filePathNm = filePathNm.replace("/", File.separator).replace("\\\\", File.separator);
+					
+					
+					//파일경로
+					FileInputStream fis = new FileInputStream(filePathNm);
+					XSSFWorkbook workbook = new XSSFWorkbook(fis);
+			
+					XSSFSheet sheet = workbook.getSheetAt(0);
+				
+					//파일의 row의 갯수
+					int rowindex = sheet.getPhysicalNumberOfRows();
+			
+					// row의 0 헤더 제외
+					for(int i = 1; i < rowindex; i++) {
+					
+						XSSFRow rows = sheet.getRow(i);
+						
+						for(int j = 0; j < rows.getLastCellNum(); j++) {
+							
+							//column은 고정
+							String column = sheet.getRow(0).getCell(j).getStringCellValue();	
+							
+							// value는 column 다음 row부터 
+							XSSFCell cell = sheet.getRow(i).getCell(j);
+						
+							List<CompanyVO> company = getCompanyList();
+							String value = "";
+							
+							//validation check 
+							
+							/*switch(cell.getCellType()) {
+								case XSSFCell.CELL_TYPE_STRING:
+									value = cell.getStringCellValue();
+									break;
+								case XSSFCell.CELL_TYPE_NUMERIC:
+									cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+									value = cell.getStringCellValue();
+									break;
+								case XSSFCell.CELL_TYPE_BLANK:
+									value = " ";
+									break;
+							}
+								switch (column) {
+							case "사업소":
+								uploadCntrwkVO.setDEPT_CODE(value);
+								break;
+								case "공사년도":
+								uploadCntrwkVO.setCNTRWK_YEAR(value);
+								break;
+							
+							case "반기구분":
+								if(value.equals("상반기")) {
+									value = "HTSE0001";
+									uploadCntrwkVO.setHT_SE(value);
+								}else if(value.equals("하반기")) {
+									value = "HTSE0002";
+									cntrwkVO.setHT_SE(value);
+								}else {
+									resultMsg = column +" 컬럼의" + value + " 오류 발생.";
+									map.put("resultMsg", resultMsg);
+									return map;
+								}							
+								break;
+								
+							case "공사구분":
+								if(value.equals("노후포장도로정비")) {
+									value = "CWSE0001";
+									uploadCntrwkVO.setCNTRWK_SE(value);
+								}else if(value.equals("긴급복구 연간단가")) {
+									value = "CWSE0002";
+									uploadCntrwkVO.setCNTRWK_SE(value);
+								}else if(value.equals("굴착복구공사(사후정비비)")) {
+									value = "CWSE0003";
+									uploadCntrwkVO.setCNTRWK_SE(value);
+								}else if(value.equals("기타")) {
+									value = "CWSE0006";
+									uploadCntrwkVO.setCNTRWK_SE(value);
+								}else {
+									resultMsg = column +" 컬럼의" + value + " 오류 발생.";
+									map.put("resultMsg", resultMsg);
+									return map;
+								}
+								break;
+								
+							case "공사분류":
+								uploadCntrwkVO.setCNTRWK_CL(value);
+								break;
+								
+							case "공사명":
+								uploadCntrwkVO.setFULL_CNTRWK_NM(value);
+								break;
+								
+							case "착공일":
+								if(value.length() > 8) {
+									String format = String.valueOf(value.charAt(4));
+									
+									if(format.equals(".") || format.equals(",") || format.equals("/")) {
+										value = value.replace(format, "");
+										uploadCntrwkVO.setSTRWRK_DE(value);
+									}else {
+										System.out.println("value.subString(4)"+ value.substring(4).toString());
+										resultMsg = column +" 컬럼의" + value + " 오류 발생.";
+										map.put("resultMsg", resultMsg);
+										return map;
+									}
+								}
+								break;
+								
+							case "준공일":
+								if(value.length() > 8) {
+									String format = String.valueOf(value.charAt(4));
+			
+									if(format.equals(".") || format.equals(",") || format.equals("/")) {
+										value = value.replace(format, "");
+										uploadCntrwkVO.setCOMPET_DE(value);
+									}else {
+										resultMsg = column +" 컬럼의" + value + " 오류 발생.";
+										map.put("resultMsg", resultMsg);
+										return map;
+									}
+								}
+								break;
+								
+							case "시공사":				
+								for(int c = 0; c < company.size(); c++) {
+									System.out.println("------company---------"+company.get(c).getCO_NM());
+									if(company.get(c).getCO_NM().equals(value)) {
+										uploadCntrwkVO.setCNSTRCT_CO_NM(value);
+										uploadCntrwkVO.setCNSTRCT_CO_NO(company.get(c).getCO_NO());
+										break;
+									}
+									
+								}
+								break;
+							case "시공사 대표자":
+								uploadCntrwkVO.setCNSTRCT_CO_RPRSNTV_NM(value);
+								break;
+								
+							case "시공사 대표번호":
+								if(value.length() == 11 || value.length() == 13) {								
+									value = value.replaceAll("-","");								
+									uploadCntrwkVO.setCNSTRCT_CO_TELNO(value);
+								} else {
+									resultMsg = column +" 컬럼의" + value + " 오류 발생.";
+									map.put("resultMsg", resultMsg);
+									return map;
+								}
+				
+								break;
+								
+							case "총 공사연장(km)":
+								uploadCntrwkVO.setTRACK_LEN(value);
+								break;
+								
+							case "총 보수금액(천원)":
+								uploadCntrwkVO.setTOT_AMOUNT(value);
+								break;
+								
+							case "총 공사면적(m²)":
+								uploadCntrwkVO.setRPAIR_AR(value);
+								break;
+								
+							case "포장두께":
+								uploadCntrwkVO.setRPAIR_THICK_DC(value);
+								break;
+							}*/
+							
+						}
+						
+						
+						cntrwkDtlVO.setCRTR_NO(userNo);
+						cntrwkDtlVO.setUSE_AT("Y");
+						cntrwkDtlVO.setDELETE_AT("N");
+					
+						// insert query
+						cntrwkDtlService.insertCntrwkDtl(cntrwkDtlVO);
+					}
+					
+					workbook.close();
+				}	
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				resultMsg = "등록에 실패하였습니다.";
+				model.addAttribute("resultMsg",  resultMsg);
+
+				return "jsonView";
+			}
+			
+			resultMsg = "정상적으로 등록되었습니다.";
+			model.addAttribute("resultMsg",  resultMsg);
+			
+			return "jsonView";
+		}
+		
 
 	@RequestMapping(value="/cntrwkdtl/downloadexcel.do")
     public View cntrwkDtlListExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO,	ModelMap model, HttpServletRequest request, HttpSession session)  throws Exception {
