@@ -484,7 +484,6 @@ MAP.CONTROL = (function($, undefined){
 			
 			gMap.activeControls("drag");
 			
-			// 수정 사유: 멀티노선을 선택하였을 경우 - 노선 선택 팝업창에서 GAttrLayer 레이어를 사용하고 있어서 기능이 제대로 작동하지 않는다.
 			//var features = gMap.getLayerByName('GAttrLayerMulti').features;
 			var features = gMap.getLayerByName('GAttrLayer').features;
 
@@ -1310,7 +1309,6 @@ MAP.CONTROL = (function($, undefined){
 			}
 
 			//181107 wijy 수정 : targetLayer 파라미터 추가
-			// 수정 사유: 멀티노선을 선택하였을 경우 - 노선 선택 팝업창에서 GAttrLayer 레이어를 사용하고 있어서 기능이 제대로 작동하지 않는다.
 			if(res.object.id == "cellPoint"){
 				//add_feature(res.data[i].results[0].feature, evt, "GAttrLayerMulti");
 				add_feature(res.data[i].results[0].feature, evt, "GAttrLayer");
