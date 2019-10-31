@@ -271,14 +271,8 @@
                 menu_id, menu_nm, menu_dc, creat_dt, use_at, crtr_no, updusr_no, updt_dt,
                 1 as LEVEL, array[menu_id]::varchar as PATH
             FROM tn_menu
-            WHERE menu_id IN ( SELECT menu_id FROM tn_role_menu WHERE delete_at = 'N'
-    ]]>
-                                <isNotEmpty property="SCH_AUTH">
-                                    <![CDATA[ AND author_id = #SCH_AUTH# ]]>
-                                </isNotEmpty>
-    <![CDATA[                )
+            WHERE upper_menu_id IS NULL
                 AND delete_at = 'N' AND use_at = 'Y'
-                AND upper_menu_id IS NULL
                 
         UNION ALL
         
@@ -286,14 +280,8 @@
                 a.menu_id, a.menu_nm, a.menu_dc, a.creat_dt, a.use_at, a.crtr_no, a.updusr_no, a.updt_dt,
                 LEVEL+1, PATH||a.menu_id
             FROM tn_menu a, tnmenu b
-            WHERE a.menu_id IN ( SELECT menu_id FROM tn_role_menu WHERE delete_at = 'N'
-    ]]>
-                                <isNotEmpty property="SCH_AUTH">
-                                    <![CDATA[ AND author_id = #SCH_AUTH# ]]>
-                                </isNotEmpty>
-    <![CDATA[                )
+            WHERE a.upper_menu_id = b.menu_id
                 AND a.delete_at = 'N' AND a.use_at = 'Y'
-                AND a.upper_menu_id = b.menu_id
         )
         SELECT tnmenu.MENU_ID   /*시스템메뉴.메뉴ID*/
               ,LPAD(' ', 4 *(LEVEL - 1)) || tnmenu.MENU_NM  MENU_NM /*시스템메뉴.메뉴명*/
@@ -304,6 +292,12 @@
               ,tnmenu.UPDUSR_NO /*시스템메뉴.수정자번호*/
               ,tnmenu.UPDT_DT   /*시스템메뉴.수정일*/          
         FROM tnmenu
+        WHERE tnmenu.menu_id IN ( SELECT menu_id FROM tn_role_menu WHERE delete_at = 'N'
+    ]]>
+                                <isNotEmpty property="SCH_AUTH">
+                                    <![CDATA[ AND author_id = #SCH_AUTH# ]]>
+                                </isNotEmpty>
+    <![CDATA[                )
         ORDER BY path
         ]]>
 	</select>
@@ -342,14 +336,8 @@
                 menu_id, menu_nm, menu_dc, creat_dt, use_at, crtr_no, updusr_no, updt_dt,
                 1 as LEVEL, array[menu_id]::varchar as PATH
             FROM tn_menu
-            WHERE menu_id NOT IN ( SELECT menu_id FROM tn_role_menu WHERE delete_at = 'N'
-    ]]>
-                                <isNotEmpty property="SCH_AUTH">
-                                    <![CDATA[ AND author_id = #SCH_AUTH# ]]>
-                                </isNotEmpty>
-    <![CDATA[                )
+            WHERE upper_menu_id IS NULL
                 AND delete_at = 'N' AND use_at = 'Y'
-                AND upper_menu_id IS NULL
                 
         UNION ALL
         
@@ -357,14 +345,8 @@
                 a.menu_id, a.menu_nm, a.menu_dc, a.creat_dt, a.use_at, a.crtr_no, a.updusr_no, a.updt_dt,
                 LEVEL+1, PATH||a.menu_id
             FROM tn_menu a, tnmenu b
-            WHERE a.menu_id NOT IN ( SELECT menu_id FROM tn_role_menu WHERE delete_at = 'N'
-    ]]>
-                                <isNotEmpty property="SCH_AUTH">
-                                    <![CDATA[ AND author_id = #SCH_AUTH# ]]>
-                                </isNotEmpty>
-    <![CDATA[                )
+            WHERE a.upper_menu_id = b.menu_id
                 AND a.delete_at = 'N' AND a.use_at = 'Y'
-                AND a.upper_menu_id = b.menu_id
         )
         SELECT tnmenu.MENU_ID   /*시스템메뉴.메뉴ID*/
               ,LPAD(' ', 4 *(LEVEL - 1)) || tnmenu.MENU_NM  MENU_NM /*시스템메뉴.메뉴명*/
@@ -375,6 +357,12 @@
               ,tnmenu.UPDUSR_NO /*시스템메뉴.수정자번호*/
               ,tnmenu.UPDT_DT   /*시스템메뉴.수정일*/          
         FROM tnmenu
+        WHERE tnmenu.menu_id NOT IN ( SELECT menu_id FROM tn_role_menu WHERE delete_at = 'N'
+    ]]>
+                                <isNotEmpty property="SCH_AUTH">
+                                    <![CDATA[ AND author_id = #SCH_AUTH# ]]>
+                                </isNotEmpty>
+    <![CDATA[                )
         ORDER BY path
         ]]>
 	</select>
