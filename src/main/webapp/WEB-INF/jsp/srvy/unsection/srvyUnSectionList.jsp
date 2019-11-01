@@ -56,22 +56,27 @@
 	        <strong>미조사구간 조회</strong>
 	    </p>
 	    <div class="mt10 ml10 mr10">
-            <div id="div_grid" style="width:100%; height:206px;">
+            <div id="div_grid" style="width:100%; height:240px;">
 				<table id="gridArea"></table>
 				<div id="gridPager"></div>
 			</div>
-        </div>
-    </div>
-</div>
+			<div class="mt10 tc">
+	            <div class="fr">
+	            	<a href="#" onclick="fnSave();" class="schbtn">차트</a>
+	           	</div>
+	        </div>
+        </div>        
+	</div>
 
 </form>
+
+<!-- 막대그래프 -->
+<div id="gpmsLenBarChart" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div>
+
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>
 <!-- 공통 (END)-->
 <script type="text/javascript" language="javascript" defer="defer">
-
-var param = {};
-var cnt = 0;
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
@@ -249,6 +254,7 @@ function fn_change_roadNm() {
     });
 }
 
+//조사구간 위치이동
 function fn_select_route(route_no, srvy_year){
 	
 	if(!srvy_year || srvy_year == 'null'){
@@ -275,8 +281,12 @@ function fn_select_route(route_no, srvy_year){
 			        		fillColor : '#0000FF',
 			        		strokeColor : '#0000FF'
 			        	};
+			        	
 			        	gMap.cleanMap();
-			        	gMap.getLayerByName('GAttrLayer').addFeatures(feature);
+			        	var layer = gMap.getLayerByName('GAttrLayer');
+			        	layer.addFeatures(feature);
+			        	gMap.zoomToExtent(layer.getDataExtent());
+			        	
         			}catch(e){
         				console.log(e);
         			}
@@ -289,7 +299,7 @@ function fn_select_route(route_no, srvy_year){
     });
 }
 
-
+//미조사구간 위치이동
 function fn_unselect_route(route_no, srvy_year){
 	
 	if(!srvy_year || srvy_year == 'null'){
@@ -316,8 +326,12 @@ function fn_unselect_route(route_no, srvy_year){
 			        		fillColor : '#0000FF',
 			        		strokeColor : '#0000FF'
 			        	};
+			        	
 			        	gMap.cleanMap();
-			        	gMap.getLayerByName('GAttrLayer').addFeatures(feature);
+			        	var layer = gMap.getLayerByName('GAttrLayer');
+			        	layer.addFeatures(feature);
+			        	gMap.zoomToExtent(layer.getDataExtent());
+			        	
         			}catch(e){
         				console.log(e);
         			}
@@ -332,6 +346,7 @@ function fn_unselect_route(route_no, srvy_year){
     });
 }
 
+//노선 위치이동
 function fn_routeLocation_move(route_no){
     parent.bottomClose();
     
@@ -346,7 +361,95 @@ function fn_routeLocation_move(route_no){
     };
     MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, fields, values, null, null, attribute);
 }
-
+<%-- 
+//차트
+require.config({
+   paths: {
+        echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
+    }
+});
+function drawGpmsLenChart(dataList,rw){
+    var gRouteNm    = [];       
+    var lenData     = [];
+    var degree      = 40;
+    if(dataList.length < 10){
+        degree = 0;
+    }
+    for(var i=0; i<dataList.length; i++){
+            gRouteNm.push(dataList[i].ROUTE_CODE+" "+dataList[i].ROAD_NAME);
+            lenData.push(Number(dataList[i].LEN));
+    }
+    
+	require([ 'echarts', 'echarts/chart/bar' ], function(ec) {
+		var myChart = ec.init(document.getElementById('gpmsLenBarChart'));
+		myChart.setOption({
+			title : {
+				text : 'GPMS 총연장(km)'
+			},
+			tooltip : {
+				trigger : 'axis'
+			},
+			toolbox : {
+				show : false,
+				feature : {
+					//dataView : {show: true, readOnly: false},     // 상세조회
+					//saveAsExcel : {show: true},                   // 엑셀저장
+					saveAsImage : {
+						show : true
+					}
+				// 이미지저장
+				}
+			},
+			grid : {
+				/* width : rw+'px',
+				x : 50, */
+				y2 : 80
+			},
+			xAxis : [ {
+				type : 'category',
+				axisLabel : {
+					show : true,
+					interval : 0,
+					rotate : degree
+				},
+				data : gRouteNm
+			} ],
+			yAxis : [ {
+				name : 'km',
+				type : 'value'
+			} ],
+			series : [ {
+				name : '',
+				type : 'bar',
+				itemStyle : {
+					normal : {
+						color : function(params) {
+							var colorList = [ '#C1232B', '#B5C334',
+									'#FCCE10', '#E87C25', '#27727B',
+									'#FE8463', '#9BCA63', '#FAD860',
+									'#F3A43B', '#60C0DD', '#FE2752',
+									'#7EEA59', '#F2B731', '#D8C35C',
+									'#41C0AE', '#FE8422', '#6EEA54',
+									'#F1B541', '#D6C32C', '#73C1AE',
+									'#FD8610', '#CDEF60', '#FD6ACE',
+									'#E6D410', '#20C5AD', '#DD810E',
+									'#CCDA80', '#BE88CA', '#D21810',
+									'#31D2BA', '#EE91AE', '#EFCBCD',
+									'#CDE1BB', '#CDE991', '#98613B',
+									'#FADE06', '#BB78FF', '#ECCDC0',
+									'#FBA001', '#E6734C', '#FFBBEE',
+									'#991122', '#DDEECC', '#AABCD5',
+									'#484ABC' ];
+							return colorList[params.dataIndex]
+						}
+					}
+				},
+				data : lenData
+			} ]
+		});
+	});
+ }
+  --%>
 </script>
 </body>
 </html>
