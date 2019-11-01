@@ -76,7 +76,11 @@ var cnt = 0;
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
 
-	parent.gMap.cleanMap();
+	try{
+		parent.gMap.cleanMap();
+	}catch(e){
+		//console.log(e);
+	}
 
     var postData = {"USE_AT":"Y"};
     postData = $("#frm").cmSerializeObject();
@@ -247,8 +251,12 @@ function fn_change_roadNm() {
 
 function fn_select_route(route_no, srvy_year){
 	
-	var params = {"ROUTE_CODE" : route_no, "SRVY_YEAR": srvy_year};
+	if(!srvy_year || srvy_year == 'null'){
+		alert('조사구간 위치가 없습니다');
+		return ;
+	}
 	
+	var params = {"ROUTE_CODE" : route_no, "SRVY_YEAR": srvy_year};
     $.ajax({
         url: contextPath + '/api/srvyunsection/sectionlocation.do'
         ,type: 'post'
@@ -259,15 +267,21 @@ function fn_select_route(route_no, srvy_year){
         	if(data.succ){
         		var item = data.item;
         		if(item && item.GEOJSON){
-	        		var geojson = item.GEOJSON;
-		        	var format = new OpenLayers.Format.GeoJSON();
-		        	var feature = format.read(geojson)[0]; 
-		        	feature.attributes = {
-		        		fillColor : '#0000FF',
-		        		strokeColor : '#0000FF'
-		        	};
-		        	gMap.cleanMap();
-		        	gMap.getLayerByName('GAttrLayer').addFeatures(feature);
+        			try{
+		        		var geojson = item.GEOJSON;
+			        	var format = new OpenLayers.Format.GeoJSON();
+			        	var feature = format.read(geojson)[0]; 
+			        	feature.attributes = {
+			        		fillColor : '#0000FF',
+			        		strokeColor : '#0000FF'
+			        	};
+			        	gMap.cleanMap();
+			        	gMap.getLayerByName('GAttrLayer').addFeatures(feature);
+        			}catch(e){
+        				console.log(e);
+        			}
+        		}else{
+        			alert('조사구간 위치가 없습니다');
         		}
         	}
         }
@@ -278,8 +292,12 @@ function fn_select_route(route_no, srvy_year){
 
 function fn_unselect_route(route_no, srvy_year){
 	
-	var params = {"ROUTE_CODE" : route_no, "SRVY_YEAR": srvy_year};
+	if(!srvy_year || srvy_year == 'null'){
+		fn_routeLocation_move(route_no);
+		return ;
+	}
 	
+	var params = {"ROUTE_CODE" : route_no, "SRVY_YEAR": srvy_year};
     $.ajax({
         url: contextPath + 'api/srvyunsection/unsectionlocation.do'
         ,type: 'post'
@@ -290,15 +308,21 @@ function fn_unselect_route(route_no, srvy_year){
         	if(data.succ){
         		var item = data.item;
         		if(item && item.GEOJSON){
-	        		var geojson = item.GEOJSON;
-		        	var format = new OpenLayers.Format.GeoJSON();
-		        	var feature = format.read(geojson)[0]; 
-		        	feature.attributes = {
-		        		fillColor : '#0000FF',
-		        		strokeColor : '#0000FF'
-		        	};
-		        	gMap.cleanMap();
-		        	gMap.getLayerByName('GAttrLayer').addFeatures(feature);
+        			try{
+		        		var geojson = item.GEOJSON;
+			        	var format = new OpenLayers.Format.GeoJSON();
+			        	var feature = format.read(geojson)[0]; 
+			        	feature.attributes = {
+			        		fillColor : '#0000FF',
+			        		strokeColor : '#0000FF'
+			        	};
+			        	gMap.cleanMap();
+			        	gMap.getLayerByName('GAttrLayer').addFeatures(feature);
+        			}catch(e){
+        				console.log(e);
+        			}
+        		}else{
+            		alert('미조사구간 위치가 없습니다');
         		}
         	}
         }
@@ -306,6 +330,21 @@ function fn_unselect_route(route_no, srvy_year){
         	
         }
     });
+}
+
+function fn_routeLocation_move(route_no){
+    parent.bottomClose();
+    
+    var tables = ["DORO_TOT_GRS80_50"];
+    var fields = ["ROAD_NO"];
+    var values = [route_no];
+    var attribute = {
+		attributes : {
+		    fillColor : '#0033ff',
+		    strokeColor : '#0033ff'
+		}
+    };
+    MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, fields, values, null, null, attribute);
 }
 
 </script>
