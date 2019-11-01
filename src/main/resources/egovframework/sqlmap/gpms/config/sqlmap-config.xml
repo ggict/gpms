@@ -45,6 +45,8 @@
 <sqlMap resource="egovframework/sqlmap/gpms/srvydtaexcel/SrvyDtaExcel_SQL_POSTGRESQL.xml"/>
 <!--	TN_SRVY_DTA 	조사자료	-->
 <sqlMap resource="egovframework/sqlmap/gpms/srvydta/SrvyDta_SQL_POSTGRESQL.xml"/>
+<!--	TN_SRVY_DTA 	조사자료	-->
+<sqlMap resource="egovframework/sqlmap/gpms/srvyunsection/SrvyUnSection_SQL_POSTGRESQL.xml"/>
 <!--	TN_SRVY_DTA_STTUS 	조사자료현황	-->
 <sqlMap resource="egovframework/sqlmap/gpms/srvydtasttus/SrvyDtaSttus_SQL_POSTGRESQL.xml"/>
 <!--	TN_SYS_USER 	시스템사용자	-->
