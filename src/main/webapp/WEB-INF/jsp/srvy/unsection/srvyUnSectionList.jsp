@@ -278,10 +278,11 @@ function fn_select_route(route_no, srvy_year){
 			        	var format = new OpenLayers.Format.GeoJSON();
 			        	var feature = format.read(geojson)[0]; 
 			        	feature.attributes = {
-			        		fillColor : '#0000FF',
-			        		strokeColor : '#0000FF'
+			        		fillColor : '#FF0000',
+			        		strokeColor : '#FF0000'
 			        	};
 			        	
+			        	var gMap = parent.gMap;
 			        	gMap.cleanMap();
 			        	var layer = gMap.getLayerByName('GAttrLayer');
 			        	layer.addFeatures(feature);
@@ -323,10 +324,11 @@ function fn_unselect_route(route_no, srvy_year){
 			        	var format = new OpenLayers.Format.GeoJSON();
 			        	var feature = format.read(geojson)[0]; 
 			        	feature.attributes = {
-			        		fillColor : '#0000FF',
-			        		strokeColor : '#0000FF'
+			        		fillColor : '#0033ff',
+			        		strokeColor : '#0033ff'
 			        	};
 			        	
+			        	var gMap = parent.gMap;
 			        	gMap.cleanMap();
 			        	var layer = gMap.getLayerByName('GAttrLayer');
 			        	layer.addFeatures(feature);
