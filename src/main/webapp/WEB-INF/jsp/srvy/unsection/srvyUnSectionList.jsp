@@ -76,7 +76,7 @@ var cnt = 0;
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
 
-	//parent.gMap.cleanMap();
+	parent.gMap.cleanMap();
 
     var postData = {"USE_AT":"Y"};
     postData = $("#frm").cmSerializeObject();
