@@ -149,7 +149,7 @@ $( document ).ready(function() {
     }).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 
     // 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
-    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 206);
+    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 190);
 
     setTimeout(function() {
          fn_search();

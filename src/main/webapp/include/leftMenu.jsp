@@ -47,8 +47,9 @@
 	<div id="sub_reg_srvy">
 	    <h2>조사자료 관리</h2>
 	    <ul class="btab_menu">
-	        <li style="height:146px"><a href="#" class="tab1" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyExcelList.do"/>');">조사자료<br />이력조회</a></li>
-	        <li style="height:145px"><a href="#" class="tab2" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>');">조사자료<br />등록</a></li>
+	        <li style="height:97px"><a href="#" class="tab1" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyExcelList.do"/>');">조사자료<br />이력조회</a></li>
+	        <li style="height:97px"><a href="#" class="tab2" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>');">조사자료<br />등록</a></li>
+	        <li style="height:97px"><a href="#" class="tab2" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/srvyunsectionList.do"/>');">미조사구간<br />조회</a></li>
 	    </ul>
     </div>
 
