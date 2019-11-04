@@ -124,6 +124,27 @@ public class CntrwkCellInfoController extends BaseController {
 	}
 	
 	/**
+	 * 공사_셀_정보(TN_CNTRWK_CELL_INFO)의 이전 포장상태를 조회한다. (no pageing)
+	 * @param cntrwkCellInfoVO - 조회할 정보가 담긴 CntrwkCellInfoVO
+	 * @return "/cntrwkcellinfo/CntrwkCellInfoList"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "api/cntrwkcellinfo/selectCntrwkBeforeCellInfoList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public  @ResponseBody Map<String, Object> selectCntrwkBeforeCellInfoList(@RequestBody CntrwkCellInfoVO cntrwkCellInfoVO, ModelMap model) throws Exception {
+		cntrwkCellInfoVO.setUsePage(false);
+		
+		List<Cell10VO> items = cntrwkCellInfoService.selectCntrwkBeforeCellInfoList(cntrwkCellInfoVO);
+		
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("page", cntrwkCellInfoVO.getPage());
+		map.put("rows", items);
+
+		return map;
+	}
+	
+	
+	/**
 	 * 공사_셀_정보(TN_CNTRWK_CELL_INFO) 상세를 조회한다.
 	 * @param cntrwkCellInfoVO - 조회할 정보가 담긴 CntrwkCellInfoVO
 	 * @return "/cntrwkcellinfo/CntrwkCellInfoView"

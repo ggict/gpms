@@ -129,4 +129,14 @@ public class CntrwkCellInfoServiceImpl extends AbstractServiceImpl implements Cn
 		return cntrwkCellInfoDAO.selectRouteInfoListByCellID(cntrwkCellInfoVO);
 	}
 	
+	/**
+	 * 공사_셀_정보(TN_CNTRWK_CELL_INFO)의 이전 포장상태를 조회한다.
+	 * @param cntrwkCellInfoVO - 조회할 정보가 담긴 CntrwkCellInfoVO
+	 * @return TN_CNTRWK_CELL_INFO 목록
+	 * @exception Exception
+	 */
+	public List<Cell10VO> selectCntrwkBeforeCellInfoList(CntrwkCellInfoVO cntrwkCellInfoVO) throws Exception {
+		return cntrwkCellInfoDAO.selectCntrwkBeforeCellInfoList(cntrwkCellInfoVO);
+	}
+	
 }

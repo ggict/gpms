@@ -58,15 +58,15 @@
 	<!-- Content -->
 	<div class="ctab_wrap">
 		<div class="tabcont">
-	    	<div class="scroll" style="height:240px;">
+	    	<div class="scroll" style="height:240px; width:600px; float:left;">
 	    	<form:form commandName="cntrwkVO" id="cntrwk_Regist-form">
 		        <table class="tbview" summary="포장공사 기본정보를 조회합니다.">
 		            <caption>포장공사 기본정보</caption>
 		            <colgroup>
-		                <col width="15%" />
-		                <col width="35%" />
-		                <col width="15%" />
-		                <col width="35%" />
+		                <col width="20%" />
+		                <col width="25%" />
+		                <col width="20%" />
+		                <col width="25%" />
 		            </colgroup>
 		            <tbody>
 		                <tr>
@@ -120,13 +120,10 @@
 							<td colspan="3">
 								<label for="FULL_CNTRWK_NM"></label>
 								<c:out value="${cntrwkVO.FULL_CNTRWK_NM}"/>
-							</td>
-							<%-- <th scope="row">세부공사명</th>
-							<td>
-								<label for="DETAIL_CNTRWK_NM"></label>
+							</td>								
 								<c:out value="${cntrwkVO.DETAIL_CNTRWK_NM}"/>
-								<input type="text" name="DETAIL_CNTRWK_NM" id="DETAIL_CNTRWK_NM" value="<c:out value="${cntrwkVO.FULL_CNTRWK_NM}"/>" class="MX_50 CS_50 input" style="display: none;" />	<!-- placeholder="예) 2016년 노후포장도로 정비공사" -->
-							</td> --%>
+								<input type="hidden" name="DETAIL_CNTRWK_NM" id="DETAIL_CNTRWK_NM" value="<c:out value="${cntrwkVO.FULL_CNTRWK_NM}"/>" class="MX_50 CS_50 input" style="display: none;" />	<!-- placeholder="예) 2016년 노후포장도로 정비공사" -->
+							
 						</tr>
 						<tr>
 							<th scope="row">착공일 ~ 준공일</th>
@@ -234,9 +231,22 @@
 		        </table>
 		    </form:form>
 	        </div>
+	        <div class="scroll" style="height:240px; width:500px;float:right;">
+	        	<form id="cellFrm2">
+                <input type="hidden" id="CELL_IDS" name="CELL_IDS" value=""/>
+                <div class="titbx mt20">
+                    <h4>셀 선택</h4>
+                   
+                        <div id="div_grid2" style="width:495px; height:240px;">
+                            <table id="gridArea2"></table>
+                            <div id="gridPager2"></div>
+                        </div>                    
+                </div>
+           		</form>
+	        </div>
 	        <div class="mt10 tc">
 	            <div class="fr mr10">
-		           	<a href="#" onclick="fnViewLocation();" class="schbtn">위치조회</a>
+		           	<!-- <a href="#" onclick="fnViewLocation();" class="schbtn">위치조회</a> -->
 					<a href="#" class="schbtn" onclick="fnUpdate();">수정</a>
 					<a href="#" class="graybtn" onclick="fnDelete();">삭제</a>
 	           	</div>
@@ -253,6 +263,75 @@
 } */
 
 $(document).ready(function(){
+	var cntrwk_id = $('#CNTRWK_ID').val();
+    var postData2 = {"CNTRWK_ID":cntrwk_id};
+    // 리스트에서 셀 선택 grid
+    $("#gridArea2").jqGrid({
+        url: '<c:url value="/"/>'+'api/cntrwkcellinfo/selectCntrwkBeforeCellInfoList.do'
+        ,autoencode: true
+        ,contentType : 'application/json'
+        ,datatype: "local"
+        ,mtype: "POST"
+        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
+        //,postData: $("#cellFrm2").cmSerializeObject()
+        ,postData: postData2
+        ,ignoreCase: true
+        ,colNames:["CELL_ID","노선번호","노선명","행선","차로","시점(m)","종점(m)","GPCI","위치보기"]
+        ,colModel:[
+            {name:'CELL_ID', index:'CELL_ID', hidden:true}
+            ,{name:'ROUTE_CODE',index:'ROUTE_CODE', align:'center', width:50, sortable:false, formatter: 'integer'}
+            ,{name:'ROAD_NAME',index:'ROAD_NAME', align:'center', width:70, sortable:false}
+            ,{name:'DIRECT_CODE',index:'DIRECT_CODE', align:'center', width:70, sortable:false}
+            ,{name:'TRACK',index:'TRACK', align:'center', width:70, sortable:false}
+            ,{name:'STRTPT',index:'STRTPT', align:'center', width:70, sortable:false, formatter: 'integer'}
+            ,{name:'ENDPT',index:'ENDPT', align:'center', width:70, sortable:false, formatter: 'integer'}
+            ,{name:'GPCI',index:'GPCI', align:'center', width:70, sortable:false, formatter: 'integer'}
+            ,{name:'btn_loc_cell',index:'btn_loc_cell', align:'center', width:70, sortable:false, formatter: fn_create_btn}
+        ]
+        ,async : false
+        ,sortname: ''
+        ,sortorder: ""
+        ,rowNum: 99999
+        ,rowList: []
+        ,pgbuttons: false
+        ,pgtext: null
+        ,viewrecords: true
+        ,pager: '#gridPager2'
+        ,rownumbers: true
+        ,loadtext: "검색 중입니다."
+        ,emptyrecords: "검색된 데이터가 없습니다."
+        ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
+        ,ondblClickRow: function(rowId) {       // 더블클릭 처리
+            //fn_view(rowId); // 대장 조회
+        }
+        ,onSelectRow: function(rowId, status, e) {     // 클릭 처리
+            //fnCalDetailInfo();
+        }
+        ,onSelectAll: function(aRowIds, status) {
+            //console.log('[onSelectAll] ' + status + ' = ' + aRowIds.length);
+            //fnCalDetailInfo();
+        }
+        ,loadBeforeSend:function(tsObj, ajaxParam, settings){
+            if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){
+                delete this.p.postData.nd;
+                delete this.p.postData._search;
+                this.p.postData.sidx = this.p.sortname;
+                this.p.postData.sord = this.p.sortorder;
+                if(this.p.postData.pageUnit != this.p.postData.rows){
+                    this.p.postData.pageUnit = this.p.postData.rows;
+                }
+                ajaxParam.data = JSON.stringify(this.p.postData);
+            }
+        }
+        ,multiselect: false
+        ,multiboxonly: false
+        ,loadonce: true
+        //,scroll: true
+    }).navGrid('#gridPager2',{edit:false,add:false,del:false,search:false,refresh:false});  
+	
+	COMMON_UTIL.cmInitGridSize('gridArea2','div_grid2', 180);
+
+	fn_search();		
 });
 
 //신규 등록 화면 이동 [수정:선택] url
@@ -260,6 +339,25 @@ function fnUpdate() {
 	COMMON_UTIL.cmMoveUrl("cntrwk/updateCntrwkView.do?CNTRWK_ID="+$("#CNTRWK_ID").val());
 	//COMMON_UTIL.cmWindowOpen( "포장공사정보 수정", "<c:url value='/cntrwk/updateCntrwkView.do'/>?CNTRWK_ID="+$("#CNTRWK_ID").val(), 1024, 530, false, $("#wnd_id").val(), 'center');	
 
+}
+
+//검색 처리
+function fn_search() {
+	
+    var cntrwk_id = $('#CNTRWK_ID').val();
+    var postData2 = {"CNTRWK_ID":cntrwk_id};
+    $("#gridArea2").jqGrid("setGridParam",{
+        datatype: "json"
+        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
+        ,contentType: "application/json"
+        ,page: 1
+        //,postData:   $("#cellFrm2").cmSerializeObject()
+        ,postData:   postData2
+        ,mtype: "POST"
+        ,loadComplete: function(data) {
+            COMMON_UTIL.fn_set_grid_noRowMsg('gridArea2', $("#gridArea2").jqGrid("getGridParam").emptyrecords, data.records);
+        }
+    }).trigger("reloadGrid");
 }
 
 //삭제 - 수정필요
@@ -316,46 +414,44 @@ var vform = $('#cntrwk_Regist-form');
 	}
 }
 
-
-/* function fn_select_cell(){
+//위치 이동
+function fn_select_cell(cell_id){
+	var tables = ["CELL_10"];
+	var fields = ["CELL_ID"];
+	var values = [cell_id];
 	
-	var action = '<c:url value="/api/cntrwk/selectCntrwkCellId.do"/>';
+	// 모든 팝업창 최소화
+	parent.wWindowHideAll();
+	// 하단 목록 창 내리기
+	parent.bottomClose();
 	
-	$.ajax({
-        url: action,
-        contentType: 'application/json',
-        data: JSON.stringify({"CNTRWK_ID" : $("#CNTRWK_ID").val()}),
-        dataType: "json",
-        type: 'POST',
-        success : function (res) {
-			if (res.res.length == 0) {
-				alert("공사 위치가 없습니다.");
-			} else {
-				//cellId 배열 선언
-				var tables=new Array();
-				var fields=new Array();
-				var cellList=new Array();
-				for(var i in res.res){
-					tables[i] = "CELL_10";
-					fields[i] = "CELL_ID";
-					cellList[i] = res.res[i].CELL_ID;
-				}
-				
-				// 모든 팝업창 최소화
-				parent.wWindowHideAll();
-				// 하단 목록 창 내리기
-				parent.bottomClose();
-				//
-				MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, fields, cellList);
+	var attribute_base = {
+	        attributes : {
+	            fillColor : '#ffffff',
+                strokeColor : '#ffffff'
 			}
-		},
-        error: function () {
-            alert("지도 이동 오류가 발생하였습니다. 다시 화면 갱신후 진행하십시오.");
-            return;
-        }
-	});
-} */
+	};
+	
+	//MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, fields, values);
+	MAP.fn_get_selectFeatureByAttrMulti(parent.gMap, tables, fields, values, null, "AND", attribute_base, true, 0, 1);
+}
 
+//위치이동 버튼 생성
+function fn_create_btn(cellValue, options, rowObject) {
+	var btn = "";
+	var nm = options.colModel.name;
+	
+	switch(nm) {
+		case "btn_loc" :
+			btn = "<a href='#' onclick=\"fn_select_cell('" + rowObject.PAV_CELL_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+			break;
+        case "btn_loc_cell" :
+            btn = "<a href='#' onclick=\"fn_select_cell('" + rowObject.CELL_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+            break;
+	}
+	
+	return btn;
+}
 //위치조회
 function fnViewLocation(){
 	

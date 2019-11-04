@@ -89,6 +89,13 @@ public class Cell10VO extends BaseVO {
 	 */
 	@XmlElement
 	private java.lang.String ENDPT;
+	
+	/**
+	 * CELL_10.GPCI,
+	 * CELL_10.GPCI
+	 */
+	@XmlElement
+	private java.lang.String GPCI;
 
 	/**
 	 * CELL_10.DEPT_CODE,
@@ -442,6 +449,25 @@ public class Cell10VO extends BaseVO {
 	 */
 	public void setENDPT(java.lang.String endpt) {
 		this.ENDPT = endpt;
+	}
+	
+	/**
+	 * CELL_10.GPCI,
+	 * CELL_10.GPCI
+	 * @return
+	 */
+	@JsonProperty(value="GPCI")
+	public java.lang.String getGPCI() {
+		return this.GPCI;
+	}
+
+	/**
+	 * CELL_10.GPCI,
+	 * CELL_10.GPCI
+	 * @param GPCI
+	 */
+	public void setGPCI(java.lang.String gpci) {
+		this.GPCI = gpci;
 	}
 
 	/**

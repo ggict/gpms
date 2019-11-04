@@ -97,5 +97,12 @@ public interface CntrwkCellInfoService {
 	 */
 	List<Cell10VO> selectRouteInfoListByCellID(CntrwkCellInfoVO cntrwkCellInfoVO) throws Exception;
 
+	/**
+	 * 공사_셀_정보(TN_CNTRWK_CELL_INFO)의 이전 포장상태를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 cntrwkCellInfoVO
+	 * @return TN_CNTRWK_CELL_INFO 목록
+	 * @exception Exception
+	 */
+	List<Cell10VO> selectCntrwkBeforeCellInfoList(CntrwkCellInfoVO cntrwkCellInfoVO) throws Exception;
 }
 
