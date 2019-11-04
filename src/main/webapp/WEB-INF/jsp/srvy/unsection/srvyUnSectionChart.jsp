@@ -61,15 +61,7 @@ function fu_getChartData(){
 	
 }
 
-
 //차트
-<%-- 
-require.config({
-   paths: {
-        echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
-    }
-});
- --%>
 function drawLenChart(dataList,rw){
  	var gRouteNm 	= [];		
  	var lenData		= [];
