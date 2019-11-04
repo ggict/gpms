@@ -32,7 +32,7 @@
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	
+	//차트 데이터
 	fu_getChartData();
 	
 });
@@ -50,6 +50,7 @@ function fu_getChartData(){
         ,data : JSON.stringify({ROAD_NO : road_no, SRVY_YEAR: srvy_year, usePage: usePage})
         ,success: function(data){
         	if(data && data.rows){
+        		//차트 그리기	
 	        	var rows = data.rows;
 	        	drawLenChart(rows);
         	}
@@ -75,50 +76,56 @@ function drawLenChart(dataList,rw){
  			lenData.push(Number(dataList[i].TOTAL_ROAD_L));
  			GpmlenData.push(Number(dataList[i].ROAD_L));
  	}
-		 var myChart = echarts.init(document.getElementById('lenBarChart'));
-		 myChart.setOption({
-			 color: ['#003366', '#4cabce'],	
-			 title 	: {	text: '조사구간현황'	},
-                tooltip : {	trigger: 'axis'				},
-                toolbox : {	show: true,
-	    			feature: {
-		    			//dataView : {show: true, readOnly: false}, 	// 상세조회
-		    			//saveAsExcel : {show: true},					// 엑셀저장
-		    			//saveAsImage: {show: true}					// 이미지저장
-		    		}	
-	    		},
-	    	    legend: {
-	    	        data: ['총연장', '조사구간']
-	    	    },
-			    grid :{
-			    	/* width : rw+'px',
-			    	x : 50, */
-			    	y2 : 100
-			    },
-                xAxis : [{	
-                			type : 'category',
-		            		axisLabel : {
-		                		show:true,
-		                		interval: 0,
-		                		rotate: degree
-		            		},
-                			data : gRouteNm
-                		}],
-                yAxis : [{	name : 'km',		type : 'value'		}],
-                series : [
-                    {
-                        name: '총연장',
-                        type: 'bar',		                      
-                        data: lenData
-                    },
-                    {
-                        name: '조사구간',
-                        type: 'bar',		                      
-                        data: GpmlenData
-                    }
-                ]
-            });
- }
+		 
+	var myChart = echarts.init(document.getElementById('lenBarChart'));
+	myChart.setOption({
+		color : [ '#003366', '#4cabce' ],
+		title : {
+			text : '조사구간현황'
+		},
+		tooltip : {
+			trigger : 'axis'
+		},
+		toolbox : {
+			show : true,
+			feature : {
+			//dataView : {show: true, readOnly: false}, 	// 상세조회
+			//saveAsExcel : {show: true},					// 엑셀저장
+			//saveAsImage: {show: true}					// 이미지저장
+			}
+		},
+		legend : {
+			data : [ '총연장', '조사구간' ]
+		},
+		grid : {
+			/* width : rw+'px',
+			x : 50, */
+			y2 : 100
+		},
+		xAxis : [ {
+			type : 'category',
+			axisLabel : {
+				show : true,
+				interval : 0,
+				rotate : degree
+			},
+			data : gRouteNm
+		} ],
+		yAxis : [ {
+			name : 'km',
+			type : 'value'
+		} ],
+		series : [ {
+			name : '총연장',
+			type : 'bar',
+			data : lenData
+		}, {
+			name : '조사구간',
+			type : 'bar',
+			data : GpmlenData
+		} ]
+	});
+}
 </script>
 </body>
 </html>
