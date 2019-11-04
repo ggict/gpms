@@ -101,7 +101,7 @@
 	
 		select
 			route_code
-			,ST_AsGeoJSON(ST_Collect(t1.geom)) geojson 
+			,ST_AsGeoJSON(ST_Union(t1.geom)) geojson 
 			/*
 			ST_Collect(t1.geom) geom 
 			count(t1.cell_id)
@@ -143,7 +143,7 @@
 	
 		select
 			route_code
-			,ST_AsGeoJSON(ST_Collect(t1.geom)) geojson 
+			,ST_AsGeoJSON(ST_Union(t1.geom)) geojson 
 			/*
 			ST_Collect(t1.geom) geom 
 			count(t1.cell_id)

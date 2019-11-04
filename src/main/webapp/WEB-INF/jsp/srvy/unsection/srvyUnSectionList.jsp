@@ -257,10 +257,15 @@ function fn_change_roadNm() {
 //조사구간 위치이동
 function fn_select_route(route_no, srvy_year){
 	
+	
 	if(!srvy_year || srvy_year == 'null'){
 		alert('조사구간 위치가 없습니다');
 		return ;
 	}
+	
+	var dvMapLoading = parent.dvMapLoading;
+	$(dvMapLoading).show();
+	parent.bottomClose();
 	
 	var params = {"ROUTE_CODE" : route_no, "SRVY_YEAR": srvy_year};
     $.ajax({
@@ -270,10 +275,14 @@ function fn_select_route(route_no, srvy_year){
         ,contentType : 'application/json'
         ,data : JSON.stringify(params)
         ,success: function(data){
+			$(dvMapLoading).hide();
         	if(data.succ){
         		var item = data.item;
         		if(item && item.GEOJSON){
         			try{
+			        	var gMap = parent.gMap;
+			        	var layer = gMap.getLayerByName('GAttrLayer');
+			        	
 		        		var geojson = item.GEOJSON;
 			        	var format = new OpenLayers.Format.GeoJSON();
 			        	var feature = format.read(geojson)[0]; 
@@ -282,12 +291,9 @@ function fn_select_route(route_no, srvy_year){
 			        		strokeColor : '#FF0000'
 			        	};
 			        	
-			        	var gMap = parent.gMap;
 			        	gMap.cleanMap();
-			        	var layer = gMap.getLayerByName('GAttrLayer');
 			        	layer.addFeatures(feature);
 			        	gMap.zoomToExtent(layer.getDataExtent());
-			        	
         			}catch(e){
         				console.log(e);
         			}
@@ -296,7 +302,9 @@ function fn_select_route(route_no, srvy_year){
         		}
         	}
         }
-        ,error: function(a,b,msg){}
+        ,error: function(a,b,msg){
+        	$(dvMapLoading).hide();
+        }
     });
 }
 
@@ -308,6 +316,10 @@ function fn_unselect_route(route_no, srvy_year){
 		return ;
 	}
 	
+	var dvMapLoading = parent.dvMapLoading;
+	$(dvMapLoading).show();
+	parent.bottomClose();
+	
 	var params = {"ROUTE_CODE" : route_no, "SRVY_YEAR": srvy_year};
     $.ajax({
         url: contextPath + 'api/srvyunsection/unsectionlocation.do'
@@ -316,10 +328,14 @@ function fn_unselect_route(route_no, srvy_year){
         ,contentType : 'application/json'
 		,data : JSON.stringify(params)
         ,success: function(data){
+			$(dvMapLoading).hide();
         	if(data.succ){
         		var item = data.item;
         		if(item && item.GEOJSON){
         			try{
+			        	var gMap = parent.gMap;
+			        	var layer = gMap.getLayerByName('GAttrLayer');
+			        	
 		        		var geojson = item.GEOJSON;
 			        	var format = new OpenLayers.Format.GeoJSON();
 			        	var feature = format.read(geojson)[0]; 
@@ -328,12 +344,10 @@ function fn_unselect_route(route_no, srvy_year){
 			        		strokeColor : '#0033ff'
 			        	};
 			        	
-			        	var gMap = parent.gMap;
 			        	gMap.cleanMap();
-			        	var layer = gMap.getLayerByName('GAttrLayer');
 			        	layer.addFeatures(feature);
 			        	gMap.zoomToExtent(layer.getDataExtent());
-			        	
+			        	parent.bottomClose();
         			}catch(e){
         				console.log(e);
         			}
