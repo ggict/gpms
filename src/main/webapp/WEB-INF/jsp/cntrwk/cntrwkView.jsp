@@ -35,7 +35,7 @@
 <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
-
+<input type="hidden" id="DETAIL_CNTRWK_ID" name="DETAIL_CNTRWK_ID" value="${cntrwkVO.DETAIL_CNTRWK_ID}">
 <!-- 필수 파라메터(END) --> 
 <div>
 	<div class="posiR">
@@ -58,7 +58,7 @@
 	<!-- Content -->
 	<div class="ctab_wrap">
 		<div class="tabcont">
-	    	<div class="scroll" style="height:240px; width:600px; float:left;">
+	    	<div class="scroll" style="height:240px; width:50%; float:left;">
 	    	<form:form commandName="cntrwkVO" id="cntrwk_Regist-form">
 		        <table class="tbview" summary="포장공사 기본정보를 조회합니다.">
 		            <caption>포장공사 기본정보</caption>
@@ -87,6 +87,7 @@
 									<option value="${selectData}" <c:if test = "${selectData == cntrwkVO.CNTRWK_YEAR}"> selected="selected" </c:if> >${selectData}</option>
 									</c:forEach>
 								</select> 년
+								<input type="hidden" id="SRVY_YEAR" name="SRVY_YEAR" value="${cntrwkVO.CNTRWK_YEAR}">
 								<select name="HT_SE" id="HT_SE" class="select" style="width:100px; margin-left: 5px;" disabled="true">
 								<option value="">== 전체 ==</option>
 									<c:forEach var="code" items="${codesHTSE}">
@@ -231,13 +232,14 @@
 		        </table>
 		    </form:form>
 	        </div>
-	        <div class="scroll" style="height:240px; width:500px;float:right;">
+		</div>
+		<div class="scroll" style="height:240px; width:50%;float:left;">
 	        	<form id="cellFrm2">
                 <input type="hidden" id="CELL_IDS" name="CELL_IDS" value=""/>
                 <div class="titbx mt20">
                     <h4>셀 선택</h4>
                    
-                        <div id="div_grid2" style="width:495px; height:240px;">
+                        <div id="div_grid2" style="width:100%; height:240px;">
                             <table id="gridArea2"></table>
                             <div id="gridPager2"></div>
                         </div>                    
@@ -251,7 +253,6 @@
 					<a href="#" class="graybtn" onclick="fnDelete();">삭제</a>
 	           	</div>
 	        </div>
-		</div>
 	</div>
 </div>
 
@@ -263,8 +264,9 @@
 } */
 
 $(document).ready(function(){
+	var pav_year = $('#SRVY_YEAR').val();
 	var cntrwk_id = $('#CNTRWK_ID').val();
-    var postData2 = {"CNTRWK_ID":cntrwk_id};
+    var postData2 = {"CNTRWK_ID":cntrwk_id, "PAV_YEAR":pav_year};
     // 리스트에서 셀 선택 grid
     $("#gridArea2").jqGrid({
         url: '<c:url value="/"/>'+'api/cntrwkcellinfo/selectCntrwkBeforeCellInfoList.do'
