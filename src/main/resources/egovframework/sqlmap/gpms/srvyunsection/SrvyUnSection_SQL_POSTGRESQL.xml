@@ -30,8 +30,8 @@
 					,t2.road_l
 					,case 
 						when (t2.road_l / t2.total_road_l) * 100 = 0 
-						then '0'
-						else to_char((t2.road_l / t2.total_road_l) * 100, 'FM999999999.00')
+						then '0' || '%'
+						else to_char((t2.road_l / t2.total_road_l) * 100, 'FM999999999.00')  || '%'
 						end persent
 				from tn_route_info t1
 				left outer join 

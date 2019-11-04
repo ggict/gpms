@@ -39,6 +39,9 @@ public class SrvyUnSectionController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SrvyUnSectionController.class);
 
 	
+	/**
+	 * 리스트 화면 이동 
+	 * */
 	@RequestMapping(value = "/srvy/srvyunsectionList.do")
 	public String srvyDtaList(SrvyUnSectionVO srvyUnSectionVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 		
@@ -56,8 +59,21 @@ public class SrvyUnSectionController {
 		
 		return "/srvy/unsection/srvyUnSectionList" ;
 	}
-	
 
+	
+	/**
+	 * 차트 화면 이동 
+	 * */
+	@RequestMapping(value = { "/srvy/selectSrvyUnSectionChart.do" })
+	public Object selectSrvyUnSectionChart(SrvyUnSectionVO srvyUnSectionVO, HttpServletRequest request, ModelMap model) throws Exception {
+		model.addAttribute("srvyUnSectionVO", srvyUnSectionVO);
+		return "/srvy/unsection/srvyUnSectionChart";
+	}
+
+	
+	/**
+	 * 리스트 조회 
+	 * */
 	@ResponseBody
 	@RequestMapping(value = { "/api/srvyunsection/selectSrvyUnSectionList.do" })
 	public Object selectSrvyDtaSttusList(@RequestBody SrvyUnSectionVO srvyUnSectionVO, ModelMap model) throws Exception {
@@ -66,7 +82,7 @@ public class SrvyUnSectionController {
 		paginationInfo.setCurrentPageNo(srvyUnSectionVO.getPage());
 		paginationInfo.setRecordCountPerPage(srvyUnSectionVO.getPageUnit());
 		paginationInfo.setPageSize(srvyUnSectionVO.getRows());
-		srvyUnSectionVO.setUsePage(true);
+		srvyUnSectionVO.setUsePage(srvyUnSectionVO.isUsePage());
 		
 		srvyUnSectionVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		srvyUnSectionVO.setLastIndex(paginationInfo.getLastRecordIndex());
@@ -96,7 +112,10 @@ public class SrvyUnSectionController {
 		return map;
 	}
 	
-	
+
+	/**
+	 * 조사구간 조회 
+	 * */
 	@RequestMapping(value = { "/api/srvyunsection/sectionlocation.do" })
 	public String sectionlocation(@RequestBody SrvyUnSectionVO srvyUnSectionVO, ModelMap model) throws Exception {
 		
@@ -119,7 +138,11 @@ public class SrvyUnSectionController {
 		model.addAttribute("item", item);
 		return "jsonView";
 	}
+
 	
+	/**
+	 * 미조사구간 조회 
+	 * */
 	@RequestMapping(value = { "/api/srvyunsection/unsectionlocation.do" })
 	public String unsectionlocation(@RequestBody SrvyUnSectionVO srvyUnSectionVO, ModelMap model) throws Exception {
 		
