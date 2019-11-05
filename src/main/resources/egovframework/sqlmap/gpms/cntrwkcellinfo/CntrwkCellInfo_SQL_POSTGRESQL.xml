@@ -301,10 +301,18 @@
 		FROM   cell_10 cell10, tn_mumm_sctn_srvy_dta, tn_route_info tnrouteinfo 
 		WHERE  1 = 1 
 ]]>
-            
-                  
+
     <isNotEmpty property="CNTRWK_ID"> <![CDATA[
-      AND CELL_ID IN ( SELECT PAV_CELL_ID FROM TN_CNTRWK_CELL_INFO WHERE DETAIL_CNTRWK_ID in (select detail_cntrwk_id from tn_cntrwk_dtl where cntrwk_id = #CNTRWK_ID# ))
+      AND CELL_ID IN 
+      	(
+      		SELECT PAV_CELL_ID FROM TN_CNTRWK_CELL_INFO WHERE DETAIL_CNTRWK_ID in 
+      		(
+      			select detail_cntrwk_id from tn_cntrwk_dtl 
+      			where cntrwk_id = #CNTRWK_ID#
+      			AND USE_AT = 'Y'
+				AND DELETE_AT = 'N'
+      		)
+      	)
     ]]></isNotEmpty>
                     
 <![CDATA[
