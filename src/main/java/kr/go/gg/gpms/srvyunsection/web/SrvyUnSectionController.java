@@ -42,7 +42,7 @@ public class SrvyUnSectionController {
 	/**
 	 * 리스트 화면 이동 
 	 * */
-	@RequestMapping(value = "/srvy/srvyunsectionList.do")
+	@RequestMapping(value = "/srvy/srvyunsectionlist.do")
 	public String srvyDtaList(SrvyUnSectionVO srvyUnSectionVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 		
 		//노선 번호
@@ -64,7 +64,7 @@ public class SrvyUnSectionController {
 	/**
 	 * 차트 화면 이동 
 	 * */
-	@RequestMapping(value = { "/srvy/selectSrvyUnSectionChart.do" })
+	@RequestMapping(value = { "/srvy/selectsrvyunsectionchart.do" })
 	public Object selectSrvyUnSectionChart(SrvyUnSectionVO srvyUnSectionVO, HttpServletRequest request, ModelMap model) throws Exception {
 		model.addAttribute("srvyUnSectionVO", srvyUnSectionVO);
 		return "/srvy/unsection/srvyUnSectionChart";
@@ -75,7 +75,7 @@ public class SrvyUnSectionController {
 	 * 리스트 조회 
 	 * */
 	@ResponseBody
-	@RequestMapping(value = { "/api/srvyunsection/selectSrvyUnSectionList.do" })
+	@RequestMapping(value = { "/api/srvyunsection/selectsrvyunsectionlist.do" })
 	public Object selectSrvyDtaSttusList(@RequestBody SrvyUnSectionVO srvyUnSectionVO, ModelMap model) throws Exception {
 		
 		PaginationInfo paginationInfo = new PaginationInfo();

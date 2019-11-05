@@ -43,7 +43,7 @@ function fu_getChartData(){
 	var usePage = 'false';
 	
     $.ajax({
-        url: contextPath + 'api/srvyunsection/selectSrvyUnSectionList.do'
+        url: contextPath + 'api/srvyunsection/selectsrvyunsectionlist.do'
         ,type: 'post'
         ,dataType: 'json'
         ,contentType : 'application/json'

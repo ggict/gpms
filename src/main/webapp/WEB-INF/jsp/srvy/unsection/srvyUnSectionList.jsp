@@ -89,7 +89,7 @@ $( document ).ready(function() {
 
     // 검색 목록 그리드 구성
     $("#gridArea").jqGrid({
-        url: '<c:url value="/"/>'+'api/srvyunsection/selectSrvyUnSectionList.do'
+        url: '<c:url value="/"/>'+'api/srvyunsection/selectsrvyunsectionlist.do'
         ,autoencode: true
         ,contentType : 'application/json'
         ,datatype: "local"
@@ -382,7 +382,7 @@ function fn_chart(){
 	var params = "SRVY_YEAR=" + srvyYear + "&ROAD_NO=" + roadNo;
 	
 	var title = "조사구간현황";
-	var url = "<c:url value='/srvy/selectSrvyUnSectionChart.do'/>?"+params;
+	var url = "<c:url value='/srvy/selectsrvyunsectionchart.do'/>?"+params;
 	var width = 700;
 	var height = 350;
 	var modal = true;
