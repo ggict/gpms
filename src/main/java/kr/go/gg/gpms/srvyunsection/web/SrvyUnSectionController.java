@@ -82,7 +82,6 @@ public class SrvyUnSectionController {
 		paginationInfo.setCurrentPageNo(srvyUnSectionVO.getPage());
 		paginationInfo.setRecordCountPerPage(srvyUnSectionVO.getPageUnit());
 		paginationInfo.setPageSize(srvyUnSectionVO.getRows());
-		srvyUnSectionVO.setUsePage(srvyUnSectionVO.isUsePage());
 		
 		srvyUnSectionVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
 		srvyUnSectionVO.setLastIndex(paginationInfo.getLastRecordIndex());
