@@ -66,9 +66,9 @@
                 <div id="gridPager"></div>
             </div>
             <div class="mt10 tc">
-                <div class="fr">
-                    <!-- <a href="#" onclick="fn_cntrwkExcel();" class="schbtn">엑셀저장</a>
-                    <a href="#" onclick="fnWrite();" class="schbtn">포장공사 신규등록</a> -->
+                <div class="fl">
+                    <!-- <a href="javascript" onclick="fn_cntrwkExcel();" class="schbtn">엑셀저장</a>  -->
+                    <a href="javascript:;" onclick="fnDelete();" class="schbtn">삭제</a>
                 </div>
             </div>
         </div>
@@ -156,35 +156,22 @@ $( document ).ready(function() {
 
 //검색 처리
 function fnSearch() {
-    var postData = {"USE_AT":"Y"};
+	var road_no = $('#ROAD_NO').val();
+	var srvy_requst_de_strt = $('#SRVY_REQUST_DE1').val() && $('#SRVY_REQUST_DE1').val().replace(/-/gi, '');
+	var srvy_requst_de_endt = $('#SRVY_REQUST_DE2').val() && $('#SRVY_REQUST_DE2').val().replace(/-/gi, '')
+    var postData = {"ROUTE_CODE":road_no, "SRVY_REQUST_DE_STRT":srvy_requst_de_strt, "SRVY_REQUST_DE_ENDT":srvy_requst_de_endt};
     $("#gridArea").jqGrid("setGridParam",{
         datatype: "json"
         ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
         ,contentType: "application/json"
         ,page: 1
-        //,postData:  JSON.stringify( $("#frm").cmSerializeObject())
-        ,postData:   $("#frm").cmSerializeObject()
+        //,postData:   $("#frm").cmSerializeObject()
+        ,postData: postData
         ,mtype: "POST"
         ,loadComplete: function(data) {
             COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
         }
     }).trigger("reloadGrid");
-}
-
-//상세 조회
-function fnView(rowId) {
-    if( $.type(rowId) === "undefined" || rowId=="" )
-         rowId = $("#gridArea").getGridParam( "selrow" );
-
-    if( rowId != null ) {
-        var rowData = $("#gridArea").getRowData(rowId);
-        var cntrwkId = rowData["CNTRWK_ID"];
-        var rotCode = rowData["ROUTE_CODE"];
-
-        COMMON_UTIL.cmMoveUrl("cntrwk/selectCntrwkView.do?CNTRWK_ID="+cntrwkId);
-    }
-    else
-        alert('<spring:message code="warn.checkplz.msg" />');
 }
 
 //공사목록 엑셀로 출력
@@ -194,23 +181,9 @@ function fn_cntrwkExcel(){
     }
 }
 
-//신규 등록 화면 이동 [수정:선택] url
-function fnWrite() {
-    if (parent.is_ext == "Y") {
-        COMMON_UTIL.cmMoveUrl("cntrwk/addCntrwkView.do");
-    } else {
-        COMMON_UTIL.cmMoveUrl("cntrwk/addCntrwkView.do");
-    }
-}
-
-//유지보수 실적집계 엑셀 출력
-function fn_cntrwkReportExcel(){
-    COMMON_UTIL.cmWindowOpen("유지보수 실적집계 엑셀출력", "<c:url value='/cntrwk/setDownloadReport.do'/>", 320, 150, true, $("#wnd_id").val(), 'center');
-}
-
 //위치이동 버튼 생성
 function fn_create_btn(cellValue, options, rowObject) {
-    return "<a href='#' onclick=\"fnViewLocation('" + rowObject.CNTRWK_ID + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+    return "<a href='#' onclick=\"fnViewLocation('" + rowObject.SRVY_REQUST_SCTN_NO + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
 }
 //도로등급 변경 시 노선번호 자동 조회
 function fn_change_roadNo() {
@@ -240,52 +213,12 @@ function fn_change_roadNo() {
         }
     });
 }
-/*
-function fn_select_cell(cntrwk_id){
-
-    var action = '<c:url value="/api/cntrwk/selectCntrwkCellId.do"/>';
-
-    $.ajax({
-        url: action,
-        contentType: 'application/json',
-        data: JSON.stringify({"CNTRWK_ID" : cntrwk_id}),
-        dataType: "json",
-        type: 'POST',
-        success : function (res) {
-            if (res.res.length == 0) {
-                alert("공사 위치가 없습니다.");
-            } else {
-                //cellId 배열 선언
-                var tables=new Array();
-                var fields=new Array();
-                var cellList=new Array();
-                for(var i in res.res){
-                    tables[i] = "CELL_10";
-                    fields[i] = "CELL_ID";
-                    cellList[i] = res.res[i].CELL_ID;
-                }
-
-                // 모든 팝업창 최소화
-                parent.wWindowHideAll();
-                // 하단 목록 창 내리기
-                parent.bottomClose();
-                //
-                MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, fields, cellList);
-            }
-        },
-        error: function () {
-            alert("지도 이동 오류가 발생하였습니다. 다시 화면 갱신후 진행하십시오.");
-            return;
-        }
-    });
-}
- */
 //위치조회
 function fnViewLocation(val){
     var srvy_requst_sctn_no = val;
 
     $.ajax({
-        url: contextPath + 'api/srvyrequstsctn/selectPavYearListAll.do'
+        url: contextPath + 'api/srvyrequstsctncellinfo/selectPavYearListAll.do'
         ,type: 'post'
         ,data: JSON.stringify({"SRVY_REQUST_SCTN_NO" : srvy_requst_sctn_no })
         ,dataType: 'json'
@@ -378,6 +311,44 @@ function fnViewLocation(val){
          }
      });
  }
+
+// 그리드 체크 선택된 항목 삭제
+function fnDelete() {
+	var rowIds = $('#gridArea').jqGrid('getGridParam', 'selarrrow');
+	if (rowIds && rowIds.length > 0 ) {
+        var rowData = [];
+        rowIds.forEach(function(elem) { rowData.push($('#gridArea').jqGrid('getRowData', elem)); });
+        
+        var srvy_requst_sctn_no_list = rowData.map(function(elem) { return elem.SRVY_REQUST_SCTN_NO; }).join();
+        var postData = {"SRVY_REQUST_SCTN_NO_LIST": srvy_requst_sctn_no_list };
+        
+        var msg = "삭제를 진행하시겠습니까?";
+        if (confirm(msg)) {
+            $.ajax({
+                url: contextPath + 'api/srvyrequstsctn/deleteSrvyRequstSctn.do'
+                ,data: JSON.stringify(postData)
+                ,type: 'post'
+                ,dataType: 'json'
+                ,contentType: "application/json;charset=UTF-8"
+                ,success: function(res){
+                	if (res != null) {
+	                    alert("조사요청구간 정보가 삭제되었습니다.");
+	                    COMMON_UTIL.cmMoveUrl('srvyrequstsctn/selectSrvyRequstSctnList.do');
+	                    return;
+                	}
+                }
+                ,error: function(a,b,msg){
+                    alert("삭제처리에 문제가 발생하였습니다.");
+                }
+            });        	
+        }
+   
+	} else {
+		alert('삭제하려는 데이터를 선택해주세요.');
+		return;
+	}
+
+}
 </script>
 </body>
 </html>

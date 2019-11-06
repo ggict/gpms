@@ -68,9 +68,9 @@
 	<![CDATA[ 
 		/* srvyRequstSctnDAO.deleteSrvyRequstSctn */
 		/* 조사요청구간 삭제 */
-		DELETE TN_SRVY_REQUST_SCTN
+		DELETE FROM TN_SRVY_REQUST_SCTN
 		WHERE 1 = 1
-		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO# 
+		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric
 ]]>
 	</delete>
 	
@@ -101,7 +101,7 @@
                 <![CDATA[ AND ROUTE_CODE = #ROUTE_CODE# ]]>
             </isNotEmpty>
             <isNotEmpty property="SRVY_REQUST_DE_STRT"><isNotEmpty property="SRVY_REQUST_DE_ENDT">
-                <![CDATA[ AND SRVY_REQUST_DE >=  #SRVY_REQUST_DE_STRT# AND SRVY_REQUST_DE < #SRVY_REQUST_DE_ENDT# ]]>
+                <![CDATA[ AND SRVY_REQUST_DE >=  #SRVY_REQUST_DE_STRT# AND SRVY_REQUST_DE <= #SRVY_REQUST_DE_ENDT# ]]>
             </isNotEmpty></isNotEmpty>
             
             <isEqual prepend=" " property="usePage" compareValue="true">

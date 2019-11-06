@@ -203,12 +203,6 @@ public class SrvyRequstSctnController extends BaseController {
 		return "/cmmn/commonMsg";
 	}
 	
-	/**
-	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
-	 * @return "/cntrwkdtl/CntrwkDtlList"
-	 * @exception Exception
-	 */
 	@RequestMapping(value = {  "/api/srvyrequstsctn/selectSrvyRequstSctnList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public  @ResponseBody Map<String, Object>  selectSrvyRequstSctnListRest(@RequestBody SrvyRequstSctnVO srvyRequstSctnVO, ModelMap model, HttpSession session) throws Exception {
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -234,6 +228,27 @@ public class SrvyRequstSctnController extends BaseController {
 		map.put("rows", items);
 		
 		return map;
+	}
+	
+	@RequestMapping(value = {   "/api/srvyrequstsctn/deleteSrvyRequstSctn.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody SrvyRequstSctnVO deleteSrvyRequstSctnRest(@RequestBody SrvyRequstSctnVO srvyRequstSctnVO, HttpSession session) throws Exception {
+		SrvyRequstSctnCellInfoVO srvyRequstSctnCellInfoVO = new SrvyRequstSctnCellInfoVO();
+		BindBeansToActiveUser(srvyRequstSctnVO);
+		BindBeansToActiveUser(srvyRequstSctnCellInfoVO);
+		
+		String[] srvyRequstSctnNolist = srvyRequstSctnVO.getSRVY_REQUST_SCTN_NO_LIST().split(",");
+		
+		for (String srvyRequstSctnNo : srvyRequstSctnNolist) {
+			srvyRequstSctnCellInfoVO.setSRVY_REQUST_SCTN_NO(srvyRequstSctnNo);
+			srvyRequstSctnCellInfoService.deleteSrvyRequstSctnCellInfo(srvyRequstSctnCellInfoVO);
+			
+			srvyRequstSctnVO.setSRVY_REQUST_SCTN_NO(srvyRequstSctnNo);
+			srvyRequstSctnService.deleteSrvyRequstSctn(srvyRequstSctnVO);
+		}
+		
+		srvyRequstSctnVO.setResultSuccess("true");
+		srvyRequstSctnVO.setResultMSG("정상 삭제되었습니다.");
+		return srvyRequstSctnVO;
 	}
 	
 

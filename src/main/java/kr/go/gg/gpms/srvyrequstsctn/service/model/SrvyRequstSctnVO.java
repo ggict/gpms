@@ -120,6 +120,9 @@ public class SrvyRequstSctnVO extends BaseVO {
 	@XmlElement
 	private java.sql.Date UPDT_DT;
 	
+	@XmlElement
+	private String SRVY_REQUST_SCTN_NO_LIST;
+	
 	/**
 	 * TN_SRVY_REQUST_SCTN.SRVY_REQUST_SCTN_NO, 
 	 * 조사_요청_구간.조사_요청_구간_번호 값읽기
@@ -363,6 +366,15 @@ public class SrvyRequstSctnVO extends BaseVO {
 	 */
 	public void setUPDT_DT(java.sql.Date updtDt) {
 		this.UPDT_DT = updtDt;
+	}
+	
+	@JsonProperty(value="SRVY_REQUST_SCTN_NO_LIST") 
+	public java.lang.String getSRVY_REQUST_SCTN_NO_LIST() {
+		return SRVY_REQUST_SCTN_NO_LIST;
+	}
+
+	public void setSRVY_REQUST_SCTN_NO_LIST(java.lang.String sRVY_REQUST_SCTN_NO_LIST) {
+		this.SRVY_REQUST_SCTN_NO_LIST = sRVY_REQUST_SCTN_NO_LIST;
 	}
 
 
