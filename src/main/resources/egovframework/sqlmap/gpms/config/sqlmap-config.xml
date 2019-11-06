@@ -45,7 +45,9 @@
 <sqlMap resource="egovframework/sqlmap/gpms/srvydtaexcel/SrvyDtaExcel_SQL_POSTGRESQL.xml"/>
 <!--	TN_SRVY_DTA 	조사자료	-->
 <sqlMap resource="egovframework/sqlmap/gpms/srvydta/SrvyDta_SQL_POSTGRESQL.xml"/>
-<!--	TN_SRVY_DTA 	조사자료	-->
+<!--    TN_SRVY_DTA     조사자료 조사요청구간   -->
+<sqlMap resource="egovframework/sqlmap/gpms/srvyrequstsctn/SrvyRequstSctn_SQL_POSTGRESQL.xml"/>
+<!--	TN_SRVY_DTA 	조사자료 미조사구간	-->
 <sqlMap resource="egovframework/sqlmap/gpms/srvyunsection/SrvyUnSection_SQL_POSTGRESQL.xml"/>
 <!--	TN_SRVY_DTA_STTUS 	조사자료현황	-->
 <sqlMap resource="egovframework/sqlmap/gpms/srvydtasttus/SrvyDtaSttus_SQL_POSTGRESQL.xml"/>
@@ -90,6 +92,8 @@
 
 <!--	TN_CNTRWK_CELL_INFO 	공사셀정보	-->
 <sqlMap resource="egovframework/sqlmap/gpms/cntrwkcellinfo/CntrwkCellInfo_SQL_POSTGRESQL.xml"/>
+<!--    TN_SRVY_REQUST_SCTN_CELL_INFO     조사요청구간공사셀정보   -->
+<sqlMap resource="egovframework/sqlmap/gpms/srvyrequstsctncellinfo/SrvyRequstSctnCellInfo_SQL_POSTGRESQL.xml"/>
 <!--	M_CALS_T                교량정보	-->
 <sqlMap resource="egovframework/sqlmap/gpms/mcalst/MCalsT_SQL_POSTGRESQL.xml"/>
 

@@ -660,7 +660,7 @@ $(document).ready(function() {
 	//var cell_id_arrays = parent.gMap.getLayerByName('GAttrLayer').features.map(function(elem) { return elem.data.CELL_ID || elem.data.cell_id })
 	var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
 	var route_code_value = $('#ROUTE_CODE').val();
-	var postData2 = {"CNTRWK_ID":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
+	var postData2 = {"ROUTE_CODE":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
 	// 리스트에서 셀 선택 grid
     $("#gridArea2").jqGrid({
         url: '<c:url value="/"/>'+'api/cntrwkcellinfo/selectCntrwkCellInfoAllList.do'
@@ -794,7 +794,7 @@ function fn_search() {
 	//var cell_id_arrays = parent.gMap.getLayerByName('GAttrLayerMulti').features.map(function(elem) { return elem.data.CELL_ID || elem.data.cell_id })
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
     var route_code_value = $('#ROUTE_CODE').val();
-    var postData2 = {"CNTRWK_ID":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
+    var postData2 = {"ROUTE_CODE":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
     $("#gridArea2").jqGrid("setGridParam",{
         datatype: "json"
         ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }

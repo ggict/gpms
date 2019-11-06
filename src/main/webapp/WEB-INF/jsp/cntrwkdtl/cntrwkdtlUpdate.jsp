@@ -679,7 +679,7 @@ $(document).ready(function(){
 	var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
     if (cell_id_arrays.length > 0) {
     	postData2['PAV_CELL_ID_LIST'] = cell_id_arrays;
-    	postData2['CNTRWK_ID'] = route_code_value;
+    	postData2['ROUTE_CODE'] = route_code_value;
     } else {
     	postData2['DETAIL_CNTRWK_ID'] = detail_cntrwk_id;
     }
@@ -818,7 +818,7 @@ function fn_search() {
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
     if (cell_id_arrays.length > 0) {
         postData2['PAV_CELL_ID_LIST'] = cell_id_arrays;
-        postData2['CNTRWK_ID'] = route_code_value;
+        postData2['ROUTE_CODE'] = route_code_value;
     } else {
         postData2['DETAIL_CNTRWK_ID'] = detail_cntrwk_id;
     }

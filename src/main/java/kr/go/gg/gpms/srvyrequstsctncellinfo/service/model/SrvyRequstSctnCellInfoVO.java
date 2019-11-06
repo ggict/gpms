@@ -1,5 +1,5 @@
 
-package kr.go.gg.gpms.cntrwkcellinfo.service.model;
+package kr.go.gg.gpms.srvyrequstsctncellinfo.service.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +15,14 @@ import kr.go.gg.gpms.base.model.BaseVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * 공사_셀_정보
+ * 조사_요청_구간_셀_정보
  *
- * @Class Name : CntrwkCellInfoVO.java
- * @Description : CntrwkCellInfo VO class
+ * @Class Name : SrvyRequstSctnCellInfoVO.java
+ * @Description : SrvyRequstSctnCellInfo VO class
  * @Modification Information
  *
  * @author muhanit.kr
- * @since 2017-07-31
+ * @since 2019-10-30
  * @version 1.0
  * @see
  *  
@@ -31,39 +31,39 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
 @XmlRootElement
 @SuppressWarnings("serial")
-public class CntrwkCellInfoVO extends BaseVO {
+public class SrvyRequstSctnCellInfoVO extends BaseVO {
 
-	public CntrwkCellInfoVO() {
+	public SrvyRequstSctnCellInfoVO() {
 		super();
 	}
 	
 	/** 
-	 * TN_CNTRWK_CELL_INFO.DETAIL_CNTRWK_ID, 
-	 * 공사_셀_정보.세부_공사_ID
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.SRVY_REQUST_SCTN_NO, 
+	 * 조사_요청_구간_셀_정보.조사_요청_구간_번호
 	 */
 	@XmlElement
-	private java.lang.String DETAIL_CNTRWK_ID;
+	private java.lang.String SRVY_REQUST_SCTN_NO;
 
 	/** 
-	 * TN_CNTRWK_CELL_INFO.PAV_CELL_ID, 
-	 * 공사_셀_정보.포장_셀_ID
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.PAV_CELL_ID, 
+	 * 조사_요청_구간_셀_정보.포장_셀_ID
 	 */
 	@XmlElement
 	private java.lang.String PAV_CELL_ID;
 
 	/** 
-	 * TN_CNTRWK_CELL_INFO.PAV_YEAR, 
-	 * 공사_셀_정보.포장_년도
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.CRTR_NO, 
+	 * 조사_요청_구간_셀_정보.생성자_번호
 	 */
 	@XmlElement
-	private java.lang.String PAV_YEAR;
+	private java.lang.String CRTR_NO;
 
 	/** 
-	 * TN_CNTRWK_CELL_INFO.CNTRWK_ID, 
-	 * 공사_셀_정보.공사_ID
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.CREAT_DT, 
+	 * 조사_요청_구간_셀_정보.생성_일시
 	 */
 	@XmlElement
-	private java.lang.String CNTRWK_ID;
+	private java.sql.Date CREAT_DT;
 
 	@XmlElement
 	private List<String> PAV_CELL_ID_LIST;
@@ -75,27 +75,27 @@ public class CntrwkCellInfoVO extends BaseVO {
 	private java.lang.String ROUTE_CODE;
 	
 	/**
-	 * TN_CNTRWK_CELL_INFO.DETAIL_CNTRWK_ID, 
-	 * 공사_셀_정보.세부_공사_ID 
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.SRVY_REQUST_SCTN_NO, 
+	 * 조사_요청_구간_셀_정보.조사_요청_구간_번호
 	 * @return
 	 */
-	@JsonProperty(value="DETAIL_CNTRWK_ID") 
-	public java.lang.String getDETAIL_CNTRWK_ID() {
-		return this.DETAIL_CNTRWK_ID;
+	@JsonProperty(value="SRVY_REQUST_SCTN_NO") 
+	public java.lang.String getSRVY_REQUST_SCTN_NO() {
+		return this.SRVY_REQUST_SCTN_NO;
 	}
  
 	 /**
-	 * TN_CNTRWK_CELL_INFO.DETAIL_CNTRWK_ID, 
-	 * 공사_셀_정보.세부_공사_ID 
-	 * @param detailCntrwkId
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.SRVY_REQUST_SCTN_NO, 
+	 * 조사_요청_구간_셀_정보.조사_요청_구간_번호
+	 * @param srvyRequstSctnNo
 	 */
-	public void setDETAIL_CNTRWK_ID(java.lang.String detailCntrwkId) {
-		this.DETAIL_CNTRWK_ID = detailCntrwkId;
+	public void setSRVY_REQUST_SCTN_NO(java.lang.String srvyRequstSctnNo) {
+		this.SRVY_REQUST_SCTN_NO = srvyRequstSctnNo;
 	}
 
 	/**
-	 * TN_CNTRWK_CELL_INFO.PAV_CELL_ID, 
-	 * 공사_셀_정보.포장_셀_ID 
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.PAV_CELL_ID, 
+	 * 조사_요청_구간_셀_정보.포장_셀_ID 
 	 * @return
 	 */
 	@JsonProperty(value="PAV_CELL_ID") 
@@ -104,8 +104,8 @@ public class CntrwkCellInfoVO extends BaseVO {
 	}
  
 	 /**
-	 * TN_CNTRWK_CELL_INFO.PAV_CELL_ID, 
-	 * 공사_셀_정보.포장_셀_ID 
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.PAV_CELL_ID, 
+	 * 조사_요청_구간_셀_정보.포장_셀_ID 
 	 * @param pavCellId
 	 */
 	public void setPAV_CELL_ID(java.lang.String pavCellId) {
@@ -113,41 +113,41 @@ public class CntrwkCellInfoVO extends BaseVO {
 	}
 
 	/**
-	 * TN_CNTRWK_CELL_INFO.PAV_YEAR, 
-	 * 공사_셀_정보.포장_년도 
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.CRTR_NO, 
+	 * 조사_요청_구간_셀_정보.생성자_번호
 	 * @return
 	 */
-	@JsonProperty(value="PAV_YEAR") 
-	public java.lang.String getPAV_YEAR() {
-		return this.PAV_YEAR;
+	@JsonProperty(value="CRTR_NO") 
+	public java.lang.String getCRTR_NO() {
+		return this.CRTR_NO;
 	}
  
 	 /**
-	 * TN_CNTRWK_CELL_INFO.PAV_YEAR, 
-	 * 공사_셀_정보.포장_년도 
-	 * @param pavYear
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.CRTR_NO, 
+	 * 조사_요청_구간_셀_정보.생성자_번호
+	 * @param crtrNo
 	 */
-	public void setPAV_YEAR(java.lang.String pavYear) {
-		this.PAV_YEAR = pavYear;
+	public void setCRTR_NO(java.lang.String crtrNo) {
+		this.CRTR_NO = crtrNo;
 	}
 
 	/**
-	 * TN_CNTRWK_CELL_INFO.CNTRWK_ID, 
-	 * 공사_셀_정보.공사_ID 
+	 * TN_SRVY_REQUST_SCTN_CELL_INFO.CREAT_DT, 
+	 * 조사_요청_구간_셀_정보.생성_일시
 	 * @return
 	 */
-	@JsonProperty(value="CNTRWK_ID") 
-	public java.lang.String getCNTRWK_ID() {
-		return this.CNTRWK_ID;
+	@JsonProperty(value="CREAT_DT") 
+	public java.sql.Date getCREAT_DT() {
+		return this.CREAT_DT;
 	}
  
 	 /**
-	 * TN_CNTRWK_CELL_INFO.CNTRWK_ID, 
-	 * 공사_셀_정보.공사_ID 
-	 * @param cntrwkId
+	 * TN_SRVY_REQUST_SCTN_CELL_INFOCREAT_DT, 
+	 * 조사_요청_구간_셀_정보.생성_일시
+	 * @param creatDt
 	 */
-	public void setCNTRWK_ID(java.lang.String cntrwkId) {
-		this.CNTRWK_ID = cntrwkId;
+	public void setCREAT_DT(java.sql.Date creatDt) {
+		this.CREAT_DT = creatDt;
 	}
 
 	@JsonProperty(value="PAV_CELL_ID_LIST") 

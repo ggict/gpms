@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="srvyRequstSctnDAO">
+
+	<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="srvyRequstSctnSerarchVO" type="kr.go.gg.gpms.srvyrequstsctn.service.model.SrvyRequstSctnDefaultVO" />
+	<typeAlias alias="srvyRequstSctnVO" type="kr.go.gg.gpms.srvyrequstsctn.service.model.SrvyRequstSctnVO" />
+
+	<insert id="srvyRequstSctnDAO.insertSrvyRequstSctn">
+		<selectKey resultClass="String" keyProperty="SRVY_REQUST_SCTN_NO">
+          <![CDATA[
+          select nextval('SEQ_TN_SRVY_REQUST_SCTN')
+          ]]>
+		</selectKey>
+	<![CDATA[ 
+		/* srvyRequstSctnDAO.insertSrvyRequstSctn */
+		/* 조사요청구간 등록 */		
+		INSERT INTO TN_SRVY_REQUST_SCTN (
+            SRVY_REQUST_SCTN_NO
+            , SRVY_NM
+            , SRVY_CN
+            , SRVY_REQUST_DE
+            , ROUTE_CODE
+            , DIRECT_CODE
+            , TRACK
+            , STRTPT
+            , ENDPT
+            , UPDUSR_NO
+            , UPDT_DT
+		) VALUES (
+            #SRVY_REQUST_SCTN_NO#::numeric
+            , #SRVY_NM#
+            , #SRVY_CN#
+            , #SRVY_REQUST_DE#
+            , #ROUTE_CODE#
+            , #DIRECT_CODE#
+            , #TRACK#
+            , #STRTPT#::numeric
+            , #ENDPT#::numeric
+            , #UPDUSR_NO#::numeric
+            , NOW()
+		)
+]]>
+	</insert>
+
+	<update id="srvyRequstSctnDAO.updateSrvyRequstSctn">
+	<![CDATA[ 
+		/* srvyRequstSctnDAO.updateSrvyRequstSctn */
+		/* 조사요청구간 수정 */
+		UPDATE TN_SRVY_REQUST_SCTN SET
+            SRVY_NM          = #SRVY_NM#
+            , SRVY_CN          = #SRVY_CN#
+            , SRVY_REQUST_DE       = #SRVY_REQUST_DE#
+            , ROUTE_CODE           = #ROUTE_CODE#
+            , DIRECT_CODE          = #DIRECT_CODE#
+            , TRACK            = #TRACK#
+            , STRTPT           = (CASE WHEN length(#STRTPT#) = 0 THEN NULL ELSE #STRTPT# END)::numeric
+            , ENDPT            = (CASE WHEN length(#ENDPT#) = 0 THEN NULL ELSE #ENDPT# END)::numeric
+            , UPDUSR_NO        = #UPDUSR_NO#
+            , UPDT_DT          = #UPDT_DT#
+		WHERE 1 = 1
+		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO# 
+]]>
+	</update>
+
+	<delete id="srvyRequstSctnDAO.deleteSrvyRequstSctn">
+	<![CDATA[ 
+		/* srvyRequstSctnDAO.deleteSrvyRequstSctn */
+		/* 조사요청구간 삭제 */
+		DELETE TN_SRVY_REQUST_SCTN
+		WHERE 1 = 1
+		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO# 
+]]>
+	</delete>
+	
+    <select id="srvyRequstSctnDAO.selectSrvyRequstSctnList" parameterClass="srvyRequstSctnVO" resultClass="srvyRequstSctnVO">
+<![CDATA[       
+        /* srvyRequstSctnDAO.selectSrvyRequstSctnList */
+        /* 조사요청구간 조회 */
+            SELECT 
+                srvyrequstsctn.SRVY_REQUST_SCTN_NO
+                , srvyrequstsctn.SRVY_NM
+                , srvyrequstsctn.SRVY_CN
+                , srvyrequstsctn.SRVY_REQUST_DE
+                , srvyrequstsctn.ROUTE_CODE
+                , routeinfo.ROAD_NAME as ROAD_NAME
+                , srvyrequstsctn.DIRECT_CODE
+                , CASE srvyrequstsctn.DIRECT_CODE WHEN 'S' THEN '상행' WHEN 'E' THEN '하행' ELSE '양방향' END AS DIRECT_NM
+                , srvyrequstsctn.TRACK
+                , srvyrequstsctn.STRTPT
+                , srvyrequstsctn.ENDPT
+                , srvyrequstsctn.UPDUSR_NO
+                , srvyrequstsctn.UPDT_DT
+            FROM TN_SRVY_REQUST_SCTN srvyrequstsctn
+            LEFT OUTER JOIN TN_ROUTE_INFO routeinfo
+                ON srvyrequstsctn.ROUTE_CODE = routeinfo.ROAD_NO
+            WHERE 1=1
+ ]]>           
+            <isNotEmpty property="ROUTE_CODE">
+                <![CDATA[ AND ROUTE_CODE = #ROUTE_CODE# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SRVY_REQUST_DE_STRT"><isNotEmpty property="SRVY_REQUST_DE_ENDT">
+                <![CDATA[ AND SRVY_REQUST_DE >=  #SRVY_REQUST_DE_STRT# AND SRVY_REQUST_DE < #SRVY_REQUST_DE_ENDT# ]]>
+            </isNotEmpty></isNotEmpty>
+            
+            <isEqual prepend=" " property="usePage" compareValue="true">
+                <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
+            </isEqual>
+    </select>
+	
+    <select id="srvyRequstSctnDAO.selectSrvyRequstSctnListTotalCount" parameterClass="srvyRequstSctnVO" resultClass="int">
+<![CDATA[       
+        /* srvyRequstSctnDAO.selectSrvyRequstSctnListTotalCount */
+        /* 조사요청구간 조회 카운트 */
+            SELECT count(*)
+            FROM TN_SRVY_REQUST_SCTN
+            WHERE 1=1
+ ]]>           
+            <isNotEmpty property="ROUTE_CODE">
+                <![CDATA[ AND ROUTE_CODE = #ROUTE_CODE# ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SRVY_REQUST_DE_STRT"><isNotEmpty property="SRVY_REQUST_DE_ENDT">
+                <![CDATA[ AND SRVY_REQUST_DE >=  #SRVY_REQUST_DE_STRT# AND SRVY_REQUST_DE < #SRVY_REQUST_DE_ENDT# ]]>
+            </isNotEmpty></isNotEmpty>
+            
+            <isEqual prepend=" " property="usePage" compareValue="true">
+                <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
+            </isEqual>
+    </select>	
+
+</sqlMap>

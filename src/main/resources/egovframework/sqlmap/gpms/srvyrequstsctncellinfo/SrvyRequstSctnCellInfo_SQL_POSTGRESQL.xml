@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SrvyRequstSctnCellInfoDAO">
+ 
+	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias  alias="srvyRequstSctnCellInfoSearchVO" type="kr.go.gg.gpms.srvyrequstsctncellinfo.service.model.SrvyRequstSctnCellInfoDefaultVO"/>
+	<typeAlias alias="srvyRequstSctnCellInfoVO"	type="kr.go.gg.gpms.srvyrequstsctncellinfo.service.model.SrvyRequstSctnCellInfoVO" />
+
+	<resultMap id="srvyRequstSctnCellInfo.resultMap" class="srvyRequstSctnCellInfoVO">
+		<result property="SRVY_REQUST_SCTN_NO" column="SRVY_REQUST_SCTN_NO" columnIndex="1" /> <!-- 조사_요청_구간_셀_정보.조사_요청_구간_번호 -->
+		<result property="PAV_CELL_ID" column="PAV_CELL_ID" columnIndex="2" /> <!--조사_요청_구간_셀_정보.포장_셀_ID -->
+		<result property="CRTR_NO" column="CRTR_NO" columnIndex="3" /> <!-- 조사_요청_구간_셀_정보.생성자_번호 -->
+		<result property="CREAT_DT" column="CREAT_DT" columnIndex="4" /> <!-- 조사_요청_구간_셀_정보.생성_일시 -->
+	</resultMap>
+
+	<insert id="srvyRequstSctnCellInfoDAO.insertSrvyRequstSctnCellInfo">
+	<![CDATA[ 
+		/* srvyRequstSctnCellInfoDAO.insertSrvyRequstSctnCellInfo */
+		/* 조사_요청_구간_셀_정보 등록 */
+		
+		INSERT INTO TN_SRVY_REQUST_SCTN_CELL_INFO (
+			SRVY_REQUST_SCTN_NO /* 조사_요청_구간_셀_정보.조사_요청_구간_번호 */
+			, PAV_CELL_ID /* 조사_요청_구간_셀_정보.포장_셀_ID */
+			, CRTR_NO /* 조사_요청_구간_셀_정보.생성자_번호 */
+			, CREAT_DT /* 조사_요청_구간_셀_정보.생성_일시 */
+		) VALUES (
+			#SRVY_REQUST_SCTN_NO#::numeric    /* 조사_요청_구간_셀_정보.조사_요청_구간_번호 */
+			, #PAV_CELL_ID#          /* 조사_요청_구간_셀_정보.포장_셀_ID */
+			, #CRTR_NO#::numeric              /* 조사_요청_구간_셀_정보.생성자_번호 */
+			, NOW()                  /* 조사_요청_구간_셀_정보.생성_일시 */
+		)
+]]>
+	</insert>
+
+	<update id="srvyRequstSctnCellInfoDAO.updateSrvyRequstSctnCellInfo">
+	<![CDATA[ 
+		/* srvyRequstSctnCellInfoDAO.updateSrvyRequstSctnCellInfo */
+		/* 조사_요청_구간_셀_정보 수정 */
+		UPDATE TN_SRVY_REQUST_SCTN_CELL_INFO SET
+    		CRTR_NO = #CRTR_NO#::numeric /* 조사_요청_구간_셀_정보.생성자_번호 */
+		WHERE 1 = 1
+		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric /* 조사_요청_구간_셀_정보.조사_요청_구간_번호 */
+		AND PAV_CELL_ID = #PAV_CELL_ID# /* 조사_요청_구간_셀_정보.포장_셀_ID */
+]]>
+	</update>
+
+	<delete id="srvyRequstSctnCellInfoDAO.deleteSrvyRequstSctnCellInfo">
+	<![CDATA[ 
+		/* srvyRequstSctnCellInfoDAO.deleteSrvyRequstSctnCellInfo */
+		/* 조사_요청_구간_셀_정보 삭제 */
+		DELETE FROM TN_SRVY_REQUST_SCTN_CELL_INFO
+		WHERE 1 = 1
+]]>		
+		<isNotEmpty property="SRVY_REQUST_SCTN_NO"><![CDATA[ /* 조사_요청_구간_셀_정보.조사_요청_구간_번호 */ AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric  ]]></isNotEmpty>
+		<isNotEmpty property="PAV_CELL_ID"><![CDATA[ /* 조사_요청_구간_셀_정보.포장_셀_ID */ AND PAV_CELL_ID = #PAV_CELL_ID# ]]></isNotEmpty>
+	</delete>
+
+	<select id="srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfo" resultMap="srvyRequstSctnCellInfo.resultMap">
+	<![CDATA[ 
+		/* srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfo */
+		/* 조사_요청_구간_셀_정보 조회 */
+		SELECT
+			srvyrequstsctncellinfo.SRVY_REQUST_SCTN_NO /* 조사_요청_구간_셀_정보.조사_요청_구간_번호 */
+			, srvyrequstsctncellinfo.PAV_CELL_ID /* 조사_요청_구간_셀_정보.포장_셀_ID */
+			, srvyrequstsctncellinfo.CRTR_NO /* 조사_요청_구간_셀_정보.생성자_번호 */
+			, srvyrequstsctncellinfo.CREAT_DT /* 조사_요청_구간_셀_정보.생성_일시 */
+		FROM TN_SRVY_REQUST_SCTN_CELL_INFO srvyrequstsctncellinfo
+		WHERE 1 = 1
+		AND srvyrequstsctncellinfo.SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric /* 조사_요청_구간_셀_정보.세부_공사_ID */
+		AND srvyrequstsctncellinfo.PAV_CELL_ID = #PAV_CELL_ID# /* 조사_요청_구간_셀_정보.포장_셀_ID */
+]]>
+	</select>
+
+	<sql id="srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfoList.where">
+		WHERE 1 = 1
+		<isNotEmpty property="SRVY_REQUST_SCTN_NO"><![CDATA[ /* 조사_요청_구간_셀_정보.조사_요청_구간_번호 */ AND srvyrequstsctncellinfo.SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric ]]></isNotEmpty>
+		<isNotEmpty property="PAV_CELL_ID"><![CDATA[ /* 조사_요청_구간_셀_정보.포장_셀_ID */ AND srvyrequstsctncellinfo.PAV_CELL_ID = #PAV_CELL_ID# ]]></isNotEmpty>
+		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 조사_요청_구간_셀_정보.생성자_번호 */ AND srvyrequstsctncellinfo.CRTR_NO = #CRTR_NO#::numeric ]]></isNotEmpty>
+	</sql>
+
+	<select id="srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfoList" parameterClass="srvyRequstSctnCellInfoVO" resultClass="srvyRequstSctnCellInfoVO">
+<![CDATA[ 		
+		/* srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfoList */
+		/* 조사_요청_구간_셀_정보 조회 */
+		SELECT
+			srvyrequstsctncellinfo.SRVY_REQUST_SCTN_NO /* 조사_요청_구간_셀_정보.조사_요청_구간_번호 */
+			, srvyrequstsctncellinfo.PAV_CELL_ID /* 조사_요청_구간_셀_정보.포장_셀_ID */
+			, srvyrequstsctncellinfo.CRTR_NO /* 조사_요청_구간_셀_정보.생성자_번호 */
+			, srvyrequstsctncellinfo.CREAT_DT /* 조사_요청_구간_셀_정보.생성_일시 */
+		FROM TN_SRVY_REQUST_SCTN_CELL_INFO srvyrequstsctncellinfo
+]]>			
+		<include refid="srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfoList.where" />
+<![CDATA[
+		ORDER BY  srvyrequstsctncellinfo.SRVY_REQUST_SCTN_NO ASC /* 조사_요청_구간_셀_정보.세부_공사_ID */
+				, srvyrequstsctncellinfo.PAV_CELL_ID ASC /* 조사_요청_구간_셀_정보.포장_셀_ID */
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+		<![CDATA[
+			LIMIT #recordCountPerPage# OFFSET #firstIndex#
+		]]>
+		</isEqual>
+<![CDATA[
+]]>		
+	</select>		
+ 
+	<select id="srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfoListTotalCount" parameterClass="srvyRequstSctnCellInfoVO" resultClass="int">
+<![CDATA[ 		
+		/* srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfoListTotalCount */
+		/* 조사_요청_구간_셀_정보 개수 조회  */
+		SELECT COUNT(*) AS totCnt
+		FROM TN_SRVY_REQUST_SCTN_CELL_INFO srvyrequstsctncellinfo
+]]>		
+		<include refid="srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfoList.where" />
+<![CDATA[		
+]]>		
+	</select>
+	
+    <select id="srvyRequstSctnCellInfoDAO.selectRouteInfoListByCellID" parameterClass="srvyRequstSctnCellInfoVO" resultClass="cell10VO">
+<![CDATA[
+        /* srvyRequstSctnCellInfoDAO.selectRouteInfoListByCellID */
+        /* CELL_10 리스트 조회 - 조사요청 > 요청구간 CELL 선택용 */
+        SELECT cell10.CELL_ID
+             , cell10.ROUTE_CODE
+             , tnrouteinfo.ROAD_NAME
+             , tccode.code_nm ROAD_GRAD
+             , cell10.direct_code DIRECT_CODE
+             , CASE cell10.DIRECT_CODE WHEN 'S' THEN '상행' WHEN 'E' THEN '하행' WHEN 'SE' THEN '양방향' ELSE '' END DIRECT_NM
+             , cell10.TRACK TRACK
+             , cell10.STRTPT STRTPT
+             , cell10.ENDPT ENDPT
+          FROM(
+                    SELECT CELL_ID
+                         , ROUTE_CODE
+                         , DIRECT_CODE
+                         , TRACK
+                         , STRTPT
+                         , ENDPT
+                         , ROAD_GRAD
+                    FROM CELL_10
+                    WHERE 1=1
+]]>
+                    <isNotEmpty property="PAV_CELL_ID_LIST">
+                        <iterate close=")" conjunction="," open="("
+                            prepend=" AND CELL_ID IN " property="PAV_CELL_ID_LIST">
+                            #PAV_CELL_ID_LIST[]#
+                        </iterate>
+                    </isNotEmpty>
+                    <isNotEmpty property="SRVY_REQUST_SCTN_NO"> <![CDATA[
+                       AND CELL_ID IN ( SELECT PAV_CELL_ID FROM TN_SRVY_REQUST_SCTN_CELL_INFO WHERE SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric )
+                    ]]></isNotEmpty>
+                    <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
+<![CDATA[
+               ) cell10
+               , TN_ROUTE_INFO tnrouteinfo
+               , TC_CODE tccode
+          WHERE cell10.ROUTE_CODE = tnrouteinfo.ROAD_NO
+            AND CELL10.ROAD_GRAD = tccode.CODE_VAL
+            AND tccode.USE_AT = 'Y'
+            AND tccode.DELETE_AT = 'N'
+          ORDER BY tnrouteinfo.ROAD_NO, cell10.STRTPT, cell10.DIRECT_CODE, cell10.TRACK
+]]>
+        <isEqual prepend=" " property="usePage" compareValue="true">
+        <![CDATA[
+            LIMIT #recordCountPerPage# OFFSET #firstIndex#
+        ]]>
+        </isEqual>
+    </select>
+</sqlMap>

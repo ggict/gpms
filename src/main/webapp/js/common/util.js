@@ -766,7 +766,7 @@ var COMMON_UTIL = (function($,undefined){
     * @param {integer} _oSize : 크기
     */
     var cmCreateDatepickerRest = function(_oId, _oSize){
-        $( "#"+id ).width(size*8).datepicker({
+        $( "#"+_oId ).width(_oSize*8).datepicker({
             changeMonth: true,changeYear: true,numberOfMonths: 1,showOn: "button",buttonImage: contextPath+ "/images/ico_date.png",buttonImageOnly: true, maxDate : "+0d"
         });
     };

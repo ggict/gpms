@@ -261,7 +261,7 @@
                     <isNotEmpty property="DETAIL_CNTRWK_ID"> <![CDATA[
                        AND CELL_ID IN ( SELECT PAV_CELL_ID FROM TN_CNTRWK_CELL_INFO WHERE DETAIL_CNTRWK_ID = #DETAIL_CNTRWK_ID# )
                     ]]></isNotEmpty>
-                    <isNotEmpty property="CNTRWK_ID"><![CDATA[ AND ROUTE_CODE = #CNTRWK_ID# ]]></isNotEmpty>
+                    <isNotEmpty property="ROUTE_CODE"><![CDATA[ AND ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
 <![CDATA[
                ) cell10
                , TN_ROUTE_INFO tnrouteinfo
