@@ -529,7 +529,7 @@ public class CntrwkDtlController extends BaseController {
 
 			}
 			// db insert
-			excelDBUpload(cntrwkDtlVO, filePathNm);
+			resultMsg = excelDBUpload(cntrwkDtlVO, filePathNm);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -538,10 +538,14 @@ public class CntrwkDtlController extends BaseController {
 
 			return "jsonView";
 		}
-
-		resultMsg = "정상적으로 등록되었습니다.";
-		model.addAttribute("resultMsg", resultMsg);
-
+		
+		if(resultMsg.equals("Success")) {
+			resultMsg = "정상적으로 등록되었습니다.";
+			model.addAttribute("resultMsg", resultMsg);
+		}else {
+			resultMsg += "등록에 실패하였습니다.";
+			model.addAttribute("resultMsg", resultMsg);
+		}
 		return "jsonView";
 	}
 
@@ -607,9 +611,14 @@ public class CntrwkDtlController extends BaseController {
 					switch (column) {
 					case "도급비":
 						try {
-							cell.setCellType(Cell.CELL_TYPE_STRING);
-							value = cell.getStringCellValue();
-							cntrwkDtlVO.setOUTSRCCT(value);
+							if(value != "") {
+								cell.setCellType(Cell.CELL_TYPE_STRING);
+								value = cell.getStringCellValue();
+								cntrwkDtlVO.setOUTSRCCT(value);
+							}else {
+								resultMsg = column + " 칼럼은 필수항목입니다.";
+								return resultMsg;
+							}							
 						} catch (Exception e) {
 							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
 							return resultMsg;
@@ -618,11 +627,16 @@ public class CntrwkDtlController extends BaseController {
 
 					case "관급비":
 						try {
-							cell.setCellType(Cell.CELL_TYPE_STRING);
-							value = cell.getStringCellValue();
-							cntrwkDtlVO.setGVSLCT(value);
-							CNTRWK_AMOUNT = Integer.valueOf(cntrwkDtlVO.getOUTSRCCT()) + Integer.valueOf(value);
-							cntrwkDtlVO.setCNTRWK_AMOUNT(String.valueOf(CNTRWK_AMOUNT));
+							if(value != "") {
+								cell.setCellType(Cell.CELL_TYPE_STRING);
+								value = cell.getStringCellValue();
+								cntrwkDtlVO.setGVSLCT(value);
+								CNTRWK_AMOUNT = Integer.valueOf(cntrwkDtlVO.getOUTSRCCT()) + Integer.valueOf(value);
+								cntrwkDtlVO.setCNTRWK_AMOUNT(String.valueOf(CNTRWK_AMOUNT));
+							}else {
+								resultMsg = column + " 칼럼은 필수항목입니다.";
+								return resultMsg;
+							}	
 						} catch (Exception e) {
 							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
 							return resultMsg;
@@ -630,7 +644,7 @@ public class CntrwkDtlController extends BaseController {
 						break;
 
 					case "세부위치":
-						if (value == null) {
+						if (value == "") {
 							resultMsg = column + " 칼럼은 필수항목입니다.";
 							return resultMsg;
 						} else {
@@ -639,7 +653,7 @@ public class CntrwkDtlController extends BaseController {
 						break;
 
 					case "도로명":
-						if (value == null) {
+						if (value == "") {
 							resultMsg = column + " 칼럼은 필수항목입니다.";
 							return resultMsg;
 						} else {
@@ -649,11 +663,16 @@ public class CntrwkDtlController extends BaseController {
 
 					case "포장공법":
 						try {
-							// 포장공법코드를 가져오는 쿼리문
-							rpairMthdVO.setMSRC_CL_NM(value);
-							rpairMthdVO = rpairMthdService.selectRpairMthdCode(rpairMthdVO);
+							if(value != "") {
+								// 포장공법코드를 가져오는 쿼리문
+								rpairMthdVO.setMSRC_CL_NM(value);
+								rpairMthdVO = rpairMthdService.selectRpairMthdCode(rpairMthdVO);
 
-							cntrwkDtlVO.setRPAIR_MTHD_CODE(rpairMthdVO.getRPAIR_MTHD_CODE());
+								cntrwkDtlVO.setRPAIR_MTHD_CODE(rpairMthdVO.getRPAIR_MTHD_CODE());
+							}else {
+								resultMsg = column + " 칼럼은 필수항목입니다.";
+								return resultMsg;
+							}
 						} catch (Exception e) {
 							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
 							return resultMsg;
@@ -661,7 +680,7 @@ public class CntrwkDtlController extends BaseController {
 						break;
 
 					case "포장두께(표층)":
-						if (value == null) {
+						if (value == "") {
 							resultMsg = column + " 칼럼은 필수항목입니다.";
 							return resultMsg;
 						} else {
@@ -670,7 +689,7 @@ public class CntrwkDtlController extends BaseController {
 						break;
 
 					case "포장두께(중간층)":
-						if (value == null) {
+						if (value == "") {
 							resultMsg = column + " 칼럼은 필수항목입니다.";
 							return resultMsg;
 						} else {
@@ -679,7 +698,7 @@ public class CntrwkDtlController extends BaseController {
 						break;
 
 					case "포장두께(기층)":
-						if (value == null) {
+						if (value == "") {
 							resultMsg = column + " 칼럼은 필수항목입니다.";
 							return resultMsg;
 						} else {
@@ -689,11 +708,16 @@ public class CntrwkDtlController extends BaseController {
 
 					case "포장재료(표층)":
 						try {
-							// 포장재료코드를 가져오는 쿼리문
-							pavMatrlVO.setPAV_MATRL_NM(value);
-							pavMatrlVO = pavMatrlService.selectPavMatrlCode(pavMatrlVO);
+							if(value != "") {
+								// 포장재료코드를 가져오는 쿼리문
+								pavMatrlVO.setPAV_MATRL_NM(value);
+								pavMatrlVO = pavMatrlService.selectPavMatrlCode(pavMatrlVO);
 
-							cntrwkDtlVO.setPAV_MATRL_ASCON_CODE(pavMatrlVO.getPAV_MATRL_CODE());
+								cntrwkDtlVO.setPAV_MATRL_ASCON_CODE(pavMatrlVO.getPAV_MATRL_CODE());
+							}else {
+								resultMsg = column + " 칼럼은 필수항목입니다.";
+								return resultMsg;
+							}
 						} catch (Exception e) {
 							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
 							return resultMsg;
@@ -702,23 +726,15 @@ public class CntrwkDtlController extends BaseController {
 						break;
 
 					case "포장재료(중간층)":
-						if (value == null) {
-							value = "";
-						} else {
-							cntrwkDtlVO.setPAV_MATRL_CNTR_NM(value);
-						}
+						cntrwkDtlVO.setPAV_MATRL_CNTR_NM(value);
 						break;
 
 					case "포장재료(기층)":
-						if (value == null) {
-							value = "";
-						} else {
-							cntrwkDtlVO.setPAV_MATRL_BASE_NM(value);
-						}
+						cntrwkDtlVO.setPAV_MATRL_BASE_NM(value);					
 						break;
 
 					case "공사시간":
-						if (value == null) {
+						if (value == "") {
 							resultMsg = column + " 칼럼은 필수항목입니다.";
 							return resultMsg;
 						} else {
@@ -727,11 +743,7 @@ public class CntrwkDtlController extends BaseController {
 						break;
 
 					case "비고":
-						if (value == null) {
-							value = "";
-						} else {
-							cntrwkDtlVO.setRM(value);
-						}
+						cntrwkDtlVO.setRM(value);						
 						break;
 
 					}
