@@ -7,6 +7,7 @@ package kr.go.gg.gpms.cntrwkdtl.web;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,11 +15,14 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Resource;
+import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.ss.formula.eval.ErrorEval;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -485,7 +489,7 @@ public class CntrwkDtlController  extends BaseController {
 			
 			String filePath = pathInfoProperties.getProperty("file.upload.path");
 			List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwkDtl", files);
-				
+			
 			Map<String, String> map = new HashMap<>();
 
 			try {
@@ -511,153 +515,98 @@ public class CntrwkDtlController  extends BaseController {
 						
 						for(int j = 0; j < rows.getLastCellNum(); j++) {
 							
-							//column은 고정
+							// column은 고정
 							String column = sheet.getRow(0).getCell(j).getStringCellValue();	
 							
 							// value는 column 다음 row부터 
 							XSSFCell cell = sheet.getRow(i).getCell(j);
-						
 							List<CompanyVO> company = getCompanyList();
 							String value = "";
 							
-							//validation check 
-							
-							/*switch(cell.getCellType()) {
-								case XSSFCell.CELL_TYPE_STRING:
+							// Validation Check - Cell Type
+							if(cell == null) {
+								value = "";
+							}else {
+								switch (cell.getCellType()) {
+								case Cell.CELL_TYPE_STRING:
 									value = cell.getStringCellValue();
 									break;
-								case XSSFCell.CELL_TYPE_NUMERIC:
-									cell.setCellType(HSSFCell.CELL_TYPE_STRING);
-									value = cell.getStringCellValue();
+
+								case Cell.CELL_TYPE_NUMERIC:
+									value = String.valueOf(cell.getNumericCellValue());
 									break;
-								case XSSFCell.CELL_TYPE_BLANK:
-									value = " ";
+								
+								case Cell.CELL_TYPE_BLANK:
+									value = "";
 									break;
+									
+								case Cell.CELL_TYPE_ERROR:
+									
+									resultMsg = "오류가 발생하였습니다." +cell.getErrorCellValue();
+									model.addAttribute("resultMsg",  resultMsg);
+
+									return "jsonView";
+								}
 							}
-								switch (column) {
-							case "사업소":
-								uploadCntrwkVO.setDEPT_CODE(value);
+							
+							// Validation Check - Cell Value Check
+							
+							switch (column) {
+							case "도급비":
+								cntrwkDtlVO.setOUTSRCCT(value);
 								break;
-								case "공사년도":
-								uploadCntrwkVO.setCNTRWK_YEAR(value);
+								
+							case "관급비":
+								cntrwkDtlVO.setGVSLCT(value);
 								break;
 							
-							case "반기구분":
-								if(value.equals("상반기")) {
-									value = "HTSE0001";
-									uploadCntrwkVO.setHT_SE(value);
-								}else if(value.equals("하반기")) {
-									value = "HTSE0002";
-									cntrwkVO.setHT_SE(value);
-								}else {
-									resultMsg = column +" 컬럼의" + value + " 오류 발생.";
-									map.put("resultMsg", resultMsg);
-									return map;
-								}							
+							case "세부위치":
+								cntrwkDtlVO.setDETAIL_CNTRWK_NM(value);
 								break;
 								
-							case "공사구분":
-								if(value.equals("노후포장도로정비")) {
-									value = "CWSE0001";
-									uploadCntrwkVO.setCNTRWK_SE(value);
-								}else if(value.equals("긴급복구 연간단가")) {
-									value = "CWSE0002";
-									uploadCntrwkVO.setCNTRWK_SE(value);
-								}else if(value.equals("굴착복구공사(사후정비비)")) {
-									value = "CWSE0003";
-									uploadCntrwkVO.setCNTRWK_SE(value);
-								}else if(value.equals("기타")) {
-									value = "CWSE0006";
-									uploadCntrwkVO.setCNTRWK_SE(value);
-								}else {
-									resultMsg = column +" 컬럼의" + value + " 오류 발생.";
-									map.put("resultMsg", resultMsg);
-									return map;
-								}
+							case "도로명":
+								cntrwkDtlVO.setROAD_NM(value);
 								break;
 								
-							case "공사분류":
-								uploadCntrwkVO.setCNTRWK_CL(value);
+							case "포장공법":
+								//코드 찾아오는 쿼리문 추가
+								break;	
+								
+							case "포장두께(표층)":
+								cntrwkDtlVO.setRPAIR_THICK_ASCON(value);
 								break;
 								
-							case "공사명":
-								uploadCntrwkVO.setFULL_CNTRWK_NM(value);
+							case "포장두께(중간층)":
+								cntrwkDtlVO.setRPAIR_THICK_CNTR(value);
 								break;
 								
-							case "착공일":
-								if(value.length() > 8) {
-									String format = String.valueOf(value.charAt(4));
+							case "포장두께(기층)":
+								cntrwkDtlVO.setRPAIR_THICK_BASE(value);
+								break;	
+								
+							case "포장재료(표층)":
+								cntrwkDtlVO.setPAV_MATRL_ASCON_NM(value);
+								break;
+								
+							case "포장재료(중간층)":
+								cntrwkDtlVO.setPAV_MATRL_CNTR_NM(value);
+								break;
+								
+							case "포장재료(기층)":
+								cntrwkDtlVO.setPAV_MATRL_BASE_NM(value);
+								break;
+								
+							case "공사시간":
+								cntrwkDtlVO.setCNTRWK_TIME(value);
+								break;
+								
+							case "비고":
+								cntrwkDtlVO.setRM(value);
+								break;
 									
-									if(format.equals(".") || format.equals(",") || format.equals("/")) {
-										value = value.replace(format, "");
-										uploadCntrwkVO.setSTRWRK_DE(value);
-									}else {
-										System.out.println("value.subString(4)"+ value.substring(4).toString());
-										resultMsg = column +" 컬럼의" + value + " 오류 발생.";
-										map.put("resultMsg", resultMsg);
-										return map;
-									}
-								}
+							default:
 								break;
-								
-							case "준공일":
-								if(value.length() > 8) {
-									String format = String.valueOf(value.charAt(4));
-			
-									if(format.equals(".") || format.equals(",") || format.equals("/")) {
-										value = value.replace(format, "");
-										uploadCntrwkVO.setCOMPET_DE(value);
-									}else {
-										resultMsg = column +" 컬럼의" + value + " 오류 발생.";
-										map.put("resultMsg", resultMsg);
-										return map;
-									}
-								}
-								break;
-								
-							case "시공사":				
-								for(int c = 0; c < company.size(); c++) {
-									System.out.println("------company---------"+company.get(c).getCO_NM());
-									if(company.get(c).getCO_NM().equals(value)) {
-										uploadCntrwkVO.setCNSTRCT_CO_NM(value);
-										uploadCntrwkVO.setCNSTRCT_CO_NO(company.get(c).getCO_NO());
-										break;
-									}
-									
-								}
-								break;
-							case "시공사 대표자":
-								uploadCntrwkVO.setCNSTRCT_CO_RPRSNTV_NM(value);
-								break;
-								
-							case "시공사 대표번호":
-								if(value.length() == 11 || value.length() == 13) {								
-									value = value.replaceAll("-","");								
-									uploadCntrwkVO.setCNSTRCT_CO_TELNO(value);
-								} else {
-									resultMsg = column +" 컬럼의" + value + " 오류 발생.";
-									map.put("resultMsg", resultMsg);
-									return map;
-								}
-				
-								break;
-								
-							case "총 공사연장(km)":
-								uploadCntrwkVO.setTRACK_LEN(value);
-								break;
-								
-							case "총 보수금액(천원)":
-								uploadCntrwkVO.setTOT_AMOUNT(value);
-								break;
-								
-							case "총 공사면적(m²)":
-								uploadCntrwkVO.setRPAIR_AR(value);
-								break;
-								
-							case "포장두께":
-								uploadCntrwkVO.setRPAIR_THICK_DC(value);
-								break;
-							}*/
+							}
 							
 						}
 						
@@ -674,7 +623,7 @@ public class CntrwkDtlController  extends BaseController {
 				}	
 				
 				
-			} catch (Exception e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 				resultMsg = "등록에 실패하였습니다.";
 				model.addAttribute("resultMsg",  resultMsg);

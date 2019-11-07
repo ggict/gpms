@@ -237,7 +237,7 @@
 	        	<form id="cellFrm2">
                 <input type="hidden" id="CELL_IDS" name="CELL_IDS" value=""/>
                 <div class="titbx mt20">
-                    <h4>셀 선택</h4>
+                    <h4>이전 공사이력</h4>
                    
                         <div id="div_grid2" style="width:100%; height:240px;">
                             <table id="gridArea2"></table>
