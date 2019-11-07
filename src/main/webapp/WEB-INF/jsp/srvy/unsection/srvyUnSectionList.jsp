@@ -102,7 +102,9 @@ $( document ).ready(function() {
         ,colModel:[
             {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
             ,{name:'SRVY_YEAR',index:'SRVY_YEAR', hidden: true}
-            ,{name:'ROAD_NO',index:'ROAD_NO', align:'center', width:50, sortable:true}
+            ,{name:'ROAD_NO',index:'ROAD_NO', align:'center', width:50, sortable:true, formatter: function(val, opt, row){
+            	return (val) ? val * 1 : '';
+            }}
             ,{name:'ROAD_NAME',index:'ROAD_NAME', align:'center', width:100, sortable:true}
             ,{name:'ST_POINT',index:'ST_POINT', align:'left', width:120, sortable:true}
             ,{name:'ED_POINT',index:'ED_POINT', align:'left', width:120, sortable:true}
