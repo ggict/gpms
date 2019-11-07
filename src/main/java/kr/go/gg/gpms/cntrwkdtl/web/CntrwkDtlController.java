@@ -8,7 +8,9 @@ package kr.go.gg.gpms.cntrwkdtl.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -475,7 +477,7 @@ public class CntrwkDtlController  extends BaseController {
 		@RequestMapping(value = "/cntrwkdtl/cntrwkDtlExcelUpload.do", method=RequestMethod.POST)
 		public String excelUpload(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
 			String resultMsg = "";
-			String filePathNm = "";		
+			String filePathNm = "";	
 			String userNo = sessionManager.getUserNo();
 			
 			/** validate request type */
@@ -495,9 +497,12 @@ public class CntrwkDtlController  extends BaseController {
 			try {
 					for (AttachFileVO file : fileList) {
 					
-					filePathNm = checkFilePath(filePath, "path") + File.separator + checkFilePath(file.getORGINL_FILE_NM(),"name");
-					filePathNm = filePathNm.replace("/", File.separator).replace("\\\\", File.separator);
-					
+					Date currentDate = new Date();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					String date = sdf.format(currentDate);	
+						
+					filePathNm = checkFilePath(filePath, "path") + File.separator + "cntrwkDtl" +
+								File.separator + date + File.separator + checkFilePath(file.getFILE_NM(),"name");
 					
 					//파일경로
 					FileInputStream fis = new FileInputStream(filePathNm);
