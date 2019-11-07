@@ -295,5 +295,24 @@ PAV_MATRL_NM = #PAV_MATRL_NM# /* 포장재료코드.포장_재료_명 */
 <![CDATA[		
 ]]>		
 	</select>
+	
+	<select id="pavMatrlDAO.selectPavMatrlCode" resultClass="pavMatrlVO">
+	<![CDATA[ 
+		/* pavMatrlDAO.selectPavMatrl */
+		/* 포장재료코드 조회 */
+		SELECT
+			tcpavmatrl.PAV_MATRL_CODE /* 포장재료코드.포장_재료_코드 */
+			, tcpavmatrl.PAV_MATRL_NM /* 포장재료코드.포장_재료_명 */
+			, tcpavmatrl.DELETE_AT /* 포장재료코드.삭제_여부 */
+			, tcpavmatrl.USE_AT /* 포장재료코드.사용_여부 */
+			, tcpavmatrl.CRTR_NO /* 포장재료코드.생성자_번호 */
+			, tcpavmatrl.CREAT_DT /* 포장재료코드.생성_일시 */
+			, tcpavmatrl.UPDUSR_NO /* 포장재료코드.수정자_번호 */
+			, tcpavmatrl.UPDT_DT /* 포장재료코드.수정_일시 */
+		FROM TC_PAV_MATRL tcpavmatrl
+		WHERE 1 = 1
+		AND tcpavmatrl.PAV_MATRL_NM = #PAV_MATRL_NM# /* 포장재료코드.포장_재료_코드 */
+]]>
+	</select>
 
 </sqlMap>

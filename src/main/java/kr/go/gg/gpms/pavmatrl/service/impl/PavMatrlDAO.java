@@ -88,5 +88,14 @@ public class PavMatrlDAO extends BaseDAO {
 	public int selectPavMatrlListTotalCount(PavMatrlVO pavMatrlVO) {
 		return (Integer) select("pavMatrlDAO.selectPavMatrlListTotalCount", pavMatrlVO);
 	}
-
+	
+	/**
+	 * 포장재료코드(TC_PAV_MATRL)를 포장재료명으로 조회한다.
+	 * @param pavMatrlVO - 조회할 정보가 담긴 PavMatrlVO
+	 * @return 조회한 TC_PAV_MATRL
+	 * @exception Exception
+	 */
+	public PavMatrlVO selectPavMatrlCode(PavMatrlVO pavMatrlVO) throws Exception {
+		return (PavMatrlVO) select("pavMatrlDAO.selectPavMatrlCode", pavMatrlVO);
+	}
 }

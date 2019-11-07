@@ -102,5 +102,15 @@ public class RpairMthdServiceImpl extends AbstractServiceImpl implements RpairMt
 	public int selectRpairMthdListTotalCount(RpairMthdVO rpairMthdVO) {
 		return rpairMthdDAO.selectRpairMthdListTotalCount( rpairMthdVO);
 	}
-
+	
+	/**
+	 * 보수공법코드(TC_RPAIR_MTHD)를 보수공법명으로 조회한다.
+	 * @param rpairMthdVO - 조회할 정보가 담긴 RpairMthdVO
+	 * @return 조회한 TC_RPAIR_MTHD
+	 * @exception Exception
+	 */
+	public RpairMthdVO selectRpairMthdCode(RpairMthdVO rpairMthdVO) throws Exception {
+		RpairMthdVO resultVO = rpairMthdDAO.selectRpairMthdCode( rpairMthdVO);
+		return resultVO;
+	}
 }

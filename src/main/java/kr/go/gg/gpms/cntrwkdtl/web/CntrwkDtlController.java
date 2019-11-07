@@ -1,12 +1,9 @@
 
-
 package kr.go.gg.gpms.cntrwkdtl.web;
-
-
-
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -78,8 +75,6 @@ import kr.go.gg.gpms.pavmatrl.service.model.PavMatrlVO;
 import kr.go.gg.gpms.rpairmthd.service.RpairMthdService;
 import kr.go.gg.gpms.rpairmthd.service.model.RpairMthdVO;
 
-
-
 /**
  * @Class Name : CntrwkDtlController.java
  * @Description : CntrwkDtl Controller class
@@ -90,11 +85,11 @@ import kr.go.gg.gpms.rpairmthd.service.model.RpairMthdVO;
  * @version 1.0
  * @see
  *
- *  Copyright (C)  All right reserved.
+ * 		Copyright (C) All right reserved.
  */
 
 @Controller("cntrwkDtlController")
-public class CntrwkDtlController  extends BaseController {
+public class CntrwkDtlController extends BaseController {
 
 	@Resource(name = "cntrwkDtlService")
 	private CntrwkDtlService cntrwkDtlService;
@@ -119,25 +114,31 @@ public class CntrwkDtlController  extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlList"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDtlList.do" })
-	public String selectCntrwkDtlList(CntrwkDtlVO cntrwkDtlVO, ModelMap model,HttpServletRequest request) throws Exception {
+	public String selectCntrwkDtlList(CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpServletRequest request)
+			throws Exception {
 
-		return "/cntrwkdtl/cntrwkdtlList" ;
+		return "/cntrwkdtl/cntrwkdtlList";
 	}
-
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlList"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkDtlList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody List<CntrwkDtlVO> selectCntrwkDtlListRest(@RequestBody CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpSession session) throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkDtlList.do" }, method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody List<CntrwkDtlVO> selectCntrwkDtlListRest(@RequestBody CntrwkDtlVO cntrwkDtlVO, ModelMap model,
+			HttpSession session) throws Exception {
 		cntrwkDtlVO.setPageUnit(egovPropertyService.getInt("pageUnit"));
 		cntrwkDtlVO.setPageSize(egovPropertyService.getInt("pageSize"));
 
@@ -154,15 +155,18 @@ public class CntrwkDtlController  extends BaseController {
 		return items;
 	}
 
-
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlList"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDtlListPage.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody Map<String, Object>  selectCntrwkDtlListPage(@RequestBody CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDtlListPage.do" }, method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Map<String, Object> selectCntrwkDtlListPage(@RequestBody CntrwkDtlVO cntrwkDtlVO,
+			ModelMap model, HttpServletRequest request) throws Exception {
 		cntrwkDtlVO.setPageUnit(egovPropertyService.getInt("pageUnit"));
 		cntrwkDtlVO.setPageSize(egovPropertyService.getInt("pageSize"));
 
@@ -175,7 +179,7 @@ public class CntrwkDtlController  extends BaseController {
 		cntrwkDtlVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		cntrwkDtlVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		//cntrwkDtlVO.setCNTRWK_ID(request.getParameter("CNTRWK_ID"));
+		// cntrwkDtlVO.setCNTRWK_ID(request.getParameter("CNTRWK_ID"));
 		List<CntrwkDtlVO> items = cntrwkDtlService.selectCntrwkDtlList(cntrwkDtlVO);
 		int total_count = cntrwkDtlService.selectCntrwkDtlListTotalCount(cntrwkDtlVO);
 		int total_page = 0;
@@ -194,12 +198,16 @@ public class CntrwkDtlController  extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlList"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = {  "/api/cntrwkdtl/selectCntrwkDtlListPage.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public  @ResponseBody List<CntrwkDtlVO>  selectCntrwkDtlListPageRest(@RequestBody  CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpSession session) throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkDtlListPage.do" }, method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody List<CntrwkDtlVO> selectCntrwkDtlListPageRest(@RequestBody CntrwkDtlVO cntrwkDtlVO,
+			ModelMap model, HttpSession session) throws Exception {
 		cntrwkDtlVO.setPageUnit(egovPropertyService.getInt("pageUnit"));
 		cntrwkDtlVO.setPageSize(egovPropertyService.getInt("pageSize"));
 
@@ -218,12 +226,16 @@ public class CntrwkDtlController  extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 상세를 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlView"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkDtl.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody CntrwkDtlVO selectCntrwkDtlRest(@RequestBody  CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpSession session) throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkDtl.do" }, method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody CntrwkDtlVO selectCntrwkDtlRest(@RequestBody CntrwkDtlVO cntrwkDtlVO, ModelMap model,
+			HttpSession session) throws Exception {
 
 		CntrwkDtlVO cntrwkDtlVOOne = cntrwkDtlService.selectCntrwkDtl(cntrwkDtlVO);
 
@@ -236,19 +248,20 @@ public class CntrwkDtlController  extends BaseController {
 	private PavMatrlService pavMatrlService;
 
 	@RequestMapping(value = { "/cntrwkdtl/addCntrwkDtlView.do" })
-	public String addCntrwkDtlView(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, ModelMap model) throws Exception {
+	public String addCntrwkDtlView(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, ModelMap model)
+			throws Exception {
 		model.addAttribute("cntrwkDtlVO", new CntrwkDtlVO());
 		CntrwkVO cntrwkVO = new CntrwkVO();
 		cntrwkVO.setCNTRWK_ID(cntrwkDtlVO.getCNTRWK_ID());
 		model.addAttribute("cntrwkVO", cntrwkService.selectCntrwk(cntrwkVO));
 
-		Integer cntrwk_start_year  = egovPropertyService.getInt("CNTRWK_START_YEAR", 2017);
+		Integer cntrwk_start_year = egovPropertyService.getInt("CNTRWK_START_YEAR", 2017);
 		model.addAttribute("cntrwkYears", getYears(cntrwk_start_year));
 		// 반기구분코드
 		addCodeToModel("HTSE", model);
-		//공사 구분
+		// 공사 구분
 		addCodeToModel("CWSE", model);
-		//날씨 구분
+		// 날씨 구분
 		addCodeToModel("WETH", model);
 
 		PavMatrlVO pavMatrlVOParam = new PavMatrlVO();
@@ -260,32 +273,31 @@ public class CntrwkDtlController  extends BaseController {
 		List<RpairMthdVO> rpairMthdItems = rpairMthdService.selectRpairMthdList(rpairMthdVOParam);
 		model.addAttribute("RpairMthds", rpairMthdItems);
 
-		//공사 업체
+		// 공사 업체
 		model.addAttribute("companyList", getCompanyList());
 
 		return "/cntrwkdtl/cntrwkdtlRegist";
 	}
 
-
-
 	@RequestMapping(value = { "/cntrwkdtl/updateCntrwkDtlView.do" })
-	public String updateCntrwkDtlView(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, ModelMap model, BindingResult bindingResult) throws Exception {
+	public String updateCntrwkDtlView(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, ModelMap model,
+			BindingResult bindingResult) throws Exception {
 		model.addAttribute("cntrwkDtlVO", cntrwkDtlService.selectCntrwkDtl(cntrwkDtlVO));
 		CntrwkVO cntrwkVO = new CntrwkVO();
 		cntrwkVO.setCNTRWK_ID(cntrwkDtlVO.getCNTRWK_ID());
 		model.addAttribute("cntrwkVO", cntrwkService.selectCntrwk(cntrwkVO));
-		
+
 		CntrwkCellInfoVO cntrwkCellInfoVO = new CntrwkCellInfoVO();
 		cntrwkCellInfoVO.setDETAIL_CNTRWK_ID(cntrwkDtlVO.getDETAIL_CNTRWK_ID());
 		model.addAttribute("cntrwkCellInfoList", cntrwkCellInfoService.selectCntrwkCellInfoList(cntrwkCellInfoVO));
 
-		Integer cntrwk_start_year  = egovPropertyService.getInt("CNTRWK_START_YEAR", 2017);
+		Integer cntrwk_start_year = egovPropertyService.getInt("CNTRWK_START_YEAR", 2017);
 		model.addAttribute("cntrwkYears", getYears(cntrwk_start_year));
 		// 반기구분코드
 		addCodeToModel("HTSE", model);
-		//공사 구분
+		// 공사 구분
 		addCodeToModel("CWSE", model);
-		//날씨 구분
+		// 날씨 구분
 		addCodeToModel("WETH", model);
 
 		PavMatrlVO pavMatrlVOParam = new PavMatrlVO();
@@ -297,17 +309,19 @@ public class CntrwkDtlController  extends BaseController {
 		List<RpairMthdVO> rpairMthdItems = rpairMthdService.selectRpairMthdList(rpairMthdVOParam);
 		model.addAttribute("RpairMthds", rpairMthdItems);
 
-		//공사 업체
+		// 공사 업체
 		model.addAttribute("companyList", getCompanyList());
 
 		return "/cntrwkdtl/cntrwkdtlUpdate";
 	}
 
-	@RequestMapping(value = { "/cntrwkdtl/addCntrwkDtl.do"  })
-	public String addCntrwkDtl(@ModelAttribute CntrwkDtlVO cntrwkDtlVO, CntrwkCellInfoVO cntrwkCellInfoVO, BindingResult bindingResult, Model model, HttpServletRequest request, SessionStatus status, HttpSession session) throws Exception {
+	@RequestMapping(value = { "/cntrwkdtl/addCntrwkDtl.do" })
+	public String addCntrwkDtl(@ModelAttribute CntrwkDtlVO cntrwkDtlVO, CntrwkCellInfoVO cntrwkCellInfoVO,
+			BindingResult bindingResult, Model model, HttpServletRequest request, SessionStatus status,
+			HttpSession session) throws Exception {
 		Map<String, String> req = requestToHashMap(request);
 
-		String action_flag = StringUtils.isNotEmpty(req.get("action_flag"))? req.get("action_flag").trim():"INSERT" ;
+		String action_flag = StringUtils.isNotEmpty(req.get("action_flag")) ? req.get("action_flag").trim() : "INSERT";
 		// common 결과처리 변수 [수정X]
 		String resultCode = "";
 		String resultMsg = "";
@@ -322,14 +336,15 @@ public class CntrwkDtlController  extends BaseController {
 			BindBeansToActiveUser(cntrwkDtlVO);
 
 			String cntrwkDtlId = cntrwkDtlService.insertCntrwkDtl(cntrwkDtlVO);
-			//위치 정보 등록
+			// 위치 정보 등록
 			String cellIdList[] = cntrwkCellInfoVO.getPAV_CELL_ID().split(",");
-			String pavYear = cntrwkDtlVO.getRPAIR_END_DE() == null ? "": cntrwkDtlVO.getRPAIR_END_DE().toString().substring(0,4);
+			String pavYear = cntrwkDtlVO.getRPAIR_END_DE() == null ? ""
+					: cntrwkDtlVO.getRPAIR_END_DE().toString().substring(0, 4);
 
 			cntrwkCellInfoVO.setDETAIL_CNTRWK_ID(cntrwkDtlId);
 			cntrwkCellInfoVO.setPAV_YEAR(pavYear);
 
-			for(String cellId : cellIdList){
+			for (String cellId : cellIdList) {
 				cntrwkCellInfoVO.setPAV_CELL_ID(cellId);
 				cntrwkCellInfoService.insertCntrwkCellInfo(cntrwkCellInfoVO);
 			}
@@ -338,25 +353,27 @@ public class CntrwkDtlController  extends BaseController {
 			cntrwkDtlVO.setResultSuccess("true");
 			cntrwkDtlVO.setResultMSG("정상 등록되었습니다.");
 			// 결과 처리용 [수정X]
-	    	model.addAttribute("resultCode", resultCode);
-	    	model.addAttribute("resultMsg", resultMsg);
-	    	model.addAttribute("callBackFunction", StringUtils.isNotEmpty(cntrwkDtlVO.getCallBackFunction()) ?
-	    			cntrwkDtlVO.getCallBackFunction().trim():"" );	// 처리후 호출 함수
+			model.addAttribute("resultCode", resultCode);
+			model.addAttribute("resultMsg", resultMsg);
+			model.addAttribute("callBackFunction",
+					StringUtils.isNotEmpty(cntrwkDtlVO.getCallBackFunction()) ? cntrwkDtlVO.getCallBackFunction().trim()
+							: ""); // 처리후 호출 함수
 
-	    	status.setComplete();	//Double Submit 방지
+			status.setComplete(); // Double Submit 방지
 		} catch (Exception e) {
 			resultCode = "ERROR";
-    		resultMsg = "등록 오류 발생";
-    		LOGGER.error("공사등록 오류", e);
+			resultMsg = "등록 오류 발생";
+			LOGGER.error("공사등록 오류", e);
 		}
 
 		return "/cmmn/commonMsg";
 
-
 	}
 
-	@RequestMapping(value = {  "/api/cntrwkdtl/addCntrwkDtl.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody CntrwkDtlVO addCntrwkDtlRest(@RequestBody CntrwkDtlVO cntrwkDtlVO, HttpSession session) throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/addCntrwkDtl.do" }, method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody CntrwkDtlVO addCntrwkDtlRest(@RequestBody CntrwkDtlVO cntrwkDtlVO, HttpSession session)
+			throws Exception {
 		BindBeansToActiveUser(cntrwkDtlVO);
 		cntrwkDtlService.insertCntrwkDtl(cntrwkDtlVO);
 		cntrwkDtlVO.setResultSuccess("true");
@@ -366,17 +383,19 @@ public class CntrwkDtlController  extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 상세를 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlView"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDtl.do"  })
-	public String selectCntrwkDtl(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, AttachFileVO attachFileVO, ModelMap model,  BindingResult bindingResult) throws Exception {
+	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDtl.do" })
+	public String selectCntrwkDtl(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, AttachFileVO attachFileVO,
+			ModelMap model, BindingResult bindingResult) throws Exception {
 		model.addAttribute("cntrwkDtlVO", cntrwkDtlService.selectCntrwkDtl(cntrwkDtlVO));
 
 		return "/cntrwkdtl/cntrwkdtlView";
 	}
-
 
 	@RequestMapping(value = { "/cntrwkdtl/updateCntrwkDtl.do" })
 	public String updateCntrwkDtl(CntrwkDtlVO cntrwkDtlVO) throws Exception {
@@ -387,33 +406,34 @@ public class CntrwkDtlController  extends BaseController {
 		return "redirect:/cntrwkdtl/selectCntrwkDtlList.do";
 	}
 
-	@RequestMapping(value = { "/api/cntrwkdtl/updateCntrwkDtl.do" }, method = {RequestMethod.GET, RequestMethod.POST} )
-	public String updateCntrwkDtlRest(CntrwkDtlVO cntrwkDtlVO, CntrwkCellInfoVO cntrwkCellInfoVO, BindingResult bindingResult, HttpServletRequest request, ModelMap model) throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/updateCntrwkDtl.do" }, method = { RequestMethod.GET, RequestMethod.POST })
+	public String updateCntrwkDtlRest(CntrwkDtlVO cntrwkDtlVO, CntrwkCellInfoVO cntrwkCellInfoVO,
+			BindingResult bindingResult, HttpServletRequest request, ModelMap model) throws Exception {
 		String resultCode = "";
 		String resultMsg = "";
-		String funCallback = cntrwkDtlVO.getCallBackFunction() == null ? ""
-				: cntrwkDtlVO.getCallBackFunction();
+		String funCallback = cntrwkDtlVO.getCallBackFunction() == null ? "" : cntrwkDtlVO.getCallBackFunction();
 
 		String fileNo_before = getFileNo(request, "file_before", "cntrwkDtl");
-		if(fileNo_before != null){
+		if (fileNo_before != null) {
 			cntrwkDtlVO.setOPERT_BFE_PHOTO_NO(fileNo_before);
 		}
 		String fileNo_after = getFileNo(request, "file_after", "cntrwkDtl");
-		if(fileNo_after != null){
+		if (fileNo_after != null) {
 			cntrwkDtlVO.setOPERT_AFT_PHOTO_NO(fileNo_after);
 		}
 		String fileNo_no = getFileNo(request, "file_no", "cntrwkDtl");
-		if(fileNo_no != null){
+		if (fileNo_no != null) {
 			cntrwkDtlVO.setFILE_NO(fileNo_no);
 		}
 
 		BindBeansToActiveUser(cntrwkDtlVO);
 		cntrwkDtlService.updateCntrwkDtl(cntrwkDtlVO);
 
-		//위치 정보 등록
-		if(cntrwkCellInfoVO.getPAV_CELL_ID() != null && !cntrwkCellInfoVO.getPAV_CELL_ID().equals("")){
+		// 위치 정보 등록
+		if (cntrwkCellInfoVO.getPAV_CELL_ID() != null && !cntrwkCellInfoVO.getPAV_CELL_ID().equals("")) {
 			String cellIdList[] = cntrwkCellInfoVO.getPAV_CELL_ID().split(",");
-			String pavYear = cntrwkDtlVO.getRPAIR_END_DE() == null ? "": cntrwkDtlVO.getRPAIR_END_DE().toString().substring(0,4);
+			String pavYear = cntrwkDtlVO.getRPAIR_END_DE() == null ? ""
+					: cntrwkDtlVO.getRPAIR_END_DE().toString().substring(0, 4);
 
 			cntrwkCellInfoVO.setPAV_CELL_ID("");
 			cntrwkCellInfoVO.setDETAIL_CNTRWK_ID(cntrwkDtlVO.getDETAIL_CNTRWK_ID());
@@ -421,7 +441,7 @@ public class CntrwkDtlController  extends BaseController {
 
 			cntrwkCellInfoVO.setPAV_YEAR(pavYear);
 
-			for(String cellId : cellIdList){
+			for (String cellId : cellIdList) {
 				cntrwkCellInfoVO.setPAV_CELL_ID(cellId);
 				cntrwkCellInfoService.insertCntrwkCellInfo(cntrwkCellInfoVO);
 			}
@@ -442,12 +462,14 @@ public class CntrwkDtlController  extends BaseController {
 		BindBeansToActiveUser(cntrwkDtlVO);
 		cntrwkDtlService.deleteCntrwkDtl(cntrwkDtlVO);
 		model.addAttribute("resultCode", "DELETE_SUCCESS");
-    	model.addAttribute("resultMsg", "정상 삭제되었습니다.");
+		model.addAttribute("resultMsg", "정상 삭제되었습니다.");
 		return "/cmmn/commonMsg";
 	}
 
-	@RequestMapping(value = {   "/api/cntrwkdtl/deleteCntrwkDtl.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody CntrwkDtlVO deleteCntrwkDtlRest(@RequestBody CntrwkDtlVO cntrwkDtlVO, FlawCntrwkVO flawCntrwkVO, CntrwkCellInfoVO cntrwkCellInfoVO, HttpSession session) throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/deleteCntrwkDtl.do" }, method = RequestMethod.POST, consumes = {
+			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody CntrwkDtlVO deleteCntrwkDtlRest(@RequestBody CntrwkDtlVO cntrwkDtlVO,
+			FlawCntrwkVO flawCntrwkVO, CntrwkCellInfoVO cntrwkCellInfoVO, HttpSession session) throws Exception {
 		BindBeansToActiveUser(cntrwkDtlVO);
 
 		BindBeansToActiveUser(flawCntrwkVO);
@@ -463,251 +485,358 @@ public class CntrwkDtlController  extends BaseController {
 		cntrwkDtlVO.setResultMSG("정상 삭제되었습니다.");
 		return cntrwkDtlVO;
 	}
-	
-	//포장공사 이력 엑셀 업로드 화면
-		@RequestMapping(value = {"/cntrwkdtl/cntrwkDtlExcelUploadForm.do"})
-		public String excelUploadForm(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO,  ModelMap model,  BindingResult bindingResult) throws Exception {
-			
-			model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
-			
-			return "/cntrwkdtl/cntrwkdtlExcelUpload";
-		}
-			
-		//포장공사 이력 엑셀 업로드 
-		@RequestMapping(value = "/cntrwkdtl/cntrwkDtlExcelUpload.do", method=RequestMethod.POST)
-		public String excelUpload(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
-			String resultMsg = "";
-			String filePathNm = "";	
-			String userNo = sessionManager.getUserNo();
-			
-			/** validate request type */
-			Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
-			final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-			
-			/** extract files */
-			final List<MultipartFile> files = multiRequest.getFiles("files");
-			Assert.notNull(files, "files is null");
-			Assert.state(files.size() > 0, "0 files exist");
-			
-			String filePath = pathInfoProperties.getProperty("file.upload.path");
-			List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwkDtl", files);
-			
-			Map<String, String> map = new HashMap<>();
 
-			try {
-					for (AttachFileVO file : fileList) {
-					
-					Date currentDate = new Date();
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-					String date = sdf.format(currentDate);	
-						
-					filePathNm = checkFilePath(filePath, "path") + File.separator + "cntrwkDtl" +
-								File.separator + date + File.separator + checkFilePath(file.getFILE_NM(),"name");
-					
-					//파일경로
-					FileInputStream fis = new FileInputStream(filePathNm);
-					XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			
-					XSSFSheet sheet = workbook.getSheetAt(0);
-				
-					//파일의 row의 갯수
-					int rowindex = sheet.getPhysicalNumberOfRows();
-			
-					// row의 0 헤더 제외
-					for(int i = 1; i < rowindex; i++) {
-					
-						XSSFRow rows = sheet.getRow(i);
-						
-						for(int j = 0; j < rows.getLastCellNum(); j++) {
-							
-							// column은 고정
-							String column = sheet.getRow(0).getCell(j).getStringCellValue();	
-							
-							// value는 column 다음 row부터 
-							XSSFCell cell = sheet.getRow(i).getCell(j);
-							List<CompanyVO> company = getCompanyList();
-							String value = "";
-							
-							// Validation Check - Cell Type
-							if(cell == null) {
-								value = "";
-							}else {
-								switch (cell.getCellType()) {
-								case Cell.CELL_TYPE_STRING:
-									value = cell.getStringCellValue();
-									break;
+	// 포장공사 이력 엑셀 업로드 화면
+	@RequestMapping(value = { "/cntrwkdtl/cntrwkDtlExcelUploadForm.do" })
+	public String excelUploadForm(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, ModelMap model,
+			BindingResult bindingResult) throws Exception {
 
-								case Cell.CELL_TYPE_NUMERIC:
-									value = String.valueOf(cell.getNumericCellValue());
-									break;
-								
-								case Cell.CELL_TYPE_BLANK:
-									value = "";
-									break;
-									
-								case Cell.CELL_TYPE_ERROR:
-									
-									resultMsg = "오류가 발생하였습니다." +cell.getErrorCellValue();
-									model.addAttribute("resultMsg",  resultMsg);
+		model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
 
-									return "jsonView";
-								}
-							}
-							
-							// Validation Check - Cell Value Check
-							
-							switch (column) {
-							case "도급비":
-								cntrwkDtlVO.setOUTSRCCT(value);
-								break;
-								
-							case "관급비":
-								cntrwkDtlVO.setGVSLCT(value);
-								break;
-							
-							case "세부위치":
-								cntrwkDtlVO.setDETAIL_CNTRWK_NM(value);
-								break;
-								
-							case "도로명":
-								cntrwkDtlVO.setROAD_NM(value);
-								break;
-								
-							case "포장공법":
-								//코드 찾아오는 쿼리문 추가
-								break;	
-								
-							case "포장두께(표층)":
-								cntrwkDtlVO.setRPAIR_THICK_ASCON(value);
-								break;
-								
-							case "포장두께(중간층)":
-								cntrwkDtlVO.setRPAIR_THICK_CNTR(value);
-								break;
-								
-							case "포장두께(기층)":
-								cntrwkDtlVO.setRPAIR_THICK_BASE(value);
-								break;	
-								
-							case "포장재료(표층)":
-								cntrwkDtlVO.setPAV_MATRL_ASCON_NM(value);
-								break;
-								
-							case "포장재료(중간층)":
-								cntrwkDtlVO.setPAV_MATRL_CNTR_NM(value);
-								break;
-								
-							case "포장재료(기층)":
-								cntrwkDtlVO.setPAV_MATRL_BASE_NM(value);
-								break;
-								
-							case "공사시간":
-								cntrwkDtlVO.setCNTRWK_TIME(value);
-								break;
-								
-							case "비고":
-								cntrwkDtlVO.setRM(value);
-								break;
-									
-							default:
-								break;
-							}
-							
-						}
-						
-						
-						cntrwkDtlVO.setCRTR_NO(userNo);
-						cntrwkDtlVO.setUSE_AT("Y");
-						cntrwkDtlVO.setDELETE_AT("N");
-					
-						// insert query
-						cntrwkDtlService.insertCntrwkDtl(cntrwkDtlVO);
-					}
-					
-					workbook.close();
-				}	
-				
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-				resultMsg = "등록에 실패하였습니다.";
-				model.addAttribute("resultMsg",  resultMsg);
+		return "/cntrwkdtl/cntrwkdtlExcelUpload";
+	}
 
-				return "jsonView";
+	// 포장공사 이력 엑셀 업로드
+	@RequestMapping(value = "/cntrwkdtl/cntrwkDtlExcelUpload.do", method = RequestMethod.POST)
+	public String excelUpload(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, BindingResult bindingResult,
+			HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
+		String resultMsg = "";
+		String filePathNm = "";
+
+		/** validate request type */
+		Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
+		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+
+		/** extract files */
+		final List<MultipartFile> files = multiRequest.getFiles("files");
+		Assert.notNull(files, "files is null");
+		Assert.state(files.size() > 0, "0 files exist");
+
+		String filePath = pathInfoProperties.getProperty("file.upload.path");
+		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwkDtl", files);
+
+		Map<String, String> map = new HashMap<>();
+
+		try {
+			for (AttachFileVO file : fileList) {
+
+				Date currentDate = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				String date = sdf.format(currentDate);
+
+				filePathNm = checkFilePath(filePath, "path") + File.separator + "cntrwkDtl" + File.separator + date
+						+ File.separator + checkFilePath(file.getFILE_NM(), "name");
+
 			}
-			
-			resultMsg = "정상적으로 등록되었습니다.";
-			model.addAttribute("resultMsg",  resultMsg);
-			
+			// db insert
+			excelDBUpload(cntrwkDtlVO, filePathNm);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			resultMsg = "등록에 실패하였습니다.";
+			model.addAttribute("resultMsg", resultMsg);
+
 			return "jsonView";
 		}
-		
 
-	@RequestMapping(value="/cntrwkdtl/downloadexcel.do")
-    public View cntrwkDtlListExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO,	ModelMap model, HttpServletRequest request, HttpSession session)  throws Exception {
-        List dataList = cntrwkDtlService.selectCntrwkDtlListExcel(cntrwkDtlVO);
+		resultMsg = "정상적으로 등록되었습니다.";
+		model.addAttribute("resultMsg", resultMsg);
 
-        String[] excel_title  = {"세부위치","노선번호","노선명","행선","차로","시점(m)","종점(m)","작업시작일","작업완료일","공사비(천원)","연장(m)","보수폭(m)","보수면적(㎡)","보수표층두께(cm)","보수중간층두께(cm)","보수기층두께(cm)"};
-        String[] excel_column = {"detail_cntrwk_nm","route_code","route_nm","direct_nm","track","strtpt","endpt","rpair_begin_de","rpair_end_de","cntrwk_amount","track_len","rpair_bt","rpair_ar","rpair_thick_ascon","rpair_thick_cntr","rpair_thick_base"};
+		return "jsonView";
+	}
 
-        //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
-        model.addAttribute("file_name",    "세부공사목록_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
-        model.addAttribute("excel_title",  excel_title);
-        model.addAttribute("excel_column", excel_column);
-        model.addAttribute("data_list",    dataList);
+	public String excelDBUpload(CntrwkDtlVO cntrwkDtlVO, String filePathNm) throws Exception {
+		String resultMsg = "";
+		int CNTRWK_AMOUNT = 0;
+		String userNo = sessionManager.getUserNo();
 
-        return new ExcelView();
-    }
+		RpairMthdVO rpairMthdVO = new RpairMthdVO();
+		PavMatrlVO pavMatrlVO = new PavMatrlVO();
+
+		// 파일경로
+		FileInputStream fis = new FileInputStream(filePathNm);
+		XSSFWorkbook workbook = new XSSFWorkbook(fis);
+
+		XSSFSheet sheet = workbook.getSheetAt(0);
+
+		// 파일의 row의 갯수
+		int rowindex = sheet.getPhysicalNumberOfRows();
+
+		try {
+			// row의 0 헤더 제외
+			for (int i = 1; i < rowindex; i++) {
+
+				XSSFRow rows = sheet.getRow(i);
+
+				for (int j = 0; j < rows.getLastCellNum(); j++) {
+
+					// column은 고정
+					String column = sheet.getRow(0).getCell(j).getStringCellValue();
+
+					// value는 column 다음 row부터
+					XSSFCell cell = sheet.getRow(i).getCell(j);
+					String value = "";
+
+					// Validation Check - Cell Type
+					if (cell == null) {
+						value = "";
+					} else {
+						switch (cell.getCellType()) {
+						case Cell.CELL_TYPE_STRING:
+							value = cell.getStringCellValue();
+							break;
+
+						case Cell.CELL_TYPE_NUMERIC:
+							value = String.valueOf(cell.getNumericCellValue());
+							break;
+
+						case Cell.CELL_TYPE_BLANK:
+							value = "";
+							break;
+
+						case Cell.CELL_TYPE_ERROR:
+
+							resultMsg = "오류가 발생하였습니다." + cell.getErrorCellValue();
+
+							return resultMsg;
+						}
+					}
+
+					// Validation Check - Cell Value Check
+
+					switch (column) {
+					case "도급비":
+						try {
+							cell.setCellType(Cell.CELL_TYPE_STRING);
+							value = cell.getStringCellValue();
+							cntrwkDtlVO.setOUTSRCCT(value);
+						} catch (Exception e) {
+							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
+							return resultMsg;
+						}
+						break;
+
+					case "관급비":
+						try {
+							cell.setCellType(Cell.CELL_TYPE_STRING);
+							value = cell.getStringCellValue();
+							cntrwkDtlVO.setGVSLCT(value);
+							CNTRWK_AMOUNT = Integer.valueOf(cntrwkDtlVO.getOUTSRCCT()) + Integer.valueOf(value);
+							cntrwkDtlVO.setCNTRWK_AMOUNT(String.valueOf(CNTRWK_AMOUNT));
+						} catch (Exception e) {
+							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
+							return resultMsg;
+						}
+						break;
+
+					case "세부위치":
+						if (value == null) {
+							resultMsg = column + " 칼럼은 필수항목입니다.";
+							return resultMsg;
+						} else {
+							cntrwkDtlVO.setDETAIL_CNTRWK_NM(value);
+						}
+						break;
+
+					case "도로명":
+						if (value == null) {
+							resultMsg = column + " 칼럼은 필수항목입니다.";
+							return resultMsg;
+						} else {
+							cntrwkDtlVO.setROAD_NM(value);
+						}
+						break;
+
+					case "포장공법":
+						try {
+							// 포장공법코드를 가져오는 쿼리문
+							rpairMthdVO.setMSRC_CL_NM(value);
+							rpairMthdVO = rpairMthdService.selectRpairMthdCode(rpairMthdVO);
+
+							cntrwkDtlVO.setRPAIR_MTHD_CODE(rpairMthdVO.getRPAIR_MTHD_CODE());
+						} catch (Exception e) {
+							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
+							return resultMsg;
+						}
+						break;
+
+					case "포장두께(표층)":
+						if (value == null) {
+							resultMsg = column + " 칼럼은 필수항목입니다.";
+							return resultMsg;
+						} else {
+							cntrwkDtlVO.setRPAIR_THICK_ASCON(value);
+						}
+						break;
+
+					case "포장두께(중간층)":
+						if (value == null) {
+							resultMsg = column + " 칼럼은 필수항목입니다.";
+							return resultMsg;
+						} else {
+							cntrwkDtlVO.setRPAIR_THICK_CNTR(value);
+						}
+						break;
+
+					case "포장두께(기층)":
+						if (value == null) {
+							resultMsg = column + " 칼럼은 필수항목입니다.";
+							return resultMsg;
+						} else {
+							cntrwkDtlVO.setRPAIR_THICK_BASE(value);
+						}
+						break;
+
+					case "포장재료(표층)":
+						try {
+							// 포장재료코드를 가져오는 쿼리문
+							pavMatrlVO.setPAV_MATRL_NM(value);
+							pavMatrlVO = pavMatrlService.selectPavMatrlCode(pavMatrlVO);
+
+							cntrwkDtlVO.setPAV_MATRL_ASCON_CODE(pavMatrlVO.getPAV_MATRL_CODE());
+						} catch (Exception e) {
+							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
+							return resultMsg;
+						}
+
+						break;
+
+					case "포장재료(중간층)":
+						if (value == null) {
+							value = "";
+						} else {
+							cntrwkDtlVO.setPAV_MATRL_CNTR_NM(value);
+						}
+						break;
+
+					case "포장재료(기층)":
+						if (value == null) {
+							value = "";
+						} else {
+							cntrwkDtlVO.setPAV_MATRL_BASE_NM(value);
+						}
+						break;
+
+					case "공사시간":
+						if (value == null) {
+							resultMsg = column + " 칼럼은 필수항목입니다.";
+							return resultMsg;
+						} else {
+							cntrwkDtlVO.setCNTRWK_TIME(value);
+						}
+						break;
+
+					case "비고":
+						if (value == null) {
+							value = "";
+						} else {
+							cntrwkDtlVO.setRM(value);
+						}
+						break;
+
+					}
+
+				}
+
+				cntrwkDtlVO.setCRTR_NO(userNo);
+				cntrwkDtlVO.setUSE_AT("Y");
+				cntrwkDtlVO.setDELETE_AT("N");
+
+				// insert query
+				cntrwkDtlService.insertCntrwkDtl(cntrwkDtlVO);
+			}
+
+			workbook.close();
+		} catch (IOException e) {
+			resultMsg = "Fail";
+		}
+		resultMsg = "Success";
+
+		return resultMsg;
+	}
+
+	@RequestMapping(value = "/cntrwkdtl/downloadexcel.do")
+	public View cntrwkDtlListExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpServletRequest request,
+			HttpSession session) throws Exception {
+		List dataList = cntrwkDtlService.selectCntrwkDtlListExcel(cntrwkDtlVO);
+
+		String[] excel_title = { "세부위치", "노선번호", "노선명", "행선", "차로", "시점(m)", "종점(m)", "작업시작일", "작업완료일", "공사비(천원)",
+				"연장(m)", "보수폭(m)", "보수면적(㎡)", "보수표층두께(cm)", "보수중간층두께(cm)", "보수기층두께(cm)" };
+		String[] excel_column = { "detail_cntrwk_nm", "route_code", "route_nm", "direct_nm", "track", "strtpt", "endpt",
+				"rpair_begin_de", "rpair_end_de", "cntrwk_amount", "track_len", "rpair_bt", "rpair_ar",
+				"rpair_thick_ascon", "rpair_thick_cntr", "rpair_thick_base" };
+
+		// model.addAttribute("file_name", cntrwkVO.getEXCEL_FILE_NM() + "_" +
+		// DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("file_name", "세부공사목록_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
+
+		return new ExcelView();
+	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 건수 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkRoutCntStats.do" })
-	public String selectCntrwkRoutCntStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkRoutCntStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
-		return "/stats/cntrwk/cntrwkRoutCntStats" ;
+		return "/stats/cntrwk/cntrwkRoutCntStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 연장 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkRoutLenStats.do" })
-	public String selectCntrwkRoutLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkRoutLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
-		return "/stats/cntrwk/cntrwkRoutLenStats" ;
+		return "/stats/cntrwk/cntrwkRoutLenStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 예산 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkRoutAmountStats.do" })
-	public String selectCntrwkRoutAmountStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkRoutAmountStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
-		return "/stats/cntrwk/cntrwkRoutAmountStats" ;
+		return "/stats/cntrwk/cntrwkRoutAmountStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
 	 */
-	@RequestMapping(value = {   "/api/cntrwkdtl/selectCntrwkStatsResult.do" })
-    public @ResponseBody Map<String, Object> selectCntrwkStatsResult(@RequestBody CntrwkDtlVO cntrwkDtlVO,HttpServletRequest request, ModelMap model, HttpSession session)  throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkStatsResult.do" })
+	public @ResponseBody Map<String, Object> selectCntrwkStatsResult(@RequestBody CntrwkDtlVO cntrwkDtlVO,
+			HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", cntrwkDtlService.selectCntrwkStatsResult(cntrwkDtlVO));
 
@@ -716,53 +845,65 @@ public class CntrwkDtlController  extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 건수 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDeptCntStats.do" })
-	public String selectCntrwkDeptCntStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkDeptCntStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
-		return "/stats/cntrwk/cntrwkDeptCntStats" ;
+		return "/stats/cntrwk/cntrwkDeptCntStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 연장 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDeptLenStats.do" })
-	public String selectCntrwkDeptLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkDeptLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
 		return "/stats/cntrwk/cntrwkDeptLenStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 예산 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDeptAmountStats.do" })
-	public String selectCntrwkDeptAmountStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkDeptAmountStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
 		return "/stats/cntrwk/cntrwkDeptAmountStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
 	 */
-	@RequestMapping(value = {   "/api/cntrwkdtl/selectCntrwkDeptStatsResult.do" })
-    public @ResponseBody Map<String, Object> selectCntrwkDeptStatsResult(@RequestBody CntrwkDtlVO cntrwkDtlVO,HttpServletRequest request, ModelMap model, HttpSession session)  throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkDeptStatsResult.do" })
+	public @ResponseBody Map<String, Object> selectCntrwkDeptStatsResult(@RequestBody CntrwkDtlVO cntrwkDtlVO,
+			HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		// 결과 JSON 저장
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", cntrwkDtlService.selectCntrwkDeptStatsResult(cntrwkDtlVO));
@@ -772,53 +913,65 @@ public class CntrwkDtlController  extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 건수 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkMthdCntStats.do" })
-	public String selectCntrwkMthdCntStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkMthdCntStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
-		return "/stats/cntrwk/cntrwkMthdCntStats" ;
+		return "/stats/cntrwk/cntrwkMthdCntStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 연장 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkMthdLenStats.do" })
-	public String selectCntrwkMthdLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkMthdLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
-		return "/stats/cntrwk/cntrwkMthdLenStats" ;
+		return "/stats/cntrwk/cntrwkMthdLenStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 예산 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkMthdAmountStats.do" })
-	public String selectCntrwkMthdAmountStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,HttpServletRequest request) throws Exception {
-		//부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		//model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
+	public String selectCntrwkMthdAmountStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
+			HttpServletRequest request) throws Exception {
+		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
+		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
-		return "/stats/cntrwk/cntrwkMthdAmountStats" ;
+		return "/stats/cntrwk/cntrwkMthdAmountStats";
 	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
 	 */
-	@RequestMapping(value = {   "/api/cntrwkdtl/selectCntrwkMthdStatsResult.do" })
-    public @ResponseBody Map<String, Object> selectCntrwkMthdStatsResult(@RequestBody CntrwkDtlVO cntrwkDtlVO,HttpServletRequest request, ModelMap model, HttpSession session)  throws Exception {
+	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkMthdStatsResult.do" })
+	public @ResponseBody Map<String, Object> selectCntrwkMthdStatsResult(@RequestBody CntrwkDtlVO cntrwkDtlVO,
+			HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		// 결과 JSON 저장
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", cntrwkDtlService.selectCntrwkMthdStatsResult(cntrwkDtlVO));
@@ -828,65 +981,77 @@ public class CntrwkDtlController  extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
 	 */
-	@RequestMapping(value="/cntrwkdtl/cntrwkRoutCntStatsExcel.do")
-    public View cntrwkRoutCntStatsExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO,	ModelMap model, HttpServletRequest request, HttpSession session)  throws Exception {
-        List dataList = cntrwkDtlService.cntrwkRoutCntStatsExcel(cntrwkDtlVO);
+	@RequestMapping(value = "/cntrwkdtl/cntrwkRoutCntStatsExcel.do")
+	public View cntrwkRoutCntStatsExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO, ModelMap model,
+			HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = cntrwkDtlService.cntrwkRoutCntStatsExcel(cntrwkDtlVO);
 
-        String[] excel_title  = {"노선번호","노선명","공사건수(건)","연장(m)","공사비(천원)","공사빈도(%)"};
-        String[] excel_column = {"route_code","route_nm", "cnt", "track_len", "cntrwk_amount", "perc"};
+		String[] excel_title = { "노선번호", "노선명", "공사건수(건)", "연장(m)", "공사비(천원)", "공사빈도(%)" };
+		String[] excel_column = { "route_code", "route_nm", "cnt", "track_len", "cntrwk_amount", "perc" };
 
-        //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
-        model.addAttribute("file_name",    "노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
-        model.addAttribute("excel_title",  excel_title);
-        model.addAttribute("excel_column", excel_column);
-        model.addAttribute("data_list",    dataList);
+		// model.addAttribute("file_name", cntrwkVO.getEXCEL_FILE_NM() + "_" +
+		// DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("file_name", "노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
 
-        return new ExcelView();
-    }
+		return new ExcelView();
+	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 통계 목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
 	 */
-	@RequestMapping(value="/cntrwkdtl/cntrwkDeptCntStatsExcel.do")
-    public View cntrwkDeptCntStatsExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO,	ModelMap model, HttpServletRequest request, HttpSession session)  throws Exception {
-        List dataList = cntrwkDtlService.cntrwkDeptCntStatsExcel(cntrwkDtlVO);
+	@RequestMapping(value = "/cntrwkdtl/cntrwkDeptCntStatsExcel.do")
+	public View cntrwkDeptCntStatsExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO, ModelMap model,
+			HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = cntrwkDtlService.cntrwkDeptCntStatsExcel(cntrwkDtlVO);
 
-        String[] excel_title  = {"관리기관명","공사건수(건)","연장(m)","공사비(천원)","공사빈도(%)"};
-        String[] excel_column = {"dept_nm", "cnt", "track_len", "cntrwk_amount", "perc"};
+		String[] excel_title = { "관리기관명", "공사건수(건)", "연장(m)", "공사비(천원)", "공사빈도(%)" };
+		String[] excel_column = { "dept_nm", "cnt", "track_len", "cntrwk_amount", "perc" };
 
-        //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
-        model.addAttribute("file_name",    "관리기관별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
-        model.addAttribute("excel_title",  excel_title);
-        model.addAttribute("excel_column", excel_column);
-        model.addAttribute("data_list",    dataList);
+		// model.addAttribute("file_name", cntrwkVO.getEXCEL_FILE_NM() + "_" +
+		// DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("file_name", "관리기관별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
 
-        return new ExcelView();
-    }
+		return new ExcelView();
+	}
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 통계 엑셀목록을 조회한다.
-	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * 
+	 * @param cntrwkDtlVO
+	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
 	 */
-	@RequestMapping(value="/cntrwkdtl/cntrwkMthdCntStatsExcel.do")
-    public View cntrwkMthdCntStatsExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO,	ModelMap model, HttpServletRequest request, HttpSession session)  throws Exception {
-        List dataList = cntrwkDtlService.cntrwkMthdCntStatsExcel(cntrwkDtlVO);
+	@RequestMapping(value = "/cntrwkdtl/cntrwkMthdCntStatsExcel.do")
+	public View cntrwkMthdCntStatsExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO, ModelMap model,
+			HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = cntrwkDtlService.cntrwkMthdCntStatsExcel(cntrwkDtlVO);
 
-        String[] excel_title  = {"공법명","공사건수(건)","연장(m)","공사비(천원)","공사빈도(%)"};
-        String[] excel_column = {"rpair_mthd_nm", "cnt", "track_len", "cntrwk_amount", "perc"};
+		String[] excel_title = { "공법명", "공사건수(건)", "연장(m)", "공사비(천원)", "공사빈도(%)" };
+		String[] excel_column = { "rpair_mthd_nm", "cnt", "track_len", "cntrwk_amount", "perc" };
 
-        //model.addAttribute("file_name",    cntrwkVO.getEXCEL_FILE_NM() + "_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
-        model.addAttribute("file_name",    "포장공법별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
-        model.addAttribute("excel_title",  excel_title);
-        model.addAttribute("excel_column", excel_column);
-        model.addAttribute("data_list",    dataList);
+		// model.addAttribute("file_name", cntrwkVO.getEXCEL_FILE_NM() + "_" +
+		// DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("file_name", "포장공법별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
 
-        return new ExcelView();
-    }
+		return new ExcelView();
+	}
 
 }
