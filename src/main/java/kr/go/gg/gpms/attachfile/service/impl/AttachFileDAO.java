@@ -38,6 +38,16 @@ public class AttachFileDAO extends BaseDAO {
 	public String insertAttachFile(AttachFileVO attachFileVO) throws Exception {
 		return (String) insert("attachFileDAO.insertAttachFile", attachFileVO);
 	}
+	
+	/**
+	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 등록한다.
+	 * @param attachFileVO - 등록할 정보가 담긴 AttachFileVO
+	 * @return void
+	 * @exception Exception
+	 */
+	public void insertAttachDetailFile(AttachFileVO attachFileVO) throws Exception {
+		insert("attachFileDAO.insertAttachDetailFile", attachFileVO);
+	}
 
 	/**
 	 * 공통첨부파일(TN_ATTACH_FILE)을 수정한다.

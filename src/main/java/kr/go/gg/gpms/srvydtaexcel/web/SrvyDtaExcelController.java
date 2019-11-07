@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
+import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
 import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
 import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 
@@ -57,6 +59,9 @@ public class SrvyDtaExcelController extends BaseController {
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService egovPropertyService;
 	
+	@Resource(name = "routeInfoService")
+	private RouteInfoService routeInfoService;
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(SrvyDtaExcelController.class);
 
 	/**
@@ -67,6 +72,21 @@ public class SrvyDtaExcelController extends BaseController {
 	 */
 	@RequestMapping(value = { "/srvydtaexcel/selectSrvyDtaExcelList.do" })
 	public String selectSrvyDtaExcelList(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model) throws Exception {
+		
+		// 노선 번호
+		RouteInfoVO routeInfoVO = new RouteInfoVO();
+		routeInfoVO.setUsePage(false);
+		routeInfoVO.setSidx("ROAD_NO");
+		List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+
+		if (routeInfoVO.getROAD_NO() != null) {
+
+			routeInfoVO = routeInfoService.selectRouteInfo(routeInfoVO);
+
+		}
+		
+		model.addAttribute("roadNoList", roadNoList);
+		model.addAttribute("routeInfoVO", routeInfoVO);
 		
 		return "/srvy/excel/srvyDtaExcelList" ;
 	}

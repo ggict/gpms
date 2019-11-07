@@ -13,10 +13,11 @@
 <script type="text/javaScript" language="javascript" defer="defer">
 // 페이지 로딩 초기 설정/*
 $( document ).ready(function() {
+	
+	COMMON_UTIL.cmCreateDatepicker('SRVY_DE', 15, "/images/btn_calendar.gif");
 
 	COMMON_FILE.clearMultiFile('#file_list', '#addFile');
-
-
+	
 	$("#addFile").change(function(){
 		var extn = ["zip"];
 		COMMON_FILE.setMultiFiles('#file_list', this, extn, 'N', 50);
@@ -80,6 +81,8 @@ $( document ).ready(function() {
 	COMMON_UTIL.cmInitGridSize('gridArea', 'div_grid', 200);
 
 	fn_search();
+	
+	fn_change_roadNm();
 });
 
 //파일 전송
@@ -95,8 +98,12 @@ function fn_file_upload(){
     	formData.append("files", files[i]);
     	len ++;
     }
-    
-    formData.append("ROUTE_CODE", $('#ROUTE_CODE').val());
+
+    formData.append("SRVY_DE", $('#SRVY_DE').val());
+    formData.append("ROAD_NO", $('#ROAD_NO').val());
+    formData.append("ROAD_NAME", $('#ROAD_NAME').val());
+    formData.append("DIRECT_CODE", $('#DIRECT_CODE').val());
+    formData.append("TRACK", $('#TRACK').val());
 
 	if(len < 1){
 		alert("조사자료 파일을 선택해주세요.");
@@ -183,6 +190,39 @@ function fn_upd_res_log(creatDt, creatNum, type, cnt){
 	}
 }
 
+//노선 번호 변경 시 노선명 자동 조회
+function fn_change_roadNm() {
+    var roadNo = $("#ROAD_NO").val();
+
+    if(roadNo == "" /* || roadGrad == "" */) {
+        $("#ROAD_NAME").val("");
+        return;
+    }
+
+    $.ajax({
+        url: contextPath + 'api/routeinfo/selectRouteInfo.do'
+        ,type: 'post'
+        ,dataType: 'json'
+        ,contentType : 'application/json'
+        ,data : JSON.stringify({ROAD_NO : roadNo})
+        ,success: function(data){
+            $("#ROAD_NAME").val(data.ROAD_NAME);
+            //$("#ROAD_GRAD").val(data.ROAD_GRAD);
+        }
+        ,error: function(a,b,msg){
+
+        }
+    });
+}
+
+function fnCheckNumber(obj){
+
+    $(obj).keyup(function() {
+        var value = $(this).val().replace(/[^0-9]/g, "");
+        $(this).val(value);
+    });
+}
+
 </script>
 </head>
 <body style="height:326px;">
@@ -206,10 +246,47 @@ function fn_upd_res_log(creatDt, creatNum, type, cnt){
 				<a href="#" class="whitebtn fr mt10" style="margin-top: 170px !important;" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
 				<input multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
 			</h3>
+			
+			
+			<ul >
+				<li >
+				<label>조사일자</label>
+				<span class="calendar btn_calendar">
+			 		<input type="text" id="SRVY_DE" name="SRVY_DE" /></span>
+				</li>
+                <li >
+                <label>노선번호</label>
+                    <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input">
+                        <option value="">= 전체 =</option>
+                        <c:forEach items="${ roadNoList }" var="roadNo">
+                            <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
+                        </c:forEach>
+                    </select>
+                </li>
+                <li>
+                    <label>노선명</label>
+                    <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
+                </li>
+                
+                <li>
+                    <label>행선</label>
+                    <select id="DIRECT_CODE" name="DIRECT_CODE" alt="행선" style="width:70px;" class="input">
+                        <option value="">= 전체 =</option>
+                        <option value="S">상행</option>
+                        <option value="E">하행</option>
+                    </select>
+
+                    <label>차로</label>
+                    <input type="number" name="TRACK" id="TRACK" value="" style="width:57px;" onkeydown="fnCheckNumber(this);" maxLength="1" class="MX_80 CS_50 DT_INT input" />
+                </li>
+                
+			</ul>
+	        
+	           
 			<div class="schbx mt10">
-			    <ul class="sch" style="padding: 140px 10px 5px;">
+			    <ul class="sch" style="padding: 55px 10px 5px;">
 			        <li>
-			            <div class="btfilebx scroll" style="width:258px; height:60px" id="file_list">
+			            <div class="btfilebx scroll" style="width:258px; height:70px" id="file_list">
 			            	<ul name="fileSet">
 			            	</ul>
 			            </div>
@@ -244,17 +321,6 @@ function fn_upd_res_log(creatDt, creatNum, type, cnt){
 	</div>
 
 </div>
-
-<form id="tmpFrm" name="tmpFrm" method="post" action="" >
-<div class="tabcont">
-<div class="fl bgsch">
-<div class="schbx mt10">
-노선코드
-<input type="text" name="ROUTE_CODE" id="ROUTE_CODE" title="노선번호" />
-</div>
-</div>
-</div>
-</form>
 
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>

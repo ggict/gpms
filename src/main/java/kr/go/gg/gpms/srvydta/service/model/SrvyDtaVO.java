@@ -5,12 +5,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelDefaultVO;
 /**
- * 조사_자료_엑셀
+ * 조사_자료
  *
- * @Class Name : SrvyDtaExcelVO.java
- * @Description : SrvyDtaExcel VO class
+ * @Class Name : SrvyDtaVO.java
+ * @Description : SrvyDta VO class
  * @Modification Information
  *
  * @author antihyun2@gmail.com
@@ -30,10 +32,94 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	}
 	
 	@XmlElement
+	private java.lang.String SRVY_NO;
+	
+	@XmlElement
+	private java.lang.String FILE_NO;
+	
+	@XmlElement
+	private java.lang.String DATA_CO;
+	
+	@XmlElement
+	private java.lang.String EVL_PROCESS_AT;
+	
+	@XmlElement
+	private java.lang.String GPS_CORTN_PROCESS_AT;
+	
+	@XmlElement
+	private java.lang.String SM_PROCESS_AT;
+	
+	@XmlElement
+	private java.lang.String VAL_EVL_AT;
+	
+	@XmlElement
+	private java.lang.String DELETE_AT;
+	
+	@XmlElement
+	private java.lang.String USE_AT;
+	
+	@XmlElement
+	private java.lang.String CRTR_NO;
+	
+	@XmlElement
+	private java.sql.Date CREAT_DT;
+	
+	@XmlElement
+	private java.lang.String UPDUSR_NO;
+	
+	@XmlElement
+	private java.sql.Date UPDT_DT;
+	
+	@XmlElement
+	private java.lang.String PRDTMDL_PROCESS_AT;
+	
+	@XmlElement
+	private java.lang.String PROCESS_STTUS;
+	
+	@XmlElement
+	private java.lang.String CRTR_NM;
+	
+	@XmlElement
+	private java.lang.String SCH_SRVY_DE1;
+	
+	@XmlElement
+	private java.lang.String SCH_SRVY_DE2;
+	
+	@XmlElement
+	private java.lang.String EVL_PROCESS;
+	
+	@XmlElement
+	private java.lang.String GPS_CORTN_PROCESS;
+	
+	@XmlElement
+	private java.lang.String SM_PROCESS;
+	
+	@XmlElement
+	private java.lang.String EVL_YEAR;
+	
+	@XmlElement
+	private java.lang.String FILE_NM;
+	
+	@XmlElement
+	private java.lang.String CALC_DE;
+	
+	@XmlElement
+	private java.lang.String PREDCT_DE;
+	
+	@XmlElement
+	private java.lang.String PRDTMDL_PROCESS;
+	
+	@XmlElement
 	private String SRVY_YEAR;
 	
 	@XmlElement
 	private String SRVY_MT;
+	
+	@XmlElement
+	private String ROAD_NO;
+	
+	@XmlElement
+	private String ROAD_NAME;
 	
 	@XmlElement
 	private String ROUTE_CODE;
@@ -710,5 +796,232 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public void setXCR(String xCR) {
 		XCR = xCR;
 	}
+
+	public String getROAD_NO() {
+		return ROAD_NO;
+	}
+
+	public void setROAD_NO(String rOAD_NO) {
+		ROAD_NO = rOAD_NO;
+	}
+
+	public String getROAD_NAME() {
+		return ROAD_NAME;
+	}
+
+	public void setROAD_NAME(String rOAD_NAME) {
+		ROAD_NAME = rOAD_NAME;
+	}
+
+	public java.lang.String getFILE_NO() {
+		return FILE_NO;
+	}
+
+	public void setFILE_NO(java.lang.String fILE_NO) {
+		FILE_NO = fILE_NO;
+	}
+
+	public java.lang.String getDATA_CO() {
+		return DATA_CO;
+	}
+
+	public void setDATA_CO(java.lang.String dATA_CO) {
+		DATA_CO = dATA_CO;
+	}
+
+	public java.lang.String getEVL_PROCESS_AT() {
+		return EVL_PROCESS_AT;
+	}
+
+	public void setEVL_PROCESS_AT(java.lang.String eVL_PROCESS_AT) {
+		EVL_PROCESS_AT = eVL_PROCESS_AT;
+	}
+
+	public java.lang.String getGPS_CORTN_PROCESS_AT() {
+		return GPS_CORTN_PROCESS_AT;
+	}
+
+	public void setGPS_CORTN_PROCESS_AT(java.lang.String gPS_CORTN_PROCESS_AT) {
+		GPS_CORTN_PROCESS_AT = gPS_CORTN_PROCESS_AT;
+	}
+
+	public java.lang.String getSM_PROCESS_AT() {
+		return SM_PROCESS_AT;
+	}
+
+	public void setSM_PROCESS_AT(java.lang.String sM_PROCESS_AT) {
+		SM_PROCESS_AT = sM_PROCESS_AT;
+	}
+
+	public java.lang.String getVAL_EVL_AT() {
+		return VAL_EVL_AT;
+	}
+
+	public void setVAL_EVL_AT(java.lang.String vAL_EVL_AT) {
+		VAL_EVL_AT = vAL_EVL_AT;
+	}
+
+	public java.lang.String getDELETE_AT() {
+		return DELETE_AT;
+	}
+
+	public void setDELETE_AT(java.lang.String dELETE_AT) {
+		DELETE_AT = dELETE_AT;
+	}
+
+	public java.lang.String getUSE_AT() {
+		return USE_AT;
+	}
+
+	public void setUSE_AT(java.lang.String uSE_AT) {
+		USE_AT = uSE_AT;
+	}
+
+	public java.lang.String getCRTR_NO() {
+		return CRTR_NO;
+	}
+
+	public void setCRTR_NO(java.lang.String cRTR_NO) {
+		CRTR_NO = cRTR_NO;
+	}
+
+	public java.sql.Date getCREAT_DT() {
+		return CREAT_DT;
+	}
+
+	public void setCREAT_DT(java.sql.Date cREAT_DT) {
+		CREAT_DT = cREAT_DT;
+	}
+
+	public java.lang.String getUPDUSR_NO() {
+		return UPDUSR_NO;
+	}
+
+	public void setUPDUSR_NO(java.lang.String uPDUSR_NO) {
+		UPDUSR_NO = uPDUSR_NO;
+	}
+
+	public java.sql.Date getUPDT_DT() {
+		return UPDT_DT;
+	}
+
+	public void setUPDT_DT(java.sql.Date uPDT_DT) {
+		UPDT_DT = uPDT_DT;
+	}
+
+	public java.lang.String getPRDTMDL_PROCESS_AT() {
+		return PRDTMDL_PROCESS_AT;
+	}
+
+	public void setPRDTMDL_PROCESS_AT(java.lang.String pRDTMDL_PROCESS_AT) {
+		PRDTMDL_PROCESS_AT = pRDTMDL_PROCESS_AT;
+	}
+
+	public java.lang.String getPROCESS_STTUS() {
+		return PROCESS_STTUS;
+	}
+
+	public void setPROCESS_STTUS(java.lang.String pROCESS_STTUS) {
+		PROCESS_STTUS = pROCESS_STTUS;
+	}
+
+	public java.lang.String getCRTR_NM() {
+		return CRTR_NM;
+	}
+
+	public void setCRTR_NM(java.lang.String cRTR_NM) {
+		CRTR_NM = cRTR_NM;
+	}
+
+	public java.lang.String getSCH_SRVY_DE1() {
+		return SCH_SRVY_DE1;
+	}
+
+	public void setSCH_SRVY_DE1(java.lang.String sCH_SRVY_DE1) {
+		SCH_SRVY_DE1 = sCH_SRVY_DE1;
+	}
+
+	public java.lang.String getSCH_SRVY_DE2() {
+		return SCH_SRVY_DE2;
+	}
+
+	public void setSCH_SRVY_DE2(java.lang.String sCH_SRVY_DE2) {
+		SCH_SRVY_DE2 = sCH_SRVY_DE2;
+	}
+
+	public java.lang.String getEVL_PROCESS() {
+		return EVL_PROCESS;
+	}
+
+	public void setEVL_PROCESS(java.lang.String eVL_PROCESS) {
+		EVL_PROCESS = eVL_PROCESS;
+	}
+
+	public java.lang.String getGPS_CORTN_PROCESS() {
+		return GPS_CORTN_PROCESS;
+	}
+
+	public void setGPS_CORTN_PROCESS(java.lang.String gPS_CORTN_PROCESS) {
+		GPS_CORTN_PROCESS = gPS_CORTN_PROCESS;
+	}
+
+	public java.lang.String getSM_PROCESS() {
+		return SM_PROCESS;
+	}
+
+	public void setSM_PROCESS(java.lang.String sM_PROCESS) {
+		SM_PROCESS = sM_PROCESS;
+	}
+
+	public java.lang.String getEVL_YEAR() {
+		return EVL_YEAR;
+	}
+
+	public void setEVL_YEAR(java.lang.String eVL_YEAR) {
+		EVL_YEAR = eVL_YEAR;
+	}
+
+	public java.lang.String getFILE_NM() {
+		return FILE_NM;
+	}
+
+	public void setFILE_NM(java.lang.String fILE_NM) {
+		FILE_NM = fILE_NM;
+	}
+
+	public java.lang.String getCALC_DE() {
+		return CALC_DE;
+	}
+
+	public void setCALC_DE(java.lang.String cALC_DE) {
+		CALC_DE = cALC_DE;
+	}
+
+	public java.lang.String getPREDCT_DE() {
+		return PREDCT_DE;
+	}
+
+	public void setPREDCT_DE(java.lang.String pREDCT_DE) {
+		PREDCT_DE = pREDCT_DE;
+	}
+
+	public java.lang.String getPRDTMDL_PROCESS() {
+		return PRDTMDL_PROCESS;
+	}
+
+	public void setPRDTMDL_PROCESS(java.lang.String pRDTMDL_PROCESS) {
+		PRDTMDL_PROCESS = pRDTMDL_PROCESS;
+	}
+	
+	@JsonProperty(value="SRVY_NO")
+	public java.lang.String getSRVY_NO() {
+		return SRVY_NO;
+	}
+
+	public void setSRVY_NO(java.lang.String sRVY_NO) {
+		SRVY_NO = sRVY_NO;
+	}
+	
+	
 
 }

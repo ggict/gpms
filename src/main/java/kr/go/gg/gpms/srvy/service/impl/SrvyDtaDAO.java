@@ -47,10 +47,21 @@ public class SrvyDtaDAO extends BaseDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<SrvyDtaVO> selectSrvyDtaFrmulaList() throws Exception {
-		System.out.println("selectSrvyDtaFrmulaList() dao!");
 		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectSrvyDtaFrmulaList");
 	}
 
+	/**
+	 * 조사_자료(TN_SRVY_DTA)를 등록한다.
+	 * @param srvyDtaVO - 등록할 정보가 담긴 srvyDtaVO
+	 * @return 등록 결과
+	 * @exception Exception
+	 */
+	public String insertSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
+		return (String) insert("srvyDtaDAO.insertSrvyDta", srvyDtaVO);
+	}
+	
+	//==============================================================================
+	
 	
 	/**
 	 * 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다.

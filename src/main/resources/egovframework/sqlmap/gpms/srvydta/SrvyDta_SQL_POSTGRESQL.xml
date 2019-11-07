@@ -24,5 +24,64 @@
 		]]>
 	</select>
 	
+	<insert id="srvyDtaDAO.insertSrvyDta">
+		<selectKey resultClass="String" keyProperty="SRVY_NO">
+  <![CDATA[
+  select nextval('SEQ_TN_SRVY_DTA')
+  ]]>
+		</selectKey>
+	<![CDATA[
+		/* srvyDtaExcelDAO.insertSrvyDtaExcel */
+		/* 조사_자료 등록 */
+		INSERT INTO TN_SRVY_DTA (
+			SRVY_NO /* 조사_자료_엑셀.조사_번호 */
+			, FILE_NO /* 조사_자료_엑셀.파일_번호 */
+			, DATA_CO /* 조사_자료_엑셀.데이터_건수 */
+			, ROUTE_CODE /* 조사_자료_엑셀.노선_코드 */
+			, DIRECT_CODE /* 조사_자료_엑셀.행선_코드 */
+			, TRACK /* 조사_자료_엑셀.차로 */
+			, STRTPT /* 조사_자료_엑셀.시점 */
+			, ENDPT /* 조사_자료_엑셀.종점 */
+			, SRVY_DE /* 조사_자료_엑셀.조사_일자 */
+			, SRVY_NM /* 조사_자료_엑셀.조사_명 */
+			, EXMNR_NM /* 조사_자료_엑셀.조사자_명 */
+			, EVL_PROCESS_AT /* 조사_자료_엑셀.평가_처리_여부 */
+			, GPS_CORTN_PROCESS_AT /* 조사_자료_엑셀.GPS_보정_처리_여부 */
+			, SM_PROCESS_AT /* 조사_자료_엑셀.집계_처리_여부 */
+			, PRDTMDL_PROCESS_AT /* 조사_자료_엑셀.예측모델_처리_여부 */
+			, VAL_EVL_AT /* 조사_자료_엑셀.유효성_평가_여부 */
+			, DELETE_AT /* 조사_자료_엑셀.삭제_여부 */
+			, USE_AT /* 조사_자료_엑셀.사용_여부 */
+			, CRTR_NO /* 조사_자료_엑셀.생성자_번호 */
+			, CREAT_DT /* 조사_자료_엑셀.생성_일시 */
+			, UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
+			, UPDT_DT /* 조사_자료_엑셀.수정_일시 */
+		) VALUES (
+			#SRVY_NO#::int /* 조사_자료_엑셀.조사_번호 */
+			, #FILE_NO#::int /* 조사_자료_엑셀.파일_번호 */
+			, #DATA_CO#::int /* 조사_자료_엑셀.데이터_건수 */
+			, #ROUTE_CODE# /* 조사_자료_엑셀.노선_코드 */
+			, #DIRECT_CODE# /* 조사_자료_엑셀.행선_코드 */
+			, #TRACK# /* 조사_자료_엑셀.차로 */
+			, #STRTPT#::int /* 조사_자료_엑셀.시점 */
+			, #ENDPT#::int /* 조사_자료_엑셀.종점 */
+			, #SRVY_DE# /* 조사_자료_엑셀.조사_일자 */
+			, #SRVY_NM# /* 조사_자료_엑셀.조사_명 */
+			, #EXMNR_NM# /* 조사_자료_엑셀.조사자_명 */
+			, #EVL_PROCESS_AT# /* 조사_자료_엑셀.평가_처리_여부 */
+			, #GPS_CORTN_PROCESS_AT# /* 조사_자료_엑셀.GPS_보정_처리_여부 */
+			, #SM_PROCESS_AT# /* 조사_자료_엑셀.집계_처리_여부 */
+			, #PRDTMDL_PROCESS_AT# /* 조사_자료_엑셀.예측모델_처리_여부 */
+			, #VAL_EVL_AT# /* 조사_자료_엑셀.유효성_평가_여부 */
+			, #DELETE_AT# /* 조사_자료_엑셀.삭제_여부 */
+			, #USE_AT# /* 조사_자료_엑셀.사용_여부 */
+			, #CRTR_NO#::int /* 조사_자료_엑셀.생성자_번호 */
+			, NOW() /* 조사_자료_엑셀.생성_일시 */
+			, #UPDUSR_NO# /* 조사_자료_엑셀.수정자_번호 */
+			, NOW() /* 조사_자료_엑셀.수정_일시 */
+		)
+	]]>
+	</insert>
+	
 
 </sqlMap>

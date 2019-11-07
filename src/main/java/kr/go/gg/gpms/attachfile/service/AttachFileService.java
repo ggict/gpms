@@ -31,6 +31,14 @@ public interface AttachFileService {
 	 * @exception Exception
 	 */
 	String insertAttachFile(AttachFileVO attachFileVO) throws Exception;
+	
+	/**
+	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 등록한다.
+	 * @param attachFileVO - 등록할 정보가 담긴 AttachFileVO
+	 * @return void
+	 * @exception Exception
+	 */
+	void insertAttachDetailFile(AttachFileVO attachFileVO) throws Exception;
 
 	/**
 	 * 공통첨부파일(TN_ATTACH_FILE)을 수정한다.

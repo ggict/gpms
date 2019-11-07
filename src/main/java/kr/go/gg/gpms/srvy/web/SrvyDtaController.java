@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -76,6 +77,7 @@ import kr.go.gg.gpms.smdtagnlsttus.service.SmDtaGnlSttusService;
 import kr.go.gg.gpms.smdtagnlsttus.service.model.SmDtaGnlSttusVO;
 import kr.go.gg.gpms.smdtalaststtus.service.SmDtaLastSttusService;
 import kr.go.gg.gpms.srvy.service.SrvyDtaService;
+import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
 import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
 import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 import kr.go.gg.gpms.srvydtalog.service.SrvyDtaLogService;
@@ -161,8 +163,8 @@ public class SrvyDtaController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/srvyDtaFileUpload.do")
-	public String fileUpload(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, SrvyDtaLogVO srvyDtaLogVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
-
+	public String fileUpload(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, SrvyDtaVO srvyDtaVO, SrvyDtaLogVO srvyDtaLogVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		
 		String resultCode = "";
 		String resultMsg = "";
 
@@ -170,8 +172,8 @@ public class SrvyDtaController extends BaseController {
 		int failCnt = 0;
 		
 		String userNo = sessionManager.getUserNo();
-		String funCallback = srvyDtaExcelVO.getCallBackFunction() == null ? "" : srvyDtaExcelVO.getCallBackFunction();
-		
+		String funCallback = srvyDtaVO.getCallBackFunction() == null ? "" : srvyDtaVO.getCallBackFunction();
+
 		/** validate request type */
 		Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
 		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
@@ -189,8 +191,6 @@ public class SrvyDtaController extends BaseController {
 			resultCode = "ERROR";
 			resultMsg = "등록오류발생";
 		} else {
-			//SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh24:mm:ss", Locale.KOREA);
-
 			for (AttachFileVO file : fileList) {
 				String logCode = "PCST0001"; // 진행
 				Date currentTime = new Date();
@@ -223,8 +223,7 @@ public class SrvyDtaController extends BaseController {
 				srvyDtaService.decmprsFile(fileName, uploadFolder);
 				
 				//원본파일
-				File orgnFile = new 
-						File(fileName);
+				File orgnFile = new File(fileName);
 				
 				//이동되는 파일
 				File moveFile = new File(bakFilePath);
@@ -237,6 +236,8 @@ public class SrvyDtaController extends BaseController {
 				int csvCount = 0;
 				String csvFileNm = "";
 				String excelFileNm = "";
+				boolean isImg = false;
+				List<SrvyDtaVO> imageList = null;
 		        
 				//하위의 모든 디렉토리
 		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
@@ -274,34 +275,102 @@ public class SrvyDtaController extends BaseController {
 		                    			excelFileNm = filePath + File.separator + seDirNm + File.separator + _csvFileNm + ".xlsx";
 		                    			
 		                    			//csv파일 -> xlsx 파일로 변환
-		                    			srvyDtaService.convertExcel(csvFileNm, excelFileNm, srvyDtaExcelVO);
+		                    			srvyDtaService.convertExcel(csvFileNm, excelFileNm, srvyDtaVO);
 		                    		}
 		                    	}
 		                    }
-		            	}
-		            }
+		            	}//분석결과 폴더
+		            	
+		            	if("표면결함".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+		            		//엑셀파일 RDSRFC_IMG_FILE_NM_1 이미지 파일명 조회
+		            		imageList = srvyDtaService.selectImageList(excelFileNm);
+		            		
+		            		//하위의 모든 파일
+		            		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+                					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+		            			seFileNm = seFiles.getName();
+		            			//jpg 파일 검증
+		            			if(!"jpg".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
+		            				resultCode = "noJpg";
+			        				resultMsg = "jpg 파일없음";
+			        				model.addAttribute("resultCode", resultCode);
+			        				model.addAttribute("resultMsg", resultMsg);
+			            			return "jsonView"; 
+		            			}
+		            			/* 적용위치 변경 가능_sdh
+		            			else {
+		            				for (int i=0; i<imageList.size(); i++) {
+		            					//디렉토리 이미지명과 엑셀파일의 이미지명 비교
+		            					if(seFileNm.equals(imageList.get(i).getRDSRFC_IMG_FILE_NM_1())) {
+		            						isImg = true;
+		            						if(!isImg) break;
+		            					}
+		            				}
+		            			}
+		            			if(!isImg) break;
+		            			*/
+		            		}//표면결함 폴더 내 jpg 파일
+		            	}//표면결함 폴더
+		            }//디렉토리 확인
 		        }//하위의 모든 디렉토리
-				
-		        String a = excelFileNm;
-		        
-		        
-		        resultCode = "tempMsg";
-				resultMsg = "디렉토리 없음";
-				
-				model.addAttribute("resultCode", resultCode);
-				model.addAttribute("resultMsg", resultMsg);
-		        
-				//zip 파일 전송 완료 추후 로직 수정
-				String tmp1 = "end";
-				if("end".equals(tmp1)) {
-					return "jsonView";  
-				}
 
+		        //파일상세정보 등록
+		        String seCode = "";
+		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
+     				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+		     	seDirNm = seDirs.getName();
+			     	if(seDirs.isDirectory()) {
+			         	if("기하구조".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+			         		seCode = "FLSE0001";
+			         		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+			     					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+			         			//파일 상세 정보 등록
+			         			attachDataSet(fileNo, seCode, seFiles, userNo);
+			         		}
+			         	} else if("도로현황".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+			         		seCode = "FLSE0002";
+			         		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+			     					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+			         			attachDataSet(fileNo, seCode, seFiles, userNo);
+			         		}
+			         	} else if("분석결과".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+			         		seCode = "FLSE0003";
+			         		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+			     					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+			         			attachDataSet(fileNo, seCode, seFiles, userNo);
+			         		}
+			         	} else if("소성변형".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+			         		seCode = "FLSE0004";
+			         		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+			     					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+			         			attachDataSet(fileNo, seCode, seFiles, userNo);
+			         		}
+			         	} else if("종단평탄성".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+			         		seCode = "FLSE0005";
+			         		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+			     					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+			         			attachDataSet(fileNo, seCode, seFiles, userNo);
+			         		}
+			         	} else if("표면결함".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+			         		seCode = "FLSE0006";
+			         		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+			     					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+			         			attachDataSet(fileNo, seCode, seFiles, userNo);
+			         		}
+			         	}
+			     	}
+		        }
+				
+				if("a".equals("a")) {
+					return "jsonView";
+				}
+		        
 				// 전송한 엑셀 파일의 개수
+				/* 단건처리로 변경
 				int resultCnt = getReadXLDataCnt(fileName, sheetName);
 
 				if (resultCnt < 0) {
-					resultMsg = sheetName + " 시트가 없습니다.";
+					//resultMsg = sheetName + " 시트가 없습니다.";
 					failCnt++;
 					logCode = "PCST0003";
 				} else if (resultCnt == 0) {
@@ -313,21 +382,29 @@ public class SrvyDtaController extends BaseController {
 					successCnt++;
 					logCode = "PCST0002";
 				}
-
+				*/
+				resultMsg = "파일전송이 성공하였습니다.";
+				successCnt++;
+				logCode = "PCST0002";
+				
+				//엑셀파일 데이터 조회하여 srvyDtaVO set 
+				srvyDtaVO = srvyDtaService.readExcel(srvyDtaVO, excelFileNm);
+				
 				// 조사자료 엑셀 파일 저장
-				srvyDtaExcelVO.setFILE_NO(fileNo);
-				srvyDtaExcelVO.setDATA_CO(Integer.toString(resultCnt));
-				srvyDtaExcelVO.setEVL_PROCESS_AT("N");
-				srvyDtaExcelVO.setGPS_CORTN_PROCESS_AT("N");
-				srvyDtaExcelVO.setPRDTMDL_PROCESS_AT("N");
-				srvyDtaExcelVO.setSM_PROCESS_AT("N");
-				srvyDtaExcelVO.setCRTR_NO(userNo);
-				srvyDtaExcelVO.setUPDUSR_NO(userNo);
-				srvyDtaExcelVO.setVAL_EVL_AT("N");
-				srvyDtaExcelVO.setUSE_AT("Y");
-				srvyDtaExcelVO.setDELETE_AT("N");
-
-				String srvyNo = srvyDtaExcelService.insertSrvyDtaExcel(srvyDtaExcelVO);
+				srvyDtaVO.setFILE_NO(fileNo);
+				srvyDtaVO.setEVL_PROCESS_AT("N");
+				srvyDtaVO.setGPS_CORTN_PROCESS_AT("N");
+				srvyDtaVO.setPRDTMDL_PROCESS_AT("N");
+				srvyDtaVO.setSM_PROCESS_AT("N");
+				srvyDtaVO.setCRTR_NO(userNo);
+				srvyDtaVO.setUPDUSR_NO(userNo);
+				srvyDtaVO.setVAL_EVL_AT("N");
+				srvyDtaVO.setUSE_AT("Y");
+				srvyDtaVO.setDELETE_AT("N");
+				
+				String srvyNo = srvyDtaService.insertSrvyDta(srvyDtaVO);
+				
+				
 
 				// 조사자료 엑셀 파일 업로드 로그 저장
 				srvyDtaLogVO.setSRVY_NO(srvyNo);
@@ -336,8 +413,9 @@ public class SrvyDtaController extends BaseController {
 				srvyDtaLogVO.setPROCESS_STTUS(logCode);
 				srvyDtaLogVO.setEND_DT(new java.sql.Date(currentTime.getTime()));
 				srvyDtaLogVO.setCRTR_NO(userNo);
-
+				
 				srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
+				
 
 				if (logCode.equals("PCST0003")) {
 					continue;
@@ -347,6 +425,7 @@ public class SrvyDtaController extends BaseController {
 				resultMsg = "자료조사 validation check를 진행중 입니다.";
 
 				// validation check
+				
 				Map<String, Object> validChkInfo = validReadXLData(fileName, sheetName);
 				boolean validChk = (Boolean) validChkInfo.get("result");
 
@@ -663,7 +742,7 @@ public class SrvyDtaController extends BaseController {
 							//sdh
 							if (fileExcel.exists() && fileExcel.isFile()) {
 							
-							String excelDB = getReadDbData(fileName, sheetName);
+							//String excelDB = getReadDbData(fileName, sheetName);
 							
 							return map;
 							}
@@ -900,6 +979,24 @@ public class SrvyDtaController extends BaseController {
 	 *
 	 * }
 	 */
+	
+	private void attachDataSet(String fileNo, String seCode, File seFiles, String userNo) throws Exception {
+		String fileNm = seFiles.getName();
+		AttachFileVO attachFileVO = new AttachFileVO();
+		attachFileVO.setFILE_NO(fileNo);	//파일번호
+		attachFileVO.setFILE_SE_CODE(seCode);	//파일구분코드
+		attachFileVO.setFILE_NM(UUID.randomUUID().toString().concat(fileNm.substring(fileNm.lastIndexOf("."))));	//파일명
+		attachFileVO.setORGINL_FILE_NM(fileNm);		//원본파일명
+		attachFileVO.setFILE_COURS(seFiles.getParent());		//파일경로
+		attachFileVO.setFILE_SIZE(String.valueOf(seFiles.length()));	//파일사이즈
+		attachFileVO.setUSE_AT("Y");
+		attachFileVO.setDELETE_AT("N");
+		attachFileVO.setCRTR_NO(userNo);
+		attachFileVO.setUPDUSR_NO(userNo);
+		//TN_ATTACH_DETAIL_FILE 등록
+		attachFileService.insertAttachDetailFile(attachFileVO);
+	}
+	
 	private String getReadXLData(String fileName, String sheetName) throws Exception {
 
 		// 엑셀파일 실행

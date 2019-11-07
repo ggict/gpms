@@ -112,6 +112,12 @@ public class AttachFileVO extends BaseVO {
 	@XmlElement
 	private String FILE_NUM;
 	
+	@XmlElement
+	private String FILE_DETAIL_NO;
+	
+	@XmlElement
+	private String FILE_SE_CODE;
+	
 	/**
 	 * TN_ATTACH_FILE.FILE_NO, 
 	 * 공통첨부파일.파일_번호 값읽기
@@ -329,4 +335,24 @@ public class AttachFileVO extends BaseVO {
 	public void setFILE_NUM(String fILE_NUM) {
 		this.FILE_NUM = fILE_NUM;
 	}
+
+	@JsonProperty(value="FILE_DETAIL_NO")
+	public String getFILE_DETAIL_NO() {
+		return FILE_DETAIL_NO;
+	}
+
+	public void setFILE_DETAIL_NO(String fILE_DETAIL_NO) {
+		FILE_DETAIL_NO = fILE_DETAIL_NO;
+	}
+
+	@JsonProperty(value="FILE_SE_CODE")
+	public String getFILE_SE_CODE() {
+		return FILE_SE_CODE;
+	}
+
+	public void setFILE_SE_CODE(String fILE_SE_CODE) {
+		FILE_SE_CODE = fILE_SE_CODE;
+	}
+	
+	
 }
