@@ -1171,7 +1171,7 @@
             <isNotEmpty property="SCH_STRCON_DE"><![CDATA[AND TO_CHAR(tlsysconnect.creat_dt,'YYYY-MM-DD hh24:mi:ss') >= #SCH_STRCON_DE#  ]]></isNotEmpty>
             <isNotEmpty property="SCH_ENDCON_DE"><![CDATA[AND TO_CHAR(tlsysconnect.creat_dt,'YYYY-MM-DD hh24:mi:ss') <= #SCH_ENDCON_DE#  || ' 23:59:59'  ]]></isNotEmpty>
                  ) systb
-<![CDATA[
+<![CDATA[ 
              ) tb where 1=1
 ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
