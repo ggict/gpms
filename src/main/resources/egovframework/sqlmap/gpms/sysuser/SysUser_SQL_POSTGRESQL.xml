@@ -98,7 +98,7 @@
             , #STPLAT_AGRE_AT# /* 시스템사용자.약관_동의_여부 */
             , #USER_SE_CODE# /* 시스템사용자.사용자_구분_코드 */
             , #CONFM_AT# /* 시스템사용자.승인_여부 */
-            , #CONFM_DT# /* 시스템사용자.승인_일시 */            
+            , #CONFM_DT# /* 시스템사용자.승인_일시 */
             , (CASE WHEN length(#CO_NO#) = 0 THEN NULL ELSE #CO_NO# END)::int /* 시스템사용자.업체_번호 */
             , NOW() /* 시스템사용자.약관_동의_일시 */
             , #RM# /* 시스템사용자.비고 */
@@ -112,7 +112,7 @@
             , 'N' /* 시스템사용자.삭제_여부 */
             , (CASE WHEN length(#UPDUSR_NO#) = 0 THEN NULL ELSE #UPDUSR_NO# END)::int /* 시스템사용자.수정자_번호 */
             , NOW() /* 시스템사용자.수정_일시 */
-            , (CASE WHEN length(#CRTR_NO#) = 0 THEN NULL ELSE #CRTR_NO# END)::int /* 시스템사용자.생성자_번호 */        
+            , (CASE WHEN length(#CRTR_NO#) = 0 THEN NULL ELSE #CRTR_NO# END)::int /* 시스템사용자.생성자_번호 */
             , NOW() /* 시스템사용자.생성_일시 */
             , #PASSWORD_CHANGE_DT# /* 시스템사용자.암호_변경_일시 */
             , #DELETE_DT# /* 시스템사용자.삭제_일시 */
@@ -1133,7 +1133,7 @@
         <isNotEmpty property="DEPT_CODE"><![CDATA[ /* 시스템사용자.부서_코드 */ AND (tnsysuser.DEPT_CODE = #DEPT_CODE# or tnsysuser.SEHIGH_DEPT_CODE = #DEPT_CODE# or tnsysuser.UPPER_SEHIGH_DEPT_CODE = #DEPT_CODE# ) ]]></isNotEmpty>
 
         <![CDATA[
-        ) as sub_totCnt 
+        ) as sub_totCnt
         WHERE 1=1
         ]]>
 
@@ -1239,8 +1239,8 @@
     ]]>
             <isNotEmpty property="SCH_MENU_ID"><![CDATA[  AND tlsysconnect.MENU_ID = #SCH_MENU_ID# ]]></isNotEmpty>
             <isNotEmpty property="SCH_MENU_NM"><![CDATA[  AND tnmenu.MENU_NM LIKE '%' ||  #SCH_MENU_NM# || '%' ]]></isNotEmpty>
-            <isNotEmpty property="SCH_STRCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT >= #SCH_STRCON_DE#  ]]></isNotEmpty>
-            <isNotEmpty property="SCH_ENDCON_DE"><![CDATA[AND tlsysconnect.CREAT_DT <= #SCH_ENDCON_DE# ]]></isNotEmpty>
+            <isNotEmpty property="SCH_STRCON_DE"><![CDATA[AND TO_CHAR(tlsysconnect.CREAT_DT, 'YYYY-MM-DD') >= #SCH_STRCON_DE#  ]]></isNotEmpty>
+            <isNotEmpty property="SCH_ENDCON_DE"><![CDATA[AND TO_CHAR(tlsysconnect.CREAT_DT, 'YYYY-MM-DD') <= #SCH_ENDCON_DE# ]]></isNotEmpty>
 <![CDATA[
                 ORDER BY tlsysconnect.CREAT_DT DESC,tnsysuser.USER_ID,tnsysuser.DEPT_CODE,tnmenu.MENU_NM
 ]]>
