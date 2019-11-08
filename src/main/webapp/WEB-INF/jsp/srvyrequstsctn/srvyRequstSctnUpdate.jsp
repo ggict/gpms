@@ -50,15 +50,15 @@
 
         </div>
     </header>
-    
+
     <div class="contents container">
-    
+
         <article class="div3">
             <h3 class="h3">검색조건</h3>
             <div class="table">
                 <table>
                     <tbody>
-                   
+
                     <tr>
                         <td class="th"><label for="SRVY_NM">조사명</label></td>
                         <td>
@@ -83,11 +83,11 @@
                             <input type="text" name="SRVY_REQUST_DE" id="SRVY_REQUST_DE" value="<c:out value="${srvyRequstSctnVO.SRVY_REQUST_DE}"/>"/>
                         </td>
                     </tr>
-                    </tbody>    
+                    </tbody>
                 </table>
             </div>
         </article>
-        
+
         <article class="div9">
             <h3 class="h3">조사요청구간</h3>
 
@@ -144,7 +144,7 @@
 
 
             <div id="div_grid" class="table">
-                <table id="gridArea"></table>               
+                <table id="gridArea"></table>
             </div>
 
             <div class="btnArea2">
@@ -156,7 +156,7 @@
             <div id="gridPager"></div>
 
         </article>
-        
+
     </div>
 
 
@@ -172,7 +172,7 @@ var _routeCd="", _directCd="", _track="", _strtpt="", _endpt="", _cellIdList="",
 $( document ).ready(function() {
 	// 달력 생성
     cmCreateDatepicker('SRVY_REQUST_DE', 10);
-	
+
     var ids = '${cells}';
     $('#PAV_CELL_ID').val(ids);
 
@@ -245,7 +245,7 @@ $( document ).ready(function() {
     }).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 
     // 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
-    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 160);
+    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 130);
 
     fnSearch();
     addBtnEventHandler();
@@ -265,7 +265,7 @@ function removeCheck(){
     for (var i = rows - 1; i >= 0; i--) {
 		$('#gridArea').jqGrid('delRowData', recs[i]);
 	}
-} 
+}
 
 //검색 처리
 function fnSearch() {
@@ -285,8 +285,8 @@ function fnSearch() {
             COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
         }
         ,gridComplete: function() {
-        	
-        }	
+
+        }
     }).trigger("reloadGrid");
 }
 
@@ -298,21 +298,21 @@ function fnAddCell() {
            //CNTRWK_ID : $("#CNTRWK_ID").val(),
            clearMap : false
    };
-   
+
    parent.MAP.CONTROL.activate_cellSel("CELL_10", option);
 }
 //지도에서 선택한 셀 리스트 조회
 function fn_add_srvyrequstsctn(cellIdList, param){
-	
+
     $.ajax({
         url: contextPath + 'api/cell10/selectRouteInfos.do'
         ,type: 'post'
         ,dataType: 'json'
         ,contentType : 'application/json'
-        ,data: JSON.stringify( {CELL_IDS : cellIdList}) 
+        ,data: JSON.stringify( {CELL_IDS : cellIdList})
         ,success: function(data){
             if(data.length < 1) {return;}
-            
+
             if(data.length > 1){
                 var roadNM = "";
                 for(var i in data){
@@ -322,14 +322,14 @@ function fn_add_srvyrequstsctn(cellIdList, param){
                 alert( '단일 노선이 선택되지 않았습니다.('+roadNM+')' );
                 return;
             }
-            
+
             var routeCd = data[0].ROUTE_CODE;
             var roadNm = data[0].ROAD_NAME;
             var directCd = data[0].DIRECT_CODE;
             var track = data[0].TRACK;
             var strtpt = parseInt(data[0].STRTPT);
             var endpt = parseInt(data[0].ENDPT);
-           
+
             var rowid, data;
             rowid  = $('#jGrid').jqGrid('getGridParam', 'selrow' );            // 선택한 열의 아이디값
             _routeCd = $('#jGrid').jqGrid('getRowData', rowid).ROUTE_CODE;
@@ -338,20 +338,20 @@ function fn_add_srvyrequstsctn(cellIdList, param){
             _strtpt = $('#jGrid').jqGrid('getRowData', rowid).STRTPT;
             _endpt = $('#jGrid').jqGrid('getRowData', rowid).ENDPT;
             _cellIdList = $('#PAV_CELL_ID').val();
-            
-            _routeCd += "," + routeCd;	        
+
+            _routeCd += "," + routeCd;
             _directCd += "," + directCd;
             _track += "," + track;
             _strtpt += "," + strtpt;
             _endpt += "," + endpt;
             _cellIdList += "," + cellIdList;
-            	
+
             var routeCdSplit = _routeCd.split(',');
             var directCdSplit = _routeCd.split(',');
             var trackSplit = _routeCd.split(',');
             var strtptSplit = _routeCd.split(',');
             var endptSplit = _routeCd.split(',');
-                     
+
             for ( var i in routeCdSplit ) {
                 $('#ROUTE_CODE').val(routeCdSplit[i]);
                 $('#DIRECT_CODE').val(directCdSplit);
@@ -359,13 +359,13 @@ function fn_add_srvyrequstsctn(cellIdList, param){
                 $('#STRTPT').val(strtptSplit);
                 $('#ENDPT').val(endptSplit);
             }
-                
+
             $('#PAV_CELL_ID').val(_cellIdList);
-            
+
             // 기존 grid data 리셋 후 reload
             $('#gridArea').jqGrid('clearGridData');
             fnSearch();
-            
+
         }
         ,error: function(a,b,msg){
         }
@@ -380,38 +380,38 @@ function fn_select_cell(cell_id){
     var tables = ["CELL_10"];
     var fields = ["CELL_ID"];
     var values = [cell_id];
-    
+
     // 모든 팝업창 최소화
     parent.wWindowHideAll();
     // 하단 목록 창 내리기
     parent.bottomClose();
-    
+
     var attribute_base = {
             attributes : {
                 fillColor : '#ffffff',
                 strokeColor : '#ffffff'
             }
     };
-    
+
     //MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, fields, values);
     MAP.fn_get_selectFeatureByAttrMulti(parent.gMap, tables, fields, values, null, "AND", attribute_base, true, 0, 1);
 }
 
 //위치조회
 function fnViewLocation(){
-	
+
 	var $pavCellId = $('#PAV_CELL_ID');
 	var res = $pavCellId && $pavCellId.val().split(',');
-	
+
     var tables = ["CELL_10"];
     var fields = [];
     var values = [];
-    
+
     if(res.length < 1){
         alert("위치 정보가 존재하지 않습니다.");
         return;
     }
-    
+
     if(res.length > 1){
         for(var i in res){
             var data = res[i];
@@ -422,23 +422,23 @@ function fnViewLocation(){
         fields = "CELL_ID";
         values = res[0];
     }
-    
+
     // 모든 팝업창 최소화
     parent.wWindowHideAll();
     // 하단 목록 창 내리기
     parent.bottomClose();
-    
+
     MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, [fields], [values], null, "OR");
 }
 //셀 선택에 따라 공사 위치정보 수치 자동 계산
 function fnCalDetailInfo() {
-    
+
     var rowIds = $('#gridArea').jqGrid('getGridParam', 'selarrrow');
     if (rowIds && rowIds.length > 0 ) {
-        
+
         var rowData = [];
         rowIds.forEach(function(elem) { rowData.push($('#gridArea').jqGrid('getRowData', elem)); });
-        
+
         // 보수시점(m)
         var strtptData = rowData.map(function(elem) { return elem.STRTPT });
         var minStrtpt = strtptData.slice(0).sort(function compare(a,b) {return a-b;})[0];
@@ -461,9 +461,9 @@ function fnCalDetailInfo() {
             $('#DIRECT_CODE').val('S');
         } else if (directData.length > 0 && directData[0] === '하행') {
             //$('#DIRECT_NM').val('하행');
-            $('#DIRECT_CODE').val('E');             
+            $('#DIRECT_CODE').val('E');
         }
-        
+
     } else {
         $('#STRTPT').val(0);
         $('#ENDPT').val(0);
@@ -471,17 +471,17 @@ function fnCalDetailInfo() {
         //$('#DIRECT_NM').val('');
         $('#DIRECT_CODE').val('');
     }
-    
+
     //COMMON_UTIL.cmFormObjectInit("frm", true);
 }
 function addBtnEventHandler() {
-	    
+
 	    $('#search_btn').click(function() {
 	        var search_direct = $('#search_direct option:selected').val();
 	        var search_track = $('#search_track').val();
 	        var search_strtpt = $('#search_strtpt').val();
 	        var search_endpt = $('#search_endpt').val();
-	        
+
 	        var f = { groupOp: "AND", rules: [] };
 	        if (search_direct && search_direct != '') {
 	            f.rules.push({field: 'DIRECT_NM', op: 'cn', data: search_direct});
@@ -495,11 +495,11 @@ function addBtnEventHandler() {
 	        if (search_endpt && search_endpt != '') {
 	            f.rules.push({field: 'ENDPT', op: 'cn', data: search_endpt});
 	        }
-	        
+
 	        // reload grid
-	        var grid = $('#gridArea'); 
-	        grid[0].p.search = f.rules.length > 0; 
-	        $.extend(grid[0].p.postData, { filters: JSON.stringify(f) }); 
+	        var grid = $('#gridArea');
+	        grid[0].p.search = f.rules.length > 0;
+	        $.extend(grid[0].p.postData, { filters: JSON.stringify(f) });
 	        grid.trigger("reloadGrid", [{ page: 1 }]);
 
 	    })
@@ -508,7 +508,7 @@ function addBtnEventHandler() {
 
 function validateInsert(frmId){
     var vform = $('#'+frmId);
-    
+
     //조사명 - SRVY_NM
     if(COMMON_LANG.isnullempty(COMMON_LANG.trimdata( vform.find('#SRVY_NM').val()))){
         alert("조사명에 값을 입력하세요.");
@@ -549,34 +549,34 @@ function validateInsert(frmId){
         $('#PAV_CELL_ID').val(selectedCellArrToString);
     } else {
         alert('셀을 한 개 이상 체크해주세요');
-        return false;       
+        return false;
     }
-    
-    
+
+
     return true;
 
 }
 
 //글 수정
 function fnUpdate() {
-    
+
     //위치등록 기능 구현 후 주석 제거
     if(!validateInsert('frm')){return;}
-    
+
     if( confirm('<spring:message code="warn.update.msg" />') ) {
         // 진행 프로그래스바 생성
         COMMON_UTIL.cmShowProgressBar();
-        
+
         try {
-            parent.gMap.cleanMap(); 
+            parent.gMap.cleanMap();
             // multipart/form-data 아닌 경우, mask 처리 값을 제거하여 폼 데이터를 전송 처리함
             COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/srvyrequstsctn/updateSrvyRequstSctn.do'/>","fnUpdateCallback");
-            
+
         } catch(E) {
             alert("폼데이터 변환중 오류가 발생하였습니다. :" +E);
         }
     }
-    
+
 }
 //---------------------------
 //처리 후 callback 함수들 (필수)
@@ -584,7 +584,7 @@ function fnUpdate() {
 function fnUpdateCallback( insertKey ) {
 
 	COMMON_UTIL.cmHideProgressBar();
-	
+
     // 목록 화면 재검색
     COMMON_UTIL.cmMoveUrl('<c:url value="/srvyrequstsctn/selectSrvyRequstSctnList.do" />');
 }
