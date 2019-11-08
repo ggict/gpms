@@ -250,8 +250,8 @@
         WHERE
             A.SLCTN_YEAR           = #SLCTN_YEAR#
             AND A.SLCTN_STTUS      != 'RTSS0010'
-            AND A.DELETE_AT        = 'Y'
-            AND A.USE_AT           = 'N'
+            AND A.DELETE_AT        = 'N'
+            AND A.USE_AT           = 'Y'
     </select>
 
     <!-- 보수대상선정시작(보수_대상_항목 등록) -->
@@ -265,13 +265,14 @@
         <parameter property="P_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
         <parameter property="P_ROUTE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
         <parameter property="P_ANALS_UNIT_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="P_START_END_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
         <parameter property="P_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
     </parameterMap>
 
     <!-- 보수대상선정시작(보수_대상_항목_그룹 등록) -->
     <select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_STRING"
             parameterMap="prc_repair_target_range_string_params" resultClass="hashMap">
-        SELECT O_PROCCODE, O_PROCMSG FROM PRC_REPAIR_TARGET_RANGE_STRING(?::numeric, ?::numeric, ?, ?, ?)
+        SELECT O_PROCCODE, O_PROCMSG FROM PRC_REPAIR_TARGET_RANGE_STRING(?::numeric, ?::numeric, ?, ?, ?, ?)
     </select>
 
 

@@ -16,7 +16,7 @@ import kr.go.gg.gpms.pothole.sms.service.SmsService;
 import kr.go.gg.gpms.pothole.sttemnt.service.SttemntService;
 import kr.go.gg.gpms.pothole.sttemnt.service.model.SttemntVO;
 
-@Component
+//@Component
 public class Scheduler {
 
 	@Resource(name = "smsService")

@@ -99,14 +99,13 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 	    List<RpairTrgetSlctnVO> routeCodeList = rpairTrgetSlctnDAO.selectRpairTrgetSlctnRouteCodeList(rpairTrgetSlctnVO);
 
 	    for ( int i = 0; i < routeCodeList.size(); i++ ) {
-	        if ( i == 0 || i > 30 ) {
-//    	        if ( i == 0 )  {  // 시작
-//    	            rpairTrgetSlctnVO.setSTART_END_CODE("S");
-//    	        } else if ( routeCodeList.size() - 1 == i ) { // 종료
-//    	            rpairTrgetSlctnVO.setSTART_END_CODE("E");
-//    	        } else {
-//    	            rpairTrgetSlctnVO.setSTART_END_CODE("");
-//    	        }
+    	        if ( i == 0 )  {  // 시작
+    	            rpairTrgetSlctnVO.setSTART_END_CODE("S");
+    	        } else if ( routeCodeList.size() - 1 == i ) { // 종료
+    	            rpairTrgetSlctnVO.setSTART_END_CODE("E");
+    	        } else {
+    	            rpairTrgetSlctnVO.setSTART_END_CODE("");
+    	        }
     	        rpairTrgetSlctnVO.setROUTE_CODE(routeCodeList.get(i).getROUTE_CODE());
 
     	        rpairTrgetSlctnDAO.procRepairTargetRangeSelect(rpairTrgetSlctnVO);
@@ -114,7 +113,6 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 
 //    	        transactionManager.commit(status);// 트랜잭션 커밋
 //    	        conn.commit(); // 성공
-	        }
 	    }
 
 //	    DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
