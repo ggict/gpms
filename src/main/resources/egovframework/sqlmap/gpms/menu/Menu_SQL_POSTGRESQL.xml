@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="menuDAO">
- 
+
 	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
 	<typeAlias  alias="menuSerarchVO" type="kr.go.gg.gpms.menu.service.model.MenuDefaultVO"/>
 	<typeAlias alias="menuVO"	type="kr.go.gg.gpms.menu.service.model.MenuVO" />
@@ -30,10 +30,10 @@
 		WHERE 1 = 1
 		AND DELETE_AT = 'N' /* 시스템메뉴.삭제_여부 */
 		<isEqual property="searchCondition" compareValue="0">
-			AND MENU_ID = #searchKeyword# 
+			AND MENU_ID = #searchKeyword#
 		</isEqual>
 		<isEqual property="searchCondition" compareValue="1">
-			AND UPPER_MENU_ID LIKE '%' || #searchKeyword# || '%' 
+			AND UPPER_MENU_ID LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
 		<isNotEmpty property="MENU_ID"><![CDATA[ /* 시스템메뉴.메뉴_ID */ AND MENU_ID = #MENU_ID# ]]></isNotEmpty>
 		<isNotEmpty property="UPPER_MENU_ID"><![CDATA[ /* 시스템메뉴.상위_메뉴_ID */ AND UPPER_MENU_ID = #UPPER_MENU_ID# ]]></isNotEmpty>
@@ -48,7 +48,7 @@
 		<isNotEmpty property="MENU_DC"><![CDATA[ /* 시스템메뉴.메뉴_설명 */ AND MENU_DC = #MENU_DC# ]]></isNotEmpty>
 		<isNotEmpty property="SCH_URL"><![CDATA[ /* 시스템메뉴.URL */ AND URL LIKE '%' || LOWER( #SCH_URL# ) || '%']]></isNotEmpty>
 		<isNotEmpty property="SCH_MENU_D"><![CDATA[ /* 시스템메뉴.시스템구분 */ AND SYS_CODE = #SCH_MENU_D# ]]></isNotEmpty>
-		<!-- 
+		<!--
 		<isNotEmpty property="SCH_MENU_S">
 				<![CDATA[AND tnmenu.MENU_ID = #SCH_MENU_S#]]>
 		</isNotEmpty>
@@ -59,10 +59,10 @@
         WHERE 1 = 1
         AND a.DELETE_AT = 'N' /* 시스템메뉴.삭제_여부 */
         <isEqual property="searchCondition" compareValue="0">
-            AND a.MENU_ID = #searchKeyword# 
+            AND a.MENU_ID = #searchKeyword#
         </isEqual>
         <isEqual property="searchCondition" compareValue="1">
-            AND a.UPPER_MENU_ID LIKE '%' || #searchKeyword# || '%' 
+            AND a.UPPER_MENU_ID LIKE '%' || #searchKeyword# || '%'
         </isEqual>
         <isNotEmpty property="MENU_ID"><![CDATA[ /* 시스템메뉴.메뉴_ID */ AND a.MENU_ID = #MENU_ID# ]]></isNotEmpty>
         <isNotEmpty property="UPPER_MENU_ID"><![CDATA[ /* 시스템메뉴.상위_메뉴_ID */ AND a.UPPER_MENU_ID = #UPPER_MENU_ID# ]]></isNotEmpty>
@@ -79,9 +79,9 @@
         <isNotEmpty property="SCH_MENU_D"><![CDATA[ /* 시스템메뉴.시스템구분 */ AND a.SYS_CODE = #SCH_MENU_D# ]]></isNotEmpty>
         <isNotEmpty property="SCH_MENU_DP"><![CDATA[  AND a.MENU_DP = #SCH_MENU_DP# ]]></isNotEmpty>
     </sql>
-    	
+
 		<select id="menuDAO.selectMenu"	resultClass="menuVO">
-		<![CDATA[ 
+		<![CDATA[
 			/* menuDAO.selectMenu */
 			/* 시스템메뉴 상세조회 */
 			SELECT
@@ -90,7 +90,7 @@
 				, tnmenu.USE_AT /* 시스템메뉴.사용_여부 */
 				, tnmenu.DELETE_AT /* 시스템메뉴.삭제_여부 */
 				, tnmenu.UPDUSR_NO /* 시스템메뉴.수정자_번호 */
-				, (SELECT tnsysuser.USER_ID /* 시스템사용자.사용자_ID */ FROM TN_SYS_USER tnsysuser WHERE 1 = 1 AND tnsysuser.USER_NO = tnmenu.UPDUSR_NO /* 시스템사용자.사용자_번호 */ 
+				, (SELECT tnsysuser.USER_ID /* 시스템사용자.사용자_ID */ FROM TN_SYS_USER tnsysuser WHERE 1 = 1 AND tnsysuser.USER_NO = tnmenu.UPDUSR_NO /* 시스템사용자.사용자_번호 */
 			AND tnsysuser.USE_AT = 'Y' AND tnsysuser.CONFM_AT = 'Y' AND tnsysuser.DELETE_AT = 'N' )	UPDUSR_ID
 				, tnmenu.UPDT_DT /* 시스템메뉴.수정_일시 */
 				, tnmenu.MENU_NM /* 시스템메뉴.메뉴_명 */
@@ -108,11 +108,11 @@
 			AND tnmenu.DELETE_AT = 'N'
 		]]>
 	</select>
-	
+
 	<insert id="menuDAO.insertMenu">
 		<selectKey resultClass="String" keyProperty="MENU_ID">
 		  <![CDATA[
-		  select concat(tccode.ATRB_VAL , LPAD( cast(nextval('seq_tn_menu')as text),11,'0')) MENU_ID 
+		  select concat(tccode.ATRB_VAL , LPAD( cast(nextval('seq_tn_menu')as text),11,'0')) MENU_ID
  		  from TC_CODE tccode
  		  where 1=1
 	        AND tccode.CODE_VAL = #SYS_CODE#/* 공통코드.코드_값 */
@@ -121,9 +121,9 @@
 	        AND tccode.CL_CODE ='SYSM' /* 공통코드.분류_코드 */
 		  ]]>
 	  </selectKey>
-	  <![CDATA[ 
+	  <![CDATA[
 			/* menuDAO.insertMenu */
-			/* 시스템메뉴 등록 */	
+			/* 시스템메뉴 등록 */
 			INSERT INTO TN_MENU (
 				MENU_ID /* 시스템메뉴.메뉴_ID */
 				, UPPER_MENU_ID /* 시스템메뉴.상위_메뉴_ID */
@@ -157,11 +157,11 @@
 	</insert>
 
 	<select id="menuDAO.selectMenuList" parameterClass="menuVO" resultClass="menuVO">
-		<![CDATA[ 		
+		<![CDATA[
 		/* menuDAO.selectMenuList */
         WITH RECURSIVE tnmenu
         (
-            menu_id, upper_menu_id, use_at, delete_at, updusr_no, updt_dt, menu_nm, crtr_no, creat_dt, url, menu_dc, sys_code, menu_dp, 
+            menu_id, upper_menu_id, use_at, delete_at, updusr_no, updt_dt, menu_nm, crtr_no, creat_dt, url, menu_dc, sys_code, menu_dp,
             LEVEL, PATH
         ) AS
         (
@@ -171,15 +171,15 @@
             FROM tn_menu
         ]]>
             <isNotEmpty property="SCH_MENU_S">
-                <![CDATA[ WHERE upper_menu_id = #UPPER_MENU_ID# ]]>
+                <![CDATA[ WHERE upper_menu_id = #SCH_MENU_S# ]]>
             </isNotEmpty>
             <isEmpty property="SCH_MENU_S">
                 <![CDATA[ WHERE upper_menu_id IS NULL ]]>
             </isEmpty>
         <![CDATA[
             UNION ALL
-            
-            SELECT 
+
+            SELECT
                 a.menu_id, a.upper_menu_id, a.use_at, a.delete_at, a.updusr_no, a.updt_dt, a.menu_nm, a.crtr_no, a.creat_dt, a.url, a.menu_dc, a.sys_code, a.menu_dp,
                 LEVEL+1, PATH||a.menu_id
             FROM
@@ -188,27 +188,27 @@
             WHERE a.upper_menu_id = b.menu_id
         )
         SELECT
-            tnmenu.menu_id /* 시스템메뉴.메뉴_ID */, 
-            tnmenu.upper_menu_id /* 시스템메뉴.상위_메뉴_ID */, 
-            tnmenu.use_at /* 시스템메뉴.사용_여부 */, 
-            tnmenu.delete_at /* 시스템메뉴.삭제_여부 */, 
-            tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */, 
-            tnmenu.updt_dt /* 시스템메뉴.수정_일시 */, 
+            tnmenu.menu_id /* 시스템메뉴.메뉴_ID */,
+            tnmenu.upper_menu_id /* 시스템메뉴.상위_메뉴_ID */,
+            tnmenu.use_at /* 시스템메뉴.사용_여부 */,
+            tnmenu.delete_at /* 시스템메뉴.삭제_여부 */,
+            tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */,
+            tnmenu.updt_dt /* 시스템메뉴.수정_일시 */,
             concat(LPAD(' ', 8 *(LEVEL - 1)) , tnmenu.MENU_NM) MENU_NM /* 시스템메뉴.메뉴_명 */,
-            tnmenu.menu_nm MENU_NM /* 시스템메뉴.메뉴_명 */, 
-            tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */, 
-            tnmenu.creat_dt /* 시스템메뉴.생성_일시 */, 
-            tnmenu.url /* 시스템메뉴.URL */, 
-            tnmenu.menu_dc /* 시스템메뉴.메뉴_설명 */, 
-            tnmenu.sys_code/* 시스템메뉴.시스템_코드 */, 
+            tnmenu.menu_nm MENU_NM /* 시스템메뉴.메뉴_명 */,
+            tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */,
+            tnmenu.creat_dt /* 시스템메뉴.생성_일시 */,
+            tnmenu.url /* 시스템메뉴.URL */,
+            tnmenu.menu_dc /* 시스템메뉴.메뉴_설명 */,
+            tnmenu.sys_code/* 시스템메뉴.시스템_코드 */,
             tnmenu.menu_dp/* 시스템메뉴.시스템_레벨 */,
             ( SELECT tnsysuser.USER_ID /* 시스템사용자.사용자_ID */
-              FROM TN_SYS_USER tnsysuser 
+              FROM TN_SYS_USER tnsysuser
               WHERE 1 = 1
-                AND tnsysuser.USER_NO = tnmenu.UPDUSR_NO /* 시스템사용자.사용자_번호 */ 
+                AND tnsysuser.USER_NO = tnmenu.UPDUSR_NO /* 시스템사용자.사용자_번호 */
                 AND tnsysuser.USE_AT = 'Y'
                 AND tnsysuser.CONFM_AT = 'Y'
-                AND tnsysuser.DELETE_AT = 'N' ) UPDUSR_ID 
+                AND tnsysuser.DELETE_AT = 'N' ) UPDUSR_ID
         FROM tnmenu
         ]]>
         <include refid="menuDAO.selectMenuList.where" />
@@ -219,14 +219,14 @@
             <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
         </isEqual>
 	</select>
-	
+
 	<select id="menuDAO.selectMenuListTotalCount"	parameterClass="menuVO"	resultClass="int">
-		<![CDATA[ 		
+		<![CDATA[
 			/* menuDAO.selectMenuListTotalCount */
 			/* 시스템메뉴 목록 개수 조회  */
         WITH RECURSIVE tnmenu
         (
-            menu_id, upper_menu_id, use_at, delete_at, updusr_no, updt_dt, menu_nm, crtr_no, creat_dt, url, menu_dc, sys_code, menu_dp, 
+            menu_id, upper_menu_id, use_at, delete_at, updusr_no, updt_dt, menu_nm, crtr_no, creat_dt, url, menu_dc, sys_code, menu_dp,
             LEVEL, PATH
         ) AS
         (
@@ -236,20 +236,20 @@
             FROM tn_menu
         ]]>
             <isNotEmpty property="SCH_MENU_S">
-                <![CDATA[ WHERE upper_menu_id = #UPPER_MENU_ID# ]]>
+                <![CDATA[ WHERE upper_menu_id = #SCH_MENU_S# ]]>
             </isNotEmpty>
             <isEmpty property="SCH_MENU_S">
                 <![CDATA[ WHERE upper_menu_id IS NULL ]]>
             </isEmpty>
         <![CDATA[
             UNION ALL
-            
-            SELECT 
+
+            SELECT
                 a.menu_id, a.upper_menu_id, a.use_at, a.delete_at, a.updusr_no, a.updt_dt, a.menu_nm, a.crtr_no, a.creat_dt, a.url, a.menu_dc, a.sys_code, a.menu_dp,
                 LEVEL+1, PATH||a.menu_id
             FROM
                 tn_menu a, tnmenu b
-        
+
             WHERE a.upper_menu_id = b.menu_id
         )
         SELECT COUNT(*) AS totCnt
@@ -257,29 +257,29 @@
         ]]>
         <include refid="menuDAO.selectMenuList.where" />
 	</select>
-	
+
 	<select id="menuDAO.selectSysCodeList" resultClass="menuVO">
-		<![CDATA[ 
-		SELECT MENU_ID, MENU_NM      
-		  FROM TN_MENU   tnmenu  
-         WHERE UPPER_MENU_ID in 
-		  (SELECT MENU_ID                      
-		     FROM TN_MENU    tnmenu                  
+		<![CDATA[
+		SELECT MENU_ID, MENU_NM
+		  FROM TN_MENU   tnmenu
+         WHERE UPPER_MENU_ID in
+		  (SELECT MENU_ID
+		     FROM TN_MENU    tnmenu
 	        WHERE 1=1
-	   ]]>     
+	   ]]>
 	        AND SYS_CODE = #SYS_CODE#
-	   <![CDATA[              
+	   <![CDATA[
 	          AND UPPER_MENU_ID IS NULL
 		      AND tnmenu.USE_AT ='Y' /* 시스템메뉴.사용_여부 */
-			  AND tnmenu.DELETE_AT ='N' /* 시스템메뉴.삭제_여부 */     
+			  AND tnmenu.DELETE_AT ='N' /* 시스템메뉴.삭제_여부 */
 		   )
 		 	  AND tnmenu.USE_AT ='Y' /* 시스템메뉴.사용_여부 */
 			  AND tnmenu.DELETE_AT ='N' /* 시스템메뉴.삭제_여부 */
 		]]>
 	</select>
-	
+
 	<update id="menuDAO.updateMenuCode">
-		<![CDATA[ 
+		<![CDATA[
 			/* 시스템메뉴 수정 */
 			UPDATE TN_MENU SET
 				 MENU_NM = #MENU_NM#  /* 시스템메뉴.메뉴명 */
@@ -292,12 +292,12 @@
 			AND MENU_ID = #MENU_ID#   /* 시스템메뉴.메뉴_ID */
 			]]>
 	</update>
-	
+
 	<delete id="menuDAO.deleteMenu">
-		<![CDATA[ 
+		<![CDATA[
 			/* menuDAO.deleteMenu */
 			/* 시스템메뉴 삭제 */
-			UPDATE TN_MENU 
+			UPDATE TN_MENU
 			SET
 			DELETE_AT = 'Y' /* 시스템메뉴.삭제_여부 */
 			, USE_AT = 'N'/* 시스템메뉴.사용_여부 */
@@ -307,16 +307,16 @@
 			AND MENU_ID = #MENU_ID# /* 시스템메뉴.메뉴_ID */
 		]]>
 	</delete>
-	
+
 	<select id="menuDAO.selectMenuByURL"	resultClass="menuVO">
-		<![CDATA[ 
+		<![CDATA[
 			/* menuDAO.selectMenuByURL */
 			/* 시스템메뉴 url조회 */
 			SELECT
 				tnmenu.MENU_ID /* 시스템메뉴.메뉴_ID */
 				, tnmenu.UPPER_MENU_ID /* 시스템메뉴.상위_메뉴_ID */
 				, tnmenu.MENU_NM /* 시스템메뉴.메뉴_명 */
-				, tnmenu.URL /* 시스템메뉴.URL */			
+				, tnmenu.URL /* 시스템메뉴.URL */
 			FROM TN_MENU tnmenu
 			WHERE 1 = 1
 			AND tnmenu.URL = LOWER(#URL#) /* 시스템메뉴.URL  */
@@ -324,11 +324,11 @@
 			AND tnmenu.DELETE_AT ='N' /* 시스템메뉴.삭제_여부 */
 		]]>
 	</select>
-	
+
 	<select id="menuDAO.selectSysCode2List" resultClass="menuVO">
-		<![CDATA[ 
-		SELECT tnmenu.MENU_ID, tnmenu.MENU_NM      
-		  FROM TN_MENU   tnmenu  
+		<![CDATA[
+		SELECT tnmenu.MENU_ID, tnmenu.MENU_NM
+		  FROM TN_MENU   tnmenu
          WHERE  tnmenu.USE_AT ='Y' /* 시스템메뉴.사용_여부 */
 		  AND tnmenu.DELETE_AT ='N' /* 시스템메뉴.삭제_여부 */
 		  AND tnmenu.MENU_DP ='2'
