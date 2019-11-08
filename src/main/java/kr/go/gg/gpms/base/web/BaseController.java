@@ -12,14 +12,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.go.gg.gpms.attachfile.service.AttachFileService;
-import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
-import kr.go.gg.gpms.code.service.CodeService;
-import kr.go.gg.gpms.code.service.model.CodeVO;
-import kr.go.gg.gpms.company.service.CompanyService;
-import kr.go.gg.gpms.company.service.model.CompanyVO;
-import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
-
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,11 +22,17 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 
 import egovframework.cmmn.util.FileUploadUtils;
 import egovframework.cmmn.web.SessionManager;
 import egovframework.security.service.impl.ReloadableFilterInvocationSecurityMetadataSource;
+import kr.go.gg.gpms.attachfile.service.AttachFileService;
+import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
+import kr.go.gg.gpms.code.service.CodeService;
+import kr.go.gg.gpms.code.service.model.CodeVO;
+import kr.go.gg.gpms.company.service.CompanyService;
+import kr.go.gg.gpms.company.service.model.CompanyVO;
+import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
 
 public class BaseController {
 
@@ -179,7 +177,9 @@ public class BaseController {
 					}
 				}
 
-			}catch(Exception e){}
+			}catch(Exception e){
+			    throw e;
+			}
 		}
 	}
 

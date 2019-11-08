@@ -9,22 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.go.gg.gpms.authority.service.AuthorityService;
-import kr.go.gg.gpms.authority.service.model.AuthorityVO;
-import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.code.service.CodeService;
-import kr.go.gg.gpms.code.service.model.CodeVO;
-import kr.go.gg.gpms.company.service.CompanyService;
-import kr.go.gg.gpms.company.service.model.CompanyVO;
-import kr.go.gg.gpms.dept.service.DeptService;
-import kr.go.gg.gpms.dept.service.model.DeptVO;
-import kr.go.gg.gpms.menu.service.MenuService;
-import kr.go.gg.gpms.menu.service.model.MenuVO;
-import kr.go.gg.gpms.sysuser.service.SysUserService;
-import kr.go.gg.gpms.sysuser.service.model.SysUserVO;
-import kr.go.gg.gpms.userauth.service.UserAuthService;
-import kr.go.gg.gpms.userauth.service.model.UserAuthVO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +30,21 @@ import egovframework.cmmn.web.SessionManager;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 //import org.springframework.security.core.context.SecurityContextHolder;
+import kr.go.gg.gpms.authority.service.AuthorityService;
+import kr.go.gg.gpms.authority.service.model.AuthorityVO;
+import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.code.service.CodeService;
+import kr.go.gg.gpms.code.service.model.CodeVO;
+import kr.go.gg.gpms.company.service.CompanyService;
+import kr.go.gg.gpms.company.service.model.CompanyVO;
+import kr.go.gg.gpms.dept.service.DeptService;
+import kr.go.gg.gpms.dept.service.model.DeptVO;
+import kr.go.gg.gpms.menu.service.MenuService;
+import kr.go.gg.gpms.menu.service.model.MenuVO;
+import kr.go.gg.gpms.sysuser.service.SysUserService;
+import kr.go.gg.gpms.sysuser.service.model.SysUserVO;
+import kr.go.gg.gpms.userauth.service.UserAuthService;
+import kr.go.gg.gpms.userauth.service.model.UserAuthVO;
 
 /**
  * @Class Name : SysUserController.java
@@ -540,7 +539,7 @@ public class SysUserController extends BaseController {
 	public String infoStplat(@ModelAttribute("sysUserVO") SysUserVO sysUserVO, Model model) throws Exception {
 		return "/user/infoStplatView";
 	}
-	
+
 	@RequestMapping(value = { "/user/sysuser/infoAgreeCheckPth.do" })
     public String infoStplatPth(@ModelAttribute("sysUserVO") SysUserVO sysUserVO, Model model) throws Exception {
         return "/user/infoStplatViewPth";
@@ -595,6 +594,7 @@ public class SysUserController extends BaseController {
 		sysUserService.insertSysUser(sysUserVO);
 		}catch(Exception e) {
 		    e.printStackTrace();
+		    throw e;
 		}
 
 		return "jsonView";
@@ -895,7 +895,7 @@ public class SysUserController extends BaseController {
 
         return usrCnt;
     }
-	
+
 	/**
      * 사용자 부서 조회
      * @author    : JOY
@@ -911,9 +911,9 @@ public class SysUserController extends BaseController {
         DeptVO dept = deptService.selectDept(deptVO);
 
         return dept;
-        
+
     }
-    
+
     /**
      * 사용자 부서 조회
      * @author    : JOY
@@ -927,12 +927,12 @@ public class SysUserController extends BaseController {
     public @ResponseBody int updateUserPswd(@RequestBody SysUserVO sysUserVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 
         Date date = new Date();
-        
+
         sysUserVO.setPASSWORD_CHANGE_DT(date);
         sysUserVO.setSECRET_NO("vYd8+U8aYxI8i+xavdEmuYg2GYnkc++4D8bNW18hoLg4UCEslLUKcBhTiqdB7l2mVhC02mwY5C7a6gfhvlYpzw==");
         sysUserVO.setUPDUSR_NO("3");
-        
+
         return sysUserService.updateSysUser(sysUserVO);
-        
+
     }
 }

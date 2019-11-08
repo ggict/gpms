@@ -10,11 +10,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
+import kr.go.gg.gpms.pothole.cmptnc.service.CmptncService;
+import kr.go.gg.gpms.pothole.cmptnc.service.model.CmptncVO;
 import kr.go.gg.gpms.pothole.sms.service.SmsService;
 import kr.go.gg.gpms.pothole.sttemnt.service.SttemntService;
 import kr.go.gg.gpms.pothole.sttemnt.service.model.SttemntVO;
-import kr.go.gg.gpms.pothole.cmptnc.service.CmptncService;
-import kr.go.gg.gpms.pothole.cmptnc.service.model.CmptncVO;
 
 @Component
 public class Scheduler {
@@ -65,6 +65,7 @@ public class Scheduler {
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					throw new RuntimeException(e);
 				}
 
 	        }

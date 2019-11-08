@@ -816,57 +816,6 @@ SELECT
 
 	</select>
 
-	<select id="rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList"
-		parameterClass="rpairTrgetGroupVO"
-		resultClass="rpairTrgetGroupVO">
-<![CDATA[
-		/* rpairTrgetGroupDAO.selectRpairTrgetGroupList */
-		/* 보수_대상_항목_그룹 조회 */
-WITH RPMDCODES AS
-(
-SELECT
-       tcrpairmthd.RPAIR_MTHD_CODE    /* 보수공법코드.보수_공법_코드 */
-     , tcrpairmthd.MSRC_CL_CODE    /* 보수공법코드.공법_분류_코드 */
-     , (SELECT tccode.CODE_NM    FROM GPMS.TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSRC_CL_CODE  ) MSRC_CL_NM
-     , tcrpairmthd.MSRC_NM    /* 보수공법코드.공법_명 */
-     , tcrpairmthd.MSRC_CT    /* 보수공법코드.공법_비용 */
-     , tcrpairmthd.MSRC_LCLAS_CODE    /* 보수공법코드.공법_대분류_코드 */
-     , tcrpairmthd.MSR_DM_CODE /* 공법선정비율_결정방식_코드 */
-     , COALESCE( (SELECT tccode.ATRB_VAL   FROM GPMS.TC_CODE  tccode  WHERE tccode.CODE_VAL = tcrpairmthd.MSR_DM_CODE AND tccode.CL_CODE ='MSRD' ),'0') RPAIR_MTHD_CLASS
-     , tnrpairmthduntpc.CNTRWK_AMOUNT    /* 보수_공법_단가.공사_금액 */
-     , tnrpairmthduntpc.PAINT_AMOUNT    /* 보수_공법_단가.차선_도색_금액 */
-     , tnrpairmthduntpc.ETC_AMOUNT    /* 보수_공법_단가.기타_금액 */
-     , tnrpairmthduntpc.TOT_AMOUNT  RPAIR_FEE  /* 보수_공법_단가.총_금액 */
-  FROM GPMS.TC_RPAIR_MTHD  tcrpairmthd  /*** 보수공법코드 테이블 ***/
-  INNER JOIN GPMS.TN_RPAIR_MTHD_UNTPC  tnrpairmthduntpc  /*** 보수_공법_단가 테이블 ***/
-  ON tnrpairmthduntpc.RPAIR_MTHD_CODE  = tcrpairmthd.RPAIR_MTHD_CODE  /* 보수_공법_단가.보수_공법_코드 */
-  AND tnrpairmthduntpc.USE_AT = 'Y'   /* 보수_공법_단가.사용_여부 */
-  AND tnrpairmthduntpc.DELETE_AT = 'N'
-  WHERE 1=1
-   AND tcrpairmthd.DELETE_AT = 'N'                                   /* 보수공법코드.삭제_여부 */
-   AND tcrpairmthd.USE_AT = 'Y'                                         /* 보수공법코드.사용_여부 */
-)
- 	SELECT tnrpairtrgetgroup.CELL_IDS    /* 보수_대상_항목_그룹.섹션목록 */
-    FROM TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-    INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
-    ON tnrpairtrgetslctn.TRGET_SLCTN_NO = tnrpairtrgetgroup.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
-    AND tnrpairtrgetslctn.DELETE_AT = 'N'
-    AND tnrpairtrgetslctn.USE_AT = 'Y'
-    INNER JOIN TC_CODE  celtcode
-        ON celtcode.CODE_VAL = tnrpairtrgetgroup.CELL_TYPE AND celtcode.CL_CODE = 'CELT' AND celtcode.USE_AT = 'Y'    AND celtcode.DELETE_AT = 'N'
-    LEFT OUTER JOIN TC_CODE  vntccode
-        ON vntccode.CODE_VAL = tnrpairtrgetgroup.VMTC_GRAD AND vntccode.CL_CODE = 'VNTC' AND vntccode.USE_AT = 'Y'    AND vntccode.DELETE_AT = 'N'
-    INNER JOIN RPMDCODES
-        ON RPMDCODES.RPAIR_MTHD_CODE= tnrpairtrgetgroup.RPAIR_MTHD_CODE
-]]>
-	<include refid="rpairTrgetGroupDAO.selectRpairTrgetGroupList.where" />
-<![CDATA[
-]]>
-</select>
-
-
-
-
 
 
 	<select id="rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalSummary"

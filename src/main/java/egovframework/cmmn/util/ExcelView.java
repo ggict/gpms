@@ -1,16 +1,22 @@
 package egovframework.cmmn.util;
 
 import java.io.UnsupportedEncodingException;
-import java.net.*;
-import java.util.*;
+import java.net.URLEncoder;
+import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.streaming.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 public class ExcelView  extends AbstractExcelViewCustom {
 
@@ -97,7 +103,7 @@ public class ExcelView  extends AbstractExcelViewCustom {
 	        response.setHeader("Content-Disposition", "attachment; filename="+URLEncoder.encode(file_name,"UTF-8")+".xlsx");
 		}
 
-		private void writeListObject(Map<String, Object> modelMap, SXSSFWorkbook workbook, HttpServletResponse response) throws UnsupportedEncodingException {
+		private void writeListObject(Map<String, Object> modelMap, SXSSFWorkbook workbook, HttpServletResponse response) throws Exception {
 			String file_name = (String) modelMap.get("file_name");
 			//file_name = URLEncoder.encode(file_name,"UTF-8");
 
@@ -147,6 +153,7 @@ public class ExcelView  extends AbstractExcelViewCustom {
 						c.setCellValue(cellValue);
 
 					} catch (Exception ex) {
+					    throw ex;
 						//System.out.println("Exception : " + ex.toString());
 						//System.out.println("StackTrace : " + ex.getStackTrace());
 					}

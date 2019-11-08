@@ -10,7 +10,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -25,11 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kr.go.gg.gpms.attachfile.service.AttachFileService;
-import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
-import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -41,13 +35,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import egovframework.cmmn.util.SaveMapUtils;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 //import org.springframework.security.core.context.SecurityContextHolder;
+import kr.go.gg.gpms.attachfile.service.AttachFileService;
+import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
+import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
 
 
 
@@ -407,6 +404,7 @@ public class AttachFileController extends BaseController{
 			ios.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -469,7 +467,7 @@ public class AttachFileController extends BaseController{
 
 		return "/map/mapPrint" ;
 	}
-    
+
     // Tomcat쪽 소스
     /*@RequestMapping(value = { "/printImgMap.do" })
     public String printImgMap(@RequestParam Map<String, Object> map,  ModelMap model

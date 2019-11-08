@@ -17,25 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kr.go.gg.gpms.attachfile.service.AttachFileService;
-import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
-import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.code.service.CodeService;
-import kr.go.gg.gpms.code.service.model.CodeVO;
-import kr.go.gg.gpms.company.service.CompanyService;
-import kr.go.gg.gpms.company.service.model.CompanyVO;
-import kr.go.gg.gpms.dept.service.DeptService;
-import kr.go.gg.gpms.dept.service.model.DeptVO;
-import kr.go.gg.gpms.map.service.MapService;
-import kr.go.gg.gpms.pothole.cmptnc.service.CmptncService;
-import kr.go.gg.gpms.pothole.cmptnc.service.model.CmptncVO;
-import kr.go.gg.gpms.pothole.sms.service.SmsService;
-import kr.go.gg.gpms.pothole.sttemnt.service.RpairService;
-import kr.go.gg.gpms.pothole.sttemnt.service.SttemntService;
-import kr.go.gg.gpms.pothole.sttemnt.service.model.RpairVO;
-import kr.go.gg.gpms.pothole.sttemnt.service.model.SttemntVO;
-import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
-
 import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +43,24 @@ import egovframework.cmmn.util.ExcelViewSttemnt;
 import egovframework.cmmn.web.SessionManager;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import kr.go.gg.gpms.attachfile.service.AttachFileService;
+import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
+import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.code.service.CodeService;
+import kr.go.gg.gpms.code.service.model.CodeVO;
+import kr.go.gg.gpms.company.service.CompanyService;
+import kr.go.gg.gpms.company.service.model.CompanyVO;
+import kr.go.gg.gpms.dept.service.DeptService;
+import kr.go.gg.gpms.dept.service.model.DeptVO;
+import kr.go.gg.gpms.map.service.MapService;
+import kr.go.gg.gpms.pothole.cmptnc.service.CmptncService;
+import kr.go.gg.gpms.pothole.cmptnc.service.model.CmptncVO;
+import kr.go.gg.gpms.pothole.sms.service.SmsService;
+import kr.go.gg.gpms.pothole.sttemnt.service.RpairService;
+import kr.go.gg.gpms.pothole.sttemnt.service.SttemntService;
+import kr.go.gg.gpms.pothole.sttemnt.service.model.RpairVO;
+import kr.go.gg.gpms.pothole.sttemnt.service.model.SttemntVO;
+import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
 
 /**
  * 포트홀 신고관리 Controller
@@ -1123,6 +1122,7 @@ public class SttemntController extends BaseController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 	    return "jsonView";
