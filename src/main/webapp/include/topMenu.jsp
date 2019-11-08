@@ -37,13 +37,13 @@
                         </ul>
                     </li>
                     <li class="c00">
-                        <a href="#none" <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')"><span>코드정보관리</span></a>
+                        <a href="#none" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')"><span>코드정보관리</span></a>
                         <ul>
                             <li class="s10" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')"><a href="#none">코드정보관리</a></li>
                         </ul>
                     </li>
                     <li class="c00">
-                        <a href="#none" <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/notice/selectNoticeList.do"/>')"><span>공지사항관리</span></a>
+                        <a href="#none" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/notice/selectNoticeList.do"/>')"><span>공지사항관리</span></a>
                         <ul>
                             <li class="s10" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/notice/selectNoticeList.do"/>')"><a href="#none">공지사항관리</a></li>
                         </ul>
@@ -66,7 +66,7 @@
             <span class="topMenu">
                 <a href="#none" class="btnMonitoring" title="새창">모니터링시스템</a>
                 <span class="userArea">
-                    <a id="userDept" href="#none" ></a><c:out value="" />                
+                    <a id="userDept" href="#none" ></a><c:out value="" />
                     <span class="user-area">
     				    <a href="#" onclick="COMMON_UTIL.cmWindowOpen('사용자 정보', contextPath +'/api/sysuser/updateUserView.do', 420, 350, true, null, 'center');"> 사용자 정보</a>
     				    <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/applyUserList.do"/>');" style="display: none;">신청<span id="usrCnt"></span>건</a>
@@ -75,15 +75,15 @@
                 </span>
                 <button  class="btnLogout" onclick="fnLogout();">로그아웃</button>
             </span>
-            
+
         </div>
-    </header>    
+    </header>
         <!-- ADMIN TOP MENU END -->
     </c:when>
 
     <c:when test="${sessionScope.system == 'map' }">
 
-        <!-- GPMS TOP MENU START -->        
+        <!-- GPMS TOP MENU START -->
 <header class="header">
         <div class="container">
             <h1 class="h1">
@@ -93,16 +93,16 @@
             <nav class="nav">
                 <ul>
                     <li class="a00">
-                        <a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_route', '<c:url value="routeinfo/selectRouteInfoList.do"/>')"><span>노선검색</span></a>
+                        <a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="routeinfo/selectRouteInfoList.do"/>')"><span>노선검색</span></a>
                         <ul>
-                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_route', '<c:url value="routeinfo/selectRouteInfoList.do"/>')">데이터로검색</a></li>
+                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="routeinfo/selectRouteInfoList.do"/>')">데이터로검색</a></li>
                             <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cell10/selectCell10List.do"/>');">셀단위로검색</a></li>
                         </ul>
                     </li>
                     <li class="b00">
-                        <a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_reg_srvy', '<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>')"><span>조사자료관리</span></a>
+                        <a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>')"><span>조사자료관리</span></a>
                         <ul>
-                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_reg_srvy', '<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>')">조사자료등록</a></li>
+                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>')">조사자료등록</a></li>
                             <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyExcelList.do"/>');">조사자료이력조회 </a></li>
                             <li class="s30"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/srvyunsectionlist.do"/>');">미조사구간조회</a></li>
                             <li class="s40"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvyrequstsctn/addSrvyRequstSctnView.do"/>');">조사요청구간등록</a></li>
@@ -110,35 +110,33 @@
                         </ul>
                     </li>
                     <li class="c00">
-                        <a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_srvyEvl', '<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>')"><span>포장상태평가</span></a>
+                        <a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>')"><span>포장상태평가</span></a>
                         <ul>
                             <li class="s10"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>');">평가정보조회</a></li>
-                            <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlList.do"/>');">포장상태 평가</a></li>
+<%--                             <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlList.do"/>');">포장상태 평가</a></li> --%>
+                        </ul>
+                    </li>
+                    <li class="e00">
+                        <a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/selectCntrwkList.do"/>')"><span>포장공사이력관리</span></a>
+                        <ul>
+                            <li class="s10" onclick="fnSelectFirst($(this)); COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/selectCntrwkList.do"/>')"><a href="#none">포장공사이력관리</a></li>
+                            <li class="s30"><a href="#none">포장공사진행현황</a></li>
                         </ul>
                     </li>
                     <li class="d00">
                         <a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_repairtargets','<c:url value="rpairtrgetslctn/intro.do"/>')"><span>보수대상선정</span></a>
                         <ul>
                             <li class="s10"><a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_repairtargets','<c:url value="rpairtrgetslctn/intro.do"/>')">보수대상선정</a></li>
-                            <li class="s20"><a href="#none">선정이력</a></li>
-                            <li class="s30"><a href="#none">환경설정</a></li>
-                        </ul>
-                    </li>
-                    <li class="e00">
-                        <a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_cntrwk','<c:url value="cntrwk/selectCntrwkList.do"/>')"><span>포장공사이력관리</span></a>
-                        <ul>
-                            <li class="s10" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_cntrwk','<c:url value="cntrwk/selectCntrwkList.do"/>')"><a href="#none">포장공사이력관리</a></li>
                             <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmWindowOpen('유지보수 실적집계 엑셀출력', contextPath +'/cntrwk/setDownloadReport.do', 390, 150, true, null, 'center');">유지보수 실적집계</a></li>
-                            <li class="s30"><a href="#none">포장공사진행현황</a></li>
                         </ul>
                     </li>
                     <li class="f00">
-                        <a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_stat_route', '<c:url value="stats/selectRouteAllStats.do"/>')"><span>통계</span></a>
+                        <a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.cmMenuUrlContent('<c:url value="stats/selectRouteAllStats.do"/>')"><span>통계</span></a>
                         <ul>
-                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_route', '<c:url value="stats/selectRouteAllStats.do"/>')">노선별통계</a></li>
-                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_mumm', '<c:url value="mumm/mummRoutCntStats.do"/>')">포장상태 평가</a></li>
-                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_rpair', '<c:url value="rpairtrgetgroup/rpairRoutLenStats.do"/>')">보수대상 선정</a></li>
-                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_cntrwk', '<c:url value="cntrwkdtl/selectCntrwkRoutLenStats.do"/>')">포장공사 이력</a></li>
+                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="stats/selectRouteAllStats.do"/>')">노선별통계</a></li>
+                            <li><a href="#" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="mumm/mummRoutCntStats.do"/>')">포장상태 평가</a></li>
+                            <li><a href="#" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="rpairtrgetgroup/rpairRoutLenStats.do"/>')">보수대상 선정</a></li>
+                            <li><a href="#" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwkdtl/selectCntrwkRoutLenStats.do"/>')">포장공사 이력</a></li>
                             <!-- <li class="s20"><a href="#none">관리기관별통계</a></li>
                             <li class="s30"><a href="#none">차로별통계</a></li>
                             <li class="s40"><a href="#none">시군구별통계</a></li> -->
@@ -147,9 +145,8 @@
                 </ul>
             </nav>
             <span class="topMenu">
-                <a href="#none" class="btnMonitoring" title="새창">모니터링시스템</a>
                 <span class="userArea">
-                    <a id="userDept" href="#none" ></a><c:out value="" />                
+                    <a id="userDept" href="#none" ></a><c:out value="" />
                     <span class="user-area">
     				    <a href="#" onclick="$('.userBx').hide(); COMMON_UTIL.cmWindowOpen('사용자 정보', contextPath +'/api/sysuser/updateUserView.do', 420, 350, true, null, 'center');"> 사용자 정보</a>
     				    <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/applyUserList.do?sFlag=gpms"/>');" style="display: none;">신청<span id="usrCnt"></span>건</a>
@@ -158,10 +155,10 @@
                 </span>
                 <button  class="btnLogout" onclick="fnLogout();">로그아웃</button>
             </span>
-            
+
         </div>
-    </header>     
-        
+    </header>
+
         <!-- GPMS TOP MENU END -->
     </c:when>
 

@@ -272,7 +272,7 @@ input[type=number]{ color:#333333; padding:0 3px; line-height:20px; height:20px;
 .btab_menu li.sel a {color:#FFF;}
 .btab_menu li:last-child a,
 .btab_menu li:last-child.sel a{border-right:0px solid;}
-.tab_wrap{margin-left:140px;}
+/*.tab_wrap{margin-left:140px;} */
 .tabcont{position:relative}
 
 .tabcont .sttsth2 {background: rgb(255, 255, 255); text-align: left; color: black; line-height: 40px; font-size: 16px; font-weight: bold; margin-left: 6px;}
