@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
 import kr.go.gg.gpms.rpairtrgetgroup.service.RpairTrgetGroupService;
 import kr.go.gg.gpms.rpairtrgetgroup.service.model.RpairTrgetGroupVO;
 
@@ -55,7 +54,22 @@ public class RpairTrgetGroupServiceImpl extends AbstractServiceImpl implements R
         return rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalCount( rpairTrgetGroupVO);
     }
 
+    /**
+     * 보수대상 우선순위 저장 처리
+     */
+    public int updatePRIORT(List<RpairTrgetGroupVO> lvo, RpairTrgetGroupVO vo) throws Exception {
+        int ret = 0;
 
+        for ( int i = 0; i < lvo.size(); i++ ) {
+            RpairTrgetGroupVO rpairTrgetGroupVO = lvo.get(i);
+            rpairTrgetGroupVO.setCRTR_NO(vo.getCRTR_NO());
+            rpairTrgetGroupVO.setUPDUSR_NO(vo.getUPDUSR_NO());
+
+            ret += rpairTrgetGroupDAO.updatePRIORT(rpairTrgetGroupVO);
+        }
+
+        return ret;
+    }
 
 
 

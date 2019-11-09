@@ -108,7 +108,7 @@
 <!-- 개발키 -->
 <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=673dc0ed61508aed5450602c57997402&libraries=services" charset='utf-8'></script>  -->
 <!-- [2019-08-21] local서버 개발용 임시 key 발급 by yslee -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61cea915165ed9516e107ce6b620ef06&libraries=services" charset='utf-8'></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=84dd5bebf98b10a5b36bcea6aa00a833&libraries=services" charset='utf-8'></script>
 
 <!-- 새 kakkao api 2018.06.05 김태규 -->
 <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=61cea915165ed9516e107ce6b620ef06&libraries=services"></script> -->

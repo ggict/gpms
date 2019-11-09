@@ -234,14 +234,14 @@ width:100% !important;
 			</div>
 			<div class="mt10 tc" style="display:block;padding-top:2px;">
                 <div class="fl">
-                    <a href="#" class="schbtn" onclick="javascript:fnInitRangeSelection(true);">상태 초기화</a>
+<!--                     <a href="#" class="schbtn" onclick="javascript:fnInitRangeSelection(true);">상태 초기화</a> -->
                     <a href="#" class="schbtn" onclick="javascript:fn_select_cellSectFilter();" >선정구간 지도위치보기</a>
                     <a href="#" class="schbtn" onclick="javascript:fn_showChart_RepairTarget();">차트 조회</a>
                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}"><a href="#" class="graybtn"  disabled >엑셀 저장</a></c:if>
                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS eq 'RTSS0010'}"><a href="#" class="schbtn"  onclick="javascript:fndownload_RepairTarget();"  >엑셀 저장</a></c:if>
                 </div>
                 <div class="fr">
-                    <a href="#" class="schbtn" onclick="javascript:fnSaveComplete();" >보수대상 선정(저장)</a>
+                    <a href="#" class="schbtn" onclick="javascript:fnPriortSave();" >우선순위 저장</a>
                 </div>
             </div>
     	</div>
@@ -366,10 +366,13 @@ $( document ).ready(function() {
 	colModels[colIndex++]={name: "FIX_BUDGET_ASIGN",  index: "FIX_BUDGET_ASIGN", comments: "금액산정 <br/>(원)",  width: 80,align: "right", hidden: true, sortable :false ,  formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 0, defaultValue: '0' }}; /*보수_대상_항목_그룹.예산_배정 */
 	colModels[colIndex++]={name: "FIX_AMOUNT_CALC",  index: "FIX_AMOUNT_CALC", comments: "금액산정 <br/>(원)",  width: 100,align: "right", hidden: false, sortable :false ,  formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 0, defaultValue: '0' }}; /*보수_대상_항목_그룹.예산_배정 */
 	colModels[colIndex++]={name: "CALC_GPCI",  index: "CALC_GPCI", comments: "GPCI",  width: 50,align: "right", hidden: false, sortable :false }; /*보수_대상_항목_그룹.산정_GPCI */
-	colModels[colIndex++]={name: "DMG_VAL",  index: "DMG_VAL", comments: "파손도",  width: 50,align: "right", hidden: false, sortable :false }; /*보수_대상_항목_그룹.파손도_값 */
+	colModels[colIndex++]={name: "TRNSPORT_QY",  index: "TRNSPORT_QY", comments: "교통_량",  width: 80,align: "center", hidden: false, sortable :true }; /*보수_대상_항목_그룹.교통_량 */
+	colModels[colIndex++]={name: "POTHOLE_QY",  index: "POTHOLE_QY", comments: "포트홀_량",  width: 80,align: "center", hidden: false, sortable :true }; /*보수_대상_항목_그룹.포트홀_량 */
+	colModels[colIndex++]={name: "PRIORT",  index: "PRIORT", comments: "우선순위",  width: 80,align: "center", hidden: false, sortable :false, formatter: fn_priort_txt}; /*보수_대상_항목_그룹.우선순위 */
 //	colModels[colIndex++]={name: "btn_loc",  index: "btn_loc", comments: "위치<br/>보기",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
 	colModels[colIndex++]={name: "btn_loc2",  index: "btn_loc2", comments: "위치<br/>보기",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
 
+	colModels[colIndex++]={name: "DMG_VAL",  index: "DMG_VAL", comments: "파손도",  width: 50,align: "right", hidden: true, sortable :false }; /*보수_대상_항목_그룹.파손도_값 */
 	colModels[colIndex++]={name: "GROUP_ITEM_NO",  index: "GROUP_ITEM_NO", comments: "그룹_항목_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.그룹_항목_번호 */
 	colModels[colIndex++]={name: "TRGET_SLCTN_NO",  index: "TRGET_SLCTN_NO", comments: "대상_선정_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.대상_선정_번호 */
 	colModels[colIndex++]={name: "SLCTN_STEP",  index: "SLCTN_STEP", comments: "선정_단계",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_단계 */
@@ -381,7 +384,6 @@ $( document ).ready(function() {
 	colModels[colIndex++]={name: "CALC_YEAR",  index: "CALC_YEAR", comments: "산정_년도",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_년도 */
 	colModels[colIndex++]={name: "CALC_MT",  index: "CALC_MT", comments: "산정_월",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_월 */
 	colModels[colIndex++]={name: "CALC_PC_GRAD",  index: "CALC_PC_GRAD", comments: "산정_포장상태등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_포장상태등급 */
-	colModels[colIndex++]={name: "TRNSPORT_QY",  index: "TRNSPORT_QY", comments: "교통_량",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.교통_량 */
 	colModels[colIndex++]={name: "RPAIR_MTHD_CODE",  index: "RPAIR_MTHD_CODE", comments: "보수_공법_코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.보수_공법_코드 */
 	colModels[colIndex++]={name: "MSR_DM_CODE",  index: "MSR_DM_CODE", comments: "공법선정비율_결정방식_코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.공법선정비율_결정방식_코드 */
 	colModels[colIndex++]={name: "THRHLD",  index: "THRHLD", comments: "임계값",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.임계값 */
@@ -522,6 +524,18 @@ function fn_grid_btn(cellValue, options, rowObject) {
 
 	return btn;
 }
+
+//우선순위 입력박스 생성
+function fn_priort_txt(cellValue, options, rowObject) {
+	var PRIORT = rowObject.PRIORT ? rowObject.PRIORT : "";
+	var GROUP_ITEM_NO = rowObject.GROUP_ITEM_NO ? rowObject.GROUP_ITEM_NO : "";
+
+	var div = $("<div></div>");
+	div.append($('<input id="PRIORT" name="PRIORT" type="text" value="' + PRIORT + '" />'));
+	div.append($('<input id="GROUP_ITEM_NO" name="GROUP_ITEM_NO" type="hidden" value="' + GROUP_ITEM_NO + '" />'));
+
+	return div.prop('outerHTML');
+}
 //도면 다운로드, 위치이동 버튼 생성
 function fn_grid_item(cellValue, options, rowObject) {
 	var btn = "";
@@ -594,7 +608,47 @@ function fn_checkItem(objThis, group_item_no, tmpr_slctn_at, fix_amount_calc){
 	});
 
 }
+/**
+ * 우선순위 저장
+ */
+function fnPriortSave(){
+	var action = '<c:url value="/api/rpairtrgetgroup/updatePRIORT.do"/>';
+	var array = [];
 
+	var GROUP_ITEM_NO = $("#div_grid input[name='GROUP_ITEM_NO']");
+	var PRIORT = $("#div_grid input[name='PRIORT']");
+
+	$.each(PRIORT, function(idx) {
+		if ( $(this).val() ) {
+    		var json = {
+    			"GROUP_ITEM_NO": GROUP_ITEM_NO.filter(":eq(" + idx + ")").val(),
+    			"PRIORT": $(this).val()
+    		}
+    	    array.push(json);
+		}
+	});
+
+	$.ajax({
+		url: action,
+        contentType: 'application/json',
+        data: JSON.stringify(array),
+        dataType: "json",
+        cache: false,
+        type: 'POST',
+        processData: false,
+		success: function(data){
+			if ( data.resultSuccess == "true" ) {
+			    alert(data.resultMSG);
+			    fnSearch();
+			} else if ( data.resultSuccess == "false" ) {
+			    alert(data.resultMSG);
+			}
+		},
+		error: function(a,b,msg){
+			alert(JSON.stringify(data));
+		}
+	});
+}
 function fnInitRangeSelection(isSearch){
 	var action = '<c:url value="/api/rpairtrgetgroup/updateInitTMPR_SLCTN_AT.do"/>';
 	var vForm = $("#frmRpairTrgetGroup");

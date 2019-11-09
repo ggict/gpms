@@ -179,8 +179,6 @@ function repairTargetStart(){
         "ANALS_UNIT_CODE" : vForm.find('input[id^=ANALS_UNIT_CODE]:checked').val(),
         "SLCTN_YEAR"      : vForm.find('#SLCTN_YEAR').val(),
     };
-    console.log(postData.ANALS_UNIT_CODE);
-    console.log(postData.SLCTN_YEAR);
     if ( COMMON_LANG.isnotempty(postData.ANALS_UNIT_CODE) == false ) {
         alert("분석단위를 입력하십시오.");
         return;

@@ -140,7 +140,28 @@ public class RpairTrgetGroupController  extends BaseController {
         return map;
     }
 
+    /**
+     * 보수대상 우선순위저장 처리
+     */
+    @RequestMapping(value = {  "/api/rpairtrgetgroup/updatePRIORT.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody RpairTrgetGroupVO updatePRIORT(@RequestBody List<RpairTrgetGroupVO> lvo, HttpSession session) throws Exception {
+        RpairTrgetGroupVO vo = new RpairTrgetGroupVO();
+        BindBeansToActiveUser(vo);
 
+        try {
+            // 보수대상 우선순위저장 처리
+            rpairTrgetGroupService.updatePRIORT(lvo, vo);
+
+            vo.setResultSuccess("true");
+            vo.setResultMSG("정상 등록되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            vo.setResultSuccess("false");
+            vo.setResultMSG("오류가 발생하였습니다.");
+        }
+
+        return vo;
+    }
 
 
 

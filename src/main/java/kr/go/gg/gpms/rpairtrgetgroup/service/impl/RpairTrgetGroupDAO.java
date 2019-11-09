@@ -6,8 +6,8 @@ package kr.go.gg.gpms.rpairtrgetgroup.service.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+
 import egovframework.example.cmmn.impl.BaseDAO;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
 import kr.go.gg.gpms.rpairtrgetgroup.service.model.RpairTrgetGroupVO;
 
 /**
@@ -47,6 +47,13 @@ public class RpairTrgetGroupDAO extends BaseDAO {
      */
     public int selectRpairTrgetGroupListTotalCount(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
         return (Integer) select("rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalCount", rpairTrgetGroupVO);
+    }
+
+    /**
+     * 보수대상 우선순위 저장 처리
+     */
+    public int updatePRIORT(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+        return update("rpairTrgetGroupDAO.updatePRIORT", rpairTrgetGroupVO);
     }
 
 

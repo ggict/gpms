@@ -60,6 +60,20 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 	private String MNG_RD_NM;
 
 	/**
+	 * TN_RPAIR_TRGET_GROUP.POTHOLE_QY,
+	 * 보수_대상_항목_그룹.포트홀_량
+	 */
+	@XmlElement
+	private String POTHOLE_QY;
+
+	/**
+	 * TN_RPAIR_TRGET_GROUP.PRIORT,
+	 * 보수_대상_항목_그룹.우선순위
+	 */
+	@XmlElement
+	private String PRIORT;
+
+	/**
 	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO,
 	 * 보수_대상_항목_그룹.그룹_항목_번호 값읽기
 	 * @return
@@ -104,6 +118,24 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 
     public void setMNG_RD_NM(String mNG_RD_NM) {
         MNG_RD_NM = mNG_RD_NM;
+    }
+
+    @JsonProperty(value="PRIORT")
+    public String getPRIORT() {
+        return PRIORT;
+    }
+
+    public void setPRIORT(String pRIORT) {
+        PRIORT = pRIORT;
+    }
+
+    @JsonProperty(value="POTHOLE_QY")
+    public String getPOTHOLE_QY() {
+        return POTHOLE_QY;
+    }
+
+    public void setPOTHOLE_QY(String pOTHOLE_QY) {
+        POTHOLE_QY = pOTHOLE_QY;
     }
 
 }

@@ -150,7 +150,7 @@
                 , tnrpairtrgetgroup.*
                 FROM (SELECT ROW_NUMBER() OVER(
             ]]>
-            <isEmpty property="sidx"> ORDER BY tb.MSR_DM_CODE ASC, tb.SLCTN_ORDR ASC </isEmpty>
+            <isEmpty property="sidx"> ORDER BY tb.PRIORT, tb.CALC_GPCI ASC </isEmpty>
             <isNotEmpty  property="sidx"> ORDER BY $sidx$ $sord$ </isNotEmpty>
             <![CDATA[
                         ) rn
@@ -224,6 +224,8 @@
                          , tnrpairtrgetgroup.CELL_IDS    /* 보수_대상_항목_그룹.섹션목록 */
                          , tnrpairtrgetgroup.MNG_RD_CD    /* 보수_대상_항목_그룹.관리_도로_코드 */
                          , mngrdcode.CODE_NM MNG_RD_NM    /* 보수_대상_항목_그룹.관리_도로_명 */
+                         , tnrpairtrgetgroup.POTHOLE_QY   /* 보수_대상_항목_그룹.포트홀_량 */
+                         , tnrpairtrgetgroup.PRIORT   /* 보수_대상_항목_그룹.우선순위 */
                         FROM TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
                         INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
                         ON tnrpairtrgetslctn.TRGET_SLCTN_NO = tnrpairtrgetgroup.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
@@ -297,7 +299,15 @@
         <include refid="rpairTrgetGroupDAO.selectRpairTrgetGroupList.where" />
     </select>
 
-
+    <!-- 보수대상 우선순위 저장 -->
+    <update id="rpairTrgetGroupDAO.updatePRIORT">
+        <![CDATA[
+            UPDATE TN_RPAIR_TRGET_GROUP SET
+                PRIORT                           = #PRIORT#::int
+            WHERE
+                GROUP_ITEM_NO                    = #GROUP_ITEM_NO#::int
+        ]]>
+    </update>
 
 
 

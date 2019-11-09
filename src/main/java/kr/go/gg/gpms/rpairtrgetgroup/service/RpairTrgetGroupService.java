@@ -2,9 +2,7 @@ package kr.go.gg.gpms.rpairtrgetgroup.service;
 
 import java.util.List;
 
-import kr.go.gg.gpms.rpairtrgetgroup.service.model.RpairTrgetGroupDefaultVO;
 import kr.go.gg.gpms.rpairtrgetgroup.service.model.RpairTrgetGroupVO;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 /**
  * 보수_대상_항목_그룹
@@ -38,6 +36,11 @@ public interface RpairTrgetGroupService {
      * @exception
      */
     int selectRpairTrgetGroupListTotalCount(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception ;
+
+    /**
+     * 보수대상 우선순위 저장 처리
+     */
+    int updatePRIORT(List<RpairTrgetGroupVO> lvo, RpairTrgetGroupVO vo) throws Exception ;
 
 
 
