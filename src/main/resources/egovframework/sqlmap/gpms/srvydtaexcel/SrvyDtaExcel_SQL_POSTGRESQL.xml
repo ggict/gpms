@@ -1049,7 +1049,7 @@
 		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN, tb.* FROM (
 			SELECT tnsrvydtaexcel.SRVY_NO
 			     , tnattachfile.ORGINL_FILE_NM FILE_NM
-			     , SUBSTR(tnsrvydtaexcel.SRVY_DE, 1, 4) || '년 ' || SUBSTR(tnsrvydtaexcel.SRVY_DE, 5, 2) || '월' SRVY_DE
+			     , concat(SUBSTR(tnsrvydtaexcel.SRVY_DE, 1, 4), '년 ', SUBSTR(tnsrvydtaexcel.SRVY_DE, 5, 2), '월') SRVY_DE
 			     , TO_CHAR(NOW(), 'YYYY') || '년 ' || TO_CHAR(NOW(), 'MM') || '월' CALC_DE
 			     , to_char(now()::timestamp + '12 month', 'YYYY') || '~' || to_char(now()::timestamp + '120 month', 'YYYY') PREDCT_DE
 			     , tnsrvydtaexcel.DATA_CO
@@ -1114,7 +1114,7 @@
 		FROM (
             SELECT
 				tnsmdtagnlsttus.SRVY_NO /* 최소_구간_조사_자료.조사번호 */
-				, tnsmdtagnlsttus.SRVY_YEAR || '.' || tnsmdtagnlsttus.SRVY_MT AS		SRVY_DE /* 최소_구간_조사_자료.조사월 */
+				, concat(tnsmdtagnlsttus.SRVY_YEAR, '.', tnsmdtagnlsttus.SRVY_MT) AS		SRVY_DE /* 최소_구간_조사_자료.조사월 */
 				, ( SELECT tcdept.LOWEST_DEPT_NM
 	                FROM TC_DEPT tcdept
 	                WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */
@@ -1207,7 +1207,7 @@
 	                , sect.OBJECT_ID
 	                , sect.CELL_ID
 	                , tnsmdtagnlsttus.SM_NO 
-	                , tnsmdtagnlsttus.SRVY_YEAR || '.' || tnsmdtagnlsttus.SRVY_MT AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
+	                , concat(tnsmdtagnlsttus.SRVY_YEAR , '.' , tnsmdtagnlsttus.SRVY_MT) AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
 	                , tnsmdtagnlsttus.SRVY_YEAR
 	                , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
 	                    WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */
@@ -1295,7 +1295,7 @@
                 SELECT
                     tnsmdtagnlsttus.SRVY_NO /* 최소_구간_조사_자료.조사번호 */
                     , sect.OBJECT_ID
-                    , tnsmdtagnlsttus.SRVY_YEAR || '.' || tnsmdtagnlsttus.SRVY_MT AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
+                    , concat(tnsmdtagnlsttus.SRVY_YEAR , '.' , tnsmdtagnlsttus.SRVY_MT) AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
                     , tnsmdtagnlsttus.SRVY_YEAR
                     , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
                         WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */

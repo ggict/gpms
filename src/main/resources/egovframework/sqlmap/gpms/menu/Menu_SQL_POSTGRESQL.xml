@@ -112,7 +112,7 @@
 	<insert id="menuDAO.insertMenu">
 		<selectKey resultClass="String" keyProperty="MENU_ID">
 		  <![CDATA[
-		  select tccode.ATRB_VAL || LPAD( cast(nextval('seq_tn_menu')as text),11,'0') MENU_ID 
+		  select concat(tccode.ATRB_VAL , LPAD( cast(nextval('seq_tn_menu')as text),11,'0')) MENU_ID 
  		  from TC_CODE tccode
  		  where 1=1
 	        AND tccode.CODE_VAL = #SYS_CODE#/* 공통코드.코드_값 */
@@ -197,7 +197,7 @@
             tnmenu.delete_at /* 시스템메뉴.삭제_여부 */, 
             tnmenu.updusr_no /* 시스템메뉴.수정자_번호 */, 
             tnmenu.updt_dt /* 시스템메뉴.수정_일시 */, 
-            LPAD(' ', 8 *(LEVEL - 1)) || tnmenu.MENU_NM MENU_NM /* 시스템메뉴.메뉴_명 */,
+            concat(LPAD(' ', 8 *(LEVEL - 1)) , tnmenu.MENU_NM) MENU_NM /* 시스템메뉴.메뉴_명 */,
             tnmenu.menu_nm MENU_NM /* 시스템메뉴.메뉴_명 */, 
             tnmenu.crtr_no /* 시스템메뉴.생성자_번호 */, 
             tnmenu.creat_dt /* 시스템메뉴.생성_일시 */, 

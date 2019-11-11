@@ -284,7 +284,7 @@
                 AND a.delete_at = 'N' AND a.use_at = 'Y'
         )
         SELECT tnmenu.MENU_ID   /*시스템메뉴.메뉴ID*/
-              ,LPAD(' ', 4 *(LEVEL - 1)) || tnmenu.MENU_NM  MENU_NM /*시스템메뉴.메뉴명*/
+              ,concat(LPAD(' ', 4 *(LEVEL - 1)) , tnmenu.MENU_NM)  MENU_NM /*시스템메뉴.메뉴명*/
               ,tnmenu.MENU_DC   /*시스템메뉴.메뉴설명*/
               ,tnmenu.CREAT_DT  /*시스템메뉴.생성_일시*/
               ,tnmenu.USE_AT    /*시스템메뉴.사용여부*/
@@ -349,7 +349,7 @@
                 AND a.delete_at = 'N' AND a.use_at = 'Y'
         )
         SELECT tnmenu.MENU_ID   /*시스템메뉴.메뉴ID*/
-              ,LPAD(' ', 4 *(LEVEL - 1)) || tnmenu.MENU_NM  MENU_NM /*시스템메뉴.메뉴명*/
+              ,concat(LPAD(' ', 4 *(LEVEL - 1)) , tnmenu.MENU_NM)  MENU_NM /*시스템메뉴.메뉴명*/
               ,tnmenu.MENU_DC   /*시스템메뉴.메뉴설명*/
               ,tnmenu.CREAT_DT  /*시스템메뉴.생성_일시*/
               ,tnmenu.USE_AT    /*시스템메뉴.사용여부*/

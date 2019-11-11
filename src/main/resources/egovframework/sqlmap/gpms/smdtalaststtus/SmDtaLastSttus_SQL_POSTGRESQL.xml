@@ -777,7 +777,7 @@
 		DMG_CUZ_ETC != 0 THEN '교통량/하부불량,기후,기타'
 		END
 		AS CUZ
-		, tnsmdtalaststtus.RPAIR_TA ||'년' RPAIR_TA
+		, concat(tnsmdtalaststtus.RPAIR_TA , '년') RPAIR_TA
 		FROM TN_SM_DTA_LAST_STTUS tnsmdtalaststtus
 		LEFT OUTER JOIN CELL_SECT sect
 		ON sect.ROUTE_CODE = tnsmdtalaststtus.ROUTE_CODE

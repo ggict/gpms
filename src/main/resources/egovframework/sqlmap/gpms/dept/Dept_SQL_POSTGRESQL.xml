@@ -872,14 +872,14 @@
             /* deptDAO.selectRegionList */
             /* 지역 셀렉트박스 리스트 */
 	  SELECT DEPT_CODE,   /* 부서코드 */
-	     CASE WHEN (DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || LOWEST_DEPT_NM
+	     CASE WHEN (DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN concat('수원시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('3790000','3800000','3810000')) THEN concat('성남시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('3950000','3960100','4100100')) THEN concat('고양시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('3850000','3840000')) THEN concat('안양시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('3910029','3910038')) THEN concat('평택시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('5550000','5560000')) THEN concat('안산시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('5620000','5630000','5640000')) THEN concat('용인시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('5530073','5530074')) THEN concat('화성시 ' , LOWEST_DEPT_NM)
              ELSE LOWEST_DEPT_NM END AS LOWEST_DEPT_NM
 	    FROM TC_DEPT
 	   WHERE 1=1
@@ -962,29 +962,29 @@
 	  SELECT DEPT_CODE         /* 부서코드 */
     ]]>
     <isEmpty property="flag"> <![CDATA[
-             , CASE WHEN (DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || LOWEST_DEPT_NM
-             WHEN (DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || LOWEST_DEPT_NM
+             , CASE WHEN (DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN concat('수원시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('3790000','3800000','3810000')) THEN concat('성남시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('3950000','3960100','4100100')) THEN concat('고양시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('3850000','3840000')) THEN concat('안양시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('3910029','3910038')) THEN concat('평택시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('5550000','5560000')) THEN concat('안산시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('5620000','5630000','5640000')) THEN concat('용인시 ' , LOWEST_DEPT_NM)
+             WHEN (DEPT_CODE in ('5530073','5530074')) THEN concat('화성시 ' , LOWEST_DEPT_NM)
              ELSE LOWEST_DEPT_NM END AS LOWEST_DEPT_NM
              ]]>
     </isEmpty>
 	<isNotEmpty property="flag">
 	<![CDATA[
              , (CASE WHEN DEPT_CODE > '7000300'  AND DEPT_CODE  < '7000400'
-		             THEN CONCAT( '민자도로사업자',  ' ('|| LOWEST_DEPT_NM || ')' )
-		             WHEN (DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN '수원시 ' || LOWEST_DEPT_NM
-		             WHEN (DEPT_CODE in ('3790000','3800000','3810000')) THEN '성남시 ' || LOWEST_DEPT_NM
-		             WHEN (DEPT_CODE in ('3950000','3960100','4100100')) THEN '고양시 ' || LOWEST_DEPT_NM
-		             WHEN (DEPT_CODE in ('3850000','3840000')) THEN '안양시 ' || LOWEST_DEPT_NM
-		             WHEN (DEPT_CODE in ('3910029','3910038')) THEN '평택시 ' || LOWEST_DEPT_NM
-		             WHEN (DEPT_CODE in ('5550000','5560000')) THEN '안산시 ' || LOWEST_DEPT_NM
-		             WHEN (DEPT_CODE in ('5620000','5630000','5640000')) THEN '용인시 ' || LOWEST_DEPT_NM
-		             WHEN (DEPT_CODE in ('5530073','5530074')) THEN '화성시 ' || LOWEST_DEPT_NM
+		             THEN CONCAT( '민자도로사업자',  ' (', LOWEST_DEPT_NM, ')' )
+		             WHEN (DEPT_CODE in ('3750000','3760000','3770000','5610000')) THEN concat('수원시 ' , LOWEST_DEPT_NM)
+		             WHEN (DEPT_CODE in ('3790000','3800000','3810000')) THEN concat('성남시 ' , LOWEST_DEPT_NM)
+		             WHEN (DEPT_CODE in ('3950000','3960100','4100100')) THEN concat('고양시 ' , LOWEST_DEPT_NM)
+		             WHEN (DEPT_CODE in ('3850000','3840000')) THEN concat('안양시 ' , LOWEST_DEPT_NM)
+		             WHEN (DEPT_CODE in ('3910029','3910038')) THEN concat('평택시 ' , LOWEST_DEPT_NM)
+		             WHEN (DEPT_CODE in ('5550000','5560000')) THEN concat('안산시 ' , LOWEST_DEPT_NM)
+		             WHEN (DEPT_CODE in ('5620000','5630000','5640000')) THEN concat('용인시 ' , LOWEST_DEPT_NM)
+		             WHEN (DEPT_CODE in ('5530073','5530074')) THEN concat('화성시 ' , LOWEST_DEPT_NM)
 		             ELSE LOWEST_DEPT_NM
 	            END) AS LOWEST_DEPT_NM
     ]]>

@@ -282,8 +282,8 @@
     
     <select id="cntrwkCellInfoDAO.selectCntrwkBeforeCellInfoList" parameterClass="cntrwkCellInfoVO" resultClass="cell10VO">
 <![CDATA[
-        /* cntrwkCellInfoDAO.selectRouteInfoListByCellID */
-        /* CELL_10 리스트 조회 - 포장공사 이력관리 > 세부공사 CELL 선택용 */
+        /* cntrwkCellInfoDAO.selectCntrwkBeforeCellInfoList */
+        /* 포장공사 기본정보 - 이전공사이력 조회 그리드용 */
         SELECT cell10.cell_id CELL_ID, 
        		cell10.route_code ROUTE_CODE,
 	   		tnrouteinfo.road_name ROAD_NAME,

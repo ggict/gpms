@@ -22,7 +22,7 @@
 	<insert id="pavMatrlDAO.insertPavMatrl">
 	<selectKey resultClass="String" keyProperty="PAV_MATRL_CODE">
 		  <![CDATA[
-		  select 'PM' || LPAD( nextval('SEQ_TC_PAV_MATRL') ,8,'0') PAV_MATRL_CODE 
+		  select concat('PM' , LPAD( nextval('SEQ_TC_PAV_MATRL') ,8,'0')) PAV_MATRL_CODE 
 		  ]]>
 	  </selectKey>
 	<![CDATA[ 

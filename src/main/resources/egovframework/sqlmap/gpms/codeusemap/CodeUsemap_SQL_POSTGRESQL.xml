@@ -123,7 +123,7 @@
 
 	/* codeUsemapDAO.selectTables */
 		/* 테이블 조회 */
-		SELECT DISTINCT c.relname TABLE_NM,  COALESCE (obj_description(c.oid)|| '  ' || c.relname, c.relname) TABLE_COMMENTS
+		SELECT DISTINCT c.relname TABLE_NM,  COALESCE (concat(obj_description(c.oid) , '  ' , c.relname), c.relname) TABLE_COMMENTS
 		FROM pg_catalog.pg_class c inner join pg_catalog.pg_namespace n on c.relnamespace=n.oid
 		WHERE ( c.relname LIKE 't%' OR obj_description(c.oid) IN ('CELL_10','CELL_SECT') )
 		AND  c.relname  NOT IN ('TOAD_PLAN_TABLE')

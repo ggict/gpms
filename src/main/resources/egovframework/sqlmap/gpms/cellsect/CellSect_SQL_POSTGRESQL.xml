@@ -82,7 +82,7 @@
                     WHERE tccode.CODE_VAL = cellsect.ROAD_GRAD AND tccode.CL_CODE = 'RDGD' 
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') ROAD_GRAD /* CELL_SECT.도로등급 */
                 , (SELECT  n3ag.NAME FROM  N3A_G0100000 n3ag
-                    WHERE n3ag.BJCD =  (cellsect.ADM_CODE||'00000')) ADM_CODE /* CELL_SECT.행정구역 */
+                    WHERE n3ag.BJCD =  concat(cellsect.ADM_CODE , '00000') ) ADM_CODE /* CELL_SECT.행정구역 */
                 , cellsect.CREAT_DT /* CELL_SECT.등록일 */
                 , cellsect.UPDUSR_NO /* CELL_SECT.수정자번호 */
                 , cellsect.UPDT_DT /* CELL_SECT.수정일 */
@@ -133,7 +133,7 @@
                     WHERE tccode.CODE_VAL = cellsect.ROAD_GRAD AND tccode.CL_CODE = 'RDGD' 
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') ROAD_GRAD /* CELL_SECT.도로등급 */
                 , (SELECT  n3ag.NAME FROM  N3A_G0100000 n3ag
-                    WHERE n3ag.BJCD =  (cellsect.ADM_CODE||'00000')) ADM_CODE /* CELL_SECT.행정구역 */
+                    WHERE n3ag.BJCD =  concat(cellsect.ADM_CODE , '00000') ) ADM_CODE /* CELL_SECT.행정구역 */
                 , cellsect.CREAT_DT /* CELL_SECT.등록일 */
                 , cellsect.UPDUSR_NO /* CELL_SECT.수정자번호 */
                 , cellsect.UPDT_DT /* CELL_SECT.수정일 */

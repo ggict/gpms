@@ -460,7 +460,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			    , (SELECT ROAD_NAME FROM TN_ROUTE_INFO ruteinf WHERE ruteinf.ROAD_NO = tnmummsctnsrvydta.ROUTE_CODE) AS ROUTE_NAME /* 노선명 */
 			    , ROUTE_CODE /* 최소_구간_조사_자료.노선_코드 */
 			    , ROAD_NM /* 최소_구간_조사_자료.도로_명 */
-			    , SCTN_STRTPT_DC || '~' || SCTN_ENDPT_DC AS STRTPTNL /* 최소_구간_조사_자료.시종점_설명*/
+			    , concat(SCTN_STRTPT_DC , '~' , SCTN_ENDPT_DC) AS STRTPTNL /* 최소_구간_조사_자료.시종점_설명*/
 			    , STRTPT /* 최소_구간_조사_자료.시점 */
 			    , ENDPT  /* 최소_구간_조사_자료.종점 */
 			    , MEMO /* 최소_구간_조사_자료.메모 */
@@ -574,7 +574,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 		    , (SELECT ROAD_NAME FROM TN_ROUTE_INFO ruteinf WHERE ruteinf.ROAD_NO = tnmummsctnsrvydta.ROUTE_CODE) AS ROUTE_NAME
 		    , ROUTE_CODE
 		    , ROAD_NM
-		    , SCTN_STRTPT_DC || '~' || SCTN_ENDPT_DC AS STRTPTNL
+		    , concat(SCTN_STRTPT_DC , '~' , SCTN_ENDPT_DC) AS STRTPTNL
 		    , STRTPT
 		    , ENDPT
 		    , (ENDPT - STRTPT) AS LENGTH

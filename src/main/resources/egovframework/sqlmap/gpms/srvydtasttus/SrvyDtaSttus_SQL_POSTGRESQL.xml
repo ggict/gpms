@@ -572,7 +572,7 @@ SRVY_YEAR = #SRVY_YEAR# /* 조사_자료_현황.조사_년도 */
 			SELECT  ROW_NUMBER() OVER ( ORDER BY tnsrvydtasttus.SRVY_YEAR, tnsrvydtasttus.SRVY_MT ASC ) rn
 				  , tnsrvydtasttus.SRVY_YEAR
       			  , tnsrvydtasttus.SRVY_MT
-			      , tnsrvydtasttus.SRVY_YEAR ||'년 ' || tnsrvydtasttus.SRVY_MT || '월' AS SRVY_DT
+			      , concat(tnsrvydtasttus.SRVY_YEAR , '년 ' , tnsrvydtasttus.SRVY_MT , '월') AS SRVY_DT
 			      , COUNT(*) AS DTA_CNT
 			 FROM TN_SRVY_DTA_STTUS tnsrvydtasttus
 			 WHERE tnsrvydtasttus.SM_PROCESS_AT = 'N'
