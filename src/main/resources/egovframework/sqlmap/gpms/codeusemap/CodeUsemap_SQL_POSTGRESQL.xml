@@ -141,7 +141,9 @@
 	<![CDATA[
 		/* codeUsemapDAO.selectColumnList */
 		/* 테이블 조회 */
-		select c.relname table_nm, a.attname colmn_nm, (select col_description(a.attrelid, a.attnum)) || ' ' || a.attname column_comments
+		select c.relname table_nm, 
+            a.attname colmn_nm, 
+            concat( (select col_description(a.attrelid, a.attnum)) , ' ' , a.attname ) as column_comments
 		from
    			pg_catalog.pg_class c
     		inner join pg_catalog.pg_attribute a on a.attrelid = c.oid
