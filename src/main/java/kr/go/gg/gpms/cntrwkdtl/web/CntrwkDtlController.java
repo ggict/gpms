@@ -502,7 +502,8 @@ public class CntrwkDtlController extends BaseController {
 			HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
 		String resultMsg = "";
 		String filePathNm = "";
-
+		String userNo = sessionManager.getUserNo();
+		
 		/** validate request type */
 		Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
 		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
@@ -515,9 +516,8 @@ public class CntrwkDtlController extends BaseController {
 		String filePath = pathInfoProperties.getProperty("file.upload.path");
 		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwkDtl", files);
 
-		Map<String, String> map = new HashMap<>();
-
 		try {
+			
 			for (AttachFileVO file : fileList) {
 
 				Date currentDate = new Date();
@@ -527,13 +527,12 @@ public class CntrwkDtlController extends BaseController {
 				filePathNm = checkFilePath(filePath, "path") + File.separator + "cntrwkDtl" + File.separator + date
 						+ File.separator + checkFilePath(file.getFILE_NM(), "name");
 
+				// db insert
+				resultMsg = cntrwkDtlService.excelDBUpload(cntrwkDtlVO, filePathNm, userNo);
 			}
-			// db insert
-			resultMsg = excelDBUpload(cntrwkDtlVO, filePathNm);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			resultMsg = "등록에 실패하였습니다.";
+		
+		} catch (Exception e) {
+			resultMsg = e.getMessage() + " 등록에 실패하였습니다.";
 			model.addAttribute("resultMsg", resultMsg);
 
 			return "jsonView";
@@ -547,224 +546,6 @@ public class CntrwkDtlController extends BaseController {
 			model.addAttribute("resultMsg", resultMsg);
 		}
 		return "jsonView";
-	}
-
-	public String excelDBUpload(CntrwkDtlVO cntrwkDtlVO, String filePathNm) throws Exception {
-		String resultMsg = "";
-		int CNTRWK_AMOUNT = 0;
-		String userNo = sessionManager.getUserNo();
-
-		RpairMthdVO rpairMthdVO = new RpairMthdVO();
-		PavMatrlVO pavMatrlVO = new PavMatrlVO();
-
-		// 파일경로
-		FileInputStream fis = new FileInputStream(filePathNm);
-		XSSFWorkbook workbook = new XSSFWorkbook(fis);
-
-		XSSFSheet sheet = workbook.getSheetAt(0);
-
-		// 파일의 row의 갯수
-		int rowindex = sheet.getPhysicalNumberOfRows();
-
-		try {
-			// row의 0 헤더 제외
-			for (int i = 1; i < rowindex; i++) {
-
-				XSSFRow rows = sheet.getRow(i);
-
-				for (int j = 0; j < rows.getLastCellNum(); j++) {
-
-					// column은 고정
-					String column = sheet.getRow(0).getCell(j).getStringCellValue();
-
-					// value는 column 다음 row부터
-					XSSFCell cell = sheet.getRow(i).getCell(j);
-					String value = "";
-
-					// Validation Check - Cell Type
-					if (cell == null) {
-						value = "";
-					} else {
-						switch (cell.getCellType()) {
-						case Cell.CELL_TYPE_STRING:
-							value = cell.getStringCellValue();
-							break;
-
-						case Cell.CELL_TYPE_NUMERIC:
-							value = String.valueOf(cell.getNumericCellValue());
-							break;
-
-						case Cell.CELL_TYPE_BLANK:
-							value = "";
-							break;
-
-						case Cell.CELL_TYPE_ERROR:
-
-							resultMsg = "오류가 발생하였습니다." + cell.getErrorCellValue();
-
-							return resultMsg;
-						}
-					}
-
-					// Validation Check - Cell Value Check
-
-					switch (column) {
-					case "도급비":
-						try {
-							if(value != "") {
-								cell.setCellType(Cell.CELL_TYPE_STRING);
-								value = cell.getStringCellValue();
-								cntrwkDtlVO.setOUTSRCCT(value);
-							}else {
-								resultMsg = column + " 칼럼은 필수항목입니다.";
-								return resultMsg;
-							}							
-						} catch (Exception e) {
-							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
-							return resultMsg;
-						}
-						break;
-
-					case "관급비":
-						try {
-							if(value != "") {
-								cell.setCellType(Cell.CELL_TYPE_STRING);
-								value = cell.getStringCellValue();
-								cntrwkDtlVO.setGVSLCT(value);
-								CNTRWK_AMOUNT = Integer.valueOf(cntrwkDtlVO.getOUTSRCCT()) + Integer.valueOf(value);
-								cntrwkDtlVO.setCNTRWK_AMOUNT(String.valueOf(CNTRWK_AMOUNT));
-							}else {
-								resultMsg = column + " 칼럼은 필수항목입니다.";
-								return resultMsg;
-							}	
-						} catch (Exception e) {
-							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
-							return resultMsg;
-						}
-						break;
-
-					case "세부위치":
-						if (value == "") {
-							resultMsg = column + " 칼럼은 필수항목입니다.";
-							return resultMsg;
-						} else {
-							cntrwkDtlVO.setDETAIL_CNTRWK_NM(value);
-						}
-						break;
-
-					case "도로명":
-						if (value == "") {
-							resultMsg = column + " 칼럼은 필수항목입니다.";
-							return resultMsg;
-						} else {
-							cntrwkDtlVO.setROAD_NM(value);
-						}
-						break;
-
-					case "포장공법":
-						try {
-							if(value != "") {
-								// 포장공법코드를 가져오는 쿼리문
-								rpairMthdVO.setMSRC_CL_NM(value);
-								rpairMthdVO = rpairMthdService.selectRpairMthdCode(rpairMthdVO);
-
-								cntrwkDtlVO.setRPAIR_MTHD_CODE(rpairMthdVO.getRPAIR_MTHD_CODE());
-							}else {
-								resultMsg = column + " 칼럼은 필수항목입니다.";
-								return resultMsg;
-							}
-						} catch (Exception e) {
-							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
-							return resultMsg;
-						}
-						break;
-
-					case "포장두께(표층)":
-						if (value == "") {
-							resultMsg = column + " 칼럼은 필수항목입니다.";
-							return resultMsg;
-						} else {
-							cntrwkDtlVO.setRPAIR_THICK_ASCON(value);
-						}
-						break;
-
-					case "포장두께(중간층)":
-						if (value == "") {
-							resultMsg = column + " 칼럼은 필수항목입니다.";
-							return resultMsg;
-						} else {
-							cntrwkDtlVO.setRPAIR_THICK_CNTR(value);
-						}
-						break;
-
-					case "포장두께(기층)":
-						if (value == "") {
-							resultMsg = column + " 칼럼은 필수항목입니다.";
-							return resultMsg;
-						} else {
-							cntrwkDtlVO.setRPAIR_THICK_BASE(value);
-						}
-						break;
-
-					case "포장재료(표층)":
-						try {
-							if(value != "") {
-								// 포장재료코드를 가져오는 쿼리문
-								pavMatrlVO.setPAV_MATRL_NM(value);
-								pavMatrlVO = pavMatrlService.selectPavMatrlCode(pavMatrlVO);
-
-								cntrwkDtlVO.setPAV_MATRL_ASCON_CODE(pavMatrlVO.getPAV_MATRL_CODE());
-							}else {
-								resultMsg = column + " 칼럼은 필수항목입니다.";
-								return resultMsg;
-							}
-						} catch (Exception e) {
-							resultMsg = column + " 컬럼의 " + cell.getStringCellValue() + "가 형식에 맞지 않습니다.";
-							return resultMsg;
-						}
-
-						break;
-
-					case "포장재료(중간층)":
-						cntrwkDtlVO.setPAV_MATRL_CNTR_NM(value);
-						break;
-
-					case "포장재료(기층)":
-						cntrwkDtlVO.setPAV_MATRL_BASE_NM(value);					
-						break;
-
-					case "공사시간":
-						if (value == "") {
-							resultMsg = column + " 칼럼은 필수항목입니다.";
-							return resultMsg;
-						} else {
-							cntrwkDtlVO.setCNTRWK_TIME(value);
-						}
-						break;
-
-					case "비고":
-						cntrwkDtlVO.setRM(value);						
-						break;
-
-					}
-
-				}
-
-				cntrwkDtlVO.setCRTR_NO(userNo);
-				cntrwkDtlVO.setUSE_AT("Y");
-				cntrwkDtlVO.setDELETE_AT("N");
-
-				// insert query
-				cntrwkDtlService.insertCntrwkDtl(cntrwkDtlVO);
-			}
-
-			workbook.close();
-		} catch (IOException e) {
-			resultMsg = "Fail";
-		}
-		resultMsg = "Success";
-
-		return resultMsg;
 	}
 
 	@RequestMapping(value = "/cntrwkdtl/downloadexcel.do")

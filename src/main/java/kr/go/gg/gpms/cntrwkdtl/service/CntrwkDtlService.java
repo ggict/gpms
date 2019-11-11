@@ -143,5 +143,11 @@ public interface CntrwkDtlService {
 	 */
 	 List cntrwkMthdCntStatsExcel(CntrwkDtlVO cntrwkDtlVO) throws Exception;
 	 
+	/**
+	 * 공사정보(TN_CNTRWK_DTL)엑셀을 DB에 저장한다.
+	 * @param cntrwkDtlVO - 저장할 정보가 담긴 CntrwkDtlVO
+	 * @exception Exception
+	 */
+	 String excelDBUpload(CntrwkDtlVO cntrwkDtlVO, String filePathNm, String userNo) throws Exception;
 }
 
