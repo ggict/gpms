@@ -75,10 +75,8 @@ var CONFIG = (function($, undefined){
 	var exceptLayerList = ['GAttrLayerBase','GAttrLayer','GStatusLayerBase' ,'GStatusLayer','GTypeLayer', 'SttemntLayer', 'DmgtLayer', 'GOverlapLayer' ];
 
 
-	//var aLayerList = ['CELL_10','CELL_SECT'];
+	var aLayerList = ['CELL_10','CELL_SECT'];
 	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T'];
-	var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T','CELL_10_4K','CELL_10_0301'];
-	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T','CELL_10_4K','CELL_10_0301','MV_ROAD_CELT0012','MV_ROAD_CELT0002','MV_ROAD_CELT0005'];
 
 	// 2018.02.07 YYK 관할구역관리 레이어 추가
 	var cLayerList = ['CMPTNC_ZONE'];
@@ -128,9 +126,7 @@ var CONFIG = (function($, undefined){
 	
 	
 	var serviceLayerInfo = {
-
 	     "CELL_10" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3764',
 	         'table' : 'CELL_10',
@@ -140,9 +136,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	 
 	     "CELL_SECT" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3765',
 	         'table' : 'CELL_SECT',
@@ -152,23 +146,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     
-	     /* 
-	     "CELL_200" : {
-	    	 
-	    	 'tmapid' : '870',
-	    	 'id' : '3800',
-	    	 'table' : 'CELL_200',
-	    	 'theme' : 'CELL_200',
-	    	 'alias' : 'CELL_200',
-	    	 'seq' : '3800',
-	    	 'show' : '1',
-	    	 'layerType' : '3',
-	     },
-	     */
-	     
 	     "CELL_10_0301" : {
-	    	 
 	    	 'tmapid' : '870',
 	    	 'id' : '3801',
 	    	 'table' : 'CELL_10_0301',
@@ -178,9 +156,7 @@ var CONFIG = (function($, undefined){
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
-	     
 	     "CELL_10_4K" : {
-	    	 
 	    	 'tmapid' : '870',
 	    	 'id' : '3802',
 	    	 'table' : 'CELL_10_4K',
@@ -190,9 +166,7 @@ var CONFIG = (function($, undefined){
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
-
 	     "MV_CELL_SECT_TYPE" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3768',
 	         'table' : 'MV_CELL_SECT_TYPE',
@@ -202,9 +176,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     
 	     "MV_GNLSTTUS_SECT_2017" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3761',
 	         'table' : 'MV_GNLSTTUS_SECT_2017',
@@ -214,9 +186,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     
 	     "MV_GNLSTTUS_SECT_2018" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3762',
 	         'table' : 'MV_GNLSTTUS_SECT_2018',
@@ -226,9 +196,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     
 	     "MV_SRVYDTA_10_2017" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3758',
 	         'table' : 'MV_SRVYDTA_10_2017',
@@ -238,9 +206,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	 
 	     "MV_SRVYDTA_10_2018" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3759',
 	         'table' : 'MV_SRVYDTA_10_2018',
@@ -250,9 +216,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     
 	     "MV_THM_YEAR_10" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3767',
 	         'table' : 'MV_THM_YEAR_10',
@@ -262,9 +226,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     
 	     "SIGUNGU" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3753',
 	         'table' : 'SIGUNGU',
@@ -274,9 +236,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	 
 	     "DORO_A001" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3754',
 	         'table' : 'DORO_A001',
@@ -286,9 +246,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	 
 	     "N3A_B0010000" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3755',
 	         'table' : 'N3A_B0010000',
@@ -298,20 +256,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     
-	     "M_CALS_T" : {
-	         
-	         'tmapid' : '870',
-	         'id' : '3775',
-	         'table' : 'M_CALS_T',
-	         'theme' : 'M_CALS_T',
-	         'alias' : '교량',
-	         'seq' : '3775',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
 	     "MV_ROAD_CELT0002" : {
-	    	 
 	    	 'tmapid' : '870',
 	    	 'id' : '3776',
 	    	 'table' : 'MV_ROAD_CELT0002',
@@ -321,8 +266,17 @@ var CONFIG = (function($, undefined){
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
+	     "M_CALS_T" : {
+	         'tmapid' : '870',
+	         'id' : '3775',
+	         'table' : 'M_CALS_T',
+	         'theme' : 'M_CALS_T',
+	         'alias' : '교량',
+	         'seq' : '3775',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
 	     "MV_ROAD_CELT0005" : {
-	    	 
 	    	 'tmapid' : '870',
 	    	 'id' : '3777',
 	    	 'table' : 'MV_ROAD_CELT0005',
@@ -333,7 +287,6 @@ var CONFIG = (function($, undefined){
 	    	 'layerType' : '3',
 	     },
 	     "MV_ROAD_CELT0012" : {
-	    	 
 	    	 'tmapid' : '870',
 	    	 'id' : '3778',
 	    	 'table' : 'MV_ROAD_CELT0012',
@@ -351,14 +304,11 @@ var CONFIG = (function($, undefined){
 	    	 'alias' : '포트홀',
 	    	 'seq' : '3802',
 	    	 'show' : '1',
-	    	 'layerType' : '1',
-	    	 'isRuleShow': 'off'
+	    	 'layerType' : '1'
+	    	 //,'isRuleShow': 'off'
 	     }
-	     
-	     
 	     /*
 	     "CMPTNC_ZONE" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3769',
 	         'table' : 'CMPTNC_ZONE',
@@ -368,9 +318,7 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	 
 	     "MV_POTHOLE_STTEMNT" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3774',
 	         'table' : 'MV_POTHOLE_STTEMNT',
@@ -380,7 +328,17 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	      */
+	     "CELL_200" : {
+	    	 'tmapid' : '870',
+	    	 'id' : '3800',
+	    	 'table' : 'CELL_200',
+	    	 'theme' : 'CELL_200',
+	    	 'alias' : 'CELL_200',
+	    	 'seq' : '3800',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
+	     },
+	     */
 	};	
 	
 

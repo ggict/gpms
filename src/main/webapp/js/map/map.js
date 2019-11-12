@@ -207,8 +207,8 @@ function($,undefined){
 
         // 베이스 레이어 설정 
         var oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
-        	layers : sThemeList
-        	,styles : sThemeList
+        	layers : sLayerList.join() //sThemeList
+        	,styles : sLayerList.join() //sThemeList
         	,format : sGetMapImageFormat
         	,version : sGetMapVersion
         	,crs : new OpenLayers.Projection(sRequestCrs)

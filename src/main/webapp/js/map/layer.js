@@ -361,7 +361,6 @@ MAP.LAYER = (function($,undefined){
 					}
 				}
 				//fn_redraw_wms();
-
 				fn_redraw_wms(_layerName);
 
 			});
