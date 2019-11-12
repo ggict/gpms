@@ -185,7 +185,7 @@ var CONFIG = (function($, undefined){
 	    	 'id' : '3802',
 	    	 'table' : 'CELL_10_4K',
 	    	 'theme' : 'CELL_10_4K',
-	    	 'alias' : 'CELL_10_4K',
+	    	 'alias' : '4K_라벨',
 	    	 'seq' : '3802',
 	    	 'show' : '1',
 	    	 'layerType' : '3',

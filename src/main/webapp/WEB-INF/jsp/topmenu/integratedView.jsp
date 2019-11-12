@@ -999,7 +999,8 @@ function fnStep3RouteInfo() {
         ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
         ,postData: postData
         ,ignoreCase: true
-        ,colNames:["ROAD_NO","노선","도로 등급","노선 번호","노선 명","시점 명","종점 명","총연장(km)","전산화</br>완료연장(km)","위치보기"]
+        //,colNames:["ROAD_NO","노선","도로 등급","노선 번호","노선 명","시점 명","종점 명","총연장(km)","전산화</br>완료연장(km)","위치보기"]
+        ,colNames:["ROAD_NO","노선","도로 등급","노선 번호","노선 명","시점 명","종점 명","총연장(km)","위치보기"]
         ,colModel:[
             {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
             ,{name:'ROUTE_CODE',index:'ROUTE_CODE', hidden: true}
@@ -1009,7 +1010,7 @@ function fnStep3RouteInfo() {
             ,{name:'ST_POINT',index:'ST_POINT', align:'left', width:120, sortable:false}
             ,{name:'ED_POINT',index:'ED_POINT', align:'left', width:120, sortable:false}
             ,{name:'ROAD_TOT_LEN_JYG_Y',index:'ROAD_TOT_LEN_JYG_Y', align:'center', width:80, sortable:false}
-            ,{name:'ROAD_LEN_CMPT',index:'ROAD_LEN_CMPT', align:'center', width:80, sortable:false}
+            //,{name:'ROAD_LEN_CMPT',index:'ROAD_LEN_CMPT', align:'center', width:80, sortable:false}
             ,{name:'btn_loc',index:'btn_loc', align:'center', width:50, sortable:false, formatter: fnCreateBtnRoute}
 
            ]
