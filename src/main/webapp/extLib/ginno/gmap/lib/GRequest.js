@@ -225,7 +225,7 @@ GRequest.WMS = {
 						var pointObj = {};
 
 						var size = points.pointSize;
-						if(size.length > 0) {
+						if(size && size.length > 0) {
 							pointObj["size"] = size;
 							if(points.name.indexOf('ImageMarker') != -1) {
 								pointObj["opacity"] = points.graphicOpacity;

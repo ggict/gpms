@@ -343,6 +343,17 @@ var CONFIG = (function($, undefined){
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
+	     "TN_POTHOLE" : {
+	    	 
+	    	 'tmapid' : '870',
+	    	 'id' : '3802',
+	    	 'table' : 'TN_POTHOLE',
+	    	 'theme' : 'TN_POTHOLE',
+	    	 'alias' : '포트홀',
+	    	 'seq' : '3802',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
+	     }
 	     
 	     /*
 	     "CMPTNC_ZONE" : {
