@@ -473,7 +473,7 @@ MAP.LAYER = (function($,undefined){
 							break;
 					}
 					if (!_oLayers) {
-						
+					
 						for ( var k in oSld.namedLayers) {
 							if (oSld.namedLayers[k].name == aLayerList[j].theme) {
 								var oUserStyles = oSld.namedLayers[k].userStyle;

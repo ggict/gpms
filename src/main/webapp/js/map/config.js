@@ -355,6 +355,7 @@ var CONFIG = (function($, undefined){
 	    	 'isRuleShow': 'off'
 	     }
 	     
+	     
 	     /*
 	     "CMPTNC_ZONE" : {
 	         
