@@ -184,75 +184,64 @@
         /* cell10DAO.selectCell10List */
         /* CELL_10 조회1 */
         
-        SELECT
-       		GID
-			, OBJECT_ID
-          	, ROUTE_CODE
-          	, ROUTE_CODE::int ROAD_NO_VAL
-          	, ROAD_NAME
-          	, DIRECT_CODE
-          	, TRACK
-          	, STRTPT
-          	, ENDPT
-          	, (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
-              	WHERE tcdept.DEPT_CODE = res.DEPT_CODE::text
-                AND tcdept.DELETE_AT='N' AND tcdept.USE_AT='Y') DEPT_CODE
-          	, (SELECT tccode.CODE_NM FROM TC_CODE tccode
-             	WHERE tccode.CODE_VAL = res.CELL_TYPE AND tccode.CL_CODE = 'CELT'
-                AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') CELL_TYPE
-			, (SELECT tccode.CODE_NM FROM TC_CODE tccode
-	            WHERE tccode.CODE_VAL = res.VMTC_GRAD AND tccode.CL_CODE = 'VNTC'
-                AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') VMTC_GRAD
-	        , (SELECT tccode.CODE_NM FROM TC_CODE tccode
-	            WHERE tccode.CODE_VAL = res.ROAD_GRAD AND tccode.CL_CODE = 'RDGD'
-                AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') ROAD_GRAD
-          	, (SELECT n3a.NAME FROM N3A_G0100000 n3a WHERE SUBSTR(n3a.BJCD,1,5) = res.ADM_CODE) ADM_NM
-          	, CREAT_DT
-          	, UPDUSR_NO
-          	, UPDT_DT
-          	, CELL_ID
-          	
-        FROM (
-            SELECT
-                cell10.GID /* CELL_10.GID */
-                , cell10.OBJECT_ID /* CELL_10.OBJECT_ID */
-                , cell10.ROUTE_CODE /* CELL_10.ROUTE_CODE */
-                , cell10.ROUTE_CODE::int ROAD_NO_VAL
-                , tnrouteinfo.ROAD_NAME
-                , cell10.DIRECT_CODE /* CELL_10.DIRECT_CODE */
-                , cell10.TRACK /* CELL_10.TRACK */
-                , cell10.STRTPT /* CELL_10.STRTPT */
-                , cell10.ENDPT /* CELL_10.ENDPT */
-                , cell10.DEPT_CODE
-                , cell10.CELL_TYPE
-                , cell10.VMTC_GRAD
-                , cell10.ROAD_GRAD
-                , cell10.ADM_CODE
-                , cell10.CREAT_DT /* CELL_10.CREAT_DT */
-                , cell10.UPDUSR_NO /* CELL_10.UPDUSR_NO */
-                , cell10.UPDT_DT /* CELL_10.UPDT_DT */
-                , cell10.CELL_ID /* CELL_10.CELL_ID */
-            FROM CELL_10 cell10
-           INNER JOIN TN_ROUTE_INFO tnrouteinfo
-              ON tnrouteinfo.ROAD_NO = cell10.ROUTE_CODE
+        SELECT gid, route_code,
+			(SELECT tnrouteinfo.road_name 
+	 		FROM tn_route_info tnrouteinfo 
+	 		WHERE tnrouteinfo.road_no = cell1015.route_code)road_name, 
+	
+			(SELECT tc_dept.lowest_dept_nm 
+			FROM tc_dept 
+	 		WHERE tc_dept.dept_code = trunc(cell1015.dept_code)::text)dept_nm, 
+	
+			(SELECT n3a.NAME 
+		 	FROM   n3a_g0100000 n3a 
+			WHERE  substr(n3a.bjcd,1,5) = cell1015.adm_code) adm_nm, 
+	 
+	 		(SELECT tccode.code_nm 
+      		FROM   tc_code tccode 
+      		WHERE  tccode.code_val = cell1015.road_grad 
+      		AND    tccode.cl_code = 'RDGD' 
+      		AND    tccode.delete_at='N' 
+      		AND    tccode.use_at='Y') road_grad , 
+	 
+	 		(SELECT tccode.code_nm 
+      		FROM   tc_code tccode 
+      		WHERE  tccode.code_val = cell1015.vmtc_grad 
+      		AND    tccode.cl_code = 'VNTC' 
+      		AND    tccode.delete_at='N' 
+      		AND    tccode.use_at='Y') vmtc_grad ,  
+	
+			(SELECT tccode.code_nm 
+     		FROM   tc_code tccode 
+     		WHERE  tccode.code_val = cell1015.cell_type 
+     		AND    tccode.cl_code = 'CELT' 
+     		AND    tccode.delete_at='N' 
+     		AND    tccode.use_at='Y') cell_type , 
+	
+			CASE cell1015.direct_cod 
+			WHEN 'S' THEN '상행' 
+			WHEN 'E' THEN '하행' 
+			ELSE '양방향' END direct_code,
+			track,
+	
+			(SELECT tn_route_sctn_info.sctn_nm 
+	 		FROM tn_route_sctn_info 
+	 		WHERE tn_route_sctn_info.sctn_no = cell1015.sctn_no) sctn_nm,
+			trunc(strtpt)strtpt, trunc(endpt)endpt, cell_id
+	
+		FROM cell_10_1015 cell1015
 ]]>
-
-        <include refid="cell10DAO.selectCell10List.where" />
 
 <![CDATA[
         ORDER BY
-                cell10.ROUTE_CODE, cell10.DIRECT_CODE, cell10.TRACK, cell10.STRTPT, cell10.ENDPT ASC
+                cell1015.ROUTE_CODE, cell1015.DIRECT_COD, cell1015.TRACK, cell1015.STRTPT, cell1015.ENDPT ASC
 ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
         <![CDATA[
             LIMIT #recordCountPerPage# OFFSET #firstIndex#
         ]]>
         </isEqual>
-<![CDATA[
-		
-		) as res
-		
-]]>
+
     </select>
 
 

@@ -316,6 +316,50 @@ public class Cell10VO extends BaseVO {
     @XmlElement
     private java.lang.String SRVY_YEAR;
 
+    @XmlElement
+    private java.lang.String SCTN_NO;
+    
+    @XmlElement
+    private java.lang.String SCTN_NM;
+    
+    /**
+	 * CELL_10.SCTN_NO,
+	 * CELL_10.SCTN_NO
+	 * @return
+	 */
+    @JsonProperty(value="SCTN_NO")
+	public java.lang.String getSCTN_NO() {
+		return SCTN_NO;
+	}
+
+    /**
+	 * CELL_10.GID,
+	 * CELL_10.GID
+	 * @param sctnNo
+	 */
+	public void setSCTN_NO(java.lang.String sctnNo) {
+		SCTN_NO = sctnNo;
+	}
+
+	/**
+	 * CELL_10.SCTN_NM,
+	 * CELL_10.SCTN_NM
+	 * @return
+	 */
+	@JsonProperty(value="SCTN_NM")
+	public java.lang.String getSCTN_NM() {
+		return SCTN_NM;
+	}
+
+	/**
+	 * CELL_10.GID,
+	 * CELL_10.GID
+	 * @param sctnNm
+	 */
+	public void setSCTN_NM(java.lang.String sctnNm) {
+		SCTN_NM = sctnNm;
+	}
+
 	/**
 	 * CELL_10.GID,
 	 * CELL_10.GID

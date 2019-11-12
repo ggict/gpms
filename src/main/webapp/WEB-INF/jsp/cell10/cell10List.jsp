@@ -26,20 +26,20 @@ $( document ).ready(function() {
 		//,postData: JSON.stringify( $("#frm").cmSerializeObject()) 
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["CELL_ID","ROUTE_CODE","노선 번호","노선 명","관리주체","행정 구역","도로 등급","교통 용량","섹션 구분","행선", "차로", "시점(m)", "종점(m)", "위치보기"]
+		,colNames:["CELL_ID","노선 번호","노선 명","관리주체","행정 구역","도로 등급","교통 용량","섹션 구분","행선", "차로","구간", "시점(m)", "종점(m)", "위치보기"]
 	   	,colModel:[
 	   	    /* sortable 사용 안함 (기본 : 노선 번호, 행선, 차료, 시점, 좀점 순으로 sort) */
 	   	    {name:'CELL_ID',index:'CELL_ID', hidden: true}
-	   	 	,{name:'ROUTE_CODE',index:'ROUTE_CODE', hidden: true}
-	   	 	,{name:'ROAD_NO_VAL',index:'ROAD_NO_VAL', align:'center', width:50, sortable:false}
+	   	 	,{name:'ROUTE_CODE',index:'ROUTE_CODE', align:'center', width:100, sortable:false}
 			,{name:'ROAD_NAME',index:'ROAD_NAME', align:'center', width:100, sortable:false}
-			,{name:'DEPT_CODE',index:'DEPT_CODE', align:'center', width:120, sortable:false}
+			,{name:'DEPT_NM',index:'DEPT_NM', align:'center', width:120, sortable:false}
 			,{name:'ADM_NM',index:'ADM_NM', align:'center', width:60, sortable:false}
 			,{name:'ROAD_GRAD',index:'ROAD_GRAD', align:'center', width:60, sortable:false}
 			,{name:'VMTC_GRAD',index:'VMTC_GRAD', align:'center', width:80, sortable:false}
 			,{name:'CELL_TYPE',index:'CELL_TYPE', align:'center', width:80, sortable:false}
-			,{name:'DIRECT_NM',index:'DIRECT_NM', align:'center', width:50, sortable:false}
+			,{name:'DIRECT_CODE',index:'DIRECT_CODE', align:'center', width:50, sortable:false}
 			,{name:'TRACK',index:'TRACK', align:'center', width:50, sortable:false}
+			,{name:'SCTN_NM',index:'SCTN_NM', align:'center', width:50, sortable:false}
 			,{name:'STRTPT',index:'STRTPT', align:'center', width:60, sortable:false, formatter: 'number', formatoptions: { thousandsSeparator: ",", decimalPlaces: 0, defaultValue: '0' }}
 			,{name:'ENDPT',index:'ENDPT', align:'center', width:60, sortable:false, formatter: 'number', formatoptions: { thousandsSeparator: ",", decimalPlaces: 0, defaultValue: '0' }}
 			,{name:'btn_loc',index:'btn_loc', align:'center', width:50, sortable:false, formatter: fn_create_btn}
@@ -56,7 +56,8 @@ $( document ).ready(function() {
 		,emptyrecords: "검색된 데이터가 없습니다."
 		,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
 		,ondblClickRow: function(rowId) {		// 더블클릭 처리
-			//fnView(rowId);	// 대장 조회
+			var rowData =$( "#gridArea" ).getRowData(rowId).CELL_ID;
+			alert(rowData); // 대장 조회
 		}
 	   	,onSelectRow: function(rowId) {		// 클릭 처리
 			if( rowId != null ) {
