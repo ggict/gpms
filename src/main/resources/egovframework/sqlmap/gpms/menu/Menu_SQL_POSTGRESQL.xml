@@ -215,21 +215,49 @@
         FROM tnmenu
         ORDER BY path
         ]]>
-        <isNotEqual prepend=" " property="usePage" compareValue="true">
+        <isEqual prepend=" " property="usePage" compareValue="true">
             <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
-        </isNotEqual>
+        </isEqual>
 	</select>
 	
 	<select id="menuDAO.selectMenuListTotalCount"	parameterClass="menuVO"	resultClass="int">
 		<![CDATA[ 		
 			/* menuDAO.selectMenuListTotalCount */
 			/* 시스템메뉴 목록 개수 조회  */
-			SELECT COUNT(*) AS totCnt
-			FROM TN_MENU
-		]]>		
-		<include refid="menuDAO.selectMenuList.where" />
-		<![CDATA[		
-		]]>		
+        WITH RECURSIVE tnmenu
+        (
+            menu_id, upper_menu_id, use_at, delete_at, updusr_no, updt_dt, menu_nm, crtr_no, creat_dt, url, menu_dc, sys_code, menu_dp, 
+            LEVEL, PATH
+        ) AS
+        (
+            SELECT
+                menu_id, upper_menu_id, use_at, delete_at, updusr_no, updt_dt, menu_nm, crtr_no, creat_dt, url, menu_dc, sys_code, menu_dp,
+                1 as LEVEL, array[menu_id]::varchar as PATH
+            FROM tn_menu
+        ]]>
+            <include refid="menuDAO.selectMenuList.where" />
+            <isNotEmpty property="SCH_MENU_S">
+                <![CDATA[ AND upper_menu_id = #UPPER_MENU_ID# ]]>
+            </isNotEmpty>
+            <isEmpty property="SCH_MENU_S">
+                <![CDATA[ AND upper_menu_id IS NULL ]]>
+            </isEmpty>
+        <![CDATA[
+            UNION ALL
+            
+            SELECT 
+                a.menu_id, a.upper_menu_id, a.use_at, a.delete_at, a.updusr_no, a.updt_dt, a.menu_nm, a.crtr_no, a.creat_dt, a.url, a.menu_dc, a.sys_code, a.menu_dp,
+                LEVEL+1, PATH||a.menu_id
+            FROM
+                tn_menu a, tnmenu b
+        ]]>
+            <include refid="menuDAO.selectMenuList.recursive.where" />
+        <![CDATA[
+            AND a.upper_menu_id = b.menu_id
+        )
+        SELECT COUNT(*) AS totCnt
+        FROM tnmenu
+        ]]>
 	</select>
 	
 	<select id="menuDAO.selectSysCodeList" resultClass="menuVO">
