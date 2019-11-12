@@ -126,190 +126,204 @@ var CONFIG = (function($, undefined){
 	
 	
 	var serviceLayerInfo = {
+
 	     "CELL_10" : {
 	         'tmapid' : '870',
-	         'id' : '1',
+	         'id' : '3764',
 	         'table' : 'CELL_10',
 	         'theme' : 'CELL_10',
-	         'alias' : '10m',
-	         'seq' : '1',
+	         'alias' : 'CELL_10',
+	         'seq' : '3764',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	 
 	     "CELL_SECT" : {
 	         'tmapid' : '870',
-	         'id' : '2',
+	         'id' : '3765',
 	         'table' : 'CELL_SECT',
 	         'theme' : 'CELL_SECT',
-	         'alias' : '200m',
-	         'seq' : '2',
+	         'alias' : 'CELL_SECT',
+	         'seq' : '3765',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	     
 	     "MV_CELL_SECT_TYPE" : {
 	         'tmapid' : '870',
-	         'id' : '3',
+	         'id' : '3768',
 	         'table' : 'MV_CELL_SECT_TYPE',
 	         'theme' : 'MV_CELL_SECT_TYPE',
 	         'alias' : 'Section셀_종류',
-	         'seq' : '3',
+	         'seq' : '3768',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	     
 	     "MV_GNLSTTUS_SECT_2017" : {
 	         'tmapid' : '870',
-	         'id' : '4',
+	         'id' : '3761',
 	         'table' : 'MV_GNLSTTUS_SECT_2017',
 	         'theme' : 'MV_GNLSTTUS_SECT_2017',
 	         'alias' : 'Section셀_포장상태_2017',
-	         'seq' : '4',
+	         'seq' : '3761',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	     
 	     "MV_GNLSTTUS_SECT_2018" : {
 	         'tmapid' : '870',
-	         'id' : '5',
+	         'id' : '3762',
 	         'table' : 'MV_GNLSTTUS_SECT_2018',
 	         'theme' : 'MV_GNLSTTUS_SECT_2018',
 	         'alias' : 'Section셀_포장상태_2018',
-	         'seq' : '5',
+	         'seq' : '3762',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	     
 	     "MV_SRVYDTA_10_2017" : {
 	         'tmapid' : '870',
-	         'id' : '6',
+	         'id' : '3758',
 	         'table' : 'MV_SRVYDTA_10_2017',
 	         'theme' : 'MV_SRVYDTA_10_2017',
 	         'alias' : '10m셀_포장상태_2017',
-	         'seq' : '6',
+	         'seq' : '3758',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	 
 	     "MV_SRVYDTA_10_2018" : {
 	         'tmapid' : '870',
-	         'id' : '7',
+	         'id' : '3759',
 	         'table' : 'MV_SRVYDTA_10_2018',
 	         'theme' : 'MV_SRVYDTA_10_2018',
 	         'alias' : '10m셀_포장상태_2018',
-	         'seq' : '7',
+	         'seq' : '3759',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	     
 	     "MV_THM_YEAR_10" : {
 	         'tmapid' : '870',
-	         'id' : '8',
+	         'id' : '3767',
 	         'table' : 'MV_THM_YEAR_10',
 	         'theme' : 'MV_THM_YEAR_10',
 	         'alias' : '10m셀_테마지도',
-	         'seq' : '8',
+	         'seq' : '3767',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	     
 	     "SIGUNGU" : {
 	         'tmapid' : '870',
-	         'id' : '9',
+	         'id' : '3753',
 	         'table' : 'SIGUNGU',
 	         'theme' : 'SIGUNGU',
 	         'alias' : '시군구',
-	         'seq' : '9',
+	         'seq' : '3753',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	 
 	     "DORO_A001" : {
 	         'tmapid' : '870',
-	         'id' : '10',
+	         'id' : '3754',
 	         'table' : 'DORO_A001',
 	         'theme' : 'DORO_A001',
 	         'alias' : '도로면',
-	         'seq' : '10',
+	         'seq' : '3754',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	 
 	     "N3A_B0010000" : {
 	         'tmapid' : '870',
-	         'id' : '11',
+	         'id' : '3755',
 	         'table' : 'N3A_B0010000',
 	         'theme' : 'N3A_B0010000',
 	         'alias' : '건물',
-	         'seq' : '11',
+	         'seq' : '3755',
+	         'show' : '1',
+	         'layerType' : '3',
+	     },
+	     
+	     "M_CALS_T" : {
+	         'tmapid' : '870',
+	         'id' : '3775',
+	         'table' : 'M_CALS_T',
+	         'theme' : 'M_CALS_T',
+	         'alias' : '교량',
+	         'seq' : '3775',
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
 	     "MV_ROAD_CELT0002" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '12',
+	    	 'id' : '3776',
 	    	 'table' : 'MV_ROAD_CELT0002',
 	    	 'theme' : 'MV_ROAD_CELT0002',
 	    	 'alias' : '교차로',
-	    	 'seq' : '12',
+	    	 'seq' : '3776',
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
-	     "M_CALS_T" : {
-	         'tmapid' : '870',
-	         'id' : '13',
-	         'table' : 'M_CALS_T',
-	         'theme' : 'M_CALS_T',
-	         'alias' : '교량',
-	         'seq' : '13',
-	         'show' : '1',
-	         'layerType' : '3',
-	     },
 	     "MV_ROAD_CELT0005" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '14',
+	    	 'id' : '3777',
 	    	 'table' : 'MV_ROAD_CELT0005',
 	    	 'theme' : 'MV_ROAD_CELT0005',
 	    	 'alias' : '터널',
-	    	 'seq' : '14',
+	    	 'seq' : '3777',
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
 	     "MV_ROAD_CELT0012" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '15',
+	    	 'id' : '3778',
 	    	 'table' : 'MV_ROAD_CELT0012',
 	    	 'theme' : 'MV_ROAD_CELT0012',
 	    	 'alias' : '특별관리구간',
-	    	 'seq' : '15',
+	    	 'seq' : '3778',
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
 	     "TN_POTHOLE" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '16',
+	    	 'id' : '3810',
 	    	 'table' : 'TN_POTHOLE',
 	    	 'theme' : 'TN_POTHOLE',
 	    	 'alias' : '포트홀',
-	    	 'seq' : '16',
-	    	 'show' : '1',
-	    	 'layerType' : '1'
-	    	 //,'isRuleShow': 'off'
-	     },
-	     "CELL_10_0301" : {
-	    	 'tmapid' : '870',
-	    	 'id' : '17',
-	    	 'table' : 'CELL_10_0301',
-	    	 'theme' : 'CELL_10_0301',
-	    	 'alias' : 'CELL_10_0301',
-	    	 'seq' : '17',
+	    	 'seq' : '3810',
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
+	     
+	     "CELL_10_0301" : {
+	    	 'tmapid' : '870',
+	    	 'id' : '3801',
+	    	 'table' : 'CELL_10_0301',
+	    	 'theme' : 'CELL_10_0301',
+	    	 'alias' : 'CELL_10_0301',
+	    	 'seq' : '3801',
+	    	 'show' : '1',
+	    	 'layerType' : '3',
+	     },
+	     
 	     "CELL_10_4K" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '18',
+	    	 'id' : '3802',
 	    	 'table' : 'CELL_10_4K',
 	    	 'theme' : 'CELL_10_4K',
 	    	 'alias' : '4K_라벨',
-	    	 'seq' : '18',
+	    	 'seq' : '3802',
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     }
 	     
 	     /*
 	     "CMPTNC_ZONE" : {
+	         
 	         'tmapid' : '870',
 	         'id' : '3769',
 	         'table' : 'CMPTNC_ZONE',
@@ -319,7 +333,9 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
+	 
 	     "MV_POTHOLE_STTEMNT" : {
+	         
 	         'tmapid' : '870',
 	         'id' : '3774',
 	         'table' : 'MV_POTHOLE_STTEMNT',
@@ -329,7 +345,9 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3',
 	     },
-	     "CELL_200" : {
+	     
+		"CELL_200" : {
+	    	 
 	    	 'tmapid' : '870',
 	    	 'id' : '3800',
 	    	 'table' : 'CELL_200',
@@ -339,9 +357,8 @@ var CONFIG = (function($, undefined){
 	    	 'show' : '1',
 	    	 'layerType' : '3',
 	     },
-	     */
+	      */
 	};	
-	
 
 	var fn_get_deactiveControls = function(){
 		return aSelectiveControls;
