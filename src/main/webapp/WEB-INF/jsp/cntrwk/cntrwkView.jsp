@@ -64,9 +64,9 @@
 		            <caption>포장공사 기본정보</caption>
 		            <colgroup>
 		                <col width="20%" />
-		                <col width="25%" />
+		                <col width="30%" />
 		                <col width="20%" />
-		                <col width="25%" />
+		                <col width="30%" />
 		            </colgroup>
 		            <tbody>
 		                <tr>
@@ -81,14 +81,14 @@
 						</td>
 						<th scope="row">공사년도</th>
 							<td>
-								<select name="CNTRWK_YEAR" id="CNTRWK_YEAR" style="width:100px" class="select"  disabled="true">
+								<select name="CNTRWK_YEAR" id="CNTRWK_YEAR" style="width:90px" class="select"  disabled="true">
 									<option value="">== 전체 ==</option>
 									<c:forEach var="selectData" items="${cntrwkYears}">
 									<option value="${selectData}" <c:if test = "${selectData == cntrwkVO.CNTRWK_YEAR}"> selected="selected" </c:if> >${selectData}</option>
 									</c:forEach>
 								</select> 년
 								<input type="hidden" id="SRVY_YEAR" name="SRVY_YEAR" value="${cntrwkVO.CNTRWK_YEAR}">
-								<select name="HT_SE" id="HT_SE" class="select" style="width:100px; margin-left: 5px;" disabled="true">
+								<select name="HT_SE" id="HT_SE" class="select" style="width:80px; margin-left: 5px;" disabled="true">
 								<option value="">== 전체 ==</option>
 									<c:forEach var="code" items="${codesHTSE}">
 									<option value="${code.CODE_VAL}" <c:if test = "${code.CODE_VAL == cntrwkVO.HT_SE}"> selected="selected" </c:if> >${code.CODE_NM}</option>
@@ -108,7 +108,7 @@
 						</td>
 						<th scope="row">공사분류</th>
 							<td>
-								<select name="CNTRWK_CL" id="CNTRWK_CL" class="select"  disabled="true" style="width: 100%;">
+								<select name="CNTRWK_CL" id="CNTRWK_CL" class="select"  disabled="true" style="width: 80%;">
 									<option value="">===== 전체 =====</option>
 									<c:forEach var="code" items="${codesCWCL}">
 									<option value="${code.CODE_VAL}" <c:if test = "${code.CODE_VAL == cntrwkVO.CNTRWK_CL}"> selected="selected" </c:if> >${code.CODE_NM}</option>
@@ -236,7 +236,7 @@
 		<div class="scroll" style="height:240px; width:50%;float:left;">
 	        	<form id="cellFrm2">
                 <input type="hidden" id="CELL_IDS" name="CELL_IDS" value=""/>
-                <div class="titbx mt20">
+                <div class="titbx">
                     <h4>이전 공사이력</h4>
                    
                         <div id="div_grid2" style="width:100%; height:240px;">
@@ -293,10 +293,8 @@ $(document).ready(function(){
         ,async : false
         ,sortname: ''
         ,sortorder: ""
-        ,rowNum: 99999
-        ,rowList: []
-        ,pgbuttons: false
-        ,pgtext: null
+        ,rowNum: 50
+        ,rowList: [20,50,100,500]
         ,viewrecords: true
         ,pager: '#gridPager2'
         ,rownumbers: true
@@ -327,7 +325,7 @@ $(document).ready(function(){
         }
         ,multiselect: false
         ,multiboxonly: false
-        ,loadonce: true
+        //,loadonce: true
         //,scroll: true
     }).navGrid('#gridPager2',{edit:false,add:false,del:false,search:false,refresh:false});  
 	
