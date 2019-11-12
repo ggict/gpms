@@ -233,13 +233,13 @@
 		    </form:form>
 	        </div>
 		</div>
-		<div class="scroll" style="height:240px; width:50%;float:left;">
+		<div class="scroll" style="width:50%;float:left;">
 	        	<form id="cellFrm2">
                 <input type="hidden" id="CELL_IDS" name="CELL_IDS" value=""/>
                 <div class="titbx">
                     <h4>이전 공사이력</h4>
                    
-                        <div id="div_grid2" style="width:100%; height:240px;">
+                        <div id="div_grid2" style="width:100%; height:210px;">
                             <table id="gridArea2"></table>
                             <div id="gridPager2"></div>
                         </div>                    
@@ -329,7 +329,7 @@ $(document).ready(function(){
         //,scroll: true
     }).navGrid('#gridPager2',{edit:false,add:false,del:false,search:false,refresh:false});  
 	
-	COMMON_UTIL.cmInitGridSize('gridArea2','div_grid2', 180);
+	COMMON_UTIL.cmInitGridSize('gridArea2','div_grid2', 150);
 
 	fn_search();		
 });
