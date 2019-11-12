@@ -135,7 +135,7 @@ var CONFIG = (function($, undefined){
 	         'id' : '3764',
 	         'table' : 'CELL_10',
 	         'theme' : 'CELL_10',
-	         'alias' : 'CELL_10',
+	         'alias' : '10m',
 	         'seq' : '3764',
 	         'show' : '1',
 	         'layerType' : '3',
@@ -147,7 +147,7 @@ var CONFIG = (function($, undefined){
 	         'id' : '3765',
 	         'table' : 'CELL_SECT',
 	         'theme' : 'CELL_SECT',
-	         'alias' : 'CELL_SECT',
+	         'alias' : '200m',
 	         'seq' : '3765',
 	         'show' : '1',
 	         'layerType' : '3',
@@ -344,7 +344,6 @@ var CONFIG = (function($, undefined){
 	    	 'layerType' : '3',
 	     },
 	     "TN_POTHOLE" : {
-	    	 
 	    	 'tmapid' : '870',
 	    	 'id' : '3802',
 	    	 'table' : 'TN_POTHOLE',
@@ -352,7 +351,8 @@ var CONFIG = (function($, undefined){
 	    	 'alias' : '포트홀',
 	    	 'seq' : '3802',
 	    	 'show' : '1',
-	    	 'layerType' : '3',
+	    	 'layerType' : '1',
+	    	 'isRuleShow': 'off'
 	     }
 	     
 	     /*

@@ -473,6 +473,7 @@ MAP.LAYER = (function($,undefined){
 							break;
 					}
 					if (!_oLayers) {
+						
 						for ( var k in oSld.namedLayers) {
 							if (oSld.namedLayers[k].name == aLayerList[j].theme) {
 								var oUserStyles = oSld.namedLayers[k].userStyle;
@@ -480,10 +481,11 @@ MAP.LAYER = (function($,undefined){
 									var oRules = oUserStyles[l].rules;
 									for(var m in oRules) {
 										var sIcon;
+										var oFileInfo = {};
 										if(oRules[m].symbolizer.text) {
 											sIcon = contextPath + "images/text.gif";
-
-											var fileObj = {
+											//var fileObj = {
+											oFileInfo = {
 												data : {
 													title : oRules[m].name,
 													icon : sIcon
@@ -494,11 +496,11 @@ MAP.LAYER = (function($,undefined){
 													'id' : "style_" + k + "_" + l + "_" + m + "_" + "text"
 												}
 											};
-											olayerInfo.children.push(fileObj);
+											//olayerInfo.children.push(fileObj);
 										}else {
 											sIcon = contextPath + "images/blank.gif";
-
-											var oFileInfo = {
+											//var oFileInfo = {
+											oFileInfo = {
 												data : {
 													title : oRules[m].name,
 													icon : sIcon
@@ -509,6 +511,12 @@ MAP.LAYER = (function($,undefined){
 													'id' : "style_" + k + "_" + l + "_" + m + "_" + "symbol"
 												}
 											};
+											//olayerInfo.children.push(oFileInfo);
+										}
+										
+										//하위 룰을 show/hide 유무
+										var isRuleShow = (aLayerList[j].isRuleShow) ? aLayerList[j].isRuleShow : 'on'; 
+										if(isRuleShow == 'on'){
 											olayerInfo.children.push(oFileInfo);
 										}
 									}
