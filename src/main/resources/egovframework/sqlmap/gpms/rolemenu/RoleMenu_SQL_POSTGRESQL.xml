@@ -255,6 +255,7 @@
 		FROM TN_AUTHORITY
 		WHERE USE_AT = 'Y'
 		AND DELETE_AT = 'N'
+		AND author_id != 'ROLE_USER_POTHOLE' /* 포트홀 */
 	</select>
 
 	<select id="roleMenuDAO.selectRoleMenuYList" parameterClass="roleMenuVO" resultClass="roleMenuVO">

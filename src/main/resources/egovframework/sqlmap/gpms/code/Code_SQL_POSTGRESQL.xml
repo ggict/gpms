@@ -143,6 +143,7 @@ UPPER_CODE_VAL = #UPPER_CODE_VAL# /* 공통코드.상위_코드_값 */
 		FROM TC_CODE tccode
 		WHERE 1 = 1
 		AND tccode.CODE_VAL = UPPER(#CODE_VAL#) /* 공통코드.코드_값 */
+		AND CODE_VAL != 'SYSM0003' /* 포트홀  */
 ]]>
 	</select>
 	
