@@ -63,6 +63,14 @@ public interface AttachFileService {
 	 * @exception Exception
 	 */
 	AttachFileVO selectAttachFile(AttachFileVO attachFileVO) throws Exception;
+	
+	/**
+	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 조회한다.
+	 * @param attachFileVO - 조회할 정보가 담긴 AttachFileVO
+	 * @return 조회한 TN_ATTACH_DETAIL_FILE
+	 * @exception Exception
+	 */
+	AttachFileVO selectAttachDetailFile(AttachFileVO attachFileVO) throws Exception;
 
 	/**
 	 * 공통첨부파일(TN_ATTACH_FILE) 목록을 조회한다.

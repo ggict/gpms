@@ -121,12 +121,15 @@ function fn_file_upload(){
        data: formData,
        type: 'POST',
        success: function(result){
-    	    alert(result.resultMsg + "(성공 : " + result.successCnt +" )/(실패 : " + result.failCnt + ")" );
 	   	    $('#filefrm')[0].reset(); //폼 초기화(리셋);
-	   		fn_search();
 	   		$('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
 	   		COMMON_FILE.clearMultiFile('#file_list', '#addFile');
 	   		parent.$("#dvProgress").dialog("close");
+	   		//alert(result.resultMsg + "(성공 : " + result.successCnt +" )/(실패 : " + result.failCnt + ")" );
+	   		//처리로직 프로시저 프로세스 태움
+	   		//펑션을 태워서 ajax로
+	   		fnPrcProcess(result.srvyNo);
+	   		//fn_search();
        }
    });
 
@@ -222,6 +225,29 @@ function fnCheckNumber(obj){
         $(this).val(value);
     });
 }
+
+function fnPrcProcess(srvyNo) {
+	
+	var params = {
+			"SRVY_NO" : srvyNo
+ 		};
+	
+	$.ajax({
+        url: contextPath + 'srvy/saveSrvyDta.do'
+        ,type: 'post'
+        ,dataType: 'json'
+        ,contentType : 'application/json'
+        ,data : JSON.stringify(params)
+        ,success: function(data){
+            alert("처리완료");
+        }
+        ,error: function(a,b,msg){
+
+        }
+    });
+	
+}
+
 
 </script>
 </head>

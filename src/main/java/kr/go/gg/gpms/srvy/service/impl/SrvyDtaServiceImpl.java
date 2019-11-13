@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
+import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStream;
 
@@ -328,6 +329,80 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public String insertSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
 
 		return srvyDtaDAO.insertSrvyDta(srvyDtaVO);
+	}
+	
+	/**
+	 * 조사_자료(TN_SRVY_DTA) 목록을 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	public List<SrvyDtaVO> selectSrvyDtaList(SrvyDtaVO srvyDtaVO) throws Exception {
+		return srvyDtaDAO.selectSrvyDtaList(srvyDtaVO);
+	}
+	
+	@Override
+	public HashMap procSaveSurveyData(SrvyDtaVO srvyDtaOne) {
+		return srvyDtaDAO.procSaveSurveyData(srvyDtaOne);
+	}
+	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)를 등록한다.
+	 * @param @param String fileName, String srvyNo
+	 * @return void
+	 * @exception Exception
+	 */
+	public void insertTmpExcelData(String fileName) throws Exception {
+		FileInputStream fis = new FileInputStream(fileName);
+		XSSFWorkbook wb = new XSSFWorkbook(fis);
+		XSSFSheet sheet = wb.getSheet("DBLoading");
+		String colName = "";
+		int rowNum = sheet.getPhysicalNumberOfRows();
+		int cellNum = sheet.getRow(0).getLastCellNum();
+		Map<String, Object> params = new HashMap<String, Object>();
+
+		// 엑셀 식(formula)으로 된 데이터 읽기
+		FormulaEvaluator formulaEval = wb.getCreationHelper().createFormulaEvaluator();
+
+		// i => 엑셀 row의 수
+		for (int i = 1; i < rowNum; i++) { // 헤더제외. 1부터 시작
+			if (!formulaEval.evaluate(sheet.getRow(i).getCell(0)).formatAsString().equals("0.0")) {
+
+				// j => 엑셀 cell의 수
+				for (int j = 0; j < cellNum; j++) {
+					colName = sheet.getRow(0).getCell(j).getStringCellValue();
+					
+					//셀 열 vo
+					String val = formulaEval.evaluate(sheet.getRow(i).getCell(j)) == null ? "" : formulaEval.evaluate(sheet.getRow(i).getCell(j)).formatAsString();
+					if (val.contains(".") && val.split("[.]")[1].equals("0")) {
+						val = val.split("[.]")[0];
+					}
+					val = val.replace("\"", "").trim();
+					params.put(colName, val);
+				}
+				srvyDtaDAO.insertTmpExcelData(params);
+			}
+		}
+	}
+	
+	/**
+	 * 조사_자료(TN_SRVY_DTA)을 조회한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return 조회한 TN_SRVY_DTA
+	 * @exception Exception
+	 */
+	public SrvyDtaVO selectSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
+		SrvyDtaVO resultVO = srvyDtaDAO.selectSrvyDta(srvyDtaVO);
+		 
+		return resultVO;
+	}
+	
+	/**
+	 * 입력한 조사자료 엑셀 데이터를 시스템에 반영한다.
+	 */
+	@Override
+	public HashMap procSrvyDtaSysReflct(SrvyDtaVO srvyDtaOne) {
+		return srvyDtaDAO.procSrvyDtaSysReflct(srvyDtaOne);
 	}
 	
 }

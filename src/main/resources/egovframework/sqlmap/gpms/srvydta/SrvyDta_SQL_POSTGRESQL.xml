@@ -83,5 +83,115 @@
 	]]>
 	</insert>
 	
+	<select id="srvyDtaDAO.selectSrvyDtaList"
+		parameterClass="srvyDtaVO" resultClass="srvyDtaVO">
+<![CDATA[
+		/* srvyDtaDAO.selectSrvyDtaList */
+		/* 조사_자료 조회 */
+			SELECT
+				 SRVY_NO /* 조사_자료_엑셀.조사_번호 */
+				,FILE_NO /* 조사_자료_엑셀.파일_번호 */
+				,DATA_CO /* 조사_자료_엑셀.데이터_건수 */
+				,ROUTE_CODE /* 조사_자료_엑셀.노선_코드 */
+				,DIRECT_CODE /* 조사_자료_엑셀.행선_코드 */
+				,TRACK /* 조사_자료_엑셀.차로 */
+				,STRTPT /* 조사_자료_엑셀.시점 */
+				,ENDPT /* 조사_자료_엑셀.종점 */
+				,SRVY_DE /* 조사_자료_엑셀.조사_일자 */
+				,SRVY_NM /* 조사_자료_엑셀.조사_명 */
+				,EXMNR_NM /* 조사_자료_엑셀.조사자_명 */
+				,EVL_PROCESS_AT /* 조사_자료_엑셀.평가_처리_여부 */
+				,GPS_CORTN_PROCESS_AT /* 조사_자료_엑셀.GPS_보정_처리_여부 */
+				,PRDTMDL_PROCESS_AT /* 조사_자료_엑셀.예측모델_처리_여부 */
+				,SM_PROCESS_AT /* 조사_자료_엑셀.집계_처리_여부 */
+				,VAL_EVL_AT /* 조사_자료_엑셀.유효성_평가_여부 */
+				,DELETE_AT /* 조사_자료_엑셀.삭제_여부 */
+				,USE_AT /* 조사_자료_엑셀.사용_여부 */
+				,CRTR_NO /* 조사_자료_엑셀.생성자_번호 */
+				,CREAT_DT /* 조사_자료_엑셀.생성_일시 */
+				,UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
+				,UPDT_DT /* 조사_자료_엑셀.수정_일시 */
+			FROM TN_SRVY_DTA
+		WHERE 1=1
+			AND  SRVY_NO = #SRVY_NO#::int
+]]>
+	</select>
+	
+	<insert id="srvyDtaDAO.insertTmpExcelData">
+		<selectKey resultClass="String" keyProperty="DTA_NO">
+  <![CDATA[
+  select COALESCE(MAX(dta_no),0)+1 AS DTA_NO from tmp_mumm_sctn_srvy_dta;
+  ]]>
+		</selectKey>
+	<![CDATA[
+		/* srvyDtaDAO.insertTmpExcelData */
+		/* 임시_최소_구간_조사_자료 등록 */
+		INSERT INTO TMP_MUMM_SCTN_SRVY_DTA (
+			DTA_NO /* 최소_구간_조사_자료.자료_번호 */
+			, SRVY_YEAR /* 최소_구간_조사_자료.조사_년도 */
+			, ROUTE_CODE /* 최소_구간_조사_자료.노선_코드 */
+			, DIRECT_CODE /* 최소_구간_조사_자료.행선_코드 */
+			, TRACK /* 최소_구간_조사_자료.차로 */
+			, STRTPT /* 최소_구간_조사_자료.시점 */
+			, ENDPT /* 최소_구간_조사_자료.종점 */
+			, IRI_VAL /* 최소_구간_조사_자료.종단평탄성_값 */
+			, RD_VAL /* 최소_구간_조사_자료.소성변형_값 */
+			, SRVY_KND /* 최소_구간_조사_자료.조사_종류 */
+			, SRVY_MT /* 최소_구간_조사_자료.조사_월 */
+			, MEMO /* 최소_구간_조사_자료.메모 */
+			, SRVY_DE /* 최소_구간_조사_자료.조사_일자 */
+			, TRACE1_LA /* 최소_구간_조사_자료.TRACE1_LA */
+			, TRACE1_LO /* 최소_구간_조사_자료.TRACE1_LO */
+			, SRVY_NM /* 최소_구간_조사_자료.조사_명 */
+			, SCTN_STRTPT_DC /* 최소_구간_조사_자료.구간_시점_설명 */
+			, SCTN_ENDPT_DC /* 최소_구간_조사_자료.구간_종점_설명 */
+			, ROAD_NM /* 최소_구간_조사_자료.도로_명 */
+			, RDSRFC_IMG_FILE_NM_1 /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
+		) VALUES (
+			#DTA_NO#::numeric /* 최소_구간_조사_자료.자료_번호 */
+			, #SRVY_YEAR# /* 최소_구간_조사_자료.조사_년도 */
+			, #ROUTE_CODE# /* 최소_구간_조사_자료.노선_코드 */
+			, #DIRECT_CODE# /* 최소_구간_조사_자료.행선_코드 */
+			, #TRACK# /* 최소_구간_조사_자료.차로 */
+			, #STRTPT#::numeric /* 최소_구간_조사_자료.시점 */
+			, #ENDPT#::numeric /* 최소_구간_조사_자료.종점 */
+			, #IRI_VAL#::numeric /* 최소_구간_조사_자료.종단평탄성_값 */
+			, #RD_VAL#::numeric /* 최소_구간_조사_자료.소성변형_값 */
+			, #SRVY_KND# /* 최소_구간_조사_자료.조사_종류 */
+			, #SRVY_MT# /* 최소_구간_조사_자료.조사_월 */
+			, #MEMO# /* 최소_구간_조사_자료.메모 */
+			, #SRVY_DE# /* 최소_구간_조사_자료.조사_일자 */
+			, #TRACE1_LA#::numeric /* 최소_구간_조사_자료.TRACE1_LA */
+			, #TRACE1_LO#::numeric /* 최소_구간_조사_자료.TRACE1_LO */
+			, #SRVY_NM# /* 최소_구간_조사_자료.조사_명 */
+			, #SCTN_STRTPT_DC# /* 최소_구간_조사_자료.구간_시점_설명 */
+			, #SCTN_ENDPT_DC# /* 최소_구간_조사_자료.구간_종점_설명 */
+			, #ROAD_NM# /* 최소_구간_조사_자료.도로_명 */
+			, #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
+		)
+]]>
+	</insert>
+	
+	<!-- 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다. -->
+	<parameterMap id="prc_savesurveydata_map" class="java.util.Map">
+		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_SRVY_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_FRMULA_NM" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="P_ROW_COUNT" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</parameterMap>
+    <select id="srvyDtaDAO.PRC_SAVESURVEYDATA" parameterMap="prc_savesurveydata_map" resultClass="hashMap">
+        SELECT * FROM PRC_SAVESURVEYDATA(?::text, ?::text, ?::text, ?::text, ?::text)
+    </select>
+    
+    <!-- 입력한 조사자료 엑셀 데이터를 시스템에 반영한다. -->
+	<parameterMap id="prc_srvy_dta_sys_reflct_map" class="java.util.Map">
+		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_SRVY_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</parameterMap>
+	<select id="srvyDtaDAO.PRC_SRVY_DTA_SYS_REFLCT" parameterMap="prc_srvy_dta_sys_reflct_map" resultClass="hashMap">
+	/* srvyDtaDAO.PRC_SRVY_DTA_SYS_REFLCT */
+		SELECT * FROM PRC_SRVY_DTA_SYS_REFLCT(?::text, ?::text)
+	</select>
 
 </sqlMap>

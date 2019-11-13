@@ -6,9 +6,8 @@ package kr.go.gg.gpms.attachfile.service.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import egovframework.example.cmmn.impl.BaseDAO;
 
-import egovframework.rte.psl.dataaccess.util.EgovMap;
+import egovframework.example.cmmn.impl.BaseDAO;
 import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 
 /**
@@ -77,6 +76,16 @@ public class AttachFileDAO extends BaseDAO {
 	 */
 	public AttachFileVO selectAttachFile(AttachFileVO attachFileVO) throws Exception {
 		return (AttachFileVO) select("attachFileDAO.selectAttachFile", attachFileVO);
+	}
+	
+	/**
+	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 조회한다.
+	 * @param attachFileVO - 조회할 정보가 담긴 AttachFileVO
+	 * @return 조회한 TN_ATTACH_DETAIL_FILE
+	 * @exception Exception
+	 */
+	public AttachFileVO selectAttachDetailFile(AttachFileVO attachFileVO) throws Exception {
+		return (AttachFileVO) select("attachFileDAO.selectAttachDetailFile", attachFileVO);
 	}
 
 	/**

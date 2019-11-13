@@ -89,6 +89,18 @@ public class AttachFileServiceImpl extends AbstractServiceImpl implements Attach
 		
 		return resultVO;
 	}
+	
+	/**
+	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 조회한다.
+	 * @param attachFileVO - 조회할 정보가 담긴 AttachFileVO
+	 * @return 조회한 TN_ATTACH_DETAIL_FILE
+	 * @exception Exception
+	 */
+	public AttachFileVO selectAttachDetailFile(AttachFileVO attachFileVO) throws Exception {
+		AttachFileVO resultVO = attachFileDAO.selectAttachDetailFile(attachFileVO);
+		
+		return resultVO;
+	}
 
 	/**
 	 * 공통첨부파일(TN_ATTACH_FILE) 목록을 조회한다.

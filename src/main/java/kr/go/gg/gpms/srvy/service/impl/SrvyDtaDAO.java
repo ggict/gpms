@@ -5,6 +5,7 @@ package kr.go.gg.gpms.srvy.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -60,43 +61,73 @@ public class SrvyDtaDAO extends BaseDAO {
 		return (String) insert("srvyDtaDAO.insertSrvyDta", srvyDtaVO);
 	}
 	
-	//==============================================================================
+	/**
+	 * 조사_자료(TN_SRVY_DTA) 목록을 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<SrvyDtaVO> selectSrvyDtaList(SrvyDtaVO srvyDtaVO) throws Exception {
+		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectSrvyDtaList", srvyDtaVO);
+	}
 	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)를 등록한다.
+	 * @param @param String fileName, String srvyNo
+	 * @return void
+	 * @exception Exception
+	 */
+	public void insertTmpExcelData(Map<String, Object> params) throws Exception {
+		insert("srvyDtaDAO.insertTmpExcelData", params);
+	}
 	
 	/**
 	 * 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다.
 	 */
-	public HashMap procSaveSurveyData(SrvyDtaExcelVO srvyDtaExcelOne) {
-		logger.info("[SrvyDtaExcelVO result] " + srvyDtaExcelOne.toString());
+	public HashMap procSaveSurveyData(SrvyDtaVO srvyDtaOne) {
+		logger.info("[SrvyDtaVO result] " + srvyDtaOne.toString());
 		
 		HashMap param = new HashMap();
-    	param.put("p_USER_NO", srvyDtaExcelOne.getCRTR_NO());
-    	param.put("p_SRVY_NO", srvyDtaExcelOne.getSRVY_NO());
-    	param.put("p_FRMULA_NM", srvyDtaExcelOne.getFRMULA_NM());
-    	param.put("P_ROW_COUNT", srvyDtaExcelOne.getDATA_CO());
-    	param.put("p_RECORDSET", srvyDtaExcelOne.getRECORDSET());
+    	param.put("p_USER_NO", srvyDtaOne.getCRTR_NO());
+    	param.put("p_SRVY_NO", srvyDtaOne.getSRVY_NO());
+    	param.put("p_FRMULA_NM", srvyDtaOne.getFRMULA_NM());
+    	param.put("P_ROW_COUNT", srvyDtaOne.getDATA_CO());
+    	//param.put("p_RECORDSET", srvyDtaOne.getRECORDSET());
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) select("srvyDtaExcelDAO.PRC_SAVESURVEYDATA", param);
+    	HashMap resultVO = (HashMap) select("srvyDtaDAO.PRC_SAVESURVEYDATA", param);
     	
-    	logger.info("[SrvyDtaExcelVO result] " + resultVO.toString());
+    	System.out.println("[SrvyDtaVO result] " + resultVO.toString());
     	return resultVO;
+	}
+	
+	/**
+	 * 조사_자료(TN_SRVY_DTA)을 조회한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return 조회한 TN_SRVY_DTA
+	 * @exception Exception
+	 */
+	public SrvyDtaVO selectSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
+		return (SrvyDtaVO) select("srvyDtaDAO.selectSrvyDtaList", srvyDtaVO);
 	}
 
 	/**
 	 * 입력한 조사자료 엑셀 데이터를 시스템에 반영한다.
 	 */
-	public HashMap procSrvyDtaSysReflct(SrvyDtaExcelVO srvyDtaExcelOne) {
-		logger.info("[procSrvyDtaSysReflctResultVO params] " + srvyDtaExcelOne.toString());
+	public HashMap procSrvyDtaSysReflct(SrvyDtaVO srvyDtalOne) {
+		logger.info("[procSrvyDtaSysReflctResultVO params] " + srvyDtalOne.toString());
 		
 		HashMap param = new HashMap();
-    	param.put("p_USER_NO", srvyDtaExcelOne.getCRTR_NO());
-    	param.put("p_SRVY_NO", srvyDtaExcelOne.getSRVY_NO());
+    	param.put("p_USER_NO", srvyDtalOne.getCRTR_NO());
+    	param.put("p_SRVY_NO", srvyDtalOne.getSRVY_NO());
     	
-    	HashMap resultVO = (HashMap) select("srvyDtaExcelDAO.PRC_SRVY_DTA_SYS_REFLCT", param);
+    	HashMap resultVO = (HashMap) select("srvyDtaDAO.PRC_SRVY_DTA_SYS_REFLCT", param);
     	logger.info("procSrvyDtaSysReflctResultVO: " + resultVO.toString());
     	return resultVO;
 	}
 
+	//==============================================================================
+	
 	/**
 	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
 	 * @param srvyDtaSttusVO

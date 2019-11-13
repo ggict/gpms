@@ -300,6 +300,10 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	
 	@XmlElement
 	private String XCR;
+	
+	@XmlElement
+	private String EXCEL_FILE_COURS;
+	
 
 	public String getSRVY_YEAR() {
 		return SRVY_YEAR;
@@ -1021,7 +1025,13 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public void setSRVY_NO(java.lang.String sRVY_NO) {
 		SRVY_NO = sRVY_NO;
 	}
-	
-	
+
+	public String getEXCEL_FILE_COURS() {
+		return EXCEL_FILE_COURS;
+	}
+
+	public void setEXCEL_FILE_COURS(String eXCEL_FILE_COURS) {
+		EXCEL_FILE_COURS = eXCEL_FILE_COURS;
+	}
 
 }
