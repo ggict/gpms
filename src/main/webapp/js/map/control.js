@@ -186,6 +186,11 @@ MAP.CONTROL = (function($, undefined){
 
 		// 지도 인쇄
 		$("#mCtrlMapPrint").bind("click", function() {
+			var zoom = parent.gMap.getZoom();
+			if(zoom < 2){
+				alert('지도를 확대 해주십시오.');
+				return ;		
+			}
 			var center = gMap.getCenter();
 			var oTrans_sLatLng = center.transform(parent.gMap.getProjection(), daumMap.projection.projCode);
 			searchAddrFromCoords(new kakao.maps.LatLng(oTrans_sLatLng.lat, oTrans_sLatLng.lon), displayCenterInfo);
@@ -200,7 +205,6 @@ MAP.CONTROL = (function($, undefined){
 
 		function displayCenterInfo(result, status) {
 		    if (status === kakao.maps.services.Status.OK) {
-
             	var mapType;
     			if($("#mCtrlSateliteMap").hasClass("selected_btn") == true){
     				mapType = "skyView";

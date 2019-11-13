@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import egovframework.cmmn.util.SaveMapUtils;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.security.service.impl.CustomAuthenticationProvider;
 import kr.go.gg.gpms.base.web.BaseController;
@@ -389,20 +390,27 @@ public class MapController extends BaseController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmssSSS");
 		String fileName = "Map_" + dateFormat.format(calendar.getTime());
 
-		if (fileName.equals(""))
+		if (fileName.equals("")) {
 			fileName = "save";
+		}
 
-		mapService.setType("save");
-		mapService.setRootPath(request.getSession().getServletContext().getRealPath("/"));
-		BufferedImage image = mapService.createImages(decodeStr);
+		//mapService.setType("save");
+		//mapService.setRootPath(request.getSession().getServletContext().getRealPath("/"));
+		//BufferedImage image = mapService.createImages(decodeStr);
+		
+		SaveMapUtils saveMapUtil = new SaveMapUtils();
+		saveMapUtil.setType("save");
+		saveMapUtil.setRootPath(request.getSession().getServletContext().getRealPath("/"));
+		BufferedImage image = saveMapUtil.createImages(decodeStr);
+		
 		try {
 			// int width = Integer.parseInt(req.get("width"));
 			// int height = Integer.parseInt(req.get("height"));
 			// image = mapService.resizeImages(image, width, height);
 
 			// 2018. 03. 12.
-			File file = new File(pathInfoProperties.getProperty("file.upload.path") + "/" + fileName + ".png"); // 이미지저장경로
-			ImageIO.write(image, "png", file); // 파일형식
+			// File file = new File(pathInfoProperties.getProperty("file.upload.path") + "/" + fileName + ".png"); // 이미지저장경로
+			// ImageIO.write(image, "png", file); // 파일형식
 
 		} catch (Exception e) {
 			e.printStackTrace();
