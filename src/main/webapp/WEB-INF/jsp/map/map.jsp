@@ -26,7 +26,7 @@
 %>
 </head>
 
-<body onload="fn_unCheckLabel();">
+<body>
 	<div id="wrap">
 		<!-- 공통 (START)-->
 		<%@ include file="/include/topMenu.jsp"%>
@@ -228,11 +228,6 @@ $(document).ready(function() {
 
 });
 
-//주석 레이어 해제
-function fn_unCheckLabel(){
-	//$("#dvLayerList").find("li[id$='_text'] a ins.jstree-checkbox").click();
-}
-
 var MAIN = (function(_mod_map, $, undefined) {
 
 	//레이어 관리 목록 조회
@@ -268,7 +263,6 @@ var MAIN = (function(_mod_map, $, undefined) {
 		}
 	});
 		
-
 	var fn_get_layerInfoList = function (_oLayer){
 		return oLayerInfoList[_oLayer];
 	}
