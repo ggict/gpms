@@ -39,7 +39,7 @@
                                 <input type="text" style="width: 99%;" onkeypress="if(event.keyCode==13) {fn_print(); return false;}"/>
                             </td>
                         </tr>
-
+						<!-- 
                         <tr>
                             <th scope="row" style="border-radius: 5px 0 0 5px  ;">
                                	 신고위치
@@ -48,6 +48,7 @@
                                 <input type="text" style="width: 99%; border:0; background-color: #ffffff;" id="address" disabled />
                             </td>
                         </tr>
+                         -->
                     </tbody>
                 </table>
                 <a href="#" class="schbtn ml5" style="height:55px;line-height:53px;width:5%" onclick="fn_print();">인쇄</a>
@@ -134,6 +135,7 @@ function fn_createMapBase64Image(_fCallback,_nWidth,_nHeight) {
 function fn_encodingMap(){
 
 	// ============ 지도인쇄/저장 후 배경 레이어 띄움 ============
+	/*	
     parent.gMap.getLayerByName("backgroundLayer").setVisibility(true);
 
     if ( parent.gMap.getLayerByName("baseLayer").visibility == true ){
@@ -148,9 +150,8 @@ function fn_encodingMap(){
         parent.gMap.getLayerByName("GAttrLayer").setVisibility(false);
         GAttrLayerOn = 1;
     }
-
+	*/
     var gData = null;
-/*
     var oTempDiv = parent.document.createElement("div");
     oTempDiv.style.visibility = "hidden";
     oTempDiv.style.height = $(parent.gMap.div).height() + "px";
@@ -166,15 +167,13 @@ function fn_encodingMap(){
     sTileMapUrl = sTileMapUrl.replace("IW=0", "IW=" + $(parent.gMap.div).width());
     sTileMapUrl = sTileMapUrl.replace("IH=0", "IH=" + $(parent.gMap.div).height());
     $(oTempMap).remove();
- */
     gData = gSaveTool.getXML({
-/*
         type : 'daum',
         url : sTileMapUrl
- */
     });
 
     // ============ 지도인쇄/저장 후 배경 레이어 지움 ============
+	/*
     parent.gMap.getLayerByName("backgroundLayer").setVisibility(false);
 
     if (baseLayerOn == 1 ){
@@ -186,7 +185,7 @@ function fn_encodingMap(){
     if (GAttrLayerOn == 1 ){
         parent.gMap.getLayerByName("GAttrLayer").setVisibility(true);
     }
-
+	*/
     return gData;
 }
 
