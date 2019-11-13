@@ -316,14 +316,6 @@ MAP.LAYER = (function($,undefined){
 	    	});
 	        // 레이어 on/off
 			$("#dvLayerList a ins.jstree-checkbox").on('click',function() {
-/*
-				if ( $(this).parent().parent().attr('id') == "layer_CMPTNC_ZONE"
-					|| $(this).parent().parent().parent().parent().attr('id') == "layer_CMPTNC_ZONE"
-					) {
-					gMap.getLayerByName('baseLayer').setVisibility(true) ;
-				}
-*/
-				//gMap.getLayerByName('baseLayer').setVisibility(true) ;
 				var oTreeElement = $(this).parent().parent();
 				if(oTreeElement.attr("id").indexOf("group_") > -1) {
 					$(oTreeElement).find("li.layer").each(function(index) {
@@ -351,20 +343,17 @@ MAP.LAYER = (function($,undefined){
 				  }
 				}
 				else {
-					var sRuleName = $(this).parent('a').text().trim();
-					//var sLayerName = 'CMPTNC_ZONE';
-					//var sLayerName = $(this).closest('.layer').find('a').eq(0)[0].text.trim();
+					//var sRuleName = $(this).parent('a').text().trim();
+					var sRuleName = $(this).parent('a').parent('li').attr('data-orinm');
 					var sLayerName = $(this).closest('.layer').find('a').eq(0).text().trim();
 					sLayerName = fn_get_EditEngLayerNm(sLayerName);
 
 					if ($("#dvLayerList").jstree("is_checked",oTreeElement)) {
 						fn_toggle_wmsRule('off',sLayerName,sRuleName);
-					}
-					else {
+					}else{
 						fn_toggle_wmsRule('on',sLayerName,sRuleName);
 					}
 				}
-				//fn_redraw_wms();
 				fn_redraw_wms(_layerName);
 
 			});
@@ -483,38 +472,42 @@ MAP.LAYER = (function($,undefined){
 								for ( var l in oUserStyles) {
 									var oRules = oUserStyles[l].rules;
 									for(var m in oRules) {
-										var sIcon;
-										if(oRules[m].symbolizer.text) {
-											sIcon = contextPath + "images/text.gif";
-
-											var fileObj = {
-												data : {
-													title : oRules[m].name,
-													icon : sIcon
-												},
-												attr : {
-													'rel' : "style",
-													'class' : "style",
-													'id' : "style_" + k + "_" + l + "_" + m + "_" + "text"
-												}
-											};
-											olayerInfo.children.push(fileObj);
-										}else {
-											sIcon = contextPath + "images/blank.gif";
-
-											var oFileInfo = {
-												data : {
-													title : oRules[m].name,
-													icon : sIcon
-												},
-												attr : {
-													'rel' : "style",
-													'class' : "style",
-													'id' : "style_" + k + "_" + l + "_" + m + "_" + "symbol"
-												}
-											};
-											olayerInfo.children.push(oFileInfo);
+										var fileObj;
+										
+										//룰 영문을 한글명으로 치환
+										var title = oRules[m].name;
+										if(title == 'POTHOLE'){
+											title = '포트홀';
 										}
+										if(oRules[m].symbolizer.text) {
+											fileObj = {
+												data : {
+													title : title,
+													icon : contextPath + "images/text.gif"
+												},
+												attr : {
+													'rel' : "style",
+													'class' : "style",
+													'id' : "style_" + k + "_" + l + "_" + m + "_" + "text",
+													'data-orinm' : oRules[m].name
+													
+												}
+											};
+										}else{
+											fileObj = {
+												data : {
+													title : title,
+													icon : contextPath + "images/blank.gif"
+												},
+												attr : {
+													'rel' : "style",
+													'class' : "style",
+													'id' : "style_" + k + "_" + l + "_" + m + "_" + "symbol",
+													'data-orinm' : oRules[m].name
+												}
+											};
+										}
+										olayerInfo.children.push(fileObj);
 									}
 								}
 							}

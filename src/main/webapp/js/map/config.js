@@ -236,43 +236,63 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3'
 	     },
-	     "M_CALS_T" : {
-	         'tmapid' : '870',
-	         'id' : '3775',
-	         'table' : 'M_CALS_T',
-	         'theme' : 'M_CALS_T',
-	         'alias' : '교량',
-	         'seq' : '3775',
-	         'show' : '0',
-	         'layerType' : '3'
-	     },
 	     "MV_ROAD_CELT0002" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '3776',
+	    	 'id' : '3775',
 	    	 'table' : 'MV_ROAD_CELT0002',
 	    	 'theme' : 'MV_ROAD_CELT0002',
 	    	 'alias' : '교차로',
-	    	 'seq' : '3776',
+	    	 'seq' : '3775',
 	    	 'show' : '0',
 	    	 'layerType' : '3'
 	     },
-	     "MV_ROAD_CELT0005" : {
+	     "M_CALS_T" : {
+	         'tmapid' : '870',
+	         'id' : '3776',
+	         'table' : 'M_CALS_T',
+	         'theme' : 'M_CALS_T',
+	         'alias' : '교량',
+	         'seq' : '3776',
+	         'show' : '0',
+	         'layerType' : '3'
+	     },
+	     "DORO_TOT_GRS80_50_LINE" : {
 	    	 'tmapid' : '870',
 	    	 'id' : '3777',
+	    	 'table' : 'DORO_TOT_GRS80_50_LINE',
+	    	 'theme' : 'DORO_TOT_GRS80_50_LINE',
+	    	 'alias' : '도로대장(선)',
+	    	 'seq' : '3777',
+	    	 'show' : '0',
+	    	 'layerType' : '2'
+	     },
+	     "STA_TOT_GRS80_50" : {
+	    	 'tmapid' : '870',
+	    	 'id' : '3778',
+	    	 'table' : 'STA_TOT_GRS80_50',
+	    	 'theme' : 'STA_TOT_GRS80_50',
+	    	 'alias' : '도로대장(점)',
+	    	 'seq' : '3778',
+	    	 'show' : '0',
+	    	 'layerType' : '1'
+	     },
+	     "MV_ROAD_CELT0005" : {
+	    	 'tmapid' : '870',
+	    	 'id' : '3779',
 	    	 'table' : 'MV_ROAD_CELT0005',
 	    	 'theme' : 'MV_ROAD_CELT0005',
 	    	 'alias' : '터널',
-	    	 'seq' : '3777',
+	    	 'seq' : '3779',
 	    	 'show' : '0',
 	    	 'layerType' : '3'
 	     },
 	     "MV_ROAD_CELT0012" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '3778',
+	    	 'id' : '3780',
 	    	 'table' : 'MV_ROAD_CELT0012',
 	    	 'theme' : 'MV_ROAD_CELT0012',
 	    	 'alias' : '특별관리구간',
-	    	 'seq' : '3778',
+	    	 'seq' : '3780',
 	    	 'show' : '0',
 	    	 'layerType' : '3'
 	     },
@@ -284,6 +304,16 @@ var CONFIG = (function($, undefined){
 	    	 'alias' : '포트홀',
 	    	 'seq' : '3801',
 	    	 'show' : '0',
+	    	 'layerType' : '1'
+	     },
+	     "CELL_10_4K" : {
+	    	 'tmapid' : '870',
+	    	 'id' : '3802',
+	    	 'table' : 'CELL_10_4K',
+	    	 'theme' : 'CELL_10_4K',
+	    	 'alias' : '4K라벨',
+	    	 'seq' : '3802',
+	    	 'show' : '0',
 	    	 'layerType' : '3'
 	     },
 	     "CELL_10_0301" : {
@@ -293,16 +323,6 @@ var CONFIG = (function($, undefined){
 	    	 'theme' : 'CELL_10_0301',
 	    	 'alias' : 'CELL_10_0301',
 	    	 'seq' : '3803',
-	    	 'show' : '0',
-	    	 'layerType' : '3'
-	     },
-	     "CELL_10_4K" : {
-	    	 'tmapid' : '870',
-	    	 'id' : '3802',
-	    	 'table' : 'CELL_10_4K',
-	    	 'theme' : 'CELL_10_4K',
-	    	 'alias' : '4K라벨',
-	    	 'seq' : '3802',
 	    	 'show' : '0',
 	    	 'layerType' : '3'
 	     }
