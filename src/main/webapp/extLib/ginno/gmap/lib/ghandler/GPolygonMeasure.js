@@ -116,7 +116,7 @@ GPolygonMeasure = OpenLayers.Class(OpenLayers.Handler.Polygon, {
         	//var contentHtml = "<div id='measureStart' class='olControlMeasurePopup olControlMeasurePopupStart'><span class='MeasureColor'>시작</span></div>";
 	    	var contentHtml;
         	popup = new GPopup("measurePopup", lonlat, null, contentHtml, new OpenLayers.Pixel(5,5));
-
+        	/*
 			contentHtml = "<div class='olControlMeasurePopup olControlMeasurePopupMovePoly'>총면적 : <span class='MeasureColor'>"+ this.measureArea() +"</span></div>";
         	this.popup = new GPopup("measurePopup", lonlat, null, contentHtml, new OpenLayers.Pixel(5,5));
 
@@ -124,7 +124,7 @@ GPolygonMeasure = OpenLayers.Class(OpenLayers.Handler.Polygon, {
 
 			this.popup.updateSize();
 			this.popup.type = "measure";
-
+        	 */
 	    	//클릭 횟수 저장 변수를 생성 및 초기화
             this.count = 1;
 	    }
