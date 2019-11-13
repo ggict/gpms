@@ -43,6 +43,10 @@
                     <input type="text" name="SRVY_NM" id="SRVY_NM" style="width:197px;" value="" class="MX_80 CS_50 input" />
                 </li>
                 <li>
+                	<label>조사요청기관</label>
+                	<input type="text" name="DEPT_NM" id="DEPT_NM" style="width:197px;" value="" class="MX_80 CS_50 input"/>
+                </li>
+                <li>
                     <label>조사내용</label>
                     <input type="text" name="SRVY_CN" id="SRVY_CN" style="width:197px;" value="" class="MX_80 CS_50 input" />
                 </li>
@@ -109,6 +113,7 @@
             </div>
             <div class="mt10 tc">
                 <div class="fr">
+                	<a href="javascript:;" onclick="" class="schbtn" style="left">삭제</a>
                     <a href="javascript:;" onclick="fnAddCell();" class="schbtn">조사요청구간 추가</a>
                     <a href="javascript:;" onclick="fnViewLocation();" class="schbtn">조사요청구간 지도위치보기</a>
                     <a href="javascript:;" onclick="fnSave();" class="schbtn">조사요청구간 수정</a>
@@ -122,9 +127,10 @@
 <%@ include file="/include/common.jsp" %>
 <!-- 공통 (END)-->
 <script type="text/javascript" defer="defer">
-
+var temp1="", temp2[], tempCnt =0;
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
+	
     // 달력 생성
     COMMON_UTIL.cmCreateDatepicker('SRVY_REQUST_DE', 10);
 
@@ -240,7 +246,7 @@ function fnAddCell() {
 }
 //지도에서 선택한 셀 리스트 조회
 function fn_add_srvyrequstsctn(cellIdList, param){
-    
+	alert("cellIdList: "+cellIdList+" ,param : " + param);
     $.ajax({
         url: contextPath + 'api/cell10/selectRouteInfos.do'
         ,type: 'post'
@@ -267,6 +273,13 @@ function fn_add_srvyrequstsctn(cellIdList, param){
             var track = data[0].TRACK;
             var strtpt = parseInt(data[0].STRTPT);
             var endpt = parseInt(data[0].ENDPT);
+           
+            
+            
+            if(tempCnt == 0) {
+            temp1 = routeCd;	        
+           
+            
             $('#ROUTE_CODE').val(routeCd);
             $('#DIRECT_CODE').val(directCd);
             $('#TRACK').val(track);
@@ -274,6 +287,29 @@ function fn_add_srvyrequstsctn(cellIdList, param){
             $('#ENDPT').val(endpt);
             $('#PAV_CELL_ID').val(cellIdList);
             
+            } else {
+            	temp1 += "," + routeCd;
+                temp2 += "," + cellIdList;
+                cellIdList += cellIdList;
+                alert("temp1 : "+temp1);
+                alert("temp2 : " + temp2);
+                var temp1111 = temp1.split(',');
+                var temp222 = temp2.split(',');
+                
+                
+                for ( var i in temp1111 ) {
+                	
+                	$('#ROUTE_CODE').val(temp1111[i]);
+                    $('#DIRECT_CODE').val(directCd);
+                    $('#TRACK').val(track);
+                    $('#STRTPT').val(strtpt);
+                    $('#ENDPT').val(endpt);
+                    $('#PAV_CELL_ID').val(temp222[i]);
+                }
+                alert("ROUTE_CODE : " + $('#ROUTE_CODE').val());
+                
+            }
+            tempCnt++;
             // 기존 grid data 리셋 후 reload
             $('#gridArea').jqGrid('clearGridData');
             fnSearch();
