@@ -65,7 +65,7 @@ var CONFIG = (function($, undefined){
 	* desc : 편집간 'SelectFeature' 컨트롤 활성화 유지를 위한 처리 - 지도기본 기능이용 시 모든컨트롤을  deactivate할 경우 feature 선택이 유지되지 않는 문제...
 	* @member {String}
 	*/
-	var aSelectiveControls			= ["drag", "zoomOut", "zoomIn", "naivgationHistory", "measurePath", "measurePolygon"];
+	var aSelectiveControls = ["drag", "zoomOut", "zoomIn", "naivgationHistory", "measurePath", "measurePolygon"];
 
 
 	/*
@@ -75,7 +75,7 @@ var CONFIG = (function($, undefined){
 	var exceptLayerList = ['GAttrLayerBase','GAttrLayer','GStatusLayerBase' ,'GStatusLayer','GTypeLayer', 'SttemntLayer', 'DmgtLayer', 'GOverlapLayer' ];
 
 
-	var aLayerList = ['CELL_10','CELL_SECT'];
+	var aLayerList = ['CELL_SECT','CELL_10'];
 	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T'];
 
 	// 2018.02.07 YYK 관할구역관리 레이어 추가
@@ -126,29 +126,26 @@ var CONFIG = (function($, undefined){
 	
 	
 	var serviceLayerInfo = {
-
 	     "CELL_10" : {
 	         'tmapid' : '870',
 	         'id' : '3764',
 	         'table' : 'CELL_10',
 	         'theme' : 'CELL_10',
-	         'alias' : 'CELL_10',
+	         'alias' : '10m',
 	         'seq' : '3764',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	 
 	     "CELL_SECT" : {
 	         'tmapid' : '870',
 	         'id' : '3765',
 	         'table' : 'CELL_SECT',
 	         'theme' : 'CELL_SECT',
-	         'alias' : 'CELL_SECT',
+	         'alias' : '200m',
 	         'seq' : '3765',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	     
 	     "MV_CELL_SECT_TYPE" : {
 	         'tmapid' : '870',
 	         'id' : '3768',
@@ -157,9 +154,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : 'Section셀_종류',
 	         'seq' : '3768',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	     
 	     "MV_GNLSTTUS_SECT_2017" : {
 	         'tmapid' : '870',
 	         'id' : '3761',
@@ -168,9 +164,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : 'Section셀_포장상태_2017',
 	         'seq' : '3761',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	     
 	     "MV_GNLSTTUS_SECT_2018" : {
 	         'tmapid' : '870',
 	         'id' : '3762',
@@ -179,9 +174,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : 'Section셀_포장상태_2018',
 	         'seq' : '3762',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	     
 	     "MV_SRVYDTA_10_2017" : {
 	         'tmapid' : '870',
 	         'id' : '3758',
@@ -190,9 +184,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : '10m셀_포장상태_2017',
 	         'seq' : '3758',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	 
 	     "MV_SRVYDTA_10_2018" : {
 	         'tmapid' : '870',
 	         'id' : '3759',
@@ -201,9 +194,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : '10m셀_포장상태_2018',
 	         'seq' : '3759',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	     
 	     "MV_THM_YEAR_10" : {
 	         'tmapid' : '870',
 	         'id' : '3767',
@@ -212,9 +204,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : '10m셀_테마지도',
 	         'seq' : '3767',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	     
 	     "SIGUNGU" : {
 	         'tmapid' : '870',
 	         'id' : '3753',
@@ -223,9 +214,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : '시군구',
 	         'seq' : '3753',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	 
 	     "DORO_A001" : {
 	         'tmapid' : '870',
 	         'id' : '3754',
@@ -234,9 +224,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : '도로면',
 	         'seq' : '3754',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	 
 	     "N3A_B0010000" : {
 	         'tmapid' : '870',
 	         'id' : '3755',
@@ -245,9 +234,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : '건물',
 	         'seq' : '3755',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	     
 	     "M_CALS_T" : {
 	         'tmapid' : '870',
 	         'id' : '3775',
@@ -255,8 +243,8 @@ var CONFIG = (function($, undefined){
 	         'theme' : 'M_CALS_T',
 	         'alias' : '교량',
 	         'seq' : '3775',
-	         'show' : '1',
-	         'layerType' : '3',
+	         'show' : '0',
+	         'layerType' : '3'
 	     },
 	     "MV_ROAD_CELT0002" : {
 	    	 'tmapid' : '870',
@@ -265,8 +253,8 @@ var CONFIG = (function($, undefined){
 	    	 'theme' : 'MV_ROAD_CELT0002',
 	    	 'alias' : '교차로',
 	    	 'seq' : '3776',
-	    	 'show' : '1',
-	    	 'layerType' : '3',
+	    	 'show' : '0',
+	    	 'layerType' : '3'
 	     },
 	     "MV_ROAD_CELT0005" : {
 	    	 'tmapid' : '870',
@@ -275,8 +263,8 @@ var CONFIG = (function($, undefined){
 	    	 'theme' : 'MV_ROAD_CELT0005',
 	    	 'alias' : '터널',
 	    	 'seq' : '3777',
-	    	 'show' : '1',
-	    	 'layerType' : '3',
+	    	 'show' : '0',
+	    	 'layerType' : '3'
 	     },
 	     "MV_ROAD_CELT0012" : {
 	    	 'tmapid' : '870',
@@ -285,45 +273,42 @@ var CONFIG = (function($, undefined){
 	    	 'theme' : 'MV_ROAD_CELT0012',
 	    	 'alias' : '특별관리구간',
 	    	 'seq' : '3778',
-	    	 'show' : '1',
-	    	 'layerType' : '3',
+	    	 'show' : '0',
+	    	 'layerType' : '3'
 	     },
 	     "TN_POTHOLE" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '3810',
+	    	 'id' : '3801',
 	    	 'table' : 'TN_POTHOLE',
 	    	 'theme' : 'TN_POTHOLE',
 	    	 'alias' : '포트홀',
-	    	 'seq' : '3810',
-	    	 'show' : '1',
-	    	 'layerType' : '3',
+	    	 'seq' : '3801',
+	    	 'show' : '0',
+	    	 'layerType' : '3'
 	     },
-	     
 	     "CELL_10_0301" : {
 	    	 'tmapid' : '870',
-	    	 'id' : '3801',
+	    	 'id' : '3803',
 	    	 'table' : 'CELL_10_0301',
 	    	 'theme' : 'CELL_10_0301',
 	    	 'alias' : 'CELL_10_0301',
-	    	 'seq' : '3801',
-	    	 'show' : '1',
-	    	 'layerType' : '3',
+	    	 'seq' : '3803',
+	    	 'show' : '0',
+	    	 'layerType' : '3'
 	     },
-	     
 	     "CELL_10_4K" : {
 	    	 'tmapid' : '870',
 	    	 'id' : '3802',
 	    	 'table' : 'CELL_10_4K',
 	    	 'theme' : 'CELL_10_4K',
-	    	 'alias' : '4K_라벨',
+	    	 'alias' : '4K라벨',
 	    	 'seq' : '3802',
-	    	 'show' : '1',
-	    	 'layerType' : '3',
+	    	 'show' : '0',
+	    	 'layerType' : '3'
 	     }
 	     
 	     /*
 	     "CMPTNC_ZONE" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3769',
 	         'table' : 'CMPTNC_ZONE',
@@ -331,11 +316,9 @@ var CONFIG = (function($, undefined){
 	         'alias' : '포트홀_관할_구역',
 	         'seq' : '3769',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	 
 	     "MV_POTHOLE_STTEMNT" : {
-	         
 	         'tmapid' : '870',
 	         'id' : '3774',
 	         'table' : 'MV_POTHOLE_STTEMNT',
@@ -343,9 +326,8 @@ var CONFIG = (function($, undefined){
 	         'alias' : '포트홀_신고_관리',
 	         'seq' : '3774',
 	         'show' : '1',
-	         'layerType' : '3',
+	         'layerType' : '3'
 	     },
-	     
 		"CELL_200" : {
 	    	 
 	    	 'tmapid' : '870',
@@ -355,7 +337,7 @@ var CONFIG = (function($, undefined){
 	    	 'alias' : 'CELL_200',
 	    	 'seq' : '3800',
 	    	 'show' : '1',
-	    	 'layerType' : '3',
+	    	 'layerType' : '3'
 	     },
 	      */
 	};	

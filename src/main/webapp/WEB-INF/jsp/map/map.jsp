@@ -230,7 +230,7 @@ $(document).ready(function() {
 
 //주석 레이어 해제
 function fn_unCheckLabel(){
-	$("#dvLayerList").find("li[id$='_text'] a ins.jstree-checkbox").click();
+	//$("#dvLayerList").find("li[id$='_text'] a ins.jstree-checkbox").click();
 }
 
 var MAIN = (function(_mod_map, $, undefined) {

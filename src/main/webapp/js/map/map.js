@@ -171,20 +171,11 @@ function($,undefined){
         var sRequestCrs = CONFIG.fn_get_requestCrs();
         var sLayerList = CONFIG.fn_get_layerList();
         var cLayerList = CONFIG.fn_get_clayerList();
-        //var mLayerList = CONFIG.fn_get_mlayerList(); // YYK
-        //var cLayerList = CONFIG.fn_get_clayerList();
         var tLayerList = CONFIG.fn_get_tlayerList();
 
-/* 레이어관리에 모든 레이어가 뜨게끔 해서 확인 하는 용도
-        if( _layerName == 'cmptncLayer' ){
-        	sThemeList = "SIGUNGU,N3A_B0010000,LSMD_CONT_LDREG,DORO_A001" ;
-        }
-        else {
-        	var sThemeList = layerTool.getThemeShowList(sLayerOrder, _layerName).join();
-        }
-        */
-        var sThemeList = layerTool.getThemeShowList(sLayerOrder, _layerName).join();
-
+        //var sThemeList = layerTool.getThemeShowList(sLayerOrder, _layerName).join();
+        var sThemeList = sLayerList.join();
+        
         var sDefaultThemeList = "EMPTY_LAYER";
         var sSldBody;
 
@@ -207,8 +198,8 @@ function($,undefined){
 
         // 베이스 레이어 설정 
         var oWmsLayer = new GWMS("baseLayer", CONFIG.fn_get_serviceUrl(), {
-        	layers : sLayerList.join() //sThemeList
-        	,styles : sLayerList.join() //sThemeList
+        	layers : sThemeList
+        	,styles : sThemeList
         	,format : sGetMapImageFormat
         	,version : sGetMapVersion
         	,crs : new OpenLayers.Projection(sRequestCrs)

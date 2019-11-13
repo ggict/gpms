@@ -232,10 +232,14 @@ MAP.LAYER = (function($,undefined){
 	        	$("#dvLayerList").jstree("check_node", $(this));
 	        	var sLayerId = $(this).attr("id").replace("layer_","");
 				var oNamedLayer = fn_find_sldNameLayer(sLayerId);
-
 				fn_toggle_allRuleWmsLayer('on',oNamedLayer);
-
 			});
+	        $("#dvLayerList li[show=0]").each( function() {
+	        	//$("#dvLayerList").jstree("check_node", $(this));
+	        	var sLayerId = $(this).attr("id").replace("layer_","");
+	        	var oNamedLayer = fn_find_sldNameLayer(sLayerId);
+	        	fn_toggle_allRuleWmsLayer('off',oNamedLayer);
+	        });
 
 	        $("#dvLayerList").bind("open_node.jstree", function(e, _oData) {
 	    		if($(_oData.rslt.obj[0]).attr("rel")=="layer") {
