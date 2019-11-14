@@ -220,34 +220,33 @@ public class MummSctnSrvyDtaController {
 		return map;
 	}
 
-	// ==========================================================================================================
-	// //
-	// 통합정보조회 - 조사자료 : 선택한 셀로 섹션 정보 조회
 	/**
-	 * @param mummSctnSrvyDtaVO
-	 *            - 조회할 정보가 담긴 MummSctnSrvyDtaVO
-	 * @return mummSctnSrvyDtaVO
-	 * @exception Exception
+	 * 통합정보조회 - 조사자료 : 선택한 셀로 섹션 정보 조회
 	 */
+	@ResponseBody
 	@RequestMapping(value = { "/api/mummsctnsrvydta/mummSctnSrvyDtaSctnByCell.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody MummSctnSrvyDtaVO mummSctnSrvyDtaSctnByCell(
-			@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model,
-			HttpSession session) throws Exception {
+	public MummSctnSrvyDtaVO mummSctnSrvyDtaSctnByCell(
+			@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model, HttpSession session) throws Exception {
 
 		// 데이터 조회
 		MummSctnSrvyDtaVO data = mummSctnSrvyDtaService.mummSctnSrvyDtaSctnByCell(mummSctnSrvyDtaVO);
-
 		if (data != null && data != new MummSctnSrvyDtaVO()) {
-
-			data.setRstFlag("1");
+			String sectCellId = data.getSECT_CELL_ID();
+			SmDtaGnlSttusVO smDtaGnlSttusVO = new SmDtaGnlSttusVO();
+			smDtaGnlSttusVO.setCELL_ID(sectCellId);
+			
+			//조사자료가 있는지 확인하고 상세페이지를 띄울수 있도록 플래그 값을 설정한다.
+			smDtaGnlSttusVO = smDtaGnlSttusService.selectSmDtaGnlSttusByCellId(smDtaGnlSttusVO);
+			if(smDtaGnlSttusVO == null || "".equals(smDtaGnlSttusVO.getSRVY_NO())){
+				data.setRstFlag("0");
+			}else{
+				data.setRstFlag("1");
+			}
 			return data;
-
 		} else {
-
 			MummSctnSrvyDtaVO tmp = new MummSctnSrvyDtaVO();
 			tmp.setRstFlag("0");
 			return tmp;
-
 		}
 	}
 
