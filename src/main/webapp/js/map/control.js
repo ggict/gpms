@@ -2032,41 +2032,36 @@ MAP.CONTROL = (function($, undefined){
 
     // =========================== RESEARCH INFO =========================== //
 
-    /** 통합정보조회 컨트롤 */
     /**
     * @description 통합정보조회 컨트롤을 등록한다. - 포장상태 조사정보
     */
     var init_inteSelResearch = function(){
         var selControls = {
-                point : new GGetFeature(GPoint, {
-                    persist : true,
-                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
-                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
-                    prefix : CONFIG.fn_get_dataHouseName(),
-                    tables : ["CELL_10"],
-                    excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
-                    id : "selPointResearch"
-                }),
-                polygon : new GGetFeature(GPolygon, {
-                    persist : false,
-                    //serviceUrl : CONFIG.fn_get_serviceUrl(),
-                    serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
-                    prefix : CONFIG.fn_get_dataHouseName(),
-                    tables : ["CELL_10"],
-                    excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
-                    id : "selPolygonResearch"
-                })
-            };
+            point : new GGetFeature(GPoint, {
+                persist : true,
+                serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
+                prefix : CONFIG.fn_get_dataHouseName(),
+                tables : ["CELL_10"],
+                excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
+                id : "selPointResearch"
+            }),
+            polygon : new GGetFeature(GPolygon, {
+                persist : false,
+                serviceUrl : CONFIG.fn_get_wfsServiceUrl(),
+                prefix : CONFIG.fn_get_dataHouseName(),
+                tables : ["CELL_10"],
+                excepts : [ "boundedby", "objectid", "shape_area", "shape_len" ],
+                id : "selPolygonResearch"
+            })
+        };
 
         for ( var i in selControls) {
             selControls[i].events.on( {
                 "callback" : event_selFeatureResearch,
                 "mousemove" : function(){}
             });
-
             // 속성 조회 컨트롤 추가
             gMap.addControl(selControls[i]);
-
         }
     };
 
@@ -2074,52 +2069,41 @@ MAP.CONTROL = (function($, undefined){
     * @description 통합정보조회 컨트롤 event - 포장상태 조사정보
     */
     var event_selFeatureResearch = function(res) {
-
-        if ( !res.success() ) { return; }
-
+    	if(typeof $("#dvMapLoading") == "object"){
+        	$("#dvMapLoading").hide();
+        }
+    	if(!res.success()){
+        	return; 
+        }
+    	
         // 검색 조건 피쳐 삭제
         if( gMap.getControl(res.object.id)
-                && gMap.getControl(res.object.id).handler
-                && gMap.getControl(res.object.id).handler.layer
-                && gMap.getControl(res.object.id).handler.layer.features
-                && gMap.getControl(res.object.id).handler.layer.features.length > 0 ) {
-
+	            && gMap.getControl(res.object.id).handler
+	            && gMap.getControl(res.object.id).handler.layer
+	            && gMap.getControl(res.object.id).handler.layer.features
+	            && gMap.getControl(res.object.id).handler.layer.features.length > 0 ) {
+        	
             gMap.getControl(res.object.id).handler.layer.removeAllFeatures();
-
         }
-
         // 검색할 내용이 선택되지 않은 경우
-        if( res.data == undefined || res.data.length < 1 ) {
-
-            if ( parent.gMap.getLayerByName("GAttrLayerMulti").features.length == 0 ) {
-
-            	//alert("선택된 범위내에 자료가 없습니다.");
+        if(res.data == undefined || res.data.length < 1){
+            if( parent.gMap.getLayerByName("GAttrLayerMulti").features.length == 0 ){
                 alert("선택된 셀이 없습니다.");
-                parent.gMap.activeControls("drag");
-
+                parent.gMap.activeControls(["drag","selPointResearch"]);
             }
-
             return;
-
         }
 
-        try {
-
+        try{
             // 검색할 내용이 선택된 경우
             for(var i=0; i<res.data.length; i++){
-
-                if( res.data[i].results == undefined
-                        || res.data[i].results.length < 1 ) {
-
+            	var results = res.data[i].results;
+                if(results == undefined || results.length < 1 ){
                     continue;
-
-                } else if ( res.data[i].results.length > 200 ) {
-
+                }else if(results.length > 200 ){
                     alert("검색할 셀이 너무 많습니다.");
                     gMap.cleanMap();
-
                     return;
-
                 }
 
                 var evt = gMap.getControl(res.object.id).handler.evt;
@@ -2127,42 +2111,28 @@ MAP.CONTROL = (function($, undefined){
 
                 var cellIds = get_cellIds(res.data[i].results);
                 check_researchInfo(cellIds, res.data[i].results, res.object.id);
-
+                
                 for ( var j = 0; j < res.data[i].results.length; j++ ) {
-
                     var feature = res.data[i].results[j].feature;
                     feature.attributes = {
-                            fillColor : '#0033ff',
-                            strokeColor : '#0033ff'
+                        fillColor : '#0033ff',
+                        strokeColor : '#0033ff'
                      };
-
                     // gMap.getLayerByName('GAttrLayerMulti').addFeatures(feature);
-                    add_sect_feature(res.data[i].results[j].feature, evt);
-
+                    add_sect_feature(feature, evt);
                 }
-
-                // 셀이 여러개인 경우 콜백함수 삭제
-                if ( res.data[i].results.length > 1 ) {
-
+                //셀이 여러개인 경우 콜백함수 삭제
+                if(res.data[i].results.length > 1){
                     option.callback = "";
-
                 }
-
             }
-
-            if ( option.callback != undefined && option.callback != "" ) {
-
-                // 함수 콜백
+            
+            if(option.callback != undefined && option.callback != ""){
                 option.iframe[option.callback](option);
-
             }
-
-        } catch(err) {
-
+        }catch(err){
             alert(err);
-
         }
-
     };
 
 
@@ -2698,13 +2668,14 @@ MAP.CONTROL = (function($, undefined){
         */
         var check_researchInfo = function(_sCellIds, _oRes, _sCheckType){
             var sUrl = "";
-
             switch(_sCheckType){
-                case "selPointResearch":
-                    sUrl = contextPath + 'api/mummsctnsrvydta/mummSctnSrvyDtaCellList.do';
-                    break;
+            case "selPointResearch":
+            	sUrl = contextPath + 'api/mummsctnsrvydta/mummSctnSrvyDtaCellList.do';
+            	break;
+            default:	
+            	break;
             }
-
+             
             $.ajax({
                 url: sUrl
                 ,type: 'post'
@@ -2712,49 +2683,35 @@ MAP.CONTROL = (function($, undefined){
                 ,contentType : 'application/json'
                 ,data: JSON.stringify( { CELL_ID : _sCellIds } )
                 ,success: function(data){
-
                     var cellArr = _sCellIds.split(",");
-
-                    if ( cellArr.length < 2 && data.length < 1 ) {
-
+                    if(cellArr.length < 2 && data.length < 1) {
                         alert("선택 된 셀에 대한 조사정보가 없습니다.");
                         gMap.cleanMap();
-
-                        if(typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
                         return;
-
-                    } else if ( cellArr.length < 2 && data.length < 2 ) {
-
+                    }else if(cellArr.length < 2 && data.length < 2) {
                         return;
-
-                    } else if ( data.length < 1 ) {
-
+                    }else if( data.length < 1 ) {
                         alert("선택 된 셀에 대한 조사정보가 없습니다.");
                         gMap.cleanMap();
-
-                        if(typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
-
                         return;
-
                     }
 
                     multiCellList = [];
                     var html = "";
-
                     switch(_sCheckType){
-                        case "selPointResearch":
-                            html = set_researchInfo_single(_oRes, data);
-                            break;
+                    case "selPointResearch":
+                    	html = set_researchInfo_single(_oRes, data);
+                    	break;
+                    default:
+                    	break;
                     }
-
+                    
                     $("#res_ChoiceSctnList").html(html);
                     $("#dvChoiceSctnRes").dialog();
                     $("#dvChoiceSctnRes").dialog("open");
                     $("#dvChoiceSctnRes").parent().css( { "width" : "600px", "z-index" : "9999" } );
-
                 }
-                ,error: function(a,b,msg){
-                }
+                ,error: function(a,b,msg){ }
             });
         };
 

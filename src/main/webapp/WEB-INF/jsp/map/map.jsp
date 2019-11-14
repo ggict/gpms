@@ -225,7 +225,13 @@ $(document).ready(function() {
 
 	//하단 메뉴 hide
 	bottomHide();
-
+	
+	
+	var indexmapToggle = function(){
+		$('.indexmap').toggle();
+	};
+	$('#snbacc').find('dt').click(indexmapToggle);
+	
 });
 
 var MAIN = (function(_mod_map, $, undefined) {

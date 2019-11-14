@@ -311,7 +311,7 @@ var CONFIG = (function($, undefined){
 	    	 'id' : '3802',
 	    	 'table' : 'CELL_10_4K',
 	    	 'theme' : 'CELL_10_4K',
-	    	 'alias' : '4K라벨',
+	    	 'alias' : '4Km라벨',
 	    	 'seq' : '3802',
 	    	 'show' : '0',
 	    	 'layerType' : '3'
