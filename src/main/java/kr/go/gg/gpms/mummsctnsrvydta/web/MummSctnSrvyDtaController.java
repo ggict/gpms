@@ -225,12 +225,11 @@ public class MummSctnSrvyDtaController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = { "/api/mummsctnsrvydta/mummSctnSrvyDtaSctnByCell.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public MummSctnSrvyDtaVO mummSctnSrvyDtaSctnByCell(
-			@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model, HttpSession session) throws Exception {
+	public MummSctnSrvyDtaVO mummSctnSrvyDtaSctnByCell(@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model, HttpSession session) throws Exception {
 
 		// 데이터 조회
 		MummSctnSrvyDtaVO data = mummSctnSrvyDtaService.mummSctnSrvyDtaSctnByCell(mummSctnSrvyDtaVO);
-		if (data != null && data != new MummSctnSrvyDtaVO()) {
+		if(data != null){
 			String sectCellId = data.getSECT_CELL_ID();
 			SmDtaGnlSttusVO smDtaGnlSttusVO = new SmDtaGnlSttusVO();
 			smDtaGnlSttusVO.setCELL_ID(sectCellId);
@@ -243,12 +242,32 @@ public class MummSctnSrvyDtaController {
 				data.setRstFlag("1");
 			}
 			return data;
-		} else {
+		}else{
 			MummSctnSrvyDtaVO tmp = new MummSctnSrvyDtaVO();
 			tmp.setRstFlag("0");
 			return tmp;
 		}
 	}
+	
+	/**
+	 * 통합정보조회 - 조사정보 : 이미지 및 로드뷰 페이지로 이동.
+	 */
+	@RequestMapping(value = { "/mng/mummsctnsrvydta/mummSctnSrvyDtaImgRoadview.do" })
+	public String mummSctnSrvyDtaImgRoadview(MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
+		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
+		return "/srvy/mumm/mummSctnSrvyDtaImgRoadview";
+	}
+
+	/**
+	 * 통합정보조회 - 조사정보 : 조사정보조회 버튼 클릭 시 상세보기 페이지로 이동.
+	 */
+	@RequestMapping(value = { "/mng/mummsctnsrvydta/mummSctnSrvyDtaDetail.do" })
+	public String mummSctnSrvyDtaDetail(MummSctnSrvyDtaVO mummSctnSrvyDtaVO, SmDtaGnlSttusVO smDtaGnlSttusVO, ModelMap model) throws Exception {
+
+		model.addAttribute("smDtaGnlSttusVO", smDtaGnlSttusService.selectSmDtaGnlSttusByCellId(smDtaGnlSttusVO));
+		model.addAttribute("srvyYearList", smDtaGnlSttusService.selectSmDtaGnlSttusYearListByCellId(smDtaGnlSttusVO));
+		return "/srvy/mumm/mummSctnSrvyDtaDetail";
+	}	
 
 	// 통합정보조회 - 조사자료 : 선택한 섹션의 정보 조회
 	/**
@@ -345,42 +364,7 @@ public class MummSctnSrvyDtaController {
 		return "/srvy/mumm/mummSctnSrvyDtaSctnList";
 	}
 
-	// 통합정보조회 - 조사정보 : 이미지 및 로드뷰 페이지로 이동.
-	/**
-	 * @param mummSctnSrvyDtaVO
-	 *            - 조회할 정보가 담긴 MummSctnSrvyDtaVO
-	 * @return "/manage/mummsctnsrvydta/mummSctnSrvyDtaDetail"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = { "/mng/mummsctnsrvydta/mummSctnSrvyDtaImgRoadview.do" })
-	public String mummSctnSrvyDtaImgRoadview(
-			MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model)
-			throws Exception {
-
-		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
-
-		return "/srvy/mumm/mummSctnSrvyDtaImgRoadview";
-	}
-
-	// 통합정보조회 - 조사정보 : 조사정보조회 버튼 클릭 시 상세보기 페이지로 이동.
-	/**
-	 * @param mummSctnSrvyDtaVO
-	 *            - 조회할 정보가 담긴 MummSctnSrvyDtaVO
-	 * @return "/manage/mummsctnsrvydta/mummSctnSrvyDtaDetail"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = { "/mng/mummsctnsrvydta/mummSctnSrvyDtaDetail.do" })
-	public String mummSctnSrvyDtaDetail(MummSctnSrvyDtaVO mummSctnSrvyDtaVO,
-			SmDtaGnlSttusVO smDtaGnlSttusVO, ModelMap model) throws Exception {
-
-		model.addAttribute("smDtaGnlSttusVO", smDtaGnlSttusService
-				.selectSmDtaGnlSttusByCellId(smDtaGnlSttusVO));
-		model.addAttribute("srvyYearList", smDtaGnlSttusService
-				.selectSmDtaGnlSttusYearListByCellId(smDtaGnlSttusVO));
-
-		return "/srvy/mumm/mummSctnSrvyDtaDetail";
-	}
-
+	
 	// 통합정보조회 - 조사정보 : 포장상태 평가정보 평균 값 조회
 	/**
 	 * @param mummSctnSrvyDtaVO
