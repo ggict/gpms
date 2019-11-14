@@ -1,51 +1,30 @@
 /**
- * 지도 관련 JS 파일
- */
-
-/**
 * 맵 객체
-* @member {Object} gMap
-* @public
 */
 var gMap = null;
 
 /**
 * 다음맵 객체
-* @member {Object} daumMap
-* @public
 */
 var daumMap = null;
 
 /**
 * 다음맵 로드뷰 객체
-* @member {Object} daumRoadMap
-* @public
 */
 var daumRoadMap = null;
 
 /**
 * 레이어 목록 (영문명/한글명)
-* @member {Object} layerAliasList
-* @public
 */
 var layerAliasList = null; //레이어 관련 정보
 
 
-var MAP = (/**
- * @param $
- * @param undefined
- * @returns {___anonymous11896_12532}
- */
-/**
- * @param $
- * @param undefined
- * @returns {___anonymous11896_12532}
- */
+var MAP = (
+		
 function($,undefined){
 
     /**
      * 이미지 저장 Tool
-     * @member {Object} saveTool
      */
     var saveTool = null;
 
@@ -54,31 +33,16 @@ function($,undefined){
     */
     var fn_init_map = function(_oRes, _bUserStyle, _layerName){
         fn_create_map();
-
         fn_create_indexMap({layers : "N3A_G0100000", maxResolution : 1000, projection : new OpenLayers.Projection(CONFIG.fn_get_dataHouseCrs())});
-
         fn_init_wms(_layerName);
         fn_init_vector();
-
         fn_move_map();
-
         fn_create_daumMap(gMap);
-        //this.LAYER.fn_set_layerInfo();
         this.LAYER.fn_init_dvLayerList(null, _bUserStyle, _layerName);
 
-        // 화면 UI
-        /*indexmap();
-        toolpack();*/
-
-        // 지도 저장 툴
+        //지도 저장 툴
         saveTool = new GSaveTool(gMap);
         this.CONTROL.fn_add_mapControl();
-
-
-
-        // YYK 컨트롤 활성화
-        //fn_layer_control('GStatusLayer');
-        //gMap.activeControls(['stteSelectFeature', 'drag']);
         gMap.activeControls('drag');
     };
 
@@ -172,26 +136,22 @@ function($,undefined){
         var sLayerList = CONFIG.fn_get_layerList();
         var cLayerList = CONFIG.fn_get_clayerList();
         var tLayerList = CONFIG.fn_get_tlayerList();
-
+        
         //var sThemeList = layerTool.getThemeShowList(sLayerOrder, _layerName).join();
         var sThemeList = sLayerList.join();
         
         var sDefaultThemeList = "EMPTY_LAYER";
         var sSldBody;
-
         if (!sThemeList && sThemeList.length <= 0) {
             sThemeList = sDefaultThemeList;
             sSldBody = null;
         } else {
-
         	// YYK. ie11 ~ 이전 버전에 따라 serializeToString 안먹히는 현상 해결
 			if ( chkBrowser == 'msie' ){ // ie 10 이하
 				sSldBody = layerTool.getSld_body(true).xml ;
-			}
-			else if ( chkBrowser == 'msie11') { // ie11
+			}else if( chkBrowser == 'msie11') { // ie11
 				sSldBody = new XMLSerializer().serializeToString(layerTool.getSld_body(true));
-			}
-			else{
+			}else{
 				sSldBody = new XMLSerializer().serializeToString(layerTool.getSld_body(true));
 			}
         }
@@ -291,7 +251,6 @@ function($,undefined){
             })
         }));
 
-      //180806 wijy
 		//교차로선택 표시용
 		gMap.addLayer(new GVector("GlyrSelectCross", {
 			styleMap : new OpenLayers.StyleMap( {
@@ -338,7 +297,6 @@ function($,undefined){
 
     /**
     * @description 다음맵 객체를 생성한다.
-    * @param {Object} _oMap : 현재 지도 객체
     */
     var fn_create_daumMap = function(_oMap){
         daumMap = new GDaumMap("daumMap", {
@@ -347,11 +305,6 @@ function($,undefined){
             zoom : _oMap.getZoom()
         });
     };
-
-
-    /**
-    * @description vector 레이어를 생성한다.
-    */
 
     // 스타일레이어
     var statusStyle = [
@@ -837,122 +790,6 @@ function($,undefined){
                 'default' : null
             })
         }));
-
-
-
-//  2018.04.11 마커 클릭 이벤트 숨김 처리
-/*
-    // ====== YYK. GStatusLayer control 등록 ======
-    	var stteFeature, sttePopup;
-
-		stteControl = new OpenLayers.Control.SelectFeature(
-
-        	[gMap.getLayerByName('GStatusLayer'), gMap.getLayerByName('SttemntLayer') ]
-            ,{onSelect: function(feature) {
-
-	            if ( $('#sttemnt_tool .'+feature.attributes.allData.PRCS_STTUS).hasClass('bgchk') ){
-		            stteFeature = feature;
-	                var pos = feature.geometry;
-	                if (sttePopup) {
-	                    gMap.removePopup(sttePopup);
-	                }
-	                sttePopup = new OpenLayers.Popup("chicken",
-	                    new OpenLayers.LonLat(pos.x, pos.y),
-	                    new OpenLayers.Size(300,140),
-	                    "<table style='width:300px; table-layout:fixed' class='selFeature'>"
-	                    + "<tbody>"
-	                    + "<tr><th>등록번호</th><td>"     + feature.attributes.allData.PTH_RG_NO.substring(0,8) + Lpad(feature.attributes.allData.PTH_RG_NO.substring(9), 3) +  "</td></tr>"
-	                    + "<tr><th>차량번호</th><td>"     + nullToEmpty(feature.attributes.allData.VHCLE_NO) +   "</td></tr>"
-	                    + "<tr><th>주소</th><td title='"+ nullToEmpty(feature.attributes.allData.LNM_ADRES) +"'>"     + nullToEmpty(feature.attributes.allData.LNM_ADRES) +  "</td></tr>"
-	                    + "<tr><th>담당자</th><td>"      + nullToEmpty(feature.attributes.allData.CHARGER_NM) + "</td></tr>"
-	                    + "<tr><th>연락처</th><td>"      + nullToEmpty(feature.attributes.allData.CTTPC) +      "</td></tr>"
-	                    + "<tr><th>신고일시</th><td>"     + nullToEmpty(feature.attributes.allData.STTEMNT_DT.substring(0, 19)) + "</td></tr>"
-	                    + "</tbody>"
-	                    + "</table>"
-	                    ,false
-	                    );
-
-	                stteFeature.Popup = sttePopup;
-	                gMap.addPopup(sttePopup)
-
-			        }
-
-	            }
-        	 ,onUnselect: function(feature) {
-
-            	 gMap.removePopup(feature.Popup);
-                 feature.Popup.destroy();
-                 feature.Popup = null;
-
-            	 }
-        	 ,id : 'stteSelectFeature'
-        	}
-
-
-        )
-
-        //gMap.setCenter(new OpenLayers.LonLat(0, 0), 3);
-        gMap.addControl(stteControl);
-
-        stteControl.activate();
-        //this.getControl(controls).activate()
-
-
-
-
-//  2018.04.11 마커 클릭 이벤트 숨김 처리
-    // ====== YYK. GTypeLayer control 등록 ======
-        var dmgtFeature, dmgtPopup;
-
-        dmgtControl = new OpenLayers.Control.SelectFeature(
-        	[gMap.getLayerByName('GTypeLayer'), gMap.getLayerByName('DmgtLayer') ]
-            ,{onSelect: function(feature) {
-
-            	if ( $('#dmgt_tool .'+feature.attributes.allData.DMG_TYPE).hasClass('bgchk') ){
-	            	dmgtFeature = feature;
-	                var pos = feature.geometry;
-	                if (dmgtPopup) {
-	                    gMap.removePopup(dmgtPopup);
-	                }
-	                dmgtPopup = new OpenLayers.Popup("chicken",
-	                    new OpenLayers.LonLat(pos.x, pos.y),
-	                    new OpenLayers.Size(300,140),
-	                    "<table style='width:300px; table-layout:fixed' class='selFeature'>"
-	                    + "<tbody>"
-	                    + "<tr><th>등록번호</th><td>"     + feature.attributes.allData.PTH_RG_NO.substring(0,8) + Lpad(feature.attributes.allData.PTH_RG_NO.substring(9), 3) +  "</td></tr>"
-	                    + "<tr><th>차량번호</th><td>"     + nullToEmpty(feature.attributes.allData.VHCLE_NO) +   "</td></tr>"
-	                    + "<tr><th>주소</th><td title='" + nullToEmpty(feature.attributes.allData.LNM_ADRES) +"'>"     + nullToEmpty(feature.attributes.allData.LNM_ADRES) +  "</td></tr>"
-	                    + "<tr><th>담당자</th><td>"      + nullToEmpty(feature.attributes.allData.CHARGER_NM) + "</td></tr>"
-	                    + "<tr><th>연락처</th><td>"      + nullToEmpty(feature.attributes.allData.CTTPC) +      "</td></tr>"
-	                    + "<tr><th>신고일시</th><td>"     + nullToEmpty(feature.attributes.allData.STTEMNT_DT.substring(0, 19)) + "</td></tr>"
-	                    + "</tbody>"
-	                    + "</table>"
-	                    ,false
-	                    );
-
-	                dmgtFeature.Popup = dmgtPopup;
-	                gMap.addPopup(dmgtPopup)
-	            }
-
-            }
-        	 ,onUnselect: function(feature) {
-            	 gMap.removePopup(feature.Popup);
-                 feature.Popup.destroy();
-                 feature.Popup = null;
-
-            	 }
-        	 ,id : 'dmgtSelectFeature'
-        	}
-        )
-
-        //gMap.setCenter(new OpenLayers.LonLat(0, 0), 3);
-        gMap.addControl(dmgtControl);
-
-        // 초기 deactivate
-        dmgtControl.activate();
-*/
-
-
 
     };
 
@@ -1743,65 +1580,47 @@ function($,undefined){
      * @param {String} table : 테이블명
      * @param {String} value : 삭제할 feature G2_ID
      */
-     var fn_del_feature = function(table, value) {
+    var fn_del_feature = function(table, value) {
+    	var msg = "0";
+    	GRequest.WFS.del(
+			//CONFIG.fn_get_serviceUrl(),
+			CONFIG.fn_get_wfsServiceUrl(),
+			CONFIG.fn_get_dataHouseName(),
+			table,
+			value,
+			function(res) {
+				msg = "1";
+		});
+    	return msg;
 
-    	 var msg = "0";
-
-    	 //alert("table : " + table + " / value : " + value);
-
-    	 GRequest.WFS.del(
-    			    //CONFIG.fn_get_serviceUrl(),
-    			 	CONFIG.fn_get_wfsServiceUrl(),
-					CONFIG.fn_get_dataHouseName(),
-					table,
-					value,
-					function(res) {
-						//alert("table : " + table + " / value : " + value + " / del : " + res);
-						msg = "1";
-					});
-
-    	 return msg;
-
-     };
-
-
+    };
 
     return {
         fn_init_map                 :               fn_init_map,
-
         fn_create_map               :               fn_create_map,
         fn_create_daumMap           :               fn_create_daumMap,
-
         fn_init_wms                 :               fn_init_wms,
         fn_init_vector              :               fn_init_vector,
-
         fn_save_map                 :               fn_save_map,
         fn_encoding_map             :               fn_encoding_map,
-
         fn_get_resolution           :               fn_get_resolution,
         fn_event_moveend            :               fn_event_moveend,
         fn_get_scale                :               fn_get_scale,
         fn_get_StyleMap             :               fn_get_StyleMap,
         fn_update_resizeMap         :               fn_update_resizeMap,
-
         fn_move_map                 :               fn_move_map,
-
         fn_get_selectFeatureByAttr  :               fn_get_selectFeatureByAttr,
         fn_get_selectFeatureByAttrMulti:            fn_get_selectFeatureByAttrMulti,
         fn_get_selectFeatureByAttrBoundary:         fn_get_selectFeatureByAttrBoundary,
         fn_show_externalSateliteMap :               fn_show_externalSateliteMap,
         fn_get_daumMap              :               fn_get_daumMap,
-
         fn_LonLatmove               :               fn_LonLatmove,
         statusStyle                 :               statusStyle,
         dmgtStyle                   :               dmgtStyle,
         overlapStyle                :               overlapStyle,
-        //fn_layer_control            :               fn_layer_control
-
         fn_get_getFeatureAndDrawByAttr :            fn_get_getFeatureAndDrawByAttr,
         fn_get_attribute            :               fn_get_attribute,
         fn_del_feature				:				fn_del_feature
-
     }
 }(jQuery));
 

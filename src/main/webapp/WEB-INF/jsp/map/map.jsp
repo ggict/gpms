@@ -10,22 +10,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>경기도 포장관리시스템</title>
-
 <%-- 공통 스크립트 --%>
 <%@ include file="/include/common_head.jsp"%>
-
-<!-- 2017. 10. 23. JOY : 조사정보 조회 스크립트 -->
 <script type="text/javascript" src="<c:url value='/js/toolRight/researchInfo.js'/>" charset='utf-8'></script>
-
-<!-- JSTREE -->
 <script src="<c:url value='/extLib/jstree/jstree.min.js'/>" charset='utf-8'></script>
-
 <%
     String flag = "gpms";
     session.setAttribute("sFlag", flag);
 %>
-</head>
+<style>
 
+/**  
+레이어 선택 공간 css
+
+.divlayermng ul {list-style:none;margin:0;padding:0;}
+.divlayermng ul li {margin: 0 25px 0 0; padding: 0 0 0 0; border : 0; float: left; text-align: center;}
+.divlayermng ul li img {width:32px; height:32px;}
+.divlayermng ul li p {width:40px;}
+*/
+</style>
+</head>
 <body>
 	<div id="wrap">
 		<!-- 공통 (START)-->
@@ -146,11 +150,6 @@
                     <li id="mCtrlSateliteMap"  class="btn" onclick="MAP.fn_show_externalSateliteMap('skyview')"><a href="#" class="map2"><span class="hidden">위성</span></a></li>
                 </ul>
 
-                <!-- <div class="custom_typecontrol radius_border" style="z-index:999;">
-			        <span id="mCtrlSatenomalMap" class="selected_btn" onclick="MAP.fn_show_externalSateliteMap('roadmap')">일반</span>
-			        <span id="mCtrlSateliteMap"  class="btn" onclick="MAP.fn_show_externalSateliteMap('skyview')">위성</span>
-			    </div> -->
-
                 <dl id="snbacc">
                     <dt>인덱스맵</dt>
                     <dd>
@@ -177,12 +176,23 @@
                     </dd>
                      -->
                 </dl>
-                
+				
+				<!-- jstree -->
                 <div id="divLayerTool" >
 	                <div id="dvLayerList" class="LayerList">
 	                </div>
                 </div>
-                
+                <%-- 
+                <div id="divLayerTool">
+	                <div id="divLayerMngList" class="divlayermng">
+	                	<ul id="divLayerMngList_ul">
+	                		<li>
+			                	<a href="#"><img src="<c:url value='/images/common/gps.png'/>"/><p>10m</p></a>
+	                		</li>
+	                	</ul>
+	                </div>
+                </div>
+                 --%>
 			</div>
 
 
@@ -200,38 +210,33 @@
 
 <script type="text/javascript" charset="utf-8">
 $(parent).resize(function() {
-
     var width = $(window).width();
-
     $(".select_map").css("left", ( width - 188 - 108 ) + "px");
     $(".right_tool").css("left", ( width - 11 - 180 ) + "px");
     $("#snbacc").css("left", ( width - 20 - 210 ) + "px");
-
 });
 
 $(document).ready(function() {
     "${sessionScope.sFlat}";
+    
     var width = $(window).width();
-
     $(".select_map").css("left", ( width - 188 - 108 ) + "px");
     $(".right_tool").css("left", ( width - 11 - 180 ) + "px");
     $("#snbacc").css("left", ( width - 20 - 210 ) + "px");
 
 	MAP.fn_update_resizeMap();
-
 	$(window).resize(function () {
         MAP.fn_update_resizeMap();
     });
-
+	
 	//하단 메뉴 hide
 	bottomHide();
 	
-	
+	//인덱스맵 토글이벤트
 	var indexmapToggle = function(){
 		$('.indexmap').toggle();
 	};
 	$('#snbacc').find('dt').click(indexmapToggle);
-	
 });
 
 var MAIN = (function(_mod_map, $, undefined) {
@@ -283,6 +288,90 @@ var MAIN = (function(_mod_map, $, undefined) {
 	return _mod_map;
 
 }(MAIN || {}, jQuery));
+
+
+//레이어 목록 만들기
+var layersMngObj = {
+	init: function(){
+		var layerinfos = CONFIG.fn_get_serviceLayerInfo();
+		var sThemeList = layerTool.getThemeShowList();
+		var layers = [];
+		for(var i=0; i<sThemeList.length; i++){
+			var layername = sThemeList[i]; 
+			layers.push(layerinfos[layername]);
+		}
+		
+		//정렬
+		function sort(a, b) {
+			if (a.seq == b.seq) { return 0 }
+			return a.seq > b.seq ? 1 : -1;
+		}
+		layers.sort(sort);
+		
+		var templates = [];
+		for(var i=0; i<layers.length; i++){
+			var json = layers[i];
+			var table = json.table; 
+			var alias = json.alias; 
+			var show = json.show; 
+			var active = (show == '1') ? 'active' : '';
+			
+			var format = 
+				this.template().replace("{title}", alias)
+					.replace("{layernm}", table)
+					.replace("{class}", active);
+			
+			templates.push(format);
+		}
+		$('#divLayerMngList_ul').html(templates.join(""));
+		this.clickevt();
+	}
+	,template : function() {
+		var imageUrl = contextPath + 'images/common/gps.png';
+		var template = ''
+				+ '<li class="{class}">'
+				+ '<a href="#"><img src="'+imageUrl+'"/><p data-layer="{layernm}">{title}</p></a>'
+				+ '</li>';
+		return template;
+	}
+	,clickevt: function(){
+		var fnCall = function(){
+			var obj = $(this);
+			var layernm = obj.find('p').attr('data-layer');  
+			console.log(obj, layernm);
+			
+			var baseLayer = gMap.getLayerByName("baseLayer");
+			var params = baseLayer.getParams();
+			var layers = params.LAYERS.split(',');
+			if(obj.hasClass('active')){
+				obj.removeClass('active');
+				if(layers.indexOf(layernm) > -1){
+					layers.splice(layers.indexOf(layernm), 1)
+				}								
+			}else{
+				obj.addClass('active');
+				if(layers.indexOf(layernm) == -1){
+					//layers.unshift(layernm);
+					layers.push(layernm);
+				}
+			}
+			
+			if(layers.length == 0){
+				baseLayer.setVisibility(false);
+			}else{
+				baseLayer.setVisibility(true);
+				baseLayer.mergeNewParams({
+					LAYERS: (layers.length == 0) ? layers[0] : layers.join()
+					,STYLES: ''	
+				});
+			}
+			
+		};
+		$('#divLayerMngList_ul').find('li').click(fnCall);
+	}
+};
+//layersMngObj.init();
+
 
 </script>
 </html>
