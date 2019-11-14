@@ -18,10 +18,6 @@
 
 // 페이지 로딩 초기 설정
 $( document ).ready(function() {
-
-    // 상세보기로 넘어온 경우 파라미터 받기
-    var cellId = "${smDtaGnlSttusVO.CELL_ID}";
-
     /* 
     var directFlag = "${mummSctnSrvyDtaVO.DIRECT_FLAG}";
     if ( directFlag == "NY" ) {
@@ -32,62 +28,51 @@ $( document ).ready(function() {
 	});
 	*/
 	
+    // 상세보기로 넘어온 경우 파라미터 받기
+    var cellId = "${smDtaGnlSttusVO.CELL_ID}";
+    
     //포장상태 기본정보, 조사정보 상세내용
     fnSelectSrvyDetail();
+    
     //포장상태 평가정보 상세내용
     fnSelectEvaluationDetail();
+    
  	//소성변형, 종단평탄성 데이터,궤적정보    
- 	fnGetrdairival();
+ 	chartInfoObj.getData();
 	geoInfoObj.clickevt();
 });
 
-//소성변형, 종단평탄성 데이터
-function fnGetrdairival(){
-	
-    var cell_id = $("#CELL_ID").val();
-    var srvy_year = $("#SRVY_YEAR").val();
-
-    $.ajax({
-        url: contextPath + 'api/mumm/getrdairival.do'
-        ,type: 'post'
-        ,dataType: 'json'
-        ,contentType : 'application/json'
-        ,data : JSON.stringify({CELL_ID : cell_id, SRVY_YEAR: srvy_year})
-        ,success: function(data){
-        	console.log(data);
-        	if(data.succ){
-        		if(data.res) geoInfoObj.geoms = data.res.GEOJSON
-        	}else{
-        		geoInfoObj.geoms = null;
-        	}
-       		drawRdChart(data);
-       		drawIRIChart(data);
-        }
-        ,error: function(a,b,msg){
-			console.log(a);        
-        }
-    });
-}
-
 //궤적정보
 var geoInfoObj = {
-	geoms : null
-	,sampleGeom : [
-		 {"type":"Point","coordinates":[200326.7244,498724.473650001]}
-		,{"type":"Point","coordinates":[200317.912292839,498729.300408196]}
-		,{"type":"Point","coordinates":[200308.8797,498733.6956]}
-		,{"type":"Point","coordinates":[200299.786572703,498737.970960377]}
-		,{"type":"Point","coordinates":[200290.52175,498741.8496]}
-		,{"type":"Point","coordinates":[200281.219376299,498745.519435337]}
-		,{"type":"Point","coordinates":[200271.812429153,498749.016715579]}
-		,{"type":"Point","coordinates":[200262.2937,498752.20715]}
-		,{"type":"Point","coordinates":[200252.8121,498755.38505]}
-		,{"type":"Point","coordinates":[202097.207715085,485988.470075922]}
-	]
-	,grid : function(){
-		var obj = geoInfoObj;
-		//var geoms = obj.sampleGeom;
-		var geoms = obj.geoms;
+	clickevt: function(){
+		$('#geoinfo').click(geoInfoObj.getData);
+	}	
+	,getData : function(){
+	    var cell_id = $("#CELL_ID").val();
+	    var srvy_year = $("#SRVY_YEAR").val();
+	    $.ajax({
+	        url: contextPath + 'api/mumm/getrdairival.do'
+	        ,type: 'post'
+	        ,dataType: 'json'
+	        ,contentType : 'application/json'
+	        ,data : JSON.stringify({CELL_ID : cell_id, SRVY_YEAR: srvy_year})
+	        ,success: function(data){
+	        	var geojson = null;
+	        	if(data.succ){
+	        		if(data.res){
+	        			geojson = data.res.GEOJSON;
+	        		}
+	        	}
+	        	geoInfoObj.grid(geojson);
+	        }
+	        ,error: function(a,b,msg){
+				console.log(a);        
+	        }
+	    });
+	}
+	,grid : function(geometrys){
+		//var geoms = geoInfoObj.sampleGeom;
+		var geoms = geometrys;
 		if(geoms && geoms.length > 0 ){
 			try{
 	        	var gMap = parent.gMap;
@@ -114,114 +99,141 @@ var geoInfoObj = {
 		}else{
 			alert('위치정보가 없습니다.');
 		}
-	},
-	clickevt: function(){
-		$('#geoinfo').click(geoInfoObj.grid);
 	}
+	,sampleGeom : [
+		 {"type":"Point","coordinates":[200326.7244,498724.473650001]}
+		,{"type":"Point","coordinates":[200317.912292839,498729.300408196]}
+		,{"type":"Point","coordinates":[200308.8797,498733.6956]}
+		,{"type":"Point","coordinates":[200299.786572703,498737.970960377]}
+		,{"type":"Point","coordinates":[200290.52175,498741.8496]}
+		,{"type":"Point","coordinates":[200281.219376299,498745.519435337]}
+		,{"type":"Point","coordinates":[200271.812429153,498749.016715579]}
+		,{"type":"Point","coordinates":[200262.2937,498752.20715]}
+		,{"type":"Point","coordinates":[200252.8121,498755.38505]}
+		,{"type":"Point","coordinates":[202097.207715085,485988.470075922]}
+	]	
 };
 	
-//차트
-function drawRdChart(dataList){
- 	var xAxisData =[];
- 	var lineData = [];
- 	for(var i=0; i<dataList.length; i++){
- 		xAxisData.push(dataList[i].RD_VAL);
- 		lineData.push(Number(dataList[i].RD_VAL));
- 	}
- 	if(xAxisData.length == 0) xAxisData = [0.00];
- 	if(lineData.length == 0) lineData = [0.00];
- 	
-	var myChart = echarts.init(document.getElementById('rdChart'));
-	myChart.setOption({
-		color : [ '#003366', '#4cabce' ],
-		title : {
-			text : '소형변형'
-			,textStyle: {
-				fontSize: 12
-			}
-		},
-		tooltip : {
-			trigger : 'axis'
-		},
-		toolbox : {
-			show : true,
-			feature : {
-			//saveAsImage: {show: true}					// 이미지저장
-			}
-		},
-		legend : {
-			data : ['소형변형']
-		},
-		grid : {
-			top : 5
-			,bottom: 10
-		},
-		xAxis : [ {
-			type : 'category',
-			data : xAxisData
-		} ],
-		yAxis : [{
-			type : 'value'
-		}],
-		series : [ {
-			name : '소형변형',
-			type : 'line',
-			data : lineData
-		}]
-	});
-}
-function drawIRIChart(dataList){
- 	var xAxisData =[];
- 	var lineData = [];
- 	for(var i=0; i<dataList.length; i++){
- 		xAxisData.push(dataList[i].IRI_VAL);
- 		lineData.push(Number(dataList[i].IRI_VAL));
- 	}
- 	if(xAxisData.length == 0) xAxisData = [0.00];
- 	if(lineData.length == 0) lineData = [0.00];
- 	
-	var myChart = echarts.init(document.getElementById('iriChart'));
-	myChart.setOption({
-		color : [ '#003366', '#4cabce' ],
-		title : {
-			text : '중단평탄성'
-			,textStyle: {
-				fontSize: 12
-			}
-		},
-		tooltip : {
-			trigger : 'axis'
-		},
-		toolbox : {
-			show : true,
-			feature : {
-			//saveAsImage: {show: true}					// 이미지저장
-			}
-		},
-		legend : {
-			data : ['중단평탄성']
-		},
-		grid : {
-			top : 5
-			,bottom: 10
-		},
-		xAxis : [ {
-			type : 'category',
-			data : xAxisData
-		} ],
-		yAxis : [{
-			type : 'value'
-		}],
-		series : [ {
-			name : '중단평탄성',
-			type : 'line',
-			data : lineData
-		}]
-	});
-}
-
-
-
+//소성변형, 종단평탄성 차트
+var chartInfoObj = {
+	getData : function(){
+	    var cell_id = $("#CELL_ID").val();
+	    var srvy_year = $("#SRVY_YEAR").val();
+	    $.ajax({
+	        url: contextPath + 'api/mumm/getrdairival.do'
+	        ,type: 'post'
+	        ,dataType: 'json'
+	        ,contentType : 'application/json'
+	        ,data : JSON.stringify({CELL_ID : cell_id, SRVY_YEAR: srvy_year})
+	        ,success: function(data){
+	        	var obj = chartInfoObj;
+	        	obj.drawRdChart(data);
+	        	obj.drawIRIChart(data);
+	        }
+	        ,error: function(a,b,msg){
+				console.log(a);        
+	        }
+	    });
+	}
+	,drawRdChart: function(dataList){
+		var xAxisData =[];
+	 	var lineData = [];
+	 	for(var i=0; i<dataList.length; i++){
+	 		xAxisData.push(dataList[i].RD_VAL);
+	 		lineData.push(Number(dataList[i].RD_VAL));
+	 	}
+	 	if(xAxisData.length == 0) xAxisData = [0.00];
+	 	if(lineData.length == 0) lineData = [0.00];
+	 	
+		var myChart = echarts.init(document.getElementById('rdChart'));
+		myChart.setOption({
+			color : [ '#003366', '#4cabce' ],
+			title : {
+				text : '소형변형'
+				,textStyle: {
+					fontSize: 12
+				}
+			},
+			tooltip : {
+				trigger : 'axis'
+			},
+			toolbox : {
+				show : true,
+				feature : {
+					//saveAsImage: {show: true}					// 이미지저장
+				}
+			},
+			legend : {
+				data : ['소형변형']
+			},
+			grid : {
+				top : 5
+				,bottom: 10
+			},
+			xAxis : [ {
+				type : 'category',
+				data : xAxisData
+			} ],
+			yAxis : [{
+				type : 'value'
+			}],
+			series : [ {
+				name : '소형변형',
+				type : 'line',
+				data : lineData
+			}]
+		});
+	}
+	,drawIRIChart: function(dataList){
+	 	var xAxisData =[];
+	 	var lineData = [];
+	 	for(var i=0; i<dataList.length; i++){
+	 		xAxisData.push(dataList[i].IRI_VAL);
+	 		lineData.push(Number(dataList[i].IRI_VAL));
+	 	}
+	 	if(xAxisData.length == 0) xAxisData = [0.00];
+	 	if(lineData.length == 0) lineData = [0.00];
+	 	
+		var myChart = echarts.init(document.getElementById('iriChart'));
+		myChart.setOption({
+			color : [ '#003366', '#4cabce' ],
+			title : {
+				text : '중단평탄성'
+				,textStyle: {
+					fontSize: 12
+				}
+			},
+			tooltip : {
+				trigger : 'axis'
+			},
+			toolbox : {
+				show : true,
+				feature : {
+					//saveAsImage: {show: true}					// 이미지저장
+				}
+			},
+			legend : {
+				data : ['중단평탄성']
+			},
+			grid : {
+				top : 5
+				,bottom: 10
+			},
+			xAxis : [ {
+				type : 'category',
+				data : xAxisData
+			} ],
+			yAxis : [{
+				type : 'value'
+			}],
+			series : [ {
+				name : '중단평탄성',
+				type : 'line',
+				data : lineData
+			}]
+		});
+	}
+};
 
 
 
