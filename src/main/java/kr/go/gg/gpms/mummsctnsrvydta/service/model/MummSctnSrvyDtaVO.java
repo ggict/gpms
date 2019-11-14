@@ -600,7 +600,18 @@ public class MummSctnSrvyDtaVO extends BaseVO {
 	@XmlElement
     private java.lang.String SRVY_YEAR_MAX;
     
-    
+	@XmlElement
+	private String GEOJSON;
+	
+	@JsonProperty(value="GEOJSON")
+	public String getGEOJSON() {
+		return GEOJSON;
+	}
+
+	public void setGEOJSON(String gEOJSON) {
+		GEOJSON = gEOJSON;
+	}
+	
 	/**
 	 * TN_MUMM_SCTN_SRVY_DTA.DTA_NO, 
 	 * 최소_구간_조사_자료.자료_번호 값읽기

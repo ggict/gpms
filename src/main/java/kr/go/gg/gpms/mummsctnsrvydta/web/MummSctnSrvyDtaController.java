@@ -971,4 +971,29 @@ public class MummSctnSrvyDtaController {
 
 	}
 
+	@RequestMapping(value = { "/api/mumm/getrdairival.do" })
+	public String getrdairival(@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model,
+			HttpSession session) throws Exception {
+
+		String cellId = mummSctnSrvyDtaVO.getCELL_ID();
+		if(cellId == null || "".equals(cellId.trim())) {
+			model.addAttribute("succ", false);	
+			model.addAttribute("msg", "requierd cellId");	
+			return "jsonView";
+		}
+		
+		String srvyYear = mummSctnSrvyDtaVO.getSRVY_YEAR();
+		if(srvyYear == null || "".equals(srvyYear.trim())) {
+			model.addAttribute("succ", false);
+			model.addAttribute("msg", "requierd SrvyYear");	
+			return "jsonView";
+		}
+		
+		// 데이터 조회
+		List<MummSctnSrvyDtaVO> result = (List<MummSctnSrvyDtaVO>) mummSctnSrvyDtaService.getrdairival(mummSctnSrvyDtaVO);
+		model.addAttribute("succ", true);
+		model.addAttribute("res", result);
+		return "jsonView";
+	}
+	
 }

@@ -277,4 +277,8 @@ public class MummSctnSrvyDtaDAO extends BaseDAO {
     public MummSctnSrvyDtaVO selectMummSctnSrvyDtaByCell(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception {
         return (MummSctnSrvyDtaVO) select("mummSctnSrvyDtaDAO.selectMummSctnSrvyDtaByCell", mummSctnSrvyDtaVO);
     }
+    
+    public Object getrdairival(Object object) throws Exception{
+    	return list("mummSctnSrvyDtaDAO.getrdairival", object);
+    }
 }

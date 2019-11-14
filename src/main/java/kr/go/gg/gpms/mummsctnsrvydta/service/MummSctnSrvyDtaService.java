@@ -194,4 +194,11 @@ public interface MummSctnSrvyDtaService {
     List integratedListExcel(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception;
 
     MummSctnSrvyDtaVO selectMummSctnSrvyDtaByCell(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception;
+    
+    
+    
+    /**
+     * 소성변형, 종단평탄성 정보
+     * */
+    public Object getrdairival(Object object) throws Exception;
 }

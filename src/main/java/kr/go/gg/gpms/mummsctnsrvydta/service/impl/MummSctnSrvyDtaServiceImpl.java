@@ -266,4 +266,10 @@ public class MummSctnSrvyDtaServiceImpl extends AbstractServiceImpl implements M
     public MummSctnSrvyDtaVO selectMummSctnSrvyDtaByCell(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception {
         return mummSctnSrvyDtaDAO.selectMummSctnSrvyDtaByCell(mummSctnSrvyDtaVO);
     }
+    
+    
+    public Object getrdairival(Object object) throws Exception{
+    	return mummSctnSrvyDtaDAO.getrdairival(object);
+    };
+    
 }

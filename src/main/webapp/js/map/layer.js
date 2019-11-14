@@ -267,8 +267,13 @@ MAP.LAYER = (function($,undefined){
 	    								style : oSld.namedLayers[aTreeId[0]].userStyle[aTreeId[1]].name,
 	    								rule : oSld.namedLayers[aTreeId[0]].userStyle[aTreeId[1]].rules[aTreeId[2]].name
 	    							});
-	    						}
-	                            else {
+	    						}else if(oSymbolizer["line"]) {
+	                            	sImgUrl = GRequest.WMS.getLengendGraphic(CONFIG.fn_get_serviceUrl(), {
+	                            		layer : oSld.namedLayers[aTreeId[0]].name,
+	                            		style : oSld.namedLayers[aTreeId[0]].userStyle[aTreeId[1]].name,
+	                            		rule : oSld.namedLayers[aTreeId[0]].userStyle[aTreeId[1]].rules[aTreeId[2]].name
+	                            	});
+	                            }else{
 	    							var oTmpSymbolizer = {
 	    									width : 16,
 	    									height : 16
@@ -476,9 +481,15 @@ MAP.LAYER = (function($,undefined){
 										
 										//룰 영문을 한글명으로 치환
 										var title = oRules[m].name;
-										if(title == 'POTHOLE'){
-											title = '포트홀';
+										if(title == "POTHOLE"){
+											title = "포트홀";
+										}else if(title == "LINE"){
+											title = "선";
+										}else if(title == "POINT"){
+											title = "점";
 										}
+										
+										
 										if(oRules[m].symbolizer.text) {
 											fileObj = {
 												data : {

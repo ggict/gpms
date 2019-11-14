@@ -2079,4 +2079,38 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 
     </select>
 
+
+	<select id="mummSctnSrvyDtaDAO.getrdairival">
+	<![CDATA[
+	/* mummSctnSrvyDtaDAO.getrdairival */
+	]]>
+	
+	select 
+		IRI_VAL
+		,RD_VAL 
+		,ST_AsGeoJSON(st_centroid(geom)) geojson
+ 	from cell_10
+	right outer join tn_mumm_sctn_srvy_dta
+	on (
+		cell_10.route_code = tn_mumm_sctn_srvy_dta.route_code
+		AND cell_10.direct_code = tn_mumm_sctn_srvy_dta.direct_code
+		AND cell_10.track = tn_mumm_sctn_srvy_dta.track
+		AND cell_10.strtpt = tn_mumm_sctn_srvy_dta.strtpt
+		AND cell_10.endpt = tn_mumm_sctn_srvy_dta.endpt
+		AND tn_mumm_sctn_srvy_dta.use_at = 'Y'
+		AND tn_mumm_sctn_srvy_dta.delete_at = 'N'
+	)
+	where 1=1
+	<isNotEmpty property="SRVY_YEAR">
+	AND SRVY_YEAR = #SRVY_YEAR#
+	</isNotEmpty>
+	and sctn_no = (
+		select sctn_no from cell_sect 
+		where 1=1
+		<isNotEmpty property="CELL_ID">
+		and cell_id = #CELL_ID#
+		</isNotEmpty>
+	)
+	</select>
+
 </sqlMap>

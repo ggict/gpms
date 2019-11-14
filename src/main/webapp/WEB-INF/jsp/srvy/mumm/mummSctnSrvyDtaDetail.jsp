@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/egovframework/egovCvpl.css'/>"/>
  -->
 <%@ include file="/include/common_head.jsp" %>
-<script src="<c:url value='/extLib/echarts/echarts.js'/>"></script>
+<script src="<c:url value='/extLib/echarts/echarts.min.js'/>"></script>
 <script type="text/javaScript" language="javascript" defer="defer">
 
 // 페이지 로딩 초기 설정
@@ -21,26 +21,209 @@ $( document ).ready(function() {
 
     // 상세보기로 넘어온 경우 파라미터 받기
     var cellId = "${smDtaGnlSttusVO.CELL_ID}";
-    /* var directFlag = "${mummSctnSrvyDtaVO.DIRECT_FLAG}"; */
 
-    /* if ( directFlag == "NY" ) {
-
+    /* 
+    var directFlag = "${mummSctnSrvyDtaVO.DIRECT_FLAG}";
+    if ( directFlag == "NY" ) {
         $("#btnShowImg").show();
-
-    } */
-
-    // 포장상태 기본정보, 조사정보 상세내용
+    }
+    $("#btnGotoEvaluation").click(function() {
+	    fnGotoEvaluation(param);
+	});
+	*/
+	
+    //포장상태 기본정보, 조사정보 상세내용
     fnSelectSrvyDetail();
-    // 포장상태 평가정보 상세내용
+    //포장상태 평가정보 상세내용
     fnSelectEvaluationDetail();
-
-    /* $("#btnGotoEvaluation").click(function() {
-
-        fnGotoEvaluation(param);
-
-    }); */
-
+ 	//소성변형, 종단평탄성 데이터,궤적정보    
+ 	fnGetrdairival();
+	geoInfoObj.clickevt();
 });
+
+//소성변형, 종단평탄성 데이터
+function fnGetrdairival(){
+	
+    var cell_id = $("#CELL_ID").val();
+    var srvy_year = $("#SRVY_YEAR").val();
+
+    $.ajax({
+        url: contextPath + 'api/mumm/getrdairival.do'
+        ,type: 'post'
+        ,dataType: 'json'
+        ,contentType : 'application/json'
+        ,data : JSON.stringify({CELL_ID : cell_id, SRVY_YEAR: srvy_year})
+        ,success: function(data){
+        	console.log(data);
+        	if(data.succ){
+        		if(data.res) geoInfoObj.geoms = data.res.GEOJSON
+        	}else{
+        		geoInfoObj.geoms = null;
+        	}
+       		drawRdChart(data);
+       		drawIRIChart(data);
+        }
+        ,error: function(a,b,msg){
+			console.log(a);        
+        }
+    });
+}
+
+//궤적정보
+var geoInfoObj = {
+	geoms : null
+	,sampleGeom : [
+		 {"type":"Point","coordinates":[200326.7244,498724.473650001]}
+		,{"type":"Point","coordinates":[200317.912292839,498729.300408196]}
+		,{"type":"Point","coordinates":[200308.8797,498733.6956]}
+		,{"type":"Point","coordinates":[200299.786572703,498737.970960377]}
+		,{"type":"Point","coordinates":[200290.52175,498741.8496]}
+		,{"type":"Point","coordinates":[200281.219376299,498745.519435337]}
+		,{"type":"Point","coordinates":[200271.812429153,498749.016715579]}
+		,{"type":"Point","coordinates":[200262.2937,498752.20715]}
+		,{"type":"Point","coordinates":[200252.8121,498755.38505]}
+		,{"type":"Point","coordinates":[202097.207715085,485988.470075922]}
+	]
+	,grid : function(){
+		var obj = geoInfoObj;
+		//var geoms = obj.sampleGeom;
+		var geoms = obj.geoms;
+		if(geoms && geoms.length > 0 ){
+			try{
+	        	var gMap = parent.gMap;
+	        	var layer = gMap.getLayerByName('GAttrLayer');
+	        	var format = new OpenLayers.Format.GeoJSON();
+	        	var features = [];
+	        	for(var i=0; i< geoms.length; i++){
+	        		var geojson = geoms[i];
+		        	var feature = format.read(geojson)[0]; 
+		        	feature.attributes = {
+		        		fillColor : '#ff0000',
+		        		strokeColor : '#ff0000',
+		        		pointRadius : '6'
+		        	};
+		        	features.push(feature);
+	        	}
+	        	gMap.cleanMap();
+	        	layer.addFeatures(features);
+	        	gMap.zoomToExtent(layer.getDataExtent());
+	        	parent.bottomClose();
+			}catch(e){
+				console.log(e);
+			}
+		}else{
+			alert('위치정보가 없습니다.');
+		}
+	},
+	clickevt: function(){
+		$('#geoinfo').click(geoInfoObj.grid);
+	}
+};
+	
+//차트
+function drawRdChart(dataList){
+ 	var xAxisData =[];
+ 	var lineData = [];
+ 	for(var i=0; i<dataList.length; i++){
+ 		xAxisData.push(dataList[i].RD_VAL);
+ 		lineData.push(Number(dataList[i].RD_VAL));
+ 	}
+ 	if(xAxisData.length == 0) xAxisData = [0.00];
+ 	if(lineData.length == 0) lineData = [0.00];
+ 	
+	var myChart = echarts.init(document.getElementById('rdChart'));
+	myChart.setOption({
+		color : [ '#003366', '#4cabce' ],
+		title : {
+			text : '소형변형'
+			,textStyle: {
+				fontSize: 12
+			}
+		},
+		tooltip : {
+			trigger : 'axis'
+		},
+		toolbox : {
+			show : true,
+			feature : {
+			//saveAsImage: {show: true}					// 이미지저장
+			}
+		},
+		legend : {
+			data : ['소형변형']
+		},
+		grid : {
+			top : 5
+			,bottom: 10
+		},
+		xAxis : [ {
+			type : 'category',
+			data : xAxisData
+		} ],
+		yAxis : [{
+			type : 'value'
+		}],
+		series : [ {
+			name : '소형변형',
+			type : 'line',
+			data : lineData
+		}]
+	});
+}
+function drawIRIChart(dataList){
+ 	var xAxisData =[];
+ 	var lineData = [];
+ 	for(var i=0; i<dataList.length; i++){
+ 		xAxisData.push(dataList[i].IRI_VAL);
+ 		lineData.push(Number(dataList[i].IRI_VAL));
+ 	}
+ 	if(xAxisData.length == 0) xAxisData = [0.00];
+ 	if(lineData.length == 0) lineData = [0.00];
+ 	
+	var myChart = echarts.init(document.getElementById('iriChart'));
+	myChart.setOption({
+		color : [ '#003366', '#4cabce' ],
+		title : {
+			text : '중단평탄성'
+			,textStyle: {
+				fontSize: 12
+			}
+		},
+		tooltip : {
+			trigger : 'axis'
+		},
+		toolbox : {
+			show : true,
+			feature : {
+			//saveAsImage: {show: true}					// 이미지저장
+			}
+		},
+		legend : {
+			data : ['중단평탄성']
+		},
+		grid : {
+			top : 5
+			,bottom: 10
+		},
+		xAxis : [ {
+			type : 'category',
+			data : xAxisData
+		} ],
+		yAxis : [{
+			type : 'value'
+		}],
+		series : [ {
+			name : '중단평탄성',
+			type : 'line',
+			data : lineData
+		}]
+	});
+}
+
+
+
+
+
 
 // 포장상태 기본정보, 조사정보 상세내용
 function fnSelectSrvyDetail() {
@@ -557,6 +740,7 @@ function fnFloat(val) {
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" id="CELL_ID" name="CELL_ID" value="${smDtaGnlSttusVO.CELL_ID }"/>
+<input type="hidden" id="SRVY_YEAR" name="SRVY_YEAR" value="${smDtaGnlSttusVO.SRVY_YEAR}"/>
 <div class="tabcont">
     <div class="">
         <h3>
@@ -573,9 +757,12 @@ function fnFloat(val) {
 	        </ul>
         </div>
         <p class="location">
+            <!-- 
             <span>조사정보조회</span>
             <span>포장상태 조사정보 조회</span>
             <strong>포장상태 조사정보 상세조회</strong>
+             -->
+	        <input type="button" value="궤적정보" id="geoinfo" />	
         </p>
         <div class="mt10 ml10 mr10">
 
@@ -678,6 +865,7 @@ function fnFloat(val) {
             <!-- 포장상태 평가자료 START -->
             <div id="mummAvg" style="width:30%; float: left; height: 210px; ">
                 <!-- <h3 style="width: 100%; line-height: 30px; font-size: 15px; float: left;">포장상태 평가정보</h3> -->
+                <%-- 
                 <h3 style="width: 100%; line-height: 30px; font-size: 15px; float: left; padding-right: 0px;"><span>포장상태 평가정보</span><a href="#" style="float:right; line-height: 11px; margin-top: 5px;" class="titbtn" onclick="fnSelectLastSttus($(this));">수시평가정보조회</a></h3>
                 <ul class="tblst mt15" style="padding-top: 35px;">
                     <li style="width:33%;border-left:0px" class="brl tc">
@@ -726,11 +914,15 @@ function fnFloat(val) {
                             <td>0</td>
                         </tr>
                     </tbody>
-
                 </table>
-
                 <span style="font-size: 11px; margin-top: 5px; float: right;">* 포장파손형태 별 포장상태지수 감소값 (10점 만점)</span>
+                 --%>
                 <!-- <a href="#" id="btnGotoEvaluation" style="padding: 5px; border-radius: 50px; width: 150px; text-align: center; color: rgb(255, 255, 255); font-size: 11px; font-weight: bolder; margin-top: 5px; float: right; background-color: rgba(69, 135, 255, 1);">평가정보 상세보기</a> -->
+                
+                
+                
+				<div id="rdChart" class="cont_ConBx2" style="height: 150px;"></div>
+				<div id="iriChart" class="cont_ConBx2" style="height: 150px;"></div>
             </div>
             <!-- 포장상태 평가자료 END -->
 
