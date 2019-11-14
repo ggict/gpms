@@ -38,11 +38,11 @@ $( document ).ready(function() {
 		//,postData: JSON.stringify( $("#frm").cmSerializeObject()) 
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["SRVY_NO", "FILE_NO", "파일명", "조사일자", "등록일자", "자료건수",  "포장상태 평가 여부", "다운로드(excel)"]
+		,colNames:["SRVY_NO", "파일명", "조사일자", "등록일자", "자료건수",  "포장상태 평가 여부", "다운로드(excel)"]
 	   	,colModel:[
 			{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
-			,{name:'FILE_NO',index:'FILE_NO', hidden: true}
-			,{name:'FILE_NM',index:'FILE_NM', align:'left', width:250, sortable: true}
+			//,{name:'FILE_NO',index:'FILE_NO', align:'left', width:50, sortable: true}
+			,{name:'FILE_NM',index:'FILE_NM', align:'center', width:200, sortable: true}
 			,{name:'SRVY_DE',index:'SRVY_DE', align:'center', width:100, sortable: true, formatter:COMMON_UTIL.fn_set_dateFormat, formatoptions : {tgtFormat: "yyyy-MM-dd", dateYN:false}}
 			,{name:'CREAT_DT',index:'CREAT_DT', align:'center', width:100, sortable: true}
 			,{name:'DATA_CO',index:'DATA_CO', align:'right', width:80, sortable: true,
@@ -257,7 +257,7 @@ function fnExcel() {
 <input type="hidden" id="SRVY_DE" name="SRVY_DE" value=""/>
 
 <div id="sch_cnt01" class="tabcont">
-<div class="fl bgsch" style="width:200px">
+<div class="fl bgsch" style="width:250px">
 	<h3>검색조건</h3>
 	<!--검색영역-->
 	 <div class="schbx mt10">
@@ -291,29 +291,21 @@ function fnExcel() {
 			<li class="wid100">
                 <a href="#" class="schbtn dpb" onclick="fn_searchCreatDt();"> 검색</a>
             </li>
-           </ul>
-		</div>
-		</div>
-		<div class="fl bgsch2" style="width:165px">
-            <h3>조사일자</h3>
-            <div class="scroll" style="height:290px;">
-                <ul class="lst">
-                </ul>
-            </div>
-        </div>
-		<div class="fr listbx" style="left:365px">
+		</ul>
+	</div>
+</div>
+		<div class="fr listbx">
 			<h3>조사자료 이력조회</h3>
 			<p class="location">
 				<span>조사자료 관리</span>
 				<span>조사자료 이력조회</span>
 				<strong>조사자료 이력 목록</strong>
 	        </p>
-		    <div class="mt10 ml10 mr10">
-				<div id="div_grid" style="width: 100%; height: 240px;">
+		    <div class="mt10 mr10">
+				<div id="div_grid" style="position:left; width: 100%; height: 240px;">
 					<table id="gridArea"></table>
 					<div id="gridPager"></div>
-				</div>
-			
+				</div>	
 			</div>
 			<div class="tc mr10" >
 			<div class="fr">

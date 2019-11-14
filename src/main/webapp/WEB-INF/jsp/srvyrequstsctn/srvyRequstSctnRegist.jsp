@@ -112,11 +112,13 @@
                 <div id="gridPager"></div>
             </div>
             <div class="mt10 tc">
+                <div class="fl">
+                    <a href="javascript:;" onclick="removeCheck();" class="schbtn" style="left">삭제</a>
+                </div>        
                 <div class="fr">
-                	<a href="javascript:;" onclick="" class="schbtn" style="left">삭제</a>
                     <a href="javascript:;" onclick="fnAddCell();" class="schbtn">조사요청구간 추가</a>
                     <a href="javascript:;" onclick="fnViewLocation();" class="schbtn">조사요청구간 지도위치보기</a>
-                    <a href="javascript:;" onclick="fnSave();" class="schbtn">조사요청구간 수정</a>
+                    <a href="javascript:;" onclick="fnSave();" class="schbtn">조사요청구간 등록</a>
                 </div>
             </div>
         </div>
@@ -127,7 +129,8 @@
 <%@ include file="/include/common.jsp" %>
 <!-- 공통 (END)-->
 <script type="text/javascript" defer="defer">
-var temp1="", temp2[], tempCnt =0;
+var _routeCd="", _directCd="", _track="", _strtpt="", _endpt="", _cellIdList="", Cnt =0;
+
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
 	
@@ -209,6 +212,14 @@ $( document ).ready(function() {
     addBtnEventHandler();
 });
 
+function removeCheck(){
+	var recs = jQuery("#gridArea").jqGrid('getGridParam', 'selarrrow');
+    var rows = recs.length;
+    for (var i = rows - 1; i >= 0; i--) {
+		$('#gridArea').jqGrid('delRowData', recs[i]);
+	}
+} 
+
 //검색 처리
 function fnSearch() {
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
@@ -227,11 +238,10 @@ function fnSearch() {
             COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
         }
         ,gridComplete: function() {
-            $("#cb_gridArea").click();
-        }
+        	
+        }	
     }).trigger("reloadGrid");
 }
-
 
 //조사요청구간 지도에서 셀 선택
 function fnAddCell() {
@@ -246,7 +256,7 @@ function fnAddCell() {
 }
 //지도에서 선택한 셀 리스트 조회
 function fn_add_srvyrequstsctn(cellIdList, param){
-	alert("cellIdList: "+cellIdList+" ,param : " + param);
+	
     $.ajax({
         url: contextPath + 'api/cell10/selectRouteInfos.do'
         ,type: 'post'
@@ -269,47 +279,53 @@ function fn_add_srvyrequstsctn(cellIdList, param){
             var routeCd = data[0].ROUTE_CODE;
             var roadNm = data[0].ROAD_NAME;
             var directCd = data[0].DIRECT_CODE;
-            var directNm = data[0].DIRECT_NM;
             var track = data[0].TRACK;
             var strtpt = parseInt(data[0].STRTPT);
             var endpt = parseInt(data[0].ENDPT);
-           
             
-            
-            if(tempCnt == 0) {
-            temp1 = routeCd;	        
-           
-            
-            $('#ROUTE_CODE').val(routeCd);
-            $('#DIRECT_CODE').val(directCd);
-            $('#TRACK').val(track);
-            $('#STRTPT').val(strtpt);
-            $('#ENDPT').val(endpt);
-            $('#PAV_CELL_ID').val(cellIdList);
+            if(Cnt == 0) {
+            	_routeCd = routeCd;	        
+            	_directCd = directCd;
+            	_track = track;
+            	_strtpt = strtpt;
+            	_endpt = endpt;
+            	_cellIdList = cellIdList;
+            	
+           	 	$('#ROUTE_CODE').val(routeCd);
+            	$('#DIRECT_CODE').val(directCd);
+            	$('#TRACK').val(track);
+            	$('#STRTPT').val(strtpt);
+            	$('#ENDPT').val(endpt);
+            	$('#PAV_CELL_ID').val(cellIdList);
             
             } else {
-            	temp1 += "," + routeCd;
-                temp2 += "," + cellIdList;
-                cellIdList += cellIdList;
-                alert("temp1 : "+temp1);
-                alert("temp2 : " + temp2);
-                var temp1111 = temp1.split(',');
-                var temp222 = temp2.split(',');
+            	_routeCd += "," + routeCd;	        
+            	_directCd += "," + directCd;
+            	_track += "," + track;
+            	_strtpt += "," + strtpt;
+            	_endpt += "," + endpt;
+            	_cellIdList += "," + cellIdList;
+            	
+                var routeCdSplit = _routeCd.split(',');
+                var directCdSplit = _routeCd.split(',');
+                var trackSplit = _routeCd.split(',');
+                var strtptSplit = _routeCd.split(',');
+                var endptSplit = _routeCd.split(',');
                 
                 
-                for ( var i in temp1111 ) {
+                for ( var i in routeCdSplit ) {
                 	
-                	$('#ROUTE_CODE').val(temp1111[i]);
-                    $('#DIRECT_CODE').val(directCd);
-                    $('#TRACK').val(track);
-                    $('#STRTPT').val(strtpt);
-                    $('#ENDPT').val(endpt);
-                    $('#PAV_CELL_ID').val(temp222[i]);
+                	$('#ROUTE_CODE').val(routeCdSplit[i]);
+                    $('#DIRECT_CODE').val(directCdSplit);
+                    $('#TRACK').val(trackSplit);
+                    $('#STRTPT').val(strtptSplit);
+                    $('#ENDPT').val(endptSplit);
                 }
-                alert("ROUTE_CODE : " + $('#ROUTE_CODE').val());
                 
+                $('#PAV_CELL_ID').val(_cellIdList);
             }
-            tempCnt++;
+            Cnt++;
+            
             // 기존 grid data 리셋 후 reload
             $('#gridArea').jqGrid('clearGridData');
             fnSearch();
@@ -530,7 +546,10 @@ function fnSave() {
 //처리 후 callback 함수들 (필수)
 //---------------------------
 function fnSaveCallback( insertKey ) {
-  // 목록 화면 재검색
+	
+	COMMON_UTIL.cmHideProgressBar();
+	
+    // 목록 화면 재검색
     COMMON_UTIL.cmMoveUrl( "srvyrequstsctn/addSrvyRequstSctnView.do");
 }
 

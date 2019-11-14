@@ -234,7 +234,7 @@
 
 <![CDATA[
         ORDER BY
-                cell1015.ROUTE_CODE, cell1015.DIRECT_COD, cell1015.TRACK, cell1015.STRTPT, cell1015.ENDPT ASC
+               gid, cell1015.ROUTE_CODE, cell1015.DIRECT_COD, cell1015.TRACK, cell1015.STRTPT, cell1015.ENDPT ASC
 ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
         <![CDATA[

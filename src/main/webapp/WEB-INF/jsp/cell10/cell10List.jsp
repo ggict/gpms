@@ -56,8 +56,7 @@ $( document ).ready(function() {
 		,emptyrecords: "검색된 데이터가 없습니다."
 		,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
 		,ondblClickRow: function(rowId) {		// 더블클릭 처리
-			var rowData =$( "#gridArea" ).getRowData(rowId).CELL_ID;
-			alert(rowData); // 대장 조회
+			//fnView(rowId);	// 대장 조회
 		}
 	   	,onSelectRow: function(rowId) {		// 클릭 처리
 			if( rowId != null ) {
