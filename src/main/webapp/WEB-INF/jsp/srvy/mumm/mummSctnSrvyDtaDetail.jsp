@@ -100,7 +100,7 @@ var geoInfoObj = {
 		        	feature.attributes = {
 		        		fillColor : '#ff0000',
 		        		strokeColor : '#ff0000',
-		        		pointRadius : '6'
+		        		pointRadius : '2'
 		        	};
 		        	features.push(feature);
 	        	}
