@@ -22,12 +22,13 @@
 
 /**  
 레이어 선택 공간 css
-
-.divlayermng ul {list-style:none;margin:0;padding:0;}
-.divlayermng ul li {margin: 0 25px 0 0; padding: 0 0 0 0; border : 0; float: left; text-align: center;}
-.divlayermng ul li img {width:32px; height:32px;}
-.divlayermng ul li p {width:40px;}
 */
+.divlayermng ul {list-style:none;margin:0;padding:0;}
+.divlayermng ul li {margin: 5px 20px 0px 20px; padding: 0 0 0 0; border : 0; float: left; text-align: center; height: 70px}
+.divlayermng ul li p {width:43px;}
+.divlayermng ul li a img {width:32px; height:32px;}
+.divlayermng ul .active a img {border: 2px solid blue; }
+
 </style>
 </head>
 <body>
@@ -177,22 +178,25 @@
                      -->
                 </dl>
 				
-				<!-- jstree -->
+				<!-- jstree
                 <div id="divLayerTool" >
 	                <div id="dvLayerList" class="LayerList">
 	                </div>
                 </div>
-                <%-- 
+                 -->
+                 
                 <div id="divLayerTool">
 	                <div id="divLayerMngList" class="divlayermng">
 	                	<ul id="divLayerMngList_ul">
+	                	<%-- 
 	                		<li>
 			                	<a href="#"><img src="<c:url value='/images/common/gps.png'/>"/><p>10m</p></a>
 	                		</li>
+	                		 --%>
 	                	</ul>
 	                </div>
                 </div>
-                 --%>
+                 
 			</div>
 
 
@@ -338,11 +342,10 @@ var layersMngObj = {
 		var fnCall = function(){
 			var obj = $(this);
 			var layernm = obj.find('p').attr('data-layer');  
-			console.log(obj, layernm);
-			
 			var baseLayer = gMap.getLayerByName("baseLayer");
 			var params = baseLayer.getParams();
 			var layers = params.LAYERS.split(',');
+			
 			if(obj.hasClass('active')){
 				obj.removeClass('active');
 				if(layers.indexOf(layernm) > -1){
@@ -370,7 +373,7 @@ var layersMngObj = {
 		$('#divLayerMngList_ul').find('li').click(fnCall);
 	}
 };
-//layersMngObj.init();
+layersMngObj.init();
 
 
 </script>
