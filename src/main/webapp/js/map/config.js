@@ -313,7 +313,7 @@ var CONFIG = (function($, undefined){
 	    	 'theme' : 'CELL_10_4K',
 	    	 'alias' : '4Km라벨',
 	    	 'seq' : '3802',
-	    	 'show' : '0',
+	    	 'show' : '1',
 	    	 'layerType' : '3'
 	     },
 	     "CELL_10_0301" : {
