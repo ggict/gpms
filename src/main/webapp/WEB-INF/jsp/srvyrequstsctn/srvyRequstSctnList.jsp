@@ -96,12 +96,13 @@ $( document ).ready(function() {
         //,postData: JSON.stringify( $("#frm").cmSerializeObject())
         ,postData: $("#frm").cmSerializeObject()
         ,ignoreCase: true
-        ,colNames:["SRVY_REQUST_SCTN_NO","조사명","노선번호","노선명","행선","차로","시점(m)","종점(m)","조사요청일자","위치보기"]
+        ,colNames:["SRVY_REQUST_SCTN_NO","조사명","노선번호","노선명","조사내용","행선","차로","시점(m)","종점(m)","조사요청일자","위치보기"]
         ,colModel:[
             {name:'SRVY_REQUST_SCTN_NO',index:'SRVY_REQUST_SCTN_NO', hidden: true}
             ,{name:'SRVY_NM',index:'SRVY_NM', align:'center', width:60}
             ,{name:'ROUTE_CODE',index:'ROUTE_CODE', align:'center', width:50, sortable:false, formatter: 'integer'}
             ,{name:'ROAD_NAME',index:'ROAD_NAME',  align:'center', width:70, sortable:false}
+            ,{name:'SRVY_CN',index:'SRVY_CN', hidden: true}
             ,{name:'DIRECT_NM',index:'DIRECT_NM', align:'center', width:70, sortable:false}
             ,{name:'TRACK',index:'TRACK', align:'center', width:70, sortable:false}
             ,{name:'STRTPT',index:'STRTPT', align:'center', width:70, sortable:false, formatter: 'integer'}
@@ -123,7 +124,7 @@ $( document ).ready(function() {
         ,emptyrecords: "검색된 데이터가 없습니다."
         ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
         ,ondblClickRow: function(rowId) {       // 더블클릭 처리
-            //fnView(rowId);  // 대장 조회
+            fnView(rowId);  // 대장 조회
         }
         ,onSelectRow: function(rowId) {     // 클릭 처리
             if( rowId != null ) {
@@ -153,6 +154,26 @@ $( document ).ready(function() {
 
     fnSearch();
 });
+
+//상세 조회
+function fnView(rowId) {
+	if( $.type(rowId) === "undefined" || rowId=="" )
+		 rowId = $("#gridArea").getGridParam( "selrow" );
+
+	if( rowId != null ) {
+		var rowData = $("#gridArea").getRowData(rowId);
+		//var cntrwkId = rowData["CNTRWK_ID"];
+		var SRVY_REQUST_SCTN_NO = rowData["SRVY_REQUST_SCTN_NO"];
+		var SRVY_NM = rowData["SRVY_NM"];
+		var SRVY_CN = rowData["SRVY_CN"];
+		var SRVY_REQUST_DE = rowData["SRVY_REQUST_DE"];
+		
+		COMMON_UTIL.cmMoveUrl("/srvyrequstsctn/updateSrvyRequstSctnView.do?SRVY_REQUST_SCTN_NO="
+				+SRVY_REQUST_SCTN_NO+"&SRVY_NM="+SRVY_NM+"&SRVY_CN="+SRVY_CN+"&SRVY_REQUST_DE="+SRVY_REQUST_DE);
+	}
+	else
+		alert('<spring:message code="warn.checkplz.msg" />');
+}
 
 //검색 처리
 function fnSearch() {

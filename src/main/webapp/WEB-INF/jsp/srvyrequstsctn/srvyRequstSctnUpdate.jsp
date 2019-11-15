@@ -12,7 +12,6 @@
 <%@ include file="/include/common_head.jsp" %>
 
 </head>
-
 <body id="wrap">
 <!-- 필수 파라메터(START) -->
 <form id="frm" name="frm" method="post" action="">
@@ -24,12 +23,12 @@
 <input type="hidden" id="sidx" name="sidx" value=""/>
 <input type="hidden" id="sord" name="sord" value=""/>
 <!-- KEY 파라메터 -->
-<input type="hidden" id="SRVY_REQUST_SCTN_NO" name="SRVY_REQUST_SCTN_NO" value="<c:out value="${srvyRequstSctnVO.SRVY_REQUST_SCTN_NO}"/>"/>
-<input type="hidden" id="ROUTE_CODE" name="ROUTE_CODE" value="<c:out value="${srvyRequstSctnVO.ROUTE_CODE}"/>"/>
-<input type="hidden" id="DIRECT_CODE" name="DIRECT_CODE" value="<c:out value="${srvyRequstSctnVO.DIRECT_CODE}"/>"/>
-<input type="hidden" id="TRACK" name="TRACK" value="<c:out value="${srvyRequstSctnVO.TRACK}"/>"/>
-<input type="hidden" id="STRTPT" name="STRTPT" value="<c:out value="${srvyRequstSctnVO.STRTPT}"/>"/>
-<input type="hidden" id="ENDPT" name="ENDPT" value="<c:out value="${srvyRequstSctnVO.ENDPT}"/>"/>
+<input type="hidden" id="SRVY_REQUST_SCTN_NO" name="SRVY_REQUST_SCTN_NO" value="${srvyRequstSctnVO.SRVY_REQUST_SCTN_NO}"/>
+<input type="hidden" id="ROUTE_CODE" name="ROUTE_CODE" value="${srvyRequstSctnVO.ROUTE_CODE}"/>
+<input type="hidden" id="DIRECT_CODE" name="DIRECT_CODE" value="${srvyRequstSctnVO.DIRECT_CODE}"/>
+<input type="hidden" id="TRACK" name="TRACK" value="${srvyRequstSctnVO.TRACK}"/>
+<input type="hidden" id="STRTPT" name="STRTPT" value="${srvyRequstSctnVO.STRTPT}"/>
+<input type="hidden" id="ENDPT" name="ENDPT" value="${srvyRequstSctnVO.ENDPT}"/>
 <input type="hidden" id="PAV_CELL_ID" name="PAV_CELL_ID" value=""/>
 
 
@@ -40,7 +39,7 @@
             <ul class="sch">
                 <li class="wid100">
                     <label>조사명</label>
-                    <input type="text" name="SRVY_NM" id="SRVY_NM" style="width:197px;" value="" class="MX_80 CS_50 input" />
+                    <input type="text" name="SRVY_NM" id="SRVY_NM" style="width:197px;" value="<c:out value="${srvyRequstSctnVO.SRVY_NM}"/>" class="MX_80 CS_50 input" />
                 </li>
                 <li>
                 	<label>조사요청기관</label>
@@ -48,11 +47,11 @@
                 </li>
                 <li>
                     <label>조사내용</label>
-                    <input type="text" name="SRVY_CN" id="SRVY_CN" style="width:197px;" value="" class="MX_80 CS_50 input" />
+                    <input type="text" name="SRVY_CN" id="SRVY_CN" style="width:197px;" value="<c:out value="${srvyRequstSctnVO.SRVY_CN}"/>" class="MX_80 CS_50 input" />
                 </li>
                 <li class="wid100">
                     <label>조사요청일자</label>
-                    <input type="text" name="SRVY_REQUST_DE" id="SRVY_REQUST_DE" style="width:70px; margin-right: 3px;" class="DT_DATE input" />
+                    <input type="text" name="SRVY_REQUST_DE" id="SRVY_REQUST_DE" style="width:70px; margin-right: 3px;" class="DT_DATE input" value="<c:out value="${srvyRequstSctnVO.SRVY_REQUST_DE}"/>"/>
                 </li>
             </ul>
         </div>
@@ -118,7 +117,7 @@
                 <div class="fr">
                     <a href="javascript:;" onclick="fnAddCell();" class="schbtn">조사요청구간 추가</a>
                     <a href="javascript:;" onclick="fnViewLocation();" class="schbtn">조사요청구간 지도위치보기</a>
-                    <a href="javascript:;" onclick="fnSave();" class="schbtn">조사요청구간 등록</a>
+                    <a href="javascript:;" onclick="fnUpdate();" class="schbtn">조사요청구간 수정</a>
                 </div>
             </div>
         </div>
@@ -133,15 +132,18 @@ var _routeCd="", _directCd="", _track="", _strtpt="", _endpt="", _cellIdList="",
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	
     // 달력 생성
     COMMON_UTIL.cmCreateDatepicker('SRVY_REQUST_DE', 10);
-
+	
+    var ids = '${cells}';
+    $('#PAV_CELL_ID').val(ids);
+    
+    alert($('#PAV_CELL_ID').val());
     // 검색 목록 그리드 구성
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
     var srvy_requst_sctn_no_value = $('#SRVY_REQUST_SCTN_NO').val();
     var route_code_value = $('#ROUTE_CODE').val();
-    var postData = {"ROUTE_CODE":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
+    var postData = {"SRVY_REQUST_SCTN_NO":srvy_requst_sctn_no_value, "PAV_CELL_ID_LIST":cell_id_arrays};
     $("#gridArea").jqGrid({
         url: '<c:url value="/"/>'+'api/srvyrequstsctncellinfo/selectSrvyRequstSctnCellInfoAllList.do'
         ,autoencode: true
@@ -208,7 +210,7 @@ $( document ).ready(function() {
     // 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
     COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 160);
 
-    //fnSearch();
+    fnSearch();
     addBtnEventHandler();
 });
 
@@ -225,7 +227,7 @@ function fnSearch() {
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
     var srvy_requst_sctn_no_value = $('#SRVY_REQUST_SCTN_NO').val();
     var route_code_value = $('#ROUTE_CODE').val();
-    var postData = {"ROUTE_CODE":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
+    var postData = {"SRVY_REQUST_SCTN_NO":route_code_value, "PAV_CELL_ID_LIST":cell_id_arrays};
     $("#gridArea").jqGrid("setGridParam",{
         datatype: "json"
         ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
@@ -282,49 +284,39 @@ function fn_add_srvyrequstsctn(cellIdList, param){
             var track = data[0].TRACK;
             var strtpt = parseInt(data[0].STRTPT);
             var endpt = parseInt(data[0].ENDPT);
+           
+            var rowid, data;
+            rowid  = $('#jGrid').jqGrid('getGridParam', 'selrow' );            // 선택한 열의 아이디값
+            _routeCd = $('#jGrid').jqGrid('getRowData', rowid).ROUTE_CODE;
+            _directCd = $('#jGrid').jqGrid('getRowData', rowid).DIRECT_CODE;
+            _track = $('#jGrid').jqGrid('getRowData', rowid).TRACK;
+            _strtpt = $('#jGrid').jqGrid('getRowData', rowid).STRTPT;
+            _endpt = $('#jGrid').jqGrid('getRowData', rowid).ENDPT;
+            _cellIdList = $('#PAV_CELL_ID').val();
             
-            if(Cnt == 0) {
-            	_routeCd = routeCd;	        
-            	_directCd = directCd;
-            	_track = track;
-            	_strtpt = strtpt;
-            	_endpt = endpt;
-            	_cellIdList = cellIdList;
+            _routeCd += "," + routeCd;	        
+            _directCd += "," + directCd;
+            _track += "," + track;
+            _strtpt += "," + strtpt;
+            _endpt += "," + endpt;
+            _cellIdList += "," + cellIdList;
             	
-           	 	$('#ROUTE_CODE').val(routeCd);
-            	$('#DIRECT_CODE').val(directCd);
-            	$('#TRACK').val(track);
-            	$('#STRTPT').val(strtpt);
-            	$('#ENDPT').val(endpt);
-            	$('#PAV_CELL_ID').val(cellIdList);
-            
-            } else {
-            	_routeCd += "," + routeCd;	        
-            	_directCd += "," + directCd;
-            	_track += "," + track;
-            	_strtpt += "," + strtpt;
-            	_endpt += "," + endpt;
-            	_cellIdList += "," + cellIdList;
-            	
-                var routeCdSplit = _routeCd.split(',');
-                var directCdSplit = _routeCd.split(',');
-                var trackSplit = _routeCd.split(',');
-                var strtptSplit = _routeCd.split(',');
-                var endptSplit = _routeCd.split(',');
-                
-                
-                for ( var i in routeCdSplit ) {
-                	
-                	$('#ROUTE_CODE').val(routeCdSplit[i]);
-                    $('#DIRECT_CODE').val(directCdSplit);
-                    $('#TRACK').val(trackSplit);
-                    $('#STRTPT').val(strtptSplit);
-                    $('#ENDPT').val(endptSplit);
-                }
-                
-                $('#PAV_CELL_ID').val(_cellIdList);
+            var routeCdSplit = _routeCd.split(',');
+            var directCdSplit = _routeCd.split(',');
+            var trackSplit = _routeCd.split(',');
+            var strtptSplit = _routeCd.split(',');
+            var endptSplit = _routeCd.split(',');
+                     
+            for ( var i in routeCdSplit ) {
+                $('#ROUTE_CODE').val(routeCdSplit[i]);
+                $('#DIRECT_CODE').val(directCdSplit);
+                $('#TRACK').val(trackSplit);
+                $('#STRTPT').val(strtptSplit);
+                $('#ENDPT').val(endptSplit);
             }
-            Cnt++;
+                
+            $('#PAV_CELL_ID').val(_cellIdList);
+            alert($('#PAV_CELL_ID').val());
             
             // 기존 grid data 리셋 후 reload
             $('#gridArea').jqGrid('clearGridData');
@@ -521,20 +513,20 @@ function validateInsert(frmId){
 
 }
 
-//글 등록
-function fnSave() {
+//글 수정
+function fnUpdate() {
     
     //위치등록 기능 구현 후 주석 제거
     if(!validateInsert('frm')){return;}
     
-    if( confirm('<spring:message code="warn.insert.msg" />') ) {
+    if( confirm('<spring:message code="warn.update.msg" />') ) {
         // 진행 프로그래스바 생성
         COMMON_UTIL.cmShowProgressBar();
         
         try {
             parent.gMap.cleanMap(); 
             // multipart/form-data 아닌 경우, mask 처리 값을 제거하여 폼 데이터를 전송 처리함
-            COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/srvyrequstsctn/addSrvyRequstSctn.do'/>","fnSaveCallback");
+            COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/srvyrequstsctn/updateSrvyRequstSctn.do'/>","fnUpdateCallback");
             
         } catch(E) {
             alert("폼데이터 변환중 오류가 발생하였습니다. :" +E);
@@ -545,12 +537,12 @@ function fnSave() {
 //---------------------------
 //처리 후 callback 함수들 (필수)
 //---------------------------
-function fnSaveCallback( insertKey ) {
-	
+function fnUpdateCallback( insertKey ) {
+
 	COMMON_UTIL.cmHideProgressBar();
 	
     // 목록 화면 재검색
-    COMMON_UTIL.cmMoveUrl( "/srvyrequstsctn/addSrvyRequstSctnView.do");
+    COMMON_UTIL.cmMoveUrl( "/srvyrequstsctn/selectSrvyRequstSctnList.do");
 }
 
 

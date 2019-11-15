@@ -53,7 +53,6 @@
 		WHERE 1 = 1
 ]]>		
 		<isNotEmpty property="SRVY_REQUST_SCTN_NO"><![CDATA[ /* 조사_요청_구간_셀_정보.조사_요청_구간_번호 */ AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric  ]]></isNotEmpty>
-		<isNotEmpty property="PAV_CELL_ID"><![CDATA[ /* 조사_요청_구간_셀_정보.포장_셀_ID */ AND PAV_CELL_ID = #PAV_CELL_ID# ]]></isNotEmpty>
 	</delete>
 
 	<select id="srvyRequstSctnCellInfoDAO.selectSrvyRequstSctnCellInfo" resultMap="srvyRequstSctnCellInfo.resultMap">

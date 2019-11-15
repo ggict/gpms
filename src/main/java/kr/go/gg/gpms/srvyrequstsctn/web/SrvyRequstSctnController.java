@@ -192,7 +192,7 @@ public class SrvyRequstSctnController extends BaseController {
 	    	model.addAttribute("resultMsg", resultMsg);
 	    	model.addAttribute("callBackFunction", StringUtils.isNotEmpty(srvyRequstSctnVO.getCallBackFunction()) ?
 	    			srvyRequstSctnVO.getCallBackFunction().trim():"" );	// 처리후 호출 함수
-
+	    	System.out.println("cellback2 : " + srvyRequstSctnVO.getCallBackFunction());
 	    	status.setComplete();	//Double Submit 방지
 		} catch (Exception e) {
 			resultCode = "ERROR";
@@ -251,7 +251,93 @@ public class SrvyRequstSctnController extends BaseController {
 		return srvyRequstSctnVO;
 	}
 	
+	@RequestMapping(value = { "/srvyrequstsctn/updateSrvyRequstSctnView.do" })
+	public String updateSrvyRequstSctnView(@ModelAttribute("searchVO") SrvyRequstSctnVO srvyRequstSctnVO, ModelMap model) throws Exception {
+		
+		SrvyRequstSctnCellInfoVO srvyRequstSctnCellInfoVO = new SrvyRequstSctnCellInfoVO();
+		
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(srvyRequstSctnCellInfoVO.getPageIndex());
+		paginationInfo.setRecordCountPerPage(srvyRequstSctnCellInfoVO.getPageUnit());
+		paginationInfo.setPageSize(srvyRequstSctnCellInfoVO.getPageSize());
 
+		srvyRequstSctnCellInfoVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		srvyRequstSctnCellInfoVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		srvyRequstSctnCellInfoVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		
+		srvyRequstSctnCellInfoVO.setSRVY_REQUST_SCTN_NO(srvyRequstSctnVO.getSRVY_REQUST_SCTN_NO());
+		
+		List<SrvyRequstSctnCellInfoVO> list = srvyRequstSctnCellInfoService.selectSrvyRequstSctnCellInfoList(srvyRequstSctnCellInfoVO);
+		
+		List<String> cellList = new ArrayList<>();
 
+		for(int i = 0; i < list.size(); i++) {
+			cellList.add(list.get(i).getPAV_CELL_ID());
+		}
+		
+		String[] cells = cellList.toArray(new String[cellList.size()]);
+		
+		model.addAttribute("srvyRequstSctnVO", srvyRequstSctnService.selectSrvyRequstSctn(srvyRequstSctnVO));
+		model.addAttribute("cells",StringUtils.join(cells, ','));
+		
+		return "/srvyrequstsctn/srvyRequstSctnUpdate";
+	}
+
+	@RequestMapping(value = { "/srvyrequstsctn/updateSrvyRequstSctn.do"  })
+	public String updateSrvyRequstSctn(@ModelAttribute SrvyRequstSctnVO srvyRequstSctnVO, SrvyRequstSctnCellInfoVO srvyRequstSctnCellInfoVO, BindingResult bindingResult, Model model, HttpServletRequest request, SessionStatus status, HttpSession session) throws Exception {
+		Map<String, String> req = requestToHashMap(request);
+
+		String action_flag = StringUtils.isNotEmpty(req.get("action_flag"))? req.get("action_flag").trim():"UPDATE" ;
+		// common 결과처리 변수 [수정X]
+		String resultCode = "";
+		String resultMsg = "";
+		String srvyRequstSctnNo = srvyRequstSctnVO.getSRVY_REQUST_SCTN_NO();
+		try {
+
+			srvyRequstSctnCellInfoService.deleteSrvyRequstSctnCellInfo(srvyRequstSctnCellInfoVO);
+			
+			resultCode = "UPDATE_SUCCESS";
+			BindBeansToActiveUser(srvyRequstSctnVO);
+			
+			int updateNo = srvyRequstSctnService.updateSrvyRequstSctn(srvyRequstSctnVO);
+			//위치 정보 등록
+			String cellIdList[] = srvyRequstSctnCellInfoVO.getPAV_CELL_ID().split(",");
+
+			srvyRequstSctnCellInfoVO.setSRVY_REQUST_SCTN_NO(srvyRequstSctnNo);
+			BindBeansToActiveUser(srvyRequstSctnCellInfoVO);
+		
+			int i = 1;
+			for(String cellId : cellIdList){
+				
+				srvyRequstSctnCellInfoVO.setPAV_CELL_ID(cellId);
+				srvyRequstSctnCellInfoService.insertSrvyRequstSctnCellInfo(srvyRequstSctnCellInfoVO);
+			
+			}
+
+			if(updateNo > 0) {
+				model.addAttribute("insertKey", srvyRequstSctnNo);
+				srvyRequstSctnVO.setResultSuccess("true");
+				srvyRequstSctnVO.setResultMSG("정상 수정되었습니다.");
+				
+				// 결과 처리용 [수정X]
+		    	model.addAttribute("resultCode", resultCode);
+		    	model.addAttribute("resultMsg", resultMsg);
+		    	model.addAttribute("callBackFunction", StringUtils.isNotEmpty(srvyRequstSctnVO.getCallBackFunction()) ?
+		    			srvyRequstSctnVO.getCallBackFunction().trim():"" );	// 처리후 호출 함수
+		    	
+		    	status.setComplete();	//Double Submit 방지
+			}else {
+				resultCode = "ERROR";
+	    		resultMsg = "수정 오류 발생";
+	    		return "/cmmn/commonMsg";
+			}
+		} catch (Exception e) {
+			resultCode = "ERROR";
+    		resultMsg = "수정 오류 발생";
+    		LOGGER.error("조사요청구간 수정 오류", e);
+		}
+
+		return "/cmmn/commonMsg";
+	}
 
 }

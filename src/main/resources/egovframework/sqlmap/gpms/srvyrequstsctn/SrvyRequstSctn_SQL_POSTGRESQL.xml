@@ -104,6 +104,10 @@
                 <![CDATA[ AND SRVY_REQUST_DE >=  #SRVY_REQUST_DE_STRT# AND SRVY_REQUST_DE <= #SRVY_REQUST_DE_ENDT# ]]>
             </isNotEmpty></isNotEmpty>
             
+            <isNotEmpty property="SRVY_REQUST_SCTN_NO">
+            	<![CDATA[ AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO# ]]>
+            </isNotEmpty>
+            
             <isEqual prepend=" " property="usePage" compareValue="true">
                 <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
             </isEqual>
@@ -128,5 +132,35 @@
                 <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
             </isEqual>
     </select>	
+    
+    <select id="srvyRequstSctnDAO.selectSrvyRequstSctn" parameterClass="srvyRequstSctnVO" resultClass="srvyRequstSctnVO">
+<![CDATA[       
+        /* srvyRequstSctnDAO.selectSrvyRequstSctnList */
+        /* 조사요청구간 조회 */
+            SELECT 
+                srvyrequstsctn.SRVY_REQUST_SCTN_NO
+                , srvyrequstsctn.SRVY_NM
+                , srvyrequstsctn.SRVY_CN
+                , srvyrequstsctn.SRVY_REQUST_DE
+                , srvyrequstsctn.ROUTE_CODE
+                , routeinfo.ROAD_NAME as ROAD_NAME
+                , srvyrequstsctn.DIRECT_CODE
+                , CASE srvyrequstsctn.DIRECT_CODE WHEN 'S' THEN '상행' WHEN 'E' THEN '하행' ELSE '양방향' END AS DIRECT_NM
+                , srvyrequstsctn.TRACK
+                , srvyrequstsctn.STRTPT
+                , srvyrequstsctn.ENDPT
+                , srvyrequstsctn.UPDUSR_NO
+                , srvyrequstsctn.UPDT_DT
+            FROM TN_SRVY_REQUST_SCTN srvyrequstsctn
+            LEFT OUTER JOIN TN_ROUTE_INFO routeinfo
+                ON srvyrequstsctn.ROUTE_CODE = routeinfo.ROAD_NO
+            WHERE 1=1
+ ]]>           
+          
+            <isNotEmpty property="SRVY_REQUST_SCTN_NO">
+            	<![CDATA[ AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO# ]]>
+            </isNotEmpty>
+
+    </select>
 
 </sqlMap>
