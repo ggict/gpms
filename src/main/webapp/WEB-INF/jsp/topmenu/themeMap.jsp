@@ -107,6 +107,25 @@
 	                </div>
 	            </div>
 	            <!-- 2018년도 평가정보 10m셀 END -->
+
+				<!-- 2019년도 평가정보 10m셀 START -->
+	            <div class="titbx pt5 pl5 pr5 pb5" id="MV_SRVYDTA_10_2019">
+	                <h4>
+	                   <a href="#" class="tLayer"><img src="<c:url value='/images/thememap/map_off.png'/>" alt="off" class="mt5 mr10 onoff off" title="2019년도 포장상태 평가정보 지도조회 10m셀" style="position: relative; top: -4px;" /></a> 2019년도 평가정보
+	                </h4>
+	                <div>
+	                    <ul class="legend">
+	                        <li class="tRule"><span class="smcircle" style="background-color:#00b050"></span><span class="rNameKor">8.00 이상</span></li>
+	                        <li class="tRule"><span class="smcircle" style="background-color:#0070c0"></span><span class="rNameKor">7.99 ~ 7.00</span></li>
+	                        <li class="tRule"><span class="smcircle" style="background-color:#ffff00"></span><span class="rNameKor">6.99 ~ 6.00</span></li>
+	                        <li class="tRule"><span class="smcircle" style="background-color:#ffc000"></span><span class="rNameKor">5.99 ~ 5.00</span></li>
+	                        <li class="tRule"><span class="smcircle" style="background-color:#ff6600"></span><span class="rNameKor">4.99 ~ 4.00</span></li>
+	                        <li class="tRule"><span class="smcircle" style="background-color:#ff0000"></span><span class="rNameKor">3.99 이하</span></li>
+	                        <li class="tRule"><span class="smcircle" style="background-color:#bbbbbb"></span><span class="rNameKor">정보없음</span></li>
+	                    </ul>
+	                </div>
+	            </div>
+	            <!-- 2019년도 평가정보 10m셀 END -->
             </div>
         </div>
         <!-- CELL END -->
@@ -171,6 +190,7 @@
 	var themeList = {
 	        "MV_CELL_SECT_TYPE"        : "Section셀_종류",
 	        "MV_THM_YEAR_10"           : "10m셀_테마지도",
+	        "MV_SRVYDTA_10_2019"       : "10m셀_포장상태_2019",
 	        "MV_SRVYDTA_10_2018"       : "10m셀_포장상태_2018",
 	        "MV_SRVYDTA_10_2017"       : "10m셀_포장상태_2017",
 	        "MV_GNLSTTUS_SECT_2018"    : "Section셀_포장상태_2018",
@@ -217,7 +237,7 @@
 	        for ( var i = 0; i < sld.length; i++ ) {
 	            var name = sld[i].featureTypeName;
 
-	            if  ( name == "MV_SRVYDTA_10_2018" || name == "MV_SRVYDTA_10_2017"
+	            if  ( name == "MV_SRVYDTA_10_2019" || name == "MV_SRVYDTA_10_2018" || name == "MV_SRVYDTA_10_2017"
 	                    || name == "MV_GNLSTTUS_SECT_2018" || name == "MV_GNLSTTUS_SECT_2017"
 	                    || name == "MV_THM_YEAR_10" || name == "MV_CELL_SECT_TYPE" ) {
 	                var style = sld[i].userStyle[0].rules;
@@ -445,7 +465,8 @@
         "MV_GNLSTTUS_SECT_2017"    : "Section셀_포장상태_2017"
         */
         if(!_bOff) {
-        	if(	sLayerNmEng == "MV_SRVYDTA_10_2018" ||
+        	if(	sLayerNmEng == "MV_SRVYDTA_10_2019" ||
+        		sLayerNmEng == "MV_SRVYDTA_10_2018" ||
                	sLayerNmEng == "MV_SRVYDTA_10_2017" ||
                	sLayerNmEng == "MV_GNLSTTUS_SECT_2018" ||
                	sLayerNmEng == "MV_GNLSTTUS_SECT_2017") {

@@ -157,6 +157,16 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3'
 	     },
+	     "MV_SRVYDTA_10_2019" : {
+	    	 'tmapid' : '870',
+	    	 'id' : '3760',
+	    	 'table' : 'MV_SRVYDTA_10_2019',
+	    	 'theme' : 'MV_SRVYDTA_10_2019',
+	    	 'alias' : '10m셀_포장상태_2019',
+	    	 'seq' : '3760',
+	    	 'show' : '1',
+	    	 'layerType' : '3'
+	     },
 	     "MV_THM_YEAR_10" : {
 	         'tmapid' : '870',
 	         'id' : '3767',

@@ -498,7 +498,7 @@ GTMapLayerTool = OpenLayers.Class({
 						            arr.push(this.layers[i]);
 						        }
 					    	} else {
-						        if ( table == "MV_SRVYDTA_10_2018" || table == "MV_SRVYDTA_10_2017"
+						        if ( table == "MV_SRVYDTA_10_2019" || table == "MV_SRVYDTA_10_2018" || table == "MV_SRVYDTA_10_2017"
 						                    || table == 'MV_GNLSTTUS_SECT_2018' || table == 'MV_GNLSTTUS_SECT_2017'
 						                    || table == "MV_THM_YEAR_10" || table == "MV_CELL_SECT_TYPE" ) {
 
