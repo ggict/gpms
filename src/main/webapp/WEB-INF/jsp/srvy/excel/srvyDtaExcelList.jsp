@@ -37,16 +37,16 @@ $( document ).ready(function() {
 		//,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
 		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","등록일자","등록자","분석자료","CRTR_NO"]
 	   	,colModel:[
-			 {name:'route_code',index:'ROUTE_CODE', align:'center', width:70}
-			,{name:'road_name',index:'ROAD_NAME', align:'center', width:70}
-			,{name:'direct_code',index:'DIRECT_CODE', align:'center', width:70}
+			 {name:'route_CODE',index:'route_CODE', align:'center', width:70}
+			,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
+			,{name:'direct_CODE',index:'direct_CODE', align:'center', width:70}
 			,{name:'track',index:'TRACK', align:'center', width:70}
-			,{name:'success_knd',index:'SUCCESS_KND', align:'center', width:70}
-			,{name:'data_co',index:'DATA_CO', align:'center', width:70}
-			,{name:'creat_dt',index:'CREAT_DT', align:'center', width:70}
-			,{name:'crtr_nm',index:'CRTR_NM', align:'center', width:50}
-			,{name:'crtr_no',index:'CRTR_NO', align:'center', width:50}
-			,{name:'crtr_no',index:'CRTR_NO', hidden: true}
+			,{name:'success_KND',index:'success_KND', align:'center', width:70}
+			,{name:'data_CO',index:'data_CO', align:'center', width:70}
+			,{name:'CREAT_DT',index:'CREAT_DT', align:'center', width:70}
+			,{name:'crtr_NM',index:'crtr_NM', align:'center', width:50}
+			,{name:'CRTR_NO',index:'CRTR_NO', align:'center', width:50}
+			,{name:'CRTR_NO',index:'CRTR_NO', hidden: true}
 	   	]
 		,async : false
 	   	,sortname: 'CREAT_DT'

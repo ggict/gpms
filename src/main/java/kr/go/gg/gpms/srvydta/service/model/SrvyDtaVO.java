@@ -303,6 +303,9 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	
 	@XmlElement
 	private String EXCEL_FILE_COURS;
+
+	@XmlElement
+	private String SUCCESS_KND;
 	
 
 	public String getSRVY_YEAR() {
@@ -1033,5 +1036,15 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public void setEXCEL_FILE_COURS(String eXCEL_FILE_COURS) {
 		EXCEL_FILE_COURS = eXCEL_FILE_COURS;
 	}
+
+	public String getSUCCESS_KND() {
+		return SUCCESS_KND;
+	}
+
+	public void setSUCCESS_KND(String sUCCESS_KND) {
+		SUCCESS_KND = sUCCESS_KND;
+	}
+	
+	
 
 }
