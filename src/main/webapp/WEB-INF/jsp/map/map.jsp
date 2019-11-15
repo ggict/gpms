@@ -143,7 +143,7 @@
                     <li><a id="integrated" href="#" class="t1 selecttool" title="통합 정보 조회" onclick="COMMON_UTIL.cmWindowOpen('통합 정보 조회', contextPath + 'topmenu/selectIntegratedView.do', 623, 215, false, null, 'integrated');"><span class="hidden">정보통합조회</span></a></li>
                     <li><a id="researchInfo" href="#" class="t2 selecttool" title="조사정보조회"><span class="hidden">조사정보조회</span></a></li>
                     <li><a id="editCellInfo" href="#" class="t3 selecttool" title="셀 속성 편집" onclick="COMMON_UTIL.cmWindowOpen('셀 속성 편집', contextPath + 'cellsect/selectCellSectUpdate.do', 623, 270, false, null, 'updCell');"><span class="hidden">셀속성편집</span></a></li>
-                    <li><a id="thememap" href="#" class="t4 selecttool" title="테마지도" onclick="COMMON_UTIL.cmWindowOpen('테마지도', contextPath + 'topmenu/selectThemeMap.do', 400, 730, false, null, 'thememap');"><span class="hidden">테마지도</span></a></li>
+                    <li><a id="thememap" href="#" class="t4 selecttool" title="PMS 테마지도" onclick="COMMON_UTIL.cmWindowOpen('PMS 테마지도', contextPath + 'topmenu/selectThemeMap.do', 400, 730, false, null, 'thememap');"><span class="hidden">PMS 테마지도</span></a></li>
                 </ul>
 
                 <ul class="select_map">
