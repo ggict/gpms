@@ -405,4 +405,34 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		return srvyDtaDAO.procSrvyDtaSysReflct(srvyDtaOne);
 	}
 	
+	/**
+	 * 조사_자료(TN_SRVY_DTA)를 수정한다.
+	 * @param srvyDtaVO - 수정할 정보가 담긴 srvyDtaVO
+	 * @return int형
+	 * @exception Exception
+	 */
+	public int updateSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
+		return srvyDtaDAO.updateSrvyDta(srvyDtaVO);
+	}
+	
+	/**
+	 * 조사_자료(TN_SRVY_DTA) 파일 업로드 결과 목록을 조회.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	public List<SrvyDtaVO> selectSrvyDtaUploadResultList(SrvyDtaVO srvyDtaVO) throws Exception {
+		return srvyDtaDAO.selectSrvyDtaUploadResultList(srvyDtaVO);
+	}
+	
+	/**
+	 * 조사_자료(TN_SRVY_DTA) 파일 업로드 결과 갯수를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 파일 업로드 결과 갯수
+	 * @exception
+	 */
+	public int selectSrvyDtaUploadResultCount(SrvyDtaVO srvyDtaVO) {
+		return srvyDtaDAO.selectSrvyDtaUploadResultCount(srvyDtaVO);
+	}
+	
 }

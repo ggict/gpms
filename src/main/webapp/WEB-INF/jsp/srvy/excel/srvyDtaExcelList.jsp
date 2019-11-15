@@ -14,7 +14,7 @@
 // 페이지 로딩 초기 설정/*
 $( document ).ready(function() {
 	
-	COMMON_UTIL.cmCreateDatepicker('SRVY_DE', 15, "/images/btn_calendar.gif");
+	cmCreateDatepicker('SRVY_DE', 15, "/images/btn_calendar.gif", "+0D");
 
 	COMMON_FILE.clearMultiFile('#file_list', '#addFile');
 	
@@ -34,13 +34,19 @@ $( document ).ready(function() {
 		//,postData: JSON.stringify( $("#frm").cmSerializeObject())
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
+		//,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
+		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","등록일자","등록자","분석자료","CRTR_NO"]
 	   	,colModel:[
-			{name:'CREAT_DT',index:'CREAT_DT', align:'center', width:70, sortable:true}
-			,{name:'SUCCESS_CNT',index:'SUCCESS_CNT', align:'center', width:70, sortable:true, formatter: fn_btn_formatter_comp}
-			,{name:'FAIL_CNT',index:'FAIL_CNT', align:'center', width:70, sortable:true, formatter: fn_btn_formatter_fail}
-			,{name:'CRTR_NM',index:'CRTR_NM', align:'center', width:50, sortable:true}
-			,{name:'CRTR_NO',index:'CRTR_NO', hidden: true}
+			 {name:'route_code',index:'ROUTE_CODE', align:'center', width:70}
+			,{name:'road_name',index:'ROAD_NAME', align:'center', width:70}
+			,{name:'direct_code',index:'DIRECT_CODE', align:'center', width:70}
+			,{name:'track',index:'TRACK', align:'center', width:70}
+			,{name:'success_knd',index:'SUCCESS_KND', align:'center', width:70}
+			,{name:'data_co',index:'DATA_CO', align:'center', width:70}
+			,{name:'creat_dt',index:'CREAT_DT', align:'center', width:70}
+			,{name:'crtr_nm',index:'CRTR_NM', align:'center', width:50}
+			,{name:'crtr_no',index:'CRTR_NO', align:'center', width:50}
+			,{name:'crtr_no',index:'CRTR_NO', hidden: true}
 	   	]
 		,async : false
 	   	,sortname: 'CREAT_DT'
@@ -81,8 +87,8 @@ $( document ).ready(function() {
 	COMMON_UTIL.cmInitGridSize('gridArea', 'div_grid', 200);
 
 	fn_search();
-	
-	fn_change_roadNm();
+
+	//fn_change_roadNm();
 });
 
 //파일 전송
@@ -125,11 +131,13 @@ function fn_file_upload(){
 	   		$('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
 	   		COMMON_FILE.clearMultiFile('#file_list', '#addFile');
 	   		parent.$("#dvProgress").dialog("close");
-	   		//alert(result.resultMsg + "(성공 : " + result.successCnt +" )/(실패 : " + result.failCnt + ")" );
-	   		//처리로직 프로시저 프로세스 태움
-	   		//펑션을 태워서 ajax로
-	   		fnPrcProcess(result.srvyNo);
-	   		//fn_search();
+	   		
+	   		if(result.resultCode == 'fail') {
+	   			alert(result.resultMsg);
+	   			return;
+	   		} else {
+	   			fnPrcProcess(result.srvyNo);
+	   		}
        }
    });
 
@@ -239,14 +247,30 @@ function fnPrcProcess(srvyNo) {
         ,contentType : 'application/json'
         ,data : JSON.stringify(params)
         ,success: function(data){
-            alert("처리완료");
+            alert(data.result);
+            alert(data.resultMSG);
         }
         ,error: function(a,b,msg){
 
         }
     });
-	
 }
+
+var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
+    var vbtnImg = contextPath+ "/images/ico_date.png";
+    if(imgPath!=null && imgPath!=undefined  && imgPath!=""){
+        vbtnImg = contextPath+ imgPath;
+    }
+    $( "#"+_oId ).width(_oSize*8).datepicker({
+         changeMonth: true
+        ,changeYear: true
+        ,numberOfMonths: 1
+        ,showOn: "button"
+        ,buttonImage: vbtnImg
+        ,buttonImageOnly: true
+        ,maxDate: maxDate
+    });
+};
 
 
 </script>

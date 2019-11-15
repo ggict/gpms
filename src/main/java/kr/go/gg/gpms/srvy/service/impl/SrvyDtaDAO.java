@@ -125,6 +125,31 @@ public class SrvyDtaDAO extends BaseDAO {
     	logger.info("procSrvyDtaSysReflctResultVO: " + resultVO.toString());
     	return resultVO;
 	}
+	
+	public int updateSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
+		return update("srvyDtaDAO.updateSrvyDta", srvyDtaVO);
+	}
+	
+	/**
+	 * 조사_자료(TN_SRVY_DTA) 파일 업로드 결과 목록을 조회.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<SrvyDtaVO> selectSrvyDtaUploadResultList(SrvyDtaVO srvyDtaVO) throws Exception {
+		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectSrvyDtaUploadResultList", srvyDtaVO);
+	}
+
+	/**
+	 * 조사_자료(TN_SRVY_DTA) 파일 업로드 결과 갯수를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 파일 업로드 결과 갯수
+	 * @exception
+	 */
+	public int selectSrvyDtaUploadResultCount(SrvyDtaVO srvyDtaVO) {
+		return (Integer) select("srvyDtaDAO.selectSrvyDtaUploadResultCount", srvyDtaVO);
+	}
 
 	//==============================================================================
 	

@@ -170,8 +170,8 @@ public class SrvyDtaController extends BaseController {
 		String resultMsg = "";
 		String srvyNo = "";
 		String excelFileNm = "";
-		int successCnt = 0;
-		int failCnt = 0;
+		//int successCnt = 0;
+		//int failCnt = 0;
 		
 		String userNo = sessionManager.getUserNo();
 		String funCallback = srvyDtaVO.getCallBackFunction() == null ? "" : srvyDtaVO.getCallBackFunction();
@@ -206,7 +206,7 @@ public class SrvyDtaController extends BaseController {
 				// 파일 정보 DB 저장
 				String fileNo = attachFileService.insertAttachFile(file);
 
-				String sheetName = "DBLoading";
+				//String sheetName = "DBLoading";
 				String filePathName = filePath + file.getFILE_COURS() + File.separator + file.getFILE_NM();
 				String bakFilePath = filePath + File.separator + "srvy" + File.separator + "bak" + File.separator + file.getFILE_NM();
 				
@@ -377,13 +377,16 @@ public class SrvyDtaController extends BaseController {
 					failCnt++;
 					logCode = "PCST0003";
 				} else {
+				
+				
+				
 					resultMsg = "파일전송이 성공하였습니다.";
 					successCnt++;
 					logCode = "PCST0002";
 				}
 				*/
 				resultMsg = "파일전송이 성공하였습니다.";
-				successCnt++;
+				//successCnt++;
 				logCode = "PCST0002";
 				
 				//엑셀파일 데이터 조회하여 srvyDtaVO set 
@@ -402,8 +405,6 @@ public class SrvyDtaController extends BaseController {
 				srvyDtaVO.setDELETE_AT("N");
 				
 				srvyNo = srvyDtaService.insertSrvyDta(srvyDtaVO);
-				
-				
 
 				// 조사자료 엑셀 파일 업로드 로그 저장
 				srvyDtaLogVO.setSRVY_NO(srvyNo);
@@ -415,35 +416,30 @@ public class SrvyDtaController extends BaseController {
 				
 				srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
 				
-				//===============================================================sdh
-				
-				/*
-				if (logCode.equals("PCST0003")) {
-					continue;
-				}
-				*/
-				/*
 				String upLogCode = "PCST0001";
 				resultMsg = "자료조사 validation check를 진행중 입니다.";
-				 */
-				
 				// validation check
 				
-				/*
-				Map<String, Object> validChkInfo = validReadXLData(fileName, sheetName);
+				
+				Map<String, Object> validChkInfo = validReadXLData(excelFileNm);
 				boolean validChk = (Boolean) validChkInfo.get("result");
+				
+				System.out.println("validChkInfo: " + validChkInfo);
 
 				if (validChk) {
 					upLogCode = "PCST0002";
 					resultMsg = validChkInfo.get("resultMsg").toString();
 
-					srvyDtaExcelVO.setSRVY_DE(validChkInfo.get("srvyDe").toString());
-					srvyDtaExcelVO.setVAL_EVL_AT("Y");
-					srvyDtaExcelVO.setSRVY_NO(srvyNo);
+					srvyDtaVO.setSRVY_DE(validChkInfo.get("srvyDe").toString());
+					srvyDtaVO.setVAL_EVL_AT("Y");
+					srvyDtaVO.setSRVY_NO(srvyNo);
 
-					srvyDtaExcelService.updateSrvyDtaExcel(srvyDtaExcelVO);
-
+					srvyDtaService.updateSrvyDta(srvyDtaVO);
+					
+					resultCode = "success";
+					
 				} else {
+					resultCode = "fail";
 					upLogCode = "PCST0003";
 					if (validChkInfo.get("errorCol").toString().equals("")) {
 						resultMsg = validChkInfo.get("resultMsg").toString();
@@ -455,16 +451,14 @@ public class SrvyDtaController extends BaseController {
 					}
 
 					
-					 * srvyDtaExcelVO.setSRVY_DE(validChkInfo.get("srvyDe").toString
-					 * ());
-					 
-					srvyDtaExcelVO.setVAL_EVL_AT("N");
-					srvyDtaExcelVO.setSRVY_NO(srvyNo);
+					//srvyDtaVO.setSRVY_DE(validChkInfo.get("srvyDe").toString());
+					srvyDtaVO.setVAL_EVL_AT("N");
+					srvyDtaVO.setSRVY_NO(srvyNo);
 
-					srvyDtaExcelService.updateSrvyDtaExcel(srvyDtaExcelVO);
+					srvyDtaService.updateSrvyDta(srvyDtaVO);
 
 				}
-*/
+
 				// 초기화
 				srvyDtaExcelVO.setSRVY_NO(null);
 
@@ -475,20 +469,16 @@ public class SrvyDtaController extends BaseController {
 				srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
 			}
 
-			resultCode = "MSG";
-			resultMsg = "완료 되었습니다. [전송결과]를 확인해주세요.";
+			//resultCode = "MSG";
+			//resultMsg = "완료 되었습니다. [전송결과]를 확인해주세요.";
 
 		}
 		model.addAttribute("srvyNo", srvyNo);
-		model.addAttribute("excelFileNm", excelFileNm);
-		model.addAttribute("failCnt", failCnt);
-		model.addAttribute("successCnt", successCnt);
 		model.addAttribute("resultCode", resultCode);
 		model.addAttribute("resultMsg", resultMsg);
 		model.addAttribute("callBackFunction", funCallback); // 처리후 호출 함수
 
 		return "jsonView";
-		// return "/cmmn/commonMsg";
 	}
 
 	@RequestMapping(value = "/srvyDtaUploadResultList.do")
@@ -506,20 +496,22 @@ public class SrvyDtaController extends BaseController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/api/srvyDtaUploadResultList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody Map<String, Object> srvyDtaUploadResultListRest(@RequestBody SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+	public @ResponseBody Map<String, Object> srvyDtaUploadResultListRest(@RequestBody SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(srvyDtaExcelVO.getPage());
-		paginationInfo.setRecordCountPerPage(srvyDtaExcelVO.getPageUnit());
-		paginationInfo.setPageSize(srvyDtaExcelVO.getRows());
-		srvyDtaExcelVO.setUsePage(true);
+		paginationInfo.setCurrentPageNo(srvyDtaVO.getPage());
+		paginationInfo.setRecordCountPerPage(srvyDtaVO.getPageUnit());
+		paginationInfo.setPageSize(srvyDtaVO.getRows());
+		srvyDtaVO.setUsePage(true);
 
-		srvyDtaExcelVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		srvyDtaExcelVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		srvyDtaExcelVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		srvyDtaVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		srvyDtaVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		srvyDtaVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		List<SrvyDtaExcelVO> items = srvyDtaExcelService.selectSrvyDtaExcelUploadResultList(srvyDtaExcelVO);
-		int totCnt = srvyDtaExcelService.selectSrvyDtaExcelUploadResultCount(srvyDtaExcelVO);
-
+		List<SrvyDtaVO> items = srvyDtaService.selectSrvyDtaUploadResultList(srvyDtaVO);
+		int totCnt = srvyDtaService.selectSrvyDtaUploadResultCount(srvyDtaVO);
+		
+		System.out.println("items: " + items.toString());
+		
 		int total_page = 0;
 		if (totCnt > 0)
 			total_page = (int) Math.ceil((float) totCnt / (float) paginationInfo.getPageSize());
@@ -527,10 +519,11 @@ public class SrvyDtaController extends BaseController {
 		// 결과 JSON 저장
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("page", srvyDtaExcelVO.getPage());
+		map.put("page", srvyDtaVO.getPage());
 		map.put("total", total_page);
 		map.put("records", totCnt);
 		map.put("rows", items);
+		
 
 		return map;
 	}
@@ -1171,7 +1164,7 @@ public class SrvyDtaController extends BaseController {
 	}
 
 	// 엑셀파일 validation check
-	private Map<String, Object> validReadXLData(String fileName, String sheetName) throws Exception {
+	private Map<String, Object> validReadXLData(String excelFileNm) throws Exception {
 
 		boolean result = false;
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -1181,11 +1174,11 @@ public class SrvyDtaController extends BaseController {
 		List<EgovMap> cols = cmmnService.selectCols("tn_mumm_sctn_srvy_dta");
 
 		// 엑셀파일 실행
-		FileInputStream fis = new FileInputStream(checkFilePath(fileName, "path"));
+		FileInputStream fis = new FileInputStream(excelFileNm);
 
 		// XFFS : .xlsx
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
-		XSSFSheet sheet = wb.getSheet(sheetName);
+		XSSFSheet sheet = wb.getSheet("DBLoading");
 
 		int cnt = 0;
 
@@ -1205,13 +1198,22 @@ public class SrvyDtaController extends BaseController {
 
 			sSrvyYear = sSrvyYear.replaceAll("\"", "");
 			sSrvyMt = sSrvyMt.replaceAll("\"", "");
+			
+			System.out.println("sSrvyYear: " + sSrvyYear);
+			System.out.println("sSrvyMt: " + sSrvyMt);
+
 
 			int nSrvyYear = 0;
 			int nSrvyMt = 0;
 
 			if(sSrvyYear != null && !sSrvyYear.equals("")) nSrvyYear = (int)Float.parseFloat(sSrvyYear);
 			if(sSrvyMt != null && !sSrvyMt.equals("")) nSrvyMt = (int)Float.parseFloat(sSrvyMt);
+			
+			
+			System.out.println("nSrvyYear: " + nSrvyYear);
+			System.out.println("nSrvyMt: " + nSrvyMt);
 
+			
 			Calendar today = Calendar.getInstance();
 			Calendar c = (Calendar) today.clone();
 
@@ -1226,8 +1228,6 @@ public class SrvyDtaController extends BaseController {
 				map.put("resultMsg", "입력데이터의 조사날짜가 현재 날짜 이후입니다. 데이터를 확인해 주십시오.");
 				return map;
 			}
-
-
 
 			// j => 엑셀 cell의 수
 			for (int j = 0; j < cellNum; j++) {
@@ -1328,7 +1328,6 @@ public class SrvyDtaController extends BaseController {
 		}
 
 		map.put("srvyDe", srvyDe);
-
 		map.put("result", result);
 		map.put("errorCol", "");
 		map.put("rowIndex", "");

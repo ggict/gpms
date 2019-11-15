@@ -193,5 +193,74 @@
 	/* srvyDtaDAO.PRC_SRVY_DTA_SYS_REFLCT */
 		SELECT * FROM PRC_SRVY_DTA_SYS_REFLCT(?::text, ?::text)
 	</select>
+	
+	<update id="srvyDtaDAO.updateSrvyDta">
+<![CDATA[
+		/* srvyDtaDAO.updateSrvyDta */
+		/* 조사_자료_엑셀 수정 */
+		UPDATE TN_SRVY_DTA SET
+		  UPDT_DT = NOW() 
+		, VAL_EVL_AT = #VAL_EVL_AT#
+		WHERE 1 = 1
+		AND SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
+]]>
+	</update>
+	
+	<select id="srvyDtaDAO.selectSrvyDtaUploadResultList"
+		parameterClass="srvyDtaVO" resultClass="srvyDtaVO">
+<![CDATA[
+		/* srvyDtaDAO.selectSrvyDtaUploadResultList */
+		/* 조사_자료_엑셀  파일 업로드 결과 조회  */
+		SELECT * FROM (SELECT ROW_NUMBER() OVER( ORDER BY $sidx$ $sord$  ) rn, tb.* FROM (
+			SELECT  tnsrvydta.ROUTE_CODE
+                 , (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnsrvydta.ROUTE_CODE) AS ROAD_NAME
+                 , CASE WHEN tnsrvydta.DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END DIRECT_CODE
+                 , tnsrvydta.TRACK
+	     		 , CASE WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0002' THEN 'S' ELSE 'F' END  AS SUCCESS_KND
+                 , tnsrvydta.DATA_CO
+                 , TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') AS CREAT_DT
+	     		 , tnsrvydta.CRTR_NO
+	     		 , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydta.CRTR_NO and tnsysuser.USE_AT = 'Y' and tnsysuser.DELETE_AT = 'N') CRTR_NM
+			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
+		   WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+		   	 AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
+		   	 AND tnsrvydta.USE_AT = 'Y'
+		   	 AND tnsrvydta.DELETE_AT = 'N'
+		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
+             ORDER BY tnsrvydta.CREAT_DT DESC
+		) tb) resultlist  WHERE 1=1
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+		</isEqual>
+	</select>
+
+	<select id="srvyDtaDAO.selectSrvyDtaUploadResultCount"
+		parameterClass="srvyDtaVO" resultClass="int">
+<![CDATA[
+		/* srvyDtaDAO.selectSrvyDtaUploadResultCount */
+		/* 조사_자료_엑셀  파일 업로드 결과 개수 조회  */
+		SELECT COUNT(*) FROM (
+			SELECT 
+                  tnsrvydta.ROUTE_CODE
+                 , (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnsrvydta.ROUTE_CODE) AS ROAD_NAME
+                 , CASE WHEN tnsrvydta.DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END DIRECT_CODE
+                 , tnsrvydta.TRACK
+	     		 , CASE WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0002' THEN 'S' ELSE 'F' END  AS SUCCESS_KND
+                 , tnsrvydta.DATA_CO
+                 , TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') AS CREAT_DT
+	     		 , tnsrvydta.CRTR_NO
+	     		 , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydta.CRTR_NO and tnsysuser.USE_AT = 'Y' and tnsysuser.DELETE_AT = 'N') CRTR_NM
+			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
+		   WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+		   	 AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
+		   	 AND tnsrvydta.USE_AT = 'Y'
+		   	 AND tnsrvydta.DELETE_AT = 'N'
+		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
+		)as sub_SrvyDtaExcel
+]]>
+	</select>
 
 </sqlMap>
