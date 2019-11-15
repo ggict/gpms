@@ -137,8 +137,7 @@ $( document ).ready(function() {
 	
     var ids = '${cells}';
     $('#PAV_CELL_ID').val(ids);
-    
-    alert($('#PAV_CELL_ID').val());
+
     // 검색 목록 그리드 구성
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
     var srvy_requst_sctn_no_value = $('#SRVY_REQUST_SCTN_NO').val();
