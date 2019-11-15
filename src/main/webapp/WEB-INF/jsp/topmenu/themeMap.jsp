@@ -53,9 +53,7 @@
                 <ul class="legend">
                     <li class="tRule"><span class="smcircle" style="background-color:#f8cbad"></span><span class="rNameKor">2017년 조사구역</span></li>
                     <li class="tRule"><span class="smcircle" style="background-color:#b4c7e7"></span><span class="rNameKor">2018년 조사구역</span></li>
-                    <!-- 
                     <li class="tRule"><span class="smcircle" style="background-color:#c55a11"></span><span class="rNameKor">2019년 조사구역</span></li>
-                     -->
                 </ul>
 
             </div>
