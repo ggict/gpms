@@ -26,6 +26,8 @@ public class SrvyUnSectionVO extends BaseVO implements Serializable {
 	
 	private String TOTAL_ROAD_L;
 	
+	private String DO_MANAGE_SCTN_LEN;
+	
 	private String PERSENT;
 	
 	private String GEOJSON;
@@ -130,5 +132,17 @@ public class SrvyUnSectionVO extends BaseVO implements Serializable {
 	public void setTOTAL_COUNT(int tOTAL_COUNT) {
 		TOTAL_COUNT = tOTAL_COUNT;
 	}
+
+	@JsonProperty(value="DO_MANAGE_SCTN_LEN")
+	public String getDO_MANAGE_SCTN_LEN() {
+		return DO_MANAGE_SCTN_LEN;
+	}
+
+	public void setDO_MANAGE_SCTN_LEN(String dO_MANAGE_SCTN_LEN) {
+		DO_MANAGE_SCTN_LEN = dO_MANAGE_SCTN_LEN;
+	}
+	
+	
+	
 	
 }

@@ -98,7 +98,7 @@ $( document ).ready(function() {
         //,postData: JSON.stringify( $("#frm").cmSerializeObject())
         ,postData: postData
         ,ignoreCase: true
-        ,colNames:["ROAD_NO","SRVY_YEAR","노선 번호","노선 명","시점 명","종점 명","총연장(km)","조사구간(km)","조사비율","조사위치보기","미조사구간위치보기"]
+        ,colNames:["ROAD_NO","SRVY_YEAR","노선 번호","노선 명","시점 명","종점 명","총연장(km)","도관리구간연장(km)","조사구간(km)","조사비율","조사위치보기","미조사구간위치보기"]
         ,colModel:[
             {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
             ,{name:'SRVY_YEAR',index:'SRVY_YEAR', hidden: true}
@@ -108,9 +108,18 @@ $( document ).ready(function() {
             ,{name:'ROAD_NAME',index:'ROAD_NAME', align:'center', width:100, sortable:true}
             ,{name:'ST_POINT',index:'ST_POINT', align:'left', width:120, sortable:true}
             ,{name:'ED_POINT',index:'ED_POINT', align:'left', width:120, sortable:true}
-            ,{name:'TOTAL_ROAD_L',index:'TOTAL_ROAD_L', align:'center', width:80, sortable:true}
-            ,{name:'ROAD_L',index:'ROAD_L', align:'center', width:80, sortable:true}
-            ,{name:'PERSENT',index:'PERSENT', align:'center', width:80, sortable:true}
+            ,{name:'TOTAL_ROAD_L',index:'TOTAL_ROAD_L', align:'center', width:80, sortable:true, formatter: function(val, opt, row){
+            	return (val) ? (val*1).toFixed(1) : 0;
+            }}
+            ,{name:'DO_MANAGE_SCTN_LEN',index:'DO_MANAGE_SCTN_LEN', align:'center', width:80, sortable:true, formatter: function(val, opt, row){
+            	return (val) ? (val*1).toFixed(1) : 0;
+            }}
+            ,{name:'ROAD_L',index:'ROAD_L', align:'center', width:80, sortable:true, formatter: function(val, opt, row){
+            	return (val) ? (val*1).toFixed(1) : 0;
+            }}
+            ,{name:'PERSENT',index:'PERSENT', align:'center', width:80, sortable:true, formatter: function(val, opt, row){
+            	return (val) ? (val*1).toFixed(1) + '%' : '';
+            }}
             ,{name:'btn_loc',index:'btn_loc', align:'center', width:50, sortable:false, formatter: fn_create_btn}
             ,{name:'btn_unloc',index:'btn_unloc', align:'center', width:50, sortable:false, formatter: fn_create_btn}
         ]
