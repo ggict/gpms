@@ -43,7 +43,7 @@ function fu_getChartData(){
 	var usePage = 'false';
 	
     $.ajax({
-        url: contextPath + 'api/srvyunsection/selectsrvyunsectionlist.do'
+        url: contextPath + 'api/srvyunsection/selectsrvyunsectionchartlist.do'
         ,type: 'post'
         ,dataType: 'json'
         ,contentType : 'application/json'
@@ -68,17 +68,11 @@ function drawLenChart(dataList,rw){
  	var lenData		= [];
  	var GpmlenData	= [];
  	var ManageLen	= [];
- 	var degree		= 40;
- 	if(dataList.length < 10){
- 		degree = 0;
- 	}
-
  	for(var i=0; i<dataList.length; i++){
  			lenData.push(Number(dataList[i].TOTAL_ROAD_L));
  			GpmlenData.push(Number(dataList[i].ROAD_L));
  			gRouteNm.push(dataList[i].dept_NAME);
  			ManageLen.push(Number(dataList[i].DO_MANAGE_SCTN_LEN));
- 			
  	}
 	 
 	var myChart = echarts.init(document.getElementById('lenBarChart'));
@@ -110,8 +104,7 @@ function drawLenChart(dataList,rw){
 			type : 'category',
 			axisLabel : {
 				show : true,
-				interval : 0,
-				rotate : degree
+				interval : 0
 			},
 			data : gRouteNm
 		} ],
