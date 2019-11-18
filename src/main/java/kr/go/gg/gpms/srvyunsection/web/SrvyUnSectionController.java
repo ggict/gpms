@@ -76,7 +76,7 @@ public class SrvyUnSectionController {
 	 * */
 	@ResponseBody
 	@RequestMapping(value = { "/api/srvyunsection/selectsrvyunsectionlist.do" })
-	public Object selectSrvyDtaSttusList(@RequestBody SrvyUnSectionVO srvyUnSectionVO, ModelMap model) throws Exception {
+	public Object selectsrvyunsectionlist(@RequestBody SrvyUnSectionVO srvyUnSectionVO, ModelMap model) throws Exception {
 		
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(srvyUnSectionVO.getPage());
@@ -88,7 +88,6 @@ public class SrvyUnSectionController {
 		srvyUnSectionVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
 		List<SrvyUnSectionVO> items = (List<SrvyUnSectionVO>) srvyUnSectionService.list(srvyUnSectionVO);
-		model.addAttribute("items", items);
 		
 		int total_count = 0;
 		if(items != null && items.size() > 0) {
@@ -105,6 +104,23 @@ public class SrvyUnSectionController {
 		map.put("page", srvyUnSectionVO.getPage());
 		map.put("total", total_page);
 		map.put("records", total_count);
+		map.put("rows", items);
+		map.put("search", srvyUnSectionVO);
+
+		return map;
+	}
+	
+	/**
+	 * 리스트 조회 
+	 * */
+	@ResponseBody
+	@RequestMapping(value = { "/api/srvyunsection/selectsrvyunsectionchartlist.do" })
+	public Object selectsrvyunsectionchartlist(@RequestBody SrvyUnSectionVO srvyUnSectionVO, ModelMap model) throws Exception {
+
+		List<SrvyUnSectionVO> items = (List<SrvyUnSectionVO>) srvyUnSectionService.chartList(srvyUnSectionVO);
+		
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("rows", items);
 		map.put("search", srvyUnSectionVO);
 
