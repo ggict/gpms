@@ -27,4 +27,9 @@ public class SrvyUnSectionDAO extends BaseDAO {
 		return list("srvyUnSectionDAO.srvyYearList", object);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Object chartList(Object object) throws Exception {	
+		return list("srvyUnSectionDAO.chartList", object);
+	}
+	
 }
