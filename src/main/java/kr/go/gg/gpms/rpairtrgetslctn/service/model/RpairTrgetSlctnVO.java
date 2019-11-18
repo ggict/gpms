@@ -1,18 +1,17 @@
 
 package kr.go.gg.gpms.rpairtrgetslctn.service.model;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import kr.go.gg.gpms.base.model.BaseVO;
 /**
  * 보수_대상_선정
  *
  * @Class Name : RpairTrgetSlctnVO.java
- * @Description : RpairTrgetSlctn VO class 
+ * @Description : RpairTrgetSlctn VO class
  * @Modification Information
  *
  * @author leehb1592@gmail.com
@@ -30,268 +29,280 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public RpairTrgetSlctnVO() {
 		super();
 	}
-	
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.TRGET_SLCTN_NO, 
+
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.TRGET_SLCTN_NO,
 	 * 보수_대상_선정.대상_선정_번호
 	 */
 	@XmlElement
 	private java.lang.String TRGET_SLCTN_NO;
-	/** 
-	 * RN, 
-	 * 
+	/**
+	 * RN,
+	 *
 	 */
 	@XmlElement
 	private java.lang.String RN;
-	
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_OPERT_NM, 
+
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_OPERT_NM,
 	 * 보수_대상_선정.선정_작업_명
 	 */
 	@XmlElement
 	private java.lang.String SLCTN_OPERT_NM;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_MTH, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_MTH,
 	 * 보수_대상_선정.선정_방법
 	 */
 	@XmlElement
 	private java.lang.String SLCTN_MTH;
-	
+
 	@XmlElement
 	private java.lang.String SLCTN_MTH_NM;
-	
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_STTUS, 
+
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_STTUS,
 	 * 보수_대상_선정.선정_상태
 	 */
 	@XmlElement
 	private java.lang.String SLCTN_STTUS;
-	
+
 	@XmlElement
 	private java.lang.String SLCTN_STTUS_NM;
-	
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET, 
+
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET,
 	 * 보수_대상_선정.선정_예산
 	 */
 	@XmlElement
 	private java.lang.Long SLCTN_BUDGET;
-	
+
 	@XmlElement
-	private java.lang.String MMNF_RATE;	
+	private java.lang.String MMNF_RATE;
 	@XmlElement
 	private java.lang.String ST_RATE;
 	@XmlElement
 	private java.lang.String PM_RATE;
-	
-	
-	
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_DT, 
+
+
+
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_DT,
 	 * 보수_대상_선정.선정_일시
 	 */
 	@XmlElement
 	private java.util.Date SLCTN_DT;
-	
+
 	@XmlElement
 	private String SLCTN_MONTH;
-	
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DELETE_AT, 
+
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DELETE_AT,
 	 * 보수_대상_선정.삭제_여부
 	 */
 	@XmlElement
 	private java.lang.String DELETE_AT;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.USE_AT, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.USE_AT,
 	 * 보수_대상_선정.사용_여부
 	 */
 	@XmlElement
 	private java.lang.String USE_AT;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.CRTR_NO, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.CRTR_NO,
 	 * 보수_대상_선정.생성자_번호
 	 */
 	@XmlElement
 	private java.lang.String CRTR_NO;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.CREAT_DT, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.CREAT_DT,
 	 * 보수_대상_선정.생성_일시
 	 */
 	@XmlElement
 	private java.util.Date CREAT_DT;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.UPDUSR_NO, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.UPDUSR_NO,
 	 * 보수_대상_선정.수정자_번호
 	 */
 	@XmlElement
 	private java.lang.String UPDUSR_NO;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.UPDT_DT, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.UPDT_DT,
 	 * 보수_대상_선정.수정_일시
 	 */
 	@XmlElement
 	private java.util.Date UPDT_DT;
 
-	
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DEPT_CODE, 
+
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DEPT_CODE,
 	 * 보수_대상_선정.부서_코드
 	 */
 	@XmlElement
 	private java.lang.String DEPT_CODE;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_1_RATE, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_1_RATE,
 	 * 보수_대상_선정.결정_방식_1_비율
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_1_RATE;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_2_RATE, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_2_RATE,
 	 * 보수_대상_선정.결정_방식_2_비율
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_2_RATE;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_3_RATE, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_3_RATE,
 	 * 보수_대상_선정.결정_방식_3_비율
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_3_RATE;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_4_RATE, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_4_RATE,
 	 * 보수_대상_선정.결정_방식_4_비율
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_4_RATE;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_5_RATE, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_5_RATE,
 	 * 보수_대상_선정.결정_방식_5_비율
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_5_RATE;
-	
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_1_BUDGET, 
+
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_1_BUDGET,
 	 * 보수_대상_선정.결정_방식_1_예산
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_1_BUDGET;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_2_BUDGET, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_2_BUDGET,
 	 * 보수_대상_선정.결정_방식_2_예산
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_2_BUDGET;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_3_BUDGET, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_3_BUDGET,
 	 * 보수_대상_선정.결정_방식_3_예산
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_3_BUDGET;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_4_BUDGET, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_4_BUDGET,
 	 * 보수_대상_선정.결정_방식_4_예산
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_4_BUDGET;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_5_BUDGET, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_5_BUDGET,
 	 * 보수_대상_선정.결정_방식_5_예산
 	 */
 	@XmlElement
 	private java.lang.Long  DECSN_MTHD_5_BUDGET;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_1, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_1,
 	 * 보수_대상_선정.결정_방식_1_선정예산
 	 */
 	@XmlElement
 	private java.lang.Long  SLCTN_BUDGET_1;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_2, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_2,
 	 * 보수_대상_선정.결정_방식_2_선정예산
 	 */
 	@XmlElement
 	private java.lang.Long  SLCTN_BUDGET_2;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_3, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_3,
 	 * 보수_대상_선정.결정_방식_3_선정예산
 	 */
 	@XmlElement
 	private java.lang.Long  SLCTN_BUDGET_3;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_4, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_4,
 	 * 보수_대상_선정.결정_방식_4_선정예산
 	 */
 	@XmlElement
 	private java.lang.Long  SLCTN_BUDGET_4;
 
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_5, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET_5,
 	 * 보수_대상_선정.결정_방식_5_선정예산
 	 */
 	@XmlElement
 	private java.lang.Long  SLCTN_BUDGET_5;
-	/** 
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_PURPS, 
+	/**
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_PURPS,
 	 * 보수_대상_선정.산정_목적
 	 */
 	@XmlElement
 	private java.lang.String SLCTN_PURPS;
-	
-	
+
+
 	@XmlElement
 	private java.lang.String ROAD_GRAD;
-	
-	
+
+
 	@XmlElement
 	private java.lang.String ROUTE_CODE;
 	@XmlElement
 	private java.lang.String ROAD_NO;
-	
+
 	@XmlElement
 	private java.lang.String ROAD_NO_VAL;
-	
-	
+
+
 	@XmlElement
 	private java.lang.String ADM_CODE;
-	
-	
+
+	/** 분석_단위_코드 */
+	@XmlElement
+    private java.lang.String ANALS_UNIT_CODE;
+
+	/** 선정_년도 */
+	@XmlElement
+	private java.lang.String SLCTN_YEAR;
+
+	/** 선정집계 처음/종료 코드(S: 시작, E: 종료) */
+	@XmlElement
+	private java.lang.String START_END_CODE;
+
+
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.TRGET_SLCTN_NO, 
+	 * TN_RPAIR_TRGET_SLCTN.TRGET_SLCTN_NO,
 	 * 보수_대상_선정.대상_선정_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="TRGET_SLCTN_NO") 
+	@JsonProperty(value="TRGET_SLCTN_NO")
 	public java.lang.String getTRGET_SLCTN_NO() {
 		return this.TRGET_SLCTN_NO;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.TRGET_SLCTN_NO, 
+	 * TN_RPAIR_TRGET_SLCTN.TRGET_SLCTN_NO,
 	 * 보수_대상_선정.대상_선정_번호 값설정
 	 * @param trgetSlctnNo
 	 */
@@ -300,17 +311,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_OPERT_NM, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_OPERT_NM,
 	 * 보수_대상_선정.선정_작업_명 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_OPERT_NM") 
+	@JsonProperty(value="SLCTN_OPERT_NM")
 	public java.lang.String getSLCTN_OPERT_NM() {
 		return this.SLCTN_OPERT_NM;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_OPERT_NM, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_OPERT_NM,
 	 * 보수_대상_선정.선정_작업_명 값설정
 	 * @param slctnOpertNm
 	 */
@@ -319,17 +330,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_MTH, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_MTH,
 	 * 보수_대상_선정.선정_방법 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_MTH") 
+	@JsonProperty(value="SLCTN_MTH")
 	public java.lang.String getSLCTN_MTH() {
 		return this.SLCTN_MTH;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_MTH, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_MTH,
 	 * 보수_대상_선정.선정_방법 값설정
 	 * @param slctnMth
 	 */
@@ -338,17 +349,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_STTUS, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_STTUS,
 	 * 보수_대상_선정.선정_상태 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_STTUS") 
+	@JsonProperty(value="SLCTN_STTUS")
 	public java.lang.String getSLCTN_STTUS() {
 		return this.SLCTN_STTUS;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_STTUS, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_STTUS,
 	 * 보수_대상_선정.선정_상태 값설정
 	 * @param slctnSttus
 	 */
@@ -357,17 +368,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET,
 	 * 보수_대상_선정.선정_예산 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_BUDGET") 
+	@JsonProperty(value="SLCTN_BUDGET")
 	public java.lang.Long getSLCTN_BUDGET() {
 		return this.SLCTN_BUDGET;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_BUDGET,
 	 * 보수_대상_선정.선정_예산 값설정
 	 * @param slctnBudget
 	 */
@@ -376,18 +387,18 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_DT, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_DT,
 	 * 보수_대상_선정.선정_일시 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_DT") 
+	@JsonProperty(value="SLCTN_DT")
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+9")
 	public java.util.Date getSLCTN_DT() {
 		return this.SLCTN_DT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_DT, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_DT,
 	 * 보수_대상_선정.선정_일시 값설정
 	 * @param slctnDt
 	 */
@@ -396,17 +407,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.DELETE_AT, 
+	 * TN_RPAIR_TRGET_SLCTN.DELETE_AT,
 	 * 보수_대상_선정.삭제_여부 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DELETE_AT") 
+	@JsonProperty(value="DELETE_AT")
 	public java.lang.String getDELETE_AT() {
 		return this.DELETE_AT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.DELETE_AT, 
+	 * TN_RPAIR_TRGET_SLCTN.DELETE_AT,
 	 * 보수_대상_선정.삭제_여부 값설정
 	 * @param deleteAt
 	 */
@@ -415,17 +426,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.USE_AT, 
+	 * TN_RPAIR_TRGET_SLCTN.USE_AT,
 	 * 보수_대상_선정.사용_여부 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="USE_AT") 
+	@JsonProperty(value="USE_AT")
 	public java.lang.String getUSE_AT() {
 		return this.USE_AT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.USE_AT, 
+	 * TN_RPAIR_TRGET_SLCTN.USE_AT,
 	 * 보수_대상_선정.사용_여부 값설정
 	 * @param useAt
 	 */
@@ -434,17 +445,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.CRTR_NO, 
+	 * TN_RPAIR_TRGET_SLCTN.CRTR_NO,
 	 * 보수_대상_선정.생성자_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CRTR_NO") 
+	@JsonProperty(value="CRTR_NO")
 	public java.lang.String getCRTR_NO() {
 		return this.CRTR_NO;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.CRTR_NO, 
+	 * TN_RPAIR_TRGET_SLCTN.CRTR_NO,
 	 * 보수_대상_선정.생성자_번호 값설정
 	 * @param crtrNo
 	 */
@@ -453,18 +464,18 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.CREAT_DT, 
+	 * TN_RPAIR_TRGET_SLCTN.CREAT_DT,
 	 * 보수_대상_선정.생성_일시 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CREAT_DT") 
+	@JsonProperty(value="CREAT_DT")
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+9")
 	public java.util.Date getCREAT_DT() {
 		return this.CREAT_DT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.CREAT_DT, 
+	 * TN_RPAIR_TRGET_SLCTN.CREAT_DT,
 	 * 보수_대상_선정.생성_일시 값설정
 	 * @param creatDt
 	 */
@@ -473,17 +484,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.UPDUSR_NO, 
+	 * TN_RPAIR_TRGET_SLCTN.UPDUSR_NO,
 	 * 보수_대상_선정.수정자_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="UPDUSR_NO") 
+	@JsonProperty(value="UPDUSR_NO")
 	public java.lang.String getUPDUSR_NO() {
 		return this.UPDUSR_NO;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.UPDUSR_NO, 
+	 * TN_RPAIR_TRGET_SLCTN.UPDUSR_NO,
 	 * 보수_대상_선정.수정자_번호 값설정
 	 * @param updusrNo
 	 */
@@ -492,18 +503,18 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.UPDT_DT, 
+	 * TN_RPAIR_TRGET_SLCTN.UPDT_DT,
 	 * 보수_대상_선정.수정_일시 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="UPDT_DT") 
+	@JsonProperty(value="UPDT_DT")
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+9")
 	public java.util.Date getUPDT_DT() {
 		return this.UPDT_DT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.UPDT_DT, 
+	 * TN_RPAIR_TRGET_SLCTN.UPDT_DT,
 	 * 보수_대상_선정.수정_일시 값설정
 	 * @param updtDt
 	 */
@@ -514,7 +525,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	/**
 	 * @return the sLCTN_MONTH
 	 */
-	@JsonProperty(value="SLCTN_MONTH") 
+	@JsonProperty(value="SLCTN_MONTH")
 	public String getSLCTN_MONTH() {
 		return SLCTN_MONTH;
 	}
@@ -525,8 +536,8 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setSLCTN_MONTH(String sLCTN_MONTH) {
 		SLCTN_MONTH = sLCTN_MONTH;
 	}
-	
-	@JsonProperty(value="SLCTN_MTH_NM") 
+
+	@JsonProperty(value="SLCTN_MTH_NM")
 	public java.lang.String getSLCTN_MTH_NM() {
 		return SLCTN_MTH_NM;
 	}
@@ -534,7 +545,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setSLCTN_MTH_NM(java.lang.String sLCTN_MTH_NM) {
 		SLCTN_MTH_NM = sLCTN_MTH_NM;
 	}
-	@JsonProperty(value="SLCTN_STTUS_NM") 
+	@JsonProperty(value="SLCTN_STTUS_NM")
 	public java.lang.String getSLCTN_STTUS_NM() {
 		return SLCTN_STTUS_NM;
 	}
@@ -542,7 +553,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setSLCTN_STTUS_NM(java.lang.String sLCTN_STTUS_NM) {
 		SLCTN_STTUS_NM = sLCTN_STTUS_NM;
 	}
-	@JsonProperty(value="MMNF_RATE") 
+	@JsonProperty(value="MMNF_RATE")
 	public java.lang.String getMMNF_RATE() {
 		return MMNF_RATE;
 	}
@@ -550,7 +561,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setMMNF_RATE(java.lang.String mMNF_RATE) {
 		MMNF_RATE = mMNF_RATE;
 	}
-	@JsonProperty(value="ST_RATE") 
+	@JsonProperty(value="ST_RATE")
 	public java.lang.String getST_RATE() {
 		return ST_RATE;
 	}
@@ -558,7 +569,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setST_RATE(java.lang.String sT_RATE) {
 		ST_RATE = sT_RATE;
 	}
-	@JsonProperty(value="PM_RATE") 
+	@JsonProperty(value="PM_RATE")
 	public java.lang.String getPM_RATE() {
 		return PM_RATE;
 	}
@@ -566,20 +577,20 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setPM_RATE(java.lang.String pM_RATE) {
 		PM_RATE = pM_RATE;
 	}
-	
-	
+
+
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.DEPT_CODE, 
+	 * TN_RPAIR_TRGET_SLCTN.DEPT_CODE,
 	 * 보수_대상_선정.부서_코드 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DEPT_CODE") 
+	@JsonProperty(value="DEPT_CODE")
 	public java.lang.String getDEPT_CODE() {
 		return this.DEPT_CODE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.DEPT_CODE, 
+	 * TN_RPAIR_TRGET_SLCTN.DEPT_CODE,
 	 * 보수_대상_선정.부서_코드 값설정
 	 * @param deptCode
 	 */
@@ -588,17 +599,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_1_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_1_RATE,
 	 * 보수_대상_선정.결정_방식_1_비율 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DECSN_MTHD_1_RATE") 
+	@JsonProperty(value="DECSN_MTHD_1_RATE")
 	public java.lang.Long getDECSN_MTHD_1_RATE() {
 		return this.DECSN_MTHD_1_RATE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_1_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_1_RATE,
 	 * 보수_대상_선정.결정_방식_1_비율 값설정
 	 * @param decsnMthd1Rate
 	 */
@@ -607,17 +618,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_2_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_2_RATE,
 	 * 보수_대상_선정.결정_방식_2_비율 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DECSN_MTHD_2_RATE") 
+	@JsonProperty(value="DECSN_MTHD_2_RATE")
 	public java.lang.Long getDECSN_MTHD_2_RATE() {
 		return this.DECSN_MTHD_2_RATE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_2_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_2_RATE,
 	 * 보수_대상_선정.결정_방식_2_비율 값설정
 	 * @param decsnMthd2Rate
 	 */
@@ -626,17 +637,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_3_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_3_RATE,
 	 * 보수_대상_선정.결정_방식_3_비율 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DECSN_MTHD_3_RATE") 
+	@JsonProperty(value="DECSN_MTHD_3_RATE")
 	public java.lang.Long getDECSN_MTHD_3_RATE() {
 		return this.DECSN_MTHD_3_RATE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_3_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_3_RATE,
 	 * 보수_대상_선정.결정_방식_3_비율 값설정
 	 * @param decsnMthd3Rate
 	 */
@@ -645,17 +656,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_4_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_4_RATE,
 	 * 보수_대상_선정.결정_방식_4_비율 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DECSN_MTHD_4_RATE") 
+	@JsonProperty(value="DECSN_MTHD_4_RATE")
 	public java.lang.Long getDECSN_MTHD_4_RATE() {
 		return this.DECSN_MTHD_4_RATE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_4_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_4_RATE,
 	 * 보수_대상_선정.결정_방식_4_비율 값설정
 	 * @param decsnMthd4Rate
 	 */
@@ -664,17 +675,17 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_5_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_5_RATE,
 	 * 보수_대상_선정.결정_방식_5_비율 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DECSN_MTHD_5_RATE") 
+	@JsonProperty(value="DECSN_MTHD_5_RATE")
 	public java.lang.Long getDECSN_MTHD_5_RATE() {
 		return this.DECSN_MTHD_5_RATE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_5_RATE, 
+	 * TN_RPAIR_TRGET_SLCTN.DECSN_MTHD_5_RATE,
 	 * 보수_대상_선정.결정_방식_5_비율 값설정
 	 * @param decsnMthd5Rate
 	 */
@@ -683,24 +694,24 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_PURPS, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_PURPS,
 	 * 보수_대상_선정.산정_목적 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_PURPS") 
+	@JsonProperty(value="SLCTN_PURPS")
 	public java.lang.String getSLCTN_PURPS() {
 		return this.SLCTN_PURPS;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_SLCTN.SLCTN_PURPS, 
+	 * TN_RPAIR_TRGET_SLCTN.SLCTN_PURPS,
 	 * 보수_대상_선정.산정_목적 값설정
 	 * @param slctnPurps
 	 */
 	public void setSLCTN_PURPS(java.lang.String slctnPurps) {
 		this.SLCTN_PURPS = slctnPurps;
 	}
-	@JsonProperty(value="DECSN_MTHD_1_BUDGET") 
+	@JsonProperty(value="DECSN_MTHD_1_BUDGET")
 	public java.lang.Long getDECSN_MTHD_1_BUDGET() {
 		return this.DECSN_MTHD_1_BUDGET;
 	}
@@ -708,7 +719,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setDECSN_MTHD_1_BUDGET(java.lang.Long dECSN_MTHD_1_BUDGET) {
 		this.DECSN_MTHD_1_BUDGET = dECSN_MTHD_1_BUDGET;
 	}
-	@JsonProperty(value="DECSN_MTHD_2_BUDGET") 
+	@JsonProperty(value="DECSN_MTHD_2_BUDGET")
 	public java.lang.Long getDECSN_MTHD_2_BUDGET() {
 		return this.DECSN_MTHD_2_BUDGET;
 	}
@@ -716,7 +727,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setDECSN_MTHD_2_BUDGET(java.lang.Long dECSN_MTHD_2_BUDGET) {
 		this.DECSN_MTHD_2_BUDGET = dECSN_MTHD_2_BUDGET;
 	}
-	@JsonProperty(value="DECSN_MTHD_3_BUDGET") 
+	@JsonProperty(value="DECSN_MTHD_3_BUDGET")
 	public java.lang.Long getDECSN_MTHD_3_BUDGET() {
 		return this.DECSN_MTHD_3_BUDGET;
 	}
@@ -724,7 +735,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setDECSN_MTHD_3_BUDGET(java.lang.Long dECSN_MTHD_3_BUDGET) {
 		this.DECSN_MTHD_3_BUDGET = dECSN_MTHD_3_BUDGET;
 	}
-	@JsonProperty(value="DECSN_MTHD_4_BUDGET") 
+	@JsonProperty(value="DECSN_MTHD_4_BUDGET")
 	public java.lang.Long getDECSN_MTHD_4_BUDGET() {
 		return this.DECSN_MTHD_4_BUDGET;
 	}
@@ -732,7 +743,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setDECSN_MTHD_4_BUDGET(java.lang.Long dECSN_MTHD_4_BUDGET) {
 		this.DECSN_MTHD_4_BUDGET = dECSN_MTHD_4_BUDGET;
 	}
-	@JsonProperty(value="DECSN_MTHD_5_BUDGET") 
+	@JsonProperty(value="DECSN_MTHD_5_BUDGET")
 	public java.lang.Long getDECSN_MTHD_5_BUDGET() {
 		return this.DECSN_MTHD_5_BUDGET;
 	}
@@ -740,7 +751,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setDECSN_MTHD_5_BUDGET(java.lang.Long dECSN_MTHD_5_BUDGET) {
 		this.DECSN_MTHD_5_BUDGET = dECSN_MTHD_5_BUDGET;
 	}
-	@JsonProperty(value="SLCTN_BUDGET_1") 
+	@JsonProperty(value="SLCTN_BUDGET_1")
 	public java.lang.Long getSLCTN_BUDGET_1() {
 		return this.SLCTN_BUDGET_1;
 	}
@@ -748,7 +759,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setSLCTN_BUDGET_1(java.lang.Long slctn_budget_1) {
 		this.SLCTN_BUDGET_1 = slctn_budget_1;
 	}
-	@JsonProperty(value="SLCTN_BUDGET_2") 
+	@JsonProperty(value="SLCTN_BUDGET_2")
 	public java.lang.Long getSLCTN_BUDGET_2() {
 		return this.SLCTN_BUDGET_2;
 	}
@@ -756,7 +767,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setSLCTN_BUDGET_2(java.lang.Long slctn_budget_2) {
 		this.SLCTN_BUDGET_2 = slctn_budget_2;
 	}
-	@JsonProperty(value="SLCTN_BUDGET_3") 
+	@JsonProperty(value="SLCTN_BUDGET_3")
 	public java.lang.Long getSLCTN_BUDGET_3() {
 		return this.SLCTN_BUDGET_3;
 	}
@@ -764,7 +775,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setSLCTN_BUDGET_3(java.lang.Long slctn_budget_3) {
 		this.SLCTN_BUDGET_3 = slctn_budget_3;
 	}
-	@JsonProperty(value="SLCTN_BUDGET_4") 
+	@JsonProperty(value="SLCTN_BUDGET_4")
 	public java.lang.Long getSLCTN_BUDGET_4() {
 		return this.SLCTN_BUDGET_4;
 	}
@@ -772,7 +783,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setSLCTN_BUDGET_4(java.lang.Long slctn_budget_4) {
 		this.SLCTN_BUDGET_4 = slctn_budget_4;
 	}
-	@JsonProperty(value="SLCTN_BUDGET_5") 
+	@JsonProperty(value="SLCTN_BUDGET_5")
 	public java.lang.Long getSLCTN_BUDGET_5() {
 		return this.SLCTN_BUDGET_5;
 	}
@@ -781,7 +792,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 		this.SLCTN_BUDGET_5 = slctn_budget_5;
 	}
 
-	@JsonProperty(value="ROAD_GRAD") 
+	@JsonProperty(value="ROAD_GRAD")
 	public java.lang.String getROAD_GRAD() {
 		return ROAD_GRAD;
 	}
@@ -789,7 +800,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setROAD_GRAD(java.lang.String rOAD_GRAD) {
 		ROAD_GRAD = rOAD_GRAD;
 	}
-	@JsonProperty(value="ROAD_NO") 
+	@JsonProperty(value="ROAD_NO")
 	public java.lang.String getROAD_NO() {
 		return ROAD_NO;
 	}
@@ -797,7 +808,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setROAD_NO(java.lang.String rOAD_NO) {
 		ROAD_NO = rOAD_NO;
 	}
-	@JsonProperty(value="ROAD_NO_VAL") 
+	@JsonProperty(value="ROAD_NO_VAL")
 	public java.lang.String getROAD_NO_VAL() {
 		return ROAD_NO_VAL;
 	}
@@ -805,7 +816,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setROAD_NO_VAL(java.lang.String rOAD_NO_VAL) {
 		ROAD_NO_VAL = rOAD_NO_VAL;
 	}
-	@JsonProperty(value="ADM_CODE") 
+	@JsonProperty(value="ADM_CODE")
 	public java.lang.String getADM_CODE() {
 		return ADM_CODE;
 	}
@@ -817,7 +828,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	/**
 	 * @return the rOUTE_CODE
 	 */
-	@JsonProperty(value="ROUTE_CODE") 
+	@JsonProperty(value="ROUTE_CODE")
 	public java.lang.String getROUTE_CODE() {
 		return ROUTE_CODE;
 	}
@@ -831,7 +842,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	/**
 	 * @return the RN
 	 */
-	@JsonProperty(value="RN") 
+	@JsonProperty(value="RN")
 	public java.lang.String getRN() {
 		return RN;
 	}
@@ -839,5 +850,32 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public void setRN(java.lang.String rN) {
 		RN = rN;
 	}
+
+	@JsonProperty(value="ANALS_UNIT_CODE")
+    public java.lang.String getANALS_UNIT_CODE() {
+        return ANALS_UNIT_CODE;
+    }
+
+    public void setANALS_UNIT_CODE(java.lang.String aNALS_UNIT_CODE) {
+        ANALS_UNIT_CODE = aNALS_UNIT_CODE;
+    }
+
+    @JsonProperty(value="SLCTN_YEAR")
+    public java.lang.String getSLCTN_YEAR() {
+        return SLCTN_YEAR;
+    }
+
+    public void setSLCTN_YEAR(java.lang.String sLCTN_YEAR) {
+        SLCTN_YEAR = sLCTN_YEAR;
+    }
+
+    @JsonProperty(value="START_END_CODE")
+    public java.lang.String getSTART_END_CODE() {
+        return START_END_CODE;
+    }
+
+    public void setSTART_END_CODE(java.lang.String sTART_END_CODE) {
+        START_END_CODE = sTART_END_CODE;
+    }
 
 }

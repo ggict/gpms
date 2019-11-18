@@ -9,8 +9,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import egovframework.example.cmmn.impl.BaseDAO;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
-import kr.go.gg.gpms.cell10.service.model.Cell10VO;
 import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 
 /**
@@ -31,15 +29,77 @@ import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 @Repository("rpairTrgetSlctnDAO")
 public class RpairTrgetSlctnDAO extends BaseDAO {
 
-	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 등록한다.
-	 * @param rpairTrgetSlctnVO - 등록할 정보가 담긴 RpairTrgetSlctnVO
-	 * @return 등록 결과
-	 * @exception Exception
-	 */
-	public String insertRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-		return (String) insert("rpairTrgetSlctnDAO.insertRpairTrgetSlctn", rpairTrgetSlctnVO);
-	}
+    /**
+     * 보수대상선정이력 목록을 조회
+     */
+    @SuppressWarnings("unchecked")
+    public List<RpairTrgetSlctnVO> selectRpairTrgetSlctnList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+        return (List<RpairTrgetSlctnVO>)list("rpairTrgetSlctnDAO.selectRpairTrgetSlctnList", rpairTrgetSlctnVO);
+    }
+
+    /**
+     * 보수대상선정시작 처리(보수_대상_선정 삭제)
+     */
+    public int deleteRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+        return delete("rpairTrgetSlctnDAO.deleteRpairTrgetSlctn", rpairTrgetSlctnVO);
+    }
+
+    /**
+     * 보수대상선정시작 처리(보수_대상_선정 등록)
+     */
+    public String insertRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+        return (String) insert("rpairTrgetSlctnDAO.insertRpairTrgetSlctn", rpairTrgetSlctnVO);
+    }
+
+    /**
+     * 보수대상선정 노선 목록을 조회
+     */
+    @SuppressWarnings("unchecked")
+    public List<RpairTrgetSlctnVO> selectRpairTrgetSlctnRouteCodeList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+        return (List<RpairTrgetSlctnVO>)list("rpairTrgetSlctnDAO.selectRpairTrgetSlctnRouteCodeList", rpairTrgetSlctnVO);
+    }
+
+    /**
+     * 보수대상선정 범위내 선정을 집계한다.
+     * @param rpairTrgetSlctnVO
+     * @return
+     */
+    public HashMap procRepairTargetRangeSelect(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
+        logger.info("procRepairTargetRangeSelectVO: " + rpairTrgetSlctnVO.toString());
+        HashMap param = new HashMap();
+        param.put("P_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
+        param.put("P_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
+        param.put("P_ROUTE_CODE", rpairTrgetSlctnVO.getROUTE_CODE());
+        param.put("P_START_END_CODE", rpairTrgetSlctnVO.getSTART_END_CODE());
+        param.put("P_MODE", "NONE");
+
+        HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT", param);
+        return resultVO;
+    }
+
+    /**
+     * 연속구간 연결 및 보수공법 재선정
+     * @param rpairTrgetSlctnVO
+     * @return
+     */
+    public HashMap procRepairTargetRangeString(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
+        logger.info("procRepairTargetRangeStringVO: " + rpairTrgetSlctnVO.toString());
+        HashMap param = new HashMap();
+        param.put("P_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
+        param.put("P_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
+        param.put("P_ANALS_UNIT_CODE", rpairTrgetSlctnVO.getANALS_UNIT_CODE());
+        param.put("P_MODE", "NONE");
+
+        HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_STRING", param);
+        return resultVO;
+    }
+
+
+
+
+
+
+
 
 	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 수정한다.
@@ -52,16 +112,6 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 	}
 
 	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 삭제한다.
-	 * @param rpairTrgetSlctnVO - 삭제할 정보가 담긴 RpairTrgetSlctnVO
-	 * @return 삭제 결과
-	 * @exception Exception
-	 */
-	public int deleteRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-		return delete("rpairTrgetSlctnDAO.deleteRpairTrgetSlctn", rpairTrgetSlctnVO);
-	}
-
-	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 조회한다.
 	 * @param rpairTrgetSlctnVO - 조회할 정보가 담긴 RpairTrgetSlctnVO
 	 * @return 조회한 TN_RPAIR_TRGET_SLCTN
@@ -69,17 +119,6 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 	 */
 	public RpairTrgetSlctnVO selectRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
 		return (RpairTrgetSlctnVO) select("rpairTrgetSlctnDAO.selectRpairTrgetSlctn", rpairTrgetSlctnVO);
-	}
-
-	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN) 목록을 조회한다.
-	 * @param rpairTrgetSlctnVO - 조회할 정보가 담긴 RpairTrgetSlctnVO
-	 * @return TN_RPAIR_TRGET_SLCTN 목록
-	 * @exception Exception
-	 */
-	@SuppressWarnings("unchecked")
-	public List<RpairTrgetSlctnVO> selectRpairTrgetSlctnList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-		return (List<RpairTrgetSlctnVO>)list("rpairTrgetSlctnDAO.selectRpairTrgetSlctnList", rpairTrgetSlctnVO);
 	}
 
 	/**
@@ -117,53 +156,7 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
 
 
 
-	/**
-	 * 보수대상선정 범위내 선정을 집계한다.
-	 * @param rpairTrgetSlctnVO
-	 * @return
-	 */
-	public HashMap procRepairTargetRangeSelect(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
-		logger.info("procRepairTargetRangeSelectVO: " + rpairTrgetSlctnVO.toString());
-		HashMap param = new HashMap();
-		param.put("p_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
-		param.put("p_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
-		param.put("p_SLCTN_BUDGET", rpairTrgetSlctnVO.getSLCTN_BUDGET());
-		param.put("p_DEPT_CODE", rpairTrgetSlctnVO.getDEPT_CODE());
-		param.put("p_DECSN_MTHD_1_RATE", rpairTrgetSlctnVO.getDECSN_MTHD_1_RATE());
-		param.put("p_DECSN_MTHD_2_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_2_RATE());
-		param.put("p_DECSN_MTHD_3_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_3_RATE());
-		param.put("p_DECSN_MTHD_4_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_4_RATE());
-		param.put("p_DECSN_MTHD_5_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_5_RATE());
-    	param.put("p_MODE", "NONE");
-    	
-    	HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT", param);
-    	logger.info("procRepairTargetRangeSelectResultVO: " + resultVO.toString());
-    	return resultVO;
-	}
 
-	/**
-	 * 연속구간 연결 및 보수공법 재선정
-	 * @param rpairTrgetSlctnVO
-	 * @return
-	 */
-	public HashMap procRepairTargetRangeString(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
-		logger.info("procRepairTargetRangeStringVO: " + rpairTrgetSlctnVO.toString());
-		HashMap param = new HashMap();
-		param.put("p_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
-		param.put("p_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
-		param.put("p_SLCTN_BUDGET", rpairTrgetSlctnVO.getSLCTN_BUDGET());
-		param.put("p_DEPT_CODE", rpairTrgetSlctnVO.getDEPT_CODE());
-		param.put("p_DECSN_MTHD_1_RATE", rpairTrgetSlctnVO.getDECSN_MTHD_1_RATE());
-		param.put("p_DECSN_MTHD_2_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_2_RATE());
-		param.put("p_DECSN_MTHD_3_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_3_RATE());
-		param.put("p_DECSN_MTHD_4_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_4_RATE());
-		param.put("p_DECSN_MTHD_5_RATE",  rpairTrgetSlctnVO.getDECSN_MTHD_5_RATE());
-    	param.put("p_MODE", "NONE");
-    	
-    	HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_STRING", param);
-    	logger.info("procRepairTargetRangeStringResultVO: " + resultVO.toString());
-    	return resultVO;
-	}
 	/**
 	 * 예산범위내 선정
 	 * @param rpairTrgetSlctnVO

@@ -3,9 +3,7 @@ package kr.go.gg.gpms.rpairtrgetslctn.service;
 import java.util.HashMap;
 import java.util.List;
 
-import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnDefaultVO;
 import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
 
 /**
  * 보수_대상_선정
@@ -19,18 +17,41 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
  * @since 2017-09-11
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 public interface RpairTrgetSlctnService {
 
+    /**
+     * 보수대상선정이력 목록을 조회
+     */
+    List<RpairTrgetSlctnVO> selectRpairTrgetSlctnList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
+
+    /**
+     * 보수대상선정시작 처리
+     */
+    void addRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
+
+    /**
+     * 보수대상선정시작 처리(보수_대상_선정 삭제)
+     */
+    int deleteRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
+
 	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 등록한다.
-	 * @param rpairTrgetSlctnVO - 등록할 정보가 담긴 RpairTrgetSlctnVO
-	 * @return 등록 결과
-	 * @exception Exception
+	 * 보수대상선정시작 처리(보수_대상_선정 등록)
 	 */
 	String insertRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
+
+	/**
+	 * 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
+	 */
+	void procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
+
+
+
+
+
+
 
 	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 수정한다.
@@ -41,28 +62,12 @@ public interface RpairTrgetSlctnService {
 	int updateRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
 
 	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 삭제한다.
-	 * @param rpairTrgetSlctnVO - 삭제할 정보가 담긴 RpairTrgetSlctnVO
-	 * @return int형 
-	 * @exception Exception
-	 */
-	int deleteRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
-
-	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 조회한다.
 	 * @param rpairTrgetSlctnVO - 조회할 정보가 담긴 RpairTrgetSlctnVO
 	 * @return 조회한 TN_RPAIR_TRGET_SLCTN
 	 * @exception Exception
 	 */
 	RpairTrgetSlctnVO selectRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
-
-	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN) 목록을 조회한다.
-	 * @param searchVO - 조회할 정보가 담긴 rpairTrgetSlctnVO
-	 * @return TN_RPAIR_TRGET_SLCTN 목록
-	 * @exception Exception
-	 */
-	List<RpairTrgetSlctnVO> selectRpairTrgetSlctnList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
 
 	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN) 총 갯수를 조회한다.
@@ -79,7 +84,7 @@ public interface RpairTrgetSlctnService {
 	 * @throws Exception
 	 */
 	HashMap procClacprcRepairTargets(RpairTrgetSlctnVO rpairTrgetSlctnVO)throws Exception;
-	
+
 	/**
 	 * 보수대상선정 범위내 선정을 진행한다.
 	 * @param rpairTrgetSlctnVO
@@ -87,7 +92,7 @@ public interface RpairTrgetSlctnService {
 	 * @throws Exception
 	 */
 	HashMap procRepairTargetRangeSelect(RpairTrgetSlctnVO rpairTrgetSlctnVO)throws Exception;
-	
+
 	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN) 범위내 선정을 위한 수정을 한다.
 	 * @param rpairTrgetSlctnVO - 수정할 정보가 담긴 RpairTrgetSlctnVO
@@ -109,12 +114,6 @@ public interface RpairTrgetSlctnService {
 	 * @throws Exception
 	 */
 	HashMap procRepairTargetBudgetRate(RpairTrgetSlctnVO rpairTrgetSlctnVO)throws Exception;
-	/**
-	 * 보수_대상_선정 한 트랜잭션으로 처리
-	 * @param rpairTrgetSlctnVO
-	 * @return
-	 */
-	HashMap procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO)throws Exception;
 
 	/**
 	 * 보수대상 선정 완료 처리
