@@ -126,7 +126,7 @@
 				AND tn_mumm_sctn_srvy_dta.SRVY_YEAR = #SRVY_YEAR#
 				</isNotEmpty>
 				<isNotEmpty property="ROAD_NO">
-				AND cell_10.road_no = #ROAD_NO#
+				AND cell_10.route_code = #ROAD_NO#
 				</isNotEmpty>
 				group by cell_10.route_code, cell_10.dept_code, srvy_year
 			) t2
