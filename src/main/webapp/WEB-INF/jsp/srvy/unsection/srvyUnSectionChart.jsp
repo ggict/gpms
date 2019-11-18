@@ -77,7 +77,7 @@ function drawLenChart(dataList,rw){
 	 
 	var myChart = echarts.init(document.getElementById('lenBarChart'));
 	myChart.setOption({
-		color : [ '#003366', '#4cabce' ],
+		color : [ '#003366', '#4cabce', '#FF0000' ],
 		title : {
 			text : '조사구간현황'
 		},
