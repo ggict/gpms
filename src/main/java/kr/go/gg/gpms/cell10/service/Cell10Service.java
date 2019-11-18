@@ -295,5 +295,7 @@ public interface Cell10Service {
     // 경위도 좌표 이동 > 좌표 입력 시 cell 정보 조회
     List<Cell10VO> selectCellInfoByLonLat(Cell10VO cell10VO) throws Exception;
     int selectCellInfoByLonLatCnt(Cell10VO cell10VO) throws Exception;
+    
+	 List<Cell10VO> selectTest(Cell10VO cell10VO) throws Exception;
 }
 

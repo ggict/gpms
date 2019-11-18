@@ -416,4 +416,9 @@ public class Cell10ServiceImpl extends AbstractServiceImpl implements Cell10Serv
     {      
         return cell10DAO.selectCellInfoByLonLatCnt(cell10VO);
     }
+    
+	public List<Cell10VO> selectTest(Cell10VO cell10VO) throws Exception {
+		return cell10DAO.selectTest(cell10VO);
+	}
+	
 }

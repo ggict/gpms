@@ -680,10 +680,10 @@ public class Cell10Controller extends BaseController {
 
         List<Cell10VO> items = cell10Service.selectRoutStatsPageList(cell10VO);
 
-        @SuppressWarnings("unchecked")
-        List<Cell10VO> chartTotal = cell10Service.selectSrvyUniRoadLenStatsResult(cell10VO);
-        @SuppressWarnings("unchecked")
-        List<Cell10VO> chartData = cell10Service.selectSrvyUniRoutLenStatsResult(cell10VO);
+        //@SuppressWarnings("unchecked")
+        //List<Cell10VO> chartTotal = cell10Service.selectSrvyUniRoadLenStatsResult(cell10VO);
+        //@SuppressWarnings("unchecked")
+        //List<Cell10VO> chartData = cell10Service.selectSrvyUniRoutLenStatsResult(cell10VO);
 
         int total_page = 0;
 
@@ -693,8 +693,8 @@ public class Cell10Controller extends BaseController {
         map.put("page", cell10VO.getPage());
         map.put("total", total_page);
         map.put("rows", items);
-        map.put("chartTotal", chartTotal);
-        map.put("chartData", chartData);
+        //map.put("chartTotal", chartTotal);
+        //map.put("chartData", chartData);
 
         return map;
     }
@@ -1892,6 +1892,31 @@ public class Cell10Controller extends BaseController {
         map.put("page", cell10VO.getPage());
         map.put("total", total_page);
         map.put("records", total_count);
+        map.put("rows", items);
+
+        return map;
+    }
+	
+	
+	/**
+	 * 통계 > 노선현황 > 노선별 통계 목록을 조회한다.
+	 * @return "/stats/route/selectRoutStatsPageList"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/api/stats/test.do" }, method = RequestMethod.POST,consumes = {MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody Map<String, Object> selectTest(@RequestBody Cell10VO cell10VO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+
+        cell10VO.setUsePage(true);
+
+        List<Cell10VO> items = cell10Service.selectTest(cell10VO);
+
+        int total_page = 0;
+
+        // 결과 JSON 저장
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("page", cell10VO.getPage());
+        map.put("total", total_page);
         map.put("rows", items);
 
         return map;
