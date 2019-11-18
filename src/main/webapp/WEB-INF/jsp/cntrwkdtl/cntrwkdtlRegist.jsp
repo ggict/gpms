@@ -543,6 +543,9 @@
                             <table id="gridArea2"></table>
                             <div id="gridPager2"></div>
                         </div>
+                        <div class="fl">
+                    		<a href="javascript:;" onclick="removeCheck();" class="schbtn" style="left">삭제</a>
+                    	</div>
                     </div>
                 </div>
             </form>     
@@ -773,6 +776,14 @@ function fn_select_cell(cell_id){
 	
 	//MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, fields, values);
 	MAP.fn_get_selectFeatureByAttrMulti(parent.gMap, tables, fields, values, null, "AND", attribute_base, true, 0, 1);
+}
+
+function removeCheck(){
+	var recs = jQuery("#gridArea2").jqGrid('getGridParam', 'selarrrow');
+    var rows = recs.length;
+    for (var i = rows - 1; i >= 0; i--) {
+		$('#gridArea2').jqGrid('delRowData', recs[i]);
+	}
 }
 
 //검색 처리
