@@ -2,11 +2,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>타이틀</title>
+
+<link rel="shortcut icon" href="images/favicon.ico" />
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/jquery.ui.custom.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/jquery.window.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/ui.jqgrid.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/magnific-popup.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/button.css'/>"/>
+
+<link href="css/common2.css" rel="stylesheet">
+<link href="css/road2019.css" rel="stylesheet">
+    
 <script src="<c:url value='/extLib/jquery/jquery.ginno.js'/>"></script>
 <script src="<c:url value='/extLib/jquery/jquery.ui.ginno.js'/>"></script>
 <script src="<c:url value='/extLib/jquery/jquery.cookie.js'/>"></script>

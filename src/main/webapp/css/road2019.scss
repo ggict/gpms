@@ -1,0 +1,412 @@
+@mixin clear {
+    &:after{display: block;content: '';clear: both;}
+}
+@mixin a1 {
+    color: #6b6b6b;
+        &:hover,&:focus,&.on{ color: #5391e2}
+}
+$a:#6aa2ec;
+$hover:#5391e2;
+$mapTool2WH:48px;
+$shadow:0 2px 2px rgba(0, 0, 0, 0.1);
+$trans1:all 0.2s ease 0s;
+
+
+/* login */
+.login { display: table; height: 100%; text-align: center;width: 100%;
+    header, section, footer { display:table-row;
+        .container { display: table-cell; vertical-align: middle;}
+    }
+
+    h1 { font-size: 32px; letter-spacing:-1px; font-weight: -500;font-weight: 500; color: #333; padding:40px 0 0 0;
+        span { font-weight: 400;}
+    }
+    section { background: url(../images/loginBg.png) no-repeat center 0;
+        .loginWrap { width: 340px; height: 170px; margin:0 auto;  position: relative; text-align: left;padding-top: 200px;
+            div{ position: relative;
+                + div { padding-bottom: 12px;}
+                input{width: 250px; height: 40px; text-indent: 30px; margin: 0 0 4px 0;}
+                label { position: absolute; left: 12px; top: 12px; color: #aaa;}
+            }
+
+            .btnLogin { position: absolute; right: 0; top: 200px;width: 84px;height: 84px;color: #fff; background: #45576a;border-radius:2px;}
+            a.btnLogin { display: inline-block; text-align: center; padding-top: 35px;height: 49px;}
+            .loginEctMenu {float: right;padding-top: 5px;
+                a{color:#999; font-size: 14px; padding: 3px 9px 3px 5px; background: url(../images/decoDot.gif) no-repeat right 6px;
+                    &:last-child {padding-right: 0; background: none;}
+                }
+            }
+        }
+    }
+
+    .noticeWrap { width: 340px; margin: 0 auto; position: relative; padding: 20px 0 0 0;
+        h3 { position: absolute;left: 0;top: 6px;}
+        ul{padding: 5px 0;}
+        li {padding:0 0 0 45px; font-size: 14px;  clear: both; position: relative;
+             > a {float: left; text-align: left; display: block; padding:0 0 4px 8px; width: 62%; overflow:hidden;text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; color: #666; background: url(../images/decoDot1.png) no-repeat 0 9px;}
+            span {float: right;color: #bbb; font-size: 13px;}
+            .ml10 { position: absolute; right: 78px; top:1px;}
+        }
+        .noticePaging { position: absolute; left:1px;top:50px; font-size: 0;
+            button {font-size: 0;width: 15px;height: 15px; border:solid 1px #ddd; margin-right: -1px; background: url(../images/arrow.gif) no-repeat 0 center;
+                &#next{background-position: right center;}
+            }
+        }
+
+    }
+}
+
+.orgLogo{ color: #777; letter-spacing:-1px; font-size: 14px;
+    span { background: url(../images/ggSlogan.png) no-repeat center; height: 30px; font-size: 0; display: block;}
+}
+
+.copyright {font-size: 11px; color:#bbb;
+    .map & {display: none;}
+}
+
+.header { position: fixed; width: 100%; left: 0;top: 0;border-bottom:solid 1px #aaa; height: 56px; background: #f1f3f4; z-index: 900;
+
+    .h1 { color: #000; font-size: 0; border-right:#aaa solid 1px; float: left; width: 330px; background: #fff;
+        span{font-size: 21px;color: #000000; font-weight:600;letter-spacing: -1px;}
+        img, span { vertical-align:middle}
+    }
+    nav { float: left;
+        li { float: left; width: 150px; position: relative;
+            a {display:block; text-align: center;  @include a1;
+                span{ display: inline-block; padding: 20px 0 0 0 ; height: 35px; font-weight:500; font-size: 16px;  border-bottom:solid 2px rgba(255,255,255,0) }
+                &:hover span, &:focus span{border-bottom: solid 2px $hover}
+            }
+            &:first-child ul{border-left:solid 1px #ededed;}
+            ul {border-right:solid 1px #ededed;overflow: hidden; transition: all 0.2s ease 0s;height: 0;
+                @include clear;
+            }
+            li{width: 100%;
+                a {padding: 8px 0 0 0;height: 26px;font-size: 15px; color: #777;}
+                &:first-child a{padding-top: 18px;}
+                &:last-child a{padding-bottom: 18px;}
+            }
+        }
+        li.on> a >span{border-bottom: solid 2px $hover; color: $hover;}
+    }
+    .navBg{ height: 0;width: 100%;  position: absolute;left: 0;top: 57px; background: #fff;transition: all 0.2s ease 0s}
+    &.on .navBg{ height: 200px; border-bottom: 1px solid rgba(0,0,0,.2); box-shadow:0 2px 4px rgba(0,0,0,.1) }
+    .topMenu { position: absolute;right: 0;top: 0; font-size: 0; line-height: 0;
+        button {height: 56px; width: 55px; background:$a url(../images/btnLogout.png) no-repeat center; font-size: 0; vertical-align: top;
+            &:hover, &:focus {background-color:$hover}
+        }
+        a {display: inline-block; padding: 21px 20px 0 58px;height: 35px; font-size: 16px;line-height: 1; border-left: 1px solid #ededed; background: #fff url(../images/topLink.png) no-repeat 17px 17px;@include a1}
+    }
+    &.nav2.on .nav li ul{height: 98px;}
+    &.nav3.on .nav li ul{height: 132px;}
+    &.nav4.on .nav li ul{height: 166px;}
+    &.nav5.on .nav li ul{height: 200px;}
+    &.nav6.on .nav li ul{height: 234px;}
+    &.nav7.on .nav li ul{height: 268px;}
+    &.nav8.on .nav li ul{height: 302px;}
+    &.nav9.on .nav li ul{height: 336px;}
+    &.nav9.on .nav li ul{height: 370px;}
+}
+
+/* 메뉴활성화 */
+body{
+    &.a00 li.a00,
+    &.b00 li.b00,
+    &.c00 li.c00,
+    &.d00 li.d00,
+    &.e00 li.e00,
+    &.f00 li.f00,
+    &.g00 li.g00,
+    &.h00 li.h00 {
+        span{border-bottom: solid 2px $hover; color: $a;}
+    }
+}
+
+.location {
+    .container{ border-right: solid 1px #d6d6d6; margin:0 1.5%;
+        .locationHeader { float: left;
+            select, h2 {border:none; border-left: solid 1px #d6d6d6; height: 42px; border-radius:0;margin: 0; font-size: 16px;padding: 0 50px  0 20px; float: left;}
+            h2 {padding-top: 11px; padding-left: 30px; height: 31px; font-weight: 600;}
+            select { background: url(../images/selecetArrow2.gif) no-repeat 92% 19px;
+                &:hover,&:focus{ background-position: 92% -25px;}
+            }
+        }
+        .locationSearch {float: right; padding-top: 4px;
+            h3{display: inline-block;}
+            label{padding-left: 12px; color: #999;}
+            .btnSearch {width: 30px; height: 30px; font-size: 0; background:#777 url(../images/btnSearch.png) no-repeat center; border-radius: 3px; margin:2px 6px 0 0; vertical-align: top}
+        }
+
+    }
+}
+.contentsWrap { border-top: 1px solid #69707e; position: fixed; width: 100%;bottom: 0;left: 0;height: 0;background: #fff; transition:all 0.2s ease 0s; z-index: 200;
+    &.on {height: 295px;
+        button.btnContentOpen { display: none;}
+        button.btnContentClose { display: block;}
+    }
+    .div4 > article { width: 24.5%;float: left; margin-left: 1%;
+        &:first-child {margin-left: 0; width: 23.5%;}
+    }
+    button.btnContentOpen, button.btnContentClose {width: 105px;height: 19px;background: #fff;border:solid 1px #69707e; border-bottom:none; font-size: 0; background:#fff url(../images/btnUpDn.gif) no-repeat center -33px; position: absolute; left: 49%;top: -19px;
+        &:hover,&:focus {background-position: center -53px; }
+    }
+    button.btnContentClose {background-position: center 7px; display: none;
+        &:hover,&:focus {background-position: center -13px; }
+    }
+}
+
+.contents { border-top:solid 1px #d6d6d6;
+    &.container {padding: 10px 1.5%;}
+}
+
+.maxHeight { overflow-y: auto; border-bottom: solid 1px #ddd;
+    &.max200 {max-height: 200px}
+}
+
+.h3 {font-weight:600; font-size: 16px; padding: 20px 0 10px 0;}
+.h3 + .coSpan { float: right; margin-top: -26px;}
+
+.infA {position: relative; width: 100%; height: 57px;
+    dt,dd{position: absolute; font-size: 13px; text-align: center; margin: 0 1%; }
+    dt { top: 35px; }
+    dd { border-radius:20px; color: #fff; height: 26px;padding-top: 6px; font-size: 17px; }
+
+    .infA-1 { left: 0; width: 18%}
+    dd.infA-1 { background:#4587ff}
+    .infA-2 { left: 20%; width: 33%;}
+    dd.infA-2 { background:#eb5739}
+    .infA-3 { left: 55%; width: 43%;}
+    dd.infA-3 { background:#818894}
+    + .table { margin: 0;
+        td, th {padding: 3px;}
+    }
+}
+.coInfo {padding: 3px 0 0 0;
+    button{font-size: 12px; border:solid 1px #ddd; border-radius:2px; padding: 1px 4px 1px 20px; background: #fff url(../images/iconView.gif) no-repeat 4px 2px;
+        &:hover,&:focus {border:solid 1px $hover}
+    }
+    span{float: right; color: #999;font-size: 12px;};
+}
+.workHistory {
+    .pagingSummary { color: #999; font-size: 13px; float: left;}
+    .table {margin: 0 0 5px 0; height:155px;overflow:auto; border-bottom:#ddd solid 1px;
+        th, td { font-size: 12px; padding: 2px 4px;}
+        td {overflow: hidden;}
+    }
+    .pageTotal { font-size: 12px;}
+    .paging { float: right;
+        a, strong { font-size: 12px;min-width: 18px; height: 20px;padding: 0;}
+        a.pageFirst, a.pageBefore, a.pageNext, a.pageLast { font-size:0; background: url(../images/pagingS.gif) no-repeat center 7px;}
+        a.pageBefore {background-position: center -13px}
+        a.pageNext {background-position: center -33px}
+        a.pageLast {background-position: center -53px}
+    }
+
+
+}
+
+button.btnLocView { width: 10px;height: 16px;background: url(../images/btnLocation.gif); font-size: 0; vertical-align: middle; }
+
+/* 지도영역 */
+.mapArea {position: fixed; top: 57px;bottom: 0;left: 0;right: 0;}
+
+/* 지도 툴영역 */
+.toolArea { position: fixed; top: 57px;bottom: 0;left: 0;right: 0; background: rgba(255,255,255,0.5); z-index: 100;}
+.mapTool { width: 40px;border:solid 1px rgba(0,0,0,0.1); box-shadow:$shadow; position: absolute;left: .5%;top: 12px;
+    .mt {border-top:solid 1px #ddd; position: relative;
+        &:first-child { border-top:none}
+    }
+    .mtBtn{display: inline-block;box-sizing:border-box;width: 40px;height: 42px; padding: 25px 0 0 0;margin: 0; text-align: center; font-size: 10px;letter-spacing: -1px; background: #fff url(../images/mapTool.png) no-repeat 0 0; color:#93a2b0;font-weight: 500;
+        &:hover, &:focus {background-color: #eef1f5;}
+    }
+    .position {}
+    .locSearch {background-position:0 -40px}
+    .move { background-position:0 -80px}
+    .zoomIn { background-position:0 -120px}
+    .zoomOut { background-position:0 -160px}
+    .before { background-position:0 -200px}
+    .next { background-position:0 -240px}
+    .viewAll { background-position:0 -280px}
+    .distance { background-position:0 -320px}
+    .partView { background-position:0 -360px}
+    .refresh { background-position:0 -400px}
+    .print { background-position:0 -442px}
+    .save     { background-position:0 -484px}
+}
+
+.mapTool2 { font-size: 0;  position: absolute;right: .5%;top: 12px;height: $mapTool2WH;
+    article {float: left; border-left:solid 1px #ddd;
+        &:first-child { border-left:none}
+     }
+    .group {border:solid 1px rgba(0,0,0,0.1); box-shadow:$shadow; margin-left: 6px; float: left; font-size: 0; height: $mapTool2WH; position: relative;}
+    .mt2Btn{width: $mapTool2WH;height: $mapTool2WH; box-sizing:border-box; padding: 28px 0 0 0;margin: 0; float: left;text-align: center; font-size: 10px;letter-spacing: -1px;background: #fff url(../images/mapTool2.png) no-repeat 0 0; color:#93a2b0;font-weight: 500;
+        &:hover, &:focus {background-color: #eef1f5;}
+    }
+    .generalMap { background-position:0 0}
+    .satelliteMap { background-position:0 -47px}
+    .totalSearch { background-position:0 -93px}
+    .searchInfo { background-position:0 -138px}
+    .cellEdit { background-position:0 -183px}
+    .themeMap { background-position:0 -230px}
+    .generalMap.on, .satelliteMap.on, .totalSearch.on, .searchInfo.on, .cellEdit.on, .themeMap.on { background-position-x:-46px; background-color: $a; color:#fff}
+}
+.indexMapWrap {position: absolute;right: .5%; top: 70px; width: 195px; box-shadow:$shadow; background:#fff;
+    button {width: 100%; font-size:13px; text-align: left; padding: 5px; background: #94a0bc url(../images/btnMore.gif) no-repeat 95% 6px;color:#fff ;  border-top:solid 1px rgba(0,0,0,0.1)}
+    button:hover, button:focus, .on button { background-color: $a;}
+    .ctn {height: 0; transition:$trans1}
+    .on {
+        .ctn {height: 200px;}
+        button { background-position: 95% -18px;}
+    }
+}
+
+/* 현재화면인쇄 */
+.btnPrint {height: 30px; border-radius:2px;position: absolute;right: 10px;bottom: 10px;padding: 0 10px 0 34px;background: $a url(../images/btnPrint.png) no-repeat 8px 6px; color:#fff;
+    &:hover,&:focus { background-color: $hover;}
+}
+.printContent_note { position: absolute;bottom: 10px; left: 10px; font-size: 13px; color: #999;}
+.printContent {border:solid 1px #ddd; margin-bottom: 36px;}
+
+
+/* 지도 이미지 저장 창 */
+#mapSave .jsDivContent {width: 500px; height: 150px; min-height: inherit;}
+.jsDiv .btn,
+.sideDiv .btn {height: 30px; border-radius:2px;padding: 0 10px;background: $a; color:#fff;
+    &:hover,&:focus { background-color: $hover;}
+}
+.jsDiv .btnSave {
+    @extend .btnSave;
+    position: absolute;right: 10px;bottom: 10px;
+}
+#mapSave .btnSave {
+    @extend .btnSave;
+    position: absolute;right: 10px;top: 46px;
+}
+input.mapPosition_X,
+input.mapPosition_Y { width: 100px;}
+
+.posR { position: absolute; right: 10px;top: 48px;}
+.btn.btnSearch { width: 30px; font-size: 0;background-image: url('../images/btnSearch.png'); background-repeat: no-repeat; background-position: center}
+
+/* jsDiv */
+article.jsDiv{ display: none; position: fixed; left: 0;top: 0; width: 100%; height: 100%; z-index: 1000; background: rgba(0, 0, 0, 0.3);
+	&.on { display: block; }
+}
+.jsDivContent { width: 90%; max-height: 85%; min-height: 50%; padding: 10px; margin: 10% auto; background: #f9f9f9; border-radius: 2px; position: relative; overflow: hidden; overflow-y: auto; box-shadow: 0 3px 5px rgba(0,0,0,.2);
+	h3{ font-size: 16px;padding: 3px 0 10px 0}
+	input.btnClose, a.btnClose {right: 10px;top: 8px;}
+    &.jsDivS { min-width: 500px; width: 50%;}
+    .content { border:solid 1px #ddd; padding: 10px;}
+}
+
+a.btnJsDivClose{ background: url(../../images/btnPopupClose.gif) no-repeat center center; display: block; width: 21px;height:21px; padding: 0; position: absolute; right:10px;top: 10px; border: #bbb 1px solid; border-radius:2px; text-indent: -9999px;overflow: hidden; opacity: 0.7; font-size: 0;
+	&:hover,
+	&:focus { opacity: 1; background-color: #ededed; }
+}
+
+
+/* sideDiv */
+article.sideDiv{ display: none; position: absolute; left:45px;top: 0; z-index: 1000; padding: 10px; background: #fff; border:solid 1px rgba(0,0,0,0.2); border-radius: 2px; box-shadow: 0 3px 5px rgba(0,0,0,.2); width: 300px;
+    &:before { display: block; content: ''; left: -10px; top: 15px;width: 10px;height: 20px; background: url(../images/sideDivArrow.png) no-repeat ; position: absolute;}
+	&.on { display: block; }
+    h3{ font-size: 15px;padding: 1px 0 8px 0}
+	input.btnClose, a.btnClose {right: 10px;top: 8px;}
+    .content { border-top:solid 1px #ddd; padding: 10px 0 0 0;
+        input[type="text"] {margin: 0};
+    }
+    .table td, .table th {padding: 5px;}
+}
+article.sideDiv.up {
+    @extend article.sideDiv;
+    top: 52px;
+    left:inherit;
+    right: 0;
+    &:before {background: url(../images/sideDivArrowUp.png) no-repeat; top: -10px;width: 20px;height: 10px;left: 70%}
+}
+
+a.btnSideDivClose{ background: #ededed url(../../images/btnPopupClose.gif) no-repeat center center; display: block; width: 25px;height:25px; padding: 0; position: absolute; right:10px;top: 10px; border: #bbb 1px solid; border-radius:2px; text-indent: -9999px;overflow: hidden; opacity: 0.7;
+	&:hover,
+	&:focus { opacity: 1 }
+}
+
+.searchResultSummary { text-align: right; color: #999; font-size: 12px;}
+#locSearchResult {display:none;
+    &.on { display: block;}
+    ul{ max-height: 600px; overflow-y: auto; }
+
+    li { font-size: 15px; border-top:solid 1px #ddd; padding: 8px 0; font-weight: 600;
+        &:hover { background-color:#f1f5fb}
+        p { font-size: 13px;color: #444}
+        .addrRoad {padding-top: 2px;}
+        span { font-size: 13px;color: #999;}
+        .addrRoad .addrS { position: fixed; left: -9999px;}
+        .addrLoc {color: #999;}
+    }
+}
+
+#totalSearch {width: 500px;}
+#totalSearch:before { left: inherit; right: 160px;}
+.btnIconLocView { background:url(../images/btnIconLocView.png) no-repeat center 0; font-size: 0; width: 12px;height: 18px;vertical-align: middle;
+    &:hover,&:focus { background-position: center bottom;}
+}
+
+#totalSearch { font-size: 13px;
+h4 {font-size: 14px; padding-bottom: 6px; /* display: inline-block; background: #f9f9f9;padding: 2px 6px; border-radius:2px; border:solid 1px #ededed */}
+    label, input{font-size: 13px;}
+}
+.totalSearch_step1 { width: 57%; float: left; padding-bottom: 8px;border-right: 1px solid #ddd;padding-right: 2%;
+    .tSt_group {
+        a { font-size: 13px;line-height: 1.3em; display: block; width: 33%;float: left; margin-left: -1px;text-align: center;height: 90px; box-sizing:border-box; padding-top: 44px; background: #f9f9f9 url(../images/totalSearch_step1.png) no-repeat center 0; border:solid 1px #ededed;
+            .sm {font-size: 11px;display: block; line-height: 1;}
+         }
+        .tSt11{padding-top: 58px;
+            #totalSearch.tSt11 & {background-position-y:-90px; background-color: $a; color:#fff}
+        }
+        .tSt12{ background-position-y: -180px;
+            #totalSearch.tSt12 & {background-position-y:-270px; background-color: $a; color:#fff}
+         }
+        .tSt13{padding-top: 52px;background-position-y: -360px;
+            #totalSearch.tSt13 & {background-position-y: -450px; background-color: $a; color:#fff}
+        }
+    }
+
+}
+.totalSearch_step2 { width: 40%; float: right; margin-bottom: 8px;
+
+    .tSt_group { font-size: 13px;
+        input[type="text"] {width: 45px; height: 26px;}
+    }
+}
+.totalSearch_step3 { clear: both; border-top: solid 1px #ededed;padding-top: 10px;
+    .btnUpDnWrap{margin: -32px 0 0 0;}
+    .searchResultSummary { display: none;}
+    div.table {overflow:hidden; height: 0; opacity:0;transition: $trans1;}
+    &.on{
+        .searchResultSummary { display: block;}
+        div.table { overflow-y:auto; height: 300px; opacity:1}
+    }
+
+    .btnOpen2, &.on .btnClose2 { display: inline-block;}
+    &.on .btnOpen2,
+    .btnClose2 { display: none;}
+
+
+}
+.btnUpDnWrap {float: right;
+    button {font-size: 0;width: 21px;height: 18px;}
+}
+
+.btnOpen2,
+.btnClose2 {background: url(../images/selecetArrow2.gif) no-repeat center -83px; border:solid 1px #dedede; border-radius:2px;
+    &:hover,&:focus {background-position: center -127px; border:solid 1px #ddd}
+}
+.btnOpen2 {background-position: center 6px;
+    &:hover,&:focus {background-position: center -38px;}
+}
+
+/* table 추가 사항 CSS */
+.table {
+    td, th {font-size: 13px;}
+}
+
+
+.pri {background: $a;}

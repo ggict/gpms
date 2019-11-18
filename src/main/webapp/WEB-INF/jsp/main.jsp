@@ -14,66 +14,92 @@
 
 <title>경기도 포장관리시스템</title>
 <%@ include file="/include/header.jsp" %>
-<link type="text/css" rel="stylesheet" href="<c:url value='/css/reset.css'/>" />
-<link type="text/css" rel="stylesheet" href="<c:url value='/css/login.css'/>" />
-
 </head>
 
-<body>
-    <div id="loginwrap">
-    <img src="<c:url value='/images/login_logo.png'/>" alt="경기도" class="glogo" />
-        <div class="login">
-            <img src="<c:url value='/images/login_logo3.png'/>" alt="경기도 포장관리시스템(PMS)" class="logo" id="gpmsLogo"/>
-           <%--  <img src="<c:url value='/images/login_logo2.png'/>" alt="경기도로 모니터링단 시스템" class="logo" id="goodLogo" style="display: none;"/> --%>
-            <div class="loginbx">
-                <img src="<c:url value='/images/login_tit.png'/>" alt="로그인" class="tit" style="display: none;"/>
+<body class="login">
+<header>
+        <div class="container">
+            <h2 class="orgLogo"><span>새로운경기 공정한 세상</span>경기도 건설국 도로안전과</h2>
+            <h1>지능형 도로포장상태 <span>예측 및 예방시스템</span></h1>
+        </div>
+    </header>
+    <section>
+        <div class="container">
+            <article class="loginWrap">
+                <h3 class="hidden">로그인</h3>
+
+
+
 
                 <form name="loginFrm" id="loginFrm" method="post" action="">
                     <!-- 필수 파라메터(START) -->
                     <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
                     <input type="hidden" id="opener_id" name="opener_id" value=""/>
                     <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
-                    <ul class="form">
-                        <li><input type="text" class="iplogin" name="USER_ID" id="id" title="아이디를 입력하세요" /></li>
-                        <li><input type="password" class="iplogin" name="SECRET_NO" id="password" title="비밀번호를 입력하세요" onkeypress="if(event.keyCode==13) {fn_login(); return false;}"/></li>
-                        <li><a href="#" onclick="fn_login();" class="btn">로그인</a></li>
-                        <li class="pt10 tr">
-                            <span class="fl"><input type="checkbox" id="idSaveCheck" title="아이디저장" /> 아이디저장</span>
-                            <a href="#" onclick="fn_regUser()" class="mr5">사용자신청</a>
-                            <a href="#" onclick="fn_selUserInfo()">아이디/비밀번호 찾기</a>
-                        </li>
-                    </ul>
+
+                    <div>
+                    	<label for="id">ID</label>
+                     	<input type="text" class="iplogin" name="USER_ID" id="id">
+                    </div>
+                    <div>
+                    	<label for="password">PW</label>
+                     	<input type="password" class="iplogin" name="SECRET_NO" id="password" onkeypress="if(event.keyCode==13) {fn_login(); return false;}"/>
+                    </div>
+
+                    <input type="checkbox" id="idSaveCheck" /><label for="idSaveCheck">아이디저장</label>
+                    <a href="#" onclick="fn_login();" class="btnLogin">LOGIN</a>
+
+                    <span class="loginEctMenu">
+						<a href="#" onclick="fn_regUser()" class="mr5">사용자신청</a>
+						<a href="#" onclick="fn_selUserInfo()">아이디/비밀번호 찾기</a>
+                    </span>
                 </form>
-            </div>
-            <div class="loginCon">
+
+            </article>
+
+            <article class="noticeWrap">
+                <h3 class="h3">공지</h3>
+                <span class="noticePaging">
+                    <button id="prev" type="button" name="button" onclick="javascript:fnNoticeListSearch('prev')">이전</button>
+                    <button id="next" type="button" name="button" onclick="javascript:fnNoticeListSearch('next')">다음</button>
+                </span>
                 <div class="notice">
-                    <h3 c>공지사항
-                        <span class="fr af">
-                            <a href="#" class="fl"><img id = "prev" src="<c:url value='/images/ln_prev1.gif'/>" onclick="javascript:fnNoticeListSearch('prev')" alt="이전" title="이전" /></a>
-                            <a href="#" class="fl"><img id = "next"  src="<c:url value='/images/ln_next2.gif'/>" onclick="javascript:fnNoticeListSearch('next')" alt="다음" title="다음" /></a>
-                        </span>
-                    </h3>
                     <ul>
                         <%-- <c:forEach var="notice" items="${noticeList}" varStatus="status">
                         </c:forEach> --%>
                     </ul>
                 </div>
-
-                <ul class="bn">
-                    <li><a href="#"><img src="<c:url value='/images/bn_login1.gif'/>" alt="도로대장관리 시스템" title="도로대장관리 시스템" onclick="window.open('http://105.0.111.83:3200')"/></a></li>
-                    <li><a href="#"><img src="<c:url value='/images/bn_login2.gif'/>" alt="교량관리 시스템" title="교량관리 시스템" onclick="window.open('http://nbms.kict.re.kr/nbms/index.jsp')"/></a></li>
-                    <li><a href="#"><img src="<c:url value='/images/bn_login3.gif'/>" alt="TMS 시스템" title="TMS 시스템" onclick="window.open('http://gits.gg.go.kr/web/main/index.do')"/></a></li>
-                    <li><a href="#"><img src="<c:url value='/images/bn_login4_good.gif'/>" alt="포트홀신고 시스템" title="포트홀신고 시스템" id="good"  onclick="window.open('http://105.0.111.7:3300/gpms/')"/></a></li>
-                </ul>
-
-            </div>
+                <!-- <ul>
+                    <li>
+                        <a href="">전체 사용자 권한 재지정은 이러쿵 저러쿵 해 주면 됩니다. 등등등 </a>
+                        <span>2019.01.01</span>
+                    </li>
+                    <li>
+                        <a href="">누락된 포장셀 구축요청 안내 이러쿵 저러쿵 해 주면 됩니다. 등등등</a>
+                        <span>2019.01.01</span>
+                    </li>
+                    <li>
+                        <a href="">경기도 포장도로관리시스템 이러쿵 저러쿵 해 주면 됩니다. 등등등</a>
+                        <span>2019.01.01</span>
+                    </li>
+                </ul> -->
+            </article>
         </div>
-        <!-- 공통 (START)-->
-        <%@ include file="/include/common.jsp" %>
-        <!-- 공통 (END)-->
-        <jsp:include page="/include/footer.jsp"/>
-    </div>
+    </section>
 
+    <footer>
+       <div class="container">
+           <p class="copyright">COPYRIGHT(c)2019 ALL RIGHTS RESERVED.</p>
+       </div>
+       <%@ include file="/include/common.jsp" %>
+   </footer>
+
+    <%-- <ul class="bn">
+         <li><a href="#"><img src="<c:url value='/images/bn_login1.gif'/>" alt="도로대장관리 시스템" title="도로대장관리 시스템" onclick="window.open('http://105.0.111.83:3200')"/></a></li>
+         <li><a href="#"><img src="<c:url value='/images/bn_login2.gif'/>" alt="교량관리 시스템" title="교량관리 시스템" onclick="window.open('http://nbms.kict.re.kr/nbms/index.jsp')"/></a></li>
+         <li><a href="#"><img src="<c:url value='/images/bn_login3.gif'/>" alt="TMS 시스템" title="TMS 시스템" onclick="window.open('http://gits.gg.go.kr/web/main/index.do')"/></a></li>
+         <li><a href="#"><img src="<c:url value='/images/bn_login4_good.gif'/>" alt="포트홀신고 시스템" title="포트홀신고 시스템" id="good"  onclick="window.open('http://105.0.111.7:3300/gpms/')"/></a></li>
+    </ul> --%>
 
 
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
@@ -232,13 +258,13 @@ function fnNoticeListSearch(param) {
                 var noticeList = '';
 
                 for(var i=0; i<dataList.length; i++){
-                    noticeList += '<li><a class="ntxt" style="cursor: pointer;" onclick="fn_view('+ dataList[i].SEQ_NO+');" title="' + dataList[i].SJ + '">' + dataList[i].SJ + '</a>';
-                    noticeList += '<span class="date">'+dataList[i].REGIST_DT+'<a href="#" class="ml10">';
+                    noticeList += '<li><a href="#none" onclick="fn_view('+ dataList[i].SEQ_NO+');">' + dataList[i].SJ + '</a>';
+                    noticeList += '<span>'+dataList[i].REGIST_DT+'<a href="#none" class="ml10">';
 
                     if(dataList[i].POS == null || dataList[i].POS == ''){
                         noticeList +='';
                     }else{
-                        noticeList += '<img src='+src+' onclick="fn_file_down('+dataList[i].POS+');" alt="첨부파일 다운로드" title="첨부파일 다운로드" /></a></span></li>';
+                        noticeList += '<img src='+src+' onclick="fn_file_down('+dataList[i].POS+');" alt="첨부파일" title="다운로드" /></a></span></li>';
                     }
                 }
 

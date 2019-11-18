@@ -3,8 +3,9 @@
 <%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
 <title><c:out value="${screen_title}"/></title>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jstree/default/style.min.css'/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value='/css/reset.css'/>"/>
+<%-- <link type="text/css" rel="stylesheet" href="<c:url value='/css/reset.css'/>"/> --%>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/common.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/css/common2.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/jquery.ui.custom.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/jquery.window.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/ui.jqgrid.css'/>"/>
