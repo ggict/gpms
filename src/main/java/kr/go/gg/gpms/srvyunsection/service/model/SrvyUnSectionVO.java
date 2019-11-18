@@ -32,6 +32,16 @@ public class SrvyUnSectionVO extends BaseVO implements Serializable {
 	
 	private String GEOJSON;
 	
+	public String getDEPT_NAME() {
+		return DEPT_NAME;
+	}
+
+	public void setDEPT_NAME(String dEPT_NAME) {
+		DEPT_NAME = dEPT_NAME;
+	}
+
+	private String DEPT_NAME;
+	
 	private transient int TOTAL_COUNT;
 
 	@JsonProperty(value="ROUTE_CODE")

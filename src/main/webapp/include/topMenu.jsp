@@ -17,10 +17,7 @@
                             <ul>
                                 <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/sysUserList.do"/>')" class="sm14">사용자 관리</a></li>
                                 <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/applyUserList.do"/>')" class="sm15">사용자 신청 관리</a></li>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/dept/selectDeptList.do"/>')" class="sm12">경기도 조직 부서 관리</a></li>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/company/companyList.do"/>')" class="sm16">공사 업체 관리</a></li>
                                 <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/selectSysUserLog.do"/>')" class="sm17">사용자 접속로그 조회</a></li>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/monitor/mntrngMbr.do"/>')" class="sm18">모니터링단원 관리</a></li>
                             </ul>
                         </div>
                     </li>

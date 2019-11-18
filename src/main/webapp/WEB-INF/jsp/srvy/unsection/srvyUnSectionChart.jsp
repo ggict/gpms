@@ -66,17 +66,21 @@ function fu_getChartData(){
 function drawLenChart(dataList,rw){
  	var gRouteNm 	= [];		
  	var lenData		= [];
- 	var GpmlenData		= [];
+ 	var GpmlenData	= [];
+ 	var ManageLen	= [];
  	var degree		= 40;
  	if(dataList.length < 10){
  		degree = 0;
  	}
+
  	for(var i=0; i<dataList.length; i++){
- 			gRouteNm.push(dataList[i].ROAD_NAME);
  			lenData.push(Number(dataList[i].TOTAL_ROAD_L));
  			GpmlenData.push(Number(dataList[i].ROAD_L));
+ 			gRouteNm.push(dataList[i].dept_NAME);
+ 			ManageLen.push(Number(dataList[i].DO_MANAGE_SCTN_LEN));
+ 			
  	}
-		 
+	 
 	var myChart = echarts.init(document.getElementById('lenBarChart'));
 	myChart.setOption({
 		color : [ '#003366', '#4cabce' ],
@@ -95,7 +99,7 @@ function drawLenChart(dataList,rw){
 			}
 		},
 		legend : {
-			data : [ '총연장', '조사구간' ]
+			data : [ '총연장', '도 관리구간 연장' ,'조사연장' ]
 		},
 		grid : {
 			/* width : rw+'px',
@@ -120,7 +124,11 @@ function drawLenChart(dataList,rw){
 			type : 'bar',
 			data : lenData
 		}, {
-			name : '조사구간',
+			name : '도 관리구간 연장',
+			type : 'bar',
+			data : ManageLen
+		}, {
+			name : '조사연장',
 			type : 'bar',
 			data : GpmlenData
 		} ]
