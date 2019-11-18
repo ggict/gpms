@@ -45,21 +45,21 @@ $( document ).ready(function() {
         ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
         ,postData: $("#frm").cmSerializeObject()
         ,ignoreCase: true
-        ,colNames:["도로등급","노선번호","노선명","총연장(m)","개통도(m)","미개통도(m)","총연장(m)","국지도","지방도","미개통도(m)"]
+        ,colNames:["도로등급","노선번호","노선명","총연장(km)","계","소계","2차로","4차로","공사구간","미개통구간"]
         ,colModel:[
-            {name:'ROAD_GRAD',index:'ROAD_GRAD', align:'center', width:60, sortable:false,summaryType:'count', summaryTpl : ' ',cellattr:jsFormatterCell}
-            ,{name:'ROUTE_CODE',index:'ROUTE_CODE', align:'center', width:60, sortable:false,summaryType:'count', summaryTpl : '전체'}
-            ,{name:'ROUTE_NAME',index:'ROUTE_NAME', align:'center', width:60, sortable:false,summaryType:'count', summaryTpl : '{0}개 노선'}
-            ,{name:'SUM_L',index:'SUM_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
-            ,{name:'OP_L',index:'OP_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
-            ,{name:'NOP_L',index:'NOP_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
-            ,{name:'SUM_LEN',index:'SUM_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
-            ,{name:'NJR_LEN',index:'NJR_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
-            ,{name:'JBR_LEN',index:'JBR_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
-            ,{name:'UNTRACK_LEN',index:'UNTRACK_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
+        	{name:'road_grad',index:'road_grad', align:'center', width:60, sortable:false,summaryType:'count', summaryTpl : ' ',cellattr:jsFormatterCell}
+        	,{name:'route_code',index:'route_code', align:'center', width:60, sortable:false,summaryType:'count', summaryTpl : '전체'}
+        	,{name:'route_name',index:'route_name', align:'center', width:60, sortable:false,summaryType:'count', summaryTpl : '{0}개 노선'}
+        	,{name:'total_l',index:'total_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
+        	,{name:'sum_l',index:'sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
+        	,{name:'sub_sum_l',index:'sub_sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
+        	,{name:'track2_len',index:'track2_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
+        	,{name:'track4_len',index:'track4_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
+        	,{name:'cntrwk_len',index:'cntrwk_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
+        	,{name:'unopn_len',index:'unopn_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3},summaryType:'sum'}
         ]
         ,async : false
-        ,sortname: 'ROUTE_CODE'
+        ,sortname: 'route_code'
         ,sortorder: "desc"
         ,rowNum: 100
         ,rowList: [20,50,100,500]
@@ -78,7 +78,7 @@ $( document ).ready(function() {
         }
        ,grouping: true
        ,groupingView : {
-            groupField : ['ROAD_GRAD'],
+            groupField : ['road_grad'],
             groupColumnShow : [true],
             groupText : ['<b>{0}</b>'],
             groupSummary : [true]
@@ -100,28 +100,24 @@ $( document ).ready(function() {
         //,scroll: true
     }).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
     
-    $("#gridArea").jqGrid('setGroupHeaders', {
-        useColSpanStyle: true, 
-        groupHeaders:[
-            {startColumnName: 'SUM_L',
-             numberOfColumns: 3,
-             titleText: '<table style="width:100%;">'
-                         +'<tr><td id="h0" colspan="3">국토부('+   nYear +')</td></tr>'
-                         +'<tr><td> </td></tr></table>'}
-            ,{startColumnName: 'SUM_LEN', 
-             numberOfColumns: 4, 
-             titleText: '<table style="width:100%;">'
-                         +'<tr><td id="h0" colspan="3">GPMS(당해년도)</td></tr>'
-                         +'<tr><td></td><td id="h1" >중용구간(m)</td><td></td><td></td></tr></table>'
-            }
-        ]   
-    });
-    
     var height = $(parent.window).height() - 250;
     
     COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
     
     fnSearch();
+    
+    $("#gridArea").jqGrid('setGroupHeaders', {
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'road_grad', numberOfColumns: 4, titleText: ''},
+                    {startColumnName: 'sum_l', numberOfColumns: 6, titleText: '도 관리구간(km)'}
+                ]   
+            }).jqGrid('setGroupHeaders', {
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'sub_sum_l', numberOfColumns: 3, titleText: '포장구간'}
+                ]   
+            })
     
     $(window).resize(function(){
         var height = $(parent.window).height() - 250;
@@ -176,11 +172,12 @@ function fnSearch() {
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
 
 	   		//차트그리기
-	   		var totalList = data.chartTotal;
-        	var dataList = data.chartData;
-			drawGradLenChart(totalList,rw);
-			drawGpmsGradLenChart(totalList,rw);
-			drawLenChart(dataList,rw);
+	   		//var totalList = data.chartTotal;
+        	//var dataList = data.chartData;
+			//drawGradLenChart(totalList,rw);
+			//drawGpmsGradLenChart(totalList,rw);
+			//drawLenChart(dataList,rw);
+	   		drawLenChart(data.rows,rw);
 
 	   	}
 	}).trigger("reloadGrid");
@@ -192,21 +189,17 @@ function changRoutCol(yy){
     $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
                 
     $("#gridArea").jqGrid('setGroupHeaders', {
-        useColSpanStyle: true, 
-          groupHeaders:[
-            {startColumnName: 'SUM_L',
-             numberOfColumns: 3,
-             titleText: '<table style="width:100%;">'
-                         +'<tr><td id="h0" colspan="3">국토부('+   nYear +')</td></tr>'
-                         +'<tr><td> </td></tr></table>'}
-            ,{startColumnName: 'SUM_LEN', 
-             numberOfColumns: 4, 
-             titleText: '<table style="width:100%;">'
-                         +'<tr><td id="h0" colspan="3">GPMS(당해년도)</td></tr>'
-                         +'<tr><td></td><td id="h1" >중용구간(m)</td><td></td><td></td></tr></table>'
-            }
-          ]
-    });
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'road_grad', numberOfColumns: 4, titleText: ''},
+                    {startColumnName: 'sum_l', numberOfColumns: 6, titleText: '도 관리구간(km)'}
+                ]   
+            }).jqGrid('setGroupHeaders', {
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'sub_sum_l', numberOfColumns: 3, titleText: '포장구간'}
+                ]   
+            })
 }
 
 function fnRoutStatsSearch(sYear){
@@ -255,192 +248,87 @@ function fnExcel() {
 	 }
  }
  
-//국토부 총연장 PIE 그래프 그리기 
- function drawGradLenChart(dataList,rw){
-
-
-	
- 	var lenData	= [];
- 	for(var i=0; i<dataList.length; i++){
- 		//lenData.push({"value" : dataList[i].SUM_L, "name" : dataList[i].ROAD_GRAD});
- 		lenData.push({"value" : routeStatsTable_Utils.toFiexd(Number(dataList[i].LEN), 3), "name" : dataList[i].ROAD_NAME});
- 	}
-
- 	require([	'echarts','echarts/chart/pie'	],
- 	        function (ec) {
- 				 var myChart = ec.init(document.getElementById('admGpmsGradLenPieChart'));
- 				 myChart.setOption({
- 		            	title 	: {	text: '국토부 총연장(km)'	},
- 		                tooltip : {	trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)"},
- 		                legend: {
- 		                    orient : 'vertical',
- 		                    x : 'right',
- 		                    y : 'center',
- 		                    data:['국지도','지방도']
- 		                },
- 		                toolbox : {	show: true,
- 			    			feature: {
- 				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
- 				    			//saveAsExcel : {show: true},					// 엑셀저장
- 				    			saveAsImage: {show: true}					// 이미지저장
- 				    		}	
- 			    		},
- 			    		calculable : true,
- 		                series : [
- 		                    {
- 		                        name: '',
- 		                        type: 'pie',
- 		                        radius : ['0%', '70%'],		                        
- 		                        itemStyle: {
- 		                        	normal : {
- 		                        		label : {
- 		                        			show : true,
- 		                        			formatter: '{a}{b} \n {c} \n({d}%)',
- 		                        			position: 'inner',
- 			                        		textStyle : {
- 					                        	color:'#000000'
- 		                        			}
- 		                        		},
- 		                        		labelLine : {
- 		                        			show : false
- 		                        		}
- 		                        	},
- 		                        	emphasis : {
- 		                        		label : {
- 		                        			show : false,
- 		                        			position : 'center',
- 		                        			textStyle : {
- 		                        				fontSize : '50',
- 		                        				fontWeight : 'bold'
- 		                        			}
- 		                        		}
- 		                        	}
- 		                        },
- 		                        data: lenData
- 		                    }
- 		                ]
- 		            });
-
- 			});		
- }
- //GPMS 총연장 PIE 그래프 그리기 
- function drawGpmsGradLenChart(dataList,rw){
- 	var lenData	= [];
- 	for(var i=0; i<dataList.length; i++){
- 		//lenData.push({"value" : dataList[i].SUM_LEN, "name" : dataList[i].ROAD_GRAD});
- 		lenData.push({"value" : routeStatsTable_Utils.toFiexd(Number(dataList[i].SUM_LEN), 3), "name" : dataList[i].ROAD_NAME});
- 	}
- 	require([	'echarts','echarts/chart/pie'	],
- 	        function (ec) {
- 				 var myChart = ec.init(document.getElementById('gpmsGradLenPieChart'));
- 				 myChart.setOption({
- 		            	title 	: {	text: 'GPMS 총연장(km)'	},
- 		                tooltip : {	trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)"},
- 		                legend: {
- 		                    orient : 'vertical',
- 		                    x : 'right',
- 		                    y : 'center',
- 		                    data:['국지도','지방도']
- 		                },
- 		                toolbox : {	show: true,
- 			    			feature: {
- 				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
- 				    			//saveAsExcel : {show: true},					// 엑셀저장
- 				    			saveAsImage: {show: true}					// 이미지저장
- 				    		}	
- 			    		},
- 			    		calculable : true,
- 		                series : [
- 		                    {
- 		                        name: '',
- 		                        type: 'pie',
- 		                        radius : ['0%', '70%'],		                        
- 		                        itemStyle: {
- 		                        	normal : {
- 		                        		label : {
- 		                        			show : true,
- 		                        			formatter: '{a}{b} \n {c} \n({d}%)',
- 		                        			position: 'inner',
- 			                        		textStyle : {
- 					                        	color:'#000000'
- 		                        			}
- 		                        		},
- 		                        		labelLine : {
- 		                        			show : false
- 		                        		}
- 		                        	}
- 		                        },
- 		                        data: lenData
- 		                    }
- 		                ]
- 		            });
-
- 			});	
- }
-
  //국토부 
  function drawLenChart(dataList,rw){
- 	var gRouteNm 	= [];		
- 	var lenData		= [];
- 	var GpmlenData		= [];
- 	var degree		= 40;
- 	if(dataList.length < 10){
- 		degree = 0;
- 	}
- 	for(var i=0; i<dataList.length; i++){
- 			//gRouteNm.push(dataList[i].ROUTE_CODE+" "+ dataList[i].ROUTE_NAME);
- 			//lenData.push(dataList[i].SUM_L);
- 			gRouteNm.push(dataList[i].ROUTE_CODE+" "+ dataList[i].ROAD_NAME);
- 			lenData.push(Number(dataList[i].LEN));
- 			GpmlenData.push(Number(dataList[i].SUM_LEN));
- 	}
+    var gRouteNm    = [];       
+    var twoData     = [];
+    var fourData      = [];
+    var cntrwkData      = [];
+    var unopnData = [];
+    var degree = (dataList.length > 10) ? 40 : 0;
+    
+    for(var i=0; i<dataList.length; i++){
+        gRouteNm.push(dataList[i].route_code+" "+ dataList[i].route_name);
+        twoData.push(Number(dataList[i].track2_len));
+        fourData.push(Number(dataList[i].track4_len));
+        cntrwkData.push(Number(dataList[i].cntrwk_len));
+        unopnData.push(Number(dataList[i].unopn_len));
+    }
  	require([	'echarts','echarts/chart/bar'	],
- 	        function (ec) {
- 				 var myChart = ec.init(document.getElementById('lenBarChart'));
- 				 myChart.setOption({
- 					 color: ['#003366', '#4cabce'],	
- 					 title 	: {	text: '총연장(km)'	},
- 		                tooltip : {	trigger: 'axis'				},
- 		                toolbox : {	show: true,
- 			    			feature: {
- 				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
- 				    			//saveAsExcel : {show: true},					// 엑셀저장
- 				    			saveAsImage: {show: true}					// 이미지저장
- 				    		}	
- 			    		},
- 			    	    legend: {
- 			    	        data: ['국토부', 'GPMS']
- 			    	    },
- 					    grid :{
- 					    	/* width : rw+'px',
- 					    	x : 50, */
- 					    	y2 : 100
- 					    },
- 		                xAxis : [{	
- 		                			type : 'category',
- 				            		axisLabel : {
- 				                		show:true,
- 				                		interval: 0,
- 				                		rotate: degree
- 				            		},
- 		                			data : gRouteNm
- 		                		}],
- 		                yAxis : [{	name : 'km',		type : 'value'		}],
- 		                series : [
- 		                    {
- 		                        name: '국토부',
- 		                        type: 'bar',		                      
- 		                        data: lenData
- 		                    },
- 		                    {
- 		                        name: 'GPMS',
- 		                        type: 'bar',		                      
- 		                        data: GpmlenData
- 		                    }
- 		                ]
- 		            });
- 				 
- 			});
+            function (ec) {
+        var myChart = ec.init(document.getElementById('lenBarChart'));
+        myChart.setOption({
+            //color: ['#003366', '#4cabce'], 
+            title  : { text: '총연장(km)' },
+            tooltip : { trigger: 'axis'             },
+            toolbox : { show: true,
+                   feature: {
+                       //dataView : {show: true, readOnly: false},     // 상세조회
+                       //saveAsExcel : {show: true},                   // 엑셀저장
+                       saveAsImage: {show: true}                   // 이미지저장
+                   }   
+            },
+            legend: {
+                data: ['2차로', '4차로', '공사구간', '미개통구간']
+            },
+            grid :{
+                /* width : rw+'px',
+                x : 50, */
+                y2 : 100
+            },
+            xAxis : [{  
+                        type : 'category',
+                        axisLabel : {
+                            show:true,
+                            interval: 0,
+                            rotate: degree
+                        },
+                        data : gRouteNm
+                    }],
+            yAxis : [{  name : 'km',        type : 'value'      }],
+            series : [
+                {
+                    name: '2차로',
+                    type: 'bar',
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: twoData
+                },
+                {
+                    name: '4차로',
+                    type: 'bar',
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: fourData
+                },
+                {
+                    name: '공사구간',
+                    type: 'bar',
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: cntrwkData
+                },
+                {
+                    name: '미개통구간',
+                    type: 'bar',    
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: unopnData
+                }
+            ]
+        });
+        
+   });
  }
  
 //경고 메시지
@@ -488,21 +376,9 @@ function fnExcel() {
         </div>
 		<div id="divStatChart" style="overflow-y:auto;">
 			<ul class="statsbx">
-				<li>
-					<div class="graylinebx p10">
-						<div id="admGpmsGradLenPieChart" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div>
-					</div>
-					<h4 id ='label' style="text-align: center;background:none;">도로등급별 도로연장 통계()</h4>
-				</li>
-				<li>
-					<div class="graylinebx p10">
-						<div id="gpmsGradLenPieChart" class="cont_ConBx2"  style="height: 300px; margin-left:20px;"></div>
-					</div>
-					<h4 style="text-align: center;background:none;">도로등급별 도로연장 통계(당해년도)</h4>
-				</li>
 				<li style="margin-left: 1px;">
 					<div class="graylinebx p10" style="width:195%;">
-						<div id="lenBarChart" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div>
+						<div id="lenBarChart" class="cont_ConBx2" style="height: 500px; margin-left:20px;"></div>
 					</div>
 				</li>
 			</ul>

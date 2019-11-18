@@ -21,12 +21,40 @@ import kr.go.gg.gpms.rpairtrgetgroup.service.model.RpairTrgetGroupVO;
  * @since 2017-10-18
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 
 @Repository("rpairTrgetGroupDAO")
 public class RpairTrgetGroupDAO extends BaseDAO {
+
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 목록을 조회한다.
+     * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+     * @return TN_RPAIR_TRGET_GROUP 목록
+     * @exception Exception
+     */
+    @SuppressWarnings("unchecked")
+    public List<RpairTrgetGroupVO> selectRpairTrgetGroupList(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+        return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairTrgetGroupList", rpairTrgetGroupVO);
+    }
+
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 총 갯수를 조회한다.
+     * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+     * @return TN_RPAIR_TRGET_GROUP 총 갯수
+     * @exception
+     */
+    public int selectRpairTrgetGroupListTotalCount(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+        return (Integer) select("rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalCount", rpairTrgetGroupVO);
+    }
+
+
+
+
+
+
+
 
 	/**
 	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP)을 등록한다.
@@ -51,7 +79,7 @@ public class RpairTrgetGroupDAO extends BaseDAO {
 	/**
 	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP)을 삭제한다.
 	 * @param rpairTrgetGroupVO - 삭제할 정보가 담긴 RpairTrgetGroupVO
-	 * @return 삭제 결과 
+	 * @return 삭제 결과
 	 * @exception Exception
 	 */
 	public int deleteRpairTrgetGroup(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
@@ -68,27 +96,6 @@ public class RpairTrgetGroupDAO extends BaseDAO {
 		return (RpairTrgetGroupVO) select("rpairTrgetGroupDAO.selectRpairTrgetGroup", rpairTrgetGroupVO);
 	}
 
-	/**
-	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 목록을 조회한다.
-	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
-	 * @return TN_RPAIR_TRGET_GROUP 목록
-	 * @exception Exception
-	 */
-	@SuppressWarnings("unchecked")
-	public List<RpairTrgetGroupVO> selectRpairTrgetGroupList(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
-		return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairTrgetGroupList", rpairTrgetGroupVO);
-	}
-
-	/**
-	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 총 갯수를 조회한다.
-	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
-	 * @return TN_RPAIR_TRGET_GROUP 총 갯수
-	 * @exception
-	 */
-	public int selectRpairTrgetGroupListTotalCount(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
-		return (Integer) select("rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalCount", rpairTrgetGroupVO);
-	}
-
 	public int updateToggleTMPR_SLCTN_AT(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception {
 		return update("rpairTrgetGroupDAO.updateToggleTMPR_SLCTN_AT", rpairTrgetGroupVO);
 	}
@@ -96,7 +103,7 @@ public class RpairTrgetGroupDAO extends BaseDAO {
 	public int updateInitTMPR_SLCTN_AT(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception {
 		return update("rpairTrgetGroupDAO.updateInitTMPR_SLCTN_AT", rpairTrgetGroupVO);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLList(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception {
 		return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList", rpairTrgetGroupVO);

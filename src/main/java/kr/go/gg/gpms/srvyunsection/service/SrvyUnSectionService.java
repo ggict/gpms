@@ -16,5 +16,7 @@ public interface SrvyUnSectionService {
 	
 	public Object srvyYearList(Object object) throws Exception;
 	
+	public Object chartList(Object object) throws Exception;
+	
 }
 

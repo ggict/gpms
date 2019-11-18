@@ -31,6 +31,7 @@
                         </div>
                     </li>
                     <li class="noSub"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')" class="menu3 top"><span class="hidden">코드정보관리</span></a></li>
+                    <li class="noSub"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/notice/selectNoticeList.do"/>')" class="menu5 top"><span class="hidden">공지사항관리</span></a></li>
                     <li>
                         <a href="#" class="menu4 top" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="srvy/srvyDtaEvlFmla.do"/>')"><span class="hidden">수식관리</span></a>
                         <div class="submenu sub3" id="sub3">
@@ -40,7 +41,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="noSub"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/notice/selectNoticeList.do"/>')" class="menu5 top"><span class="hidden">공지사항관리</span></a></li>
                 </ul>
             </div>
             <div class="submenubg"></div>
@@ -76,7 +76,7 @@
             <div id="gnb">
                 <ul>
                     <li class="noSub"><a href="#" class="menu1 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_route', '<c:url value="routeinfo/selectRouteInfoList.do"/>')"><span class="hidden">노선검색</span></a></li>
-                    <li class="noSub"><a href="#" class="menu7 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_reg_srvy', '<c:url value="srvy/selectSrvyExcelList.do"/>')"><span class="hidden">조사자료 관리</span></a></li>
+                    <li class="noSub"><a href="#" class="menu7 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_reg_srvy', '<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>')"><span class="hidden">조사자료 관리</span></a></li>
                     <li class="noSub"><a href="#" class="menu2 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_srvyEvl', '<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>')"><span class="hidden">포장상태 평가</span></a></li>
                     <%-- <li class="noSub"><a href="#" class="menu3 top" onclick="COMMON_UTIL.fn_set_subMenu('sub_srvyPredct', '<c:url value="smdtalaststtus/selectSrvyDtaLastSttusList.do"/>')"><span class="hidden">포장상태 예측</span></a></li> --%>
                     <%--/* full windows style 적용    */ --%>

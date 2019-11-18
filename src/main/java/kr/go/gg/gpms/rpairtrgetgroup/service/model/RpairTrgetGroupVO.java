@@ -1,19 +1,17 @@
 
 package kr.go.gg.gpms.rpairtrgetgroup.service.model;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import kr.go.gg.gpms.base.model.BaseVO;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import kr.go.gg.gpms.rpairtrget.service.model.RpairTrgetVO;
 /**
  * 보수_대상_항목_그룹
  *
  * @Class Name : RpairTrgetGroupVO.java
- * @Description : RpairTrgetGroup VO class 
+ * @Description : RpairTrgetGroup VO class
  * @Modification Information
  *
  * @author leehb1592@gmail.com
@@ -31,43 +29,57 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 	public RpairTrgetGroupVO() {
 		super();
 	}
-	
-	/** 
-	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO, 
+
+	/**
+	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO,
 	 * 보수_대상_항목_그룹.그룹_항목_번호
 	 */
 	@XmlElement
 	private String GROUP_ITEM_NO;
-	
-	
-	/** 
-	 * TN_RPAIR_TRGET_GROUP.NODE_CO, 
+
+
+	/**
+	 * TN_RPAIR_TRGET_GROUP.NODE_CO,
 	 * 보수_대상_항목_그룹.노드 개수
 	 */
 	@XmlElement
 	private String NODE_CO;
-	
+
 	/**
-	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO, 
+	 * TN_RPAIR_TRGET_GROUP.MNG_RD_CD,
+	 * 보수_대상_항목_그룹.관리_도로_코드
+	 */
+	@XmlElement
+	private String MNG_RD_CD;
+
+	/**
+	 * TN_RPAIR_TRGET_GROUP.MNG_RD_NM,
+	 * 보수_대상_항목_그룹.관리_도로_명
+	 */
+	@XmlElement
+	private String MNG_RD_NM;
+
+	/**
+	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO,
 	 * 보수_대상_항목_그룹.그룹_항목_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="GROUP_ITEM_NO") 
+	@JsonProperty(value="GROUP_ITEM_NO")
 	public String getGROUP_ITEM_NO() {
 		return GROUP_ITEM_NO;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO, 
+	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO,
 	 * 보수_대상_항목_그룹.그룹_항목_번호 값설정
 	 * @param groupItemNo
 	 */
 	public void setGROUP_ITEM_NO(String groupItemNo) {
 		GROUP_ITEM_NO = groupItemNo;
 	}
-	
-	
-	@JsonProperty(value="NODE_CO") 
+
+
+	@JsonProperty(value="NODE_CO")
 	public String getNODE_CO() {
 		return NODE_CO;
 	}
@@ -76,5 +88,22 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 		NODE_CO = nODE_CO;
 	}
 
-	
+	@JsonProperty(value="MNG_RD_CD")
+    public String getMNG_RD_CD() {
+        return MNG_RD_CD;
+    }
+
+    public void setMNG_RD_CD(String mNG_RD_CD) {
+        MNG_RD_CD = mNG_RD_CD;
+    }
+
+    @JsonProperty(value="MNG_RD_NM")
+    public String getMNG_RD_NM() {
+        return MNG_RD_NM;
+    }
+
+    public void setMNG_RD_NM(String mNG_RD_NM) {
+        MNG_RD_NM = mNG_RD_NM;
+    }
+
 }

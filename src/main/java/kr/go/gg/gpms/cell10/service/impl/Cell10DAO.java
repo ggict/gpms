@@ -402,5 +402,9 @@ public class Cell10DAO extends BaseDAO {
     {      
         return (Integer) select("cell10DAO.selectCellInfoByLonLatCnt", cell10VO);
     }
+    
+	public List<Cell10VO> selectTest(Cell10VO cell10VO) throws Exception {
+		return (List<Cell10VO>)list("cell10DAO.selectTest", cell10VO);
+	}
 
 }

@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
-import egovframework.rte.psl.dataaccess.util.EgovMap;
 import kr.go.gg.gpms.rpairtrgetslctn.service.RpairTrgetSlctnService;
 import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 
@@ -23,31 +23,87 @@ import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
  * @since 2017-09-11
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 
 @Service("rpairTrgetSlctnService")
 public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements RpairTrgetSlctnService {
 
-	@Resource(name = "rpairTrgetSlctnDAO")
+    @Resource(name = "rpairTrgetSlctnDAO")
 	private RpairTrgetSlctnDAO rpairTrgetSlctnDAO;
 
-	//@Resource(name="RpairTrgetSlctnIdGnrService")	
+	//@Resource(name="RpairTrgetSlctnIdGnrService")
 	//private EgovIdGnrService egovIdGnrService;
 
 	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 등록한다.
-	 * @param rpairTrgetSlctnVO - 등록할 정보가 담긴 RpairTrgetSlctnVO
-	 * @return 등록 결과
-	 * @exception Exception
+	 * 보수대상선정이력 목록을 조회
+	 */
+	public List<RpairTrgetSlctnVO> selectRpairTrgetSlctnList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+	    return rpairTrgetSlctnDAO.selectRpairTrgetSlctnList(rpairTrgetSlctnVO);
+	}
+
+	/**
+     * 보수대상선정시작 처리
+     */
+    public void addRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+        // 보수_대상_선정 삭제
+        deleteRpairTrgetSlctn(rpairTrgetSlctnVO);
+        // 보수_대상_선정 등록
+        insertRpairTrgetSlctn(rpairTrgetSlctnVO);
+    }
+
+    /**
+     * 보수대상선정시작 처리(보수_대상_선정 삭제)
+     */
+    public int deleteRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+        return rpairTrgetSlctnDAO.deleteRpairTrgetSlctn(rpairTrgetSlctnVO);
+    }
+
+	/**
+	 * 보수대상선정시작 처리(보수_대상_선정 등록)
 	 */
 	public String insertRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-		//String id = egovIdGnrService.getNextStringId();
-		//rpairTrgetSlctnVO.setId(id);
-
-		return rpairTrgetSlctnDAO.insertRpairTrgetSlctn( rpairTrgetSlctnVO);
+	    return rpairTrgetSlctnDAO.insertRpairTrgetSlctn(rpairTrgetSlctnVO);
 	}
+
+	/**
+	 * 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
+	 */
+	@Async
+    public void procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+	    // 전체노선을 한번에 돌릴경우 메모리 오류 발생하여 메모리 오류 방지를 위해 노선별로 처리
+	    List<RpairTrgetSlctnVO> routeCodeList = rpairTrgetSlctnDAO.selectRpairTrgetSlctnRouteCodeList(rpairTrgetSlctnVO);
+	    for ( int i = 0; i < routeCodeList.size() && i == 0; i++ ) {
+	        if ( i == 0 )  {  // 시작
+	            rpairTrgetSlctnVO.setSTART_END_CODE("S");
+	        } else if ( routeCodeList.size() - 1 == i ) { // 종료
+	            rpairTrgetSlctnVO.setSTART_END_CODE("E");
+	        } else {
+	            rpairTrgetSlctnVO.setSTART_END_CODE("");
+	        }
+	        rpairTrgetSlctnVO.setROUTE_CODE(routeCodeList.get(i).getROUTE_CODE());
+
+	        rpairTrgetSlctnDAO.procRepairTargetRangeSelect(rpairTrgetSlctnVO);
+	    }
+
+        rpairTrgetSlctnDAO.procRepairTargetRangeString(rpairTrgetSlctnVO);
+//        rpairTrgetSlctnDAO.procRepairTargetBudgetRate(rpairTrgetSlctnVO);
+	}
+
+
+
+
+
+
+
+
+    public HashMap procRepairTargetComplete(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+        HashMap resultVO = rpairTrgetSlctnDAO.procRepairTargetComplete(rpairTrgetSlctnVO);
+        return resultVO;
+    }
+
+
 
 	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 수정한다.
@@ -58,7 +114,7 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 	public int updateRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
 		return rpairTrgetSlctnDAO.updateRpairTrgetSlctn( rpairTrgetSlctnVO);
 	}
-	
+
 	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 수정한다.
 	 * @param rpairTrgetSlctnVO - 수정할 정보가 담긴 RpairTrgetSlctnVO
@@ -67,16 +123,6 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 	 */
 	public int updateRangeSelection(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
 		return rpairTrgetSlctnDAO.updateRangeSelection( rpairTrgetSlctnVO);
-	}
-
-	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN)을 삭제한다.
-	 * @param rpairTrgetSlctnVO - 삭제할 정보가 담긴 RpairTrgetSlctnVO
-	 * @return int형 
-	 * @exception Exception
-	 */
-	public int deleteRpairTrgetSlctn(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-		return rpairTrgetSlctnDAO.deleteRpairTrgetSlctn( rpairTrgetSlctnVO);
 	}
 
 	/**
@@ -95,16 +141,6 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 	}
 
 	/**
-	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN) 목록을 조회한다.
-	 * @param searchVO - 조회할 정보가 담긴 rpairTrgetSlctnVO
-	 * @return TN_RPAIR_TRGET_SLCTN 목록
-	 * @exception Exception
-	 */
-	public List<RpairTrgetSlctnVO> selectRpairTrgetSlctnList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-		return rpairTrgetSlctnDAO.selectRpairTrgetSlctnList( rpairTrgetSlctnVO);
-	}
-
-	/**
 	 * 보수_대상_선정(TN_RPAIR_TRGET_SLCTN) 총 갯수를 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 rpairTrgetSlctnVO
 	 * @return TN_RPAIR_TRGET_SLCTN 총 갯수
@@ -114,7 +150,7 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 		return rpairTrgetSlctnDAO.selectRpairTrgetSlctnListTotalCount( rpairTrgetSlctnVO);
 
 	}
-	
+
 	/**
 	 * 보수대상선정 항목을 집계한다.
 	 */
@@ -128,7 +164,7 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 	public HashMap procRepairTargetRangeSelect(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
 		return rpairTrgetSlctnDAO.procRepairTargetRangeSelect(rpairTrgetSlctnVO);
 	}
-	
+
 	/**
 	 * 연속구간 연결 및 보수공법 재선정
 	 */
@@ -145,22 +181,11 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 		return rpairTrgetSlctnDAO.procRepairTargetBudgetRate(rpairTrgetSlctnVO);
 	}
 
-	@Override
-	public HashMap procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-		rpairTrgetSlctnDAO.updateRangeSelection( rpairTrgetSlctnVO);
-		HashMap resultVO =rpairTrgetSlctnDAO.procRepairTargetRangeSelect(rpairTrgetSlctnVO);
-		resultVO =rpairTrgetSlctnDAO.procRepairTargetRangeString(rpairTrgetSlctnVO);
-		resultVO =rpairTrgetSlctnDAO.procRepairTargetBudgetRate(rpairTrgetSlctnVO);
-		return resultVO;
-	}
 
-	@Override
-	public HashMap procRepairTargetComplete(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-		HashMap resultVO =rpairTrgetSlctnDAO.procRepairTargetComplete(rpairTrgetSlctnVO);
-		return resultVO;
-	}
 
-	
-	
+
+
+
+
 
 }

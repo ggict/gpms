@@ -18,10 +18,42 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
  * @since 2017-10-18
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 public interface RpairTrgetGroupService {
+
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 목록을 조회한다.
+     * @param searchVO - 조회할 정보가 담긴 rpairTrgetGroupVO
+     * @return TN_RPAIR_TRGET_GROUP 목록
+     * @exception Exception
+     */
+    List<RpairTrgetGroupVO> selectRpairTrgetGroupList(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception;
+
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 총 갯수를 조회한다.
+     * @param searchVO - 조회할 정보가 담긴 rpairTrgetGroupVO
+     * @return TN_RPAIR_TRGET_GROUP 총 갯수
+     * @exception
+     */
+    int selectRpairTrgetGroupListTotalCount(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP)을 등록한다.
@@ -42,7 +74,7 @@ public interface RpairTrgetGroupService {
 	/**
 	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP)을 삭제한다.
 	 * @param rpairTrgetGroupVO - 삭제할 정보가 담긴 RpairTrgetGroupVO
-	 * @return int형 
+	 * @return int형
 	 * @exception Exception
 	 */
 	int deleteRpairTrgetGroup(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception;
@@ -54,22 +86,6 @@ public interface RpairTrgetGroupService {
 	 * @exception Exception
 	 */
 	RpairTrgetGroupVO selectRpairTrgetGroup(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception;
-
-	/**
-	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 목록을 조회한다.
-	 * @param searchVO - 조회할 정보가 담긴 rpairTrgetGroupVO
-	 * @return TN_RPAIR_TRGET_GROUP 목록
-	 * @exception Exception
-	 */
-	List<RpairTrgetGroupVO> selectRpairTrgetGroupList(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception;
-
-	/**
-	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 총 갯수를 조회한다.
-	 * @param searchVO - 조회할 정보가 담긴 rpairTrgetGroupVO
-	 * @return TN_RPAIR_TRGET_GROUP 총 갯수
-	 * @exception
-	 */
-	int selectRpairTrgetGroupListTotalCount(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception ;
 
 	/**
 	 * 임시 선택을 반전 처리한다.

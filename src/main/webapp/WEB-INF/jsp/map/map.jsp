@@ -20,7 +20,7 @@
 %>
 <style>
 
-/**  
+/**
 레이어 선택 공간 css
 */
 .divlayermng ul {list-style:none;margin:0;padding:0;}
@@ -98,7 +98,7 @@
                     </div>
                     <div id="btab01">
                     	<%-- 왼쪽 세부 메뉴 --%>보수대상선정
-						<%@ include file="/WEB-INF/jsp/repairtarget/common_repairtarget.jsp" %>
+						<c:import url="/rpairtrgetslctn/common_repairtarget.do" />
                         <div style="margin-top: -14px;" >
                          	<div class="rtab_wrap ">
                         		<iframe id="content_repairtargets" name="content_repairtargets" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; border:0; width:100%; height:860px; overflow: hidden; z-index:9999;" scrolling=no></iframe>
@@ -127,7 +127,7 @@
                     <li class="active"><a href="#" class="t3 maptool" id="mCtrlPan" title="이동"><span class="hidden">이동</span></a></li>
                     <li><a href="#" class="t4 maptool" id="mCtrlZoomIn" title="확대"><span class="hidden">확대</span></a></li>
                     <li><a href="#" class="t5 maptool" id="mCtrlZoomOut" title="축소"><span class="hidden">축소</span></a></li>
-                    <!-- 
+                    <!--
                     <li><a href="#" class="t6 maptool" id="mCtrlPrev" title="이전"><span class="hidden">이전</span></a></li>
                     <li><a href="#" class="t7 maptool" id="mCtrlNext" title="다음"><span class="hidden">다음</span></a></li>
                      -->
@@ -135,7 +135,7 @@
                     <li><a href="#" class="t9 maptool" id="mCtrlMesureLength" title="거리"><span class="hidden">거리</span></a></li>
                     <li><a href="#" class="t10 maptool" id="mCtrlMesureArea" title="면적"><span class="hidden">면적</span></a></li>
                     <li><a href="#" class="t11 maptool" id="mCtrlClear" title="초기화"><span class="hidden">초기화</span></a></li>
-                    <!-- 
+                    <!--
                     <li><a href="#" class="t12 maptool" id="mCtrlMapPrint" title="현재화면 인쇄"><span class="hidden">인쇄</span></a></li>
                     <li><a href="#" class="t13 maptool" id="mCtrlPrint" title="현재화면 저장"><span class="hidden">저장</span></a></li>
                      -->
@@ -169,7 +169,7 @@
 							</div>
                         </div>
                     </dd>
-                    <!-- 
+                    <!--
                     <dt>레이어관리</dt>
                     <dd>
 						<div class="inBx" id="toolArea">
@@ -179,18 +179,18 @@
                     </dd>
                      -->
                 </dl>
-				
+
 				<!-- jstree
                 <div id="divLayerTool" >
 	                <div id="dvLayerList" class="LayerList">
 	                </div>
                 </div>
                  -->
-                 
+
                 <div id="divLayerTool">
 	                <div id="divLayerMngList" class="divlayermng">
 	                	<ul id="divLayerMngList_ul">
-	                	<%-- 
+	                	<%--
 	                		<li>
 			                	<a href="#"><img src="<c:url value='/images/common/gps.png'/>"/><p>10m</p></a>
 	                		</li>
@@ -198,7 +198,7 @@
 	                	</ul>
 	                </div>
                 </div>
-                 
+
 			</div>
 
 
@@ -224,7 +224,7 @@ $(parent).resize(function() {
 
 $(document).ready(function() {
     "${sessionScope.sFlat}";
-    
+
     var width = $(window).width();
     $(".select_map").css("left", ( width - 188 - 108 ) + "px");
     $(".right_tool").css("left", ( width - 11 - 180 ) + "px");
@@ -234,10 +234,10 @@ $(document).ready(function() {
 	$(window).resize(function () {
         MAP.fn_update_resizeMap();
     });
-	
+
 	//하단 메뉴 hide
 	bottomHide();
-	
+
 	//인덱스맵 토글이벤트
 	var indexmapToggle = function(){
 		$('.indexmap').toggle();
@@ -276,10 +276,10 @@ var MAIN = (function(_mod_map, $, undefined) {
 			var left = offset['left'];
 			if(top < 110){
 				obj.offset({top:110, left:55});
-			} 
+			}
 		}
 	});
-		
+
 	var fn_get_layerInfoList = function (_oLayer){
 		return oLayerInfoList[_oLayer];
 	}
@@ -303,30 +303,30 @@ var layersMngObj = {
 		var sThemeList = layerTool.getThemeShowList();
 		var layers = [];
 		for(var i=0; i<sThemeList.length; i++){
-			var layername = sThemeList[i]; 
+			var layername = sThemeList[i];
 			layers.push(layerinfos[layername]);
 		}
-		
+
 		//정렬
 		function sort(a, b) {
 			if (a.seq == b.seq) { return 0 }
 			return a.seq > b.seq ? 1 : -1;
 		}
 		layers.sort(sort);
-		
+
 		var templates = [];
 		for(var i=0; i<layers.length; i++){
 			var json = layers[i];
-			var table = json.table; 
-			var alias = json.alias; 
-			var show = json.show; 
+			var table = json.table;
+			var alias = json.alias;
+			var show = json.show;
 			var active = (show == '1') ? 'active' : '';
-			
-			var format = 
+
+			var format =
 				this.template().replace("{title}", alias)
 					.replace("{layernm}", table)
 					.replace("{class}", active);
-			
+
 			templates.push(format);
 		}
 		$('#divLayerMngList_ul').html(templates.join(""));
@@ -343,16 +343,16 @@ var layersMngObj = {
 	,clickevt: function(){
 		var fnCall = function(){
 			var obj = $(this);
-			var layernm = obj.find('p').attr('data-layer');  
+			var layernm = obj.find('p').attr('data-layer');
 			var baseLayer = gMap.getLayerByName("baseLayer");
 			var params = baseLayer.getParams();
 			var layers = params.LAYERS.split(',');
-			
+
 			if(obj.hasClass('active')){
 				obj.removeClass('active');
 				if(layers.indexOf(layernm) > -1){
 					layers.splice(layers.indexOf(layernm), 1)
-				}								
+				}
 			}else{
 				obj.addClass('active');
 				if(layers.indexOf(layernm) == -1){
@@ -360,17 +360,17 @@ var layersMngObj = {
 					layers.push(layernm);
 				}
 			}
-			
+
 			if(layers.length == 0){
 				baseLayer.setVisibility(false);
 			}else{
 				baseLayer.setVisibility(true);
 				baseLayer.mergeNewParams({
 					LAYERS: (layers.length == 0) ? layers[0] : layers.join()
-					,STYLES: ''	
+					,STYLES: ''
 				});
 			}
-			
+
 		};
 		$('#divLayerMngList_ul').find('li').click(fnCall);
 	}

@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="rpairTrgetSlctnDAO">
- 
+
 	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
 	<typeAlias  alias="rpairTrgetSlctnSerarchVO" type="kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnDefaultVO"/>
 	<typeAlias alias="rpairTrgetSlctnVO"	type="kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO" />
@@ -33,68 +33,252 @@
 		<result property="SLCTN_BUDGET_3" column="SLCTN_BUDGET_3" columnIndex="21" /> <!-- 보수_대상_선정.선정_예산_3_BF_2 -->
 		<result property="SLCTN_BUDGET_4" column="SLCTN_BUDGET_4" columnIndex="22" /> <!-- 보수_대상_선정.선정_예산_4  -->
 		<result property="SLCTN_BUDGET_5" column="SLCTN_BUDGET_5" columnIndex="23" /> <!-- 보수_대상_선정.선정_예산_5 -->
-		
+
 		<result property="SLCTN_PURPS" column="SLCTN_PURPS" columnIndex="24" /> <!-- 보수_대상_선정.산정_목적 -->
 	</resultMap>
 
-	<insert id="rpairTrgetSlctnDAO.insertRpairTrgetSlctn">
-	<selectKey resultClass="String" keyProperty="TRGET_SLCTN_NO">
-  <![CDATA[
-  select nextval('SEQ_TN_RPAIR_TRGET_SLCTN')
-  ]]>
-  </selectKey>
-	<![CDATA[ 
-		/* rpairTrgetSlctnDAO.insertRpairTrgetSlctn */
-		/* 보수_대상_선정 등록 */		
-		INSERT INTO TN_RPAIR_TRGET_SLCTN (
-			TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
-			, SLCTN_OPERT_NM /* 보수_대상_선정.선정_작업_명 */
-			, SLCTN_MTH /* 보수_대상_선정.선정_방법 */
-			, SLCTN_STTUS /* 보수_대상_선정.선정_상태 */
-			, SLCTN_BUDGET /* 보수_대상_선정.선정_예산 */
-			, SLCTN_DT /* 보수_대상_선정.선정_일시 */
-			, DELETE_AT /* 보수_대상_선정.삭제_여부 */
-			, USE_AT /* 보수_대상_선정.사용_여부 */
-			, CRTR_NO /* 보수_대상_선정.생성자_번호 */
-			, CREAT_DT /* 보수_대상_선정.생성_일시 */
-			, UPDUSR_NO /* 보수_대상_선정.수정자_번호 */
-			, UPDT_DT /* 보수_대상_선정.수정_일시 */
-			, DEPT_CODE /* 보수_대상_선정.부서_코드 */
-			, DECSN_MTHD_1_RATE /* 보수_대상_선정.결정_방식_1_비율 */
-			, DECSN_MTHD_2_RATE /* 보수_대상_선정.결정_방식_2_비율 */
-			, DECSN_MTHD_3_RATE /* 보수_대상_선정.결정_방식_3_비율 */
-			, DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
-			, DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
-			, SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
-		) VALUES (
-			#TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
-			, #SLCTN_OPERT_NM# /* 보수_대상_선정.선정_작업_명 */
-			, #SLCTN_MTH# /* 보수_대상_선정.선정_방법 */
-			, #SLCTN_STTUS# /* 보수_대상_선정.선정_상태 */
-			, #SLCTN_BUDGET#::numeric /* 보수_대상_선정.선정_예산 */
-			, date(#SLCTN_DT#) /* 보수_대상_선정.선정_일시 */
-			, 'N' /* 보수_대상_선정.삭제_여부 */
-			, 'Y' /* 보수_대상_선정.사용_여부 */
-			, #CRTR_NO#::int /* 보수_대상_선정.생성자_번호 */
-			, NOW() /* 보수_대상_선정.생성_일시 */
-			, #UPDUSR_NO#::int /* 보수_대상_선정.수정자_번호 */
-			, NOW() /* 보수_대상_선정.수정_일시 */
-			, #DEPT_CODE# /* 보수_대상_선정.부서_코드 */
-			, #DECSN_MTHD_1_RATE#::numeric /* 보수_대상_선정.결정_방식_1_비율 */
-			, #DECSN_MTHD_2_RATE#::numeric /* 보수_대상_선정.결정_방식_2_비율 */
-			, #DECSN_MTHD_3_RATE#::numeric /* 보수_대상_선정.결정_방식_3_비율 */
-			, #DECSN_MTHD_4_RATE#::numeric /* 보수_대상_선정.결정_방식_4_비율 */
-			, #DECSN_MTHD_5_RATE#::numeric /* 보수_대상_선정.결정_방식_5_비율 */
-			, #SLCTN_PURPS# /* 보수_대상_선정.산정_목적 */
-		)
-]]>
-	</insert>
+    <!-- 보수대상선정 조회/보수대상선정이력 년도조회 검색조건 -->
+    <sql id="rpairTrgetSlctnDAO.selectRpairTrgetSlctnList.where">
+        WHERE 1 = 1
+            AND tnrpairtrgetslctn.SLCTN_YEAR IS NOT NULL
+            AND tnrpairtrgetslctn.SLCTN_YEAR <![CDATA[<>]]> ''
+            AND tnrpairtrgetslctn.DELETE_AT = 'N'                         /* 보수_대상_선정.삭제_여부 */
+            AND tnrpairtrgetslctn.USE_AT = 'Y'                            /* 보수_대상_선정.사용_여부 */
+        <isEqual property="searchCondition" compareValue="0">
+            AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #searchKeyword#::int
+        </isEqual>
+        <isEqual property="searchCondition" compareValue="1">
+            AND tnrpairtrgetslctn.SLCTN_OPERT_NM LIKE '%' || #searchKeyword# || '%'
+        </isEqual>
+        <isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_선정.대상_선정_번호 */ AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int ]]></isNotEmpty>
+        <isNotEmpty property="SLCTN_OPERT_NM"><![CDATA[ /* 보수_대상_선정.선정_작업_명 */ AND tnrpairtrgetslctn.SLCTN_OPERT_NM = #SLCTN_OPERT_NM# ]]></isNotEmpty>
+        <isNotEmpty property="SLCTN_MTH"><![CDATA[ /* 보수_대상_선정.선정_방법 */ AND tnrpairtrgetslctn.SLCTN_MTH = #SLCTN_MTH# ]]></isNotEmpty>
+        <isNotEmpty property="SLCTN_STTUS"><![CDATA[ /* 보수_대상_선정.선정_상태 */ AND tnrpairtrgetslctn.SLCTN_STTUS = #SLCTN_STTUS# ]]></isNotEmpty>
+        <isNotEmpty property="SLCTN_BUDGET"><![CDATA[ /* 보수_대상_선정.선정_예산 */ AND tnrpairtrgetslctn.SLCTN_BUDGET = #SLCTN_BUDGET#::numeric ]]></isNotEmpty>
+        <isNotEmpty property="SLCTN_DT"><![CDATA[ /* 보수_대상_선정.선정_일시 */ AND tnrpairtrgetslctn.SLCTN_DT = #SLCTN_DT# ]]></isNotEmpty>
+        <isNotEmpty property="DELETE_AT"><![CDATA[ /* 보수_대상_선정.삭제_여부 */ AND tnrpairtrgetslctn.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
+        <isNotEmpty property="USE_AT"><![CDATA[ /* 보수_대상_선정.사용_여부 */ AND tnrpairtrgetslctn.USE_AT = #USE_AT# ]]></isNotEmpty>
+        <isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_선정.생성자_번호 */ AND tnrpairtrgetslctn.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
+        <isNotEmpty property="CREAT_DT"><![CDATA[ /* 보수_대상_선정.생성_일시 */ AND tnrpairtrgetslctn.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
+        <isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_선정.수정자_번호 */ AND tnrpairtrgetslctn.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
+        <isNotEmpty property="UPDT_DT"><![CDATA[ /* 보수_대상_선정.수정_일시 */ AND tnrpairtrgetslctn.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
+        <isNotEmpty property="DEPT_CODE"><![CDATA[ /* 보수_대상_선정.부서_코드 */ AND tnrpairtrgetslctn.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+        <isNotEmpty property="DECSN_MTHD_1_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_1_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE#::numeric ]]></isNotEmpty>
+        <isNotEmpty property="DECSN_MTHD_2_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_2_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE#::numeric ]]></isNotEmpty>
+        <isNotEmpty property="DECSN_MTHD_3_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_3_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE#::numeric ]]></isNotEmpty>
+        <isNotEmpty property="DECSN_MTHD_4_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_4_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE#::numeric ]]></isNotEmpty>
+        <isNotEmpty property="DECSN_MTHD_5_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_5_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE#::numeric ]]></isNotEmpty>
+        <isNotEmpty property="SLCTN_PURPS"><![CDATA[ /* 보수_대상_선정.산정_목적 */ AND tnrpairtrgetslctn.SLCTN_PURPS = #SLCTN_PURPS# ]]></isNotEmpty>
+    </sql>
+
+    <!-- 보수대상선정 조회/보수대상선정이력 년도조회 -->
+    <select id="rpairTrgetSlctnDAO.selectRpairTrgetSlctnList" parameterClass="rpairTrgetSlctnVO" resultClass="rpairTrgetSlctnVO">
+        <![CDATA[
+            /* rpairTrgetSlctnDAO.selectRpairTrgetSlctnList */
+            /* 보수_대상_선정 조회 */
+            SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
+                SELECT
+                    tnrpairtrgetslctn.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
+                    , tnrpairtrgetslctn.SLCTN_OPERT_NM /* 보수_대상_선정.선정_작업_명 */
+                    , tnrpairtrgetslctn.SLCTN_MTH /* 보수_대상_선정.선정_방법 */
+                    , (SELECT tccode.CODE_NM FROM TC_CODE tccode WHERE 1 = 1 AND tccode.CODE_VAL = tnrpairtrgetslctn.SLCTN_MTH AND tccode.USE_AT = 'Y' AND tccode.DELETE_AT = 'N' ) SLCTN_MTH_NM
+                    , tnrpairtrgetslctn.SLCTN_STTUS /* 보수_대상_선정.선정_상태 */
+                    , (SELECT tccode.CODE_NM FROM TC_CODE tccode WHERE 1 = 1 AND tccode.CODE_VAL = tnrpairtrgetslctn.SLCTN_STTUS AND tccode.USE_AT = 'Y' AND tccode.DELETE_AT = 'N' ) SLCTN_STTUS_NM
+                    , tnrpairtrgetslctn.SLCTN_BUDGET /* 보수_대상_선정.선정_예산 */
+                    , tnrpairtrgetslctn.SLCTN_DT /* 보수_대상_선정.선정_일시 */
+                    , TO_CHAR(tnrpairtrgetslctn.SLCTN_DT, 'yyyy.MM') SLCTN_MONTH  /* 보수_대상_선정.선정_일시 */
+                    , tnrpairtrgetslctn.DELETE_AT /* 보수_대상_선정.삭제_여부 */
+                    , tnrpairtrgetslctn.USE_AT /* 보수_대상_선정.사용_여부 */
+                    , tnrpairtrgetslctn.CRTR_NO /* 보수_대상_선정.생성자_번호 */
+                    , tnrpairtrgetslctn.CREAT_DT /* 보수_대상_선정.생성_일시 */
+                    , tnrpairtrgetslctn.UPDUSR_NO /* 보수_대상_선정.수정자_번호 */
+                    , tnrpairtrgetslctn.UPDT_DT /* 보수_대상_선정.수정_일시 */
+                    , tnrpairtrgetslctn.DEPT_CODE /* 보수_대상_선정.부서_코드 */
+                , tnrpairtrgetslctn.DECSN_MTHD_1_RATE /* 보수_대상_선정.결정_방식_1_비율 */
+                , tnrpairtrgetslctn.DECSN_MTHD_2_RATE /* 보수_대상_선정.결정_방식_2_비율 */
+                , tnrpairtrgetslctn.DECSN_MTHD_3_RATE /* 보수_대상_선정.결정_방식_3_비율 */
+                , tnrpairtrgetslctn.DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
+                , tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
+                , tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
+                , CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_1_rate, 0) = 0 THEN 0 ELSE
+                    CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
+                        ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_1_rate / 100)
+                    END
+                  END DECSN_MTHD_1_BUDGET
+                , CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_2_rate, 0) = 0 THEN 0 ELSE
+                    CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
+                        ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_2_rate / 100)
+                    END
+                  END DECSN_MTHD_2_BUDGET
+                , CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_3_rate, 0) = 0 THEN 0 ELSE
+                    CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
+                        ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_3_rate / 100)
+                    END
+                  END DECSN_MTHD_3_BUDGET
+                , CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_4_rate, 0) = 0 THEN 0 ELSE
+                    CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
+                        ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_4_rate / 100)
+                    END
+                  END DECSN_MTHD_4_BUDGET
+                , CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_5_rate, 0) = 0 THEN 0 ELSE
+                    CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
+                        ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_5_rate / 100)
+                    END
+                  END DECSN_MTHD_5_BUDGET
+                 , tnrpairtrgetslctn.SLCTN_BUDGET_1    /* 보수_대상_선정.선정_예산_1_WF */
+                 , tnrpairtrgetslctn.SLCTN_BUDGET_2    /* 보수_대상_선정.선정_예산_2_BF_1 */
+                 , tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */
+                 , tnrpairtrgetslctn.SLCTN_BUDGET_4    /* 보수_대상_선정.선정_예산_4 */
+                 , tnrpairtrgetslctn.SLCTN_BUDGET_5    /* 보수_대상_선정.선정_예산_5 */
+                 , tnrpairtrgetslctn.SLCTN_YEAR    /* 보수_대상_선정.선정_년도 */
+                FROM TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+        ]]>
+        <include refid="rpairTrgetSlctnDAO.selectRpairTrgetSlctnList.where" />
+            <![CDATA[
+                ORDER BY
+                        tnrpairtrgetslctn.SLCTN_DT DESC, tnrpairtrgetslctn.TRGET_SLCTN_NO DESC /* 보수_대상_선정.대상_선정_번호 */
+                ) tb) tnrpairtrgetslctn  WHERE 1=1
+            ]]>
+        <isEqual prepend=" " property="usePage" compareValue="true">
+            <![CDATA[
+                AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+            ]]>
+        </isEqual>
+    </select>
+
+    <!-- 보수대상선정시작(보수_대상_선정 삭제)  -->
+    <delete id="rpairTrgetSlctnDAO.deleteRpairTrgetSlctn">
+        <![CDATA[
+            /* rpairTrgetSlctnDAO.deleteRpairTrgetSlctn */
+            /* 보수_대상_선정 삭제 */
+            UPDATE TN_RPAIR_TRGET_SLCTN SET
+                DELETE_AT                    = 'Y'                         /* 보수_대상_선정.삭제_여부 */
+                , USE_AT                     = 'N'                         /* 보수_대상_선정.사용_여부 */
+                , UPDUSR_NO                  = #UPDUSR_NO#::NUMERIC        /* 보수_대상_선정.수정자_번호 */
+                , UPDT_DT                    = NOW()                       /* 보수_대상_선정.수정_일시 */
+            WHERE
+                1 = 1
+                AND SLCTN_YEAR               = #SLCTN_YEAR#                /* 보수_대상_선정.선정_년도 */
+        ]]>
+    </delete>
+
+    <!-- 보수대상선정시작(보수_대상_선정 등록)  -->
+    <insert id="rpairTrgetSlctnDAO.insertRpairTrgetSlctn">
+        <selectKey resultClass="String" keyProperty="TRGET_SLCTN_NO">
+            <![CDATA[
+                SELECT NEXTVAL('SEQ_TN_RPAIR_TRGET_SLCTN')
+            ]]>
+        </selectKey>
+
+        <![CDATA[
+            /* rpairTrgetSlctnDAO.insertRpairTrgetSlctn */
+            /* 보수_대상_선정 등록 */
+            INSERT INTO TN_RPAIR_TRGET_SLCTN (
+                TRGET_SLCTN_NO                                             /* 보수_대상_선정.대상_선정_번호 */
+                , SLCTN_OPERT_NM                                           /* 보수_대상_선정.선정_작업_명 */
+                , SLCTN_MTH                                                /* 보수_대상_선정.선정_방법 */
+                , SLCTN_STTUS                                              /* 보수_대상_선정.선정_상태 */
+                , SLCTN_BUDGET                                             /* 보수_대상_선정.선정_예산 */
+                , SLCTN_DT                                                 /* 보수_대상_선정.선정_일시 */
+                , DELETE_AT                                                /* 보수_대상_선정.삭제_여부 */
+                , USE_AT                                                   /* 보수_대상_선정.사용_여부 */
+                , CRTR_NO                                                  /* 보수_대상_선정.생성자_번호 */
+                , CREAT_DT                                                 /* 보수_대상_선정.생성_일시 */
+                , UPDUSR_NO                                                /* 보수_대상_선정.수정자_번호 */
+                , UPDT_DT                                                  /* 보수_대상_선정.수정_일시 */
+                , DEPT_CODE                                                /* 보수_대상_선정.부서_코드 */
+                , DECSN_MTHD_1_RATE                                        /* 보수_대상_선정.결정_방식_1_비율 */
+                , DECSN_MTHD_2_RATE                                        /* 보수_대상_선정.결정_방식_2_비율 */
+                , DECSN_MTHD_3_RATE                                        /* 보수_대상_선정.결정_방식_3_비율 */
+                , DECSN_MTHD_4_RATE                                        /* 보수_대상_선정.결정_방식_4_비율 */
+                , DECSN_MTHD_5_RATE                                        /* 보수_대상_선정.결정_방식_5_비율 */
+                , SLCTN_PURPS                                              /* 보수_대상_선정.산정_목적 */
+                , ANALS_UNIT_CODE                                          /* 보수_대상_선정.분석_단위_코드 */
+                , SLCTN_YEAR                                               /* 보수_대상_선정.선정_년도 */
+            ) VALUES (
+                #TRGET_SLCTN_NO#::INT                                      /* 보수_대상_선정.대상_선정_번호 */
+                , #SLCTN_OPERT_NM#                                         /* 보수_대상_선정.선정_작업_명 */
+                , #SLCTN_MTH#                                              /* 보수_대상_선정.선정_방법 */
+                , #SLCTN_STTUS#                                            /* 보수_대상_선정.선정_상태 */
+                , #SLCTN_BUDGET#::NUMERIC                                  /* 보수_대상_선정.선정_예산 */
+                , NOW()                                                    /* 보수_대상_선정.선정_일시 */
+                , 'N'                                                      /* 보수_대상_선정.삭제_여부 */
+                , 'Y'                                                      /* 보수_대상_선정.사용_여부 */
+                , #CRTR_NO#::INT                                           /* 보수_대상_선정.생성자_번호 */
+                , NOW()                                                    /* 보수_대상_선정.생성_일시 */
+                , #UPDUSR_NO#::INT                                         /* 보수_대상_선정.수정자_번호 */
+                , NOW()                                                    /* 보수_대상_선정.수정_일시 */
+                , #DEPT_CODE#                                              /* 보수_대상_선정.부서_코드 */
+                , #DECSN_MTHD_1_RATE#::NUMERIC                             /* 보수_대상_선정.결정_방식_1_비율 */
+                , #DECSN_MTHD_2_RATE#::NUMERIC                             /* 보수_대상_선정.결정_방식_2_비율 */
+                , #DECSN_MTHD_3_RATE#::NUMERIC                             /* 보수_대상_선정.결정_방식_3_비율 */
+                , #DECSN_MTHD_4_RATE#::NUMERIC                             /* 보수_대상_선정.결정_방식_4_비율 */
+                , #DECSN_MTHD_5_RATE#::NUMERIC                             /* 보수_대상_선정.결정_방식_5_비율 */
+                , #SLCTN_PURPS#                                            /* 보수_대상_선정.산정_목적 */
+                , #ANALS_UNIT_CODE#                                        /* 보수_대상_선정.분석_단위_코드 */
+                , #SLCTN_YEAR#                                             /* 보수_대상_선정.선정_년도 */
+            )
+        ]]>
+    </insert>
+
+    <!-- 보수대상 선정 범위내 선정 -->
+    <parameterMap id="prc_repair_target_range_select_params" class="java.util.Map">
+        <parameter property="P_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="P_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="P_ROUTE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="P_ROUTE_CODE_LAST_YN" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="P_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </parameterMap>
+
+    <select id="rpairTrgetSlctnDAO.selectRpairTrgetSlctnRouteCodeList" resultClass="rpairTrgetSlctnVO">
+        SELECT
+            A.ROUTE_CODE                                                  /* 노선_코드 */
+        FROM TN_MUMM_SCTN_SRVY_DTA A                                      /*** 최소_구간_조사_자료 테이블 ***/
+        WHERE
+            1 = 1
+            AND A.DELETE_AT              = 'N'                            /* 삭제_여부 */
+            AND A.USE_AT                 = 'Y'                            /* 사용_여부 */
+            AND A.LAST_DTA_AT            = 'Y'                            /* 최종_자료_여부 */
+        GROUP BY
+            A.ROUTE_CODE                                                  /* 노선_코드 */
+    </select>
+
+    <!-- 보수대상선정시작(보수_대상_항목 등록) -->
+    <select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT" parameterMap="prc_repair_target_range_select_params" resultClass="hashMap">
+        SELECT O_PROCCODE, O_PROCMSG FROM PRC_REPAIR_TARGET_RANGE_SELECT(?::NUMERIC, ?::NUMERIC, ?, ?, ?)
+    </select>
+
+    <!-- 연속구간 연결 및 보수공법 재선정 -->
+    <parameterMap id="prc_repair_target_range_string_params" class="java.util.Map">
+        <parameter property="P_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="P_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="P_ANALS_UNIT_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+        <parameter property="P_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </parameterMap>
+
+    <select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_STRING"
+            parameterMap="prc_repair_target_range_string_params" resultClass="hashMap">
+        SELECT O_PROCCODE, O_PROCMSG FROM PRC_REPAIR_TARGET_RANGE_STRING(?::numeric, ?::numeric, ?, ?)
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<update id="rpairTrgetSlctnDAO.updateRpairTrgetSlctn">
-	<![CDATA[ 
+	<![CDATA[
 /* rpairTrgetSlctnDAO.updateRpairTrgetSlctn */
 /* 보수_대상_선정 수정 */
-UPDATE TN_RPAIR_TRGET_SLCTN 
+UPDATE TN_RPAIR_TRGET_SLCTN
 SET
 SLCTN_OPERT_NM = #SLCTN_OPERT_NM# /* 보수_대상_선정.선정_작업_명 */
 , SLCTN_MTH = #SLCTN_MTH# /* 보수_대상_선정.선정_방법 */
@@ -115,15 +299,15 @@ SLCTN_OPERT_NM = #SLCTN_OPERT_NM# /* 보수_대상_선정.선정_작업_명 */
 , SLCTN_BUDGET_3 = #SLCTN_BUDGET_3#     /* 보수_대상_선정.선정_예산_3_BF_2 */
 , SLCTN_BUDGET_4 = #SLCTN_BUDGET_4#     /* 보수_대상_선정.선정_예산_4 */
 , SLCTN_BUDGET_5 = #SLCTN_BUDGET_5#    /* 보수_대상_선정.선정_예산_5 */
-, SLCTN_PURPS = #SLCTN_PURPS# /* 보수_대상_선정.산정_목적 */	
+, SLCTN_PURPS = #SLCTN_PURPS# /* 보수_대상_선정.산정_목적 */
 WHERE 1 = 1
 AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
 ]]>
 	</update>
-	
-	
+
+
 	<update id="rpairTrgetSlctnDAO.updateRangeSelection">
-	<![CDATA[ 
+	<![CDATA[
 		/* rpairTrgetSlctnDAO.updateRangeSelection */
 		/* 보수_대상_선정  범위내 선정 */
 		UPDATE TN_RPAIR_TRGET_SLCTN SET
@@ -146,24 +330,10 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
 ]]>
 	</update>
-	
 
-	<delete id="rpairTrgetSlctnDAO.deleteRpairTrgetSlctn">
-	<![CDATA[ 
-		/* rpairTrgetSlctnDAO.deleteRpairTrgetSlctn */
-		/* 보수_대상_선정 삭제 */
-		UPDATE TN_RPAIR_TRGET_SLCTN SET
-		DELETE_AT = 'Y' /* 보수_대상_선정.삭제_여부 */
-		, USE_AT = 'N' /* 보수_대상_선정.사용_여부 */
-		, UPDUSR_NO = #UPDUSR_NO#::int /* 보수_대상_선정.수정자_번호 */
-		, UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
-		WHERE 1 = 1
-		AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */
-]]>
-	</delete>
 
 	<select id="rpairTrgetSlctnDAO.selectRpairTrgetSlctn" resultClass="rpairTrgetSlctnVO">
-<![CDATA[ 
+<![CDATA[
 		/* rpairTrgetSlctnDAO.selectRpairTrgetSlctn */
 		/* 보수_대상_선정 조회 */
 		SELECT
@@ -190,27 +360,27 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 			, tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
 			, tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
 			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_1_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
 					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_1_rate / 100)
-				END 
+				END
 			  END DECSN_MTHD_1_BUDGET
 			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_2_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
 					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_2_rate / 100)
 				END
 			  END DECSN_MTHD_2_BUDGET
 			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_3_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
 					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_3_rate / 100)
 				END
 			  END DECSN_MTHD_3_BUDGET
 			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_4_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
 					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_4_rate / 100)
 				END
 			  END DECSN_MTHD_4_BUDGET
 			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_5_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
+				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0
 					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_5_rate / 100)
 				END
 			  END DECSN_MTHD_5_BUDGET
@@ -227,45 +397,15 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 ]]>
 </select>
 
-	<sql id="rpairTrgetSlctnDAO.selectRpairTrgetSlctnList.where">
-		WHERE 1 = 1
-
-		<isEqual property="searchCondition" compareValue="0">
-			AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #searchKeyword#::int
-		</isEqual>
-		<isEqual property="searchCondition" compareValue="1">
-			AND tnrpairtrgetslctn.SLCTN_OPERT_NM LIKE '%' || #searchKeyword# || '%'
-		</isEqual>
-		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_선정.대상_선정_번호 */ AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_OPERT_NM"><![CDATA[ /* 보수_대상_선정.선정_작업_명 */ AND tnrpairtrgetslctn.SLCTN_OPERT_NM = #SLCTN_OPERT_NM# ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_MTH"><![CDATA[ /* 보수_대상_선정.선정_방법 */ AND tnrpairtrgetslctn.SLCTN_MTH = #SLCTN_MTH# ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_STTUS"><![CDATA[ /* 보수_대상_선정.선정_상태 */ AND tnrpairtrgetslctn.SLCTN_STTUS = #SLCTN_STTUS# ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_BUDGET"><![CDATA[ /* 보수_대상_선정.선정_예산 */ AND tnrpairtrgetslctn.SLCTN_BUDGET = #SLCTN_BUDGET#::numeric ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_DT"><![CDATA[ /* 보수_대상_선정.선정_일시 */ AND tnrpairtrgetslctn.SLCTN_DT = #SLCTN_DT# ]]></isNotEmpty>
-		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 보수_대상_선정.삭제_여부 */ AND tnrpairtrgetslctn.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="USE_AT"><![CDATA[ /* 보수_대상_선정.사용_여부 */ AND tnrpairtrgetslctn.USE_AT = #USE_AT# ]]></isNotEmpty>
-		<isNotEmpty property="CRTR_NO"><![CDATA[ /* 보수_대상_선정.생성자_번호 */ AND tnrpairtrgetslctn.CRTR_NO = #CRTR_NO#::int ]]></isNotEmpty>
-		<isNotEmpty property="CREAT_DT"><![CDATA[ /* 보수_대상_선정.생성_일시 */ AND tnrpairtrgetslctn.CREAT_DT = #CREAT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ /* 보수_대상_선정.수정자_번호 */ AND tnrpairtrgetslctn.UPDUSR_NO = #UPDUSR_NO#::int ]]></isNotEmpty>
-		<isNotEmpty property="UPDT_DT"><![CDATA[ /* 보수_대상_선정.수정_일시 */ AND tnrpairtrgetslctn.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ /* 보수_대상_선정.부서_코드 */ AND tnrpairtrgetslctn.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_1_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_1_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_1_RATE = #DECSN_MTHD_1_RATE#::numeric ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_2_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_2_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_2_RATE = #DECSN_MTHD_2_RATE#::numeric ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_3_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_3_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_3_RATE = #DECSN_MTHD_3_RATE#::numeric ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_4_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_4_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE#::numeric ]]></isNotEmpty>
-		<isNotEmpty property="DECSN_MTHD_5_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_5_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE#::numeric ]]></isNotEmpty>
-		<isNotEmpty property="SLCTN_PURPS"><![CDATA[ /* 보수_대상_선정.산정_목적 */ AND tnrpairtrgetslctn.SLCTN_PURPS = #SLCTN_PURPS# ]]></isNotEmpty>
-</sql>
-
 	<select id="rpairTrgetSlctnDAO.selectRpairTrgetSlctnListPage"
 		parameterClass="rpairTrgetSlctnVO"
 		resultClass="rpairTrgetSlctnVO">
-<![CDATA[ 		
+<![CDATA[
 		/* rpairTrgetSlctnDAO.selectRpairTrgetSlctnListPage */
 		/* 보수_대상_선정 조회(페이징) */
 		WITH tnrpairtrgetslctn AS
 		(
-		SELECT	
+		SELECT
 				tnrpairtrgetslctn.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
 				, tnrpairtrgetslctn.SLCTN_OPERT_NM /* 보수_대상_선정.선정_작업_명 */
 				, tnrpairtrgetslctn.SLCTN_MTH /* 보수_대상_선정.선정_방법 */
@@ -291,7 +431,7 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 		     , tnrpairtrgetslctn.SLCTN_BUDGET_4    /* 보수_대상_선정.선정_예산_4 */
 		     , tnrpairtrgetslctn.SLCTN_BUDGET_5    /* 보수_대상_선정.선정_예산_5 */
 			FROM TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
-]]>			
+]]>
 		WHERE 1 = 1
 
 		<isEqual property="searchCondition" compareValue="0">
@@ -301,7 +441,7 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 		<isEqual property="searchCondition" compareValue="1">
 			AND tnrpairtrgetslctn.SLCTN_OPERT_NM LIKE '%' || #searchKeyword# || '%'
 		</isEqual>
-		
+
 		<isNotEmpty property="TRGET_SLCTN_NO"><![CDATA[ /* 보수_대상_선정.대상_선정_번호 */ AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_OPERT_NM"><![CDATA[ /* 보수_대상_선정.선정_작업_명 */ AND tnrpairtrgetslctn.SLCTN_OPERT_NM = #SLCTN_OPERT_NM# ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_MTH"><![CDATA[ /* 보수_대상_선정.선정_방법 */ AND tnrpairtrgetslctn.SLCTN_MTH = #SLCTN_MTH# ]]></isNotEmpty>
@@ -321,11 +461,11 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 		<isNotEmpty property="DECSN_MTHD_4_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_4_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_4_RATE = #DECSN_MTHD_4_RATE#::numeric ]]></isNotEmpty>
 		<isNotEmpty property="DECSN_MTHD_5_RATE"><![CDATA[ /* 보수_대상_선정.결정_방식_5_비율 */ AND tnrpairtrgetslctn.DECSN_MTHD_5_RATE = #DECSN_MTHD_5_RATE#::numeric ]]></isNotEmpty>
 		<isNotEmpty property="SLCTN_PURPS"><![CDATA[ /* 보수_대상_선정.산정_목적 */ AND tnrpairtrgetslctn.SLCTN_PURPS = #SLCTN_PURPS# ]]></isNotEmpty>
-	<![CDATA[		
+	<![CDATA[
 		)
 		SELECT tnrpairtrgetslctn.* FROM
 		(
-		SELECT 
+		SELECT
 			tnrpairtrgetslctn.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
 			, tnrpairtrgetslctn.SLCTN_OPERT_NM /* 보수_대상_선정.선정_작업_명 */
 			, tnrpairtrgetslctn.SLCTN_MTH /* 보수_대상_선정.선정_방법 */
@@ -355,132 +495,55 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 			WHERE 1=1
 		)  tnrpairtrgetslctn
 		WHERE 1=1
-]]>			
-<![CDATA[  		
+]]>
+<![CDATA[
   		AND  tnrpairtrgetslctn.ROW_NO BETWEEN #firstIndex# + 1 AND #lastIndex#
-]]>	  		
+]]>
 <![CDATA[
 		AND  tnrpairtrgetslctn.ROW_NO <= #lastIndex#	AND  ROW_NO > #firstIndex#
-]]>	
-	
-
-	</select>	
-	
-	
-	<select id="rpairTrgetSlctnDAO.selectRpairTrgetSlctnList"
-		parameterClass="rpairTrgetSlctnVO"
-		resultClass="rpairTrgetSlctnVO">
-<![CDATA[ 		
-		/* rpairTrgetSlctnDAO.selectRpairTrgetSlctnList */
-		/* 보수_대상_선정 조회 */
-		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
-			SELECT
-				tnrpairtrgetslctn.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
-				, tnrpairtrgetslctn.SLCTN_OPERT_NM /* 보수_대상_선정.선정_작업_명 */
-				, tnrpairtrgetslctn.SLCTN_MTH /* 보수_대상_선정.선정_방법 */
-				, (SELECT tccode.CODE_NM FROM TC_CODE tccode WHERE 1 = 1 AND tccode.CODE_VAL = tnrpairtrgetslctn.SLCTN_MTH AND tccode.USE_AT = 'Y' AND tccode.DELETE_AT = 'N' ) SLCTN_MTH_NM
-				, tnrpairtrgetslctn.SLCTN_STTUS /* 보수_대상_선정.선정_상태 */
-				, (SELECT tccode.CODE_NM FROM TC_CODE tccode WHERE 1 = 1 AND tccode.CODE_VAL = tnrpairtrgetslctn.SLCTN_STTUS AND tccode.USE_AT = 'Y' AND tccode.DELETE_AT = 'N' ) SLCTN_STTUS_NM
-				, tnrpairtrgetslctn.SLCTN_BUDGET /* 보수_대상_선정.선정_예산 */
-				, tnrpairtrgetslctn.SLCTN_DT /* 보수_대상_선정.선정_일시 */
-				, TO_CHAR(tnrpairtrgetslctn.SLCTN_DT, 'yyyy.MM') SLCTN_MONTH  /* 보수_대상_선정.선정_일시 */
-				, tnrpairtrgetslctn.DELETE_AT /* 보수_대상_선정.삭제_여부 */
-				, tnrpairtrgetslctn.USE_AT /* 보수_대상_선정.사용_여부 */
-				, tnrpairtrgetslctn.CRTR_NO /* 보수_대상_선정.생성자_번호 */
-				, tnrpairtrgetslctn.CREAT_DT /* 보수_대상_선정.생성_일시 */
-				, tnrpairtrgetslctn.UPDUSR_NO /* 보수_대상_선정.수정자_번호 */
-				, tnrpairtrgetslctn.UPDT_DT /* 보수_대상_선정.수정_일시 */
-				, tnrpairtrgetslctn.DEPT_CODE /* 보수_대상_선정.부서_코드 */
-			, tnrpairtrgetslctn.DECSN_MTHD_1_RATE /* 보수_대상_선정.결정_방식_1_비율 */
-			, tnrpairtrgetslctn.DECSN_MTHD_2_RATE /* 보수_대상_선정.결정_방식_2_비율 */
-			, tnrpairtrgetslctn.DECSN_MTHD_3_RATE /* 보수_대상_선정.결정_방식_3_비율 */
-			, tnrpairtrgetslctn.DECSN_MTHD_4_RATE /* 보수_대상_선정.결정_방식_4_비율 */
-			, tnrpairtrgetslctn.DECSN_MTHD_5_RATE /* 보수_대상_선정.결정_방식_5_비율 */
-			, tnrpairtrgetslctn.SLCTN_PURPS /* 보수_대상_선정.산정_목적 */
-			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_1_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
-					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_1_rate / 100)
-				END
-			  END DECSN_MTHD_1_BUDGET
-			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_2_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
-					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_2_rate / 100)
-				END
-			  END DECSN_MTHD_2_BUDGET
-			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_3_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
-					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_3_rate / 100)
-				END
-			  END DECSN_MTHD_3_BUDGET
-			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_4_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
-					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_4_rate / 100)
-				END
-			  END DECSN_MTHD_4_BUDGET
-			, CASE WHEN coalesce(tnrpairtrgetslctn.decsn_mthd_5_rate, 0) = 0 THEN 0 ELSE
-				CASE WHEN coalesce(tnrpairtrgetslctn.slctn_budget, 0) = 0 THEN 0 
-					ELSE tnrpairtrgetslctn.slctn_budget *(tnrpairtrgetslctn.decsn_mthd_5_rate / 100)
-				END
-			  END DECSN_MTHD_5_BUDGET
-			 , tnrpairtrgetslctn.SLCTN_BUDGET_1    /* 보수_대상_선정.선정_예산_1_WF */
-		     , tnrpairtrgetslctn.SLCTN_BUDGET_2    /* 보수_대상_선정.선정_예산_2_BF_1 */
-		     , tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */
-		     , tnrpairtrgetslctn.SLCTN_BUDGET_4    /* 보수_대상_선정.선정_예산_4 */
-		     , tnrpairtrgetslctn.SLCTN_BUDGET_5    /* 보수_대상_선정.선정_예산_5 */
-			
-			FROM TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
 ]]>
-	<include refid="rpairTrgetSlctnDAO.selectRpairTrgetSlctnList.where" />	
-<![CDATA[
-		ORDER BY 
-				tnrpairtrgetslctn.SLCTN_DT DESC, tnrpairtrgetslctn.TRGET_SLCTN_NO DESC /* 보수_대상_선정.대상_선정_번호 */  
-		) tb) tnrpairtrgetslctn  WHERE 1=1
-]]>		
-<isEqual prepend=" " property="usePage" compareValue="true">
-<![CDATA[
-    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
-]]>
-</isEqual>		
 
 
-	</select>		
- 
+	</select>
+
 
 	<select id="rpairTrgetSlctnDAO.selectRpairTrgetSlctnListTotalCount"
 		parameterClass="rpairTrgetSlctnVO"
 		resultClass="int">
-<![CDATA[ 		
+<![CDATA[
 		/* rpairTrgetSlctnDAO.selectRpairTrgetSlctnListTotalCount */
 		/* 보수_대상_선정 목록 개수 조회  */
 		SELECT COUNT(*) AS totCnt
 		FROM TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
-]]>		
+]]>
 		<include refid="rpairTrgetSlctnDAO.selectRpairTrgetSlctnList.where" />
-<![CDATA[		
-]]>		
+<![CDATA[
+]]>
 	</select>
-	
+
 	<!-- 집계된 조사자료를 현행화 한다 -->
 	<parameterMap id="prc_repair_targets_params" class="java.util.Map">
-		
-		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />			
+
+		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_SLCTN_BUDGET" javaType="java.lang.Long" jdbcType="NUMERIC" />
 		<parameter property="p_MMNF_RATE" javaType="java.lang.Float" jdbcType="NUMERIC" />
 		<parameter property="p_ST_RATE" javaType="java.lang.Float" jdbcType="NUMERIC" />
-		<parameter property="p_PM_RATE" javaType="java.lang.Float" jdbcType="NUMERIC" />			
+		<parameter property="p_PM_RATE" javaType="java.lang.Float" jdbcType="NUMERIC" />
 		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
 	</parameterMap>
-	
+
 	<select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGETS"
 			parameterMap="prc_repair_targets_params"
 			resultClass="hashMap">
 		SELECT * FROM PRC_REPAIR_TARGETS(?::text,?::text,?::numeric,?::numeric,?::numeric,?::numeric,?::text)
 	</select>
-	
-	<!-- 보수대상 선정 범위내 선정 -->
-	<parameterMap id="prc_repair_target_range_select_params" class="java.util.Map">		
-		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />			
+
+
+
+	<!-- 예산범위내 선정 -->
+	<parameterMap id="prc_repair_target_budget_rate_params" class="java.util.Map">
+		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_SLCTN_BUDGET" javaType="java.lang.Long" jdbcType="NUMERIC" />
 		<parameter property="p_DEPT_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -488,66 +551,27 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 		<parameter property="p_DECSN_MTHD_2_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
 		<parameter property="p_DECSN_MTHD_3_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
 		<parameter property="p_DECSN_MTHD_4_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_5_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />			
+		<parameter property="p_DECSN_MTHD_5_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
 		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
 	</parameterMap>
 
-	<select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_SELECT"
-			parameterMap="prc_repair_target_range_select_params"
-			resultClass="hashMap">
-		SELECT o_proccode, o_procmsg FROM PRC_REPAIR_TARGET_RANGE_SELECT(?::numeric, ?::numeric, ?, ?, ?, ?, ?, ?, ?, ?)
-	</select>
-	
-	<!-- 연속구간 연결 및 보수공법 재선정 -->
-	<parameterMap id="prc_repair_target_range_string_params" class="java.util.Map">		
-		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />			
-		<parameter property="p_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
-		<parameter property="p_SLCTN_BUDGET" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DEPT_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
-		<parameter property="p_DECSN_MTHD_1_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_2_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_3_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_4_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_5_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />			
-		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
-	</parameterMap>
-	
-	<select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_STRING"
-			parameterMap="prc_repair_target_range_string_params" resultClass="hashMap">
-		SELECT o_proccode, o_procmsg FROM PRC_REPAIR_TARGET_RANGE_STRING(?::numeric,?::numeric,?,?,?,?,?,?,?,?)
-	</select>
-	
-	<!-- 예산범위내 선정 -->
-	<parameterMap id="prc_repair_target_budget_rate_params" class="java.util.Map">		
-		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />			
-		<parameter property="p_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
-		<parameter property="p_SLCTN_BUDGET" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DEPT_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
-		<parameter property="p_DECSN_MTHD_1_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_2_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_3_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_4_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />
-		<parameter property="p_DECSN_MTHD_5_RATE" javaType="java.lang.Long" jdbcType="NUMERIC" />			
-		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
-	</parameterMap>
-	
 	<select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_BUDGET_RATE"
 			parameterMap="prc_repair_target_budget_rate_params" resultClass="hashMap">
 		SELECT o_proccode, o_procmsg FROM PRC_REPAIR_TARGET_BUDGET_RATE(?::numeric,?::numeric,?,?,?,?,?,?,?,?)
 	</select>
-	
+
 		<!-- 예산범위내 선정 -->
-	<parameterMap id="prc_repair_target_complete_params" class="java.util.Map">		
-		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />			
+	<parameterMap id="prc_repair_target_complete_params" class="java.util.Map">
+		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_TRGET_SLCTN_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
 		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
 	</parameterMap>
-	
+
 	<select id="rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_COMPLETE"
 			parameterMap="prc_repair_target_complete_params" resultClass="hashMap">
 		SELECT o_proccode, o_procmsg FROM PRC_REPAIR_TARGET_COMPLETE(?,?,?)
 	</select>
-	
-	
+
+
 
 </sqlMap>

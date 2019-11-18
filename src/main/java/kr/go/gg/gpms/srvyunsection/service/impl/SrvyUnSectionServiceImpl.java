@@ -34,5 +34,9 @@ public class SrvyUnSectionServiceImpl extends AbstractServiceImpl implements Srv
 	public Object srvyYearList(Object object) throws Exception {
 		return srvyUnSectionDAO.srvyYearList(object);
 	}
+	@Override
+	public Object chartList(Object object) throws Exception{
+		return srvyUnSectionDAO.chartList(object);
+	}
 
 }

@@ -12,7 +12,7 @@
 <%@ include file="/include/common_head.jsp" %>
 
 <style type="text/css"  >
- 
+
 
 .notempty-price {background-color:#E6E6E6;}
 .statsbx .ui-jqgrid .ui-jqgrid-hbox{
@@ -37,7 +37,7 @@ padding-right:0px;
     border-bottom-color: inherit;
     border-bottom-style: solid;
     overflow: hidden;
-  	
+
     padding-top: 0px;
     padding-right: 2px;
     padding-bottom: 0px;
@@ -45,25 +45,25 @@ padding-right:0px;
 }
 
 .rtGridDept .ui-jqgrid tr.footrow-ltr td:first-child{
-     width:160px !important; 
+     width:160px !important;
      padding-top: 0px;
     padding-right: 2px;
     padding-bottom: 0px;
     padding-left: 20px;
 }
 .rtGridDept .ui-jqgrid tr.footrow-ltr td:nth-child(2){
-     width:161px !important; 
+     width:161px !important;
      padding-top: 0px;
     padding-right: 20px;
     padding-bottom: 0px;
     padding-left: 2px;
 }
 .rtGridDept .ui-jqgrid tr td:first-child{
- 	width:160px !important; 
+ 	width:160px !important;
     padding-left: 20px;
 }
 .rtGridDept .ui-jqgrid tr td:nth-child(2){
-	width:161px !important; 
+	width:161px !important;
     padding-right: 20px;
 }
 
@@ -88,32 +88,32 @@ height: 5.7em !important;
     border-bottom-color: inherit;
     border-bottom-style: solid;
     overflow: hidden;
-  	
+
     padding-top: 0px;
     padding-right: 2px;
     padding-bottom: 0px;
     padding-left: 2px;
 }
 .rtGridMethod .ui-jqgrid tr.footrow-ltr td:first-child{
-     width:160px !important; 
+     width:160px !important;
      padding-top: 0px;
     padding-right: 2px;
     padding-bottom: 0px;
     padding-left: 20px;
 }
 .rtGridMethod .ui-jqgrid tr.footrow-ltr td:nth-child(2){
-     width:161px !important; 
+     width:161px !important;
      padding-top: 0px;
     padding-right: 20px;
     padding-bottom: 0px;
     padding-left: 2px;
 }
 .rtGridMethod .ui-jqgrid tr td:first-child{
- 	width:160px !important; 
+ 	width:160px !important;
     padding-left: 20px;
 }
 .rtGridMethod .ui-jqgrid tr td:nth-child(2){
-	width:161px !important; 
+	width:161px !important;
     padding-right: 20px;
 }
 
@@ -121,7 +121,7 @@ height: 5.7em !important;
 .rtGridAdmin .ui-jqgrid-htable, .rtGridAdmin .ui-jqgrid-ftable,  .rtGridAdmin .ui-jqgrid-btable{
 width:100% !important;
 }
- 
+
 .rtGridAdmin .ui-jqgrid .ui-jqgrid-hbox{
 	padding-right:0px;
 }
@@ -133,34 +133,34 @@ width:100% !important;
     border-bottom-color: inherit;
     border-bottom-style: solid;
     overflow: hidden;
-  	
+
     padding-top: 0px;
     padding-right: 2px;
     padding-bottom: 0px;
     padding-left: 2px;
 }
 .rtGridAdmin .ui-jqgrid tr.footrow-ltr td:first-child{
-     width:470px !important; 
+     width:470px !important;
      padding-top: 0px;
     padding-right: 1px;
     padding-bottom: 0px;
     padding-left: 20px;
 }
 .rtGridAdmin .ui-jqgrid tr.footrow-ltr td:nth-child(2){
-     width:486px !important; 
+     width:486px !important;
      padding-top: 0px;
     padding-right: 20px;
     padding-bottom: 0px;
     padding-left: 2px;
 }
 .rtGridAdmin .ui-jqgrid tr td:first-child{
- 	width:471px !important; 
+ 	width:471px !important;
     padding-left: 20px;
 }
 .rtGridAdmin .ui-jqgrid tr td:nth-child(2){
-	width:470px !important; 
+	width:470px !important;
     padding-right: 20px;
-}   
+}
 </style>
 
 </head>
@@ -173,108 +173,12 @@ width:100% !important;
 <input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
 <input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <div id="sch_cnt01" class="tabcont">
-	<h3 class="tc">${rpairTrgetSlctnVO.SLCTN_OPERT_NM} (<fmt:formatDate pattern = "yyyy-MM-dd" value = "${rpairTrgetSlctnVO.SLCTN_DT}" />) <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}">(작업중)</c:if> 보수대상 선정 과정을 진행합니다.</h3>
+	<h3 class="tc">(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${rpairTrgetSlctnVO.SLCTN_DT}" />) <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}">(작업중)</c:if> 보수대상 선정 과정을 진행합니다.</h3>
 	<p class="location">
 	    <span>보수대상선정</span>
 	    <strong>보수대상선정</strong>
 	</p>
 	<div>
-		<div class="bgsch2 af" style="height:240px;">
-        <h4 class="stit">보수대상 선정 시나리오 작성</h4>
-		<form id="frmRpairTrgetSlctn" name="frmRpairTrgetSlctn" method="post" action="">
-        <input type="hidden" name="TRGET_SLCTN_NO" id="TRGET_SLCTN_NO" value="${rpairTrgetSlctnVO.TRGET_SLCTN_NO}" />
-	        <div class="posiR m10">
-	            <ul class="sch fl mt10" style="width:220px;">
-	                <li class="wid100">
-	                    <label class="wid100">예산 집행 기관</label>
-	                </li>
-	                <li class="wid100">
-						<select name="DEPT_CODE" id="DEPT_CODE"  style="width:180px">
-							<option value="">===== 전체 =====</option>
-							<c:forEach var="selectData" items="${deptCdList}">
-								<option value="${selectData.DEPT_CODE}" <c:if test = "${rpairTrgetSlctnVO.DEPT_CODE == selectData.DEPT_CODE}"> selected </c:if> >${selectData.LOWEST_DEPT_NM}</option>
-							</c:forEach>
-						</select>
-	                </li>
-	                <li class="wid100 mt15">
-	                    <label class="wid100">총 예산(원)</label>
-	                </li>
-	                <li class="wid100">
-	                <%--
-	                    <input type="number" style="width:172px"  onchange="fnBudgetRateChange(0);" name="SLCTN_BUDGET" id="SLCTN_BUDGET" pattern="[0-9]*" value="${rpairTrgetSlctnVO.SLCTN_BUDGET}" class=" input" />
-	                     --%>
-	                     <input type="text" style="width:172px;text-align:right;"  onchange="fnBudgetRateChange(0);" name="SLCTN_BUDGET" id="SLCTN_BUDGET" pattern="[0-9]*" value="${rpairTrgetSlctnVO.SLCTN_BUDGET}" class="MX_80 input DT_INT" />
-	                </li>
-	            </ul>
-	            <div class="fl mt10 posiA" style="left:230px;right:130px">
-	                <label class="lable">공종별 예산분배</label>
-	                <table class="adminlist mt5" summary="정보를 제공합니다.">
-	                    <caption>정보</caption>
-	                    <colgroup>
-	                        <col width="20%">
-	                        <col width="40%">
-	                        <col width="10%">
-	                        <col width="15%">
-	                        <col width="20%">
-	                    </colgroup>
-	                    <thead>
-	                        <tr>
-	                            <th scope="col">보수공법 비율 결정방식</th>
-	                            <th scope="col">보수공법</th>
-	                            <th scope="col">예산분배(%)</th>
-	                            <th scope="col">예산배정(원)</th>
-	                            <th scope="col">선정예산(원)</th>
-	                        </tr>
-	                    </thead>
-	
-	                    <tbody>
-	                        <tr>
-	                            <td>Worst-First</td>
-	                            <td>
-	                            <c:set var="methodnames" value="" scope="page" />
-	                            <c:forEach var="methodItem" items="${repairMethodItems}">
-								<c:if test = "${methodItem.MSR_DM_CODE == 'MSRD0001'}">
-								<c:set var="methodnames" value="${methodnames} / ${methodItem.MSRC_CL_NM}" scope="page" />
-								 <c:set var="myVar" value="${stat.first ? '' : myVar} ${currentItem}" />
-								</c:if>
-							</c:forEach>${fn:substringAfter(methodnames, " /")}</td>
-	                            <td><input type="number" style="width:60px;text-align:right;" onchange="fnBudgetRateChange(1);" name="DECSN_MTHD_1_RATE" id="DECSN_MTHD_1_RATE" value="${rpairTrgetSlctnVO.DECSN_MTHD_1_RATE}"/></td>
-	                            <td class="txtright"><span id="DECSN_MTHD_1_BUDGET" class="fcblue"><fmt:formatNumber value="${rpairTrgetSlctnVO.DECSN_MTHD_1_BUDGET}" type="number"/></span></td>
-	                            <td class="txtright"><span id="SLCTN_BUDGET_1"  class="fcred"><fmt:formatNumber value="${rpairTrgetSummaryVO.SLCTN_BUDGET_1}" type="number"/></span></td>
-	                        </tr>
-	                        <tr>
-	                            <td>Best-First</td>
-	                            <td><c:set var="methodnames" value="" scope="page" />
-	                            <c:forEach var="methodItem" items="${repairMethodItems}">
-								<c:if test = "${methodItem.MSR_DM_CODE == 'MSRD0002'}">
-								<c:set var="methodnames" value="${methodnames} / ${methodItem.MSRC_CL_NM}" scope="page" />
-								 <c:set var="myVar" value="${stat.first ? '' : myVar} ${currentItem}" />
-								</c:if>
-							</c:forEach>${fn:substringAfter(methodnames, " /")}</td>
-	                            <td><input type="number" style="width:60px;text-align:right;" onchange="fnBudgetRateChange(2);"  name="DECSN_MTHD_2_RATE" id="DECSN_MTHD_2_RATE" value="${rpairTrgetSlctnVO.DECSN_MTHD_2_RATE}"/></td>
-	                            <td class="txtright"><span id="DECSN_MTHD_2_BUDGET"  class="fcblue"><fmt:formatNumber value="${rpairTrgetSlctnVO.DECSN_MTHD_2_BUDGET}" type="number"/></span></td>
-	                            <td class="txtright"><span id="SLCTN_BUDGET_2" class="fcred"><fmt:formatNumber value="${rpairTrgetSummaryVO.SLCTN_BUDGET_2}" type="number"/></span></td>
-	                        </tr>
-	                        <tr>
-	                            <td>Best-First</td>
-	                            <td><c:set var="methodnames" value="" scope="page" />
-	                            <c:forEach var="methodItem" items="${repairMethodItems}">
-								<c:if test = "${methodItem.MSR_DM_CODE == 'MSRD0003'}">
-								<c:set var="methodnames" value="${methodnames} / ${methodItem.MSRC_CL_NM}" scope="page" />
-								 <c:set var="myVar" value="${stat.first ? '' : myVar} ${currentItem}" />
-								</c:if>
-							</c:forEach>${fn:substringAfter(methodnames, " /")}</td>
-	                            <td><input type="number" style="width:60px;text-align:right;" onchange="fnBudgetRateChange(3);"  name="DECSN_MTHD_3_RATE" id="DECSN_MTHD_3_RATE" value="${rpairTrgetSlctnVO.DECSN_MTHD_3_RATE}"/></td>
-	                            <td class="txtright"><span id="DECSN_MTHD_3_BUDGET" class="fcblue"><fmt:formatNumber value="${rpairTrgetSlctnVO.DECSN_MTHD_3_BUDGET}" type="number"/></span></td>
-	                            <td class="txtright"><span id="SLCTN_BUDGET_3" class="fcred"><fmt:formatNumber value="${rpairTrgetSummaryVO.SLCTN_BUDGET_3}" type="number"/></span></td>
-	                        </tr>
-	                    </tbody>
-	                </table>
-	            </div>
-	            <a href="#" class="schbtn dpb fr mt30 mr10" style="height:135px;line-height:135px" onclick="javascript:fnRangeSelection();">범위 내 선정</a>	
-		</div>
-		</form>
-		</div>	
 	    <div class="m20">
 	    	<form id="frmRpairTrgetGroup" name="frmRpairTrgetGroup" method="post" action="">
 	    	<input type="hidden" name="useFilter" id="useFilter" value="false" />
@@ -309,11 +213,15 @@ width:100% !important;
 		        			<option value="${adm.CODE_VAL }">${adm.CODE_NM }</option>
 		        		</c:forEach>
 	                </select></li>
+	                <li class="ml20"><label>관리도로</label>
+	                <select id="MNG_RD_CD" name="MNG_RD_CD" title="관리도로" style="width:110px;" class="input">
+	                	<option value="">== 전체 ==</option>
+		        		<c:forEach items="${mngRdList }" var="mngRd">
+		        			<option value="${mngRd.CODE_VAL}">${mngRd.CODE_NM}</option>
+		        		</c:forEach>
+	                </select></li>
 	                <li class="ml10 fr">
 	                    <a href="#" onclick="javascript:fnFilterApply();" class="schbtn" id="btnFilterSearch" >필터적용</a>
-	                    <%--
-	                    <a href="#" onclick="javascript:fnFilterSelect();" class="schbtn" >필터구간만 목록조회</a>	                    
-	                     --%>
 	                </li>
 	            </ul>
 	        </div>
@@ -329,11 +237,11 @@ width:100% !important;
                     <a href="#" class="schbtn" onclick="javascript:fnInitRangeSelection(true);">상태 초기화</a>
                     <a href="#" class="schbtn" onclick="javascript:fn_select_cellSectFilter();" >선정구간 지도위치보기</a>
                     <a href="#" class="schbtn" onclick="javascript:fn_showChart_RepairTarget();">차트 조회</a>
-                    <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}"><a href="#" class="graybtn"  disabled >엑셀 저장</a></c:if> 
+                    <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}"><a href="#" class="graybtn"  disabled >엑셀 저장</a></c:if>
                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS eq 'RTSS0010'}"><a href="#" class="schbtn"  onclick="javascript:fndownload_RepairTarget();"  >엑셀 저장</a></c:if>
                 </div>
                 <div class="fr">
-                    <a href="#" class="schbtn" onclick="javascript:fnSaveComplete();" >보수대상 선정(저장)</a>                    
+                    <a href="#" class="schbtn" onclick="javascript:fnSaveComplete();" >보수대상 선정(저장)</a>
                 </div>
             </div>
     	</div>
@@ -378,9 +286,9 @@ width:100% !important;
     <%-- <%@ include file="/include/stats/common_cntrwk.jsp" %> --%>
     <!--// 왼쪽메뉴영역-->
 	<!-- 그래프 -->
-	
+
 	<!-- 표 -->
-	
+
 
 
 <!-- 공통 (START)-->
@@ -401,62 +309,48 @@ var ntcNo=0;
  * 차트 여부 플래그
  */
 var isChart = true;
-var myChartDept = null; 
+var myChartDept = null;
 var myChartMethod = null;
-var myChartAdmin = null; 
+var myChartAdmin = null;
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	// input, select 항목 init
-	COMMON_UTIL.cmFormObjectInit("frmRpairTrgetSlctn");
-
 	var minChartWidth = 1350;
 	minChartWidth = Math.max(minChartWidth, $(window).width() - 150);
-	
+
+	/* 차트 조회 팝업 */
 	$("#repairtargetStats").dialog({
-		autoOpen : false, 
+		autoOpen : false,
 		height : $(window).height() - 150, // 850,
 		width : minChartWidth, // 1024,
 		modal : true, title : "[챠트 조회] 예산에 근거한 유지보수 구간 선정 과정을 진행합니다."
 
 	});
-	// 달력 생성
-	//COMMON_UTIL.cmCreateDatepickerLinked('SCH_STRWRK_DE','SCH_COMPET_DE', 10);
-	
-	//창 조절시 차트 width 
-	var rw = $(window).width() / 3;
-	
-	$("#divGridHeight").height(($(parent.window).height() - 530));
-	$("#div_grid").height(($(parent.window).height() - 620));
-	$(window).resize(function () {
-		$("#divGridHeight").height(($(parent.window).height() - 530));
-		$("#div_grid").height(($(parent.window).height() - 620));
-		COMMON_UTIL.cmInitGridSize('gridArea','div_grid', $("#div_grid").height());
-    });
-  
+
+	//검색 목록 그리드 구성
 	var vForm = $("#frmRpairTrgetGroup");
 	var vPostData = {"TRGET_SLCTN_NO":vForm.find("#TRGET_SLCTN_NO").val(),
 			"ROAD_GRAD":vForm.find("#ROAD_GRAD").val(),
 			"ROUTE_CODE":vForm.find("#ROUTE_CODE").val(),
 			"ROAD_NO_VAL":vForm.find("#ROAD_NO_VAL").val(),
-			"ADM_CODE":vForm.find("#ADM_CODE").val()};
-	//검색 목록 그리드 구성
-	
-	
+			"ADM_CODE":vForm.find("#ADM_CODE").val(),
+			"MNG_RD_CD":vForm.find("#MNG_RD_CD").val()};
+
 	var colModels = new Array();
 	var colIndex = 0;
 	colModels[colIndex++]={name: "btn_check",  index: "btn_check", comments: "선택",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
 	colModels[colIndex++]={name: "DEPT_NM",  index: "DEPT_NM", comments: "관리<br/>기관",  width: 80,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.부서코드 */
-	colModels[colIndex++]={name: "ROAD_GRAD",  index: "ROAD_GRAD", comments: "도로등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.도로등급 */	
+	colModels[colIndex++]={name: "ROAD_GRAD",  index: "ROAD_GRAD", comments: "도로등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.도로등급 */
 	colModels[colIndex++]={name: "ROAD_GRAD_NM",  index: "ROAD_GRAD_NM", comments: "도로<br/>등급",  width: 80,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.도로등급 */
 	colModels[colIndex++]={name: "ROUTE_CODE",  index: "ROUTE_CODE", comments: "노선<br/>번호",  width: 50,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.노선_코드 */
 	colModels[colIndex++]={name: "ROAD_NO_VAL",  index: "ROAD_NO_VAL", comments: "노선<br/>번호",  width: 50,align: "center", hidden: false, sortable :false }; /*보수_대상_항목_그룹.노선_코드 */
-	
+
 	colModels[colIndex++]={name: "DIRECT_CODE",  index: "DIRECT_CODE", comments: "행선",  width: 40,align: "center", hidden: false, sortable :false ,  formatter: fn_grid_item}; /*보수_대상_항목_그룹.행선_코드 */
 	colModels[colIndex++]={name: "TRACK",  index: "TRACK", comments: "차로",  width: 40,align: "center", hidden: false, sortable :false }; /*보수_대상_항목_그룹.차로 */
+	colModels[colIndex++]={name: "MNG_RD_NM",  index: "MNG_RD_NM", comments: "관리도로",  width: 80,align: "center", hidden: false, sortable :false }; /*보수_대상_항목_그룹.관리도로 */
 	colModels[colIndex++]={name: "CELL_TYPE",  index: "CELL_TYPE", comments: "셀_타입",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.셀_타입 */
 	colModels[colIndex++]={name: "CELL_TYPE_NM",  index: "CELL_TYPE_NM", comments: "포장셀<br/>구분",  width: 90,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.셀_타입 */
-	colModels[colIndex++]={name: "STRTPT",  index: "STRTPT", comments: "시점<br/>(m)",  width: 60,align: "right", hidden: false, sortable :false ,  formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 0, defaultValue: '0' }}; /*보수_대상_항목_그룹.시점 */			
+	colModels[colIndex++]={name: "STRTPT",  index: "STRTPT", comments: "시점<br/>(m)",  width: 60,align: "right", hidden: false, sortable :false ,  formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 0, defaultValue: '0' }}; /*보수_대상_항목_그룹.시점 */
 	colModels[colIndex++]={name: "ENDPT",  index: "ENDPT", comments: "종점<br/>(m)",  width: 60,align: "right", hidden: false, sortable :false ,  formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 0, defaultValue: '0' }}; /*보수_대상_항목_그룹.종점 */
 	colModels[colIndex++]={name: "DEPT_CODE",  index: "DEPT_CODE", comments: "부서코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.부서코드 */
 	colModels[colIndex++]={name: "VMTC_GRAD",  index: "VMTC_GRAD", comments: "교통량등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.교통량등급 */
@@ -464,7 +358,7 @@ $( document ).ready(function() {
 	colModels[colIndex++]={name: "ADM_CODE",  index: "ADM_CODE", comments: "행정구역코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.행정구역코드 */
 	colModels[colIndex++]={name: "ADM_NM",  index: "ADM_NM", comments: "행정<br/>구역",  width: 80,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.행정구역코드 */
 	colModels[colIndex++]={name: "CNTRWK_YEAR",  index: "CNTRWK_YEAR", comments: "최근공사<br/>년도",  width: 80,align: "right", hidden: false, sortable :false }; /*보수_대상_항목_그룹.공사_년도 */
-	colModels[colIndex++]={name: "KILLO_LEN",  index: "KILLO_LEN", comments: "연장<br/>(km)",  width: 80,align: "right", hidden: false, sortable :false, formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0' }}; /*보수_대상_항목_그룹.연장 */			
+	colModels[colIndex++]={name: "KILLO_LEN",  index: "KILLO_LEN", comments: "연장<br/>(km)",  width: 80,align: "right", hidden: false, sortable :false, formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0' }}; /*보수_대상_항목_그룹.연장 */
 	colModels[colIndex++]={name: "AR",  index: "AR", comments: "면적<br/>(m<sup>2</sup>)",  width: 80,align: "right", hidden: false, sortable :false,  formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0' } }; /*보수_대상_항목_그룹.면적 */
 	colModels[colIndex++]={name: "RPAIR_MTHD_CODE",  index: "RPAIR_MTHD_CODE", comments: "보수_공법_코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.보수_공법_코드 */
 	colModels[colIndex++]={name: "MSRC_CL_NM",  index: "MSRC_CL_NM", comments: "보수<br/>공법",  width: 150,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.보수_공법_코드 */
@@ -477,42 +371,42 @@ $( document ).ready(function() {
 	colModels[colIndex++]={name: "btn_loc2",  index: "btn_loc2", comments: "위치<br/>보기",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
 
 	colModels[colIndex++]={name: "GROUP_ITEM_NO",  index: "GROUP_ITEM_NO", comments: "그룹_항목_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.그룹_항목_번호 */
-	colModels[colIndex++]={name: "TRGET_SLCTN_NO",  index: "TRGET_SLCTN_NO", comments: "대상_선정_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.대상_선정_번호 */			
-	colModels[colIndex++]={name: "SLCTN_STEP",  index: "SLCTN_STEP", comments: "선정_단계",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_단계 */			
-	colModels[colIndex++]={name: "ITEM_SLCTN_STTUS",  index: "ITEM_SLCTN_STTUS", comments: "항목_선정_상태",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.항목_선정_상태 */			
-	colModels[colIndex++]={name: "SRVY_MT",  index: "SRVY_MT", comments: "조사_월",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.조사_월 */			
-	colModels[colIndex++]={name: "SRVY_YEAR",  index: "SRVY_YEAR", comments: "조사_년도",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.조사_년도 */			
-	colModels[colIndex++]={name: "GPCI",  index: "GPCI", comments: "GPCI",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.GPCI */			
-	colModels[colIndex++]={name: "PC_GRAD",  index: "PC_GRAD", comments: "포장상태등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.포장상태등급 */			
-	colModels[colIndex++]={name: "CALC_YEAR",  index: "CALC_YEAR", comments: "산정_년도",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_년도 */			
-	colModels[colIndex++]={name: "CALC_MT",  index: "CALC_MT", comments: "산정_월",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_월 */			
-	colModels[colIndex++]={name: "CALC_PC_GRAD",  index: "CALC_PC_GRAD", comments: "산정_포장상태등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_포장상태등급 */			
-	colModels[colIndex++]={name: "TRNSPORT_QY",  index: "TRNSPORT_QY", comments: "교통_량",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.교통_량 */			
-	colModels[colIndex++]={name: "RPAIR_MTHD_CODE",  index: "RPAIR_MTHD_CODE", comments: "보수_공법_코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.보수_공법_코드 */			
-	colModels[colIndex++]={name: "MSR_DM_CODE",  index: "MSR_DM_CODE", comments: "공법선정비율_결정방식_코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.공법선정비율_결정방식_코드 */			
-	colModels[colIndex++]={name: "THRHLD",  index: "THRHLD", comments: "임계값",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.임계값 */			
-	colModels[colIndex++]={name: "FIXING_AT",  index: "FIXING_AT", comments: "고정_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.고정_여부 */			
-	colModels[colIndex++]={name: "BUDGET_CECK",  index: "BUDGET_CECK", comments: "예산_체크",  width: 80,align: "center", hidden: true, sortable :false , summaryType:'sum', summaryTpl: 'Totals :'}; /*보수_대상_항목_그룹.예산_체크 */			
-	colModels[colIndex++]={name: "ACCMLT_CALC",  index: "ACCMLT_CALC", comments: "누적_산정",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.누적_산정 */			
-	colModels[colIndex++]={name: "SLCTN_AT",  index: "SLCTN_AT", comments: "선정_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_여부 */			
-	colModels[colIndex++]={name: "SLCTN_DT",  index: "SLCTN_DT", comments: "선정_일시",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_일시 */			
-	colModels[colIndex++]={name: "TMPR_SLCTN_AT",  index: "TMPR_SLCTN_AT", comments: "임시_선정_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.임시_선정_여부 */			
-	colModels[colIndex++]={name: "NODE_CO",  index: "NODE_CO", comments: "노드_개수",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.노드_개수 */			
-	colModels[colIndex++]={name: "SLCTN_ORDR",  index: "SLCTN_ORDR", comments: "선정_순서",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_순서 */			
-	colModels[colIndex++]={name: "DELETE_AT",  index: "DELETE_AT", comments: "삭제_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.삭제_여부 */			
-	colModels[colIndex++]={name: "USE_AT",  index: "USE_AT", comments: "사용_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.사용_여부 */			
-	colModels[colIndex++]={name: "CRTR_NO",  index: "CRTR_NO", comments: "생성자_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.생성자_번호 */			
-	colModels[colIndex++]={name: "CREAT_DT",  index: "CREAT_DT", comments: "생성_일시",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.생성_일시 */			
-	colModels[colIndex++]={name: "UPDUSR_NO",  index: "UPDUSR_NO", comments: "수정자_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.수정자_번호 */			
+	colModels[colIndex++]={name: "TRGET_SLCTN_NO",  index: "TRGET_SLCTN_NO", comments: "대상_선정_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.대상_선정_번호 */
+	colModels[colIndex++]={name: "SLCTN_STEP",  index: "SLCTN_STEP", comments: "선정_단계",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_단계 */
+	colModels[colIndex++]={name: "ITEM_SLCTN_STTUS",  index: "ITEM_SLCTN_STTUS", comments: "항목_선정_상태",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.항목_선정_상태 */
+	colModels[colIndex++]={name: "SRVY_MT",  index: "SRVY_MT", comments: "조사_월",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.조사_월 */
+	colModels[colIndex++]={name: "SRVY_YEAR",  index: "SRVY_YEAR", comments: "조사_년도",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.조사_년도 */
+	colModels[colIndex++]={name: "GPCI",  index: "GPCI", comments: "GPCI",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.GPCI */
+	colModels[colIndex++]={name: "PC_GRAD",  index: "PC_GRAD", comments: "포장상태등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.포장상태등급 */
+	colModels[colIndex++]={name: "CALC_YEAR",  index: "CALC_YEAR", comments: "산정_년도",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_년도 */
+	colModels[colIndex++]={name: "CALC_MT",  index: "CALC_MT", comments: "산정_월",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_월 */
+	colModels[colIndex++]={name: "CALC_PC_GRAD",  index: "CALC_PC_GRAD", comments: "산정_포장상태등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.산정_포장상태등급 */
+	colModels[colIndex++]={name: "TRNSPORT_QY",  index: "TRNSPORT_QY", comments: "교통_량",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.교통_량 */
+	colModels[colIndex++]={name: "RPAIR_MTHD_CODE",  index: "RPAIR_MTHD_CODE", comments: "보수_공법_코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.보수_공법_코드 */
+	colModels[colIndex++]={name: "MSR_DM_CODE",  index: "MSR_DM_CODE", comments: "공법선정비율_결정방식_코드",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.공법선정비율_결정방식_코드 */
+	colModels[colIndex++]={name: "THRHLD",  index: "THRHLD", comments: "임계값",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.임계값 */
+	colModels[colIndex++]={name: "FIXING_AT",  index: "FIXING_AT", comments: "고정_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.고정_여부 */
+	colModels[colIndex++]={name: "BUDGET_CECK",  index: "BUDGET_CECK", comments: "예산_체크",  width: 80,align: "center", hidden: true, sortable :false , summaryType:'sum', summaryTpl: 'Totals :'}; /*보수_대상_항목_그룹.예산_체크 */
+	colModels[colIndex++]={name: "ACCMLT_CALC",  index: "ACCMLT_CALC", comments: "누적_산정",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.누적_산정 */
+	colModels[colIndex++]={name: "SLCTN_AT",  index: "SLCTN_AT", comments: "선정_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_여부 */
+	colModels[colIndex++]={name: "SLCTN_DT",  index: "SLCTN_DT", comments: "선정_일시",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_일시 */
+	colModels[colIndex++]={name: "TMPR_SLCTN_AT",  index: "TMPR_SLCTN_AT", comments: "임시_선정_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.임시_선정_여부 */
+	colModels[colIndex++]={name: "NODE_CO",  index: "NODE_CO", comments: "노드_개수",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.노드_개수 */
+	colModels[colIndex++]={name: "SLCTN_ORDR",  index: "SLCTN_ORDR", comments: "선정_순서",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.선정_순서 */
+	colModels[colIndex++]={name: "DELETE_AT",  index: "DELETE_AT", comments: "삭제_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.삭제_여부 */
+	colModels[colIndex++]={name: "USE_AT",  index: "USE_AT", comments: "사용_여부",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.사용_여부 */
+	colModels[colIndex++]={name: "CRTR_NO",  index: "CRTR_NO", comments: "생성자_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.생성자_번호 */
+	colModels[colIndex++]={name: "CREAT_DT",  index: "CREAT_DT", comments: "생성_일시",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.생성_일시 */
+	colModels[colIndex++]={name: "UPDUSR_NO",  index: "UPDUSR_NO", comments: "수정자_번호",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.수정자_번호 */
 	colModels[colIndex++]={name: "UPDT_DT",  index: "UPDT_DT", comments: "수정_일시",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.수정_일시 */
 	colModels[colIndex++]={name: "CELL_IDS",  index: "CELL_IDS", comments: "셀목록",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.셀목록 */
-	
+
 
 	var colNameList = new Array();
 	for (var i = 0; i < colModels.length; i++) {
 		colNameList[i] = colModels[i].comments;
 	}
-	
+
 	$("#gridArea").jqGrid({
 		url: '<c:url value="/"/>'+'api/rpairtrgetgroup/selectRpairTrgetGroupListPage.do'
 		,autoencode: true
@@ -526,7 +420,7 @@ $( document ).ready(function() {
 	   	,colModel:colModels
 		,async : false
 		,sortname: ''
-	    ,sortorder: "asc" 
+	    ,sortorder: "asc"
 	   	,rowNum: 50
 	   	,rowList: [20,50,100,500]
 	    ,viewrecords: true
@@ -544,12 +438,12 @@ $( document ).ready(function() {
 				/*
 	            if(parseInt(data.FIX_BUDGET_ASIGN) > 0) {
 	                $('tr#' + id).addClass('notempty-price');
-	            }else 
-	            
+	            }else
+
 	            else if(data.SLCTN_AT == 'Y') {
 	                $('tr#' + id).addClass('notempty-price');
 	            }
-	            
+
 				*/
 	    }
 		,ondblClickRow: function(rowId) {		// 더블클릭 처리
@@ -574,7 +468,7 @@ $( document ).ready(function() {
 				delete this.p.postData._search;
 				this.p.postData.sidx = this.p.sortname;
 				this.p.postData.sord = this.p.sortorder;
-	   			//{"USER_NM":"","USE_AT":"","DELETE_AT":"","pageIndex":1,"pageUnit":50,"sidx":"USER_NM","sord":"desc"}	   			
+	   			//{"USER_NM":"","USE_AT":"","DELETE_AT":"","pageIndex":1,"pageUnit":50,"sidx":"USER_NM","sord":"desc"}
 	   			//this.p.postData = JSON.stringify(this.p.postData);
 	   			//var pData=$("#frm").cmSerializeObject();
 	   			if (this.p.postData.pageUnit != this.p.postData.rows) {
@@ -590,13 +484,13 @@ $( document ).ready(function() {
 	}).navGrid('#gridPager', {
 		edit : false, add : false, del : false, search : false, refresh : false
 	});
-	
+
 	// 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
 
 	COMMON_UTIL.cmInitGridSize('gridArea', 'div_grid', $("#div_grid").height());
 
 	fnSearch();
-}); 
+});
 
 //도면 다운로드, 위치이동 버튼 생성
 function fn_grid_btn(cellValue, options, rowObject) {
@@ -678,7 +572,7 @@ function fn_checkItem(objThis, group_item_no, tmpr_slctn_at, fix_amount_calc){
         dataType: "json",
         cache: false,
         type: 'POST',
-        processData: false,        
+        processData: false,
 		success: function(data){
 			if (data.resultSuccess == "true") {
 				var slctn_budget_1 = parseInt(data.SLCTN_BUDGET_1);
@@ -692,13 +586,13 @@ function fn_checkItem(objThis, group_item_no, tmpr_slctn_at, fix_amount_calc){
 //			vForm.find('#TRGET_SLCTN_NO').val(data.TRGET_SLCTN_NO);
 //			parent.fnRefreshRepairTarget();
 //			parent.closeRTDialog();
-//			parent.COMMON_UTIL.repairMenuUrlContent( '<c:url value="rpairtrgetslctn/selectRpairTrgetSlctn.do"/>?TRGET_SLCTN_NO='+data.TRGET_SLCTN_NO); 
+//			parent.COMMON_UTIL.repairMenuUrlContent( '<c:url value="rpairtrgetslctn/selectRpairTrgetSlctn.do"/>?TRGET_SLCTN_NO='+data.TRGET_SLCTN_NO);
 		},
 		error: function(a,b,msg){
 			alert(JSON.stringify(data));
 		}
 	});
-	
+
 }
 
 function fnInitRangeSelection(isSearch){
@@ -708,7 +602,7 @@ function fnInitRangeSelection(isSearch){
 		"TRGET_SLCTN_NO" : vForm.find("#TRGET_SLCTN_NO").val()
 	};
 	if (vPostData.TRGET_SLCTN_NO == null || vPostData.TRGET_SLCTN_NO == "")
-		return; 
+		return;
 	$.ajax({
 		url: action,
         contentType: 'application/json',
@@ -716,7 +610,7 @@ function fnInitRangeSelection(isSearch){
         dataType: "json",
         cache: false,
         type: 'POST',
-        processData: false,        
+        processData: false,
 		success: function(data){
 //			alert(JSON.stringify(data));
 //			vForm.find('#TRGET_SLCTN_NO').val(data.TRGET_SLCTN_NO);
@@ -725,7 +619,7 @@ function fnInitRangeSelection(isSearch){
 //			parent.COMMON_UTIL.repairMenuUrlContent( '<c:url value="rpairtrgetslctn/selectRpairTrgetSlctn.do"/>?TRGET_SLCTN_NO='+data.TRGET_SLCTN_NO);
 			alert("초기화 하였습니다.");
 			if(isSearch){
-				fnSearch();	
+				fnSearch();
 			}
 		},
 		error: function(a,b,msg){
@@ -749,19 +643,20 @@ function fnSearch() {
 			"ROAD_GRAD":vForm.find("#ROAD_GRAD").val(),
 			"ROUTE_CODE":vForm.find("#ROUTE_CODE").val(),
 			"ROAD_NO_VAL":vForm.find("#ROAD_NO_VAL").val(),
-			"ADM_CODE":vForm.find("#ADM_CODE").val()};
+			"ADM_CODE":vForm.find("#ADM_CODE").val(),
+			"MNG_RD_CD":vForm.find("#MNG_RD_CD").val()};
 	var vUseFilter = vForm.find("#useFilter").val();
 	if (vUseFilter == "true") {
-		vPostData["TMPR_SLCTN_AT"] = "Y";
+//		vPostData["TMPR_SLCTN_AT"] = "Y";
 	}
-	
+
 
 	$("#gridArea").jqGrid("setGridParam",{
 		datatype: "json"
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,contentType: "application/json"
 		,page: 1
-		//,postData:  JSON.stringify( $("#frm").cmSerializeObject())  
+		//,postData:  JSON.stringify( $("#frm").cmSerializeObject())
 		,postData:   vPostData
 		,ignoreCase: true
 		,async : false
@@ -774,11 +669,11 @@ function fnSearch() {
 			if (data.records != null && data.records > 0) {
 				total_budget_asign = data.rows[0].TOTAL_TMPR_FIX_BUDGET_ASIGN;
 			}
-	
+
 			$('#gridArea').jqGrid('footerData', 'set', {
 				DEPT_NM : '합계', FIX_AMOUNT_CALC : total_budget_asign
 			});
-	
+
 	   	}
 	}).trigger("reloadGrid");
 }
@@ -787,11 +682,11 @@ function fnSearch() {
 function fnView(rowId) {
 	if( $.type(rowId) === "undefined" || rowId=="" )
 		 rowId = $("#gridArea").getGridParam( "selrow" );
-		
+
 	if( rowId != null ) {
 		var rowData = $("#gridArea").getRowData(rowId);
 		var group_item_no = rowData["GROUP_ITEM_NO"];
-		
+
 		//alert(group_item_no);
 		//COMMON_UTIL.cmWindowOpen('시스템 메뉴 관리', "<c:url value='/manage/menu/selectMenu.do'/>?MENU_ID="+menuId, 550, 400, false, $("#wnd_id").val(), 'center');
 	}
@@ -802,7 +697,7 @@ function fnView(rowId) {
 
 
 function fnRangeSelection(){
-	
+
 	if($("#SLCTN_BUDGET").val().includes(".")){
 		alert("정수로 입력하세요.");
 		$("#SLCTN_BUDGET").val(0);
@@ -817,7 +712,7 @@ function fnRangeSelection(){
 			,"DECSN_MTHD_2_RATE":vForm.find('#DECSN_MTHD_2_RATE').val()
 			,"DECSN_MTHD_3_RATE":vForm.find('#DECSN_MTHD_3_RATE').val()};
 	var action = '<c:url value="/api/rpairtrgetslctn/rangeSelection.do"/>';
-	
+
 	//vForm.find('#TRGET_SLCTN_NO').val("");
 	if (COMMON_LANG.isnotempty(postData.SLCTN_BUDGET) == false) {
 		alert("총 예산을 입력하십시오.");
@@ -843,21 +738,21 @@ function fnRangeSelection(){
         dataType: "json",
         cache: false,
         type: 'POST',
-        processData: false,        
+        processData: false,
 		success: function(data){
 //			alert(JSON.stringify(data));
 			vForm.find('#TRGET_SLCTN_NO').val(data.TRGET_SLCTN_NO);
 //			parent.fnRefreshRepairTarget();
 //			parent.closeRTDialog();
 			hideRTProgress();
-			parent.COMMON_UTIL.repairMenuUrlContent( '<c:url value="rpairtrgetslctn/selectRpairTrgetSlctn.do"/>?TRGET_SLCTN_NO='+data.TRGET_SLCTN_NO); 
+			parent.COMMON_UTIL.repairMenuUrlContent( '<c:url value="rpairtrgetslctn/selectRpairTrgetSlctn.do"/>?TRGET_SLCTN_NO='+data.TRGET_SLCTN_NO);
 		},
 		error: function(a,b,msg){
 			hideRTProgress();
 			alert(JSON.stringify(data));
 		}
 	});
-	
+
 }
 
 function dofndownloadAll(){
@@ -877,7 +772,7 @@ function dofndownloadSelection(){
 	vform.submit();
 }
 function fndownload_RepairTarget(){
-	
+
 	var confirmTitle, msgContents, btnTitles, btnCancleTitle, callOKs, callBackCancel;
 	btnTitles = [
 			"보수대상 구간 전체 내보내기", "범위내 선정 구간만 내보내기" ];
@@ -887,7 +782,7 @@ function fndownload_RepairTarget(){
 	msgContents = '보수대상 구간 전체 또는 범위내 선정 구간만 엑셀로 다운로드 할 수 있습니다.';
 
 	fnSwitchDialog(confirmTitle, msgContents, btnTitles, btnCancleTitle, callOKs, callBackCancel);
-	
+
 }
 
 function fnSaveComplete(){
@@ -901,14 +796,14 @@ function fnSaveComplete(){
 }
 
 function dofnSaveComplete(){
-	 
+
 	var vForm = $("#frmRpairTrgetSlctn");
 	var postData = {
 		"TRGET_SLCTN_NO" : vForm.find('#TRGET_SLCTN_NO').val()
 	};
 	var action = '<c:url value="/api/rpairtrgetslctn/saveComplete.do"/>';
-	
-	
+
+
 	$.ajax({
 		url: action,
         contentType: 'application/json',
@@ -916,7 +811,7 @@ function dofnSaveComplete(){
         dataType: "json",
         cache: false,
         type: 'POST',
-        processData: false,        
+        processData: false,
 		success: function(data){
 //			alert(JSON.stringify(data));
 			vForm.find('#TRGET_SLCTN_NO').val(data.TRGET_SLCTN_NO);
@@ -954,7 +849,7 @@ function fnBudgetRateChange(objNo){
 			}
 		}
 	}
-	
+
 	var rateVal = 0;
 	var vSLCTN_BUDGET = parseInt($("#SLCTN_BUDGET").val().replace(/,/g, ""));
 	for (var i = 1; i <= 3; i++) {
@@ -967,14 +862,14 @@ function fnBudgetRateChange(objNo){
 
 
 function fn_select_cellSectFilter(){
-	
+
 	var vForm = $("#frmRpairTrgetSlctn");
 	var postData = {
 		"TRGET_SLCTN_NO" : vForm.find('#TRGET_SLCTN_NO').val(), "TMPR_SLCTN_AT" : "Y", "USE_AT" : "Y", "DELETE_AT" : "N"
 	};
 	var action = '<c:url value="/api/rpairtrgetgroup/selectRpairTrgetGroupCELLListRest.do"/>';
-	
-	
+
+
 	$.ajax({
 		url: action,
         contentType: 'application/json',
@@ -982,7 +877,7 @@ function fn_select_cellSectFilter(){
         dataType: "json",
         cache: false,
         type: 'POST',
-        processData: false,        
+        processData: false,
 		success: function(datas){
 //			alert(JSON.stringify(datas));
 			var cellids = "";
@@ -1005,7 +900,7 @@ function fn_select_cellSectFilter(){
 			alert(JSON.stringify(data));
 		}
 	});
- 
+
 }
 /*
  * 선정 ID(복수) 위치조회
@@ -1108,7 +1003,7 @@ function fn_select_cellSectRange(route_code, direct_code, track, strtpt, endpt){
 	parent.gMap.setLayerIndex(attrLayer, 1);
 	parent.gMap.setLayerIndex(multiLayer, 0);
 	//
-	MAP.fn_get_selectFeatureByAttrBoundary(parent.gMap, tables, fields, values, null, "AND", attribute, true, 1, 0, boundaryFields, boundaryValues); 
+	MAP.fn_get_selectFeatureByAttrBoundary(parent.gMap, tables, fields, values, null, "AND", attribute, true, 1, 0, boundaryFields, boundaryValues);
 }
 
 
@@ -1117,7 +1012,7 @@ function fn_select_cellSectRange(route_code, direct_code, track, strtpt, endpt){
 function fnFilterApply(){
 	//btnFilterSearch
 	var vForm = $("#frmRpairTrgetGroup");
-	
+
 	var vUseFilter = vForm.find("#useFilter").val();
 	if(vUseFilter=="false"){
 		vForm.find("#useFilter").val(true);
@@ -1130,6 +1025,7 @@ function fnFilterApply(){
 		vForm.find("#ROAD_NO_VAL").val("");
 		vForm.find("#ROAD_NAME").val("");
 		vForm.find("#ADM_CODE").val("");
+		vForm.find("#MNG_RD_CD").val("");
 		$("#btnFilterSearch").html("필터적용");
 	}
 	fnSearch();
@@ -1164,7 +1060,7 @@ function fn_showChartDepts(trget_slctn_no){
 	var postData = {
 		"TRGET_SLCTN_NO" : trget_slctn_no, "TMPR_SLCTN_AT" : "Y"
 	};
-	
+
 	var actionUrl = '<c:url value="/api/rpairtrgetgroup/selectRpairTrgetDeptStatistics.do"  />';
 	$.ajax({
         url: actionUrl,
@@ -1198,7 +1094,7 @@ function fn_showChartMethods(trget_slctn_no){
 	var postData = {
 		"TRGET_SLCTN_NO" : trget_slctn_no, "TMPR_SLCTN_AT" : "Y"
 	};
-		
+
 	var actionUrl = '<c:url value="/api/rpairtrgetgroup/selectRpairTrgetMethodStatistics.do"  />';
 	$.ajax({
         url: actionUrl,
@@ -1231,7 +1127,7 @@ function fn_showChartAdmins(trget_slctn_no){
 	var postData = {
 		"TRGET_SLCTN_NO" : trget_slctn_no, "TMPR_SLCTN_AT" : "Y"
 	};
-		
+
 	var actionUrl = '<c:url value="/api/rpairtrgetgroup/selectRpairTrgetAdminStatistics.do"  />';
 	$.ajax({
         url: actionUrl,
@@ -1270,7 +1166,7 @@ function drawChartDepts(dataList){
 			});
 		}
 	}
-	
+
 	if(myChartDept!=null){
 		myChartDept.clear();
 		myChartDept.dispose();
@@ -1358,7 +1254,7 @@ function drawChartDepts(dataList){
 				}, data : chartData
 			} ]
 		}
-		
+
 		myChartDept = ec.init(document.getElementById('rtChartDeptCode'));
 		myChartDept.setOption(option2);
 		if( myChartDept != null &&  myChartMethod != null && myChartAdmin != null){
@@ -1384,8 +1280,8 @@ function drawChartMethods(dataList){
 			legendName.push(dataList[i].MSRC_CL_NM);
 		}
 	}
-	
-	
+
+
 	if(myChartMethod!=null){
 		myChartMethod.clear();
 		myChartMethod.dispose();
@@ -1443,7 +1339,7 @@ function drawChartMethods(dataList){
 									'#507E32', '#5F933B', '#6BA543', '#88B76E', '#ACCA9E', '#C9DBC1', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
 									'#FE2752', '#7EEA59', '#F2B731', '#D8C35C', '#41C0AE', '#FE8422', '#6EEA54', '#F1B541', '#D6C32C', '#73C1AE',
 									'#FD8610', '#CDEF60', '#FD6ACE', '#E6D410', '#20C5AD', '#DD810E', '#CCDA80', '#BE88CA', '#D21810', '#31D2BA',
-									'#EE91AE', '#EFCBCD', '#CDE1BB', '#CDE991', '#98613B', '#FADE06', '#BB78FF', '#ECCDC0', '#FBA001', '#E6734C', 
+									'#EE91AE', '#EFCBCD', '#CDE1BB', '#CDE991', '#98613B', '#FADE06', '#BB78FF', '#ECCDC0', '#FBA001', '#E6734C',
 									'#FFBBEE', '#991122', '#DDEECC', '#AABCD5', '#484ABC' ];
 							return colorList[params.dataIndex]
 						}, label : {
@@ -1485,7 +1381,7 @@ function drawChartMethods(dataList){
 /**
  * 단위행정구역 차트 조회
  */
- 
+
 function drawChartAdmins(dataList){
 	var yLabelWidth = 100;
 	var xLabelHeight = 80;
@@ -1503,7 +1399,7 @@ function drawChartAdmins(dataList){
 			chartData.push({
 				"value" : dataList[i].AMOUNT_CALC, "name" : dataList[i].ADM_NM
 			});
-			legendName.push(dataList[i].ADM_NM);			
+			legendName.push(dataList[i].ADM_NM);
 		}
 	}
 	if(myChartAdmin!=null){
@@ -1511,8 +1407,8 @@ function drawChartAdmins(dataList){
 		myChartAdmin.dispose();
 		myChartAdmin = null;
 	}
-	
-	require([	'echarts','echarts/chart/bar'	], function (ec) {				 
+
+	require([	'echarts','echarts/chart/bar'	], function (ec) {
 		var option2 = {
 			title : {
 				text : '예산(원)', x : "center"
@@ -1550,10 +1446,10 @@ function drawChartAdmins(dataList){
 					normal : {
 						color : function(params) {
 							var colorList = [
-									'#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B', '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD', 
-									'#FE2752', '#7EEA59', '#F2B731', '#D8C35C', '#41C0AE', '#FE8422', '#6EEA54', '#F1B541', '#D6C32C', '#73C1AE', 
-									'#FD8610', '#CDEF60', '#FD6ACE', '#E6D410', '#20C5AD', '#DD810E', '#CCDA80', '#BE88CA', '#D21810', '#31D2BA', 
-									'#EE91AE', '#EFCBCD', '#CDE1BB', '#CDE991', '#98613B', '#FADE06', '#BB78FF', '#ECCDC0', '#FBA001', '#E6734C', 
+									'#C1232B', '#B5C334', '#FCCE10', '#E87C25', '#27727B', '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+									'#FE2752', '#7EEA59', '#F2B731', '#D8C35C', '#41C0AE', '#FE8422', '#6EEA54', '#F1B541', '#D6C32C', '#73C1AE',
+									'#FD8610', '#CDEF60', '#FD6ACE', '#E6D410', '#20C5AD', '#DD810E', '#CCDA80', '#BE88CA', '#D21810', '#31D2BA',
+									'#EE91AE', '#EFCBCD', '#CDE1BB', '#CDE991', '#98613B', '#FADE06', '#BB78FF', '#ECCDC0', '#FBA001', '#E6734C',
 									'#FFBBEE', '#991122', '#DDEECC', '#AABCD5', '#484ABC' ];
 							// return colorList[params.dataIndex]
 							// 값 고정
@@ -1566,19 +1462,19 @@ function drawChartAdmins(dataList){
 
 		myChartAdmin = ec.init(document.getElementById('rtChartAdminCode'));
 		myChartAdmin.setOption(option2);
-		
+
 		if( myChartDept != null &&  myChartMethod != null && myChartAdmin != null){
 			hideRTProgress();
-		} 
+		}
 	});
 }
- 
+
 /*
  * 도로등급 변경 시 노선번호 자동 조회
  */
 function fn_change_roadNo(val) {
 	var roadGrad = $("#ROAD_GRAD").val();
-	
+
 	$.ajax({
 		url: contextPath + 'api/routeinfo/selectRouteInfoListByGrad.do'
 		,type: 'post'
@@ -1587,24 +1483,24 @@ function fn_change_roadNo(val) {
 		,data : JSON.stringify({ROAD_GRAD : roadGrad})
 		,success: function(data){
 			var txtHtml = "<option value=''>== 전체 ==</option>";
-			
+
 			for(var i=0; i < data.length; i++){
 				txtHtml += "<option value='" + data[i].ROAD_NO + "'>" + data[i].ROAD_NO_VAL + "</option>";
 			}
-			
+
 			var no = $("#ROUTE_CODE").val();
 			var name = $("#ROAD_NAME").val();
-			
+
 			$("#ROUTE_CODE").html(txtHtml);
 			$("#ROAD_NAME").val("");
-						 
+
 			if(val != undefined){
 				$("#ROUTE_CODE").val(val);
 				fn_change_roadNm();
 			}
 		}
 		,error: function(a,b,msg){
-			
+
 		}
 	});
 }
@@ -1615,13 +1511,13 @@ function fn_change_roadNo(val) {
 function fn_change_roadNm() {
 	var roadNo = $("#ROUTE_CODE").val();
 	var roadGrad = $("#ROAD_GRAD").val();
-	
+
 	if(roadNo == "") {
 		$("#ROAD_NAME").val("");
 		$("#ROAD_GRAD").val("");
 		return;
 	}
-	
+
 	$.ajax({
 		url: contextPath + 'api/routeinfo/selectRouteInfo.do'
 		,type: 'post'
@@ -1633,7 +1529,7 @@ function fn_change_roadNm() {
 			$("#ROAD_GRAD").val(data.ROAD_GRAD);
 		}
 		,error: function(a,b,msg){
-			
+
 		}
 	});
 }
@@ -1642,7 +1538,7 @@ function fn_change_roadNm() {
  */
 function showGridDepts(dataList){
 	//rtGridDeptCode
-	$("#rtGridDeptCodeArea").jqGrid({ 
+	$("#rtGridDeptCodeArea").jqGrid({
 		datatype: "local"
 		, ignoreCase: true
 		, height : 139
@@ -1659,14 +1555,14 @@ function showGridDepts(dataList){
 		//,emptyrecords: "검색된 데이터가 없습니다."
 	   	, multiselect: false
 		, multiboxonly: false
-	}); 
+	});
 	$('#rtGridDeptCodeArea').jqGrid('clearGridData');
 	var i = 0;
 	for (i = 0; i <= dataList.length; i++){
 		$("#rtGridDeptCodeArea").jqGrid('addRowData', i + 1, dataList[i]);
 	}
-		
-	
+
+
 	var total_amount_calc = 0;
 	if (dataList.length != null && dataList.length > 0) {
 		total_amount_calc = dataList[0].TOTAL_AMOUNT_CALC;
@@ -1687,7 +1583,7 @@ function showGridDepts(dataList){
 	var  ids = grid.getDataIDs();
 	for (var i = 0; i < ids.length; i++) {
 	    grid.setRowData(ids[i], false, { height : 40 + (i * 2) });
-	} 
+	}
 	*/
 }
 /**
@@ -1695,7 +1591,7 @@ function showGridDepts(dataList){
  */
 function showGridMethods(dataList){
 	//rtGridMethodCode
-	$("#rtGridMethodCodeArea").jqGrid({ 
+	$("#rtGridMethodCodeArea").jqGrid({
 		datatype: "local"
 		, ignoreCase: true
 		, height : 139
@@ -1712,7 +1608,7 @@ function showGridMethods(dataList){
 		//,emptyrecords: "검색된 데이터가 없습니다."
 	   	, multiselect: false
 		, multiboxonly: false
-	}); 
+	});
 	$('#rtGridMethodCodeArea').jqGrid('clearGridData');
 	var i = 0;
 	for (i = 0; i <= dataList.length; i++)
@@ -1739,7 +1635,7 @@ function showGridMethods(dataList){
  */
 function showGridAdmins(dataList){
 	//rtGridAdminCode
-	$("#rtGridAdminCodeArea").jqGrid({ 
+	$("#rtGridAdminCodeArea").jqGrid({
 		datatype: "local"
 		, ignoreCase: true
 		, height : 139
@@ -1755,7 +1651,7 @@ function showGridAdmins(dataList){
 		, userDataOnFooter : false
 	   	, multiselect: false
 		, multiboxonly: false
-	}); 
+	});
 	$('#rtGridAdminCodeArea').jqGrid('clearGridData');
 	var i = 0;
 	for (i = 0; i <= dataList.length; i++)
@@ -1782,8 +1678,8 @@ function showGridAdmins(dataList){
  * 차트 와 표 다이얼로그 토글 표시
  */
 function fnToggleChart() {
-	
-	
+
+
 	isChart = !isChart;
 	fnShowChart();
 }
@@ -1822,7 +1718,7 @@ function fnExcel(se) {
 		if (se == "rtChartDeptCode") {
 			action = '<c:url value='/'/>rpairtrgetgroup/downloadExcelRpairTrgetDeptStatistics.do';
 			vform.prop("action", action);
-			vform.submit();			
+			vform.submit();
 		} else if (se == "rtChartMethodCode") {
 			action = '<c:url value='/'/>rpairtrgetgroup/downloadExcelRpairTrgetMethodStatistics.do';
 			vform.prop("action", action);
