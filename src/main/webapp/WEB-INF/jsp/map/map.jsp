@@ -127,8 +127,10 @@
                     <li class="active"><a href="#" class="t3 maptool" id="mCtrlPan" title="이동"><span class="hidden">이동</span></a></li>
                     <li><a href="#" class="t4 maptool" id="mCtrlZoomIn" title="확대"><span class="hidden">확대</span></a></li>
                     <li><a href="#" class="t5 maptool" id="mCtrlZoomOut" title="축소"><span class="hidden">축소</span></a></li>
+                    <!-- 
                     <li><a href="#" class="t6 maptool" id="mCtrlPrev" title="이전"><span class="hidden">이전</span></a></li>
                     <li><a href="#" class="t7 maptool" id="mCtrlNext" title="다음"><span class="hidden">다음</span></a></li>
+                     -->
                     <li><a href="#" class="t8 maptool" id="mCtrlFullExt" title="전체"><span class="hidden">전체</span></a></li>
                     <li><a href="#" class="t9 maptool" id="mCtrlMesureLength" title="거리"><span class="hidden">거리</span></a></li>
                     <li><a href="#" class="t10 maptool" id="mCtrlMesureArea" title="면적"><span class="hidden">면적</span></a></li>
