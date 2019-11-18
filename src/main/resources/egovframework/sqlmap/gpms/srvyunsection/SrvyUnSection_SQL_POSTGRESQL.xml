@@ -39,8 +39,8 @@
 					select
 						t1.route_code
 						, t2.srvy_year
-						, coalesce(t1.total_road_l, 0) total_road_l
-						, coalesce(t2.road_l, 0) road_l
+						, coalesce(t1.total_road_l, 0) / 1000 total_road_l
+						, coalesce(t2.road_l, 0) / 1000 road_l
 					from 
 						(SELECT route_code, coalesce(sum(ROAD_L), 0) TOTAL_ROAD_L FROM cell_10 group by cell_10.route_code) as t1 
 					left outer join
