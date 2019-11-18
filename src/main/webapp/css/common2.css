@@ -1,0 +1,266 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: 'Noto';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Noto Sans Light'), local('NotoSans-Light'), url('../font/notokr-light.eot');
+    src: url('../font/notokr-light.eot?#iefix') format('embedded-opentype'),
+         url('../font/NotoSansKR-Light.woff2') format('woff2'),
+         url('../font/NotoSansKR-Light.woff') format('woff');
+}
+@font-face {
+    font-family: 'Noto';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Noto Sans Regular'), local('NotoSans-Regular'), url('../font/notokr-regular.eot');
+    src: url('../font/notokr-regular.eot?#iefix') format('embedded-opentype'),
+         url('../font/NotoSansKR-Regular.woff2') format('woff2'),
+         url('../font/NotoSansKR-Regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Noto';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Noto Sans Medium'), local('NotoSans-Medium'), url('../font/notokr-medium.eot');
+    src: url('../font/notokr-medium.eot?#iefix') format('embedded-opentype'),
+         url('../font/NotoSansKR-Medium.woff2') format('woff2'),
+         url('../font/NotoSansKR-Medium.woff') format('woff');
+}
+@font-face {
+    font-family: 'Noto';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Noto Sans Bold'), local('NotoSans-Bold'), url('../font/notokr-bold.eot');
+    src: url('../font/notokr-bold.eot?#iefix') format('embedded-opentype'),
+         url('../font/NotoSansKR-Bold.woff2') format('woff2'),
+         url('../font/NotoSansKR-Bold.woff') format('woff');
+}
+
+html, body {display: block; height: 100%; width: 100%; line-height: 1.2em;font-family:'Noto', 'Malgun Gothic', sans-serif;-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; -webkit-font-smoothing:antialiased;}
+body, h1, h2, h3, h4, h5, h6, div, p, blockquote, pre, address, ul, ol, li, dl, dt, dd, table, caption, th, td, form, fieldset, legend, hr, label, button {margin:0; padding:0; font-size:15px; font-family:'Noto','Malgun Gothic',sans-serif; color: #454753; word-break:keep-all; font-weight: 500}
+ul, ol, dl {list-style:none;}
+table {width:100%; margin:0; padding:0; border-spacing:0; border:0; border-collapse:collapse; }
+img, button, fieldset, abbr, acronym {border:0}
+address, caption, cite, code, dfn, em, var {}
+q:before, q:after {content:'';}
+input, select, button {-webkit-appearance: none;-webkit-border-radius: 0; line-height: 1.2em; font-size: 15px;font-family:'Noto', 'Malgun Gothic',sans-serif;}
+a, input, select, button, img, label, span, strong {vertical-align: baseline}
+
+
+
+::-webkit-input-placeholder {color:#b0b0b0}
+:-moz-placeholder {color:#b0b0b0}
+::-moz-placeholder {color:#b0b0b0}
+:-ms-input-placeholder {color:#b0b0b0}
+
+
+input[type=checkbox] {width:13px; height:13px}
+input[type=radio] {width:13px; height:13px; margin-top:-1px}
+label, button  {cursor: pointer; }
+
+a {color:#257393; text-decoration:none;}
+a:focus, a:hover, a:active {color:#00a4cb}
+
+a.skip { position: fixed; left: -9999px; top: -9999px; display: block; line-height: 3em; background: #40b2cd; color: #fff; text-align: center;}
+a.skip:hover,
+a.skip:focus { position: static; left: 0; top: 0; }
+
+.container { margin: 0 auto; position: relative; }
+.container:after { display: block; content: ""; clear: both; }
+
+/* commom */
+.hidden,
+.none { position: fixed; left: -9999px; }
+
+.floatL { float: left }
+.floatR { float: right }
+
+/* table*/
+div.table,
+table.table {border-top: #515151 solid 1px;  position: relative; clear: both;}
+td,th { font-weight: 500}
+.table caption {}
+.table thead th { background: #f3f3f3;padding:8px 6px; border:#ccc solid 1px ; border-top:none; line-height: 1.3em }
+.table tbody th,
+.table tbody td { border:#e1e1e0 solid 1px ; padding:6px 6px; background: #fff; line-height: 1.3em; border-top:none;}
+.table tbody th,
+.table tbody th label { background:#fafafa; color: #777}
+
+
+/* 왼쪽 정렬인 테이블 */
+.table10 tbody th,
+.table10 tbody td,
+.table td.title { text-align: left; }
+
+/* 가운데 정렬인 테이블 */
+.table20 tbody th,
+.table20 tbody td { text-align: center;}
+
+
+.textL{ text-align: left !important; }
+.textR{ text-align: right !important; }
+.textC{ text-align: center !important; }
+
+.table th.check,
+.table tbody td.check { width: 34px; padding-left:0; padding-right:0}
+
+.pageNav { text-align: center; position: relative; min-height: 31px; }
+.pageNav .pageTotal { color: #aaa; line-height: 2em; position: absolute; left: 0; top: 0; }
+.pageNav:after { display: block; content: ""; clear: both; }
+.pageNav .paging { font-size: 0; display: inline-block; }
+.pageNav .paging a, .pageNav .paging strong { display: inline-block; min-width: 24px; height: 25px; padding: 5px 0 0 0; font-size: 15px; vertical-align: middle; opacity: 0.6; }
+.pageNav .paging a.pageFirst, .pageNav .paging a.pageBefore, .pageNav .paging a.pageNext, .pageNav .paging a.pageLast, .pageNav .paging strong.pageFirst, .pageNav .paging strong.pageBefore, .pageNav .paging strong.pageNext, .pageNav .paging strong.pageLast { font-size: 0; background: url(../images/paging.png) no-repeat 3px center; }
+.pageNav .paging a.pageBefore, .pageNav .paging strong.pageBefore { background-position: -39px center; }
+.pageNav .paging a.pageNext, .pageNav .paging strong.pageNext { background-position: -74px center; }
+.pageNav .paging a.pageLast, .pageNav .paging strong.pageLast { background-position: -107px center; }
+.pageNav .paging a:hover, .pageNav .paging a:focus, .pageNav .paging a.on, .pageNav .paging strong { text-decoration: underline; opacity: 1; }
+
+/* btn */
+
+.btn {background: #777; color: #fff; border:none; border-radius: 4px; padding: 4px 30px  }
+.btn:hover, .btn:focus {color: #fff; background-color: #666 }
+.pri {background:#00b2d9}
+.pri:hover, .pri:focus {background-color:#00a2c5}
+.wrn {background:#ed8f14}
+.wrn:hover, .wrn:focus {background-color:#dc8b22}
+.dis { opacity: 0.5; cursor: default; }
+
+.btnArea { text-align: right; padding:0 0 30px 0; clear: both; }
+.btnArea .btn { padding:10px 30px; border-radius: 4px; display: inline-block; }
+
+
+/* checkbox / radio */
+
+input[type="checkbox"],
+input[type="radio"] {  outline: 0 none }
+input[type="checkbox"] + label::before,
+input[type="checkbox"]:checked + label::before { cursor: pointer; content:""; display:inline-block; width: 18px;height: 18px; background: url("../images/commonInput.png") no-repeat 0 -30px; margin: 0 6px 3px -20px; vertical-align: middle }
+
+input[type="checkbox"]:hover + label::before,
+input[type="checkbox"]:focus + label::before {background-position: 0 -60px}
+input[type="checkbox"]:hover + label,
+input[type="checkbox"]:focus + label { color: #00b2d9 }
+
+input[type="checkbox"]:checked + label::before { background: url("../images/commonInput.png") no-repeat 0 0;  }
+input[type="checkbox"]:checked + label { color: #00b2d9 }
+
+
+input[type="radio"] + label::before,
+input[type="radio"]:checked + label::before { cursor: pointer; content:""; display:inline-block; width: 18px;height: 18px; background: url("../images/commonInput.png") no-repeat -30px -30px; margin: 0 6px 3px -20px; vertical-align:middle  }
+
+input[type="radio"]:hover + label::before,
+input[type="radio"]:focus + label::before {background-position: -30px -60px;}
+input[type="radio"]:hover + label,
+input[type="radio"]:focus + label { color: #00b2d9 }
+
+
+input[type="radio"]:checked + label::before { background: url("../images/commonInput.png") no-repeat -30px 0;  }
+input[type="radio"]:checked + label { color: #00b2d9 }
+
+label + input   { margin-left: 12px}
+/* label + input { margin-left: 15px} */
+
+
+
+label.hiddenLabel {font-size: 0}
+input[type="checkbox"] + label.hiddenLabel:before { margin: 0 0 0 -20px}
+
+/* select */
+
+
+
+/* input */
+input[type="button"] { cursor: pointer; }
+
+input[type="text"], input[type="password"], select, .input, textarea
+{ border: solid 1px #bcbcbc; border-radius: 2px; background: #fff; padding: 0 8px; margin: 2px; box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
+input[type="text"], input[type="password"], select, .input { height: 30px; line-height: 1em}
+textarea {overflow:auto; padding:10px; line-height: 1.3em;font-family:'Noto', 'Malgun Gothic',sans-serif; font-size: 15px}
+.js-elasticArea {transition: all 0.3s ease 0.0s}
+
+select {padding: 0 24px 0 5px;  background:#fff url("../images/selecetArrow.png") no-repeat right 0 }
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	select {padding: 0  0 0 5px;}
+}
+select:hover,
+select:focus { background-position: right -32px}
+input[type="text"]:hover, input[type="password"]:hover, select:hover, .input:hover,
+input[type="text"]:focus, input[type="password"]:focus, select:focus, .input:focus { border-color:#40b2cd; }
+
+.input02, .width02 { width: 2% }
+.input03, .width03 { width: 3% }
+.input04, .width04 { width: 4% }
+.input05, .width05 { width: 5% }
+.input06, .width06 { width: 6% }
+.input07, .width07 { width: 7% }
+.input08, .width08 { width: 8% }
+.input09, .width09 { width: 9% }
+.input10, .width10 { width: 10% }
+.input15, .width15 { width: 15% }
+.input20, .width20 { width: 20% }
+.input25, .width25 { width: 25% }
+.input30, .width30 { width: 30% }
+.input35, .width35 { width: 35% }
+.input40, .width40 { width: 40% }
+.input45, .width45 { width: 45% }
+.input50, .width50 { width: 50% }
+.input55, .width55 { width: 55% }
+.input60, .width60 { width: 60% }
+.input65, .width65 { width: 65% }
+.input70, .width70 { width: 70% }
+.input75, .width75 { width: 75% }
+.input80, .width80 { width: 80% }
+.input85, .width85 { width: 85% }
+.input86, .width86 { width: 86% }
+.input87, .width87 { width: 87% }
+.input88, .width88 { width: 88% }
+.input89, .width89 { width: 89% }
+.input90, .width90 { width: 90% }
+.input92, .width92 { width: 92% }
+.input94, .width94 { width: 94% }
+.input95, .width95 { width: 95% }
+.input97, .width97 { width: 97% }
+.input98, .width98 { width: 98% }
+.input99, .width99 { width: 99% }
+.input100, .width100 { width: 100% }
+
+.width02,
+.width03,
+.width04,
+.width05,
+.width06,
+.width07,
+.width08,
+.width09,
+.width10,
+.width15,
+.width20,
+.width25,
+.width30,
+.width35,
+.width40,
+.width45,
+.width50,
+.width55,
+.width60,
+.width65,
+.width70,
+.width75,
+.width80,
+.width85,
+.width86,
+.width87,
+.width88,
+.width89,
+.width90,
+.width95,
+.width98,
+.width99,
+.width100 { position: relative; margin: 0 auto }
+
+input.input100 { margin-left: 0; margin-right: 0;}
+
+
+.fr{float: right;}
+.fl{float: left;}
