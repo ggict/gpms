@@ -70,10 +70,10 @@
 								<label for="ROAD_TOT_LEN_JYG_Y"></label>
 								<input type="number" class="MX_50 CS_25 input" id="ROAD_TOT_LEN_JYG_Y" name="ROAD_TOT_LEN_JYG_Y" value="<c:out value="${routeInfoVO.ROAD_TOT_LEN_JYG_Y}"/>"/>
 							</td>
-							<th scope="row"><span class="fcred"> *</span>전산화 완료연장(km)</th>
+							<th scope="row"><span class="fcred"> *</span>도 관리구간(km)</th>
 							<td>
 								<label for="ROAD_LEN_CMPT"></label>
-								<input type="number" class="MX_50 CS_25 input" id="ROAD_LEN_CMPT" name="ROAD_LEN_CMPT" value="<c:out value="${routeInfoVO.ROAD_LEN_CMPT}"/>"/>
+								<input type="number" class="MX_50 CS_25 input" id="ROAD_LEN_CMPT" name="DO_MANAGE_SCTN_LEN" value="<c:out value="${routeInfoVO.DO_MANAGE_SCTN_LEN}"/>"/>
 							</td>
 						</tr>
 					</tbody>

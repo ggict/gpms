@@ -189,6 +189,13 @@ public class RouteInfoVO extends BaseVO {
 	
 	private java.lang.String DIRECT_FLAG;
 	
+	/** 
+	 * TN_ROUTE_INFO.DO_MANAGE_SCTN_LEN, 
+	 * 노선_대장_마스터.도_관리_구간_연장
+	 */
+	@XmlElement
+	private java.lang.String DO_MANAGE_SCTN_LEN;
+	
 	/**
 	 * TN_ROUTE_INFO.ROAD_NO, 
 	 * 노선_대장_마스터.노선_번호 
@@ -530,6 +537,26 @@ public class RouteInfoVO extends BaseVO {
 	public void setROAD_TOT_LEN_JYG_N(java.lang.String roadTotLenJygN) {
 		this.ROAD_TOT_LEN_JYG_N = roadTotLenJygN;
 	}
+
+	/**
+	 * TN_ROUTE_INFO.DO_MANAGE_SCTN_LEN, 
+	 * 노선_대장_마스터.도_관리_구간_연장
+	 * @return
+	 */
+	@JsonProperty(value="DO_MANAGE_SCTN_LEN") 
+	public java.lang.String getDO_MANAGE_SCTN_LEN() {
+		return this.DO_MANAGE_SCTN_LEN;
+	}
+ 
+	 /**
+	 * TN_ROUTE_INFO.DO_MANAGE_SCTN_LEN, 
+	 * 노선_대장_마스터.도_관리_구간_연장
+	 * @param roadLenCmpt
+	 */
+	public void setDO_MANAGE_SCTN_LEN(java.lang.String doMangeSctnLen) {
+		this.ROAD_LEN_CMPT = doMangeSctnLen;
+	}
+	
 
 	/**
 	 * TN_ROUTE_INFO.ROAD_LEN_CMPT, 

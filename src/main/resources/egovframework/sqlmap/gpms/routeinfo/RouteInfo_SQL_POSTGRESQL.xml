@@ -57,6 +57,7 @@
 			, ROAD_TOT_LEN_JYG_N /* 노선_대장_마스터.도로_총_연장_중용비포함 */
 			, ROAD_LEN_CMPT /* 노선_대장_마스터.도로_연장_전산화완료 */
 			, ROAD_GRAD /* 노선_대장_마스터.도로등급 */
+			, DO_MANAGE_SCTN_LEN
 		) VALUES (
 			#ROAD_NO# /* 노선_대장_마스터.노선_번호 */
 			, #INPUT_DATE# /* 노선_대장_마스터.입력일 */
@@ -78,6 +79,7 @@
 			, #ROAD_TOT_LEN_JYG_N#::float /* 노선_대장_마스터.도로_총_연장_중용비포함 */
 			, #ROAD_LEN_CMPT#::float /* 노선_대장_마스터.도로_연장_전산화완료 */
 			, #ROAD_GRAD# /* 노선_대장_마스터.도로등급 */
+			, #DO_MANAGE_SCTN_LEN# /*노선_대방_마스터.도_관리_구간_연장*/
 		)
 ]]>
 	</insert>
@@ -221,7 +223,7 @@
 				, tnrouteinfo.JUN /* 노선_대장_마스터.JUN */
 				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y::numeric /* 노선_대장_마스터.도로_총_연장_중용포함 */
 				, tnrouteinfo.ROAD_TOT_LEN_JYG_N::numeric /* 노선_대장_마스터.도로_총_연장_중용비포함 */
-				, tnrouteinfo.ROAD_LEN_CMPT::numeric /* 노선_대장_마스터.도로_연장_전산화완료 */
+				, tnrouteinfo.do_manage_sctn_len /* 노선_대장_마스터.도_관리_구간_연장 */
 				, tnrouteinfo.ROAD_GRAD /* 노선_대장_마스터.도로등급 */
 			FROM ( SELECT ROAD_NO FROM DORO_TOT_GRS80_50 GROUP BY ROAD_NO ORDER BY ROAD_NO ) doro
 			LEFT OUTER JOIN TN_ROUTE_INFO tnrouteinfo

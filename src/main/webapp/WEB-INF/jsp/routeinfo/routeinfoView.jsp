@@ -67,10 +67,10 @@
 								<label for="ROAD_TOT_LEN_JYG_Y"></label>
 								<c:out value="${routeInfoVO.ROAD_TOT_LEN_JYG_Y}"/>
 							</td>
-							<th scope="row">전산화 완료연장(km)</th>
+							<th scope="row">도 관리구간(km)</th>
 							<td>
-								<label for="ROAD_LEN_CMPT"></label>
-								<c:out value="${routeInfoVO.ROAD_LEN_CMPT}"/>
+								<label for="DO_MANAGE_SCTN_LEN"></label>
+								<c:out value="${routeInfoVO.DO_MANAGE_SCTN_LEN}"/>
 							</td>
 						</tr>
 					</tbody>
