@@ -24,7 +24,7 @@
 레이어 선택 공간 css
 */
 .divlayermng ul {list-style:none;margin:0;padding:0;}
-.divlayermng ul li {margin: 5px 20px 0px 20px; padding: 0 0 0 0; border : 0; float: left; text-align: center; height: 70px;}
+.divlayermng ul li {margin: 5px 5px 0px 5px; padding: 0 0 0 0; border : 0; float: left; text-align: center; height: 70px;}
 .divlayermng ul li p {width:43px;}
 .divlayermng ul li a img {width:32px; height:32px;}
 .divlayermng ul .active a img {border: 2px solid blue;}
