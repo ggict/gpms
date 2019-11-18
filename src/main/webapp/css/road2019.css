@@ -106,9 +106,23 @@
 
 .header .topMenu button:hover, .header .topMenu button:focus { background-color: #5391e2; }
 
-.header .topMenu a { display: inline-block; padding: 21px 20px 0 58px; height: 35px; font-size: 16px; line-height: 1; border-left: 1px solid #ededed; background: #fff url(../images/topLink.png) no-repeat 17px 17px; color: #6b6b6b; }
+.header .topMenu a, .header .topMenu #userDept { display: inline-block; padding: 21px 20px 0 20px; height: 35px; font-size: 16px; line-height: 1; border-left: 1px solid #ededed; color: #6b6b6b; }
 
-.header .topMenu a:hover, .header .topMenu a:focus, .header .topMenu a.on { color: #5391e2; }
+.header .topMenu a:hover, .header .topMenu a:focus, .header .topMenu a.on, .header .topMenu #userDept:hover, .header .topMenu #userDept:focus, .header .topMenu #userDept.on { color: #5391e2; }
+
+.header .topMenu #userDept { padding-left: 58px; background: #ededed url(../images/userIcon.png) no-repeat 17px 13px; }
+
+.header .topMenu a.btnMonitoring { padding-left: 58px; background: #fff url(../images/topLink.png) no-repeat 17px 17px; }
+
+.header .userArea { position: relative; }
+
+.header .userArea.on .user-area { display: block; }
+
+.header .userArea .user-area { position: absolute; top: 20px; padding: 4px 0 0 0; right: 0; width: 300px; display: none; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); border-bottom: solid 1px #aaa; }
+
+.header .userArea .user-area a { background: #fff; }
+
+.header .userArea .user-area:before { display: block; content: ''; width: 20px; height: 10px; background: url(../images/sideDivArrowUp.png) no-repeat 0 0; top: -6px; left: 67.5%; position: absolute; }
 
 .header.nav2.on .nav li ul { height: 98px; }
 

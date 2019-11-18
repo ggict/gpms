@@ -4,14 +4,16 @@
 <title><c:out value="${screen_title}"/></title>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jstree/default/style.min.css'/>"/>
 <%-- <link type="text/css" rel="stylesheet" href="<c:url value='/css/reset.css'/>"/> --%>
+
+<link rel="shortcut icon" href="<c:url value='/images/favicon.ico'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/common.css'/>"/>
-<link type="text/css" rel="stylesheet" href="<c:url value='/css/common2.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/jquery.ui.custom.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/jquery.window.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/ui.jqgrid.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/jquery/magnific-popup.css'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/css/button.css'/>"/>
-
+<link type="text/css" rel="stylesheet" href="<c:url value='/css/common2.css'/>"/>
+<link type="text/css" rel="stylesheet" href="<c:url value='/css/road2019.css'/>"/>
 
 <%-- <script src="<c:url value='/extLib/jquery/jquery-1.12.4.min.js'/>"></script>
 <script src="<c:url value='/extLib/jquery/jquery-ui.min.js'/>"></script> --%>
@@ -96,6 +98,7 @@
 <script src="<c:url value='/js/map/layer.js'/>" charset='utf-8'></script>
 <script src="<c:url value='/js/map/control.js'/>" charset='utf-8'></script>
 <script src="<c:url value='/js/srvy/srvyDta.js'/>" charset='utf-8'></script>
+<script src="<c:url value='/js/design.js'/>" charset='utf-8'></script>
 
 <!-- 다음 지도 APi -->
 <!-- <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=53ac1925d1cd02c5c4cc1ecdfcd1a3cd&libraries=services"></script> -->

@@ -94,8 +94,18 @@ $trans1:all 0.2s ease 0s;
         button {height: 56px; width: 55px; background:$a url(../images/btnLogout.png) no-repeat center; font-size: 0; vertical-align: top;
             &:hover, &:focus {background-color:$hover}
         }
-        a {display: inline-block; padding: 21px 20px 0 58px;height: 35px; font-size: 16px;line-height: 1; border-left: 1px solid #ededed; background: #fff url(../images/topLink.png) no-repeat 17px 17px;@include a1}
+        a, #userDept {display: inline-block; padding: 21px 20px 0 20px; height: 35px; font-size: 16px;line-height: 1; border-left: 1px solid #ededed;@include a1}
+        #userDept {padding-left: 58px; background: #ededed url(../images/userIcon.png) no-repeat 17px 13px;}
+        a.btnMonitoring {padding-left: 58px; background: #fff url(../images/topLink.png) no-repeat 17px 17px;}
     }
+    .userArea { position: relative;
+        &.on .user-area{ display: block;}
+        .user-area { position: absolute; top:20px; padding: 4px 0 0 0; right: 0; width: 300px; display: none; box-shadow:$shadow; border-bottom:solid 1px #aaa;
+            a { background: #fff;}
+            &:before { display: block; content: ''; width: 20px;height: 10px;background: url(../images/sideDivArrowUp.png) no-repeat 0 0; top: -6px; left: 67.5%; position: absolute;}
+        }
+    }
+
     &.nav2.on .nav li ul{height: 98px;}
     &.nav3.on .nav li ul{height: 132px;}
     &.nav4.on .nav li ul{height: 166px;}

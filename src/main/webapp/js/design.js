@@ -67,6 +67,14 @@ $(function(){
 		});
 
 	}
+	
+	$(".userArea").mouseover(function(){
+		$(this).addClass("on");
+	});	
+	$(".userArea").mouseout(function(){
+		$(this).removeClass("on");
+	});
+	
 
 	// 팝업 띄우기
 	$("a.jsDiv").click(function(){
