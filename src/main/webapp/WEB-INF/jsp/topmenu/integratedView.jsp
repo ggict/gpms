@@ -887,6 +887,9 @@ function cbSetUserInputTrack(data) {
 
 //노선검색 callback
 function cb_ms_ui_search20Cells(data) {
+	if(typeof parent.$("#dvMapLoading") == "object"){
+		parent.$("#dvMapLoading").hide();
+    }
     var oRes = data.result;
     if(oRes == null || oRes.code == 'NO_RESULT') {
         alert("결과가 없습니다. 검색값을 확인해 주십시오.");

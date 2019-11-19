@@ -1952,7 +1952,9 @@ MAP.CONTROL = (function($, undefined){
      * @description 통합정보조회 컨트롤 event - 노선조회
      */
     var event_selFeatureRoad = function(res) {
-
+    	if(typeof $("#dvMapLoading") == "object"){
+        	$("#dvMapLoading").hide();
+        }
         if ( !res.success() ) { return; }
 
         // 검색 조건 피쳐 삭제
