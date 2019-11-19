@@ -5,66 +5,73 @@
 <c:choose>
     <c:when test="${sessionScope.system == 'mng' }">
         <!-- ADMIN TOP MENU START -->
-        <div id="header">
-			<img src="<c:url value='/images/logo.png'/>" alt="경기도 포장관리시스템4" class="logo" id="gpms-logo" style="display: none;" />
-            <img src="<c:url value='/images/logo3.png'/>" alt="경기도로 모니터링 시스템3" class="logo" id="good-logo" style="display: none;" />
-            <h2 class="hidden">메인메뉴</h2>
-            <div id="admingnb">
+        <header class="header">
+        <div class="container">
+            <h1 class="h1">
+                <img src="<c:url value='/images/orgLogo.png'/>" alt="세계속의경기도"><span>포장관리시스템</span>
+            </h1>
+            <div class="navBg"></div>
+            <nav class="nav">
                 <ul>
-                    <li>
-                        <a href="#" class="menu1 top" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/sysUserList.do"/>')"><span class="hidden">사용자 관리 </span></a>
-                        <div class="submenu sub1" id="sub1">
-                            <ul>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/sysUserList.do"/>')" class="sm14">사용자 관리</a></li>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/applyUserList.do"/>')" class="sm15">사용자 신청 관리</a></li>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/selectSysUserLog.do"/>')" class="sm17">사용자 접속로그 조회</a></li>
-                            </ul>
-                        </div>
+                    <li class="a00">
+                        <a href="#none" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/sysUserList.do"/>')"><span>사용자 관리</span></a>
+                        <ul>
+                            <li class="s10">
+                                <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/sysUserList.do"/>')">사용자 관리</a>
+                            </li>
+                            <li class="s20">
+                                <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/applyUserList.do"/>')">사용자 신청 관리</a>
+                            </li>
+                            <li class="s30"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/selectSysUserLog.do"/>')">사용자 접속로그 조회</a></li>
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#" class="menu2 top" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/menu/selectUserMenuList.do"/>')"><span class="hidden">시스템메뉴 관리</span></a>
-                        <div class="submenu sub2" id="sub2">
-                            <ul>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/menu/selectUserMenuList.do"/>')" class="sm18">시스템메뉴 관리</a></li>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/rolemenu/selectRoleMenuList.do"/>')" class="sm19">시스템메뉴 권한관리</a></li>
-                            </ul>
-                        </div>
+                    <li class="b00">
+                        <a href="#none" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/menu/selectUserMenuList.do"/>')"><span>스템메뉴 관리</span></a>
+                        <ul>
+                            <li class="s10">
+                                <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/menu/selectUserMenuList.do"/>')">시스템메뉴 관리</a>
+                            </li>
+                            <li class="s20">
+                                <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/rolemenu/selectRoleMenuList.do"/>')">시스템메뉴 권한관리</a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="noSub"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')" class="menu3 top"><span class="hidden">코드정보관리</span></a></li>
-                    <li class="noSub"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/notice/selectNoticeList.do"/>')" class="menu5 top"><span class="hidden">공지사항관리</span></a></li>
-                    <li>
-                        <a href="#" class="menu4 top" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="srvy/srvyDtaEvlFmla.do"/>')"><span class="hidden">수식관리</span></a>
-                        <div class="submenu sub3" id="sub3">
+                    <li class="c00">
+                        <a href="#none" <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')"><span>코드정보관리</span></a>
+                        <ul>
+                            <li class="s10" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')"><a href="#none">코드정보관리</a></li>
+                        </ul>
+                    </li>
+                    <li class="d00">
+                        <a href="#none" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="srvy/srvyDtaEvlFmla.do"/>')"><span>수식관리</span></a>
+                        <ul>
                             <ul>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="srvy/srvyDtaEvlFmla.do"/>')" class="sm20">포장상태 평가수식조회</a></li>
-                                <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="predctfrmulaidx/selectPredctFrmulaIdxList.do"/>')" class="sm21">공용성예측모델 수식조회</a></li>
+                                <li class="s10">
+                                    <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="srvy/srvyDtaEvlFmla.do"/>')">포장상태 평가수식조회</a>
+                                </li>
+                                <li class="s20">
+                                    <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="predctfrmulaidx/selectPredctFrmulaIdxList.do"/>')">공용성예측모델 수식조회</a>
+                                </li>
                             </ul>
-                        </div>
+                        </ul>
                     </li>
                 </ul>
-            </div>
-            <div class="submenubg"></div>
-            <div class="htbx user-area">
-                <h2 class="hidden">사용자정보</h2>
-                <div class="user user-area">
-                    <a href="#" title="사용자" class="user-area"><span class="hidden user-area">사용자</span></a>
-                </div>
-            </div>
-            <div class="userBx user-area" style="width: 230px;">
-                <img src="<c:url value='/images/user_tail.png' />" class="user-area" />
-                <div class="userinfo user-area">
-                    <span class="user-area" style="height: 20px;">
-                        <span id="userDept" style="margin: 0px; width: 150px; float: left;"></span><c:out value="" />
-                        <a href="#" onclick="fnLogout();" class="btn_blue user-area">로그아웃</a>
-                    </span>
+            </nav>
+            <span class="topMenu">
+                <a href="#none" class="btnMonitoring" title="새창">모니터링시스템</a>
+                <span class="userArea">
+                    <a id="userDept" href="#none" ></a><c:out value="" />                
                     <span class="user-area">
-                        <a href="#" onclick="COMMON_UTIL.cmWindowOpen('사용자 정보', contextPath +'/api/sysuser/updateUserView.do', 420, 350, true, null, 'center');" class="br"> 사용자 정보</a>
-                        <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/applyUserList.do"/>');" style="display: none;">신청<span class="usrCnt" id="usrCnt"></span>건</a>
-                        <a href="#" onclick="fnMap();">지도</a>
-                    </span>
-                </div>
-            </div>
+    				    <a href="#" onclick="COMMON_UTIL.cmWindowOpen('사용자 정보', contextPath +'/api/sysuser/updateUserView.do', 420, 350, true, null, 'center');"> 사용자 정보</a>
+    				    <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/applyUserList.do"/>');" style="display: none;">신청<span id="usrCnt"></span>건</a>
+    				   <a href="#" onclick="fnMap();">지도</a>
+    				</span>
+                </span>
+                <button  class="btnLogout" onclick="fnLogout();">로그아웃</button>
+            </span>
+            
         </div>
+    </header>   
         <!-- ADMIN TOP MENU END -->
     </c:when>
 
