@@ -347,29 +347,33 @@ var layersMngObj = {
 			var baseLayer = gMap.getLayerByName("baseLayer");
 			var params = baseLayer.getParams();
 			var layers = params.LAYERS.split(',');
-
+			var relayers = [];
 			if(obj.hasClass('active')){
 				obj.removeClass('active');
 				if(layers.indexOf(layernm) > -1){
-					layers.splice(layers.indexOf(layernm), 1)
+					if(layers.length == 1 ) layers = [];
+					else layers.splice(layers.indexOf(layernm), 1)
 				}
 			}else{
 				obj.addClass('active');
 				if(layers.indexOf(layernm) == -1){
-					//layers.unshift(layernm);
 					layers.push(layernm);
 				}
 			}
 
-			if(layers.length == 0){
-				baseLayer.setVisibility(false);
-			}else{
-				baseLayer.setVisibility(true);
-				baseLayer.mergeNewParams({
-					LAYERS: (layers.length == 0) ? layers[0] : layers.join()
-					,STYLES: ''
-				});
+			for(var i=0; i<layers.length; i++){
+				var layer = layers[i];
+				if(layer){
+					relayers.push(layer);
+				}
 			}
+			
+			if(relayers.length == 0) baseLayer.setVisibility(false);
+			else baseLayer.setVisibility(true);
+			baseLayer.mergeNewParams({
+				LAYERS: relayers.join()
+				,STYLES: ''
+			});
 
 		};
 		$('#divLayerMngList_ul').find('li').click(fnCall);
