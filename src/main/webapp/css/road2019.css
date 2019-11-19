@@ -259,11 +259,7 @@ button.btnLocView { width: 10px; height: 16px; background: url(../images/btnLoca
 /* 지도 툴영역 */
 .toolArea { position: fixed; top: 57px; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.5); z-index: 100; }
 
-.mapTool { width: 40px; border: solid 1px rgba(0, 0, 0, 0.1); box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); position: absolute; left: .5%; top: 12px; }
-
-.mapTool .mt { border-top: solid 1px #ddd; position: relative; }
-
-.mapTool .mt:first-child { border-top: none; }
+.mapTool { width: 40px; border: solid 1px rgba(0, 0, 0, 0.1); box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); position: absolute; left: .5%; top: 12px; z-index: 999; }
 
 .mapTool .mtBtn { display: inline-block; box-sizing: border-box; width: 40px; height: 42px; padding: 25px 0 0 0; margin: 0; text-align: center; font-size: 10px; letter-spacing: -1px; background: #fff url(../images/mapTool.png) no-repeat 0 0; color: #93a2b0; font-weight: 500; }
 
@@ -292,6 +288,12 @@ button.btnLocView { width: 10px; height: 16px; background: url(../images/btnLoca
 .mapTool .print { background-position: 0 -442px; }
 
 .mapTool .save { background-position: 0 -484px; }
+
+.mapTool li { border-top: solid 1px #ddd; position: relative; }
+
+.mapTool li:first-child { border-top: none; }
+
+.mapTool li.active a, .mapTool li.active a:hover, .mapTool li.active a:focus { background-position-x: -40px; background-color: #6aa2ec; color: #fff; }
 
 .mapTool2 { font-size: 0; position: absolute; right: .5%; top: 12px; height: 48px; }
 
@@ -330,6 +332,8 @@ button.btnLocView { width: 10px; height: 16px; background: url(../images/btnLoca
 .indexMapWrap .on .ctn { height: 200px; }
 
 .indexMapWrap .on button { background-position: 95% -18px; }
+
+.divlayermng ul li p { font-size: 12px; word-break: break-all; line-height: 1; }
 
 /* 현재화면인쇄 */
 .btnPrint { height: 30px; border-radius: 2px; position: absolute; right: 10px; bottom: 10px; padding: 0 10px 0 34px; background: #6aa2ec url(../images/btnPrint.png) no-repeat 8px 6px; color: #fff; }

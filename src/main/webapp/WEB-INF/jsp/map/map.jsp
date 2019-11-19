@@ -120,25 +120,25 @@
             </div>
 			<div id="daumMap"></div>
 			<div id="map">
-				<ul class="left_tool">
-					<!-- <li><a href="#" class="t1 maptool" id="mCtrlIdentify"><span class="hidden">셀속성조회</span></a></li> -->
-					<li><a href="#" class="t1 maptool" id="mCtrlLocSearch" title="위치 통합검색"><span class="hidden">위치통합검색</span></a></li>
-                    <li><a href="#" class="t2 maptool" id="mCtrlLonLatMove" title="경위도 좌표 이동"><span class="hidden">경위도 좌표 이동</span></a></li>
-                    <li class="active"><a href="#" class="t3 maptool" id="mCtrlPan" title="이동"><span class="hidden">이동</span></a></li>
-                    <li><a href="#" class="t4 maptool" id="mCtrlZoomIn" title="확대"><span class="hidden">확대</span></a></li>
-                    <li><a href="#" class="t5 maptool" id="mCtrlZoomOut" title="축소"><span class="hidden">축소</span></a></li>
+				<ul class="mapTool">
+                    <!-- <li><a href="#" class="t1 maptool" id="mCtrlIdentify"><span class="hidden">셀속성조회</span></a></li> -->
+                    <li><a href="#" class="mtBtn sideDiv locSearch" id="mCtrlLocSearch" title="위치 통합검색">위치검색</a></li>
+                    <li><a href="#" class="mtBtn sideDiv position" id="mCtrlLonLatMove" title="경위도 좌표 이동">좌표이동</a></li>
+                    <li class="active"><a href="#" class="mtBtn move" id="mCtrlPan" title="이동">이동</a></li>
+                    <li><a href="#" class="mtBtn zoomIn" id="mCtrlZoomIn" title="확대">확대</a></li>
+                    <li><a href="#" class="mtBtn zoomOut" id="mCtrlZoomOut" title="축소">축소</a></li>
                     <!--
-                    <li><a href="#" class="t6 maptool" id="mCtrlPrev" title="이전"><span class="hidden">이전</span></a></li>
-                    <li><a href="#" class="t7 maptool" id="mCtrlNext" title="다음"><span class="hidden">다음</span></a></li>
+                    <li><a href="#" class="mtBtn before" id="mCtrlPrev" title="이전">이전</a></li>
+                    <li><a href="#" class="mtBtn next" id="mCtrlNext" title="다음">다음</a></li>
                      -->
-                    <li><a href="#" class="t8 maptool" id="mCtrlFullExt" title="전체"><span class="hidden">전체</span></a></li>
-                    <li><a href="#" class="t9 maptool" id="mCtrlMesureLength" title="거리"><span class="hidden">거리</span></a></li>
-                    <li><a href="#" class="t10 maptool" id="mCtrlMesureArea" title="면적"><span class="hidden">면적</span></a></li>
-                    <li><a href="#" class="t11 maptool" id="mCtrlClear" title="초기화"><span class="hidden">초기화</span></a></li>
+                    <li><a href="#" class="mtBtn viewAll" id="mCtrlFullExt" title="전체보기">전체</a></li>
+                    <li><a href="#" class="mtBtn distance" id="mCtrlMesureLength" title="거리재기">거리</a></li>
+                    <li><a href="#" class="mtBtn partView" id="mCtrlMesureArea" title="면적">면적</a></li>
+                    <li><a href="#" class="mtBtn refresh" id="mCtrlClear" title="초기화">초기화</a></li>
                     <!--
-                    <li><a href="#" class="t12 maptool" id="mCtrlMapPrint" title="현재화면 인쇄"><span class="hidden">인쇄</span></a></li>
-                    <li><a href="#" class="t13 maptool" id="mCtrlPrint" title="현재화면 저장"><span class="hidden">저장</span></a></li>
-                     -->
+                    <li><a href="#" class="mtBtn print" id="mCtrlMapPrint" title="현재화면 프린트">프린트</a></li>
+                    <li><a href="#" class="mtBtn save" id="mCtrlPrint" title="현재화면 저장">저장</a></li>
+                    -->
                 </ul>
 
                 <ul class="right_tool">
@@ -150,7 +150,7 @@
 
                 <ul class="select_map">
                     <li id="mCtrlSatenomalMap" class="selected_btn" onclick="MAP.fn_show_externalSateliteMap('roadmap')"><a href="#" class="map1"><span class="hidden">일반</span></a></li>
-                    <li id="mCtrlSateliteMap"  class="btn" onclick="MAP.fn_show_externalSateliteMap('skyview')"><a href="#" class="map2"><span class="hidden">위성</span></a></li>
+                    <li id="mCtrlSateliteMap" onclick="MAP.fn_show_externalSateliteMap('skyview')"><a href="#" class="map2"><span class="hidden">위성</span></a></li>
                 </ul>
 
                 <dl id="snbacc">
