@@ -198,7 +198,7 @@ $(parent).resize(function() {
 
     $(".select_map").css("left", ( width - 188 - 108 ) + "px");
     $(".right_tool").css("left", ( width - 11 - 180 ) + "px");
-    $("#snbacc").css("left", ( width - 20 - 210 ) + "px");
+    // $("#snbacc").css("left", ( width - 20 - 210 ) + "px");
 
 });
 
@@ -207,7 +207,7 @@ $(document).ready(function() {
 
     $(".select_map").css("left", ( width - 188 - 108 ) + "px");
     $(".right_tool").css("left", ( width - 11 - 180 ) + "px");
-    $("#snbacc").css("left", ( width - 20 - 210 ) + "px");
+    // $("#snbacc").css("left", ( width - 20 - 210 ) + "px");
 
 	MAP.fn_update_resizeMap();
 

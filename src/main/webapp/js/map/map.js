@@ -1349,13 +1349,13 @@ function($,undefined){
         if (maptype === 'roadmap') {
             MAP.fn_get_daumMap().setVisibility(true);
             MAP.fn_get_daumMap().setMapMode(1);
-            roadmapControl.className = 'selected_btn';
-            skyviewControl.className = 'btn';
+            //roadmapControl.className = 'selected_btn';
+            //skyviewControl.className = 'btn';
         } else {
             MAP.fn_get_daumMap().setVisibility(true);
             MAP.fn_get_daumMap().setMapMode(2);
-            skyviewControl.className = 'selected_btn';
-            roadmapControl.className = 'btn';
+            //skyviewControl.className = 'selected_btn';
+            //roadmapControl.className = 'btn';
         }
 
         return false;

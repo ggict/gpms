@@ -180,33 +180,36 @@
 	                    </article>
 	                </div>
             	</nav>
+            	
+            	
 
-                <dl id="snbacc">
-                    <dt>인덱스맵</dt>
-                    <dd>
-                        <!-- <p class="locationtxt">위치 확인 중...</p> -->
-                        <div class="indexmap" style="height: 230px; ">
-                        	<div class="inmapBx2" id="dvIndexMap"></div>
-                        	<div class="inmapBx3">
+                <!-- indexMapWrap S -->
+	            <nav class="indexMapWrap">
+	                <article class="indexMap">
+	                    <button>인덱스맵</button>
+	                    <div class="ctn">
+		                    <div id="dvIndexMap"></div>
+		                      	<div class="inmapBx3">
 								축척 1 : <input type="text" id="scale" onclick="this.select();" />
-								<p style="font-size: 10px;">일반지도는 유사축척으로 변경됨</p>
-								<p style="margin-top: 5px; font-size: 11px; color: black;">
-									<label id="lblLonlat1"></label><br /> <label id="lblLonlat2"></label><br />
+								<p>일반지도는 유사축척으로 변경됨</p>
+								<p>
+									<label id="lblLonlat1"></label><br />
+									<label id="lblLonlat2"></label><br />
 									<label id="lblXY"></label>
 								</p>
 							</div>
-                        </div>
-                    </dd>
-                    <!--
-                    <dt>레이어관리</dt>
-                    <dd>
-						<div class="inBx" id="toolArea">
-							<div id="dvLayerList" class="LayerList">
-							</div>
 						</div>
-                    </dd>
-                     -->
-                </dl>
+	                </article>
+	                <!--
+	                <article class="layerMng">
+	                    <button>레이어관리</button>
+	                    <div class="ctn" id="toolArea">
+	                    	<div id="dvLayerList" class="LayerList">
+	                    </div>
+	                </article>
+	                -->
+	            </nav>
+            	<!-- indexMapWrap E -->
 
 				<!-- jstree
                 <div id="divLayerTool" >
@@ -247,7 +250,7 @@ $(parent).resize(function() {
     var width = $(window).width();
     $(".select_map").css("left", ( width - 188 - 108 ) + "px");
     $(".right_tool").css("left", ( width - 11 - 180 ) + "px");
-    $("#snbacc").css("left", ( width - 20 - 210 ) + "px");
+    //$("#snbacc").css("left", ( width - 20 - 210 ) + "px");
 });
 
 $(document).ready(function() {
@@ -256,7 +259,7 @@ $(document).ready(function() {
     var width = $(window).width();
     $(".select_map").css("left", ( width - 188 - 108 ) + "px");
     $(".right_tool").css("left", ( width - 11 - 180 ) + "px");
-    $("#snbacc").css("left", ( width - 20 - 210 ) + "px");
+    //$("#snbacc").css("left", ( width - 20 - 210 ) + "px");
 
 	MAP.fn_update_resizeMap();
 	$(window).resize(function () {
