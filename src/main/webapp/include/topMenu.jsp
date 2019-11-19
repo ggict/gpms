@@ -95,24 +95,25 @@
                     <li class="a00">
                         <a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_route', '<c:url value="routeinfo/selectRouteInfoList.do"/>')"><span>노선검색</span></a>
                         <ul>
-                            <li class="s10"><a href="#none">데이터로검색</a></li>
-                            <li class="s20"><a href="#none">셀단위로검색</a></li>
+                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_route', '<c:url value="routeinfo/selectRouteInfoList.do"/>')">데이터로검색</a></li>
+                            <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cell10/selectCell10List.do"/>');">셀단위로검색</a></li>
                         </ul>
                     </li>
                     <li class="b00">
                         <a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_reg_srvy', '<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>')"><span>조사자료관리</span></a>
                         <ul>
-                            <li class="s10"><a href="#none">조사자료등록</a></li>
-                            <li class="s20"><a href="#none">조사자료이력조회</a></li>
-                            <li class="s30"><a href="#none">미조사구간조회</a></li>
-                            <li class="s40"><a href="#none">조사요청구간등록</a></li>
-                            <li class="s50"><a href="#none">조사요청구간관리</a></li>
+                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_reg_srvy', '<c:url value="srvydtaexcel/selectSrvyDtaExcelList.do"/>')">조사자료등록</a></li>
+                            <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyExcelList.do"/>');">조사자료이력조회 </a></li>
+                            <li class="s30"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/srvyunsectionlist.do"/>');">미조사구간조회</a></li>
+                            <li class="s40"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvyrequstsctn/addSrvyRequstSctnView.do"/>');">조사요청구간등록</a></li>
+                            <li class="s50"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvyrequstsctn/selectSrvyRequstSctnList.do"/>');">조사요청구간관리</a></li>
                         </ul>
                     </li>
                     <li class="c00">
                         <a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_srvyEvl', '<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>')"><span>포장상태평가</span></a>
                         <ul>
-                            <li class="s10"><a href="#none">평가정보조회</a></li>
+                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>');">평가정보조회</a></li>
+                            <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlList.do"/>');">포장상태 평가</a></li>
                         </ul>
                     </li>
                     <li class="d00">

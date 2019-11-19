@@ -29,13 +29,14 @@
 		<!-- 공통 (END)-->
 		<!-- container start -->
 		<div id="container">
-			<h2 class="hidden">본문컨텐츠-지도</h2>
-			<h2 class="hidden">메인메뉴</h2>
+		
 			<div id="bottom">
                 <div id="bottom_cont">
                     <div class="bottomBtArea">
-                        <a href="#" id="leftCloseBt" onclick="bottomClose()"><img src="images/btn_pleftclose.png" alt="닫기" title="닫기" /></a>
-                        <a href="#" class="hidden" id="leftOpenBt" onclick="bottomOpen()"><img src="images/btn_pleftopen.png" alt="열기" title="열기" /></a>
+                    	<button class="btnContentOpen">열기</button>
+                    	<button class="btnContentClose">닫기</button>
+                        <a href="#" id="leftCloseBt" onclick="bottomClose()"><img src="images/btn_pleftclose.png" alt="닫기"></a>
+                        <a href="#" class="hidden" id="leftOpenBt" onclick="bottomOpen()"><img src="images/btn_pleftopen.png" alt="열기"></a>
                     </div>
                     <div id="btab01">
                     	<%-- 왼쪽 세부 메뉴 --%>
@@ -66,6 +67,8 @@
             <div id="stats">
                 <div id="bottom_cont">
                     <div class="bottomBtArea">
+                   		<button class="btnContentOpen">열기</button>
+                    	<button class="btnContentClose">닫기</button>
                         <a href="#" id="leftCloseSt" onclick="statsClose()"><img src="images/btn_pleftclose.png" alt="닫기" title="닫기"/></a>
                         <a href="#" class="hidden" id="leftOpenSt" onclick="statsOpen()"><img src="images/btn_pleftopen.png" alt="열기" title="열기"/></a>
                     </div>
