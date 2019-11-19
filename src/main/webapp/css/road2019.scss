@@ -246,7 +246,7 @@ button.btnLocView { width: 10px;height: 16px;background: url(../images/btnLocati
 
 }
 
-.mapTool2 { font-size: 0;  position: absolute;right: .5%;top: 12px;height: $mapTool2WH;
+.mapTool2 { font-size: 0;  position: absolute;right: .5%;top: 12px;height: $mapTool2WH; z-index: 990;
     article {float: left; border-left:solid 1px #ddd;
         &:first-child { border-left:none}
      }

@@ -140,7 +140,8 @@
                     <li><a href="#" class="mtBtn save" id="mCtrlPrint" title="현재화면 저장">저장</a></li>
                     -->
                 </ul>
-
+                
+				<!--
                 <ul class="right_tool">
                     <li><a id="integrated" href="#" class="t1 selecttool" title="통합 정보 조회" onclick="COMMON_UTIL.cmWindowOpen('통합 정보 조회', contextPath + 'topmenu/selectIntegratedView.do', 623, 215, false, null, 'integrated');"><span class="hidden">정보통합조회</span></a></li>
                     <li><a id="researchInfo" href="#" class="t2 selecttool" title="조사정보조회"><span class="hidden">조사정보조회</span></a></li>
@@ -152,6 +153,33 @@
                     <li id="mCtrlSatenomalMap" class="selected_btn" onclick="MAP.fn_show_externalSateliteMap('roadmap')"><a href="#" class="map1"><span class="hidden">일반</span></a></li>
                     <li id="mCtrlSateliteMap" onclick="MAP.fn_show_externalSateliteMap('skyview')"><a href="#" class="map2"><span class="hidden">위성</span></a></li>
                 </ul>
+                -->
+                
+                <nav class="mapTool2">
+	                <div class="group toggleBtn">
+	                    <article>
+	                        <button class="mt2Btn generalMap on" id="mCtrlSatenomalMap" onclick="MAP.fn_show_externalSateliteMap('roadmap')">일반지도</button>
+	                    </article>
+	                    <article>
+	                        <button class="mt2Btn satelliteMap" id="mCtrlSateliteMap" onclick="MAP.fn_show_externalSateliteMap('skyview')">위성사진</button>
+	                    </article>
+	                </div>
+	                <div class="group">
+	                    <article>
+	                        <a href="#totalSearch" id="integrated" class="mt2Btn sideDiv totalSearch" onclick="COMMON_UTIL.cmWindowOpen('통합 정보 조회', contextPath + 'topmenu/selectIntegratedView.do', 623, 215, false, null, 'integrated');">통합조회</a>
+	                    </article>
+	                    </article>
+	                    <article>
+	                        <button class="mt2Btn searchInfo" id="researchInfo">조사정보</button>
+	                    </article>
+	                    <article>
+	                        <button class="mt2Btn cellEdit" id="editCellInfo" onclick="COMMON_UTIL.cmWindowOpen('셀 속성 편집', contextPath + 'cellsect/selectCellSectUpdate.do', 623, 270, false, null, 'updCell');" title="셀 속성 편집">셀편집</button>
+	                    </article>
+	                    <article>
+	                        <button class="mt2Btn themeMap" id="thememap" onclick="COMMON_UTIL.cmWindowOpen('PMS 테마지도', contextPath + 'topmenu/selectThemeMap.do', 400, 730, false, null, 'thememap');" title="PMS 테마지도">테마지도</button>
+	                    </article>
+	                </div>
+            	</nav>
 
                 <dl id="snbacc">
                     <dt>인덱스맵</dt>

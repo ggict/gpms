@@ -295,7 +295,7 @@ button.btnLocView { width: 10px; height: 16px; background: url(../images/btnLoca
 
 .mapTool li.active a, .mapTool li.active a:hover, .mapTool li.active a:focus { background-position-x: -40px; background-color: #6aa2ec; color: #fff; }
 
-.mapTool2 { font-size: 0; position: absolute; right: .5%; top: 12px; height: 48px; }
+.mapTool2 { font-size: 0; position: absolute; right: .5%; top: 12px; height: 48px; z-index: 990; }
 
 .mapTool2 article { float: left; border-left: solid 1px #ddd; }
 
