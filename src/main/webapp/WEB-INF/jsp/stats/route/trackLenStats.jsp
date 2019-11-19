@@ -23,18 +23,8 @@ $( document ).ready(function() {
 	var rw1 = $(window).width()-400;
 	var rw = $(window).width()/3;
 	
-	//검색조건
-	var sYear = parent.document.getElementById("SCH_STATS_YEAR").value;
-	if(sYear != ''){
-		$("#label").text("도로등급별 도로연장 통계("+sYear+")");
-	}
 	
-	fnGradLenSearch(sYear,rw);//국토부 도로등급별 도로 연장통계 조회
-	fnGpmsGradLenSearch(rw);//GPMS 도로등급별 도로연장 통계 조회
-	fnLenSearch(sYear,rw);//국토부연장조회
-	fnGpmsLenSearch(rw);//GPMS 총연장 조회
-	fnAdmLenSearch(sYear,rw1);//국토부 관리기관별 시군구 총연장조회
-	fnAdmGpmsLenSearch(rw1);//GPMS 관리기관별 시군구 총연장조회
+	fnTrackStatsSearch(rw);
 	
 }); 
 
@@ -46,17 +36,12 @@ $(window).on('resize', function(){
     	var rw = $(window).width()/3;
     	var sYear = parent.document.getElementById("SCH_STATS_YEAR").value;
     	
-    	fnTrackStatsSearch(sYear,rw1,rw);
+    	fnTrackStatsSearch(rw);
 });
 
 //조건에 맞는 검색조회
 function fnTrackStatsSearch(sYear,rw1,rw){
-	fnGradLenSearch(sYear,rw);//국토부 도로등급별 도로 연장통계 조회
-	fnGpmsGradLenSearch(rw);//GPMS 도로등급별 도로연장 통계 조회
-	fnLenSearch(sYear,rw);//국토부연장조회
-	fnGpmsLenSearch(rw);//GPMS 총연장 조회
-	fnAdmLenSearch(sYear,rw1);//국토부 관리기관별 시군구 총연장조회
-	fnAdmGpmsLenSearch(rw1);//GPMS 관리기관별 시군구 총연장조회
+	fnGpmsGradLenSearch(rw);//GPMS 관리기관별 시군구 총연장조회
 	
 	if(sYear != ''){
 		$("#label").text("도로등급별 도로연장 통계("+sYear+")");
@@ -71,13 +56,13 @@ require.config({
     }
 });
 
+
+
 //검색 처리
-function fnGradLenSearch(sYear,rw) {
-	
-	$("#STATS_YEAR").val(sYear);
-	
-  	 $.ajax({
-        url: '<c:url value="/"/>'+'api/cell10/selectSrvyUniRoadLenStatsResult.do',
+function fnGpmsGradLenSearch(rw) {
+    
+     $.ajax({
+        url: '<c:url value="/"/>'+'api/cell10/selectTrackLenStatsResult.do',
         data: JSON.stringify( $("#frm").cmSerializeObject()),
         //data: JSON.stringify(data),
         contentType: 'application/json',
@@ -86,592 +71,93 @@ function fnGradLenSearch(sYear,rw) {
         type: 'POST',
         processData: false,
         success: function (data) {
-        	var dataList = data.data;
-			if(dataList.length !=0){
-				drawGradLenChart(dataList,rw);
-			}else{
-				ntcNo += 1;
-			}
+            var dataList = data.data;
+            if(dataList.length !=0){
+                drawLenChart(dataList,rw);
+            }else{
+                ntcNo += 1;
+                fn_msgNtc();
+            }
         },
         error: function () {
-        	errNo += 1;
+            errNo += 1;
+            fn_msgErr();
         }
     });
-}
-
-function drawGradLenChart(dataList,rw){
-	var lenData	= [];
-	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].ROAD_NAME});
-	}
-	require([	'echarts','echarts/chart/pie'	],
-	        function (ec) {
-				 var myChart = ec.init(document.getElementById('gradLenPieChart'));
-				 myChart.setOption({
-		            	title 	: {	text: '국토부 총연장(km)'	},
-		                tooltip : {	trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)"},
-		                legend: {
-		                    orient : 'vertical',
-		                    x : 'right',
-		                    y : 'center',
-		                    data:['국지도','지방도']
-		                },
-		                toolbox : {	show: true,
-			    			feature: {
-				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
-				    			//saveAsExcel : {show: true},					// 엑셀저장
-				    			saveAsImage: {show: true}					// 이미지저장
-				    		}	
-			    		},
-			    		calculable : true,
-		                series : [
-		                    {
-		                        name: '',
-		                        type: 'pie',
-		                        radius : ['0%', '70%'],		                        
-		                        itemStyle: {
-		                        	normal : {
-		                        		label : {
-		                        			show : true,
-		                        			formatter: '{a}{b} \n {c} \n({d}%)',
-		                        			position: 'inner',
-			                        		textStyle : {
-					                        	color:'#000000'
-		                        			}
-		                        		},
-		                        		labelLine : {
-		                        			show : false
-		                        		}
-		                        	},
-		                        	emphasis : {
-		                        		label : {
-		                        			show : false,
-		                        			position : 'center',
-		                        			textStyle : {
-		                        				fontSize : '50',
-		                        				fontWeight : 'bold'
-		                        			}
-		                        		}
-		                        	}
-		                        },
-		                        data: lenData
-		                    }
-		                ]
-		            });
-
-			});		
-}
-
-//검색 처리
-function fnGpmsGradLenSearch(deptCd,strDt,endDt,rw) {
-	
-  	 $.ajax({
-        url: '<c:url value="/"/>'+'api/cell10/selectGradLenStatsResult.do',
-        data: JSON.stringify( $("#frm").cmSerializeObject()),
-        //data: JSON.stringify(data),
-        contentType: 'application/json',
-        dataType: "json",
-        cache: false,
-        type: 'POST',
-        processData: false,
-        success: function (data) {
-        	var dataList = data.data;
-			if(dataList.length !=0){
-				drawGpmsGradLenChart(dataList,rw);
-			}else{
-				ntcNo += 1;
-			}
-        },
-        error: function () {
-        	errNo += 1;
-        }
-    });
-}
-
-function drawGpmsGradLenChart(dataList,rw){
-	var lenData	= [];
-	for(var i=0; i<dataList.length; i++){
-		lenData.push({"value" : Number(dataList[i].LEN), "name" : dataList[i].ROAD_NAME});
-	}
-	require([	'echarts','echarts/chart/pie'	],
-	        function (ec) {
-				 var myChart = ec.init(document.getElementById('mRoadLenChart'));
-				 myChart.setOption({
-		            	title 	: {	text: 'GPMS 총연장(km)'	},
-		                tooltip : {	trigger: 'item',formatter: "{a} <br/>{b} : {c} ({d}%)"},
-		                legend: {
-		                    orient : 'vertical',
-		                    x : 'right',
-		                    y : 'center',
-		                    data:['국지도','지방도']
-		                },
-		                toolbox : {	show: true,
-			    			feature: {
-				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
-				    			//saveAsExcel : {show: true},					// 엑셀저장
-				    			saveAsImage: {show: true}					// 이미지저장
-				    		}	
-			    		},
-			    		calculable : true,
-		                series : [
-		                    {
-		                        name: '',
-		                        type: 'pie',
-		                        radius : ['0%', '70%'],		                        
-		                        itemStyle: {
-		                        	normal : {
-		                        		label : {
-		                        			show : true,
-		                        			formatter: '{a}{b} \n {c} \n({d}%)',
-		                        			position: 'inner',
-			                        		textStyle : {
-					                        	color:'#000000'
-		                        			}
-		                        		},
-		                        		labelLine : {
-		                        			show : false
-		                        		}
-		                        	},
-		                        	emphasis : {
-		                        		label : {
-		                        			show : false,
-		                        			position : 'center',
-		                        			textStyle : {
-		                        				fontSize : '50',
-		                        				fontWeight : 'bold'
-		                        			}
-		                        		}
-		                        	}
-		                        },
-		                        data: lenData
-		                    }
-		                ]
-		            });
-
-			});		
-}
-
-
-//검색 처리
-function fnLenSearch(sYear,rw) {
-	$("#STATS_YEAR").val(sYear);
-	
-	$.ajax({
-		 url: '<c:url value="/"/>'+'api/cell10/selectUniTrackLenStatsResult.do'
-		,type: 'post'
-		,contentType: 'application/json'
-		,data: JSON.stringify( $("#frm").cmSerializeObject())
-		//,data: JSON.stringify(data)
-		,dataType: 'json'
-		,success: function (data) {
-    	var dataList = data.data;
-			if(dataList.length !=0){
-				drawLenChart(dataList,rw);
-			}else{
-				ntcNo += 1;
-				fn_msgNtc();
-			}
-    },
-    error: function () {
-  	  errNo += 1;
-  	  fn_msgErr();
-    }
-	});
 }
 
 function drawLenChart(dataList,rw){
-	var gNm 	= [];		
-	var lenData		= [];
-	var degree		= 0;
-	if(dataList.length < 10){
-		degree = 0;
-	}
-	
-	for(var i=0; i<dataList.length; i++){
-		if(dataList[i].LEN != '' && dataList[i].LEN != null){
-			gNm.push(dataList[i].TRACK+'차로');
-			lenData.push(Number(dataList[i].LEN));
-		}
-	}
-
-	require([	'echarts','echarts/chart/bar'	],
-	        function (ec) {
-				 var myChart = ec.init(document.getElementById('mUniTrackLenChart'));
-				 myChart.setOption({
-		            	title 	: {	text: '국토부 총연장(km)'	},
-		                tooltip : {	trigger: 'axis'				},
-		                toolbox : {	show: true,
-			    			feature: {
-				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
-				    			//saveAsExcel : {show: true},					// 엑셀저장
-				    			saveAsImage: {show: true}					// 이미지저장
-				    		}	
-			    		},
-					    grid :{
-					    	width : rw+'px',
-					    	x : 50,
-					    	y2 : 80
-					    },
-		                xAxis : [{	
-		                			type : 'category',
-				            		axisLabel : {
-				                		show:true,
-				                		interval: 0,
-				                		rotate: degree
-				            		},
-		                			data : gNm
-		                		}],
-		                yAxis : [{	name : 'km',		type : 'value'		}],
-		                series : [
-		                    {
-		                        name: '',
-		                        type: 'bar',
-		                        itemStyle: {
-		                            normal: {
-		                                color: function(params) {
-		                                    var colorList = [
-		                                      '#157ea8','#157ea8','#157ea8','#157ea8',
-		                                      '#157ea8','#157ea8','#157ea8','#157ea8',
-		                                      '#157ea8','#157ea8','#157ea8','#157ea8'
-		                                    ];
-		                                    return colorList[params.dataIndex]
-		                                }
-		                            }
-		                        },
-		                        data: lenData
-		                    }
-		                ]
-		            });
-				 
-			});
-}
-
-
-//검색 처리
-function fnGpmsLenSearch(deptCd,strDt,endDt,rw) {
-	
-	$.ajax({
-		 url: '<c:url value="/"/>'+'api/cell10/selectTrackLenStatsResult.do'
-		,type: 'post'
-		,contentType: 'application/json'
-		,data: JSON.stringify( $("#frm").cmSerializeObject())
-		//,data: JSON.stringify(data)
-		,dataType: 'json'
-		,success: function (data) {
-    	var dataList = data.data;
-			if(dataList.length !=0){
-				drawGpmsLenChart(dataList,rw);
-			}else{
-				ntcNo += 1;
-			}
-    },
-    error: function () {
-  	  errNo += 1;
+    var gDeptNm    = [];       
+    var pavData     = [];
+    var cntrwkData      = [];
+    var unopnData = [];
+    var degree = (dataList.length > 10) ? 40 : 0;
+    
+    for(var i=0; i<dataList.length; i++){
+        gDeptNm.push(dataList[i].adm_nm);
+        pavData.push(Number(dataList[i].total_l));
+        cntrwkData.push(Number(dataList[i].cntrwk_len));
+        unopnData.push(Number(dataList[i].unopn_len));
     }
-	});
-}
-
-function drawGpmsLenChart(dataList,rw){
-	var gNm 	= [];		
-	var lenData		= [];
-	var degree		= 0;
-	if(dataList.length < 10){
-		degree = 0;
-	}
-	for(var i=0; i<dataList.length; i++){
-		if(dataList[i].TRACK != '' && dataList[i].TRACK != null){
-			gNm.push(dataList[i].TRACK+'차로');
-			lenData.push(Number(dataList[i].LEN));
-		}
-	}
-	require([	'echarts','echarts/chart/bar'	],
-	        function (ec) {
-				 var myChart = ec.init(document.getElementById('mTrackLenChart'));
-				 myChart.setOption({
-		            	title 	: {	text: 'GPMS 총연장(km)'	},
-		                tooltip : {	trigger: 'axis'				},
-		                toolbox : {	show: true,
-			    			feature: {
-				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
-				    			//saveAsExcel : {show: true},					// 엑셀저장
-				    			saveAsImage: {show: true}					// 이미지저장
-				    		}	
-			    		},
-					    grid :{
-					    	/* width : rw+'px',
-					    	x : 50, */
-					    	y2 : 80
-					    },
-		                xAxis : [{	
-		                			type : 'category',
-				            		axisLabel : {
-				                		show:true,
-				                		interval: 0,
-				                		rotate: degree
-				            		},
-		                			data : gNm
-		                		}],
-		                yAxis : [{	name : 'km',		type : 'value'		}],
-		                series : [
-		                    {
-		                        name: '',
-		                        type: 'bar',
-		                        itemStyle: {
-		                            normal: {
-		                                color: function(params) {
-		                                    var colorList = [
-												'#157ea8','#157ea8','#157ea8','#157ea8',
-												'#157ea8','#157ea8','#157ea8','#157ea8',
-												'#157ea8','#157ea8','#157ea8','#157ea8'
-		                                    ];
-		                                    return colorList[params.dataIndex]
-		                                }
-		                            }
-		                        },
-		                        data: lenData
-		                    }
-		                ]
-		            });
-				 
-			});
-}
-
-//검색 처리
-function fnAdmLenSearch(sYear,rw) {
-	$("#STATS_YEAR").val(sYear);
-	
-	$.ajax({
-		 url: '<c:url value="/"/>'+'api/cell10/selectUniAdmGradLenStatsResult.do'
-		,type: 'post'
-		,contentType: 'application/json'
-		,data: JSON.stringify( $("#frm").cmSerializeObject())
-		//,data: JSON.stringify(data)
-		,dataType: 'json'
-		,success: function (data) {
-    	var dataList = data.data;
-			if(dataList.length !=0){
-				drawUniLenChart(dataList,rw);
-			}else{
-				ntcNo += 1;
-			}
-    },
-    error: function () {
-  	  errNo += 1;
-    }
-	});
-}
-
-function drawUniLenChart(dataList,rw){
-	var admNm 		= [];		
-	var lenData		= [];
-	var degree		= 90;
-	var rowData		= new Object();
-	var admLen      = [];
-	
-	if(dataList.length < 10){
-		degree = 0;
-	}
-		if(dataList[0].ROAD_GRAD == '국지도'){
-			rowData.name = '국지도';
-			rowData.type = 'bar';
-			rowData.stack = 'bar';
-			
-			for(var i=0; i<dataList.length; i++){
-				if(dataList[i].ROAD_GRAD == '국지도'){
-					admNm.push(dataList[i].ADM_NM);
-					admLen.push(Number(dataList[i].LEN));
-				}
-			}
-			
-	  		rowData.data = admLen;
-			lenData.push(rowData);
-			rowData		= new Object();
-			admLen		= [];
-		}
-		
-		if(dataList[1].ROAD_GRAD == '지방도') {
-			rowData.name = '지방도';
-			rowData.type = 'bar';
-			rowData.stack = 'bar';
-			for(var i=0; i<dataList.length; i++){
-				if(dataList[i].ROAD_GRAD == '지방도'){
-					admLen.push(Number(dataList[i].LEN));
-				}
-			}
-			
-			rowData.data = admLen;
-			lenData.push(rowData);
-			rowData		= new Object();
-			admLen		= [];
-		}
-		
-	require([	'echarts','echarts/chart/bar'	],
-	        function (ec) {
-				 var myChart = ec.init(document.getElementById('lenBarChart'));
-				 myChart.setOption({
-		            	title 	: {	text: '국토부 총연장(km)'	},
-		                tooltip : {	trigger: 'axis'				},
-		                legend: {
-		                    orient : 'vertical',
-		                    x : 'right',
-		                    y : 'center',
-		                    data:['지방도','국지도']
-		                },
-		                toolbox : {	show: true,
-			    			feature: {
-				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
-				    			//saveAsExcel : {show: true},					// 엑셀저장
-				    			saveAsImage: {show: true}					// 이미지저장
-				    		}	
-			    		},
-					    grid :{
-					    	/* width : rw+'px',
-					    	x : 50, */
-					    	y2 : 80
-					    },
-		                xAxis : [{	
-		                			type : 'category',
-				            		axisLabel : {
-				                		show:true,
-				                		interval: 0,
-				                		rotate: degree
-				            		},
-		                			data : admNm
-		                		}],
-		                yAxis : [{	name : 'km',		type : 'value'		}],
-		                series : lenData
-		            });
-				 
-			});
-}
-
-//검색 처리
-function fnAdmGpmsLenSearch(deptCd,strDt,endDt,rw) {
-	
-	$.ajax({
-		 url: '<c:url value="/"/>'+'api/cell10/selectAdmGradLenStatsResult.do'
-		,type: 'post'
-		,contentType: 'application/json'
-		,data: JSON.stringify( $("#frm").cmSerializeObject())
-		//,data: JSON.stringify(data)
-		,dataType: 'json'
-		,success: function (data) {
-    	var dataList = data.data;
-			if(dataList.length !=0){
-				drawDeptGpmsLenChart(dataList,rw);
-			}else{
-				ntcNo += 1;
-			}
-    },
-    error: function () {
-  	  errNo += 1;
-    }
-	});
-}
-
-function drawDeptGpmsLenChart(dataList,rw){
-	var admNm 	= [];		
-	var lenData		= [];
-	var degree		= 90;
-	var rowData		= new Object();
-	var admLen      = [];
-	
-	if(dataList.length < 10){
-		degree = 0;
-	}
-	
-	if(dataList[0].ROAD_GRAD == '국지도'){
-		rowData.name = '국지도';
-		rowData.type = 'bar';
-		rowData.stack = 'bar';
-		
-		for(var i=0; i<dataList.length; i++){
-			if(dataList[i].ROAD_GRAD == '국지도'){
-				admNm.push(dataList[i].ADM_NM);
-				admLen.push(Number(dataList[i].LEN));
-			}
-		}
-		
-  		rowData.data = admLen;
-		lenData.push(rowData);
-		rowData		= new Object();
-		admLen		= [];
-	}
-	
-	if(dataList[1].ROAD_GRAD == '지방도') {
-		rowData.name = '지방도';
-		rowData.type = 'bar';
-		rowData.stack = 'bar';
-		for(var i=0; i<dataList.length; i++){
-			if(dataList[i].ROAD_GRAD == '지방도'){
-				admLen.push(Number(dataList[i].LEN));
-			}
-		}
-		
-		rowData.data = admLen;
-		lenData.push(rowData);
-		rowData		= new Object();
-		admLen		= [];
-	}
-		
-	require([	'echarts','echarts/chart/bar'	],
-	        function (ec) {
-				 var myChart = ec.init(document.getElementById('gpmsLenBarChart'));
-				 myChart.setOption({
-		            	title 	: {	text: 'GPMS 총연장(km)'	},
-		                tooltip : {	trigger: 'axis'				},
-		                legend: {
-		                    orient : 'vertical',
-		                    x : 'right',
-		                    y : 'center',
-		                    data:['지방도','국지도']
-		                },
-		                toolbox : {	show: true,
-			    			feature: {
-				    			//dataView : {show: true, readOnly: false}, 	// 상세조회
-				    			//saveAsExcel : {show: true},					// 엑셀저장
-				    			saveAsImage: {show: true}					// 이미지저장
-				    		}	
-			    		},
-					    grid :{
-					    	/* width : rw+'px',
-					    	x : 50, */
-					    	y2 : 80
-					    },
-		                xAxis : [{	
-		                			type : 'category',
-				            		axisLabel : {
-				                		show:true,
-				                		interval: 0,
-				                		rotate: degree
-				            		},
-		                			data : admNm
-		                		}],
-		                yAxis : [{	name : 'km',		type : 'value'		}],
-		                series : lenData
-		            });
-			});
-}
-
-
-//엑셀 다운로드
-function fnExcel() {
-	if( confirm("엑셀 파일로 저장하시겠습니까?") ) {
-		if(se == "road"){
-			COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/cell10/selectGradLenStatsResultExcel.do'/>", "");
-		}else if(se == "dept"){
-			COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/cell10/selectDeptLenStatsResultExcel.do'/>", "");
-		}else if(se == "track"){
-			COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/cell10/selectTrackLenStatsResultExcel.do'/>", "");
-		}
-	}
-}
-
-//노선변호 String > Integer로 형변환
-function fn_castRouteCode(routeCd){
-	var routeNo = routeCd*1;
-	return routeNo;
-}
+    require([   'echarts','echarts/chart/bar'   ],
+            function (ec) {
+        var myChart = ec.init(document.getElementById('lenBarChart'));
+        myChart.setOption({
+            //color: ['#003366', '#4cabce'], 
+            title  : { text: '총연장(km)' },
+            tooltip : { trigger: 'axis'             },
+            toolbox : { show: true,
+                   feature: {
+                       //dataView : {show: true, readOnly: false},     // 상세조회
+                       //saveAsExcel : {show: true},                   // 엑셀저장
+                       saveAsImage: {show: true}                   // 이미지저장
+                   }   
+            },
+            legend: {
+                data: ['포장구간', '공사구간', '미개통구간']
+            },
+            grid :{
+                /* width : rw+'px',
+                x : 50, */
+                y2 : 100
+            },
+            xAxis : [{  
+                        type : 'category',
+                        axisLabel : {
+                            show:true,
+                            interval: 0,
+                            rotate: degree
+                        },
+                        data : gDeptNm
+                    }],
+            yAxis : [{  name : 'km',        type : 'value'      }],
+            series : [
+                {
+                    name: '포장구간',
+                    type: 'bar',
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: pavData
+                },
+                {
+                    name: '공사구간',
+                    type: 'bar',
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: cntrwkData
+                },
+                {
+                    name: '미개통구간',
+                    type: 'bar',    
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: unopnData
+                }
+            ]
+        });
+        
+   });
+ }
 
 //에러 메시지
 function fn_msgErr(){
@@ -718,38 +204,8 @@ function fn_msgNtc(){
         </div>
         <div id="divStatChart" style="overflow-y:auto;">
 			<ul class="statsbx">
-				<li>
-					<div class="graylinebx p10">
-						<div id="gradLenPieChart" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div>
-					</div>
-					<h4 id='label' style="text-align: center;background:none;">도로등급별 도로연장 통계()</h4>
-				</li>
-				<li>
-					<div class="graylinebx p10">
-						<div id="mRoadLenChart" class="cont_ConBx2"  style="height: 300px; margin-left:20px;"></div>
-					</div>
-					<h4 style="text-align: center;background:none;">도로등급별 도로 연장 통계(당해년도)</h4>
-				</li>
-				<li>
-					<div class="graylinebx p10">
-						<div id="mUniTrackLenChart" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div>
-					</div>
-				</li>
-				<li>
-					<div class="graylinebx p10">
-						<div id="mTrackLenChart" class="cont_ConBx2"  style="height: 300px; margin-left:20px;"></div>
-					</div>
-				</li>
-				<li>
-					<div class="graylinebx p10" style="width:195%;">
-						<div id="lenBarChart" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div>
-					</div>
-				</li>
-				<li style="margin-left: 1px;">
-					<div class="graylinebx p10" style="width:195%;">
-						<div id="gpmsLenBarChart" class="cont_ConBx2"  style="height: 300px; margin-left:20px;"></div>
-					</div>
-				</li>
+
+
 			</ul>
 		</div>	
 	</div>

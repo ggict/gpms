@@ -31,32 +31,23 @@ $( document ).ready(function() {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["시군구","도로등급","총연장(m)","2차로","4차로","6차로","8차로","10차로","총연장(m)","2차로","4차로","6차로","8차로","10차로","중용구간(m)"]
+		,colNames:["시군구","차로","총연장(km)","포장구간","공사구간","미개통현황"]
 	   	,colModel:[
-			{name:'ADM_NM',index:'DEPT_NM', align:'center', width:50, sortable:false,cellattr:jsFormatterCell}
-			,{name:'ROAD_GRAD',index:'SUM_L', align:'center', width:50, sortable:false}
-			,{name:'SUM_L',index:'SUM_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK2_L',index:'TRACK2_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK4_L',index:'TRACK4_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK6_L',index:'TRACK6_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK8_L',index:'TRACK8_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK10_L',index:'TRACK10_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'SUM_LEN',index:'SUM_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK2',index:'TRACK2', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK4',index:'TRACK4', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK6',index:'TRACK6', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK8',index:'TRACK8', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'TRACK10',index:'TRACK10', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'JR_LEN',index:'JR_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			{name:'adm_name',index:'adm_name', align:'center', width:50, sortable:false,cellattr:jsFormatterCell}
+			,{name:'track',index:'track', align:'center', width:50, sortable:false}
+			,{name:'total_l',index:'total_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'sum_l',index:'sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'cntrwk_len',index:'cntrwk_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'unopn_len',index:'unopn_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 	   	]
 		,async : false
-	   	,sortname: 'ADM_NM'
+	   	,sortname: 'adm_name'
 	    ,sortorder: "desc"
 	   	,rowNum: 500
 	   	,rowList: [20,50,100,500]
 	    ,viewrecords: true
 	   	,pager: '#gridPager'
-	    ,rownumbers: true
+	    //,rownumbers: true
 	    ,loadtext: "검색 중입니다."
 		,emptyrecords: "검색된 데이터가 없습니다."
 		,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
@@ -88,8 +79,7 @@ $( document ).ready(function() {
 	$("#gridArea").jqGrid('setGroupHeaders', {
 		useColSpanStyle: true, 
 		groupHeaders:[
-			{startColumnName: 'SUM_L', numberOfColumns: 6, titleText: '국토부('+ nYear +')'}
-			,{startColumnName: 'SUM_LEN', numberOfColumns: 7,  titleText: 'GPMS(당해년도)'}
+			{startColumnName: 'sum_l', numberOfColumns: 3, titleText: '도 관리구간(km)'}
 		]	
 	});
 	
@@ -141,13 +131,12 @@ function changRoutCol(yy){
 	var colModel = $("#gridArea").jqGrid('getGridParam', 'colModel'); 
     $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
                 
-	$("#gridArea").jqGrid('setGroupHeaders', {
-		useColSpanStyle: true, 
-		  groupHeaders:[
-			{startColumnName: 'SUM_L', numberOfColumns: 6, titleText: '국토부('+ nYear +')'}
-			,{startColumnName: 'SUM_LEN', numberOfColumns: 7,  titleText: 'GPMS(당해년도)'}
-		  ]
-	});
+    $("#gridArea").jqGrid('setGroupHeaders', {
+        useColSpanStyle: true, 
+        groupHeaders:[
+            {startColumnName: 'sum_l', numberOfColumns: 3, titleText: '도 관리구간(km)'}
+        ]   
+    });
 }
 
 function fnTrackStatsSearch(sYear){
@@ -156,12 +145,6 @@ function fnTrackStatsSearch(sYear){
 	fnSearch();
 }
 
-//노선번호
-function rotForm(cellValue, options, rowObject) {
-	var rotNo = rowObject.ROUTE_CODE+'호선';
-	return rotNo;
-}
- 
 
 //관리기관 병합
 function jsFormatterCell(rowid, val, rowObject, cm, rdata){
