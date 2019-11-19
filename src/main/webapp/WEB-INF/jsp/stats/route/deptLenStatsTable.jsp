@@ -6,6 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>관리기관별 통계</title>
+<style>
+.ui-jqgrid .ui-jqgrid-bdiv{ overflow-x:auto; }
+</style>
+
 <%@ include file="/include/common_head.jsp" %>
 <script type="text/javascript">
 
@@ -31,25 +35,26 @@ $( document ).ready(function() {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["관리기관","총연장(m)","개통도(m)","미개통도(m)","총연장(m)","국지도","지방도","미개통도(m)"]
+		,colNames:["관리기관","총연장(km)","계","소계","2차로","4차로","6차로","공사구간","미개통구간"]
 	   	,colModel:[
-			{name:'DEPT_NM',index:'DEPT_NM', align:'center', width:60, sortable:false}
-			,{name:'SUM_L',index:'SUM_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'OP_L',index:'OP_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'NOP_L',index:'NOP_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'SUM_LEN',index:'SUM_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'NJR_LEN',index:'NJR_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'JBR_LEN',index:'JBR_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'UNTRACK_LEN',index:'UNTRACK_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			{name:'dept_nm',index:'dept_nm', align:'center', width:60, sortable:false}
+			,{name:'total_l',index:'total_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'sum_l',index:'sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'sub_sum_l',index:'sub_sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'track2_len',index:'track2_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'track4_len',index:'track4_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'track6_len',index:'track6_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'cntrwk_len',index:'cntrwk_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'unopn_len',index:'unopn_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 	   	]
 		,async : false
-	   	,sortname: 'DEPT_NM'
+	   	,sortname: 'dept_nm'
 	    ,sortorder: "desc"
 	   	,rowNum: 50
 	   	,rowList: [20,50,100,500]
 	    ,viewrecords: true
 	   	,pager: '#gridPager'
-	    ,rownumbers: true
+	    //,rownumbers: true
 	    ,loadtext: "검색 중입니다."
 		,emptyrecords: "검색된 데이터가 없습니다."
 		,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
@@ -74,36 +79,31 @@ $( document ).ready(function() {
 	   	}
 		,multiselect: false
 		,multiboxonly: false
+		,footerrow : true
+		,userDataOnFooter: true
 		//,scroll: true
 	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 	
-	$("#gridArea").jqGrid('setGroupHeaders', {
-		useColSpanStyle: true, 
-		groupHeaders:[
-			{startColumnName: 'SUM_L',
-			 numberOfColumns: 3,
-			 titleText: '<table style="width:100%;">'
-			 			 +'<tr><td id="h0" colspan="3">국토부('+ nYear +')</td></tr>'
-			 			 +'<tr><td> </td></tr></table>'}
-			,{startColumnName: 'SUM_LEN', 
-			 numberOfColumns: 4, 
-			 titleText: '<table style="width:100%;">'
-			 			 +'<tr><td id="h0" colspan="3">GPMS(당해년도)</td></tr>'
-			 			 +'<tr><td></td><td id="h1" >중용구간(m)</td><td></td><td></td></tr></table>'
-			}
-		]	
-	});
-	
-	var height = $(parent.window).height() - 250;
-	
-	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
+    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', $('#gridArea').height());
 	
 	fnSearch();
 	
 	$(window).resize(function(){
-		var height = $(parent.window).height() - 250;
-		
-		COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
+		COMMON_UTIL.cmInitGridSize('gridArea','div_grid', $('#gridArea').height());
+	    $('.ui-jqgrid .ui-jqgrid-bdiv').css('overflow-x','hidden');
+	    
+	    $("#gridArea").jqGrid('setGroupHeaders', {
+	        useColSpanStyle: true,
+	                groupHeaders:[
+	                    {startColumnName: 'dept_nm', numberOfColumns: 2, titleText: ''},
+	                    {startColumnName: 'sum_l', numberOfColumns: 7, titleText: '도 관리구간(km)'}
+	                ]   
+	            }).jqGrid('setGroupHeaders', {
+	        useColSpanStyle: true,
+	                groupHeaders:[
+	                    {startColumnName: 'sub_sum_l', numberOfColumns: 4, titleText: '포장구간'}
+	                ]   
+	            })
 	});
 	
 }); 
@@ -121,16 +121,30 @@ function fnSearch() {
 		,mtype: "POST"
 	   	,loadComplete: function(data) {
 	   		
-			var grid = this;
-            
-            $('td[name="cellRowspan"]', grid).each(function() {
+	   		var grid = this;
+	        $('td[name="cellRowspan"]', grid).each(function() {
                 var spans = $('td[rowspanid="'+this.id+'"]',grid).length+1;
                 if(spans>1){
                  $(this).attr('rowspan',spans);
                 }
             });  
+	        
+	        var _this = $('#gridArea');
+	        _this.jqGrid('footerData','set', {
+            	dept_nm: '계', 
+            	total_l: _this.jqGrid('getCol', 'total_l', false, 'sum'),
+            	sum_l: _this.jqGrid('getCol', 'sum_l', false, 'sum'),
+            	sub_sum_l: _this.jqGrid('getCol', 'sub_sum_l', false, 'sum'),
+            	track2_len: _this.jqGrid('getCol', 'track2_len', false, 'sum'),
+            	track4_len: _this.jqGrid('getCol', 'track4_len', false, 'sum'),
+            	track6_len: _this.jqGrid('getCol', 'track6_len', false, 'sum'),
+            	cntrwk_len: _this.jqGrid('getCol', 'cntrwk_len', false, 'sum'),
+            	unopn_len: _this.jqGrid('getCol', 'unopn_len', false, 'sum')
+            }); 
 	   		
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
+	   		
+	   		$(window).trigger('resize');
 	   	}
 	}).trigger("reloadGrid");
 }
@@ -140,22 +154,7 @@ function changRoutCol(yy){
 	var colModel = $("#gridArea").jqGrid('getGridParam', 'colModel'); 
     $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
                 
-	$("#gridArea").jqGrid('setGroupHeaders', {
-		useColSpanStyle: true, 
-		  groupHeaders:[
-			{startColumnName: 'SUM_L',
-			 numberOfColumns: 3,
-			 titleText: '<table style="width:100%;">'
-			 			 +'<tr><td id="h0" colspan="3">국토부('+ nYear +')</td></tr>'
-			 			 +'<tr><td> </td></tr></table>'}
-			,{startColumnName: 'SUM_LEN', 
-			 numberOfColumns: 4, 
-			 titleText: '<table style="width:100%;">'
-			 			 +'<tr><td id="h0" colspan="3">GPMS(당해년도)</td></tr>'
-			 			 +'<tr><td></td><td id="h1" >중용구간(m)</td><td></td><td></td></tr></table>'
-			}
-		  ]
-	});
+
 }
 
 function fnDeptStatsSearch(sYear){
@@ -166,18 +165,7 @@ function fnDeptStatsSearch(sYear){
 
 //관리기관 병합
  function jsFormatterCell(rowid, val, rowObject, cm, rdata){
-    var result = "";
-     
-    if(chkcell.chkval != val){ //check 값이랑 비교값이 다른 경우
-        var cellId = this.id + '_row_'+rowid+'-'+cm.name;
-        result = ' rowspan="1" id ="'+cellId+'" + name="cellRowspan"';
-        //alert(result);
-        chkcell = {cellId:cellId, chkval:val};
-    }else{
-        result = 'style="display:none"  rowspanid="'+chkcell.cellId+'"'; //같을 경우 display none 처리
-        //alert(result);
-    }
-    return result;
+
 }
  
 //엑셀 다운로드
@@ -210,8 +198,8 @@ function fnExcel() {
 	</div>
 	<div class="cont_ListBx">
 		<div class="btnbx mb10">
-          	<a href="#" class="schbtn" onclick="location.replace('<c:url value="selectDeptLenStats.do"/>');">그래프보기</a>
-          	<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
+          	<a href="javascript:;" class="schbtn" onclick="location.replace('<c:url value="selectDeptLenStats.do"/>');">그래프보기</a>
+          	<a href="javascript:;" class="schbtn" onclick="fnExcel();">엑셀저장</a>
         </div>
 		<div id="div_grid" >
 			<table class="adminlist" id="gridArea"></table>

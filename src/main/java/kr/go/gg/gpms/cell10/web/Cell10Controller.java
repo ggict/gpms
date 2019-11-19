@@ -1114,67 +1114,67 @@ public class Cell10Controller extends BaseController {
 
          objRow = objSheet.createRow(0);
          objCell = objRow.createCell(0);
-         objCell.setCellValue("관리기관");
+         objCell.setCellValue("관리구간");
          objSheet.addMergedRegion(new Region(0,(short)0,2,(short)0));
          objSheet.setColumnWidth(0, objSheet.getColumnWidth(0)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(1);
-         objCell.setCellValue("국토부(2016)");
-         objSheet.addMergedRegion(new Region(0,(short)1,0,(short)3));
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(4);
-         objCell.setCellValue("GPMS("+calendar.get(calendar.YEAR)+")");
-         objSheet.addMergedRegion(new Region(0,(short)4,0,(short)7));
-         objCell.setCellStyle(styleHd1);
-
-         objRow = objSheet.createRow(1);
-         objCell = objRow.createCell(1);
-         objCell.setCellValue("총연장(m)");
-         objSheet.addMergedRegion(new Region(1,(short)1,2,(short)1));
-         objSheet.setColumnWidth(1, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("총연장(km)");
+         objSheet.addMergedRegion(new Region(0,(short)1,2,(short)1));
+         objSheet.setColumnWidth(1, objSheet.getColumnWidth(1)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(2);
-         objCell.setCellValue("개통도(m)");
+         objCell.setCellValue("도 관리구간(km)");
+         objSheet.addMergedRegion(new Region(0,(short)2,0,(short)8));
+         objSheet.setColumnWidth(2, objSheet.getColumnWidth(7)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objRow = objSheet.createRow(1);
+         objCell = objRow.createCell(2);
+         objCell.setCellValue("계");
          objSheet.addMergedRegion(new Region(1,(short)2,2,(short)2));
-         objSheet.setColumnWidth(2, objSheet.getColumnWidth(0)+4096);
+         objSheet.setColumnWidth(2, objSheet.getColumnWidth(1)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(3);
-         objCell.setCellValue("미개통도(m)");
-         objSheet.addMergedRegion(new Region(1,(short)3,2,(short)3));
-         objSheet.setColumnWidth(3, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(4);
-         objCell.setCellValue("총연장(m)");
-         objSheet.addMergedRegion(new Region(1,(short)4,2,(short)4));
-         objSheet.setColumnWidth(4, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(5);
-         objCell.setCellValue("중용구간(m)");
-         objSheet.addMergedRegion(new Region(1,(short)5,1,(short)6));
-         objSheet.setColumnWidth(5, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("포장구간");
+         objSheet.addMergedRegion(new Region(1,(short)3,1,(short)6));
+         objSheet.setColumnWidth(3, objSheet.getColumnWidth(4)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(7);
-         objCell.setCellValue("미개설구간(m)");
+         objCell.setCellValue("공사구간");
          objSheet.addMergedRegion(new Region(1,(short)7,2,(short)7));
-         objSheet.setColumnWidth(7, objSheet.getColumnWidth(0)+4096);
+         objSheet.setColumnWidth(7, objSheet.getColumnWidth(1)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objCell = objRow.createCell(8);
+         objCell.setCellValue("미개통구간");
+         objSheet.addMergedRegion(new Region(1,(short)8,2,(short)8));
+         objSheet.setColumnWidth(8, objSheet.getColumnWidth(1)+4096);
          objCell.setCellStyle(styleHd1);
 
          objRow = objSheet.createRow(2);
-         objCell = objRow.createCell(5);
-         objCell.setCellValue("국지도");
-         objSheet.setColumnWidth(5, objSheet.getColumnWidth(0)+4096);
+         objCell = objRow.createCell(3);
+         objCell.setCellValue("소계");
+         objSheet.setColumnWidth(3, objSheet.getColumnWidth(1)+4096);
          objCell.setCellStyle(styleHd1);
 
+         objCell = objRow.createCell(4);
+         objCell.setCellValue("2차로");
+         objSheet.setColumnWidth(4, objSheet.getColumnWidth(1)+4096);
+         objCell.setCellStyle(styleHd1);
+         
+         objCell = objRow.createCell(5);
+         objCell.setCellValue("4차로");
+         objSheet.setColumnWidth(5, objSheet.getColumnWidth(1)+4096);
+         objCell.setCellStyle(styleHd1);
+         
          objCell = objRow.createCell(6);
-         objCell.setCellValue("지방도");
-         objSheet.setColumnWidth(6, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("6차로");
+         objSheet.setColumnWidth(6, objSheet.getColumnWidth(1)+4096);
          objCell.setCellStyle(styleHd1);
 
          result = cell10Service.selectDeptStatsPageListExcel(cell10VO);//관리기관별 연장 목록
@@ -1185,36 +1185,45 @@ public class Cell10Controller extends BaseController {
         	 tempMap = (HashMap) result.get(i);
 
         	 objRow = objSheet.createRow(iRow++);
+        	 
     		 objCell = objRow.createCell(0);
-    		 objCell.setCellValue(tempMap.get("dept_nm").toString());
+    		 if (i == result.size()-1) {
+    			 objCell.setCellValue("경기도 건설 본부 전체");
+    		 } else {
+    			 objCell.setCellValue(tempMap.get("dept_nm").toString());
+    		 }
     		 objCell.setCellStyle(styleHd1);
 
              objCell = objRow.createCell(1);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("total_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(2);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("op_l")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("nop_l")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sub_sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track2_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("njr_len")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track4_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jbr_len")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track6_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("untrack_len")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("cntrwk_len")));
+             objCell.setCellStyle(styleHd);
+             
+             objCell = objRow.createCell(8);
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("unopn_len")));
              objCell.setCellStyle(styleHd);
          }
 

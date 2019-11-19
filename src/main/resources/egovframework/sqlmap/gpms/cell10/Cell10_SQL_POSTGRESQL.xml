@@ -562,17 +562,59 @@
         ]]>
     </select>
 
-    <select id="cell10DAO.selectDeptLenStatsResult" parameterClass="cell10VO" resultClass="cell10VO">
+    <select id="cell10DAO.selectDeptLenStatsResult" parameterClass="cell10VO" resultClass="hashmap">
         <![CDATA[
             /* cell10DAO.selectDeptLenStatsResult */
-            /* 통계 > 노선현황 > 관리기관별 통계 목록을 조회한다 */
-               SELECT cell10.DEPT_CODE,
-                    ( SELECT LOWEST_DEPT_NM FROM TC_DEPT tcdept WHERE tcdept.DEPT_CODE = cell10.DEPT_CODE::text) AS DEPT_NM,
-                     SUM(ROAD_L) /1000 AS LEN
-               FROM CELL_10 cell10
-              WHERE 1 = 1
-                AND cell10.DEPT_CODE::text IN('6411399', '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
-              GROUP BY cell10.DEPT_CODE
+            /* 통계 > 노선현황 > 관리기관별 통계 그래프를 조회한다 */
+            SELECT
+                DEPT.DEPT_NM,
+                SUM((coalesce(C10B.ROAD_LEN, 0)*1.0 / 1000)) AS TOTAL_L,
+                SUM((coalesce(C10A.TRACK2 + C10A.TRACK4 + C10A.TRACK6 + C10A.TRACK8 + C10A.TRACK10 + C10A.TRACK10 + C10B.UNTRACK_LEN + C10B.CNTRWK_LEN, 0)*1.0 / 1000)) AS SUM_L,
+                SUM((coalesce(C10A.TRACK2 + C10A.TRACK4 + C10A.TRACK6 + C10A.TRACK8 + C10A.TRACK10 + C10A.TRACK10, 0)*1.0 / 1000)) AS SUB_SUM_L,
+                SUM((coalesce(C10A.TRACK2, 0)*1.0 / 1000)) AS TRACK2_LEN,
+                SUM((coalesce(C10A.TRACK4, 0)*1.0 / 1000)) AS TRACK4_LEN,
+                SUM((coalesce(C10A.TRACK6, 0)*1.0 / 1000)) AS TRACK6_LEN,
+                SUM((coalesce(C10B.CNTRWK_LEN, 0)*1.0 / 1000)) AS CNTRWK_LEN,
+                SUM((coalesce(C10B.UNTRACK_LEN, 0)*1.0 / 1000)) AS UNOPN_LEN
+            FROM
+                ( SELECT
+                    DEPT_CODE::int AS DEPT_CODE,
+                    LOWEST_DEPT_NM AS DEPT_NM
+                FROM TC_DEPT
+                WHERE DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                ) DEPT
+                LEFT OUTER JOIN
+                ( SELECT
+                    CELL10.DEPT_CODE AS DEPT_CODE,
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    sum(CASE CELL10.TRACK WHEN '1' THEN ROAD_L ELSE 0 END)::int AS TRACK2,
+                    sum(CASE CELL10.TRACK WHEN '3' THEN ROAD_L ELSE 0 END)::int AS TRACK4,
+                    sum(CASE CELL10.TRACK WHEN '5' THEN ROAD_L ELSE 0 END)::int AS TRACK6,
+                    sum(0) AS TRACK8,
+                    sum(0) AS TRACK10
+                    /*CASE CELL10.TRACK WHEN '7' THEN ROAD_L ELSE 0 END AS TRACK8,
+                    CASE CELL10.TRACK WHEN '9' THEN ROAD_L ELSE 0 END AS TRACK10 */
+                FROM CELL_10 CELL10
+                WHERE ( CELL10.CNTRWK_AT IS NULL OR CELL10.CNTRWK_AT = 'N' )
+                    AND ( CELL10.UNOPN_AT IS NULL OR CELL10.UNOPN_AT = 'N' )
+                    AND CELL10.DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                GROUP BY DEPT_CODE, ROUTE_CODE
+                ) C10A
+                ON DEPT.DEPT_CODE = C10A.DEPT_CODE
+                LEFT OUTER JOIN
+                ( SELECT
+                    CELL10.DEPT_CODE AS DEPT_CODE,
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    sum(CELL10.ROAD_L)::int AS ROAD_LEN,
+                    sum(CASE WHEN CELL10.CELL_TYPE = 'CELT0013' THEN CELL10.ROAD_L WHEN UNOPN_AT = 'Y' THEN ROAD_L ELSE 0 END)::int AS UNTRACK_LEN,
+                    sum(CASE CELL10.CNTRWK_AT WHEN 'Y' THEN ROAD_L ELSE 0 END)::int AS CNTRWK_LEN
+                FROM  CELL_10 CELL10
+                WHERE CELL10.DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                GROUP BY DEPT_CODE, ROUTE_CODE
+                ) C10B
+                ON DEPT.DEPT_CODE = C10B.DEPT_CODE
+            GROUP BY DEPT_NM
+            ORDER BY DEPT_NM desc
         ]]>
     </select>
 
@@ -1033,75 +1075,59 @@
     ]]>
 </select>
 
-    <select id="cell10DAO.selectDeptStatsPageList"  parameterClass="cell10VO" resultClass="cell10VO">
+    <select id="cell10DAO.selectDeptStatsPageList"  parameterClass="cell10VO" resultClass="hashmap">
     <![CDATA[
             /* cell10DAO.selectDeptStatsPageList */
             /* 통계 > 노선현황 > 관리기관별 통계 목록을 조회한다. */
-              SELECT *
-               FROM ( SELECT C10A.DEPT_NM,
-                             0 AS SUM_L,
-                             0 AS OP_L,
-                             0 AS NOP_L,
-                             COALESCE(C10A.SUM_LEN,0) AS SUM_LEN,
-                             COALESCE(NJR.NJR_LEN,0) AS NJR_LEN,
-                             COALESCE(JBR.JBR_LEN,0) AS JBR_LEN,
-                             COALESCE(C10B.UNTRACK_LEN,0) AS UNTRACK_LEN
-                        FROM ( SELECT CELL10A.DEPT_CODE,
-                                      ( SELECT LOWEST_DEPT_NM
-                                           FROM TC_DEPT TCDEPT
-                                          WHERE TCDEPT.DEPT_CODE::int = CELL10A.DEPT_CODE) AS DEPT_NM,
-                                      SUM(ROAD_L) AS SUM_LEN
-                                 FROM CELL_10 CELL10A
-                                WHERE CELL10A.DEPT_CODE IN('6411399',
-                                      '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
-                                GROUP BY CELL10A.DEPT_CODE) C10A,
-                             ( SELECT 0 AS NJR_LEN
-                                  ) NJR,/*GPMS 중용구간 국지도*/
-                             ( SELECT 0 AS JBR_LEN
-                                  ) JBR,/*GPMS 중용구간 지방도*/
-                             ( SELECT CELL10B.DEPT_CODE,
-                                       SUM(ROAD_L) AS UNTRACK_LEN
-                                  FROM CELL_10 CELL10B
-                                 WHERE CELL10B.DEPT_CODE IN('6411399',
-                                       '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
-                                   AND CELL10B.CELL_TYPE = 'CELT0013'
-                                 GROUP BY CELL10B.DEPT_CODE) C10B
-                       WHERE C10A.DEPT_CODE = C10B.DEPT_CODE
-                       ORDER BY C10A.DEPT_NM DESC ) AS SUB_DEPT
-                       
-              UNION ALL
-              
-             SELECT '경기도 건설 본부 전체' AS DEPT_NM,
-                    COALESCE(SUM(UNI.SUM_L),0) AS SUM_L,
-                    COALESCE(SUM(UNI.OP_L),0) AS OP_L,
-                    COALESCE(SUM(UNI.NOP_L),0) AS NOP_L,
-                    COALESCE(SUM(C10A.SUM_LEN),0) AS SUM_LEN,
-                    COALESCE(SUM(NJR.NJR_LEN),0) AS NJR_LEN,
-                    COALESCE(SUM(JBR.JBR_LEN),0) AS JBR_LEN,
-                    COALESCE(SUM(C10B.UNTRACK_LEN),0) AS UNTRACK_LEN
-               FROM ( SELECT MGN_CODE,
-                             SUM_L,
-                             OP_L,
-                             NOP_L
-                        FROM UNI_MGN_ST UNIMGNST
-                       WHERE UNIMGNST.MGN_CODE = '6411000'
-    ]]>
-            <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
-    <![CDATA[
-                       ) UNI,
-                    ( SELECT SUM(ROAD_L) AS SUM_LEN
-                         FROM CELL_10 CELL10A
-                        WHERE CELL10A.DEPT_CODE IN('6411399',
-                              '6411799') /* 6411399:도로건설과/6411799:북부도로과 */ ) C10A,
-                    ( SELECT 0 AS NJR_LEN
-                         ) NJR,/*GPMS 중용구간 국지도*/
-                    ( SELECT 0 AS JBR_LEN
-                         ) JBR,/*GPMS 중용구간 지방도*/
-                    ( SELECT SUM(ROAD_L) AS UNTRACK_LEN
-                         FROM CELL_10 CELL10B
-                        WHERE CELL10B.DEPT_CODE IN('6411399',
-                              '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
-                          AND CELL10B.CELL_TYPE = 'CELT0013') C10B
+            SELECT
+                DEPT.DEPT_NM,
+                SUM((coalesce(C10B.ROAD_LEN, 0)*1.0 / 1000)) AS TOTAL_L,
+                SUM((coalesce(C10A.TRACK2 + C10A.TRACK4 + C10A.TRACK6 + C10A.TRACK8 + C10A.TRACK10 + C10A.TRACK10 + C10B.UNTRACK_LEN + C10B.CNTRWK_LEN, 0)*1.0 / 1000)) AS SUM_L,
+                SUM((coalesce(C10A.TRACK2 + C10A.TRACK4 + C10A.TRACK6 + C10A.TRACK8 + C10A.TRACK10 + C10A.TRACK10, 0)*1.0 / 1000)) AS SUB_SUM_L,
+                SUM((coalesce(C10A.TRACK2, 0)*1.0 / 1000)) AS TRACK2_LEN,
+                SUM((coalesce(C10A.TRACK4, 0)*1.0 / 1000)) AS TRACK4_LEN,
+                SUM((coalesce(C10A.TRACK6, 0)*1.0 / 1000)) AS TRACK6_LEN,
+                SUM((coalesce(C10B.CNTRWK_LEN, 0)*1.0 / 1000)) AS CNTRWK_LEN,
+                SUM((coalesce(C10B.UNTRACK_LEN, 0)*1.0 / 1000)) AS UNOPN_LEN
+            FROM
+                ( SELECT
+                    DEPT_CODE::int AS DEPT_CODE,
+                    LOWEST_DEPT_NM AS DEPT_NM
+                FROM TC_DEPT
+                WHERE DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                ) DEPT
+                LEFT OUTER JOIN
+                ( SELECT
+                    CELL10.DEPT_CODE AS DEPT_CODE,
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    sum(CASE CELL10.TRACK WHEN '1' THEN ROAD_L ELSE 0 END)::int AS TRACK2,
+                    sum(CASE CELL10.TRACK WHEN '3' THEN ROAD_L ELSE 0 END)::int AS TRACK4,
+                    sum(CASE CELL10.TRACK WHEN '5' THEN ROAD_L ELSE 0 END)::int AS TRACK6,
+                    sum(0) AS TRACK8,
+                    sum(0) AS TRACK10
+                    /*CASE CELL10.TRACK WHEN '7' THEN ROAD_L ELSE 0 END AS TRACK8,
+                    CASE CELL10.TRACK WHEN '9' THEN ROAD_L ELSE 0 END AS TRACK10 */
+                FROM CELL_10 CELL10
+                WHERE ( CELL10.CNTRWK_AT IS NULL OR CELL10.CNTRWK_AT = 'N' )
+                    AND ( CELL10.UNOPN_AT IS NULL OR CELL10.UNOPN_AT = 'N' )
+                    AND CELL10.DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                GROUP BY DEPT_CODE, ROUTE_CODE
+                ) C10A
+                ON DEPT.DEPT_CODE = C10A.DEPT_CODE
+                LEFT OUTER JOIN
+                ( SELECT
+                    CELL10.DEPT_CODE AS DEPT_CODE,
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    sum(CELL10.ROAD_L)::int AS ROAD_LEN,
+                    sum(CASE WHEN CELL10.CELL_TYPE = 'CELT0013' THEN CELL10.ROAD_L WHEN UNOPN_AT = 'Y' THEN ROAD_L ELSE 0 END)::int AS UNTRACK_LEN,
+                    sum(CASE CELL10.CNTRWK_AT WHEN 'Y' THEN ROAD_L ELSE 0 END)::int AS CNTRWK_LEN
+                FROM  CELL_10 CELL10
+                WHERE CELL10.DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                GROUP BY DEPT_CODE, ROUTE_CODE
+                ) C10B
+                ON DEPT.DEPT_CODE = C10B.DEPT_CODE
+            GROUP BY DEPT_NM
+            ORDER BY DEPT_NM desc
         ]]>
         </select>
 
@@ -1109,71 +1135,55 @@
     <![CDATA[
         /* cell10DAO.selectDeptStatsPageListExcel */
         /* 통계 > 노선현황 > 관리기관별 통계 엑셀 목록을 조회한다. */
-        SELECT *
-               FROM ( SELECT C10A.DEPT_NM,
-                             0 AS SUM_L,
-                             0 AS OP_L,
-                             0 AS NOP_L,
-                             COALESCE(C10A.SUM_LEN,0) AS SUM_LEN,
-                             COALESCE(NJR.NJR_LEN,0) AS NJR_LEN,
-                             COALESCE(JBR.JBR_LEN,0) AS JBR_LEN,
-                             COALESCE(C10B.UNTRACK_LEN,0) AS UNTRACK_LEN
-                        FROM ( SELECT CELL10A.DEPT_CODE,
-                                      ( SELECT LOWEST_DEPT_NM
-                                           FROM TC_DEPT TCDEPT
-                                          WHERE TCDEPT.DEPT_CODE::int = CELL10A.DEPT_CODE) AS DEPT_NM,
-                                      SUM(ROAD_L) AS SUM_LEN
-                                 FROM CELL_10 CELL10A
-                                WHERE CELL10A.DEPT_CODE IN('6411399',
-                                      '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
-                                GROUP BY CELL10A.DEPT_CODE) C10A,
-                             ( SELECT 0 AS NJR_LEN
-                                  ) NJR,/*GPMS 중용구간 국지도*/
-                             ( SELECT 0 AS JBR_LEN
-                                  ) JBR,/*GPMS 중용구간 지방도*/
-                             ( SELECT CELL10B.DEPT_CODE,
-                                       SUM(ROAD_L) AS UNTRACK_LEN
-                                  FROM CELL_10 CELL10B
-                                 WHERE CELL10B.DEPT_CODE IN('6411399',
-                                       '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
-                                   AND CELL10B.CELL_TYPE = 'CELT0013'
-                                 GROUP BY CELL10B.DEPT_CODE) C10B
-                       WHERE C10A.DEPT_CODE = C10B.DEPT_CODE
-                       ORDER BY C10A.DEPT_NM DESC ) AS SUB_DEPT
-                       
-              UNION ALL
-              
-             SELECT '경기도 건설 본부 전체' AS DEPT_NM,
-                    COALESCE(SUM(UNI.SUM_L),0) AS SUM_L,
-                    COALESCE(SUM(UNI.OP_L),0) AS OP_L,
-                    COALESCE(SUM(UNI.NOP_L),0) AS NOP_L,
-                    COALESCE(SUM(C10A.SUM_LEN),0) AS SUM_LEN,
-                    COALESCE(SUM(NJR.NJR_LEN),0) AS NJR_LEN,
-                    COALESCE(SUM(JBR.JBR_LEN),0) AS JBR_LEN,
-                    COALESCE(SUM(C10B.UNTRACK_LEN),0) AS UNTRACK_LEN
-               FROM ( SELECT MGN_CODE,
-                             SUM_L,
-                             OP_L,
-                             NOP_L
-                        FROM UNI_MGN_ST UNIMGNST
-                       WHERE UNIMGNST.MGN_CODE = '6411000'
-            ]]>
-                <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
-            <![CDATA[
-                       ) UNI,
-                    ( SELECT SUM(ROAD_L) AS SUM_LEN
-                         FROM CELL_10 CELL10A
-                        WHERE CELL10A.DEPT_CODE IN('6411399',
-                              '6411799') /* 6411399:도로건설과/6411799:북부도로과 */ ) C10A,
-                    ( SELECT 0 AS NJR_LEN
-                         ) NJR,/*GPMS 중용구간 국지도*/
-                    ( SELECT 0 AS JBR_LEN
-                         ) JBR,/*GPMS 중용구간 지방도*/
-                    ( SELECT SUM(ROAD_L) AS UNTRACK_LEN
-                         FROM CELL_10 CELL10B
-                        WHERE CELL10B.DEPT_CODE IN('6411399',
-                              '6411799') /* 6411399:도로건설과/6411799:북부도로과 */
-                          AND CELL10B.CELL_TYPE = 'CELT0013') C10B
+            SELECT
+                DEPT.DEPT_NM,
+                SUM((coalesce(C10B.ROAD_LEN, 0)*1.0 / 1000)) AS TOTAL_L,
+                SUM((coalesce(C10A.TRACK2 + C10A.TRACK4 + C10A.TRACK6 + C10A.TRACK8 + C10A.TRACK10 + C10A.TRACK10 + C10B.UNTRACK_LEN + C10B.CNTRWK_LEN, 0)*1.0 / 1000)) AS SUM_L,
+                SUM((coalesce(C10A.TRACK2 + C10A.TRACK4 + C10A.TRACK6 + C10A.TRACK8 + C10A.TRACK10 + C10A.TRACK10, 0)*1.0 / 1000)) AS SUB_SUM_L,
+                SUM((coalesce(C10A.TRACK2, 0)*1.0 / 1000)) AS TRACK2_LEN,
+                SUM((coalesce(C10A.TRACK4, 0)*1.0 / 1000)) AS TRACK4_LEN,
+                SUM((coalesce(C10A.TRACK6, 0)*1.0 / 1000)) AS TRACK6_LEN,
+                SUM((coalesce(C10B.CNTRWK_LEN, 0)*1.0 / 1000)) AS CNTRWK_LEN,
+                SUM((coalesce(C10B.UNTRACK_LEN, 0)*1.0 / 1000)) AS UNOPN_LEN
+            FROM
+                ( SELECT
+                    DEPT_CODE::int AS DEPT_CODE,
+                    LOWEST_DEPT_NM AS DEPT_NM
+                FROM TC_DEPT
+                WHERE DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                ) DEPT
+                LEFT OUTER JOIN
+                ( SELECT
+                    CELL10.DEPT_CODE AS DEPT_CODE,
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    sum(CASE CELL10.TRACK WHEN '1' THEN ROAD_L ELSE 0 END)::int AS TRACK2,
+                    sum(CASE CELL10.TRACK WHEN '3' THEN ROAD_L ELSE 0 END)::int AS TRACK4,
+                    sum(CASE CELL10.TRACK WHEN '5' THEN ROAD_L ELSE 0 END)::int AS TRACK6,
+                    sum(0) AS TRACK8,
+                    sum(0) AS TRACK10
+                    /*CASE CELL10.TRACK WHEN '7' THEN ROAD_L ELSE 0 END AS TRACK8,
+                    CASE CELL10.TRACK WHEN '9' THEN ROAD_L ELSE 0 END AS TRACK10 */
+                FROM CELL_10 CELL10
+                WHERE ( CELL10.CNTRWK_AT IS NULL OR CELL10.CNTRWK_AT = 'N' )
+                    AND ( CELL10.UNOPN_AT IS NULL OR CELL10.UNOPN_AT = 'N' )
+                    AND CELL10.DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                GROUP BY DEPT_CODE, ROUTE_CODE
+                ) C10A
+                ON DEPT.DEPT_CODE = C10A.DEPT_CODE
+                LEFT OUTER JOIN
+                ( SELECT
+                    CELL10.DEPT_CODE AS DEPT_CODE,
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    sum(CELL10.ROAD_L)::int AS ROAD_LEN,
+                    sum(CASE WHEN CELL10.CELL_TYPE = 'CELT0013' THEN CELL10.ROAD_L WHEN UNOPN_AT = 'Y' THEN ROAD_L ELSE 0 END)::int AS UNTRACK_LEN,
+                    sum(CASE CELL10.CNTRWK_AT WHEN 'Y' THEN ROAD_L ELSE 0 END)::int AS CNTRWK_LEN
+                FROM  CELL_10 CELL10
+                WHERE CELL10.DEPT_CODE IN ('6411399','6411799')  /* 6411399:도로건설과/6411799:북부도로과 */
+                GROUP BY DEPT_CODE, ROUTE_CODE
+                ) C10B
+                ON DEPT.DEPT_CODE = C10B.DEPT_CODE
+            GROUP BY rollup(dept_nm)
+            ORDER BY DEPT_NM desc nulls last
     ]]>
 </select>
 
