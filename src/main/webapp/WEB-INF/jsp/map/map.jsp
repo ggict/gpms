@@ -346,8 +346,8 @@ var layersMngObj = {
 			var layernm = obj.find('p').attr('data-layer');
 			var baseLayer = gMap.getLayerByName("baseLayer");
 			var params = baseLayer.getParams();
-			var layers = params.LAYERS.split(',');
-			var relayers = [];
+			var layers = (params.LAYERS) ? params.LAYERS.split(',') : [];
+			
 			if(obj.hasClass('active')){
 				obj.removeClass('active');
 				if(layers.indexOf(layernm) > -1){
@@ -360,18 +360,11 @@ var layersMngObj = {
 					layers.push(layernm);
 				}
 			}
-
-			for(var i=0; i<layers.length; i++){
-				var layer = layers[i];
-				if(layer){
-					relayers.push(layer);
-				}
-			}
 			
-			if(relayers.length == 0) baseLayer.setVisibility(false);
+			if(layers.length == 0) baseLayer.setVisibility(false);
 			else baseLayer.setVisibility(true);
 			baseLayer.mergeNewParams({
-				LAYERS: relayers.join()
+				LAYERS: layers.join()
 				,STYLES: ''
 			});
 
