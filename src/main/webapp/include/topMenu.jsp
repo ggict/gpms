@@ -26,7 +26,7 @@
                         </ul>
                     </li>
                     <li class="b00">
-                        <a href="#none" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/menu/selectUserMenuList.do"/>')"><span>스템메뉴 관리</span></a>
+                        <a href="#none" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/menu/selectUserMenuList.do"/>')"><span>시스템메뉴 관리</span></a>
                         <ul>
                             <li class="s10">
                                 <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/menu/selectUserMenuList.do"/>')">시스템메뉴 관리</a>
@@ -40,6 +40,12 @@
                         <a href="#none" <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')"><span>코드정보관리</span></a>
                         <ul>
                             <li class="s10" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/clcode/codeList.do"/>')"><a href="#none">코드정보관리</a></li>
+                        </ul>
+                    </li>
+                    <li class="c00">
+                        <a href="#none" <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/notice/selectNoticeList.do"/>')"><span>공지사항관리</span></a>
+                        <ul>
+                            <li class="s10" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/notice/selectNoticeList.do"/>')"><a href="#none">공지사항관리</a></li>
                         </ul>
                     </li>
                     <li class="d00">
@@ -71,7 +77,7 @@
             </span>
             
         </div>
-    </header>   
+    </header>    
         <!-- ADMIN TOP MENU END -->
     </c:when>
 
