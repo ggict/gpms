@@ -1185,12 +1185,12 @@
                 /* cell10DAO.selectTrackLenStatsResult */
                 /* 통계 > 노선현황 > 차로별 GPMS 총연장 통계*/
             SELECT 
-                N3A.ADM_NAME,
-                CASE TRK.TRACK WHEN '1' THEN '2차로' WHEN '3' THEN '4차로' WHEN '5' THEN '6차로' ELSE '' END AS TRACK,
-                (coalesce(C10B.ROAD_LEN, 0)*1.0 / 1000) AS TOTAL_L,
-                (coalesce(C10A.PAV_LEN, 0)*1.0 / 1000) AS SUM_L,
-                (coalesce(C10B.CNTRWK_LEN, 0)*1.0 / 1000) AS CNTRWK_LEN,
-                (coalesce(C10B.UNTRACK_LEN, 0)*1.0 / 1000) AS UNOPN_LEN
+                N3A.ADM_NAME as adm_nm,
+                CASE TRK.TRACK WHEN '1' THEN '2차로' WHEN '3' THEN '4차로' WHEN '5' THEN '6차로' ELSE '' END AS track,
+                (coalesce(C10B.ROAD_LEN, 0)*1.0 / 1000) AS total_l,
+                (coalesce(C10A.PAV_LEN, 0)*1.0 / 1000) AS sum_l,
+                (coalesce(C10B.CNTRWK_LEN, 0)*1.0 / 1000) AS cntrwk_len,
+                (coalesce(C10B.UNTRACK_LEN, 0)*1.0 / 1000) AS unopn_len
             FROM
                 ( SELECT 
                     SUBSTR(BJCD, 1, 5) AS ADM_CODE,
