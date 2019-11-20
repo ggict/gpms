@@ -16,51 +16,76 @@
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
 <div class="tabcont">
-	<div class="fl bgsch">
-	    <h3>검색조건</h3>
-	    <div class="schbx mt10">
-	        <ul class="sch">
-	            <li class="wid100">
-	                <label>도로등급</label>
-	                <select id="ROAD_GRAD" name="ROAD_GRAD" alt="도로등급" onchange="fn_change_roadNo();" class="input" style="width:100px;">
-	                	<option value="">== 전체 ==</option>
-		        		<c:forEach items="${roadGradList }" var="roadGrad">
-		        			<option value="${roadGrad.CODE_VAL }">${roadGrad.CODE_NM }</option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li class="wid100">
-	                <label>노선번호</label>
-	                <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input" style="width:100px;">
-		                <option value="">== 전체 ==</option>
-		        		<c:forEach items="${roadNoList }" var="roadNo">
-		        			<option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li>
-	                <label>노선명</label>
-	                <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" style="width:197px;" class="MX_80 CS_50 input" />
-	            </li>
-	            <li class="wid100" style="margin-top: 10px;">
-	                <a href="#" class="schbtn dpb" onclick="javascript:fn_search();">검색</a>
-	            </li>
-	        </ul>
-	    </div>
-	</div>
-	<div class="fr listbx">
-	    <h3>노선 데이터로 검색</h3>
-	    <p class="location">
-	        <span>노선검색</span>
-	        <strong>노선 데이터로 검색</strong>
-	    </p>
-	    <div class="mt10 ml10 mr10">
-            <div id="div_grid" style="width:100%; height:206px;">
-				<table id="gridArea"></table>
-				<div id="gridPager"></div>
-			</div>
+
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">노선검색</option>
+                </select>
+                <select name="">
+                    <option value="">데이터로검색</option>
+                </select>
+                <h2 class="h2">포장상태평가정보</h2>
+            </span>
         </div>
+    </header>
+    
+    <div class="contents container">
+    
+    	<article class="div3">
+    		<h3 class="h3">검색조건</h3>
+    		<div class="table">
+    			<table>
+    				<tbody>
+    				<tr>
+    					<td class="th"><label for="ROAD_GRAD">도로등급</labed>
+	                </th>
+    					<td>
+                             <select id="ROAD_GRAD" name="ROAD_GRAD" alt="도로등급" onchange="fn_change_roadNo();" class="input" style="width:100px;">
+                                <option value="">== 전체 ==</option>
+                                <c:forEach items="${roadGradList }" var="roadGrad">
+                                    <option value="${roadGrad.CODE_VAL }">${roadGrad.CODE_NM }</option>
+                                </c:forEach>
+                             </select>               
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="ROAD_NO">노선번호</label></td>
+    					<td>
+                             <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input" style="width:100px;">
+                                <option value="">== 전체 ==</option>
+                                <c:forEach items="${roadNoList }" var="roadNo">
+                                    <option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
+                                </c:forEach>
+                             </select>               
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="ROAD_NAME">노선명</label></td>
+    					<td>
+                            <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="">
+                        </td>
+    				</tr>
+    				</tbody>	
+    			</table>
+                <div class="btnArea">
+                    <button class="btn pri" onclick="javascript:fn_search();">검색</button>
+                </div>
+    		</div>
+    	</article>
+    	
+    	<article class="div9">
+    		<h3 class="h3">노선데이터로 검색</h3>
+    		<div id="div_grid" class="table">
+				<table id="gridArea"></table>				
+			</div>
+			<div id="gridPager"></div>
+        </div>
+    	</article>
+    	
     </div>
+
 </div>
 
 </form>
@@ -150,7 +175,7 @@ $( document ).ready(function() {
     }).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 
     // 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
-    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 206);
+    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 180);
 
     setTimeout(function() {
          fn_search();

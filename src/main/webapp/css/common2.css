@@ -77,13 +77,13 @@ a.skip:focus { position: static; left: 0; top: 0; }
 .floatR { float: right }
 
 /* table*/
-div.table,
-table.table {border-top: #515151 solid 1px;  position: relative; clear: both;}
+div.table,table.table {border-top: #515151 solid 1px;  position: relative; clear: both;}
+div.table table, table.table {width:100%}
 td,th { font-weight: 500}
 .table caption {}
 .table thead th { background: #f3f3f3;padding:8px 6px; border:#ccc solid 1px ; border-top:none; line-height: 1.3em }
 .table tbody th,
-.table tbody td { border:#e1e1e0 solid 1px ; padding:6px 6px; background: #fff; line-height: 1.3em; border-top:none;}
+.table tbody td { border:#e1e1e0 solid 1px ; padding:6px 6px; line-height: 1.3em; border-top:none;}
 .table tbody th,
 .table tbody th label { background:#fafafa; color: #777}
 
@@ -118,16 +118,16 @@ td,th { font-weight: 500}
 
 /* btn */
 
-.btn {background: #777; color: #fff; border:none; border-radius: 4px; padding: 4px 30px  }
+.btn {background: #777; color: #fff; border:none; border-radius: 2px;padding:5px 15px; display: inline-block; }
 .btn:hover, .btn:focus {color: #fff; background-color: #666 }
-.pri {background:#00b2d9}
-.pri:hover, .pri:focus {background-color:#00a2c5}
+.pri {background:#6aa2ec}
+.pri:hover, .pri:focus {background-color:#5390e0}
 .wrn {background:#ed8f14}
 .wrn:hover, .wrn:focus {background-color:#dc8b22}
 .dis { opacity: 0.5; cursor: default; }
 
 .btnArea { text-align: right; padding:0 0 30px 0; clear: both; }
-.btnArea .btn { padding:10px 30px; border-radius: 4px; display: inline-block; }
+table + .btnArea, .table + .btnArea {padding-top: 10px;}
 
 
 /* checkbox / radio */
