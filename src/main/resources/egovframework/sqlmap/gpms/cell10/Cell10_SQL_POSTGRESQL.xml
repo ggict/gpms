@@ -1602,99 +1602,124 @@ union all select '전체' , '', sum(w.total_l), sum(w.sum_l), sum(w.cntrwk_len),
         <![CDATA[
             /* cell10DAO.selectAdmStatsPageListExcel */
             /* 통계 > 노선현황 > 시군구별 국토부 통계를 엑셀 목록 조회한다.*/
-              SELECT COALESCE(NGB.ADM_NM,'전체') AS ADM_NM,
-                    COALESCE(SUM(NJD.SUM_L),0) AS SUM_L,
-                    COALESCE(SUM(NJD.OP_L),0) AS OP_L,
-                    COALESCE(SUM(NJD.NOP_L),0) AS NOP_L,
-                    COALESCE(SUM(C10A.SUM_LEN),0) AS SUM_LEN,
-                    COALESCE(SUM(NJR.NJR_LEN),0) AS NJR_LEN,
-                    COALESCE(SUM(JBR.JBR_LEN),0) AS JBR_LEN,
-                    COALESCE(SUM(C10B.UNTRACK_LEN),0) AS UNTRACK_LEN
-               FROM ( SELECT N3A.BJCD,N3A.NAME AS ADM_NM
-                        FROM N3A_G0100000 N3A
-                    ) NGB
-                    LEFT OUTER JOIN
-                    ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
-                             ADM_NAME AS ADM_NM,
-                             SUM_L,
-                             OP_L,
-                             NOP_L
-                        FROM UNI_ADM_ST
-                     WHERE 1=1
-        ]]>
-            <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
-        <![CDATA[
-                    ) NJD ON NGB.BJCD = NJD.ADM_CODE
-                    LEFT OUTER JOIN
-                    ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
-                              SUM(ROAD_L) AS SUM_LEN
-                         FROM CELL_10 CELL10A
-                        GROUP BY CELL10A.ADM_CODE
-                    ) C10A ON NJD.ADM_CODE = C10A.ADM_CODE
-                    LEFT OUTER JOIN
-                    ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
-                              SUM(ROAD_L) AS UNTRACK_LEN
-                         FROM CELL_10 CELL10B
-                        WHERE CELL10B.CELL_TYPE = 'CELT0013' /*CELT0013 : 미개설구간*/
-                        GROUP BY CELL10B.ADM_CODE
-                    ) C10B ON NJD.ADM_CODE = C10B.ADM_CODE,
-                    ( SELECT 0 AS NJR_LEN
-                         ) NJR,/*GPMS 중용구간 국지도*/
-                    ( SELECT 0 AS JBR_LEN
-                         ) JBR /*GPMS 중용구간 지방도*/
-              GROUP BY ROLLUP (NGB.ADM_NM)
-              /* HAVING GROUPING_ID(NGB.ADM_NM) IN(0, 1) */
-              ORDER BY NGB.ADM_NM
+with tb as (
+SELECT 
+               N3A.ADM_NAME as adm_nm,
+                CASE ROUTE.ROAD_GRAD WHEN 'RDGD0001' THEN '국지도' WHEN 'RDGD0002' THEN '지방도' ELSE '' END AS road_grad,
+                concat(ROUTE.ROUTE_CODE,'호선') as route_code,
+                (coalesce(C10B.ROAD_LEN, 0)*1.0 / 1000) AS total_l,
+                (coalesce(C10A.TRACK2 + C10A.TRACK4 + C10B.UNTRACK_LEN + C10B.CNTRWK_LEN, 0)*1.0 / 1000) AS sum_l,
+                (coalesce(C10A.TRACK2 + C10A.TRACK4, 0)*1.0 / 1000) AS sub_sum_l,
+                (coalesce(C10A.TRACK2, 0)*1.0 / 1000) AS track2_len,
+                (coalesce(C10A.TRACK4, 0)*1.0 / 1000) AS track4_len,
+                (coalesce(C10B.CNTRWK_LEN, 0)*1.0 / 1000) AS cntrwk_len,
+                (coalesce(C10B.UNTRACK_LEN, 0)*1.0 / 1000) AS unopn_len
+            FROM
+                ( SELECT 
+                    SUBSTR(BJCD, 1, 5) AS ADM_CODE,
+                    NAME AS ADM_NAME
+                 FROM    N3A_G0100000
+                ) N3A 
+                JOIN 
+                ( SELECT 
+                    ROAD_NO::INT AS ROUTE_CODE, 
+                    COALESCE(ROAD_NAME, ROAD_NO::INT::TEXT) AS ROUTE_NAME,
+                    road_grad as road_grad
+                FROM TN_ROUTE_INFO
+                ) ROUTE 
+                ON 1=1
+                LEFT OUTER JOIN
+                ( SELECT  
+                    CELL10.ROAD_GRAD AS ROAD_GRAD,
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    CELL10.ADM_CODE AS ADM_CODE,
+                    sum(CASE CELL10.TRACK WHEN '1' THEN ROAD_L ELSE 0 END)::int AS TRACK2,
+                    sum(CASE CELL10.TRACK WHEN '3' THEN ROAD_L ELSE 0 END)::int AS TRACK4
+                FROM CELL_10 CELL10
+                WHERE CELL10.CNTRWK_AT IS NULL AND CELL10.UNOPN_AT IS NULL
+                GROUP BY ROAD_GRAD, ROUTE_CODE, ADM_CODE
+                ) C10A
+                ON ROUTE.ROUTE_CODE = C10A.ROUTE_CODE AND N3A.ADM_CODE = C10A.ADM_CODE
+                LEFT OUTER JOIN
+                ( SELECT  
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    CELL10.ADM_CODE AS ADM_CODE,
+                    sum(CELL10.ROAD_L)::int AS ROAD_LEN,
+                    sum(CASE CELL10.UNOPN_AT WHEN 'Y' THEN ROAD_L ELSE 0 END)::int AS UNTRACK_LEN,
+                    sum(CASE CELL10.CNTRWK_AT WHEN 'Y' THEN ROAD_L ELSE 0 END)::int AS CNTRWK_LEN,
+                    CELL10.ROAD_GRAD AS ROAD_GRAD
+                FROM  CELL_10 CELL10
+                GROUP BY ROAD_GRAD, ROUTE_CODE, ADM_CODE
+                ) C10B
+                ON route.ROUTE_CODE = C10B.ROUTE_CODE AND N3A.ADM_CODE = C10B.ADM_CODE
+        WHERE C10B.ROAD_LEN > 0
+            ORDER BY N3A.ADM_CODE, route.ROAD_GRAD, ROUTE.ROUTE_CODE
+)
+select * from tb union all
+select '전체', '', '', sum(total_l), sum(sum_l), sum(sub_sum_l), sum(track2_len), sum(track4_len), sum(cntrwk_len), sum(unopn_len) from tb;
         ]]>
     </select>
 
-    <select id="cell10DAO.selectAdmStatsPageList"  parameterClass="cell10VO" resultClass="cell10VO">
+    <select id="cell10DAO.selectAdmStatsPageList"  parameterClass="cell10VO" resultClass="hashmap">
     <![CDATA[
             /* cell10DAO.selectAdmStatsPageList */
             /* 통계 > 노선현황 > 시군구별 통계 목록을 조회한다. */
-             SELECT COALESCE(NGB.ADM_NM,'전체') AS ADM_NM,
-                    COALESCE(SUM(NJD.SUM_L),0) AS SUM_L,
-                    COALESCE(SUM(NJD.OP_L),0) AS OP_L,
-                    COALESCE(SUM(NJD.NOP_L),0) AS NOP_L,
-                    COALESCE(SUM(C10A.SUM_LEN),0) AS SUM_LEN,
-                    COALESCE(SUM(NJR.NJR_LEN),0) AS NJR_LEN,
-                    COALESCE(SUM(JBR.JBR_LEN),0) AS JBR_LEN,
-                    COALESCE(SUM(C10B.UNTRACK_LEN),0) AS UNTRACK_LEN
-               FROM ( SELECT N3A.BJCD,N3A.NAME AS ADM_NM
-                      FROM N3A_G0100000 N3A
-                    ) NGB
-                    LEFT OUTER JOIN
-                    ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
-                             ADM_NAME AS ADM_NM,
-                             SUM_L,
-                             OP_L,
-                             NOP_L
-                        FROM UNI_ADM_ST
-                     WHERE 1=1
-        ]]>
-            <isNotEmpty property="STATS_YEAR"><![CDATA[ AND STATS_YEAR=#STATS_YEAR# ]]></isNotEmpty>
-        <![CDATA[
-                    ) NJD ON NGB.BJCD = NJD.ADM_CODE
-                    LEFT OUTER JOIN
-                    ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
-                              SUM(ROAD_L) AS SUM_LEN
-                         FROM CELL_10 CELL10A
-                        GROUP BY CELL10A.ADM_CODE
-                    ) C10A ON NJD.ADM_CODE = C10A.ADM_CODE
-                    LEFT OUTER JOIN
-                    ( SELECT  ADM_CODE ||'00000' AS ADM_CODE,
-                              SUM(ROAD_L) AS UNTRACK_LEN
-                         FROM CELL_10 CELL10B
-                        WHERE CELL10B.CELL_TYPE = 'CELT0013' /*CELT0013 : 미개설구간*/
-                        GROUP BY CELL10B.ADM_CODE
-                    ) C10B ON NJD.ADM_CODE = C10B.ADM_CODE,
-                    ( SELECT 0 AS NJR_LEN
-                         ) NJR,/*GPMS 중용구간 국지도*/
-                    ( SELECT 0 AS JBR_LEN
-                         ) JBR /*GPMS 중용구간 지방도*/
-              GROUP BY ROLLUP (NGB.ADM_NM)
-              /* HAVING GROUPING_ID(NGB.ADM_NM) IN(0, 1) */
-              ORDER BY NGB.ADM_NM
+with tb as (
+SELECT 
+               N3A.ADM_NAME as adm_nm,
+                CASE ROUTE.ROAD_GRAD WHEN 'RDGD0001' THEN '국지도' WHEN 'RDGD0002' THEN '지방도' ELSE '' END AS road_grad,
+                concat(ROUTE.ROUTE_CODE,'호선') as route_code,
+                (coalesce(C10B.ROAD_LEN, 0)*1.0 / 1000) AS total_l,
+                (coalesce(C10A.TRACK2 + C10A.TRACK4 + C10B.UNTRACK_LEN + C10B.CNTRWK_LEN, 0)*1.0 / 1000) AS sum_l,
+                (coalesce(C10A.TRACK2 + C10A.TRACK4, 0)*1.0 / 1000) AS sub_sum_l,
+                (coalesce(C10A.TRACK2, 0)*1.0 / 1000) AS track2_len,
+                (coalesce(C10A.TRACK4, 0)*1.0 / 1000) AS track4_len,
+                (coalesce(C10B.CNTRWK_LEN, 0)*1.0 / 1000) AS cntrwk_len,
+                (coalesce(C10B.UNTRACK_LEN, 0)*1.0 / 1000) AS unopn_len
+            FROM
+                ( SELECT 
+                    SUBSTR(BJCD, 1, 5) AS ADM_CODE,
+                    NAME AS ADM_NAME
+                 FROM    N3A_G0100000
+                ) N3A 
+                JOIN 
+                ( SELECT 
+                    ROAD_NO::INT AS ROUTE_CODE, 
+                    COALESCE(ROAD_NAME, ROAD_NO::INT::TEXT) AS ROUTE_NAME,
+                    road_grad as road_grad
+                FROM TN_ROUTE_INFO
+                ) ROUTE 
+                ON 1=1
+                LEFT OUTER JOIN
+                ( SELECT  
+                    CELL10.ROAD_GRAD AS ROAD_GRAD,
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    CELL10.ADM_CODE AS ADM_CODE,
+                    sum(CASE CELL10.TRACK WHEN '1' THEN ROAD_L ELSE 0 END)::int AS TRACK2,
+                    sum(CASE CELL10.TRACK WHEN '3' THEN ROAD_L ELSE 0 END)::int AS TRACK4
+                FROM CELL_10 CELL10
+                WHERE CELL10.CNTRWK_AT IS NULL AND CELL10.UNOPN_AT IS NULL
+                GROUP BY ROAD_GRAD, ROUTE_CODE, ADM_CODE
+                ) C10A
+                ON ROUTE.ROUTE_CODE = C10A.ROUTE_CODE AND N3A.ADM_CODE = C10A.ADM_CODE
+                LEFT OUTER JOIN
+                ( SELECT  
+                    CELL10.ROUTE_CODE::INT AS ROUTE_CODE,
+                    CELL10.ADM_CODE AS ADM_CODE,
+                    sum(CELL10.ROAD_L)::int AS ROAD_LEN,
+                    sum(CASE CELL10.UNOPN_AT WHEN 'Y' THEN ROAD_L ELSE 0 END)::int AS UNTRACK_LEN,
+                    sum(CASE CELL10.CNTRWK_AT WHEN 'Y' THEN ROAD_L ELSE 0 END)::int AS CNTRWK_LEN,
+                    CELL10.ROAD_GRAD AS ROAD_GRAD
+                FROM  CELL_10 CELL10
+                GROUP BY ROAD_GRAD, ROUTE_CODE, ADM_CODE
+                ) C10B
+                ON route.ROUTE_CODE = C10B.ROUTE_CODE AND N3A.ADM_CODE = C10B.ADM_CODE
+        WHERE C10B.ROAD_LEN > 0
+            ORDER BY N3A.ADM_CODE, route.ROAD_GRAD, ROUTE.ROUTE_CODE
+)
+select * from tb union all
+select '전체', '', '', sum(total_l), sum(sum_l), sum(sub_sum_l), sum(track2_len), sum(track4_len), sum(cntrwk_len), sum(unopn_len) from tb;
+           
     ]]>
         </select>
 

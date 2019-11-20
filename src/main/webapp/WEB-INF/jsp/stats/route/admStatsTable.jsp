@@ -9,6 +9,8 @@
 <%@ include file="/include/common_head.jsp" %>
 <script type="text/javascript">
 var nYear;
+var chkcell={cellId:undefined, chkval:undefined};
+var chkcell2={cellId:undefined, chkval:undefined};
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
 	
@@ -28,25 +30,27 @@ $( document ).ready(function() {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["시·군구별","총연장(m)","개통도(m)","미개통도(m)","총연장(m)","국지도","지방도","미개통도(m)"]
+		,colNames:["시·군구별","도로등급","노선명","총연장(km)","계","소계","2차로","4차로","공사구간","미개통구간"]
 	   	,colModel:[
-			{name:'ADM_NM',index:'ADM_NM', align:'center', width:60, sortable:false}
-			,{name:'SUM_L',index:'SUM_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'OP_L',index:'OP_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'NOP_L',index:'NOP_L', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'SUM_LEN',index:'SUM_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'NJR_LEN',index:'NJR_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'JBR_LEN',index:'JBR_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'UNTRACK_LEN',index:'UNTRACK_LEN', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			{name:'adm_nm',index:'adm_nm', align:'center', width:60, sortable:false, cellattr: jsFormatterCell}
+			,{name:'road_grad',index:'road_grad', align:'center', width:60, sortable:false, cellattr: jsFormatterCell2}
+			,{name:'route_code',index:'route_code', align:'center', width:60, sortable:false}
+			,{name:'total_l',index:'total_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'sum_l',index:'sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'sub_sum_l',index:'sub_sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'track2_len',index:'track2_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'track4_len',index:'track4_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'cntrwk_len',index:'cntrwk_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'unopn_len',index:'unopn_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 	   	]
 		,async : false
-	   	,sortname: 'ADM_NM'
+	   	,sortname: 'adm_nm'
 	    ,sortorder: "desc"
-	   	,rowNum: 100
+	   	,rowNum: 999
 	   	,rowList: [20,50,100,500]
 	    ,viewrecords: true
 	   	,pager: '#gridPager'
-	    ,rownumbers: true
+	    //,rownumbers: true
 	    ,loadtext: "검색 중입니다."
 		,emptyrecords: "검색된 데이터가 없습니다."
 		,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
@@ -74,32 +78,28 @@ $( document ).ready(function() {
 		//,scroll: true
 	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 	
-	$("#gridArea").jqGrid('setGroupHeaders', {
-		useColSpanStyle: true, 
-		groupHeaders:[
-			{startColumnName: 'SUM_L',
-			 numberOfColumns: 3,
-			 titleText: '<table style="width:100%;">'
-			 			 +'<tr><td id="h0" colspan="3">국토부('+ nYear +')</td></tr>'
-			 			 +'<tr><td> </td></tr></table>'}
-			,{startColumnName: 'SUM_LEN', 
-			 numberOfColumns: 4, 
-			 titleText: '<table style="width:100%;">'
-			 			 +'<tr><td id="h0" colspan="3">GPMS(당해년도)</td></tr>'
-			 			 +'<tr><td></td><td id="h1" >중용구간(m)</td><td></td><td></td></tr></table>'
-			}
-		]	
-	});
+    $("#gridArea").jqGrid('setGroupHeaders', {
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'adm_nm', numberOfColumns: 3, titleText: ''},
+                    {startColumnName: 'total_l', numberOfColumns: 7, titleText: '도 관리구간(km)'}
+                ]   
+            }).jqGrid('setGroupHeaders', {
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'sub_sum_l', numberOfColumns: 3, titleText: '포장구간'}
+                ]   
+            })
 	
 	
-	var height = $(parent.window).height() - 250;
+	var height = $(parent.window).height() - 280;
 	
 	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
 	
 	fnSearch();
 	
 	$(window).resize(function(){
-		var height = $(parent.window).height() - 250;
+		var height = $(parent.window).height() - 280;
 		
 		COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
 	});
@@ -118,6 +118,21 @@ function fnSearch() {
 		,postData:   $("#frm").cmSerializeObject()
 		,mtype: "POST"
 	   	,loadComplete: function(data) {
+            var grid = this;
+            $('td[name="cellRowspan"]', grid).each(function() {
+                var spans = $('td[rowspanid="'+this.id+'"]',grid).length+1;
+                if(spans>1){
+                 $(this).attr('rowspan',spans);
+                }
+            });
+            $('td[name="cellRowspan2"]', grid).each(function() {
+                var spans = $('td[rowspanid2="'+this.id+'"]',grid).length+1;
+                if(spans>1){
+                 $(this).attr('rowspan',spans);
+                }
+            });
+            
+	   		
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
 	   	}
 	}).trigger("reloadGrid");
@@ -151,6 +166,34 @@ function fnAdmStatsSearch(sYear){
 	$("#STATS_YEAR").val(sYear);
 	changRoutCol(sYear);
 	fnSearch();
+}
+
+function jsFormatterCell(rowid, val, rowObject, cm, rdata){
+
+	var result = "";
+	    
+   if(chkcell.chkval != val){ //check 값이랑 비교값이 다른 경우
+       var cellId = this.id + '_row_'+rowid+'-'+cm.name;
+       result = ' rowspan="1" id ="'+cellId+'" + name="cellRowspan"';
+       chkcell = {cellId:cellId, chkval:val};
+   }else{
+       result = 'style="display:none"  rowspanid="'+chkcell.cellId+'"'; //같을 경우 display none 처리
+   }
+   return result;
+}
+	
+function jsFormatterCell2(rowid, val, rowObject, cm, rdata){
+    var result = "";
+    var concatValue = Object.entries(rdata).reduce(function(a,b) { return a+b[1]; }, '');
+        
+   if(chkcell2.chkval != concatValue){ //check 값이랑 비교값이 다른 경우
+       var cellId = this.id + '_row_'+rowid+'-'+cm.name;
+       result = ' rowspan="1" id ="'+cellId+'" + name="cellRowspan2"';
+       chkcell2 = {cellId: cellId, chkval: concatValue};
+   }else{
+       result = 'style="display:none"  rowspanid2="'+chkcell2.cellId+'"'; //같을 경우 display none 처리
+   }
+   return result;
 }
 
 //엑셀 다운로드
