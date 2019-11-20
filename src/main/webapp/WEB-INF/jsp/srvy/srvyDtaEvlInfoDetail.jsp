@@ -90,6 +90,16 @@
                             <th scope="row">행정구역</th>
                             <td>${smDtaGnlSttusVO.ADM_CODE }</td>
                         </tr>
+                        <tr>
+                        	<th scope="row">관리도로</th>
+                        	<td>${smDtaGnlSttusVO.MRG_RD_NM }</td>
+                        </tr>
+                        <tr>
+                        	<th scope="row">공사구간</th>
+                        	<td>${smDtaGnlSttusVO.CNTRWK_LEN }</td>
+                        	<th scope="row">미개통구간</th>
+                        	<td>${smDtaGnlSttusVO.UNOPN_LEN }</td>
+                        </tr>
                     </tbody>
 
                 </table>

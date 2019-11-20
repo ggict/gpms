@@ -603,6 +603,18 @@ public class MummSctnSrvyDtaVO extends BaseVO {
 	@XmlElement
 	private String GEOJSON;
 	
+	@XmlElement
+	private String MRG_RD_NM;
+	
+	@JsonProperty(value="MRG_RD_NM")
+	public String getMRG_RD_NM() {
+		return MRG_RD_NM;
+	}
+
+	public void setMRG_RD_NM(String mRG_RD_NM) {
+		MRG_RD_NM = mRG_RD_NM;
+	}
+
 	@JsonProperty(value="GEOJSON")
 	public String getGEOJSON() {
 		return GEOJSON;

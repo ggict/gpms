@@ -124,7 +124,7 @@ $( document ).ready(function() {
         ,emptyrecords: "검색된 데이터가 없습니다."
         ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
         ,ondblClickRow: function(rowId) {       // 더블클릭 처리
-            fnView(rowId);  // 대장 조회
+        	fnView(rowId);  // 대장 조회
         }
         ,onSelectRow: function(rowId) {     // 클릭 처리
             if( rowId != null ) {
@@ -157,9 +157,9 @@ $( document ).ready(function() {
 
 //상세 조회
 function fnView(rowId) {
-	if( $.type(rowId) === "undefined" || rowId=="" )
-		 rowId = $("#gridArea").getGridParam( "selrow" );
-
+	if( $.type(rowId) === "undefined" || rowId=="" ){
+		rowId = $("#gridArea").getGridParam( "selrow" );
+	}
 	if( rowId != null ) {
 		var rowData = $("#gridArea").getRowData(rowId);
 		//var cntrwkId = rowData["CNTRWK_ID"];
@@ -168,7 +168,7 @@ function fnView(rowId) {
 		var SRVY_CN = rowData["SRVY_CN"];
 		var SRVY_REQUST_DE = rowData["SRVY_REQUST_DE"];
 		
-		COMMON_UTIL.cmMoveUrl("/srvyrequstsctn/updateSrvyRequstSctnView.do?SRVY_REQUST_SCTN_NO="
+		COMMON_UTIL.cmMoveUrl("srvyrequstsctn/updateSrvyRequstSctnView.do?SRVY_REQUST_SCTN_NO="
 				+SRVY_REQUST_SCTN_NO+"&SRVY_NM="+SRVY_NM+"&SRVY_CN="+SRVY_CN+"&SRVY_REQUST_DE="+SRVY_REQUST_DE);
 	}
 	else

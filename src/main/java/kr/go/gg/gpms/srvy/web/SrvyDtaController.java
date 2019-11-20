@@ -1414,6 +1414,9 @@ public class SrvyDtaController extends BaseController {
 		model.addAttribute("routeInfoVO", routeInfoVO);
 		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
 		model.addAttribute("srvyYearList", srvyYearList);
+		
+		//관리 도로
+        addCodeToModel("MNRD", "mngRdList", model);
 
 		return "/srvy/srvyDtaEvlInfoList";
 	}

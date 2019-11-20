@@ -66,6 +66,14 @@
                     <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" style="width:194px;" class="MX_80 CS_50 input" />
                 </li>
                 <li>
+                	<label>관리도로</label>
+                	<select id="MNG_RD_CD" name="MNG_RD_CD" title="관리도로" style="width:110px;" class="input">
+	                	<option value="">== 전체 ==</option>
+		        		<c:forEach items="${mngRdList }" var="mngRd">
+		        			<option value="${mngRd.CODE_VAL}">${mngRd.CODE_NM}</option>
+		        		</c:forEach>
+	                </select></li>
+                <li>
                     <label>행선</label>
                     <select id="DIRECT_CODE" name="DIRECT_CODE" alt="행선" style="width:70px;" class="input">
                         <option value="">= 전체 =</option>
@@ -191,7 +199,7 @@ $( document ).ready(function() {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["SRVY_NO", "SM_NO", "SRVY_YEAR", "OBJECT_ID", "CELL_ID", "조사년도", "관리기관", "도로등급", "노선번호", "노선명", "행선", "차로", "시점(km)", "종점(km)", "GPCI", "주 파손", "파손원인", "위치"
+		,colNames:["SRVY_NO", "SM_NO", "SRVY_YEAR", "OBJECT_ID", "CELL_ID", "조사년도", "관리기관", "도로등급", "노선번호", "노선명", "행선", "차로", "관리도로" ,"시점(km)", "종점(km)", "교통량" , "GPCI", "주 파손", "파손원인", "위치"
 		           , "CNTL_DFECT", "CODE_NM", "AC_IDX", "LC_IDX", "BC_IDX", "PTCHG_IDX", "POTHOLE_IDX", "RD_IDX", "RCI", "DMG_CUZ_CLMT", "DMG_CUZ_VMTC", "DMG_CUZ_ETC" ]
 	   	,colModel:[
 			{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
@@ -206,8 +214,10 @@ $( document ).ready(function() {
 			,{name:'ROAD_NM',index:'ROAD_NM', align:'center', width:70, sortable: true}
 			,{name:'DIRECT_CODE',index:'DIRECT_CODE', align:'center', width:50, sortable: true}
 			,{name:'TRACK',index:'TRACK', align:'center', width:40, sortable: true}
+			,{name:'MRG_RD_NM',index:'MRG_RD_NM', align:'center', width:40, sortable: true}
 			,{name:'STRTPT',index:'STRTPT', align:'center', width:60, sortable:false, formatter: fnConvertKm}
 			,{name:'ENDPT',index:'ENDPT', align:'center', width:60, sortable: true, formatter: fnConvertKm}
+			,{name:'TRNSPORT_QY',index:'TRNSPORT_QY', align:'center', width:60, sortable: true, formatter: fnConvertKm}
 			,{name:'GPCI',index:'GPCI', align:'center', width:50, sortable: true, formatter: fnFloat}
 			,{name:'CR',index:'CR', align:'center', width:70, sortable: false, formatter: fnFormatter}
 			,{name:'CUZ',index:'CUZ', align:'center', width:100, sortable: false, formatter: fnFormatter}

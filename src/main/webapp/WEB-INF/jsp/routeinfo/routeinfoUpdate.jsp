@@ -6,7 +6,7 @@
 <head>
 <title>노선 통합 검색</title>
 <%@ include file="/include/common_head.jsp" %>
-<script src="<c:url value='/js/common/cu_alert.js'/>"></script>
+<%-- <script src="<c:url value='/js/common/cu_alert.js'/>"></script> --%>
 </head>
 <body>
 
@@ -72,8 +72,8 @@
 							</td>
 							<th scope="row"><span class="fcred"> *</span>도 관리구간(km)</th>
 							<td>
-								<label for="ROAD_LEN_CMPT"></label>
-								<input type="number" class="MX_50 CS_25 input" id="ROAD_LEN_CMPT" name="DO_MANAGE_SCTN_LEN" value="<c:out value="${routeInfoVO.DO_MANAGE_SCTN_LEN}"/>"/>
+								<label for="DO_MANAGE_SCTN_LEN"></label>
+								<input type="number" class="MX_50 CS_25 input" id="DO_MANAGE_SCTN_LEN" name="DO_MANAGE_SCTN_LEN" value="<c:out value="${routeInfoVO.DO_MANAGE_SCTN_LEN}"/>"/>
 							</td>
 						</tr>
 					</tbody>
@@ -142,8 +142,8 @@ function validateCntrwk(frmId){
 		return false;
 	}
 	//전산화_완료연장
-	if(COMMON_LANG.isnullempty(COMMON_LANG.trimdata( vform.find('#ROAD_LEN_CMPT').val()))){
-		alert("전산화 완료연장을 입력하세요.");
+	if(COMMON_LANG.isnullempty(COMMON_LANG.trimdata( vform.find('#DO_MANAGE_SCTN_LEN').val()))){
+		alert("도 관리구간을 입력하세요.");
 		return false;
 	}
 	

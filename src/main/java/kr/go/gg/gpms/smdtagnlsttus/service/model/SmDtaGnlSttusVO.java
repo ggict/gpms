@@ -614,8 +614,51 @@ public class SmDtaGnlSttusVO extends BaseVO {
 	 */
 	@XmlElement
 	private java.lang.String RCI_RDUCT_RATE;
+	
+	/**
+	 * 관리도로
+	 */
+	@XmlElement
+	private String MRG_RD_NM;
 
+	/**
+	 * 공사구간
+	 */
+	@XmlElement
+	private String CNTRWK_LEN;
 
+	/**
+	 * 미개통구간
+	 */
+	@XmlElement
+	private String UNOPN_LEN;
+	
+	@JsonProperty(value="MRG_RD_NM")
+	public String getMRG_RD_NM() {
+		return CNTRWK_LEN;
+	}
+
+	public void setMRG_RD_NM(String mRG_RD_NM) {
+		CNTRWK_LEN = mRG_RD_NM;
+	}
+	
+	@JsonProperty(value="CNTRWK_LEN")
+	public String getCNTRWK_LEN() {
+		return CNTRWK_LEN;
+	}
+
+	public void setCNTRWK_LEN(String cNTRWK_LEN) {
+		CNTRWK_LEN = cNTRWK_LEN;
+	}
+
+	@JsonProperty(value="UNOPN_LEN")
+	public String getUNOPN_LEN() {
+		return UNOPN_LEN;
+	}
+
+	public void setUNOPN_LEN(String uNOPN_LEN) {
+		UNOPN_LEN = uNOPN_LEN;
+	}
 
 	/**
 	 * TN_SM_DTA_GNL_STTUS.SM_NO,

@@ -1175,62 +1175,99 @@
     <![CDATA[
         /* srvyDtaExcelDAO.srvyDtaEvlInfoDetailList */
         /* JOY_포장상태 평가정보.상세정보 목록 조회 */
-        SELECT tnsmdtagnlsttus.*
-        FROM (
-	        SELECT ROW_NUMBER() OVER() AS rn, tb.*
-			FROM (
-                SELECT
-	                tnsmdtagnlsttus.SRVY_NO /* 최소_구간_조사_자료.조사번호 */
-	                , sect.OBJECT_ID
-	                , sect.CELL_ID
-	                , tnsmdtagnlsttus.SM_NO 
-	                , concat(tnsmdtagnlsttus.SRVY_YEAR , '.' , tnsmdtagnlsttus.SRVY_MT) AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
-	                , tnsmdtagnlsttus.SRVY_YEAR
-	                , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
-	                    WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */
-	                , ( SELECT code.CODE_NM FROM TC_CODE code
-	                    WHERE code.CODE_VAL = sect.ROAD_GRAD ) AS ROAD_GRAD /* 셀.도로등급 */
-	                , sect.ADM_CODE /* 셀.행정구역코드 */
-	                , tnsmdtagnlsttus.ROUTE_CODE AS ROAD_NO /* 최소_구간_조사_자료.노선번호 */
-	                , tnsmdtagnlsttus.ROUTE_CODE::int AS ROAD_NO_VAL
-	                , tnrouteinfo.ROAD_NAME AS ROAD_NM
-	                , CASE tnsmdtagnlsttus.DIRECT_CODE
-	                    WHEN 'S' THEN '상행'
-	                    WHEN 'E' THEN '하행'
-	                    WHEN 'SE' THEN '상하행'
-	                    ELSE ''
-	                END AS DIRECT_CODE /* 최소_구간_조사_자료.행선 */
-	                , tnsmdtagnlsttus.TRACK /* 최소_구간_조사_자료.차로 */
-	                , tnsmdtagnlsttus.STRTPT /* 최소_구간_조사_자료.시점 */
-	                , tnsmdtagnlsttus.ENDPT /* 최소_구간_조사_자료.종점 */
-	                , ROUND(tnsmdtagnlsttus.GPCI, 2) AS GPCI /* 최소_구간_조사_자료.GPCI */
-
-	                , tnsmdtagnlsttus.CNTL_DFECT
-	                , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
-	                    WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) AS CODE_NM
-	                , tnsmdtagnlsttus.AC_IDX /* 주 파손.거북등균열 */
-	                , tnsmdtagnlsttus.LC_IDX /* 주 파손.선형균열 */
-	                , tnsmdtagnlsttus.BC_IDX /* 주 파손.블럭균열 */
-	                , tnsmdtagnlsttus.PTCHG_IDX /* 주 파손.패칭 */
-	                , tnsmdtagnlsttus.POTHOLE_IDX /* 주 파손.포트홀 */
-	                , tnsmdtagnlsttus.RD_IDX /* 주 파손.소성변형 */
-	                , tnsmdtagnlsttus.RCI /* 주 파손.종단평탄성 */
-	                , tnsmdtagnlsttus.DMG_CUZ_CLMT /* 주 파손.파손원인_기후 */
-	                , tnsmdtagnlsttus.DMG_CUZ_VMTC /* 주 파손.파손원인_교통량 */
-	                , tnsmdtagnlsttus.DMG_CUZ_ETC /* 주 파손.파손원인_기타 */
-	            FROM
-	                TN_SM_DTA_GNL_STTUS tnsmdtagnlsttus
-	                INNER JOIN CELL_SECT sect
-	                        ON sect.ROUTE_CODE = tnsmdtagnlsttus.ROUTE_CODE
-	                       AND sect.DIRECT_CODE = tnsmdtagnlsttus.DIRECT_CODE
-	                       AND sect.TRACK = tnsmdtagnlsttus.TRACK
-	                       AND sect.STRTPT = tnsmdtagnlsttus.STRTPT
-	                       AND sect.ENDPT = tnsmdtagnlsttus.ENDPT
-	                LEFT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
-	                             ON tnrouteinfo.ROAD_NO = tnsmdtagnlsttus.ROUTE_CODE
-	            WHERE 1=1
-	                AND tnsmdtagnlsttus.USE_AT = 'Y'
-	                AND tnsmdtagnlsttus.DELETE_AT = 'N'
+        SELECT tnsmdtagnlsttus.* 
+FROM   (SELECT Row_number() 
+                 over() AS rn, 
+               tb.* 
+        FROM   (SELECT tnsmdtagnlsttus.srvy_no 
+                       /* 최소_구간_조사_자료.조사번호 */, 
+                       sect.object_id, 
+                       sect.cell_id, 
+                       tnsmdtagnlsttus.sm_no, 
+                       Concat(tnsmdtagnlsttus.srvy_year, '.', 
+                       tnsmdtagnlsttus.srvy_mt) 
+                       AS 
+                               SRVY_DE 
+                       /* 최소_구간_조사_자료.조사월 */, 
+                       tnsmdtagnlsttus.srvy_year, 
+                       (SELECT tcdept.lowest_dept_nm 
+                        FROM   tc_dept tcdept 
+                        WHERE  tcdept.dept_code = sect.dept_code :: text) 
+                       AS 
+                               DEPT_CODE /* 셀.부서코드 */, 
+                       (SELECT code.code_nm 
+                        FROM   tc_code code 
+                        WHERE  code.code_val = sect.road_grad) 
+                       AS 
+                               ROAD_GRAD /* 셀.도로등급 */, 
+                       sect.adm_code /* 셀.행정구역코드 */, 
+                       tnsmdtagnlsttus.route_code 
+                       AS 
+                               ROAD_NO 
+                       /* 최소_구간_조사_자료.노선번호 */, 
+                       tnsmdtagnlsttus.route_code :: INT 
+                       AS 
+                               ROAD_NO_VAL, 
+                       tnrouteinfo.road_name 
+                       AS 
+                               ROAD_NM, 
+                       CASE tnsmdtagnlsttus.direct_code 
+                         WHEN 'S' THEN '상행' 
+                         WHEN 'E' THEN '하행' 
+                         WHEN 'SE' THEN '상하행' 
+                         ELSE '' 
+                       END 
+                       AS 
+                               DIRECT_CODE 
+                       /* 최소_구간_조사_자료.행선 */, 
+                       tnsmdtagnlsttus.track 
+                       /* 최소_구간_조사_자료.차로 */, 
+						(select code_nm from tc_code code, tn_rpair_trget_group tnrpairtrgetgroup WHERE code.code_val = 
+                                       tnrpairtrgetgroup.mng_rd_cd 
+                                       AND code.cl_code = 'MNRD' 
+                                       AND code.use_at = 'Y' 
+                                       AND code.delete_at = 'N' ) MRG_RD_NM,
+                       tnsmdtagnlsttus.strtpt 
+                       /* 최소_구간_조사_자료.시점 */, 
+                       tnsmdtagnlsttus.endpt 
+                       /* 최소_구간_조사_자료.종점 */, 
+                       tnsmdtagnlsttus.trnsport_qy /* 교통량 */,
+                       Round(tnsmdtagnlsttus.gpci, 2) 
+                       AS GPCI 
+                               /* 최소_구간_조사_자료.GPCI */, 
+                       tnsmdtagnlsttus.cntl_dfect, 
+                       (SELECT tccode.code_nm 
+                        FROM   tc_code tccode 
+                        WHERE  tccode.code_val = tnsmdtagnlsttus.cntl_dfect) 
+                       AS 
+                               CODE_NM, 
+                       tnsmdtagnlsttus.ac_idx /* 주 파손.거북등균열 */, 
+                       tnsmdtagnlsttus.lc_idx /* 주 파손.선형균열 */, 
+                       tnsmdtagnlsttus.bc_idx /* 주 파손.블럭균열 */, 
+                       tnsmdtagnlsttus.ptchg_idx /* 주 파손.패칭 */, 
+                       tnsmdtagnlsttus.pothole_idx /* 주 파손.포트홀 */, 
+                       tnsmdtagnlsttus.rd_idx /* 주 파손.소성변형 */, 
+                       tnsmdtagnlsttus.rci /* 주 파손.종단평탄성 */, 
+                       tnsmdtagnlsttus.dmg_cuz_clmt 
+                       /* 주 파손.파손원인_기후 */, 
+                       tnsmdtagnlsttus.dmg_cuz_vmtc 
+                       /* 주 파손.파손원인_교통량 */, 
+                       tnsmdtagnlsttus.dmg_cuz_etc 
+               /* 주 파손.파손원인_기타 */ 
+                FROM   tn_sm_dta_gnl_sttus tnsmdtagnlsttus 
+                       inner join cell_sect sect 
+                               ON sect.route_code = tnsmdtagnlsttus.route_code 
+                                  AND sect.direct_code = 
+                                      tnsmdtagnlsttus.direct_code 
+                                  AND sect.track = tnsmdtagnlsttus.track 
+                                  AND sect.strtpt = tnsmdtagnlsttus.strtpt 
+                                  AND sect.endpt = tnsmdtagnlsttus.endpt 
+                       left outer join tn_route_info tnrouteinfo 
+                                    ON tnrouteinfo.road_no = 
+                                       tnsmdtagnlsttus.route_code 
+                WHERE  1 = 1 
+                       AND tnsmdtagnlsttus.use_at = 'Y' 
+                       AND tnsmdtagnlsttus.delete_at = 'N'
     ]]>
 
 		<isNotEmpty property="CELL_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
