@@ -161,9 +161,8 @@ public class RouteInfoController extends BaseController {
 	}
 	
 	@RequestMapping(value = { "/routeinfo/updateRouteInfo.do" })
-	public String updateRouteInfoView(@ModelAttribute RouteInfoVO routeInfoVO, ModelMap model,BindingResult bindingResult,HttpServletRequest request, SessionStatus status, HttpSession session) throws Exception {
+	public String updateRouteInfoView(@ModelAttribute("searchVO") RouteInfoVO routeInfoVO, ModelMap model,BindingResult bindingResult,HttpServletRequest request, SessionStatus status, HttpSession session) throws Exception {
 		Map<String, String> req = requestToHashMap(request);
-		
 		String action_flag = StringUtils.isNotEmpty(req.get("action_flag"))?
 				req.get("action_flag").trim():"UPDATE" ;
 		// common 결과처리 변수 [수정X]

@@ -554,7 +554,7 @@ public class RouteInfoVO extends BaseVO {
 	 * @param roadLenCmpt
 	 */
 	public void setDO_MANAGE_SCTN_LEN(java.lang.String doMangeSctnLen) {
-		this.ROAD_LEN_CMPT = doMangeSctnLen;
+		this.DO_MANAGE_SCTN_LEN = doMangeSctnLen;
 	}
 	
 
