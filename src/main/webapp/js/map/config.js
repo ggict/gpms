@@ -286,7 +286,9 @@ var CONFIG = (function($, undefined){
 	    	 'seq' : '3802',
 	    	 'show' : '0',
 	    	 'layerType' : '3'
-	     },
+	     }
+	     
+	     /*
 	     "CELL_10_0301" : {
 	    	 'tmapid' : '870',
 	    	 'id' : '3803',
@@ -297,8 +299,6 @@ var CONFIG = (function($, undefined){
 	    	 'show' : '0',
 	    	 'layerType' : '3'
 	     }
-	     
-	     /*
 	     "CMPTNC_ZONE" : {
 	         'tmapid' : '870',
 	         'id' : '3769',
