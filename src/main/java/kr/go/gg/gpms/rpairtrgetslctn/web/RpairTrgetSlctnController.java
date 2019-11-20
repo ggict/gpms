@@ -72,7 +72,6 @@ public class RpairTrgetSlctnController  extends BaseController {
 	@Resource(name = "rpairMthdService")
 	private RpairMthdService rpairMthdService;
 
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(RpairTrgetSlctnController.class);
 
     /**
@@ -129,13 +128,25 @@ public class RpairTrgetSlctnController  extends BaseController {
         BindBeansToActiveUser(rpairTrgetSlctnVO);
 
         try {
-            // 보수대상선정시작(보수_대상_선정 삭제/등록)
-            rpairTrgetSlctnService.addRpairTrgetSlctn(rpairTrgetSlctnVO);
-            // 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
-            rpairTrgetSlctnService.procRepairTarget(rpairTrgetSlctnVO);
+            // 보수대상선정 선정년도 존재여부
+            if ( rpairTrgetSlctnService.selectRpairTrgetSlctnSlctnYearListCnt(rpairTrgetSlctnVO) > 0 ) {
+                rpairTrgetSlctnVO.setResultSuccess("false");
+                rpairTrgetSlctnVO.setResultMSG("보수대상선정 작업중입니다.");
+            } else {
+                // 보수대상선정시작(보수_대상_선정 삭제/등록)
+                rpairTrgetSlctnService.addRpairTrgetSlctn(rpairTrgetSlctnVO);
 
-            rpairTrgetSlctnVO.setResultSuccess("true");
-            rpairTrgetSlctnVO.setResultMSG("정상 등록되었습니다.");
+//                List<RpairTrgetSlctnVO> list = rpairTrgetSlctnService.selectRpairTrgetSlctnRouteCodeList(rpairTrgetSlctnVO);
+
+//                for ( int i = 0; i < list.size() && i < 3; i++ ) {
+//                    rpairTrgetSlctnVO.setROUTE_CODE(list.get(i).getROUTE_CODE());
+                    // 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
+                    rpairTrgetSlctnService.procRepairTarget(rpairTrgetSlctnVO);
+//                }
+
+                rpairTrgetSlctnVO.setResultSuccess("true");
+                rpairTrgetSlctnVO.setResultMSG("정상 등록되었습니다.");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             rpairTrgetSlctnVO.setResultSuccess("false");

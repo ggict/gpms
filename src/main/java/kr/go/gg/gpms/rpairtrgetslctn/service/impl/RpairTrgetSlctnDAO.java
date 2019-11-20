@@ -95,6 +95,25 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
         return resultVO;
     }
 
+    /**
+     * 보수대상선정 선정년도 존재여부
+     * @param rpairTrgetSlctnVO
+     * @return
+     */
+    public int selectRpairTrgetSlctnSlctnYearListCnt(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
+        return (int)select("rpairTrgetSlctnDAO.selectRpairTrgetSlctnSlctnYearListCnt", rpairTrgetSlctnVO);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

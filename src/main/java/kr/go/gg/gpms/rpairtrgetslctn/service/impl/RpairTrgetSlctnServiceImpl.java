@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.rpairtrgetslctn.service.RpairTrgetSlctnService;
@@ -35,8 +37,12 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
     @Resource(name = "rpairTrgetSlctnDAO")
 	private RpairTrgetSlctnDAO rpairTrgetSlctnDAO;
 
+//    @Resource(name = "transactionManager")
+//    private DataSourceTransactionManager transactionManager;
+//    @Autowired
+//    private PlatformTransactionManager transactionManager;
     @Autowired
-    private PlatformTransactionManager transactionManager;
+    DataSource dataSource;
 
 	//@Resource(name="RpairTrgetSlctnIdGnrService")
 	//private EgovIdGnrService egovIdGnrService;
@@ -76,26 +82,66 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 	 * 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
 	 */
 	@Async
+//	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+//    @Transactional(propagation=Propagation.REQUIRES_NEW)
     public void procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+//	    DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+//	    def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+//	    TransactionStatus status= transactionManager.getTransaction(def);
+//	    TransactionSynchronizationManager.initSynchronization(); // 트랜잭션 동기화 작업 초기화
+        // Connection 오브젝트 생성, 저장소 바인딩, 참조변수 값 리턴
+//        Connection conn = DataSourceUtils.getConnection(dataSource);
+//        conn.setAutoCommit(false); // 트랜잭션 시작
+
+
+
 	    // 전체노선을 한번에 돌릴경우 메모리 오류 발생하여 메모리 오류 방지를 위해 노선별로 처리
 	    List<RpairTrgetSlctnVO> routeCodeList = rpairTrgetSlctnDAO.selectRpairTrgetSlctnRouteCodeList(rpairTrgetSlctnVO);
 
 	    for ( int i = 0; i < routeCodeList.size(); i++ ) {
-	        if ( i % 5 == 0 ) {
-    	        if ( i == 0 )  {  // 시작
-    	            rpairTrgetSlctnVO.setSTART_END_CODE("S");
-    	        } else if ( routeCodeList.size() - 1 == i ) { // 종료
-    	            rpairTrgetSlctnVO.setSTART_END_CODE("E");
-    	        } else {
-    	            rpairTrgetSlctnVO.setSTART_END_CODE("");
-    	        }
+	        if ( i == 0 || i > 30 ) {
+//    	        if ( i == 0 )  {  // 시작
+//    	            rpairTrgetSlctnVO.setSTART_END_CODE("S");
+//    	        } else if ( routeCodeList.size() - 1 == i ) { // 종료
+//    	            rpairTrgetSlctnVO.setSTART_END_CODE("E");
+//    	        } else {
+//    	            rpairTrgetSlctnVO.setSTART_END_CODE("");
+//    	        }
     	        rpairTrgetSlctnVO.setROUTE_CODE(routeCodeList.get(i).getROUTE_CODE());
 
     	        rpairTrgetSlctnDAO.procRepairTargetRangeSelect(rpairTrgetSlctnVO);
     	        rpairTrgetSlctnDAO.procRepairTargetRangeString(rpairTrgetSlctnVO);
+
+//    	        transactionManager.commit(status);// 트랜잭션 커밋
+//    	        conn.commit(); // 성공
 	        }
 	    }
+
+//	    DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
+
+        // 동기화 작업을 종료하고 저장소를 비운다
+//        TransactionSynchronizationManager.unbindResource(this.dataSource);
+//        TransactionSynchronizationManager.clearSynchronization();
 	}
+
+	/**
+     * 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
+     */
+	public int selectRpairTrgetSlctnSlctnYearListCnt(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+	    return rpairTrgetSlctnDAO.selectRpairTrgetSlctnSlctnYearListCnt(rpairTrgetSlctnVO);
+	}
+
+	public List<RpairTrgetSlctnVO> selectRpairTrgetSlctnRouteCodeList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+	    return rpairTrgetSlctnDAO.selectRpairTrgetSlctnRouteCodeList(rpairTrgetSlctnVO);
+	}
+
+
+
+
+
+
+
+
 
 
 

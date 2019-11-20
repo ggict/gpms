@@ -47,6 +47,18 @@ public interface RpairTrgetSlctnService {
 	 */
 	void procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
 
+	/**
+     * 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
+     */
+    int selectRpairTrgetSlctnSlctnYearListCnt(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
+
+    List<RpairTrgetSlctnVO> selectRpairTrgetSlctnRouteCodeList(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
+
+
+
+
+
+
 
 
 

@@ -20,7 +20,7 @@
 			                <input type="hidden" id="SLCTN_STTUS" name="SLCTN_STTUS" value="RTSS0001"/>  <%-- 보수대상선정상태(RTSS)[시작(RTSS0001), 임시저장(RTSS0002), 보수대상선정(RTSS0003)...] --%>
 			                <input type="hidden" id="SLCTN_PURPS" name="SLCTN_PURPS" value="RTSP0002"/>  <%-- 보수대상선정목적(RTSP)[차트용(시스템이 생성)(RTSP0001), 사용자 보수 대상 선정(RTSP0002)] --%>
 			                <input type="hidden" id="TRGET_SLCTN_NO" name="TRGET_SLCTN_NO" value=""/>
-			
+
 			            <c:forEach var="anun" items="${anunList}" varStatus="status">
 			                <input type="radio" id="ANALS_UNIT_CODE<c:out value="${status.index}" />" name="ANALS_UNIT_CODE" value="<c:out value="${anun.CODE_VAL}" />" /><label for="ANALS_UNIT_CODE<c:out value="${status.index}" />" class="wid30" ><c:out value="${anun.CODE_NM}" /></label>
 			            </c:forEach>
@@ -37,14 +37,14 @@
 
                         </td>
     				</tr>
-    				</tbody>	
+    				</tbody>
     			</table>
                 <div class="btnArea">
                      <input type="button" class="btn pri" value="선정시작" onclick="fnRepairTargetStart();">
                 </div>
     		</div>
-    		
-    		
+
+
     		<h3 class="h3">보수대상선정이력</h3>
     		<div class="scroll" id="repairTargetList"></div>
 
@@ -98,9 +98,14 @@ function fnRefreshRepairTarget(){
         	$("#repairTargetList").empty();
         	// 년도이력 출력
         	$.each(data, function() {
-        	    var yearHis = '<h5 class="pt10 pb10"><a href="javascript:loadRepairTargets(' + this.SLCTN_YEAR + ', ' + this.TRGET_SLCTN_NO + ')"><img src="images/ic_date.png" alt="날짜선택" class="vm" style="padding-left: 15px;" />&nbsp;&nbsp;'+ this.SLCTN_YEAR +'년</a></h5>';
+//         	    var yearHis = '<h5 class="pt10 pb10"><a href="javascript:loadRepairTargets(' + this.SLCTN_YEAR + ', ' + this.TRGET_SLCTN_NO + ')"><img src="images/ic_date.png" alt="날짜선택" class="vm" style="padding-left: 15px;" />&nbsp;&nbsp;'+ this.SLCTN_YEAR +'년</a></h5>';
+        	    var yearHis = '<h5 class="pt10 pb10"><a href="javascript:fnRepairTargetLoad(' + this.TRGET_SLCTN_NO + ')"><img src="images/ic_date.png" alt="날짜선택" class="vm" style="padding-left: 15px;" />&nbsp;&nbsp;'+ this.SLCTN_YEAR +'년</a></h5>';
                 $("#repairTargetList").append(yearHis);
         	});
+
+        	if ( $("#repairTargetList h5 a").length > 0 ) {
+    		   $("#repairTargetList h5 a").get(0).click();
+        	}
         },
         error: function(a,b,msg){
             console.log(a);
@@ -176,10 +181,17 @@ function repairTargetStart(){
         type          : 'POST',
         processData   : false,
         success       : function(data){
-            vForm.find('#TRGET_SLCTN_NO').val(data.TRGET_SLCTN_NO);
-            fnRefreshRepairTarget();
-            closeRTDialog();
-            COMMON_UTIL.repairMenuUrlContent( '<c:url value="rpairtrgetslctn/selectRpairTrgetSlctn.do"/>?TRGET_SLCTN_NO='+data.TRGET_SLCTN_NO);
+        	if ( data.resultSuccess == "true" ) {
+        	    alert(data.resultMSG);
+
+                vForm.find('#TRGET_SLCTN_NO').val(data.TRGET_SLCTN_NO);
+                fnRefreshRepairTarget();
+                closeRTDialog();
+                COMMON_UTIL.repairMenuUrlContent( '<c:url value="rpairtrgetslctn/selectRpairTrgetSlctn.do"/>?TRGET_SLCTN_NO='+data.TRGET_SLCTN_NO);
+        	} else {
+        	    closeRTDialog();
+        	    alert(data.resultMSG);
+        	}
         },
         error: function(a,b,msg){
             alert(JSON.stringify(data));
@@ -192,7 +204,7 @@ function repairTargetStart(){
  */
 function fnRepairTargetLoad(trget_slctn_no){
     COMMON_UTIL.repairMenuUrlContent( '<c:url value="rpairtrgetslctn/selectRpairTrgetSlctn.do"/>?TRGET_SLCTN_NO='+trget_slctn_no);
-    closeRTDialog();
+//     closeRTDialog();
 }
 
 /**

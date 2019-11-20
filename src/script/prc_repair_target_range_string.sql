@@ -227,7 +227,7 @@ BEGIN
     O_PROCMSG := '보수대상선정 집계 연속 구간 GPIC 재개산 및 공법 결정 완료';
 
     UPDATE TN_RPAIR_TRGET_SLCTN SET
-        SLCTN_STTUS = 'RTSS0004' /* 보수_대상_선정.선정_상태 보수대상연속구간 조회(동일섹션 연속구간 선정) */
+        SLCTN_STTUS = 'RTSS0010' /* 완료 */
         , UPDUSR_NO = P_USER_NO::NUMERIC /* 보수_대상_선정.수정자_번호 */
         , UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
     WHERE
