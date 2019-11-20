@@ -88,56 +88,57 @@
 		]]>
 
 		with temp as (
-			select 6411799 as dept_code, '북부도로과' as dept_name
-			union all
-			select 6411399 as dept_code, '도로건설과'as dept_name
-		)
+			select 
+				dept_code
+				,sum(ROAD_TOT_LEN_JYG_Y) as ROAD_TOT_LEN_JYG_Y
+				,sum(DO_MANAGE_SCTN_LEN) as DO_MANAGE_SCTN_LEN
+			from (
+				select
+					t2.dept_code
+					,route_code	
+					,ROAD_TOT_LEN_JYG_Y
+					,DO_MANAGE_SCTN_LEN
+				from tn_route_info t1 
+				left outer join cell_10 t2
+				on(t1.road_no = t2.route_code)
+				group by dept_code, route_code, ROAD_TOT_LEN_JYG_Y, DO_MANAGE_SCTN_LEN	
+			) t1	
+			group by dept_code
+		) 
 		select 
-			t1.dept_code, t1.dept_name, total_road_l, road_l, DO_MANAGE_SCTN_LEN  
+			t1.dept_code
+			,case when t1.dept_code = 6411799 then '북부도로과' else '도로건설과' end dept_name
+			,ROAD_TOT_LEN_JYG_Y as total_road_l
+			,DO_MANAGE_SCTN_LEN
+			,ROAD_L
 		from temp t1
 		left outer join 
-		(
-			select
-				t2.dept_code
-				,coalesce(sum(ROAD_TOT_LEN_JYG_Y),0) as total_road_l
-				,coalesce(sum(t2.road_l),0) as road_l
-				,coalesce(sum(DO_MANAGE_SCTN_LEN),0) as DO_MANAGE_SCTN_LEN
-			from tn_route_info t1
-			left outer join 
-			(	
-				SELECT
-					srvy_year
-					, dept_code	
-					, cell_10.route_code route_code
-					, coalesce(sum(ROAD_L), 0) / 1000 ROAD_L
-				FROM cell_10 
-				right outer join tn_mumm_sctn_srvy_dta
-				on (
-					cell_10.route_code = tn_mumm_sctn_srvy_dta.route_code
-					AND cell_10.direct_code = tn_mumm_sctn_srvy_dta.direct_code
-					AND cell_10.track = tn_mumm_sctn_srvy_dta.track
-					AND cell_10.strtpt = tn_mumm_sctn_srvy_dta.strtpt
-					AND cell_10.endpt = tn_mumm_sctn_srvy_dta.endpt
-					AND tn_mumm_sctn_srvy_dta.use_at = 'Y'
-					AND tn_mumm_sctn_srvy_dta.delete_at = 'N'
-				)
-				where 1=1
-				<isNotEmpty property="SRVY_YEAR">
-				AND tn_mumm_sctn_srvy_dta.SRVY_YEAR = #SRVY_YEAR#
-				</isNotEmpty>
-				<isNotEmpty property="ROAD_NO">
-				AND cell_10.route_code = #ROAD_NO#
-				</isNotEmpty>
-				group by cell_10.route_code, cell_10.dept_code, srvy_year
-			) t2
-			on (t1.road_no = t2.route_code)
+		(	
+			SELECT
+				dept_code
+				,coalesce(sum(ROAD_L), 0) / 1000 ROAD_L
+			FROM cell_10 
+			right outer join tn_mumm_sctn_srvy_dta
+			on (
+				cell_10.route_code = tn_mumm_sctn_srvy_dta.route_code
+				AND cell_10.direct_code = tn_mumm_sctn_srvy_dta.direct_code
+				AND cell_10.track = tn_mumm_sctn_srvy_dta.track
+				AND cell_10.strtpt = tn_mumm_sctn_srvy_dta.strtpt
+				AND cell_10.endpt = tn_mumm_sctn_srvy_dta.endpt
+				AND tn_mumm_sctn_srvy_dta.use_at = 'Y'
+				AND tn_mumm_sctn_srvy_dta.delete_at = 'N'
+			)
 			where 1=1
-			<isNotEmpty property="ROAD_NO">
-			AND t1.road_no = #ROAD_NO#
+			<isNotEmpty property="SRVY_YEAR">
+			AND tn_mumm_sctn_srvy_dta.SRVY_YEAR = #SRVY_YEAR#
 			</isNotEmpty>
-			group by t2.dept_code	
-		) as t2
+			<isNotEmpty property="ROAD_NO">
+			AND cell_10.route_code = #ROAD_NO#
+			</isNotEmpty>
+			group by cell_10.dept_code
+		) t2
 		on(t1.dept_code = t2.dept_code)
+		where t1.dept_code in (6411799, 6411399)
 		order by t1.dept_code desc	
 	</select>
 	

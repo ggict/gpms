@@ -87,18 +87,28 @@ function fnGpmsGradLenSearch(rw) {
 }
 
 function drawLenChart(dataList,rw){
-    var gDeptNm    = [];       
+	/*
+    var gDeptNm    = [];
     var pavData     = [];
     var cntrwkData      = [];
     var unopnData = [];
+    */
     var degree = (dataList.length > 10) ? 40 : 0;
     
+    var deptList = dataList.map(function(elem) { return elem.adm_nm }).reduce(function(a,b) { if(a.indexOf(b)<0) a.push(b); return a; }, []);
+    var trackList = dataList.map(function(elem) { return elem.track }).reduce(function(a,b) { if(a.indexOf(b)<0) a.push(b); return a; }, []);
+    var pavData = dataList.map(function(elem) { return elem.total_l });
+    var cntrwkData = dataList.map(function(elem) { return elem.cntrwk_len });
+    var unopnData = dataList.map(function(elem) { return elem.unopn_len });
+    
+    /*
     for(var i=0; i<dataList.length; i++){
         gDeptNm.push(dataList[i].adm_nm);
         pavData.push(Number(dataList[i].total_l));
         cntrwkData.push(Number(dataList[i].cntrwk_len));
         unopnData.push(Number(dataList[i].unopn_len));
     }
+    */
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
         var myChart = ec.init(document.getElementById('lenBarChart'));
@@ -128,7 +138,7 @@ function drawLenChart(dataList,rw){
                             interval: 0,
                             rotate: degree
                         },
-                        data : gDeptNm
+                        data : deptList
                     }],
             yAxis : [{  name : 'km',        type : 'value'      }],
             series : [
@@ -204,8 +214,11 @@ function fn_msgNtc(){
         </div>
         <div id="divStatChart" style="overflow-y:auto;">
 			<ul class="statsbx">
-
-
+                <li style="margin-left: 1px;">
+                    <div class="graylinebx p10" style="width:195%; text-align:center;">
+                        <div id="lenBarChart" class="cont_ConBx2" style="height: 500px; margin-left:20px;"></div>
+                    </div>
+                </li>
 			</ul>
 		</div>	
 	</div>
