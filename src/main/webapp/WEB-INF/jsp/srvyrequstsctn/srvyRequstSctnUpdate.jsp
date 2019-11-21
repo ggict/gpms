@@ -10,7 +10,10 @@
 <head>
 <title>조사요청구간 관리 </title>
 <%@ include file="/include/common_head.jsp" %>
+<script src="<c:url value='/js/common/cu_alert.js'/>"></script>
+<script type="text/javaScript" language="javascript" defer="defer">
 
+</script>
 </head>
 <body id="wrap">
 <!-- 필수 파라메터(START) -->
@@ -324,7 +327,6 @@ function fn_add_srvyrequstsctn(cellIdList, param){
             }
                 
             $('#PAV_CELL_ID').val(_cellIdList);
-            alert($('#PAV_CELL_ID').val());
             
             // 기존 grid data 리셋 후 reload
             $('#gridArea').jqGrid('clearGridData');
@@ -550,7 +552,7 @@ function fnUpdateCallback( insertKey ) {
 	COMMON_UTIL.cmHideProgressBar();
 	
     // 목록 화면 재검색
-    COMMON_UTIL.cmMoveUrl( "/srvyrequstsctn/selectSrvyRequstSctnList.do");
+    COMMON_UTIL.cmMoveUrl('<c:url value="/srvyrequstsctn/selectSrvyRequstSctnList.do" />');
 }
 
 

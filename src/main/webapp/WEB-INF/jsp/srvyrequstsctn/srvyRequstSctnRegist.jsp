@@ -10,7 +10,10 @@
 <head>
 <title>조사요청구간 관리 </title>
 <%@ include file="/include/common_head.jsp" %>
+<script src="<c:url value='/js/common/cu_alert.js'/>"></script>
+<script type="text/javaScript" language="javascript" defer="defer">
 
+</script>
 </head>
 
 <body id="wrap">
@@ -128,6 +131,7 @@
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>
 <!-- 공통 (END)-->
+
 <script type="text/javascript" defer="defer">
 var _routeCd="", _directCd="", _track="", _strtpt="", _endpt="", _cellIdList="", Cnt =0;
 
@@ -558,7 +562,7 @@ function fnSaveCallback( insertKey ) {
 	COMMON_UTIL.cmHideProgressBar();
 	
     // 목록 화면 재검색
-    COMMON_UTIL.cmMoveUrl( "/srvyrequstsctn/addSrvyRequstSctnView.do");
+	COMMON_UTIL.cmMoveUrl('<c:url value="/srvyrequstsctn/selectSrvyRequstSctnList.do" />');
 }
 
 
