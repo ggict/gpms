@@ -14,9 +14,13 @@
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
+<input type="hidden" id="SCH_DEPT_CODE" name="SCH_DEPT_CODE" value=""/>
+<input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
+<input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
-<div id="container">
-    <div class="tabcont">
+<div style="margin: 0px 20px 0 20px;">
+    <!--  그래프 -->
+    <div id="sch_cnt01" class="tabcont">
         <h3>포장상태 평가 관리기관별 통계</h3>
         <p class="location">
             <span>포장공사 이력관리</span>
@@ -24,16 +28,53 @@
             <strong>관리기관별 통계</strong>
         </p>
         
-        <div class="btnbx mb10" style="margin-right: 25px;">
-            <a href="#" onclick="fnShowChart();" class="schbtn" style="float: right;">그래프 보기</a> &nbsp;
-            <a href="#" onclick="fnExcel();" class="schbtn" style="float: right; margin-right: 5px;">엑셀저장</a>
+        <div id="divStatChart" style="overflow-y:auto;">
+            <ul class="statsbx">
+                <li style="float:none; width:97%">
+                    <div class="graylinebx p10" style="width:100%;">
+                        <div id="mummDeptGpciChart" class="cont_ConBx2" style="height: 320px; margin-left:20px;"></div>
+                    </div>
+                    <h4 style="text-align: center;background:none; width:100%;">노선별 포장상태 평가 통계</h4>
+                </li>
+                <li style="float:none; margin-top: 40px; width:97%">
+                    <div class="graylinebx p10" style="width:100%">
+                        <div id="mummDeptDfctChart" class="cont_ConBx2" style="height: 320px; margin-left:20px;"></div>
+                    </div>
+                    <h4 style="text-align: center;background:none; width:100%;">노선별 포장상태 파손원인 통계</h4>
+                </li>
+            </ul>
         </div>
-        <div class="cont_ListBx" style="margin: 15px 25px; overflow-y: auto; overflow-x: hidden;">
-            <div id="div_grid" style="width: 100%; margin-top: 20px;">
-                <table id="gridArea"></table>
-                <div id="gridPager"></div>
-            </div>
-        </div>
+    </div>
+    <!-- 표 -->
+     <div class="cont_ListBx" style="display: none;">
+        <table class="tblist" border="1" id="diagram">
+            <colgroup>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+                <col width="10%"/>
+            </colgroup>
+            <thead style="text-align: center;">
+                <tr>
+                    <th scope="col">관리기관</th>
+                    <th scope="col">GPCI</th>
+                    <th scope="col">거북등균열</th>
+                    <th scope="col">선형균열</th>
+                    <th scope="col">패칭</th>
+                    <th scope="col">포트홀</th>
+                    <th scope="col">소성변형</th>
+                    <th scope="col">종단평탄성</th>
+                    <th scope="col">블럭균열</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 </div>
 </form>
@@ -44,142 +85,278 @@
 
 <script type="text/javascript" defer="defer">
 
+//에러 메시지 변수
+var errNo=0;
+//경고 메시지 변수
+var ntcNo=0;
+
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
     
-    parent.schFlag = 0;
+    $("#divStatChart").height($(parent.window).height() - 170);
     
     // input, select 항목 init
     COMMON_UTIL.cmFormObjectInit("frm");
-    parent.$("#schDeptCnt").show();
-    parent.$("#schRoutCnt").hide();
-    parent.$("#MUMM_DEPT_CODE").val("");
     
-    // 차트페이지에서 넘어온 경우
-    var param = "${mummSctnSrvyDtaVO.DEPT_CODE}";
+    //창 조절시 차트 width 
+    var rw = $(window).width()/3;
     
-    if ( param != null && param != "" ) {
-        
-        parent.$("#MUMM_DEPT_CODE").val(param);    
-        
-    }
-    
-    var deptCode = parent.$("#MUMM_DEPT_CODE").val();
-    
-    var postData = {"DEPT_CODE" : deptCode};
-    
-    // 검색 목록 그리드 구성
-    $("#gridArea").jqGrid({
-        url: '<c:url value="/"/>'+'api/mumm/mummDeptCntStats.do'
-        ,autoencode: true
-        ,contentType : 'application/json'
-        ,datatype: "local"
-        ,mtype: "POST"
-        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
-        ,postData: JSON.stringify(postData)
-        ,ignoreCase: true
-        ,colNames:["관리부서코드","관리부서명","GPCI","교통량/하부불량","기후", "기타"]
-        ,colModel:[
-            {name:'DEPT_CODE',index:'DEPT_CODE', align:'center', width: 100, sortable:false, hidden: true}
-            ,{name:'DEPT_NM',index:'DEPT_NM', align:'center', width:100, sortable:false}
-            ,{name:'GPCI',index:'GPCI', align:'center', width:100, sortable:false, formatter: fnFloat}
-            ,{name:'DMG_CUZ_VMTC',index:'DMG_CUZ_VMTC', align:'center', width:100, sortable:false, formatter: fnFloat}
-            ,{name:'DMG_CUZ_CLMT',index:'DMG_CUZ_CLMT', align:'center', width:100, sortable:false, formatter: fnFloat}
-            ,{name:'DMG_CUZ_ETC',index:'DMG_CUZ_ETC', align:'center', width:100, sortable:false, formatter: fnFloat}
-        ]
-        ,async : false
-        ,sortname: 'ROAD_GRAD'
-        ,sortorder: "asc"
-        ,rowNum: 100
-        ,rowList: [100]
-        ,viewrecords: true
-        //,pager: '#gridPager'
-        ,rownumbers: true
-        ,loadtext: "검색 중입니다."
-        ,emptyrecords: "검색된 데이터가 없습니다."
-        ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
-        ,ondblClickRow: function(rowId) { }
-        ,onSelectRow: function(rowId) {     // 클릭 처리
-            if( rowId != null ) {
-                var rowData =$( "#gridArea" ).getRowData(rowId);
-            }
-        }
-        ,loadBeforeSend:function(tsObj, ajaxParam, settings){
-            if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){
-                delete this.p.postData.nd;
-                delete this.p.postData._search;
-                this.p.postData.sidx = this.p.sortname;
-                this.p.postData.sord = this.p.sortorder;
-                if(this.p.postData.pageUnit != this.p.postData.rows){
-                    this.p.postData.pageUnit = this.p.postData.rows;
-                }
-                ajaxParam.data = JSON.stringify(this.p.postData);
-            }
-        }
-        ,multiselect: false
-        ,multiboxonly: false
-        //,scroll: true
-    }).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
-    
-    $("#gridArea").jqGrid('setGroupHeaders', {
-        useColSpanStyle: true, 
-        groupHeaders:[
-            {startColumnName: 'DMG_CUZ_VMTC', numberOfColumns: 3, titleText: '파손원인'}
-        ]   
-    }); 
-    
-    var height = $(parent.window).height() - 300;
-    
-    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-    
-    fn_search(postData);
-    
-    $(window).resize(function(){
-        
-        var height = $(parent.window).height() - 300;
-        
-        COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-    }); 
+    fnMummDeptSearch('','','',rw);//관리기관 조회
 }); 
 
-//검색 처리
-function fn_search(postData) {
+//창 조절시 차트 resize
+$(window).on('resize', function(){
+        $("#divStatChart").height($(parent.window).height() - 170);
     
-    $("#gridArea").jqGrid("setGridParam",{
-        datatype: "json"
-        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
-        ,contentType: "application/json"
-        ,page: 1
-        ,postData:   JSON.stringify(postData)
-        ,mtype: "POST"
-        ,loadComplete: function(data) {
-            COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
+        var rw = $(window).width()/3;
+        var deptCd = $("#SCH_DEPT_CODE").val();
+        var strDt = $("#SCH_STRWRK_DE").val();
+        var endDt = $("#SCH_COMPET_DE").val();
+        
+        fnDeptSearch(deptCd,strDt,endDt,rw);
+});
+
+//조건에 맞는 검색조회
+function fnDeptSearch(deptCd,strDt,endDt,rw){
+    //검색 조건 값 set
+    $("#SCH_DEPT_CODE").val(deptCd);
+    $("#SCH_STRWRK_DE").val(strDt);
+    $("#SCH_COMPET_DE").val(endDt);
+    
+    fnDeptCntSearch(deptCd,strDt,endDt,rw);//관리기관 조회
+}
+
+require.config({
+       paths: {
+            echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
         }
-    }).trigger("reloadGrid");
+    });
+
+//검색 처리
+function fnMummDeptSearch(deptCd,strDt,endDt,rw) {
+    var data = {"SCH_DEPT_CODE" : deptCd, "SCH_STRWRK_DE" : strDt, "SCH_COMPET_DE" : endDt};
+    
+    $.ajax({
+         url: '<c:url value="/"/>'+'api/mumm/mummDeptCntStats.do'
+        ,type: 'post'
+        ,contentType: 'application/json'
+        //,data: JSON.stringify( $("#frm").cmSerializeObject())
+        ,data: JSON.stringify(data)
+        ,dataType: 'json'
+        ,success: function (data) {
+            var dataList = data.rows;
+            if(dataList.length !=0){
+                drawDeptGpciChart(dataList,rw);
+                drawDeptDfctChart(dataList,rw);
+                
+                drawTable(dataList);
+            }else{
+                ntcNo += 1;
+            }
+        },
+        error: function () {
+            errNo += 1;
+        }
+    });
 }
 
-// 그래프 보기
-function fnShowChart() {
+function drawDeptGpciChart(dataList,rw){
+    var gDeptNm    = dataList.map(function(elem){ return elem.dept_nm; });       
+    var gpciData    = dataList.map(function(elem){ return elem.gpci; });
+    var degree      = (dataList.length < 10) ? 0 : -90;
     
-    COMMON_UTIL.cmMoveUrl('<c:url value="mumm/mummDeptCntStatsChart.do"/>');
-    
+    require([   'echarts','echarts/chart/bar'   ],
+            function (ec) {
+                 var myChart = ec.init(document.getElementById('mummDeptGpciChart'));
+                 myChart.setOption({
+                        title   : { text: 'GPCI'   },
+                        tooltip : { trigger: 'axis'             },
+                        toolbox : { show: true,
+                            feature: {
+                                dataView : {show: true, readOnly: false},   // 상세조회
+                                saveAsExcel : {show: true},                 // 엑셀저장
+                                saveAsImage: {show: true}                   // 이미지저장
+                            }   
+                        },
+                        grid :{
+                            x : 50,
+                            y2 : 80
+                        },
+                        xAxis : [{  
+                                    type : 'category',
+                                    axisLabel : {
+                                        show:true,
+                                        interval: 0,
+                                        rotate: degree
+                                    },
+                                    data : gDeptNm
+                                }],
+                        yAxis : [{  name : '',     type : 'value'      }],
+                        series : [
+                            {
+                                name: '',
+                                type: 'bar',
+                                data: gpciData
+                            }
+                        ]
+                    });
+                 
+            });
 }
 
-// 엑셀 다운로드
+function drawDeptDfctChart(dataList,rw){
+    var gDeptNm    = dataList.map(function(elem){ return elem.dept_nm; });      
+    var ac_idx_data    = dataList.map(function(elem){ return elem.ac_idx; });
+    var lc_tc_idx_data    = dataList.map(function(elem){ return elem.lc_tc_idx; });
+    var ptchg_idx_data    = dataList.map(function(elem){ return elem.ptchg_idx; });
+    var pothole_idx_data    = dataList.map(function(elem){ return elem.pothole_idx; });
+    var rd_idx_data    = dataList.map(function(elem){ return elem.rd_idx; });
+    var iri_val_data    = dataList.map(function(elem){ return elem.iri_val; });
+    var bc_idx_data    = dataList.map(function(elem){ return elem.rd_idx; });
+    var degree      = (dataList.length < 10) ? 0 : -90;
+    
+    require([   'echarts','echarts/chart/bar'   ],
+            function (ec) {
+                 var myChart = ec.init(document.getElementById('mummDeptDfctChart'));
+                 myChart.setOption({
+                        title   : { text: '파손형태' },
+                        tooltip : { trigger: 'axis'             },
+                        toolbox : { show: true,
+                            feature: {
+                                dataView : {show: true, readOnly: false},   // 상세조회
+                                saveAsExcel : {show: true},                 // 엑셀저장
+                                saveAsImage: {show: true}                   // 이미지저장
+                            }   
+                        },
+                        legend: {
+                            data: ['거북등균열', '선형균열', '패칭', '포트홀', '소성변형', '종단평탄성', '블럭균열'/*, '복합파손'*/]
+                        },
+                        grid :{
+                            x : 50,
+                            y2 : 80 
+                        },
+                        xAxis : [{  
+                                    type : 'category',
+                                    axisLabel : {
+                                        show:true,
+                                        interval: 0,
+                                        rotate: degree
+                                    },
+                                    data : gDeptNm
+                                }],
+                        yAxis : [{  name : '',       type : 'value'      }],
+                        series : [
+                            {
+                                name: '거북등균열',
+                                type: 'bar',
+                                stack: '합계',
+                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                                data: ac_idx_data
+                            },
+                            {
+                                name: '선형균열',
+                                type: 'bar',
+                                stack: '합계',
+                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                                data: lc_tc_idx_data
+                            },
+                            {
+                                name: '패칭',
+                                type: 'bar',
+                                stack: '합계',
+                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                                data: ptchg_idx_data
+                            },
+                            {
+                                name: '포트홀',
+                                type: 'bar',
+                                stack: '합계',
+                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                                data: pothole_idx_data
+                            },
+                            {
+                                name: '종단평탄성',
+                                type: 'bar',    
+                                stack: '합계',
+                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                                data: rd_idx_data
+                            },
+                            {
+                                name: '소성변형',
+                                type: 'bar',    
+                                stack: '합계',
+                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                                data: iri_val_data
+                            },
+                            {
+                                name: '블럭균열',
+                                type: 'bar',    
+                                stack: '합계',
+                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                                data: bc_idx_data
+                            }
+                        ]
+                    });
+
+            });
+}
+
+
+
+function drawTable(dataList){
+
+    var mainData    = dataList;
+    var tHtml       = '';
+    
+    for(var i=0; i<mainData.length; i++){
+        tHtml   += '<tr>';
+        tHtml   += '<td align="center" class="bg">'             +   mainData[i].dept_nm+ '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].gpci        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].ac_idx        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].lc_tc_idx    + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].ptchg_idx                        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].pothole_idx                        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].rd_idx                        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].iri_val                        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].rd_idx                        + '</td>';
+        tHtml   += '</tr>';
+    }
+    
+    $('#diagram tbody').empty().append(tHtml);
+}
+
+//엑셀 다운로드
 function fnExcel() {
     if( confirm("엑셀 파일로 저장하시겠습니까?") ) {
-        COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/api/mumm/mummDeptCntStatsExcel.do'/>", "");
+        COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/mumm/mummDeptCntStatsExcel.do'/>", "");
     }
 }
 
-function fnFloat(cellValue, options, rowObject) {
-    
-    // 0.xx 표현을 위한 formatter
-    var nm = options.colModel.name;
-    
-    var val = rowObject.GPCI;
-    return parseFloat(val).toFixed(2);
-        
+//노선변호 String > Integer로 형변환
+function fn_castRouteCode(routeCd){
+    var routeNo = routeCd*1;
+    return routeNo;
+}
+
+
+//에러 메시지
+function fn_msgErr(){
+    if(errNo >= 1){
+        alert("오류가 발생하였습니다. 새로고침 하시기 바랍니다.");
+        return;
+    }else {
+        return;
+    }
+}
+
+//경고 메시지
+function fn_msgNtc(){
+    if(ntcNo >= 1){
+        alert("해당 조건에 검색 결과가 없습니다. 검색 조건을 변경하여 조회 하시기 바랍니다.");
+        return;
+    }else {
+        return;
+    }
 }
 </script>
 

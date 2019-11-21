@@ -103,8 +103,7 @@ $( document ).ready(function() {
     //창 조절시 차트 width 
     var rw = $(window).width()/3;
     
-    fnRoutCntSearch('','','',rw);//노선건수조회
-    fnRoutLenSearch('','','',rw);//노선연장조회
+    fnMummRoutSearch('','','',rw);//노선조회
 }); 
 
 //창 조절시 차트 resize
@@ -126,8 +125,7 @@ function fnRoutSearch(deptCd,strDt,endDt,rw){
     $("#SCH_STRWRK_DE").val(strDt);
     $("#SCH_COMPET_DE").val(endDt);
     
-    fnRoutCntSearch(deptCd,strDt,endDt,rw);//노선건수조회
-    fnRoutLenSearch(deptCd,strDt,endDt,rw);//노선연장조회
+    fnMummRoutSearch(deptCd,strDt,endDt,rw);//노선조회
 }
 
 require.config({
@@ -137,7 +135,7 @@ require.config({
 	});
 
 //검색 처리
-function fnRoutCntSearch(deptCd,strDt,endDt,rw) {
+function fnMummRoutSearch(deptCd,strDt,endDt,rw) {
     var data = {"SCH_DEPT_CODE" : deptCd, "SCH_STRWRK_DE" : strDt, "SCH_COMPET_DE" : endDt};
     
     $.ajax({
@@ -212,7 +210,7 @@ function drawRoutDfctChart(dataList,rw){
 	var gRouteNm    = dataList.map(function(elem){ return Number(elem.route_code)+"호선"; });      
     var ac_idx_data    = dataList.map(function(elem){ return elem.ac_idx; });
     var lc_tc_idx_data    = dataList.map(function(elem){ return elem.lc_tc_idx; });
-    var patch_idx_data    = dataList.map(function(elem){ return elem.patch_idx; });
+    var ptchg_idx_data    = dataList.map(function(elem){ return elem.ptchg_idx; });
     var pothole_idx_data    = dataList.map(function(elem){ return elem.pothole_idx; });
     var rd_idx_data    = dataList.map(function(elem){ return elem.rd_idx; });
     var iri_val_data    = dataList.map(function(elem){ return elem.iri_val; });
@@ -269,7 +267,7 @@ function drawRoutDfctChart(dataList,rw){
                                 type: 'bar',
                                 stack: '합계',
                                 itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: patch_idx_data
+                                data: ptchg_idx_data
                             },
                             {
                                 name: '포트홀',
@@ -319,7 +317,7 @@ function drawTable(dataList){
         tHtml   += '<td style="text-align:right">'              +   mainData[i].gpci        + '</td>';
         tHtml   += '<td style="text-align:right">'              +   mainData[i].ac_idx        + '</td>';
         tHtml   += '<td style="text-align:right">'              +   mainData[i].lc_tc_idx    + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].patch_idx                        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].ptchg_idx                        + '</td>';
         tHtml   += '<td style="text-align:right">'              +   mainData[i].pothole_idx                        + '</td>';
         tHtml   += '<td style="text-align:right">'              +   mainData[i].rd_idx                        + '</td>';
         tHtml   += '<td style="text-align:right">'              +   mainData[i].iri_val                        + '</td>';

@@ -1645,7 +1645,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI)::        NUMERIC, 2), 0) AS gpci
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ac_idx)::NUMERIC, 2), 0) AS ac_idx               /* 거북등 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.tc_idx+tnmummsctnsrvydta.lc_idx)::NUMERIC / 2, 2), 0) AS lc_tc_idx /* 선형 */
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ptchg_idx)::NUMERIC, 2), 0) AS patch_idx         /* 패칭 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ptchg_idx)::NUMERIC, 2), 0) AS ptchg_idx         /* 패칭 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.pothole_idx)::NUMERIC, 2), 0) AS pothole_idx     /* 포트홀 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.rd_idx)::NUMERIC, 2), 0) AS rd_idx               /* 소성 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.iri_val)::NUMERIC, 2), 0) AS iri_val             /* 종단평탄성 */
@@ -1681,7 +1681,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI)::        NUMERIC, 2), 0) AS gpci
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ac_idx)::NUMERIC, 2), 0) AS ac_idx               /* 거북등 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.tc_idx+tnmummsctnsrvydta.lc_idx)::NUMERIC / 2, 2), 0) AS lc_tc_idx /* 선형 */
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ptchg_idx)::NUMERIC, 2), 0) AS patch_idx         /* 패칭 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ptchg_idx)::NUMERIC, 2), 0) AS ptchg_idx         /* 패칭 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.pothole_idx)::NUMERIC, 2), 0) AS pothole_idx     /* 포트홀 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.rd_idx)::NUMERIC, 2), 0) AS rd_idx               /* 소성 */
                 , COALESCE(ROUND(AVG(tnmummsctnsrvydta.iri_val)::NUMERIC, 2), 0) AS iri_val             /* 종단평탄성 */
@@ -1706,86 +1706,55 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
         ]]>
     </select>
 
-    <select id="mummSctnSrvyDtaDAO.mummDeptCntStats" parameterClass="mummSctnSrvyDtaVO" resultClass="mummSctnSrvyDtaVO">
+    <select id="mummSctnSrvyDtaDAO.mummDeptCntStats" parameterClass="mummSctnSrvyDtaVO" resultClass="hashmap">
         <![CDATA[
             /* mummSctnSrvyDtaDAO.mummDeptCntStats */
             /* JOY_ 통계 > 포장상태평가 > 관리기관별통계 */
-            SELECT
-			    dept.DEPT_CODE
-			    , dept.LOWEST_DEPT_NM AS DEPT_NM
-			    , COALESCE(mumm.GPCI, 0) AS GPCI
-			    , COALESCE(mumm.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
-			    , COALESCE(mumm.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
-			    , COALESCE(mumm.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
-			FROM (
-			        SELECT dept.*
-			        FROM TC_DEPT dept
-			        WHERE dept.DEPT_CODE IN ('6411399','6411799')
-			    ) dept
-			LEFT OUTER jOIN (
-			        SELECT
-			            tb.DEPT_CODE
-			            , ROUND(AVG(tb.GPCI)::numeric, 2) AS GPCI
-			            , ROUND(AVG(tb.DMG_CUZ_CLMT)::numeric, 2) AS DMG_CUZ_CLMT
-			            , ROUND(AVG(tb.DMG_CUZ_VMTC)::numeric, 2) AS DMG_CUZ_VMTC
-			            , ROUND(AVG(tb.DMG_CUZ_ETC)::numeric, 2) AS DMG_CUZ_ETC
-			        FROM (
-			            SELECT
-			                cell10.DEPT_CODE
-			                , tnmummsctnsrvydta.*
-			            FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
-			            LEFT OUTER JOIN CELL_10 cell10
-			                ON cell10.ROUTE_CODE = tnmummsctnsrvydta.ROUTE_CODE
-			               AND cell10.DIRECT_CODE = tnmummsctnsrvydta.DIRECT_CODE
-			               AND cell10.TRACK = tnmummsctnsrvydta.TRACK
-			               AND cell10.STRTPT = tnmummsctnsrvydta.STRTPT
-			               AND cell10.ENDPT = tnmummsctnsrvydta.ENDPT
-			            WHERE 1=1
-			                AND tnmummsctnsrvydta.USE_AT = 'Y'
-			                AND tnmummsctnsrvydta.DELETE_AT = 'N'
-			                AND tnmummsctnsrvydta.LAST_DTA_AT = 'Y'
-			        ) tb
-			        WHERE 1=1
-			            AND tb.DEPT_CODE IS NOT NULL
-			        GROUP BY tb.DEPT_CODE
-			    ) mumm
-			    ON dept.DEPT_CODE = mumm.DEPT_CODE::text
-			WHERE 1=1
-		]]>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND dept.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
-
-    </select>
-
-    <select id="mummSctnSrvyDtaDAO.mummDeptCntStatsExcel"
-            parameterClass="mummSctnSrvyDtaVO" resultClass="hashMap">
-        <![CDATA[
-            /* mummSctnSrvyDtaDAO.mummDeptCntStatsExcel */
-            /* JOY_ 통계 > 포장상태평가 > 관리기관별통계 */
-            SELECT
-                dept.DEPT_CODE
-                , dept.LOWEST_DEPT_NM AS DEPT_NM
-                , COALESCE(mumm.GPCI, 0) AS GPCI
-                , COALESCE(mumm.DMG_CUZ_CLMT, 0) AS DMG_CUZ_CLMT
-                , COALESCE(mumm.DMG_CUZ_VMTC, 0) AS DMG_CUZ_VMTC
-                , COALESCE(mumm.DMG_CUZ_ETC, 0) AS DMG_CUZ_ETC
-            FROM (
-                    SELECT dept.*
-                    FROM TC_DEPT dept
-                    WHERE dept.DEPT_CODE IN ('6411399','6411799')
+            WITH tbl AS (
+                SELECT
+                    dept.dept_code
+                    , dept.LOWEST_DEPT_NM AS dept_nm
+                    , COALESCE(mumm.GPCI, 0) AS gpci
+                    , COALESCE(mumm.AC_IDX, 0) AS ac_idx
+                    , COALESCE(mumm.LC_TC_IDX, 0) AS lc_tc_idx
+                    , COALESCE(mumm.PTCHG_IDX, 0) AS ptchg_idx
+                    , COALESCE(mumm.POTHOLE_IDX, 0) AS pothole_idx
+                    , COALESCE(mumm.RD_IDX, 0) AS rd_idx
+                    , COALESCE(mumm.IRI_VAL, 0) AS iri_val
+                    , COALESCE(mumm.BC_IDX, 0) AS bc_idx
+                    
+                FROM (
+                    SELECT
+                        DEPT_CODE
+                        , LOWEST_DEPT_NM
+                    FROM TC_DEPT
+                    WHERE DEPT_CODE IN ('6411399','6411799')
                 ) dept
-            LEFT OUTER jOIN (
+                LEFT OUTER jOIN (
                     SELECT
                         tb.DEPT_CODE
                         , ROUND(AVG(tb.GPCI)::numeric, 2) AS GPCI
-                        , ROUND(AVG(tb.DMG_CUZ_CLMT)::numeric, 2) AS DMG_CUZ_CLMT
-                        , ROUND(AVG(tb.DMG_CUZ_VMTC)::numeric, 2) AS DMG_CUZ_VMTC
-                        , ROUND(AVG(tb.DMG_CUZ_ETC)::numeric, 2) AS DMG_CUZ_ETC
+                        , ROUND(AVG(tb.AC_IDX)::numeric, 2) AS AC_IDX
+                        , ROUND(AVG(tb.TC_IDX + tb.LC_IDX)::numeric / 2, 2) AS LC_TC_IDX
+                        , ROUND(AVG(tb.PTCHG_IDX)::numeric, 2) AS PTCHG_IDX
+                        , ROUND(AVG(tb.POTHOLE_IDX)::numeric, 2) AS POTHOLE_IDX
+                        , ROUND(AVG(tb.RD_IDX)::numeric, 2) AS RD_IDX
+                        , ROUND(AVG(tb.IRI_VAL)::numeric, 2) AS IRI_VAL
+                        , ROUND(AVG(tb.BC_IDX)::numeric, 2) AS BC_IDX
                     FROM (
                         SELECT
                             cell10.DEPT_CODE
-                            , tnmummsctnsrvydta.*
+                            , tnmummsctnsrvydta.GPCI
+                            , tnmummsctnsrvydta.AC_IDX
+                            , tnmummsctnsrvydta.TC_IDX
+                            , tnmummsctnsrvydta.LC_IDX
+                            , tnmummsctnsrvydta.PTCHG_IDX
+                            , tnmummsctnsrvydta.POTHOLE_IDX
+                            , tnmummsctnsrvydta.RD_IDX
+                            , tnmummsctnsrvydta.IRI_VAL
+                            , tnmummsctnsrvydta.BC_IDX
                         FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
-                        LEFT OUTER JOIN CELL_10 cell10
+                        JOIN CELL_10 cell10
                             ON cell10.ROUTE_CODE = tnmummsctnsrvydta.ROUTE_CODE
                            AND cell10.DIRECT_CODE = tnmummsctnsrvydta.DIRECT_CODE
                            AND cell10.TRACK = tnmummsctnsrvydta.TRACK
@@ -1795,16 +1764,94 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
                             AND tnmummsctnsrvydta.USE_AT = 'Y'
                             AND tnmummsctnsrvydta.DELETE_AT = 'N'
                             AND tnmummsctnsrvydta.LAST_DTA_AT = 'Y'
+                            AND cell10.DEPT_CODE IN ('6411399','6411799')
                     ) tb
-                    WHERE 1=1
-                        AND tb.DEPT_CODE IS NOT NULL
                     GROUP BY tb.DEPT_CODE
                 ) mumm
                 ON dept.DEPT_CODE = mumm.DEPT_CODE::text
-            WHERE 1=1
-        ]]>
-        <isNotEmpty property="DEPT_CODE"><![CDATA[ AND dept.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+            )
+            SELECT dept_code, dept_nm, gpci, ac_idx, lc_tc_idx, ptchg_idx, pothole_idx, rd_idx, iri_val, bc_idx FROM tbl
+            UNION ALL 
+            SELECT '9999999', '경기도', avg(gpci), avg(ac_idx), avg(lc_tc_idx), avg(PTCHG_IDX), avg(pothole_idx), avg(rd_idx), avg(iri_val), avg(bc_idx)
+            FROM tbl
+            ORDER BY dept_code desc
+		]]>
 
+    </select>
+
+    <select id="mummSctnSrvyDtaDAO.mummDeptCntStatsExcel" parameterClass="mummSctnSrvyDtaVO" resultClass="hashMap">
+        <![CDATA[
+            /* mummSctnSrvyDtaDAO.mummDeptCntStatsExcel */
+            /* JOY_ 통계 > 포장상태평가 > 관리기관별통계 */
+            WITH tbl AS (
+                SELECT
+                    dept.dept_code
+                    , dept.LOWEST_DEPT_NM AS dept_nm
+                    , COALESCE(mumm.GPCI, 0) AS gpci
+                    , COALESCE(mumm.AC_IDX, 0) AS ac_idx
+                    , COALESCE(mumm.LC_TC_IDX, 0) AS lc_tc_idx
+                    , COALESCE(mumm.PTCHG_IDX, 0) AS ptchg_idx
+                    , COALESCE(mumm.POTHOLE_IDX, 0) AS pothole_idx
+                    , COALESCE(mumm.RD_IDX, 0) AS rd_idx
+                    , COALESCE(mumm.IRI_VAL, 0) AS iri_val
+                    , COALESCE(mumm.BC_IDX, 0) AS bc_idx
+                    
+                FROM (
+                    SELECT
+                        DEPT_CODE
+                        , LOWEST_DEPT_NM
+                    FROM TC_DEPT
+                    WHERE DEPT_CODE IN ('6411399','6411799')
+                ) dept
+                LEFT OUTER jOIN (
+                    SELECT
+                        tb.DEPT_CODE
+                        , ROUND(AVG(tb.GPCI)::numeric, 2) AS GPCI
+                        , ROUND(AVG(tb.AC_IDX)::numeric, 2) AS AC_IDX
+                        , ROUND(AVG(tb.TC_IDX + tb.LC_IDX)::numeric / 2, 2) AS LC_TC_IDX
+                        , ROUND(AVG(tb.PTCHG_IDX)::numeric, 2) AS PTCHG_IDX
+                        , ROUND(AVG(tb.POTHOLE_IDX)::numeric, 2) AS POTHOLE_IDX
+                        , ROUND(AVG(tb.RD_IDX)::numeric, 2) AS RD_IDX
+                        , ROUND(AVG(tb.IRI_VAL)::numeric, 2) AS IRI_VAL
+                        , ROUND(AVG(tb.BC_IDX)::numeric, 2) AS BC_IDX
+                    FROM (
+                        SELECT
+                            cell10.DEPT_CODE
+                            , tnmummsctnsrvydta.GPCI
+                            , tnmummsctnsrvydta.AC_IDX
+                            , tnmummsctnsrvydta.TC_IDX
+                            , tnmummsctnsrvydta.LC_IDX
+                            , tnmummsctnsrvydta.PTCHG_IDX
+                            , tnmummsctnsrvydta.POTHOLE_IDX
+                            , tnmummsctnsrvydta.RD_IDX
+                            , tnmummsctnsrvydta.IRI_VAL
+                            , tnmummsctnsrvydta.BC_IDX
+                        FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
+                        JOIN CELL_10 cell10
+                            ON cell10.ROUTE_CODE = tnmummsctnsrvydta.ROUTE_CODE
+                           AND cell10.DIRECT_CODE = tnmummsctnsrvydta.DIRECT_CODE
+                           AND cell10.TRACK = tnmummsctnsrvydta.TRACK
+                           AND cell10.STRTPT = tnmummsctnsrvydta.STRTPT
+                           AND cell10.ENDPT = tnmummsctnsrvydta.ENDPT
+                        WHERE 1=1
+                            AND tnmummsctnsrvydta.USE_AT = 'Y'
+                            AND tnmummsctnsrvydta.DELETE_AT = 'N'
+                            AND tnmummsctnsrvydta.LAST_DTA_AT = 'Y'
+                            AND cell10.DEPT_CODE IN ('6411399','6411799')
+                    ) tb
+                    GROUP BY tb.DEPT_CODE
+                ) mumm
+                ON dept.DEPT_CODE = mumm.DEPT_CODE::text
+            )
+            SELECT dept_code, dept_nm, gpci, ac_idx, lc_tc_idx, ptchg_idx, pothole_idx, rd_idx, iri_val, bc_idx FROM tbl
+            UNION ALL 
+            SELECT
+                '9999999', '경기도',
+                ROUND(avg(gpci),2), ROUND(avg(ac_idx),2), ROUND(avg(lc_tc_idx),2), ROUND(avg(PTCHG_IDX),2),
+                ROUND(avg(pothole_idx),2), ROUND(avg(rd_idx),2), ROUND(avg(iri_val),2), ROUND(avg(bc_idx),2)
+            FROM tbl
+            ORDER BY dept_code desc
+        ]]>
     </select>
 
 	<resultMap id="mapMummSctnSrvyDtaVO" class="mummSctnSrvyDtaVO">
