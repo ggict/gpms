@@ -713,9 +713,7 @@ public class MummSctnSrvyDtaController {
 	 * @exception : Exception
 	 */
 	@RequestMapping(value = "/mumm/mummRoutCntStats.do")
-	public String selectRoutCntStats(
-			@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model)
-			throws Exception {
+	public String selectRoutCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
 
 		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
 
@@ -733,15 +731,21 @@ public class MummSctnSrvyDtaController {
 	 * @exception : Exception
 	 */
 	@RequestMapping(value = { "/api/mumm/mummRoutCntStatsGPCI.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody List<MummSctnSrvyDtaVO> mummRoutCntStatsGPCI(
-			@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model,
-			HttpSession session) throws Exception {
+	public @ResponseBody Map<String, Object> mummRoutCntStatsGPCI(@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model,HttpSession session) throws Exception {
 
 		// 데이터 조회
-		List<MummSctnSrvyDtaVO> result = mummSctnSrvyDtaService
-				.mummRoutCntStatsGPCI(mummSctnSrvyDtaVO);
+		List<MummSctnSrvyDtaVO> result = mummSctnSrvyDtaService.mummRoutCntStatsGPCI(mummSctnSrvyDtaVO);
+		
+		int total_page = 0;
 
-		return result;
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("page", mummSctnSrvyDtaVO.getPage());
+		map.put("total", total_page);
+		map.put("rows", result);
+
+		return map;
 	}
 
 	/**
@@ -774,20 +778,14 @@ public class MummSctnSrvyDtaController {
 	 * @return : View
 	 * @exception : Exception
 	 */
-	@RequestMapping(value = "/api/mumm/mummRoutCntStatsExcel.do")
-	public View mummRoutCntStatsExcel(
-			@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO,
-			ModelMap model, HttpServletRequest request, HttpSession session)
-			throws Exception {
-		List dataList = mummSctnSrvyDtaService
-				.mummRoutCntStatsExcel(mummSctnSrvyDtaVO);
+	@RequestMapping(value = "/mumm/mummRoutCntStatsExcel.do")
+	public View mummRoutCntStatsExcel(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO,ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = mummSctnSrvyDtaService.mummRoutCntStatsExcel(mummSctnSrvyDtaVO);
 
-		String[] excel_title = { "노선번호", "노선명", "GPCI", "교통량/하부불량", "기후", "기타" };
-		String[] excel_column = { "route_code", "road_nm", "gpci",
-				"dmg_cuz_vmtc", "dmg_cuz_clmt", "dmg_cuz_etc" };
+		String[] excel_title = { "노선번호", "노선명", "GPCI", "거북등균열", "선형균열", "패칭", "포트홀", "소성변형", "종단평탄성", "블럭균열" };
+		String[] excel_column = { "route_code", "road_nm", "gpci","ac_idx", "lc_tc_idx", "patch_idx", "pothole_idx", "rd_idx", "iri_val", "bc_idx" };
 
-		model.addAttribute("file_name",
-				"포장상태평가_노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("file_name","포장상태평가_노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
 		model.addAttribute("excel_title", excel_title);
 		model.addAttribute("excel_column", excel_column);
 		model.addAttribute("data_list", dataList);
@@ -806,9 +804,7 @@ public class MummSctnSrvyDtaController {
 	 * @exception : Exception
 	 */
 	@RequestMapping(value = "/mumm/mummDeptCntStats.do")
-	public String selectDeptCntStats(
-			@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model)
-			throws Exception {
+	public String selectDeptCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
 
 		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
 
@@ -826,13 +822,10 @@ public class MummSctnSrvyDtaController {
 	 * @exception : Exception
 	 */
 	@RequestMapping(value = { "/api/mumm/mummDeptCntStats.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody List<MummSctnSrvyDtaVO> mummDeptCntStats(
-			@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model,
-			HttpSession session) throws Exception {
+	public @ResponseBody List<MummSctnSrvyDtaVO> mummDeptCntStats(@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model,HttpSession session) throws Exception {
 
 		// 데이터 조회
-		List<MummSctnSrvyDtaVO> result = mummSctnSrvyDtaService
-				.mummDeptCntStats(mummSctnSrvyDtaVO);
+		List<MummSctnSrvyDtaVO> result = mummSctnSrvyDtaService.mummDeptCntStats(mummSctnSrvyDtaVO);
 
 		return result;
 	}

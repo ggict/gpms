@@ -1634,19 +1634,22 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
         ]]>
     </select>
 
-    <select id="mummSctnSrvyDtaDAO.mummRoutCntStatsGPCI"
-            parameterClass="mummSctnSrvyDtaVO" resultClass="mummSctnSrvyDtaVO">
+    <select id="mummSctnSrvyDtaDAO.mummRoutCntStatsGPCI" parameterClass="mummSctnSrvyDtaVO" resultClass="hashmap">
         <![CDATA[
             /* mummSctnSrvyDtaDAO.mummRoutCntStatsGPCI */
             /* JOY_ 통계 > 포장상태평가 > 노선별통계 */
             SELECT
-			    tnrouteinfo.ROAD_GRAD
-			    , tnrouteinfo.ROAD_NO AS ROUTE_CODE
-			    , tnrouteinfo.ROAD_NAME AS ROAD_NM
-			    , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI)::numeric, 2), 0) AS GPCI
-			    , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC)::numeric, 2), 0) AS DMG_CUZ_VMTC
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT)::numeric, 2), 0) AS DMG_CUZ_CLMT
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC)::numeric, 2), 0) AS DMG_CUZ_ETC
+			    tnrouteinfo.ROAD_GRAD as road_grad
+			    , tnrouteinfo.ROAD_NO AS route_code 
+			    , tnrouteinfo.ROAD_NAME AS road_nm
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI)::        NUMERIC, 2), 0) AS gpci
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ac_idx)::NUMERIC, 2), 0) AS ac_idx               /* 거북등 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.tc_idx+tnmummsctnsrvydta.lc_idx)::NUMERIC / 2, 2), 0) AS lc_tc_idx /* 선형 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ptchg_idx)::NUMERIC, 2), 0) AS patch_idx         /* 패칭 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.pothole_idx)::NUMERIC, 2), 0) AS pothole_idx     /* 포트홀 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.rd_idx)::NUMERIC, 2), 0) AS rd_idx               /* 소성 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.iri_val)::NUMERIC, 2), 0) AS iri_val             /* 종단평탄성 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.bc_idx)::NUMERIC, 2), 0) AS bc_idx               /* 블록 */
 			FROM
 			    TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
 			RIGHT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
@@ -1667,19 +1670,22 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
         ]]>
     </select>
 
-    <select id="mummSctnSrvyDtaDAO.mummRoutCntStatsExcel"
-            parameterClass="mummSctnSrvyDtaVO" resultClass="hashMap">
+    <select id="mummSctnSrvyDtaDAO.mummRoutCntStatsExcel" parameterClass="mummSctnSrvyDtaVO" resultClass="hashMap">
         <![CDATA[
             /* mummSctnSrvyDtaDAO.mummRoutCntStatsExcel */
             /* JOY_ 통계 > 포장상태평가 > 노선별통계 */
             SELECT
-                tnrouteinfo.ROAD_GRAD
-                , tnrouteinfo.ROAD_NO AS ROUTE_CODE
-                , tnrouteinfo.ROAD_NAME AS ROAD_NM
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI)::numeric, 2), 0) AS GPCI
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_VMTC)::numeric, 2), 0) AS DMG_CUZ_VMTC
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_CLMT)::numeric, 2), 0) AS DMG_CUZ_CLMT
-                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.DMG_CUZ_ETC)::numeric, 2), 0) AS DMG_CUZ_ETC
+                tnrouteinfo.ROAD_GRAD as road_grad
+                , tnrouteinfo.ROAD_NO AS route_code 
+                , tnrouteinfo.ROAD_NAME AS road_nm
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.GPCI)::        NUMERIC, 2), 0) AS gpci
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ac_idx)::NUMERIC, 2), 0) AS ac_idx               /* 거북등 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.tc_idx+tnmummsctnsrvydta.lc_idx)::NUMERIC / 2, 2), 0) AS lc_tc_idx /* 선형 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.ptchg_idx)::NUMERIC, 2), 0) AS patch_idx         /* 패칭 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.pothole_idx)::NUMERIC, 2), 0) AS pothole_idx     /* 포트홀 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.rd_idx)::NUMERIC, 2), 0) AS rd_idx               /* 소성 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.iri_val)::NUMERIC, 2), 0) AS iri_val             /* 종단평탄성 */
+                , COALESCE(ROUND(AVG(tnmummsctnsrvydta.bc_idx)::NUMERIC, 2), 0) AS bc_idx               /* 블록 */
             FROM
                 TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
             RIGHT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
@@ -1700,8 +1706,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
         ]]>
     </select>
 
-    <select id="mummSctnSrvyDtaDAO.mummDeptCntStats"
-            parameterClass="mummSctnSrvyDtaVO" resultClass="mummSctnSrvyDtaVO">
+    <select id="mummSctnSrvyDtaDAO.mummDeptCntStats" parameterClass="mummSctnSrvyDtaVO" resultClass="mummSctnSrvyDtaVO">
         <![CDATA[
             /* mummSctnSrvyDtaDAO.mummDeptCntStats */
             /* JOY_ 통계 > 포장상태평가 > 관리기관별통계 */
