@@ -26,6 +26,7 @@
 	<c:if test="${empty mummSctnSrvyDtaVO.CELL_ID }">
 	<div class="fl bgsch">
     	<h3>검색조건</h3>
+    	<div class="scroll" style="height:300px;">
 	    <div class="schbx mt10">
 	        <ul class="sch">
 	           <li class="wid100">
@@ -117,6 +118,7 @@
 
 
 	        </ul>
+	    </div>
 	    </div>
 	</div>
 	</c:if>

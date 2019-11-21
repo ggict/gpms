@@ -51,7 +51,7 @@
                     <input type="text" name="SRVY_CN" id="SRVY_CN" style="width:197px;" value="" class="MX_80 CS_50 input" />
                 </li>
                 <li class="wid100">
-                    <label>조사요청일자</label>
+                    <label>조사접수일</label>
                     <input type="text" name="SRVY_REQUST_DE" id="SRVY_REQUST_DE" style="width:70px; margin-right: 3px;" class="DT_DATE input" />
                 </li>
             </ul>
@@ -135,7 +135,7 @@ var _routeCd="", _directCd="", _track="", _strtpt="", _endpt="", _cellIdList="",
 $( document ).ready(function() {
 	
     // 달력 생성
-    COMMON_UTIL.cmCreateDatepicker('SRVY_REQUST_DE', 10);
+    cmCreateDatepicker('SRVY_REQUST_DE', 10);
 
     // 검색 목록 그리드 구성
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
@@ -219,7 +219,15 @@ function removeCheck(){
 		$('#gridArea').jqGrid('delRowData', recs[i]);
 	}
 } 
-
+var cmCreateDatepicker = function(_oId, _oSize){
+	var date = new Date();
+    var currentMonth = date.getMonth();
+    var currentDate = date.getDate();
+    var currentYear = date.getFullYear();
+    $( "#"+_oId ).width(_oSize*8).datepicker({
+        changeMonth: true,changeYear: true,numberOfMonths: 1,showOn: "button",buttonImage: contextPath+ "/images/ico_date.png",buttonImageOnly: true, minDate: new Date(currentYear, currentMonth, currentDate)
+    });
+};
 //검색 처리
 function fnSearch() {
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');

@@ -1348,4 +1348,13 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
         ]]>
     </select>
 
+	<!-- 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다. -->
+	<parameterMap id="prc_savesurveydata_map" class="java.util.Map">
+		<parameter property="USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="ROUTE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</parameterMap>
+    <select id="cntrwkDAO.prc_SaveData" parameterMap="prc_savesurveydata_map" resultClass="hashMap">
+        SELECT * FROM prc_job_predct(?::numeric, ?::text, ?::text)
+    </select>
 </sqlMap>

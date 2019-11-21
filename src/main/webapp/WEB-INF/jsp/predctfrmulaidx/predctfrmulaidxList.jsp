@@ -74,11 +74,11 @@ $( document ).ready(function() {
 			//fnView(rowId);	// 대장 조회
 		}
 	   	,onSelectRow: function(rowId) {		// 클릭 처리
-	   		if(rowId && rowId!==lastsel){
-				jQuery('#gridArea').jqGrid('restoreRow',lastsel);
-				jQuery('#gridArea').jqGrid('editRow',rowId,true);
-				lastsel=rowId;
-			}
+	   		
+			jQuery('#gridArea').jqGrid('restoreRow',lastsel);
+			jQuery('#gridArea').jqGrid('editRow',rowId,true);
+			lastsel=rowId;
+			
 		}
 	   	,loadBeforeSend:function(tsObj, ajaxParam, settings){
 	   		if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){

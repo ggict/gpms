@@ -57,10 +57,11 @@
         </div>
     </div>
     <div class="fr listbx" style="left:400px;">
-        <h3>조사요청구간 목록</h3>
+        <h3>조사요청구간</h3>
         <p class="location">
             <span>조사자료 관리</span>
-            <strong>조사요청구간 관리</strong>
+            <span>조사요청구간 관리</span>
+            <strong>조사요청구간 수정</strong>
         </p>
         <div class="mt10 ml10 mr10">
             <table class="tbview" summary="포장 세부공사 위치정보를 조회한다.">
@@ -132,8 +133,8 @@ var _routeCd="", _directCd="", _track="", _strtpt="", _endpt="", _cellIdList="",
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-    // 달력 생성
-    COMMON_UTIL.cmCreateDatepicker('SRVY_REQUST_DE', 10);
+	// 달력 생성
+    cmCreateDatepicker('SRVY_REQUST_DE', 10);
 	
     var ids = '${cells}';
     $('#PAV_CELL_ID').val(ids);
@@ -212,7 +213,15 @@ $( document ).ready(function() {
     fnSearch();
     addBtnEventHandler();
 });
-
+var cmCreateDatepicker = function(_oId, _oSize){
+	var date = new Date();
+    var currentMonth = date.getMonth();
+    var currentDate = date.getDate();
+    var currentYear = date.getFullYear();
+    $( "#"+_oId ).width(_oSize*8).datepicker({
+        changeMonth: true,changeYear: true,numberOfMonths: 1,showOn: "button",buttonImage: contextPath+ "/images/ico_date.png",buttonImageOnly: true, minDate: new Date(currentYear, currentMonth, currentDate)
+    });
+};
 function removeCheck(){
 	var recs = jQuery("#gridArea").jqGrid('getGridParam', 'selarrrow');
     var rows = recs.length;

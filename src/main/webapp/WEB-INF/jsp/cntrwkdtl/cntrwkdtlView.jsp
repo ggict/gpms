@@ -352,6 +352,7 @@ function fnViewLocation(){
 				<!-- KEY 파라메터 -->
 				<input type="hidden" id="CNTRWK_ID" name="CNTRWK_ID" value="${cntrwkDtlVO.CNTRWK_ID}"/>
 				<input type="hidden" id="DETAIL_CNTRWK_ID" name="DETAIL_CNTRWK_ID" value="${cntrwkDtlVO.DETAIL_CNTRWK_ID}"/>
+				<input type="hidden" id="CNTRWK_SE" name="CNTRWK_SE" value="${CNTRWK_SE}"/>
 				<%-- <input type="hidden" id="CELL_ID" name="CELL_ID" value="${param.CELL_ID }"/> --%>
 				<div class="titbx">
 					<h4>기본정보</h4>

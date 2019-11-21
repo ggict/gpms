@@ -145,6 +145,15 @@ public interface CntrwkService {
      * @exception : Exception
      */
 	int selectCntrwkListBySctnCnt(CntrwkVO cntrwkVO);
+	
+	/**
+	 * 집계자료_최신_현황
+	 * @date		: 2019.11.19
+	 * 
+	 * @param		: CNTRWK_SE
+	 * @exception	: Exception
+	 */
+	HashMap prc_SaveData(HashMap resultMap);
 
 }
 
