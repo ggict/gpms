@@ -16,7 +16,6 @@
         <h2>포장상태 평가</h2>
         <ul class="btab_menu">
             <li style="height:146px"><a href="#" class="tab1" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>');">포장상태<br />평가정보 조회</a></li>
-            <li style="height:145px"><a href="#" class="tab2" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlList.do"/>');">포장상태 평가</a></li>
         </ul>
     </div>
 
