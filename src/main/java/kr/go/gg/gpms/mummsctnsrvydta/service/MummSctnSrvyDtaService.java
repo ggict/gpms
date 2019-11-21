@@ -183,6 +183,26 @@ public interface MummSctnSrvyDtaService {
     List<MummSctnSrvyDtaVO> mummDeptCntStatsExcel(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception;
     
     /**
+     * 통계 > 포장상태 평가 > 시군구별 > 데이터조회
+     * @date      : 2019. 11. 21. 추가
+     * 
+     * @param     : mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
+     * @return    : List<MummSctnSrvyDtaVO>
+     * @exception : Exception
+     */
+    List<MummSctnSrvyDtaVO> mummAdmCntStats(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception;
+    
+    /**
+     * 통계 > 포장상태 평가 > 시군구별통계 > 엑셀
+     * @date      : 2019. 11. 21. 추가
+     * 
+     * @param     : mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
+     * @return    : List<MummSctnSrvyDtaVO>
+     * @exception : Exception
+     */
+    List<MummSctnSrvyDtaVO> mummAdmCntStatsExcel(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception;
+    
+    /**
      * 통합정보조회 > 포장상태평가조회 > 엑셀저장
      * @author    : JOY
      * @date      : 2018. 9. 12.

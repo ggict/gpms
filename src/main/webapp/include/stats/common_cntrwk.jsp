@@ -186,6 +186,7 @@
         <ul class="btab_menu" style="min-height: 300px">
             <li style="height: 150px"><a href="#sch_cnt01" class="tab1" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="mumm/mummRoutCntStats.do"/>');">노선별<br />통계</a></li>
             <li style="height: 150px"><a href="#sch_cnt02" class="tab2" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="mumm/mummDeptCntStats.do"/>');">관리기관별<br />통계</a></li>
+            <li style="height: 150px"><a href="#sch_cnt03" class="tab3" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="mumm/mummAdmCntStats.do"/>');">시군구별<br />통계</a></li>
         </ul>
 
         <div id="schRoutCnt">

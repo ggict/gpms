@@ -1853,6 +1853,135 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
             ORDER BY dept_code desc
         ]]>
     </select>
+    
+    <select id="mummSctnSrvyDtaDAO.mummAdmCntStats" parameterClass="mummSctnSrvyDtaVO" resultClass="hashmap">
+        <![CDATA[
+            /* mummSctnSrvyDtaDAO.mummAdmCntStats */
+            /* JOY_ 통계 > 포장상태평가 > 시군구별통계 */
+            SELECT
+                n3a.adm_code
+                , n3a.ADM_NM AS adm_nm
+                , COALESCE(mumm.GPCI, 0) AS gpci
+                , COALESCE(mumm.AC_IDX, 0) AS ac_idx
+                , COALESCE(mumm.LC_TC_IDX, 0) AS lc_tc_idx
+                , COALESCE(mumm.PTCHG_IDX, 0) AS ptchg_idx
+                , COALESCE(mumm.POTHOLE_IDX, 0) AS pothole_idx
+                , COALESCE(mumm.RD_IDX, 0) AS rd_idx
+                , COALESCE(mumm.IRI_VAL, 0) AS iri_val
+                , COALESCE(mumm.BC_IDX, 0) AS bc_idx
+                
+            FROM (
+                SELECT
+                    SUBSTR(BJCD, 1, 5) AS ADM_CODE
+                    , NAME AS ADM_NM
+                FROM N3A_G0100000
+            ) n3a
+            LEFT OUTER jOIN (
+                SELECT
+                    tb.ADM_CODE
+                    , ROUND(AVG(tb.GPCI)::numeric, 2) AS GPCI
+                    , ROUND(AVG(tb.AC_IDX)::numeric, 2) AS AC_IDX
+                    , ROUND(AVG(tb.TC_IDX + tb.LC_IDX)::numeric / 2, 2) AS LC_TC_IDX
+                    , ROUND(AVG(tb.PTCHG_IDX)::numeric, 2) AS PTCHG_IDX
+                    , ROUND(AVG(tb.POTHOLE_IDX)::numeric, 2) AS POTHOLE_IDX
+                    , ROUND(AVG(tb.RD_IDX)::numeric, 2) AS RD_IDX
+                    , ROUND(AVG(tb.IRI_VAL)::numeric, 2) AS IRI_VAL
+                    , ROUND(AVG(tb.BC_IDX)::numeric, 2) AS BC_IDX
+                FROM (
+                    SELECT
+                        cell10.ADM_CODE
+                        , tnmummsctnsrvydta.GPCI
+                        , tnmummsctnsrvydta.AC_IDX
+                        , tnmummsctnsrvydta.TC_IDX
+                        , tnmummsctnsrvydta.LC_IDX
+                        , tnmummsctnsrvydta.PTCHG_IDX
+                        , tnmummsctnsrvydta.POTHOLE_IDX
+                        , tnmummsctnsrvydta.RD_IDX
+                        , tnmummsctnsrvydta.IRI_VAL
+                        , tnmummsctnsrvydta.BC_IDX
+                    FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
+                    JOIN CELL_10 cell10
+                        ON cell10.ROUTE_CODE = tnmummsctnsrvydta.ROUTE_CODE
+                       AND cell10.DIRECT_CODE = tnmummsctnsrvydta.DIRECT_CODE
+                       AND cell10.TRACK = tnmummsctnsrvydta.TRACK
+                       AND cell10.STRTPT = tnmummsctnsrvydta.STRTPT
+                       AND cell10.ENDPT = tnmummsctnsrvydta.ENDPT
+                    WHERE 1=1
+                        AND tnmummsctnsrvydta.USE_AT = 'Y'
+                        AND tnmummsctnsrvydta.DELETE_AT = 'N'
+                        AND tnmummsctnsrvydta.LAST_DTA_AT = 'Y'
+                ) tb
+                GROUP BY tb.ADM_CODE
+            ) mumm
+            ON n3a.ADM_CODE = mumm.ADM_CODE
+            ORDER BY n3a.ADM_CODE asc
+        ]]>
+
+    </select>
+
+    <select id="mummSctnSrvyDtaDAO.mummAdmCntStatsExcel" parameterClass="mummSctnSrvyDtaVO" resultClass="hashMap">
+        <![CDATA[
+            /* mummSctnSrvyDtaDAO.mummAdmCntStatsExcel */
+            /* JOY_ 통계 > 포장상태평가 > 시군구별통계 */
+            SELECT
+                n3a.adm_code
+                , n3a.ADM_NM AS adm_nm
+                , COALESCE(mumm.GPCI, 0) AS gpci
+                , COALESCE(mumm.AC_IDX, 0) AS ac_idx
+                , COALESCE(mumm.LC_TC_IDX, 0) AS lc_tc_idx
+                , COALESCE(mumm.PTCHG_IDX, 0) AS ptchg_idx
+                , COALESCE(mumm.POTHOLE_IDX, 0) AS pothole_idx
+                , COALESCE(mumm.RD_IDX, 0) AS rd_idx
+                , COALESCE(mumm.IRI_VAL, 0) AS iri_val
+                , COALESCE(mumm.BC_IDX, 0) AS bc_idx
+                
+            FROM (
+                SELECT
+                    SUBSTR(BJCD, 1, 5) AS ADM_CODE
+                    , NAME AS ADM_NM
+                FROM N3A_G0100000
+            ) n3a
+            LEFT OUTER jOIN (
+                SELECT
+                    tb.ADM_CODE
+                    , ROUND(AVG(tb.GPCI)::numeric, 2) AS GPCI
+                    , ROUND(AVG(tb.AC_IDX)::numeric, 2) AS AC_IDX
+                    , ROUND(AVG(tb.TC_IDX + tb.LC_IDX)::numeric / 2, 2) AS LC_TC_IDX
+                    , ROUND(AVG(tb.PTCHG_IDX)::numeric, 2) AS PTCHG_IDX
+                    , ROUND(AVG(tb.POTHOLE_IDX)::numeric, 2) AS POTHOLE_IDX
+                    , ROUND(AVG(tb.RD_IDX)::numeric, 2) AS RD_IDX
+                    , ROUND(AVG(tb.IRI_VAL)::numeric, 2) AS IRI_VAL
+                    , ROUND(AVG(tb.BC_IDX)::numeric, 2) AS BC_IDX
+                FROM (
+                    SELECT
+                        cell10.ADM_CODE
+                        , tnmummsctnsrvydta.GPCI
+                        , tnmummsctnsrvydta.AC_IDX
+                        , tnmummsctnsrvydta.TC_IDX
+                        , tnmummsctnsrvydta.LC_IDX
+                        , tnmummsctnsrvydta.PTCHG_IDX
+                        , tnmummsctnsrvydta.POTHOLE_IDX
+                        , tnmummsctnsrvydta.RD_IDX
+                        , tnmummsctnsrvydta.IRI_VAL
+                        , tnmummsctnsrvydta.BC_IDX
+                    FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
+                    JOIN CELL_10 cell10
+                        ON cell10.ROUTE_CODE = tnmummsctnsrvydta.ROUTE_CODE
+                       AND cell10.DIRECT_CODE = tnmummsctnsrvydta.DIRECT_CODE
+                       AND cell10.TRACK = tnmummsctnsrvydta.TRACK
+                       AND cell10.STRTPT = tnmummsctnsrvydta.STRTPT
+                       AND cell10.ENDPT = tnmummsctnsrvydta.ENDPT
+                    WHERE 1=1
+                        AND tnmummsctnsrvydta.USE_AT = 'Y'
+                        AND tnmummsctnsrvydta.DELETE_AT = 'N'
+                        AND tnmummsctnsrvydta.LAST_DTA_AT = 'Y'
+                ) tb
+                GROUP BY tb.ADM_CODE
+            ) mumm
+            ON n3a.ADM_CODE = mumm.ADM_CODE
+            ORDER BY n3a.ADM_CODE asc
+        ]]>
+    </select>
 
 	<resultMap id="mapMummSctnSrvyDtaVO" class="mummSctnSrvyDtaVO">
 		 <result property="PREDCT_YEAR" column="PREDCT_YEAR" /><!-- COMMENTS -->

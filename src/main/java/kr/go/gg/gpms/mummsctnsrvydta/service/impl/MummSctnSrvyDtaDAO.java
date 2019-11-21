@@ -259,6 +259,31 @@ public class MummSctnSrvyDtaDAO extends BaseDAO {
     public List mummDeptCntStatsExcel(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception {
         return (List)list("mummSctnSrvyDtaDAO.mummDeptCntStatsExcel", mummSctnSrvyDtaVO);
     };
+    
+    /**
+     * 통계 > 포장상태 평가 > 시군구별통계 > 데이터조회
+     * @date      : 2019. 11. 21. 추가
+     * 
+     * @param     : mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
+     * @return    : List<MummSctnSrvyDtaVO>
+     * @exception : Exception
+     */
+    @SuppressWarnings("unchecked")
+    public List<MummSctnSrvyDtaVO> mummAdmCntStats(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception {
+        return (List<MummSctnSrvyDtaVO>)list("mummSctnSrvyDtaDAO.mummAdmCntStats", mummSctnSrvyDtaVO);
+    };
+    
+    /**
+     * 통계 > 포장상태 평가 > 시군구별통계 > 엑셀
+     * @date      : 2019. 11. 21. 추가
+     * 
+     * @param     : mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
+     * @return    : List<MummSctnSrvyDtaVO>
+     * @exception : Exception
+     */
+    public List mummAdmCntStatsExcel(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception {
+        return (List)list("mummSctnSrvyDtaDAO.mummAdmCntStatsExcel", mummSctnSrvyDtaVO);
+    };
 
     /**
      * 통합정보조회 > 포장상태평가조회 > 엑셀저장

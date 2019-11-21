@@ -883,6 +883,74 @@ public class MummSctnSrvyDtaController {
 
 		return new ExcelView();
 	}
+	
+	/**
+	 * 통계 > 포장상태 평가 > 시군구별통계 페이지 조회
+	 *
+	 * @date : 2019. 11. 21. 추가
+	 *
+	 * @param : mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
+	 * @return : "/stats/mumm/mummAdmCntStats"
+	 * @exception : Exception
+	 */
+	@RequestMapping(value = "/mumm/mummAdmCntStats.do")
+	public String selectAdmCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
+
+		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
+
+		return "/stats/mumm/mummAdmCntStats";
+	}
+
+	/**
+	 * 통계 > 포장상태 평가 > 시군구별통계 > 데이터조회
+	 *
+	 * @date : 2019. 11. 21. 추가
+	 *
+	 * @param : mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
+	 * @return : List<MummSctnSrvyDtaVO>
+	 * @exception : Exception
+	 */
+	@RequestMapping(value = { "/api/mumm/mummAdmCntStats.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Map<String, Object> mummAdmCntStats(@RequestBody MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model,HttpSession session) throws Exception {
+
+		// 데이터 조회
+		List<MummSctnSrvyDtaVO> result = mummSctnSrvyDtaService.mummAdmCntStats(mummSctnSrvyDtaVO);
+		
+		int total_page = 0;
+
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("page", mummSctnSrvyDtaVO.getPage());
+		map.put("total", total_page);
+		map.put("rows", result);
+
+		return map;
+	}
+
+	/**
+	 * 통계 > 포장상태 평가 > 시군구별통계 > 엑셀
+	 *
+	 * @date : 2019. 11. 21. 추가
+	 *
+	 * @param : mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
+	 * @return : View
+	 * @exception : Exception
+	 */
+	@RequestMapping(value = "/mumm/mummAdmCntStatsExcel.do")
+	public View mummAdmCntStatsExcel(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO,ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = mummSctnSrvyDtaService.mummAdmCntStatsExcel(mummSctnSrvyDtaVO);
+
+		String[] excel_title = { "시·군구명", "GPCI", "거북등균열", "선형균열", "패칭", "포트홀", "소성변형", "종단평탄성", "블럭균열" };
+		String[] excel_column = { "adm_nm", "gpci","ac_idx", "lc_tc_idx", "ptchg_idx", "pothole_idx", "rd_idx", "iri_val", "bc_idx" };
+
+		model.addAttribute("file_name","포장상태평가_시군구별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
+
+		return new ExcelView();
+	}
 
 	@RequestMapping(value="/api/mumm/integratedListExcel.do")
     public View integratedListExcel(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO,  ModelMap model, HttpServletRequest request, HttpSession session)  throws Exception {
