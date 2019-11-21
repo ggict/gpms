@@ -625,39 +625,39 @@ public class SmDtaGnlSttusVO extends BaseVO {
 	 * 공사구간
 	 */
 	@XmlElement
-	private String CNTRWK_LEN;
+	private String CNTRWK_AT;
 
 	/**
 	 * 미개통구간
 	 */
 	@XmlElement
-	private String UNOPN_LEN;
+	private String UNOPN_AT;
 	
 	@JsonProperty(value="MRG_RD_NM")
 	public String getMRG_RD_NM() {
-		return CNTRWK_LEN;
+		return MRG_RD_NM;
 	}
 
 	public void setMRG_RD_NM(String mRG_RD_NM) {
-		CNTRWK_LEN = mRG_RD_NM;
+		MRG_RD_NM = mRG_RD_NM;
 	}
 	
-	@JsonProperty(value="CNTRWK_LEN")
-	public String getCNTRWK_LEN() {
-		return CNTRWK_LEN;
+	@JsonProperty(value="CNTRWK_AT")
+	public String getCNTRWK_AT() {
+		return CNTRWK_AT;
 	}
 
-	public void setCNTRWK_LEN(String cNTRWK_LEN) {
-		CNTRWK_LEN = cNTRWK_LEN;
+	public void setCNTRWK_AT(String cNTRWK_AT) {
+		CNTRWK_AT = CNTRWK_AT;
 	}
 
-	@JsonProperty(value="UNOPN_LEN")
-	public String getUNOPN_LEN() {
-		return UNOPN_LEN;
+	@JsonProperty(value="UNOPN_AT")
+	public String getUNOPN_AT() {
+		return UNOPN_AT;
 	}
 
-	public void setUNOPN_LEN(String uNOPN_LEN) {
-		UNOPN_LEN = uNOPN_LEN;
+	public void setUNOPN_AT(String uNOPN_AT) {
+		UNOPN_AT = UNOPN_AT;
 	}
 
 	/**

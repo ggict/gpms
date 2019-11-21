@@ -200,4 +200,14 @@ public class CntrwkServiceImpl extends AbstractServiceImpl implements CntrwkServ
 	    return cntrwkDAO.selectCntrwkListBySctnCnt(cntrwkVO);
 	};
 
+	/**
+	 * 집계자료_최신_현황
+	 * @date		: 2019.11.19
+	 * 
+	 * @param		: CNTRWK_SE
+	 * @exception	: Exception
+	 */
+	public HashMap prc_SaveData(HashMap resultMap) {
+		return cntrwkDAO.prc_SaveData(resultMap);		
+	};
 }

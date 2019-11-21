@@ -96,7 +96,7 @@ $( document ).ready(function() {
         //,postData: JSON.stringify( $("#frm").cmSerializeObject())
         ,postData: $("#frm").cmSerializeObject()
         ,ignoreCase: true
-        ,colNames:["SRVY_REQUST_SCTN_NO","조사명","노선번호","노선명","조사내용","행선","차로","시점(m)","종점(m)","조사요청일자","위치보기"]
+        ,colNames:["SRVY_REQUST_SCTN_NO","조사명","노선번호","노선명","조사내용","행선","차로","시점(m)","종점(m)","조사접수일","위치보기"]
         ,colModel:[
             {name:'SRVY_REQUST_SCTN_NO',index:'SRVY_REQUST_SCTN_NO', hidden: true}
             ,{name:'SRVY_NM',index:'SRVY_NM', align:'center', width:60}

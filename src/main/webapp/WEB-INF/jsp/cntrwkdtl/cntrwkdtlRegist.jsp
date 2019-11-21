@@ -31,6 +31,7 @@
 			<input type="hidden" id="PAV_CELL_ID" name="PAV_CELL_ID" value=""/>
 			<input type="hidden" id="DETAIL_CNTRWK_ID" name="DETAIL_CNTRWK_ID" value="<c:out value="${cntrwkDtlVO.DETAIL_CNTRWK_ID}"/>"/>
 			<input type="hidden" id="DETAIL_CNTRWK_GROUP" name="DETAIL_CNTRWK_GROUP" value="<c:out value="${cntrwkDtlVO.DETAIL_CNTRWK_GROUP}"/>"/>
+			<input type="hidden" id="CNTRWK_SE" name="CNTRWK_SE" value="${cntrwkVO.CNTRWK_SE}"/>
 			<!-- 기타 파라메터 -->
 			<input type="hidden" id="EXT_TAB" name="EXT_TAB" value="<c:out value="${param.EXT_TAB}"/>"/>
 			<div class="titbx">

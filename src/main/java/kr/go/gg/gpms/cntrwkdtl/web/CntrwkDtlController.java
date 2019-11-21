@@ -121,9 +121,10 @@ public class CntrwkDtlController extends BaseController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDtlList.do" })
-	public String selectCntrwkDtlList(CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpServletRequest request)
+	public String selectCntrwkDtlList(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, CntrwkVO cntrwkVO,  ModelMap model, HttpServletRequest request)
 			throws Exception {
-
+		
+		model.addAttribute("CNTRWK_SE",cntrwkVO.getCNTRWK_SE());
 		return "/cntrwkdtl/cntrwkdtlList";
 	}
 
@@ -248,11 +249,9 @@ public class CntrwkDtlController extends BaseController {
 	private PavMatrlService pavMatrlService;
 
 	@RequestMapping(value = { "/cntrwkdtl/addCntrwkDtlView.do" })
-	public String addCntrwkDtlView(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, ModelMap model)
+	public String addCntrwkDtlView(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, CntrwkVO cntrwkVO, ModelMap model)
 			throws Exception {
 		model.addAttribute("cntrwkDtlVO", new CntrwkDtlVO());
-		CntrwkVO cntrwkVO = new CntrwkVO();
-		cntrwkVO.setCNTRWK_ID(cntrwkDtlVO.getCNTRWK_ID());
 		model.addAttribute("cntrwkVO", cntrwkService.selectCntrwk(cntrwkVO));
 
 		Integer cntrwk_start_year = egovPropertyService.getInt("CNTRWK_START_YEAR", 2017);
@@ -316,11 +315,11 @@ public class CntrwkDtlController extends BaseController {
 	}
 
 	@RequestMapping(value = { "/cntrwkdtl/addCntrwkDtl.do" })
-	public String addCntrwkDtl(@ModelAttribute CntrwkDtlVO cntrwkDtlVO, CntrwkCellInfoVO cntrwkCellInfoVO,
+	public String addCntrwkDtl(@ModelAttribute CntrwkDtlVO cntrwkDtlVO,CntrwkVO cntrwkVO, CntrwkCellInfoVO cntrwkCellInfoVO,
 			BindingResult bindingResult, Model model, HttpServletRequest request, SessionStatus status,
 			HttpSession session) throws Exception {
 		Map<String, String> req = requestToHashMap(request);
-
+		String userNo = sessionManager.getUserNo();
 		String action_flag = StringUtils.isNotEmpty(req.get("action_flag")) ? req.get("action_flag").trim() : "INSERT";
 		// common 결과처리 변수 [수정X]
 		String resultCode = "";
@@ -336,6 +335,15 @@ public class CntrwkDtlController extends BaseController {
 			BindBeansToActiveUser(cntrwkDtlVO);
 
 			String cntrwkDtlId = cntrwkDtlService.insertCntrwkDtl(cntrwkDtlVO);
+			System.out.println("CNTRWK_SE : " + cntrwkVO.getCNTRWK_SE());
+			if(cntrwkVO.getCNTRWK_SE().equals("CWSE0008") || cntrwkVO.getCNTRWK_SE().equals("CWSE0009")) {
+				HashMap<String, String> resultMap = new HashMap<>();
+				resultMap.put("ROUTE_CODE", cntrwkDtlVO.getROUTE_CODE());
+				resultMap.put("USER_NO", userNo);
+				resultMap.put("p_MODE", "NONE");
+				
+				HashMap result = cntrwkService.prc_SaveData(resultMap);
+			}
 			// 위치 정보 등록
 			String cellIdList[] = cntrwkCellInfoVO.getPAV_CELL_ID().split(",");
 			String pavYear = cntrwkDtlVO.getRPAIR_END_DE() == null ? ""
@@ -390,10 +398,10 @@ public class CntrwkDtlController extends BaseController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDtl.do" })
-	public String selectCntrwkDtl(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, AttachFileVO attachFileVO,
+	public String selectCntrwkDtl(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO,CntrwkVO cntrwkVO, AttachFileVO attachFileVO,
 			ModelMap model, BindingResult bindingResult) throws Exception {
 		model.addAttribute("cntrwkDtlVO", cntrwkDtlService.selectCntrwkDtl(cntrwkDtlVO));
-
+		model.addAttribute("CNTRWK_SE",cntrwkVO.getCNTRWK_SE());
 		return "/cntrwkdtl/cntrwkdtlView";
 	}
 

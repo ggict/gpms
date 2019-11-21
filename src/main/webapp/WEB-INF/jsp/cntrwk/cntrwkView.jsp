@@ -41,7 +41,7 @@
 	<div class="posiR">
        	<ul class="ctab_menu">
             <li class="sel"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('cntrwk/selectCntrwkView.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}')">기본정보</a></li>
-			<li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('cntrwkdtl/selectCntrwkDtlList.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}')">세부공사</a></li>
+			<li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('cntrwkdtl/selectCntrwkDtlList.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}&CNTRWK_SE=${cntrwkVO.CNTRWK_SE}')">세부공사</a></li>
 			<%-- <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('flaw/selectFlaw.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}')">하자기본정보</a></li>
 			<li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('flawcntrwk/selectFlawCntrwkList.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}')">하자보수공사</a></li> --%>
        	</ul>

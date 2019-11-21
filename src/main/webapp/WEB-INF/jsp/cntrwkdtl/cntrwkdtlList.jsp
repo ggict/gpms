@@ -21,6 +21,7 @@
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" id="CNTRWK_ID" name="CNTRWK_ID" value="${param.CNTRWK_ID }" />
+<input type="hidden" id="CNTRWK_SE" name="CNTRWK_SE" value="${CNTRWK_SE}"/>
 <div>
 	<div class="posiR">
        	<ul class="ctab_menu">
@@ -215,8 +216,8 @@ function fnView(rowId) {
 		var rowData = $("#gridArea").getRowData(rowId);
 		var deCntrwkId = rowData["DETAIL_CNTRWK_ID"];
 		var cellId = rowData["CELL_ID"];
-		
-		COMMON_UTIL.cmWindowOpen('상세정보 조회', "<c:url value='/cntrwkdtl/selectCntrwkDtl.do'/>?DETAIL_CNTRWK_ID="+deCntrwkId+"&CELL_ID="+cellId, 700, 1200, false, $("#wnd_id").val(), 'center');
+		var cntrwk_se = $('#CNTRWK_SE').val();
+		COMMON_UTIL.cmWindowOpen('상세정보 조회', "<c:url value='/cntrwkdtl/selectCntrwkDtl.do'/>?DETAIL_CNTRWK_ID="+deCntrwkId+"&CELL_ID="+cellId+"&CNTRWK_SE="+cntrwk_se, 700, 1200, false, $("#wnd_id").val(), 'center');
 	}
 	else
 		alert('<spring:message code="warn.checkplz.msg" />');
@@ -245,6 +246,7 @@ function fnWrite() {
 					iframe : window,
 					callback : "fn_add_cntrwkDtl",
 					CNTRWK_ID : $("#CNTRWK_ID").val(),
+					CNTRWK_SE : $("#CNTRWK_SE").val(),
 					clearMap : false
 			};
 			

@@ -185,8 +185,21 @@ public class CntrwkDAO extends BaseDAO {
      * @param     : cntrwkVO - 조회할 정보가 담긴 cntrwkVO
      * @exception : Exception
      */
+    @SuppressWarnings("unchecked")
     public int selectCntrwkListBySctnCnt(CntrwkVO cntrwkVO) {
         return (Integer) select("cntrwkDAO.selectCntrwkListBySctnCnt", cntrwkVO);
     };
 
+    /**
+	 * 집계자료_최신_현황
+	 * @date		: 2019.11.19
+	 * 
+	 * @param		: CNTRWK_SE
+	 * @exception	: Exception
+	 */
+	public HashMap prc_SaveData(HashMap resultMap) {
+		HashMap resultVO = (HashMap) select("cntrwkDAO.prc_SaveData",resultMap);
+		System.out.println("resultVO : " + resultVO.toString());
+		return resultVO;
+	}
 }
