@@ -96,9 +96,9 @@
                         </tr>
                         <tr>
                         	<th scope="row">공사구간</th>
-                        	<td>${smDtaGnlSttusVO.CNTRWK_LEN }</td>
+                        	<td>${smDtaGnlSttusVO.CNTRWK_AT }</td>
                         	<th scope="row">미개통구간</th>
-                        	<td>${smDtaGnlSttusVO.UNOPN_LEN }</td>
+                        	<td>${smDtaGnlSttusVO.UNOPN_AT }</td>
                         </tr>
                     </tbody>
 
