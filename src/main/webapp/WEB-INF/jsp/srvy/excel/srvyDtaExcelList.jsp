@@ -41,7 +41,7 @@ $( document ).ready(function() {
 			,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
 			,{name:'direct_CODE',index:'direct_CODE', align:'center', width:70}
 			,{name:'track',index:'TRACK', align:'center', width:70}
-			,{name:'success_KND',index:'success_KND', align:'center', width:70}
+			,{name:'success_KND',index:'success_KND', align:'center', width:70, formatter:fn_btn_formatter_fail}
 			,{name:'data_CO',index:'data_CO', align:'center', width:70}
 			,{name:'CREAT_DT',index:'CREAT_DT', align:'center', width:70}
 			,{name:'crtr_NM',index:'crtr_NM', align:'center', width:50}
@@ -179,26 +179,19 @@ function fn_btn_formatter_comp(cellValue, options, rowObject){
 
 function fn_btn_formatter_fail(cellValue, options, rowObject){
 	var btn ="";
-	btn  = "<span style='width:50px;display:inline-block;'><font>" + rowObject.FAIL_CNT + "</font></span>";
-	btn += "<a href='#' class='schbtn' onclick=\"fn_upd_res_log('" + rowObject.CREAT_DT + "', '" + rowObject.CRTR_NO + "', 'FAIL', '" + rowObject.FAIL_CNT + "');\"><font color=white>상세조회</font></a>";
+	btn  = "<span style='width:50px;display:inline-block;'><font>" + rowObject.success_KND + "</font></span>";
+	if(rowObject.success_KND == 'F') {
+		btn += "<a href='#' class='schbtn' onclick=\"fn_upd_res_log('" + rowObject.CREAT_DT + "', '" + rowObject.CRTR_NO + "');\"><font color=white>상세조회</font></a>";
+	}
+	
 	return btn;
 }
 
 // 상세조회
-function fn_upd_res_log(creatDt, creatNum, type, cnt){
+function fn_upd_res_log(creatDt, creatNum){
 	$("#CREAT_DT").val(creatDt);
 	$("#CRTR_NO").val(creatNum);
-	$("#PROCESS_STTUS").val(type);
-	$("#cnt").val(cnt);
-
-	switch(type){
-		case "COMP":
-			COMMON_UTIL.cmMovePage("viewForm", contextPath + "srvydtaexcel/selectSrvyDtaExcelCompList.do");
-			break;
-		case "FAIL":
-			COMMON_UTIL.cmMovePage("viewForm", contextPath + "srvydtaexcel/selectSrvyDtaExcelFailList.do");
-			break;
-	}
+	COMMON_UTIL.cmMovePage("viewForm", contextPath + "srvydtaexcel/selectSrvyDtaExcelFailList.do");
 }
 
 //노선 번호 변경 시 노선명 자동 조회
@@ -249,6 +242,7 @@ function fnPrcProcess(srvyNo) {
         ,success: function(data){
             alert(data.result);
             alert(data.resultMSG);
+            fn_search();
         }
         ,error: function(a,b,msg){
 
@@ -293,7 +287,7 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 <div class="tabcont">
 	<div class="fl bgsch">
 			<h3>파일첨부
-				<a href="#" class="whitebtn fr mt10" style="margin-top: 170px !important;" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
+				<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
 				<input multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
 			</h3>
 			
@@ -336,7 +330,7 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 			<div class="schbx mt10">
 			    <ul class="sch" style="padding: 55px 10px 5px;">
 			        <li>
-			            <div class="btfilebx scroll" style="width:258px; height:70px" id="file_list">
+			            <div class="btfilebx scroll" style="width:258px; height:40px" id="file_list">
 			            	<ul name="fileSet">
 			            	</ul>
 			            </div>

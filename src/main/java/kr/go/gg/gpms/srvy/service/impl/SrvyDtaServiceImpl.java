@@ -203,11 +203,40 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        		frmulaSeCode = frmulaList.get(j).getFRMULA_SE_CODE();
 	        		if(StringUtils.isNotEmpty(arithFrmla)) {
 	        			if(StringUtils.isNotEmpty(frmulaSeCode)) {
-	        				newSeCode = frmulaSeCode.substring(0,1).
-	        							concat(String.valueOf(i+Integer.parseInt(frmulaSeCode.substring(1))-1));
-	        				_arithFrmula = arithFrmla.replace(frmulaSeCode, newSeCode);
+	        				if(!frmulaSeCode.contains(",")) {	//코드 단건
+	        					if(frmulaSeCode.charAt(1)>=47 && frmulaSeCode.charAt(1)<=58) {	//숫자
+	        						newSeCode = frmulaSeCode.substring(0,1).concat(String.valueOf(i+Integer.parseInt(frmulaSeCode.substring(1))-1));
+	        					} else {	//문자
+	        						newSeCode = frmulaSeCode.substring(0,2).concat(String.valueOf(i+Integer.parseInt(frmulaSeCode.substring(2))-1));
+	        					}
+	        					_arithFrmula = arithFrmla.replace(frmulaSeCode, newSeCode);
+	        				} else {	//코드 다건
+	        					char arrayKey;
+	        					String arrayCode = "";
+	        					String[] arrayFrmulaSeCode = frmulaSeCode.split(",");
+	        					int arrayLength = arrayFrmulaSeCode.length;
+        					
+	        					for(int k=0; k<arrayLength; k++) {
+	        						arrayKey = arrayFrmulaSeCode[k].charAt(1);
+	        						arrayCode = arrayFrmulaSeCode[k];
+	        						if(arrayKey>=47 && arrayKey<=58) {	//숫자
+	        							newSeCode = arrayCode.substring(0,1).concat(String.valueOf(i+Integer.parseInt(arrayCode.substring(1))-1));
+	        						}else {	//문자
+	        							newSeCode = arrayCode.substring(0,2).concat(String.valueOf(i+Integer.parseInt(arrayCode.substring(2))-1));
+	        						}
+	        						if(k==0) {
+	        							_arithFrmula = arithFrmla.replace(arrayCode, newSeCode);
+	        						} else {
+	        							_arithFrmula = _arithFrmula.replace(arrayCode, newSeCode);
+	        						}
+	        					}
+	        				}
+	        				
 		        			dbRow.createCell(j).setCellFormula(_arithFrmula);
 	        			}//if frmulaSeCode null 
+	        			else if("0".equals(arithFrmla)) {
+	        				dbRow.createCell(j).setCellValue("0");
+	        			}
         				else {
         					dbRow.createCell(j).setCellFormula(arithFrmla);
         				}
@@ -433,6 +462,27 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 */
 	public int selectSrvyDtaUploadResultCount(SrvyDtaVO srvyDtaVO) {
 		return srvyDtaDAO.selectSrvyDtaUploadResultCount(srvyDtaVO);
+	}
+	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
+	 * @exception Exception
+	 */
+	public SrvyDtaVO selectTmpExcelData() throws Exception {
+		SrvyDtaVO resultVO = srvyDtaDAO.selectTmpExcelData();
+		return resultVO;
+	}
+	
+	/**
+	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
+	 * @param srvyDtaSttusVO
+	 * @return
+	 */
+	@Override
+	public HashMap procAggregateGeneral(SrvyDtaVO srvyDtaVO) {
+		return srvyDtaDAO.procAggregateGeneral(srvyDtaVO);
 	}
 	
 }

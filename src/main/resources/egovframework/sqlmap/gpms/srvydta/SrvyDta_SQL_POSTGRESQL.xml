@@ -136,38 +136,146 @@
 			, ENDPT /* 최소_구간_조사_자료.종점 */
 			, IRI_VAL /* 최소_구간_조사_자료.종단평탄성_값 */
 			, RD_VAL /* 최소_구간_조사_자료.소성변형_값 */
+			, VRTCAL_CR /* 최소_구간_조사_자료.종방향_균열 */
+			, HRZNTAL_CR /* 최소_구간_조사_자료.횡방향_균열 */
+			, CNSTRCT_JOINT_CR /* 최소_구간_조사_자료.시공_줄눈_균열 */
+			, TRTS_BAC_CR /* 최소_구간_조사_자료.거북등_균열 */
+			, PTCHG_CR /* 최소_구간_조사_자료.패칭_균열 */
+			, CR_VAL /* 최소_구간_조사_자료.표면손상값 */
+			, CR_IDX /* 최소_구간_조사_자료.표면손상지수 */
+			, RD_IDX /* 최소_구간_조사_자료.소성변형지수 */
+			, CNTL_DFECT /* 최소_구간_조사_자료.지배_결함 */
 			, SRVY_KND /* 최소_구간_조사_자료.조사_종류 */
 			, SRVY_MT /* 최소_구간_조사_자료.조사_월 */
 			, MEMO /* 최소_구간_조사_자료.메모 */
 			, SRVY_DE /* 최소_구간_조사_자료.조사_일자 */
 			, TRACE1_LA /* 최소_구간_조사_자료.TRACE1_LA */
 			, TRACE1_LO /* 최소_구간_조사_자료.TRACE1_LO */
+			, TRACE2_LA /* 최소_구간_조사_자료.TRACE2_LA */
+			, TRACE2_LO /* 최소_구간_조사_자료.TRACE2_LO */
 			, SRVY_NM /* 최소_구간_조사_자료.조사_명 */
+			, EXMNR_NM /* 최소_구간_조사_자료.조사자_명 */
 			, SCTN_STRTPT_DC /* 최소_구간_조사_자료.구간_시점_설명 */
 			, SCTN_ENDPT_DC /* 최소_구간_조사_자료.구간_종점_설명 */
 			, ROAD_NM /* 최소_구간_조사_자료.도로_명 */
+			, FRNT_IMG_FILE_NM /* 최소_구간_조사_자료.전방_이미지_파일_명 */
 			, RDSRFC_IMG_FILE_NM_1 /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
+			, RDSRFC_IMG_FILE_NM_2 /* 최소_구간_조사_자료.노면_이미지_파일_명_2 */
+			, EXCEL_DTA_SEQ /* 최소_구간_조사_자료.엑셀_자료_SEQ */
+			, FRMULA_NO /* 최소_구간_조사_자료.수식_번호 */
+			, POTHOLE_CR /* 최소_구간_조사_자료.포트홀_균열 */
+			, RI_IDX /* 최소_구간_조사_자료.평탄성_지수 */
+			, BLOCK_CR 
+		    , CR_LT 
+		    , CR_WID 
+		    , NHPCI 
+		    , SPI 
+		    , XCR 
+		    , RCI 
+		    , SCR 
+		    , AC_LOW 
+		    , AC_MED 
+		    , AC_HI 
+		    , LC_LOW 
+		    , LC_MED 
+		    , LC_HI 
+		    , TC_LOW 
+		    , TC_MED 
+		    , TC_HI 
+		    , AC_IDX 
+		    , LC_IDX 
+		    , TC_IDX 
+		    , PTCHG_IDX 
+		    , RD_LOW 
+		    , RD_MED 
+		    , RD_HI 
+		    , STRTPT_TEST
+		    , ENDPT_TEST
+		    , BLOCK_CR_LOW 
+		    , BLOCK_CR_MED 
+		    , BLOCK_CR_HI 
+		    , POTHOLE_IDX 
+		    , DMG_CUZ_CLMT 
+		    , DMG_CUZ_VMTC 
+		    , DMG_CUZ_ETC 
+		    , BC_IDX 
+			, PC_GRAD /* 최소_구간_조사_자료.포장상태등급 */
+			, GPCI /* 최소_구간_조사_자료.포장상태지수 */
 		) VALUES (
 			#DTA_NO#::numeric /* 최소_구간_조사_자료.자료_번호 */
 			, #SRVY_YEAR# /* 최소_구간_조사_자료.조사_년도 */
 			, #ROUTE_CODE# /* 최소_구간_조사_자료.노선_코드 */
 			, #DIRECT_CODE# /* 최소_구간_조사_자료.행선_코드 */
 			, #TRACK# /* 최소_구간_조사_자료.차로 */
-			, #STRTPT#::numeric /* 최소_구간_조사_자료.시점 */
-			, #ENDPT#::numeric /* 최소_구간_조사_자료.종점 */
-			, #IRI_VAL#::numeric /* 최소_구간_조사_자료.종단평탄성_값 */
-			, #RD_VAL#::numeric /* 최소_구간_조사_자료.소성변형_값 */
+			, NULLIF(#STRTPT#::numeric,0) /* 최소_구간_조사_자료.시점 */
+			, NULLIF(#ENDPT#::numeric,0) /* 최소_구간_조사_자료.종점 */
+			, NULLIF(#IRI_VAL#::numeric,0) /* 최소_구간_조사_자료.종단평탄성_값 */
+			, NULLIF(#RD_VAL#::numeric,0) /* 최소_구간_조사_자료.소성변형_값 */
+			, NULLIF(#VRTCAL_CR#::numeric,0) /* 최소_구간_조사_자료.종방향_균열 */
+			, NULLIF(#HRZNTAL_CR#::numeric,0) /* 최소_구간_조사_자료.횡방향_균열 */
+			, NULLIF(#CNSTRCT_JOINT_CR#::numeric,0) /* 최소_구간_조사_자료.시공_줄눈_균열 */
+			, NULLIF(#TRTS_BAC_CR#::numeric,0) /* 최소_구간_조사_자료.거북등_균열 */
+			, NULLIF(#PTCHG_CR#::numeric,0) /* 최소_구간_조사_자료.패칭_균열 */
+			, NULLIF(#CR_VAL#::numeric,0) /* 최소_구간_조사_자료.표면손상값 */
+			, NULLIF(#CR_IDX#::numeric,0) /* 최소_구간_조사_자료.표면손상지수 */
+			, NULLIF(#RD_IDX#::numeric,0) /* 최소_구간_조사_자료.소성변형지수 */
+			, #CNTL_DFECT# /* 최소_구간_조사_자료.지배_결함 */
 			, #SRVY_KND# /* 최소_구간_조사_자료.조사_종류 */
 			, #SRVY_MT# /* 최소_구간_조사_자료.조사_월 */
 			, #MEMO# /* 최소_구간_조사_자료.메모 */
 			, #SRVY_DE# /* 최소_구간_조사_자료.조사_일자 */
-			, #TRACE1_LA#::numeric /* 최소_구간_조사_자료.TRACE1_LA */
-			, #TRACE1_LO#::numeric /* 최소_구간_조사_자료.TRACE1_LO */
+			, NULLIF(#TRACE1_LA#::numeric,0) /* 최소_구간_조사_자료.TRACE1_LA */
+			, NULLIF(#TRACE1_LO#::numeric,0) /* 최소_구간_조사_자료.TRACE1_LO */
+			, NULLIF(#TRACE2_LA#::numeric,0) /* 최소_구간_조사_자료.TRACE2_LA */
+			, NULLIF(#TRACE2_LO#::numeric,0) /* 최소_구간_조사_자료.TRACE2_LO */
 			, #SRVY_NM# /* 최소_구간_조사_자료.조사_명 */
+			, #EXMNR_NM# /* 최소_구간_조사_자료.조사자_명 */
 			, #SCTN_STRTPT_DC# /* 최소_구간_조사_자료.구간_시점_설명 */
 			, #SCTN_ENDPT_DC# /* 최소_구간_조사_자료.구간_종점_설명 */
 			, #ROAD_NM# /* 최소_구간_조사_자료.도로_명 */
+			, #FRNT_IMG_FILE_NM# /* 최소_구간_조사_자료.전방_이미지_파일_명 */
 			, #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
+			, #RDSRFC_IMG_FILE_NM_2# /* 최소_구간_조사_자료.노면_이미지_파일_명_2 */
+			, NULLIF(#EXCEL_DTA_SEQ#::numeric,0)  /* 최소_구간_조사_자료.엑셀_자료_SEQ */
+			, NULLIF(#FRMULA_NO#::numeric,0)  /* 최소_구간_조사_자료.수식_번호 */
+			, NULLIF(#POTHOLE_CR#::numeric,0)  /* 최소_구간_조사_자료.포트홀_균열 */
+			, NULLIF(#RI_IDX#::numeric,0)  /* 최소_구간_조사_자료.평탄성_지수 */
+			, NULLIF(#BLOCK_CR#::numeric,0)
+			, NULLIF(#CR_LT#::numeric,0)
+			, NULLIF(#CR_WID#::numeric,0)
+			, NULLIF(#NHPCI#::numeric,0)
+			, NULLIF(#SPI#::numeric,0)
+			, NULLIF(#XCR#::numeric,0)
+			, NULLIF(#RCI#::numeric,0)
+			, NULLIF(#SCR#::numeric,0)
+			, NULLIF(#AC_LOW#::numeric,0)
+			, NULLIF(#AC_MED#::numeric,0)
+			, NULLIF(#AC_HI#::numeric,0)
+			, NULLIF(#LC_LOW#::numeric,0)
+			, NULLIF(#LC_MED#::numeric,0)
+			, NULLIF(#LC_HI#::numeric,0)
+			, NULLIF(#TC_LOW#::numeric,0)
+			, NULLIF(#TC_MED#::numeric,0)
+			, NULLIF(#TC_HI#::numeric,0)
+			, NULLIF(#AC_IDX#::numeric,0)
+			, NULLIF(#LC_IDX#::numeric,0)
+			, NULLIF(#TC_IDX#::numeric,0)
+			, NULLIF(#PTCHG_IDX#::numeric,0)
+			, NULLIF(#RD_LOW#::numeric,0)
+			, NULLIF(#RD_MED#::numeric,0)
+			, NULLIF(#RD_HI#::numeric,0)
+			, NULLIF(#STRTPT_TEST#::numeric,0)
+			, NULLIF(#ENDPT_TEST#::numeric,0)
+			, NULLIF(#BLOCK_CR_LOW#::numeric,0)
+			, NULLIF(#BLOCK_CR_MED#::numeric,0)
+			, NULLIF(#BLOCK_CR_HI#::numeric,0)
+			, NULLIF(#POTHOLE_IDX#::numeric,0)
+			, NULLIF(#DMG_CUZ_CLMT#::numeric,0)
+			, NULLIF(#DMG_CUZ_VMTC#::numeric,0)
+			, NULLIF(#DMG_CUZ_ETC#::numeric,0)
+			, NULLIF(#BC_IDX#::numeric,0)
+			, NULLIF(#PC_GRAD#::numeric,0) /* 최소_구간_조사_자료.포장상태등급 */
+			, NULLIF(#GPCI#::numeric,0) /* 최소_구간_조사_자료.포장상태지수 */
 		)
 ]]>
 	</insert>
@@ -261,6 +369,63 @@
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 		)as sub_SrvyDtaExcel
 ]]>
+	</select>
+	
+	<select id="srvyDtaDAO.selectTmpExcelData" resultClass="srvyDtaVO">
+<![CDATA[
+		/* srvyDtaDAO.selectTmpExcelData */
+		
+	SELECT CASE WHEN sumChk > 0 THEN 'Y' ELSE 'N' END as SE_CD
+	    FROM (
+	        SELECT
+	            SUM(COALESCE(RD_IDX,0))+
+	            SUM(COALESCE(NHPCI,0))+
+	            SUM(COALESCE(SPI,0))+
+	            SUM(COALESCE(XCR,0))+
+	            SUM(COALESCE(RCI,0))+
+	            SUM(COALESCE(SCR,0))+
+	            SUM(COALESCE(AC_LOW,0))+
+	            SUM(COALESCE(AC_MED,0))+
+	            SUM(COALESCE(AC_HI,0))+
+	            SUM(COALESCE(LC_LOW,0))+
+	            SUM(COALESCE(LC_MED,0))+
+	            SUM(COALESCE(LC_HI,0))+
+	            SUM(COALESCE(TC_LOW,0))+
+	            SUM(COALESCE(TC_MED,0))+
+	            SUM(COALESCE(TC_HI,0))+
+	            SUM(COALESCE(AC_IDX,0))+
+	            SUM(COALESCE(LC_IDX,0))+
+	            SUM(COALESCE(TC_IDX,0))+
+	            SUM(COALESCE(PTCHG_IDX,0))+
+	            SUM(COALESCE(RD_LOW,0))+
+	            SUM(COALESCE(RD_MED,0))+
+	            SUM(COALESCE(RD_HI,0))+
+	            SUM(COALESCE(BLOCK_CR_LOW,0))+
+	            SUM(COALESCE(BLOCK_CR_MED,0))+
+	            SUM(COALESCE(BLOCK_CR_HI,0))+
+	            SUM(COALESCE(POTHOLE_IDX,0))+
+	            SUM(COALESCE(BC_IDX,0))+
+	            SUM(COALESCE(GPCI,0)) as sumChk
+	        FROM TMP_MUMM_SCTN_SRVY_DTA
+	    ) as tb
+		
+]]>
+	</select>
+	
+	<!-- 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다. -->
+	<parameterMap id="prc_aggregate_general_map" class="java.util.Map">
+		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_SRVY_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_ROUTE_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_DIRECT_CODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_TRACK" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_STRTPT" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_ENDPT" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_FRMULA_NM" javaType="java.lang.String" jdbcType="VARCHAR" />
+		<parameter property="p_MODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+	</parameterMap>
+	<select id="srvyDtaDAO.PRC_AGGREGATE_GENERAL" parameterMap="prc_aggregate_general_map" resultClass="hashMap">
+		SELECT * FROM PRC_AGGREGATE_GENERAL(?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text)
 	</select>
 
 </sqlMap>

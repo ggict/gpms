@@ -22,6 +22,10 @@ import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelDefaultVO;
  *  
  *  Copyright (C)  All right reserved.
  */
+/**
+ * @author antih
+ *
+ */
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
 @XmlRootElement
 @SuppressWarnings("serial")
@@ -306,6 +310,9 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 
 	@XmlElement
 	private String SUCCESS_KND;
+	
+	@XmlElement
+	private String SE_CD;
 	
 
 	public String getSRVY_YEAR() {
@@ -1044,7 +1051,14 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public void setSUCCESS_KND(String sUCCESS_KND) {
 		SUCCESS_KND = sUCCESS_KND;
 	}
-	
+
+	public String getSE_CD() {
+		return SE_CD;
+	}
+
+	public void setSE_CD(String sE_CD) {
+		SE_CD = sE_CD;
+	}
 	
 
 }

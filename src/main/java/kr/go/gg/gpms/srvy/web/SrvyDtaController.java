@@ -423,8 +423,6 @@ public class SrvyDtaController extends BaseController {
 				
 				Map<String, Object> validChkInfo = validReadXLData(excelFileNm);
 				boolean validChk = (Boolean) validChkInfo.get("result");
-				
-				System.out.println("validChkInfo: " + validChkInfo);
 
 				if (validChk) {
 					upLogCode = "PCST0002";
@@ -509,8 +507,6 @@ public class SrvyDtaController extends BaseController {
 
 		List<SrvyDtaVO> items = srvyDtaService.selectSrvyDtaUploadResultList(srvyDtaVO);
 		int totCnt = srvyDtaService.selectSrvyDtaUploadResultCount(srvyDtaVO);
-		
-		System.out.println("items: " + items.toString());
 		
 		int total_page = 0;
 		if (totCnt > 0)
@@ -659,6 +655,7 @@ public class SrvyDtaController extends BaseController {
 
 		String o_PROCCODE = "";
 		String o_PROCMSG = "";
+		String seCd = "";
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		srvyDtaVO.setUSE_AT("Y");
@@ -711,7 +708,6 @@ public class SrvyDtaController extends BaseController {
 					// 조사자료 등록 및 수식 평가
 					if (srvyDtaOne.getEVL_PROCESS_AT().equals("N")) {
 
-						// i번째 파일명 가져오기
 						AttachFileVO attachFileParam = new AttachFileVO();
 						attachFileParam.setFILE_NO(srvyDtaOne.getFILE_NO());
 						attachFileParam.setUSE_AT("Y");
@@ -721,22 +717,21 @@ public class SrvyDtaController extends BaseController {
 							map.put("result", "nofile"); map.put("resultMSG","엑셀 파일이 없습니다.");
 							noFileList.add(srvyDtaOne.getFILE_NM());
 							continue;
-							// return map;
 						}
 						
 						fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
 						
-						//tmp 테이블 등록
+						//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
 						srvyDtaService.insertTmpExcelData(fileName);
 						
+						//TMP_MUMM_SCTN_SRVY_DTA 조회
+						srvyDtaVO = srvyDtaService.selectTmpExcelData();
+						seCd = srvyDtaVO.getSE_CD();
+
 						HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
 
 						o_PROCCODE = prc_result.get("o_proccode").toString();
 						o_PROCMSG = prc_result.get("o_procmsg").toString();
-
-						if (!o_PROCCODE.equals("true")) {
-							continue;
-						}
 
 						srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
 						BindBeansToActiveUser(srvyDtaOne);
@@ -750,31 +745,26 @@ public class SrvyDtaController extends BaseController {
 						o_PROCCODE = prc_result.get("o_proccode").toString();
 						o_PROCMSG = prc_result.get("o_procmsg").toString();
 
-						if (!o_PROCCODE.equals("true")) {
-							continue;
-						}
-
 						srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
 						BindBeansToActiveUser(srvyDtaOne);
 					}
 					
-					/*
+					//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
+					if("N".equals(seCd)) {
+						
+					}
+				
 					// 집계 처리
-					if (srvyDtaExcelOne.getSM_PROCESS_AT().equals("N")) {
-						HashMap prc_result = srvyDtaExcelService.procAggregateGeneral(srvyDtaExcelOne);
+					if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
+						srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
+						srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
+						
+						HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
+						
 						o_PROCCODE = (String) prc_result.get("o_proccode");
 						o_PROCMSG = (String) prc_result.get("o_procmsg");
-
-						if (!o_PROCCODE.equals("true")) {
-							continue;
-						}
-
 					}
 
-					if ("true".equals(o_PROCCODE)) {
-						successCount++;
-					}
-*/
 				} catch (Exception e) {
 					
 				}
@@ -955,7 +945,7 @@ public class SrvyDtaController extends BaseController {
 		AttachFileVO attachFileVO = new AttachFileVO();
 		attachFileVO.setFILE_NO(fileNo);	//파일번호
 		attachFileVO.setFILE_SE_CODE(seCode);	//파일구분코드
-		attachFileVO.setFILE_NM(UUID.randomUUID().toString().concat(fileNm.substring(fileNm.lastIndexOf("."))));	//파일명
+		attachFileVO.setFILE_NM(fileNm);	//파일명
 		attachFileVO.setORGINL_FILE_NM(fileNm);		//원본파일명
 		attachFileVO.setFILE_COURS(seFiles.getParent());		//파일경로
 		attachFileVO.setFILE_SIZE(String.valueOf(seFiles.length()));	//파일사이즈
@@ -1198,21 +1188,12 @@ public class SrvyDtaController extends BaseController {
 
 			sSrvyYear = sSrvyYear.replaceAll("\"", "");
 			sSrvyMt = sSrvyMt.replaceAll("\"", "");
-			
-			System.out.println("sSrvyYear: " + sSrvyYear);
-			System.out.println("sSrvyMt: " + sSrvyMt);
-
 
 			int nSrvyYear = 0;
 			int nSrvyMt = 0;
 
 			if(sSrvyYear != null && !sSrvyYear.equals("")) nSrvyYear = (int)Float.parseFloat(sSrvyYear);
 			if(sSrvyMt != null && !sSrvyMt.equals("")) nSrvyMt = (int)Float.parseFloat(sSrvyMt);
-			
-			
-			System.out.println("nSrvyYear: " + nSrvyYear);
-			System.out.println("nSrvyMt: " + nSrvyMt);
-
 			
 			Calendar today = Calendar.getInstance();
 			Calendar c = (Calendar) today.clone();
@@ -1416,7 +1397,7 @@ public class SrvyDtaController extends BaseController {
 		model.addAttribute("srvyYearList", srvyYearList);
 		
 		//관리 도로
-        addCodeToModel("MNRD", "mngRdList", model);
+	    addCodeToModel("MNRD", "mngRdList", model);
 
 		return "/srvy/srvyDtaEvlInfoList";
 	}

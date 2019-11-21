@@ -162,32 +162,6 @@ public class SrvyDtaExcelServiceImpl extends AbstractServiceImpl implements Srvy
 	public int selectSrvyDtaCompCount(SrvyDtaExcelVO srvyDtaExcelVO) {
 		return srvyDtaExcelDAO.selectSrvyDtaCompCount(srvyDtaExcelVO);
 	}
-
-	/**
-	 * 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다.
-	 */
-	@Override
-	public HashMap procSaveSurveyData(SrvyDtaExcelVO srvyDtaExcelOne) {
-		return srvyDtaExcelDAO.procSaveSurveyData( srvyDtaExcelOne);
-	}
-	
-	/**
-	 * 입력한 조사자료 엑셀 데이터를 시스템에 반영한다.
-	 */
-	@Override
-	public HashMap procSrvyDtaSysReflct(SrvyDtaExcelVO srvyDtaExcelVO) {
-		return srvyDtaExcelDAO.procSrvyDtaSysReflct(srvyDtaExcelVO);
-	}
-	
-	/**
-	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
-	 * @param srvyDtaSttusVO
-	 * @return
-	 */
-	@Override
-	public HashMap procAggregateGeneral(SrvyDtaExcelVO srvyDtaExcelVO) {
-		return srvyDtaExcelDAO.procAggregateGeneral( srvyDtaExcelVO);
-	}
 	
 	/**
 	 * 조사_자료 등록 대상 엑셀별 목록

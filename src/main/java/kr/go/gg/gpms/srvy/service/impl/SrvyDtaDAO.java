@@ -95,9 +95,8 @@ public class SrvyDtaDAO extends BaseDAO {
     	param.put("P_ROW_COUNT", srvyDtaOne.getDATA_CO());
     	//param.put("p_RECORDSET", srvyDtaOne.getRECORDSET());
     	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) select("srvyDtaDAO.PRC_SAVESURVEYDATA", param);
     	
-    	System.out.println("[SrvyDtaVO result] " + resultVO.toString());
+   		HashMap  resultVO = (HashMap) select("srvyDtaDAO.PRC_SAVESURVEYDATA", param);
     	return resultVO;
 	}
 	
@@ -126,6 +125,31 @@ public class SrvyDtaDAO extends BaseDAO {
     	return resultVO;
 	}
 	
+	/**
+	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
+	 * @param srvyDtaSttusVO
+	 * @return
+	 */
+	public HashMap procAggregateGeneral(SrvyDtaVO srvyDtaOne) {
+		HashMap<String, Comparable> param = new HashMap();
+
+    	param.put("p_USER_NO", srvyDtaOne.getCRTR_NO());
+    	param.put("p_SRVY_NO", srvyDtaOne.getSRVY_NO());
+    	param.put("p_ROUTE_CODE", srvyDtaOne.getROUTE_CODE());
+    	param.put("p_DIRECT_CODE", srvyDtaOne.getDIRECT_CODE());
+    	param.put("p_TRACK", srvyDtaOne.getTRACK());
+    	param.put("p_STRTPT", srvyDtaOne.getSTRTPT());
+    	param.put("p_ENDPT", srvyDtaOne.getENDPT());
+    	param.put("p_FRMULA_NM", "GPCI");
+    	param.put("p_MODE", "NONE");
+    	
+    	System.out.println("srvyDtaOneDao: " + srvyDtaOne.toString());
+    	
+    	HashMap resultVO = (HashMap) select("srvyDtaDAO.PRC_AGGREGATE_GENERAL", param);
+    	logger.info("procAggregateGeneralVO: " + resultVO.toString());
+    	return resultVO;
+	}
+	
 	public int updateSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
 		return update("srvyDtaDAO.updateSrvyDta", srvyDtaVO);
 	}
@@ -149,6 +173,16 @@ public class SrvyDtaDAO extends BaseDAO {
 	 */
 	public int selectSrvyDtaUploadResultCount(SrvyDtaVO srvyDtaVO) {
 		return (Integer) select("srvyDtaDAO.selectSrvyDtaUploadResultCount", srvyDtaVO);
+	}
+	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
+	 * @exception Exception
+	 */
+	public SrvyDtaVO selectTmpExcelData() throws Exception {
+		return (SrvyDtaVO) select("srvyDtaDAO.selectTmpExcelData");
 	}
 
 	//==============================================================================

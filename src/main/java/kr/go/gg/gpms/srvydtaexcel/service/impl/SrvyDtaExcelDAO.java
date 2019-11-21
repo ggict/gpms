@@ -165,63 +165,6 @@ public class SrvyDtaExcelDAO extends BaseDAO {
 	}
 
 	/**
-	 * 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다.
-	 */
-	public HashMap procSaveSurveyData(SrvyDtaExcelVO srvyDtaExcelOne) {
-		logger.info("[SrvyDtaExcelVO result] " + srvyDtaExcelOne.toString());
-		
-		HashMap param = new HashMap();
-    	param.put("p_USER_NO", srvyDtaExcelOne.getCRTR_NO());
-    	param.put("p_SRVY_NO", srvyDtaExcelOne.getSRVY_NO());
-    	param.put("p_FRMULA_NM", srvyDtaExcelOne.getFRMULA_NM());
-    	param.put("P_ROW_COUNT", srvyDtaExcelOne.getDATA_CO());
-    	param.put("p_RECORDSET", srvyDtaExcelOne.getRECORDSET());
-    	param.put("p_MODE", "NONE");
-    	HashMap resultVO = (HashMap) select("srvyDtaExcelDAO.PRC_SAVESURVEYDATA", param);
-    	
-    	logger.info("[SrvyDtaExcelVO result] " + resultVO.toString());
-    	return resultVO;
-	}
-
-	/**
-	 * 입력한 조사자료 엑셀 데이터를 시스템에 반영한다.
-	 */
-	public HashMap procSrvyDtaSysReflct(SrvyDtaExcelVO srvyDtaExcelOne) {
-		logger.info("[procSrvyDtaSysReflctResultVO params] " + srvyDtaExcelOne.toString());
-		
-		HashMap param = new HashMap();
-    	param.put("p_USER_NO", srvyDtaExcelOne.getCRTR_NO());
-    	param.put("p_SRVY_NO", srvyDtaExcelOne.getSRVY_NO());
-    	
-    	HashMap resultVO = (HashMap) select("srvyDtaExcelDAO.PRC_SRVY_DTA_SYS_REFLCT", param);
-    	logger.info("procSrvyDtaSysReflctResultVO: " + resultVO.toString());
-    	return resultVO;
-	}
-
-	/**
-	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
-	 * @param srvyDtaSttusVO
-	 * @return
-	 */
-	public HashMap procAggregateGeneral(SrvyDtaExcelVO srvyDtaExcelOne) {
-		HashMap<String, Comparable> param = new HashMap();
-
-    	param.put("p_USER_NO", srvyDtaExcelOne.getCRTR_NO());
-    	param.put("p_SRVY_NO", srvyDtaExcelOne.getSRVY_NO());
-    	param.put("p_ROUTE_CODE", srvyDtaExcelOne.getROUTE_CODE());
-    	param.put("p_DIRECT_CODE", srvyDtaExcelOne.getDIRECT_CODE());
-    	param.put("p_TRACK", srvyDtaExcelOne.getTRACK());
-    	param.put("p_STRTPT", srvyDtaExcelOne.getSTRTPT());
-    	param.put("p_ENDPT", srvyDtaExcelOne.getENDPT());
-    	param.put("p_FRMULA_NM", srvyDtaExcelOne.getFRMULA_NM());
-    	param.put("p_MODE", "NONE");
-
-    	HashMap resultVO = (HashMap) select("srvyDtaExcelDAO.PRC_AGGREGATE_GENERAL", param);
-    	logger.info("procAggregateGeneralVO: " + resultVO.toString());
-    	return resultVO;
-	}
-
-	/**
 	 * 조사_자료 등록 대상 엑셀별 목록
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaExcelVO
 	 * @return 조사_자료 등록 대상 엑셀별 목록

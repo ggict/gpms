@@ -127,21 +127,6 @@ public interface SrvyDtaExcelService {
 	 * @param srvyDtaExcelOne
 	 * @return
 	 */
-	HashMap procSaveSurveyData(SrvyDtaExcelVO srvyDtaExcelOne);
-	
-	/**
-	 * 입력한 조사자료 엑셀 데이터를 시스템에 반영한다.
-	 * @param srvyDtaExcelVO
-	 * @return
-	 */
-	HashMap procSrvyDtaSysReflct(SrvyDtaExcelVO srvyDtaExcelVO);
-	
-	/**
-	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
-	 * @param srvyDtaSttusVO
-	 * @return
-	 */
-	HashMap procAggregateGeneral(SrvyDtaExcelVO srvyDtaExcelVO);
 
 	/**
 	 * 조사_자료 등록 대상 엑셀별 목록
