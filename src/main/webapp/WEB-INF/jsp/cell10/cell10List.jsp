@@ -80,7 +80,7 @@ $( document ).ready(function() {
 	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 	
 	// 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
-	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 206);
+	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 190);
 	
 	fn_search();
 }); 
@@ -158,103 +158,152 @@ function fn_select_route(route_no, cell_id){
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
 <div class="tabcont">
-	<div class="fl bgsch">
-	    <h3>검색조건</h3>
-	    <div class="schbx mt10">
-	        <ul class="sch">
-	            <li class="wid100">
-	                <label>관리주체</label>
-	                <select id="DEPT_CODE" name="DEPT_CODE" alt="관리주체" class="input" style="width:100px;">
-	                	<option value="">== 전체 ==</option>
-		        		<c:forEach items="${deptList }" var="dept">
-		        			<option value="${dept.DEPT_CODE }">${dept.LOWEST_DEPT_NM }</option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li class="wid100">
-	                <label>행정구역</label>
-	                 <select id="ADM_CODE" name="ADM_CODE" alt="행정구역" class="input" style="width:100px;" >
-	                	<option value="">== 전체 ==</option>
-		        		<c:forEach items="${admList }" var="adm">
-		        			<option value="${adm.CODE_VAL }">${adm.CODE_NM }</option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li class="wid100">
-	                <label>교통용량</label>
-	                <select id="VMTC_GRAD" name="VMTC_GRAD" alt="교통용량" style="width:100px;" class="input">
-	                	<option value="">== 전체 ==</option>
-		        		<c:forEach items="${vntcList }" var="vntc">
-		        			<option value="${vntc.CODE_VAL }">${vntc.CODE_NM }</option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li class="wid100">
-	                <label>섹션구분</label>
-	                <select id="CELL_TYPE" name="CELL_TYPE" alt="섹션구분" style="width:100px;" class="input">
-	                	<option value="">== 전체 ==</option>
-		        		<c:forEach items="${celtList }" var="celt">
-		        			<option value="${celt.CODE_VAL }">${celt.CODE_NM }</option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li class="wid100">
-	                <label>도로등급</label>
-	                <select id="ROAD_GRAD" name="ROAD_GRAD" alt="도로등급" style="width:100px;" class="input" onchange="COMMON_UTIL.fn_change_roadNo('ROAD_GRAD', 'ROUTE_CODE', 'ROAD_NAME');">
-	                	<option value="">== 전체 ==</option>
-		        		<c:forEach items="${roadGradList }" var="roadGrad">
-		        			<option value="${roadGrad.CODE_VAL }">${roadGrad.CODE_NM }</option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li class="wid100">
-                    <label>노선번호</label>
-                    <select id="ROUTE_CODE" name="ROUTE_CODE" alt="노선번호" onchange="COMMON_UTIL.fn_change_roadNm('ROUTE_CODE', 'ROAD_NAME', 'ROAD_GRAD');" style="width: 100px;" class="input">
-						<option value="">== 전체 ==</option>
-						<c:forEach items="${ roadNoList }" var="roadNo">
-						    <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
-						</c:forEach>
-                    </select>
-                    <input type="text" id="ROAD_NAME" readonly="readonly" value="" style="width: 90px;" class="MX_80 CS_50 input" />
-                </li>
-	            <li>
-	                <label>행선</label>
-	                <select id="DIRECT_CODE" name="DIRECT_CODE" alt="행선" style="width:100px;" class="input">
-	                	<option value="">== 전체 ==</option>
-		        		<option value="S">상행</option>
-		        		<option value="E">하행</option>
-	                </select>
-	            </li>
-	            <li class="wid100">
-	                <label>차로</label>
-	                <input type="text" name="TRACK" id="TRACK" value="" style="width:197px;" class="MX_80 CS_50 DT_INT input" />
-	            </li>
-	            <li class="wid100">
-	                <label>시점(m)</label>
-	                <input type="text" name="STRTPT" id="STRTPT" value="" style="width:53px;" class="MX_80 CS_50 DT_INT input" />
-	                 ~ 
-	                <label>종점(m)</label>
-	                <input type="text" name="ENDPT" id="ENDPT" value="" style="width:53px;" class="MX_80 CS_50 DT_INT input" />
-	            </li>
-	            <li class="wid100 mt10">
-	                <a href="#" class="schbtn dpb" onclick="javascript:fn_search();">검색</a>
-	            </li>
-	        </ul>
-	    </div>
-	</div>
-	<div class="fr listbx">
-	    <h3>10m셀로 검색</h3>
-	    <p class="location">
-	        <span>노선검색</span>
-	        <strong>10m셀로 검색</strong>
-	    </p>
-	    <div class="mt10 ml10 mr10">
-            <div id="div_grid" style="width:100%; height:206px;">
-				<table id="gridArea"></table>
-				<div id="gridPager"></div>
-			</div>
+
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">노선검색</option>
+                </select>
+                <select name="">
+                    <option value="">데이터로검색</option>
+                </select>
+                <h2 class="h2">포장상태평가정보</h2>
+            </span>
         </div>
+    </header>
+
+    <div class="contents container">
+
+    	<!-- div3, 왼쪽 3/12 S -->
+    	<article class="div3 arrange1">
+    		<h3 class="h3">검색조건</h3>
+    		<div class="table">
+    			<table>
+    				<tbody>
+    					<tr>
+    						<td class="th">
+    							<label for="DEPT_CODE">관리주체</label>
+    						</td>
+    						<td>
+				                <select id="DEPT_CODE" name="DEPT_CODE">
+				                	<option value="">전체</option>
+					        		<c:forEach items="${deptList }" var="dept">
+					        			<option value="${dept.DEPT_CODE }">${dept.LOWEST_DEPT_NM }</option>
+					        		</c:forEach>
+				                </select>    							
+    						</td>
+    						<td class="th">
+    							 <label>행정구역</label>	                
+    						</td>
+    						<td>
+				                 <select id="ADM_CODE" name="ADM_CODE" >
+				                	<option value="">전체</option>
+					        		<c:forEach items="${admList }" var="adm">
+					        			<option value="${adm.CODE_VAL }">${adm.CODE_NM }</option>
+					        		</c:forEach>
+				                </select>
+    						</td>
+    					</tr>
+			            <tr>
+					            	<td class="th">
+    						                <label>교통용량</label>
+    						            </td>
+    						            <td>
+    						                <select id="VMTC_GRAD" name="VMTC_GRAD">
+    						                	<option value="">전체</option>
+    							        		<c:forEach items="${vntcList }" var="vntc">
+    							        			<option value="${vntc.CODE_VAL }">${vntc.CODE_NM }</option>
+    							        		</c:forEach>
+    						                </select>
+    						           </td>
+					            	<td class="th">
+    						                <label>섹션구분</label>
+    						            </td>
+    						            <td>
+    						                <select id="CELL_TYPE" name="CELL_TYPE">
+    						                	<option value="">전체</option>
+    							        		<c:forEach items="${celtList }" var="celt">
+    							        			<option value="${celt.CODE_VAL }">${celt.CODE_NM }</option>
+    							        		</c:forEach>
+    						                </select>
+    						           </td>
+			            </tr>
+			            <tr>
+			            
+					            	<td class="th">
+    						                <label>도로등급</label>
+    						            </td>
+    						            <td>
+    						                <select id="ROAD_GRAD" name="ROAD_GRAD" onchange="COMMON_UTIL.fn_change_roadNo('ROAD_GRAD', 'ROUTE_CODE', 'ROAD_NAME');">
+    						                	<option value="">전체</option>
+    							        		<c:forEach items="${roadGradList }" var="roadGrad">
+    							        			<option value="${roadGrad.CODE_VAL }">${roadGrad.CODE_NM }</option>
+    							        		</c:forEach>
+    						                </select>
+    						           </td>
+					            	<td class="th">
+    					                    <label>노선번호</label>
+    					                </td>
+    					                <td>
+    					                    <select id="ROUTE_CODE" name="ROUTE_CODE" onchange="COMMON_UTIL.fn_change_roadNm('ROUTE_CODE', 'ROAD_NAME', 'ROAD_GRAD');" >
+    											<option value="">전체</option>
+    											<c:forEach items="${ roadNoList }" var="roadNo">
+    											    <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
+    											</c:forEach>
+    					                    </select>
+    					                    <input type="text" id="ROAD_NAME" readonly="readonly" value="">
+    					               </td>
+    					 </tr>
+    					 <tr>
+						           <td class="th">
+    						                <label>행선</label>
+    						            </td>
+    						            <td>
+    						                <select id="DIRECT_CODE" name="DIRECT_CODE">
+    						                	<option value="">전체</option>
+    							        		<option value="S">상행</option>
+    							        		<option value="E">하행</option>
+    						                </select>
+    						           </td>
+						            	<td class="th">
+    						                <label>차로</label>
+    						            </td>
+    						            <td>
+    						                <input type="text" name="TRACK" id="TRACK" value="" class="MX_80 CS_50 DT_INT input" />
+    						           </td>
+			 	         
+    					 <tr>
+    						            
+    						            	<td class="th" colspan="4">
+    						                <label>시점(m)</label>
+    						                <input type="text" name="STRTPT" id="STRTPT" value="" style="width:53px;" class="MX_80 CS_50 DT_INT input" />
+    						                 ~ 
+    						                <label>종점(m)</label>
+    						                <input type="text" name="ENDPT" id="ENDPT" value="" style="width:53px;" class="MX_80 CS_50 DT_INT input" />
+    						           <button class="btn pri fr" onclick="javascript:fn_search();">검색</button>
+    						       </td>
+    					</tr>
+    				</tbody>
+    			</table>
+    		</div>
+    	</article>
+    	<!-- div3, 왼쪽 3/12 E -->
+
+    	<!-- div9, 왼쪽 9/12 S -->
+    	<article class="div9">
+
+    		<h3 class="h3">10m셀로 검색</h3>
+    		<div id="div_grid" class="table">
+				<table id="gridArea"></table>				
+			</div>
+			<div id="gridPager"></div>
+
+
+    	</article>
+    	<!-- div9, 왼쪽 9/12 E -->
     </div>
+
 </div>
 </form>
 <!-- 공통 (START)-->
