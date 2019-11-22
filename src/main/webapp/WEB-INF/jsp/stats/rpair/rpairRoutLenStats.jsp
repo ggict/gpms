@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>포장공사평가 통계</title>
+<title>보수대상선정 통계</title>
 <%@ include file="/include/common_head.jsp" %>
 <script src="<c:url value='/extLib/echarts/echarts.js'/>"></script>
 </head>
@@ -21,7 +21,7 @@
 <div style="margin: 0px 20px 0 20px;">
     <!--  그래프 -->
 	<div id="sch_cnt01" class="tabcont">
-	    <h3>포장상태 평가 노선별 통계</h3>
+	    <h3>보수대상 선정 노선별 통계</h3>
 	    <p class="location">
 	        <span>통계</span>
 	        <span>포장상태 평가</span>
