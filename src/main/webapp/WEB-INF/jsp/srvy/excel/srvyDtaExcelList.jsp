@@ -126,19 +126,24 @@ function fn_file_upload(){
        contentType: false,
        data: formData,
        type: 'POST',
-       success: function(result){
+       success: function(data){
 	   	    $('#filefrm')[0].reset(); //폼 초기화(리셋);
 	   		$('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
 	   		COMMON_FILE.clearMultiFile('#file_list', '#addFile');
 	   		parent.$("#dvProgress").dialog("close");
 	   		
-	   		if(result.resultCode == 'fail') {
-	   			alert(result.resultMsg);
-	   			return;
-	   		} else {
-	   			fnPrcProcess(result.srvyNo);
-	   		}
+	   		alert(data.resultCode);
+   			alert(data.resultMsg);
+		   	if(!data.result) {
+		   		return;
+		   	} else {
+	   	        fn_search();
+		   	}
+   			
        }
+       	,error: function(a,b,msg){
+
+    	}
    });
 
 }

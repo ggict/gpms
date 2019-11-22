@@ -3,7 +3,6 @@ package kr.go.gg.gpms.srvy.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.StringWriter;
-import java.net.URLConnection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +36,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -144,6 +145,9 @@ public class SrvyDtaController extends BaseController {
 
 	@Autowired
 	SessionManager sessionManager;
+	
+	@Autowired
+	private DataSourceTransactionManager transactionManager;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SrvyDtaController.class);
 
@@ -164,14 +168,15 @@ public class SrvyDtaController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/srvyDtaFileUpload.do")
-	public String fileUpload(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, SrvyDtaVO srvyDtaVO, SrvyDtaLogVO srvyDtaLogVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+	public String fileUpload(@ModelAttribute SrvyDtaVO srvyDtaVO, SrvyDtaLogVO srvyDtaLogVO, PavFrmulaVO pavFrmulaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 		
+		TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
+		boolean isResult = false;
 		String resultCode = "";
 		String resultMsg = "";
 		String srvyNo = "";
 		String excelFileNm = "";
-		//int successCnt = 0;
-		//int failCnt = 0;
+		int totCount = 0;
 		
 		String userNo = sessionManager.getUserNo();
 		String funCallback = srvyDtaVO.getCallBackFunction() == null ? "" : srvyDtaVO.getCallBackFunction();
@@ -193,6 +198,8 @@ public class SrvyDtaController extends BaseController {
 			resultCode = "ERROR";
 			resultMsg = "등록오류발생";
 		} else {
+			
+		try {
 			for (AttachFileVO file : fileList) {
 				String logCode = "PCST0001"; // 진행
 				Date currentTime = new Date();
@@ -206,9 +213,8 @@ public class SrvyDtaController extends BaseController {
 				// 파일 정보 DB 저장
 				String fileNo = attachFileService.insertAttachFile(file);
 
-				//String sheetName = "DBLoading";
 				String filePathName = filePath + file.getFILE_COURS() + File.separator + file.getFILE_NM();
-				String bakFilePath = filePath + File.separator + "srvy" + File.separator + "bak" + File.separator + file.getFILE_NM();
+				//String bakFilePath = filePath + File.separator + "srvy" + File.separator + "bak" + File.separator + file.getFILE_NM();
 				
 				//파일경로+파일명
 				String fileName = checkFilePath(filePathName, "path");
@@ -225,19 +231,19 @@ public class SrvyDtaController extends BaseController {
 				srvyDtaService.decmprsFile(fileName, uploadFolder);
 				
 				//원본파일
-				File orgnFile = new File(fileName);
+				//File orgnFile = new File(fileName);
 				
 				//이동되는 파일
-				File moveFile = new File(bakFilePath);
+				//File moveFile = new File(bakFilePath);
 				
 				//zip 파일이동
-				FileUtils.moveFile(orgnFile, moveFile);
+				//FileUtils.moveFile(orgnFile, moveFile);
 				
 				String seDirNm = "";
 				String seFileNm = "";
 				int csvCount = 0;
 				String csvFileNm = "";
-				boolean isImg = false;
+				//boolean isImg = false;
 				List<SrvyDtaVO> imageList = null;
 		        
 				//하위의 모든 디렉토리
@@ -257,10 +263,8 @@ public class SrvyDtaController extends BaseController {
 	                    		}
 		            		}
 		            		if(csvCount > 1 ) {
-		            			resultCode = "tempMsg";
-		        				resultMsg = "csv파일 2개";
-		        				model.addAttribute("resultCode", resultCode);
-		        				model.addAttribute("resultMsg", resultMsg);
+		        				model.addAttribute("resultCode", "multiCsv");
+		        				model.addAttribute("resultMsg", "csv파일이 여러개 존재합니다.");
 		            			return "jsonView";
 		            		}
 		            		
@@ -292,10 +296,8 @@ public class SrvyDtaController extends BaseController {
 		            			seFileNm = seFiles.getName();
 		            			//jpg 파일 검증
 		            			if(!"jpg".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
-		            				resultCode = "noJpg";
-			        				resultMsg = "jpg 파일없음";
-			        				model.addAttribute("resultCode", resultCode);
-			        				model.addAttribute("resultMsg", resultMsg);
+			        				model.addAttribute("resultCode", "noJpg");
+			        				model.addAttribute("resultMsg", "이미지 파일이 없습니다.");
 			            			return "jsonView"; 
 		            			}
 		            			/* 적용위치 변경 가능_sdh
@@ -314,9 +316,10 @@ public class SrvyDtaController extends BaseController {
 		            	}//표면결함 폴더
 		            }//디렉토리 확인
 		        }//하위의 모든 디렉토리
-
+		       
 		        //파일상세정보 등록
 		        String seCode = "";
+		       
 		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
      				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
 		     	seDirNm = seDirs.getName();
@@ -361,32 +364,8 @@ public class SrvyDtaController extends BaseController {
 			         	}
 			     	}
 		        }
-				
-				
-		        
-				// 전송한 엑셀 파일의 개수
-				/* 단건처리로 변경
-				int resultCnt = getReadXLDataCnt(fileName, sheetName);
 
-				if (resultCnt < 0) {
-					//resultMsg = sheetName + " 시트가 없습니다.";
-					failCnt++;
-					logCode = "PCST0003";
-				} else if (resultCnt == 0) {
-					resultMsg = "데이터가 없습니다.";
-					failCnt++;
-					logCode = "PCST0003";
-				} else {
-				
-				
-				
-					resultMsg = "파일전송이 성공하였습니다.";
-					successCnt++;
-					logCode = "PCST0002";
-				}
-				*/
 				resultMsg = "파일전송이 성공하였습니다.";
-				//successCnt++;
 				logCode = "PCST0002";
 				
 				//엑셀파일 데이터 조회하여 srvyDtaVO set 
@@ -418,9 +397,8 @@ public class SrvyDtaController extends BaseController {
 				
 				String upLogCode = "PCST0001";
 				resultMsg = "자료조사 validation check를 진행중 입니다.";
+				
 				// validation check
-				
-				
 				Map<String, Object> validChkInfo = validReadXLData(excelFileNm);
 				boolean validChk = (Boolean) validChkInfo.get("result");
 
@@ -433,11 +411,9 @@ public class SrvyDtaController extends BaseController {
 					srvyDtaVO.setSRVY_NO(srvyNo);
 
 					srvyDtaService.updateSrvyDta(srvyDtaVO);
-					
-					resultCode = "success";
-					
+					isResult = true;
 				} else {
-					resultCode = "fail";
+					isResult = false;
 					upLogCode = "PCST0003";
 					if (validChkInfo.get("errorCol").toString().equals("")) {
 						resultMsg = validChkInfo.get("resultMsg").toString();
@@ -448,32 +424,124 @@ public class SrvyDtaController extends BaseController {
 						resultMsg = colName + "컬럼의 " + rowIndex + "줄에 validation 오류 발생 : " + validChkInfo.get("resultMsg").toString();
 					}
 
-					
-					//srvyDtaVO.setSRVY_DE(validChkInfo.get("srvyDe").toString());
 					srvyDtaVO.setVAL_EVL_AT("N");
 					srvyDtaVO.setSRVY_NO(srvyNo);
-
+					
 					srvyDtaService.updateSrvyDta(srvyDtaVO);
-
 				}
-
-				// 초기화
-				srvyDtaExcelVO.setSRVY_NO(null);
 
 				srvyDtaLogVO.setPROCESS_SE("PCSE0002");
 				srvyDtaLogVO.setPROCESS_STTUS("PCST0002");
 				srvyDtaLogVO.setLOG_MSSAGE(resultMsg);
-
+				
 				srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
 			}
+			
+			String seCd = "";
+			srvyDtaVO.setSRVY_NO(srvyNo);
+			srvyDtaVO.setUSE_AT("Y");
+			srvyDtaVO.setDELETE_AT("N");
+		
+			// 선택 엑셀 데이터 조회
+			List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
+			
+			// 엑셀 데이터가 없으면 종료
+			if (excelList == null || excelList.size() == 0) {
+				model.addAttribute("resultCode", "noData");
+				model.addAttribute("resultMsg", "엑셀 데이터가 없습니다.");
+    			return "jsonView"; 
+			}
+			
+			//frmula_nm = GPCI
+			String frmula_nm = egovPropertyService.getString("FRMULA_NM", "NHPCI");
+			
+			if (StringUtils.isEmpty(pavFrmulaVO.getFRMULA_NM())) {
+				pavFrmulaVO.setFRMULA_NM(frmula_nm);
+			}
+			pavFrmulaVO.setUSE_AT("Y");
+			pavFrmulaVO.setDELETE_AT("N");
 
-			//resultCode = "MSG";
-			//resultMsg = "완료 되었습니다. [전송결과]를 확인해주세요.";
+			PavFrmulaVO pavFrmulaOne = pavFrmulaService.selectPavFrmula(pavFrmulaVO);
+			totCount = excelList.size();
 
+			// 데이터(list) 수 만큼 for문 실행
+			String fileName = "";
+			for (SrvyDtaVO srvyDtaOne : excelList) {
+				BindBeansToActiveUser(srvyDtaOne);
+
+				// 조사자료 등록 및 수식 평가
+				if (srvyDtaOne.getEVL_PROCESS_AT().equals("N")) {
+
+					AttachFileVO attachFileParam = new AttachFileVO();
+					attachFileParam.setFILE_NO(srvyDtaOne.getFILE_NO());
+					attachFileParam.setUSE_AT("Y");
+					attachFileParam.setDELETE_AT("N");
+					AttachFileVO attachFileOne = attachFileService.selectAttachDetailFile(attachFileParam);
+					if (attachFileOne == null || StringUtils.isEmpty(attachFileOne.getFILE_COURS())) {
+						model.addAttribute("resultCode", "noExcel");
+						model.addAttribute("resultMsg", "엑셀 파일이 없습니다.");
+						return "jsonView";
+					}
+					
+					fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
+					
+					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
+					srvyDtaService.insertTmpExcelData(fileName);
+					
+					//TMP_MUMM_SCTN_SRVY_DTA 조회
+					srvyDtaVO = srvyDtaService.selectTmpExcelData();
+					seCd = srvyDtaVO.getSE_CD();
+
+					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
+
+					resultCode = prc_result.get("o_proccode").toString();
+					resultMsg = prc_result.get("o_procmsg").toString();
+
+					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
+					BindBeansToActiveUser(srvyDtaOne);
+				}
+				
+				// 공간 보정
+				if (srvyDtaOne.getGPS_CORTN_PROCESS_AT().equals("N")) {
+
+					HashMap prc_result = srvyDtaService.procSrvyDtaSysReflct(srvyDtaOne);
+
+					resultCode = prc_result.get("o_proccode").toString();
+					resultMsg = prc_result.get("o_procmsg").toString();
+
+					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
+					BindBeansToActiveUser(srvyDtaOne);
+				}
+				
+				//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
+				if("N".equals(seCd)) {
+					
+				}
+			
+				// 집계 처리
+				if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
+					srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
+					srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
+					
+					HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
+					
+					resultCode = (String) prc_result.get("o_proccode");
+					resultMsg = (String) prc_result.get("o_procmsg");
+				}
+				
+			}
+				isResult = true;
+				this.transactionManager.commit(status);// 트랜잭션 커밋
+			} catch (Exception e) {
+				isResult = false;
+				this.transactionManager.rollback(status);// 트랜잭션 롤백
+			}
 		}
-		model.addAttribute("srvyNo", srvyNo);
+		
+		model.addAttribute("result", isResult);
 		model.addAttribute("resultCode", resultCode);
 		model.addAttribute("resultMsg", resultMsg);
+		model.addAttribute("totCount", totCount);
 		model.addAttribute("callBackFunction", funCallback); // 처리후 호출 함수
 
 		return "jsonView";
@@ -650,6 +718,8 @@ public class SrvyDtaController extends BaseController {
 	 * @return
 	 * @throws Exception
 	 */
+	
+	/*
 	@RequestMapping(value = "/saveSrvyDta.do")
 	public @ResponseBody Map<String, Object> saveSrvyDta(@RequestBody SrvyDtaVO srvyDtaVO, PavFrmulaVO pavFrmulaVO, ModelMap model, HttpServletRequest request, HttpSession session) {
 
@@ -662,7 +732,7 @@ public class SrvyDtaController extends BaseController {
 		srvyDtaVO.setDELETE_AT("N");
 
 		int totCount = 0;
-		int successCount = 0;
+		//int successCount = 0;
 		List<String> noFileList = new ArrayList<String>();
 
 		try {
@@ -685,95 +755,78 @@ public class SrvyDtaController extends BaseController {
 			pavFrmulaVO.setDELETE_AT("N");
 
 			PavFrmulaVO pavFrmulaOne = pavFrmulaService.selectPavFrmula(pavFrmulaVO);
-			
-			// 산출식이 없으면 종료
-			if (pavFrmulaOne == null || StringUtils.isEmpty(pavFrmulaOne.getFRMULA_NM())) {
-				map.put("result", "noformula");
-				map.put("resultMSG", "산출식 데이터가 없습니다.");
-				return map;
-			}
-
 			totCount = excelList.size();
-			successCount = 0;
 
 			// 데이터(list) 수 만큼 for문 실행
 			String fileName = "";
 			for (SrvyDtaVO srvyDtaOne : excelList) {
-				try {
-					BindBeansToActiveUser(srvyDtaOne);
+				BindBeansToActiveUser(srvyDtaOne);
 
+				// 조사자료 등록 및 수식 평가
+				if (srvyDtaOne.getEVL_PROCESS_AT().equals("N")) {
+
+					AttachFileVO attachFileParam = new AttachFileVO();
+					attachFileParam.setFILE_NO(srvyDtaOne.getFILE_NO());
+					attachFileParam.setUSE_AT("Y");
+					attachFileParam.setDELETE_AT("N");
+					AttachFileVO attachFileOne = attachFileService.selectAttachDetailFile(attachFileParam);
+					if (attachFileOne == null || StringUtils.isEmpty(attachFileOne.getFILE_COURS())) {
+						map.put("result", "nofile"); map.put("resultMSG","엑셀 파일이 없습니다.");
+						noFileList.add(srvyDtaOne.getFILE_NM());
+						continue;
+					}
+					
+					fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
+					
+					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
+					srvyDtaService.insertTmpExcelData(fileName);
+					
+					//TMP_MUMM_SCTN_SRVY_DTA 조회
+					srvyDtaVO = srvyDtaService.selectTmpExcelData();
+					seCd = srvyDtaVO.getSE_CD();
+
+					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
+
+					o_PROCCODE = prc_result.get("o_proccode").toString();
+					o_PROCMSG = prc_result.get("o_procmsg").toString();
+
+					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
+					BindBeansToActiveUser(srvyDtaOne);
+				}
+				
+				// 공간 보정
+				if (srvyDtaOne.getGPS_CORTN_PROCESS_AT().equals("N")) {
+
+					HashMap prc_result = srvyDtaService.procSrvyDtaSysReflct(srvyDtaOne);
+
+					o_PROCCODE = prc_result.get("o_proccode").toString();
+					o_PROCMSG = prc_result.get("o_procmsg").toString();
+
+					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
+					BindBeansToActiveUser(srvyDtaOne);
+				}
+				
+				//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
+				if("N".equals(seCd)) {
+					
+				}
+			
+				// 집계 처리
+				if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
 					srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
 					srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
-
-					// 조사자료 등록 및 수식 평가
-					if (srvyDtaOne.getEVL_PROCESS_AT().equals("N")) {
-
-						AttachFileVO attachFileParam = new AttachFileVO();
-						attachFileParam.setFILE_NO(srvyDtaOne.getFILE_NO());
-						attachFileParam.setUSE_AT("Y");
-						attachFileParam.setDELETE_AT("N");
-						AttachFileVO attachFileOne = attachFileService.selectAttachDetailFile(attachFileParam);
-						if (attachFileOne == null || StringUtils.isEmpty(attachFileOne.getFILE_COURS())) {
-							map.put("result", "nofile"); map.put("resultMSG","엑셀 파일이 없습니다.");
-							noFileList.add(srvyDtaOne.getFILE_NM());
-							continue;
-						}
-						
-						fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
-						
-						//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
-						srvyDtaService.insertTmpExcelData(fileName);
-						
-						//TMP_MUMM_SCTN_SRVY_DTA 조회
-						srvyDtaVO = srvyDtaService.selectTmpExcelData();
-						seCd = srvyDtaVO.getSE_CD();
-
-						HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
-
-						o_PROCCODE = prc_result.get("o_proccode").toString();
-						o_PROCMSG = prc_result.get("o_procmsg").toString();
-
-						srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
-						BindBeansToActiveUser(srvyDtaOne);
-					}
 					
-					// 공간 보정
-					if (srvyDtaOne.getGPS_CORTN_PROCESS_AT().equals("N")) {
-
-						HashMap prc_result = srvyDtaService.procSrvyDtaSysReflct(srvyDtaOne);
-
-						o_PROCCODE = prc_result.get("o_proccode").toString();
-						o_PROCMSG = prc_result.get("o_procmsg").toString();
-
-						srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
-						BindBeansToActiveUser(srvyDtaOne);
-					}
+					HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
 					
-					//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
-					if("N".equals(seCd)) {
-						
-					}
-				
-					// 집계 처리
-					if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
-						srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
-						srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
-						
-						HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
-						
-						o_PROCCODE = (String) prc_result.get("o_proccode");
-						o_PROCMSG = (String) prc_result.get("o_procmsg");
-					}
-
-				} catch (Exception e) {
-					
+					o_PROCCODE = (String) prc_result.get("o_proccode");
+					o_PROCMSG = (String) prc_result.get("o_procmsg");
 				}
 			}
 		} catch (Exception e) {
-
+			//트랜잭션 롤백
 		} finally {
 			map.put("totCount", totCount);
-			map.put("successCount", successCount);
+			//map.put("successCount", successCount);
 			map.put("noFileList", noFileList);
 			map.put("result", o_PROCCODE);
 			map.put("resultMSG", o_PROCMSG);
@@ -781,7 +834,7 @@ public class SrvyDtaController extends BaseController {
 
 		return map;
 	}
-
+*/
 	/**
 	 * 엑셀 조사자료를 최소구간조사 자료에 입력한다.
 	 *

@@ -207,27 +207,27 @@
 			, #ROUTE_CODE# /* 최소_구간_조사_자료.노선_코드 */
 			, #DIRECT_CODE# /* 최소_구간_조사_자료.행선_코드 */
 			, #TRACK# /* 최소_구간_조사_자료.차로 */
-			, NULLIF(#STRTPT#::numeric,0) /* 최소_구간_조사_자료.시점 */
-			, NULLIF(#ENDPT#::numeric,0) /* 최소_구간_조사_자료.종점 */
-			, NULLIF(#IRI_VAL#::numeric,0) /* 최소_구간_조사_자료.종단평탄성_값 */
-			, NULLIF(#RD_VAL#::numeric,0) /* 최소_구간_조사_자료.소성변형_값 */
-			, NULLIF(#VRTCAL_CR#::numeric,0) /* 최소_구간_조사_자료.종방향_균열 */
-			, NULLIF(#HRZNTAL_CR#::numeric,0) /* 최소_구간_조사_자료.횡방향_균열 */
-			, NULLIF(#CNSTRCT_JOINT_CR#::numeric,0) /* 최소_구간_조사_자료.시공_줄눈_균열 */
-			, NULLIF(#TRTS_BAC_CR#::numeric,0) /* 최소_구간_조사_자료.거북등_균열 */
-			, NULLIF(#PTCHG_CR#::numeric,0) /* 최소_구간_조사_자료.패칭_균열 */
-			, NULLIF(#CR_VAL#::numeric,0) /* 최소_구간_조사_자료.표면손상값 */
-			, NULLIF(#CR_IDX#::numeric,0) /* 최소_구간_조사_자료.표면손상지수 */
-			, NULLIF(#RD_IDX#::numeric,0) /* 최소_구간_조사_자료.소성변형지수 */
+			, COALESCE(#STRTPT#::numeric,0) /* 최소_구간_조사_자료.시점 */
+			, COALESCE(#ENDPT#::numeric,0) /* 최소_구간_조사_자료.종점 */
+			, COALESCE(#IRI_VAL#::numeric,0) /* 최소_구간_조사_자료.종단평탄성_값 */
+			, COALESCE(#RD_VAL#::numeric,0) /* 최소_구간_조사_자료.소성변형_값 */
+			, COALESCE(#VRTCAL_CR#::numeric,0) /* 최소_구간_조사_자료.종방향_균열 */
+			, COALESCE(#HRZNTAL_CR#::numeric,0) /* 최소_구간_조사_자료.횡방향_균열 */
+			, COALESCE(#CNSTRCT_JOINT_CR#::numeric,0) /* 최소_구간_조사_자료.시공_줄눈_균열 */
+			, COALESCE(#TRTS_BAC_CR#::numeric,0) /* 최소_구간_조사_자료.거북등_균열 */
+			, COALESCE(#PTCHG_CR#::numeric,0) /* 최소_구간_조사_자료.패칭_균열 */
+			, COALESCE(#CR_VAL#::numeric,0) /* 최소_구간_조사_자료.표면손상값 */
+			, COALESCE(#CR_IDX#::numeric,0) /* 최소_구간_조사_자료.표면손상지수 */
+			, COALESCE(#RD_IDX#::numeric,0) /* 최소_구간_조사_자료.소성변형지수 */
 			, #CNTL_DFECT# /* 최소_구간_조사_자료.지배_결함 */
 			, #SRVY_KND# /* 최소_구간_조사_자료.조사_종류 */
 			, #SRVY_MT# /* 최소_구간_조사_자료.조사_월 */
 			, #MEMO# /* 최소_구간_조사_자료.메모 */
 			, #SRVY_DE# /* 최소_구간_조사_자료.조사_일자 */
-			, NULLIF(#TRACE1_LA#::numeric,0) /* 최소_구간_조사_자료.TRACE1_LA */
-			, NULLIF(#TRACE1_LO#::numeric,0) /* 최소_구간_조사_자료.TRACE1_LO */
-			, NULLIF(#TRACE2_LA#::numeric,0) /* 최소_구간_조사_자료.TRACE2_LA */
-			, NULLIF(#TRACE2_LO#::numeric,0) /* 최소_구간_조사_자료.TRACE2_LO */
+			, COALESCE(#TRACE1_LA#::numeric,0) /* 최소_구간_조사_자료.TRACE1_LA */
+			, COALESCE(#TRACE1_LO#::numeric,0) /* 최소_구간_조사_자료.TRACE1_LO */
+			, COALESCE(#TRACE2_LA#::numeric,0) /* 최소_구간_조사_자료.TRACE2_LA */
+			, COALESCE(#TRACE2_LO#::numeric,0) /* 최소_구간_조사_자료.TRACE2_LO */
 			, #SRVY_NM# /* 최소_구간_조사_자료.조사_명 */
 			, #EXMNR_NM# /* 최소_구간_조사_자료.조사자_명 */
 			, #SCTN_STRTPT_DC# /* 최소_구간_조사_자료.구간_시점_설명 */
@@ -236,46 +236,46 @@
 			, #FRNT_IMG_FILE_NM# /* 최소_구간_조사_자료.전방_이미지_파일_명 */
 			, #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
 			, #RDSRFC_IMG_FILE_NM_2# /* 최소_구간_조사_자료.노면_이미지_파일_명_2 */
-			, NULLIF(#EXCEL_DTA_SEQ#::numeric,0)  /* 최소_구간_조사_자료.엑셀_자료_SEQ */
-			, NULLIF(#FRMULA_NO#::numeric,0)  /* 최소_구간_조사_자료.수식_번호 */
-			, NULLIF(#POTHOLE_CR#::numeric,0)  /* 최소_구간_조사_자료.포트홀_균열 */
-			, NULLIF(#RI_IDX#::numeric,0)  /* 최소_구간_조사_자료.평탄성_지수 */
-			, NULLIF(#BLOCK_CR#::numeric,0)
-			, NULLIF(#CR_LT#::numeric,0)
-			, NULLIF(#CR_WID#::numeric,0)
-			, NULLIF(#NHPCI#::numeric,0)
-			, NULLIF(#SPI#::numeric,0)
-			, NULLIF(#XCR#::numeric,0)
-			, NULLIF(#RCI#::numeric,0)
-			, NULLIF(#SCR#::numeric,0)
-			, NULLIF(#AC_LOW#::numeric,0)
-			, NULLIF(#AC_MED#::numeric,0)
-			, NULLIF(#AC_HI#::numeric,0)
-			, NULLIF(#LC_LOW#::numeric,0)
-			, NULLIF(#LC_MED#::numeric,0)
-			, NULLIF(#LC_HI#::numeric,0)
-			, NULLIF(#TC_LOW#::numeric,0)
-			, NULLIF(#TC_MED#::numeric,0)
-			, NULLIF(#TC_HI#::numeric,0)
-			, NULLIF(#AC_IDX#::numeric,0)
-			, NULLIF(#LC_IDX#::numeric,0)
-			, NULLIF(#TC_IDX#::numeric,0)
-			, NULLIF(#PTCHG_IDX#::numeric,0)
-			, NULLIF(#RD_LOW#::numeric,0)
-			, NULLIF(#RD_MED#::numeric,0)
-			, NULLIF(#RD_HI#::numeric,0)
-			, NULLIF(#STRTPT_TEST#::numeric,0)
-			, NULLIF(#ENDPT_TEST#::numeric,0)
-			, NULLIF(#BLOCK_CR_LOW#::numeric,0)
-			, NULLIF(#BLOCK_CR_MED#::numeric,0)
-			, NULLIF(#BLOCK_CR_HI#::numeric,0)
-			, NULLIF(#POTHOLE_IDX#::numeric,0)
-			, NULLIF(#DMG_CUZ_CLMT#::numeric,0)
-			, NULLIF(#DMG_CUZ_VMTC#::numeric,0)
-			, NULLIF(#DMG_CUZ_ETC#::numeric,0)
-			, NULLIF(#BC_IDX#::numeric,0)
-			, NULLIF(#PC_GRAD#::numeric,0) /* 최소_구간_조사_자료.포장상태등급 */
-			, NULLIF(#GPCI#::numeric,0) /* 최소_구간_조사_자료.포장상태지수 */
+			, COALESCE(#EXCEL_DTA_SEQ#::numeric,0)  /* 최소_구간_조사_자료.엑셀_자료_SEQ */
+			, COALESCE(#FRMULA_NO#::numeric,0)  /* 최소_구간_조사_자료.수식_번호 */
+			, COALESCE(#POTHOLE_CR#::numeric,0)  /* 최소_구간_조사_자료.포트홀_균열 */
+			, COALESCE(#RI_IDX#::numeric,0)  /* 최소_구간_조사_자료.평탄성_지수 */
+			, COALESCE(#BLOCK_CR#::numeric,0)
+			, COALESCE(#CR_LT#::numeric,0)
+			, COALESCE(#CR_WID#::numeric,0)
+			, COALESCE(#NHPCI#::numeric,0)
+			, COALESCE(#SPI#::numeric,0)
+			, COALESCE(#XCR#::numeric,0)
+			, COALESCE(#RCI#::numeric,0)
+			, COALESCE(#SCR#::numeric,0)
+			, COALESCE(#AC_LOW#::numeric,0)
+			, COALESCE(#AC_MED#::numeric,0)
+			, COALESCE(#AC_HI#::numeric,0)
+			, COALESCE(#LC_LOW#::numeric,0)
+			, COALESCE(#LC_MED#::numeric,0)
+			, COALESCE(#LC_HI#::numeric,0)
+			, COALESCE(#TC_LOW#::numeric,0)
+			, COALESCE(#TC_MED#::numeric,0)
+			, COALESCE(#TC_HI#::numeric,0)
+			, COALESCE(#AC_IDX#::numeric,0)
+			, COALESCE(#LC_IDX#::numeric,0)
+			, COALESCE(#TC_IDX#::numeric,0)
+			, COALESCE(#PTCHG_IDX#::numeric,0)
+			, COALESCE(#RD_LOW#::numeric,0)
+			, COALESCE(#RD_MED#::numeric,0)
+			, COALESCE(#RD_HI#::numeric,0)
+			, COALESCE(#STRTPT_TEST#::numeric,0)
+			, COALESCE(#ENDPT_TEST#::numeric,0)
+			, COALESCE(#BLOCK_CR_LOW#::numeric,0)
+			, COALESCE(#BLOCK_CR_MED#::numeric,0)
+			, COALESCE(#BLOCK_CR_HI#::numeric,0)
+			, COALESCE(#POTHOLE_IDX#::numeric,0)
+			, COALESCE(#DMG_CUZ_CLMT#::numeric,0)
+			, COALESCE(#DMG_CUZ_VMTC#::numeric,0)
+			, COALESCE(#DMG_CUZ_ETC#::numeric,0)
+			, COALESCE(#BC_IDX#::numeric,0)
+			, COALESCE(#PC_GRAD#::numeric,0) /* 최소_구간_조사_자료.포장상태등급 */
+			, COALESCE(#GPCI#::numeric,0) /* 최소_구간_조사_자료.포장상태지수 */
 		)
 ]]>
 	</insert>
