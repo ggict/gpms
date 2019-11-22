@@ -24,7 +24,7 @@
 	    <h3>보수대상 선정 노선별 통계</h3>
 	    <p class="location">
 	        <span>통계</span>
-	        <span>포장상태 평가</span>
+	        <span>보수대상 선정</span>
 	        <strong>노선별 통계</strong>
 	    </p>
 	    
@@ -32,15 +32,9 @@
             <ul class="statsbx">
                 <li style="float:none; width:97%">
                     <div class="graylinebx p10" style="width:100%;">
-                        <div id="mummRoutGpciChart" class="cont_ConBx2" style="height: 320px; margin-left:20px;"></div>
+                        <div id="rpairRoutChart" class="cont_ConBx2" style="height: 320px; margin-left:20px;"></div>
                     </div>
-                    <h4 style="text-align: center;background:none; width:100%;">노선별 포장상태 평가 통계</h4>
-                </li>
-                <li style="float:none; margin-top: 40px; width:97%">
-                    <div class="graylinebx p10" style="width:100%">
-                        <div id="mummRoutDfctChart" class="cont_ConBx2" style="height: 320px; margin-left:20px;"></div>
-                    </div>
-                    <h4 style="text-align: center;background:none; width:100%;">노선별 포장상태 파손원인 통계</h4>
+                    <h4 style="text-align: center;background:none; width:100%;">노선별 보수대상 선정 통계</h4>
                 </li>
             </ul>
         </div>
@@ -49,29 +43,17 @@
      <div class="cont_ListBx" style="display: none;">
         <table class="tblist" border="1" id="diagram">
             <colgroup>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
+                <col width="25%"/>
+                <col width="25%"/>
+                <col width="25%"/>
+                <col width="25%"/>
             </colgroup>
             <thead style="text-align: center;">
                 <tr>
                     <th scope="col">노선번호</th>
                     <th scope="col">노선명</th>
-                    <th scope="col">GPCI</th>
-                    <th scope="col">거북등균열</th>
-                    <th scope="col">선형균열</th>
-                    <th scope="col">패칭</th>
-                    <th scope="col">포트홀</th>
-                    <th scope="col">소성변형</th>
-                    <th scope="col">종단평탄성</th>
-                    <th scope="col">블럭균열</th>
+                    <th scope="col">연장</th>
+                    <th scope="col">구간갯수</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,7 +85,7 @@ $( document ).ready(function() {
     //창 조절시 차트 width 
     var rw = $(window).width()/3;
     
-    fnMummRoutSearch('','','',rw);//노선조회
+    fnRoutSearch('','','',rw);//노선조회
 }); 
 
 //창 조절시 차트 resize
@@ -125,7 +107,7 @@ function fnRoutSearch(deptCd,strDt,endDt,rw){
     $("#SCH_STRWRK_DE").val(strDt);
     $("#SCH_COMPET_DE").val(endDt);
     
-    fnMummRoutSearch(deptCd,strDt,endDt,rw);//노선조회
+    fnRpairRoutSearch(deptCd,strDt,endDt,rw);//노선조회
 }
 
 require.config({
@@ -135,11 +117,11 @@ require.config({
 	});
 
 //검색 처리
-function fnMummRoutSearch(deptCd,strDt,endDt,rw) {
+function fnRpairRoutSearch(deptCd,strDt,endDt,rw) {
     var data = {"SCH_DEPT_CODE" : deptCd, "SCH_STRWRK_DE" : strDt, "SCH_COMPET_DE" : endDt};
     
     $.ajax({
-         url: '<c:url value="/"/>'+'api/mumm/mummRoutCntStatsGPCI.do'
+         url: '<c:url value="/"/>'+'api/rpairtrgetgroup/selectRpairRoutLenStats.do'
         ,type: 'post'
         ,contentType: 'application/json'
         //,data: JSON.stringify( $("#frm").cmSerializeObject())
@@ -148,9 +130,7 @@ function fnMummRoutSearch(deptCd,strDt,endDt,rw) {
         ,success: function (data) {
             var dataList = data.rows;
             if(dataList.length !=0){
-            	drawRoutGpciChart(dataList,rw);
-            	drawRoutDfctChart(dataList,rw);
-                
+            	drawRoutChart(dataList,rw);
                 drawTable(dataList);
             }else{
                 ntcNo += 1;
@@ -162,16 +142,19 @@ function fnMummRoutSearch(deptCd,strDt,endDt,rw) {
     });
 }
 
-function drawRoutGpciChart(dataList,rw){
+function drawRoutChart(dataList,rw){
     var gRouteNm    = dataList.map(function(elem){ return Number(elem.route_code)+"호선"; });       
-    var gpciData    = dataList.map(function(elem){ return elem.gpci; });
+    var groupLenData    = dataList.map(function(elem){ return elem.group_len; });
+    var maxOfGroupLenData = groupLenData.reduce(function(prev, curr) { return (prev > curr) ? prev : curr; });
+    var groupCntData    = dataList.map(function(elem){ return elem.group_cnt; });
+    var maxOfGroupCntData = groupCntData.reduce(function(prev, curr) { return (prev > curr) ? prev : curr; });
     var degree      = (dataList.length < 10) ? 0 : -90;
     
-    require([   'echarts','echarts/chart/bar'   ],
+    require([   'echarts','echarts/chart/bar', 'echarts/chart/line'   ],
             function (ec) {
-                 var myChart = ec.init(document.getElementById('mummRoutGpciChart'));
+                 var myChart = ec.init(document.getElementById('rpairRoutChart'));
                  myChart.setOption({
-                        title   : { text: 'GPCI'   },
+                        title   : { text: '노선별 통계'   },
                         tooltip : { trigger: 'axis'             },
                         toolbox : { show: true,
                             feature: {
@@ -193,117 +176,27 @@ function drawRoutGpciChart(dataList,rw){
                                     },
                                     data : gRouteNm
                                 }],
-                        yAxis : [{  name : '',     type : 'value'      }],
+                        yAxis : [
+                        	{ name: '연장', type: 'value', min: 0, max: maxOfGroupLenData+10000      },
+                        	{ name: '구간갯수', type: 'value',  min: 0, max: maxOfGroupCntData }
+                        	],
                         series : [
                             {
-                                name: '',
+                            	name: '연장',
                                 type: 'bar',
-                                data: gpciData
+                                data: groupLenData
+                            },
+                            {
+                            	name: '구간갯수',
+                            	type: 'line',
+                            	yAxisIndex: 1,
+                            	data: groupCntData
                             }
                         ]
                     });
                  
             });
 }
-
-function drawRoutDfctChart(dataList,rw){
-	var gRouteNm    = dataList.map(function(elem){ return Number(elem.route_code)+"호선"; });      
-    var ac_idx_data    = dataList.map(function(elem){ return elem.ac_idx; });
-    var lc_tc_idx_data    = dataList.map(function(elem){ return elem.lc_tc_idx; });
-    var ptchg_idx_data    = dataList.map(function(elem){ return elem.ptchg_idx; });
-    var pothole_idx_data    = dataList.map(function(elem){ return elem.pothole_idx; });
-    var rd_idx_data    = dataList.map(function(elem){ return elem.rd_idx; });
-    var iri_val_data    = dataList.map(function(elem){ return elem.iri_val; });
-    var bc_idx_data    = dataList.map(function(elem){ return elem.rd_idx; });
-    var degree      = (dataList.length < 10) ? 0 : -90;
-    
-    require([   'echarts','echarts/chart/bar'   ],
-            function (ec) {
-                 var myChart = ec.init(document.getElementById('mummRoutDfctChart'));
-                 myChart.setOption({
-                        title   : { text: '파손형태' },
-                        tooltip : { trigger: 'axis'             },
-                        toolbox : { show: true,
-                            feature: {
-                                dataView : {show: true, readOnly: false},   // 상세조회
-                                saveAsExcel : {show: true},                 // 엑셀저장
-                                saveAsImage: {show: true}                   // 이미지저장
-                            }   
-                        },
-                        legend: {
-                        	data: ['거북등균열', '선형균열', '패칭', '포트홀', '소성변형', '종단평탄성', '블럭균열'/*, '복합파손'*/]
-                        },
-                        grid :{
-                            x : 50,
-                            y2 : 80
-                        },
-                        xAxis : [{  
-                                    type : 'category',
-                                    axisLabel : {
-                                        show:true,
-                                        interval: 0,
-                                        rotate: degree
-                                    },
-                                    data : gRouteNm
-                                }],
-                        yAxis : [{  name : '',       type : 'value'      }],
-                        series : [
-                            {
-                                name: '거북등균열',
-                                type: 'bar',
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: ac_idx_data
-                            },
-                            {
-                                name: '선형균열',
-                                type: 'bar',
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: lc_tc_idx_data
-                            },
-                            {
-                                name: '패칭',
-                                type: 'bar',
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: ptchg_idx_data
-                            },
-                            {
-                                name: '포트홀',
-                                type: 'bar',
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: pothole_idx_data
-                            },
-                            {
-                                name: '종단평탄성',
-                                type: 'bar',    
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: rd_idx_data
-                            },
-                            {
-                                name: '소성변형',
-                                type: 'bar',    
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: iri_val_data
-                            },
-                            {
-                                name: '블럭균열',
-                                type: 'bar',    
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: bc_idx_data
-                            }
-                        ]
-                    });
-
-            });
-}
-
-
 
 function drawTable(dataList){
 
@@ -314,14 +207,8 @@ function drawTable(dataList){
         tHtml   += '<tr>';
         tHtml   += '<td align="center" class="bg">'             +   Number(mainData[i].route_code)+"호선"+ '</td>';
         tHtml   += '<td align="center" class="bg">'             +   mainData[i].road_nm                    + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].gpci        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].ac_idx        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].lc_tc_idx    + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].ptchg_idx                        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].pothole_idx                        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].rd_idx                        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].iri_val                        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].rd_idx                        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].group_len        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].group_cnt        + '</td>';
         tHtml   += '</tr>';
     }
     
@@ -331,7 +218,7 @@ function drawTable(dataList){
 //엑셀 다운로드
 function fnExcel() {
     if( confirm("엑셀 파일로 저장하시겠습니까?") ) {
-        COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/mumm/mummRoutCntStatsExcel.do'/>", "");
+        COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/rpairtrgetgroup/rpairRoutLenStatsExcel.do'/>", "");
     }
 }
 
