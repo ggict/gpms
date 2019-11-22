@@ -17,12 +17,16 @@ import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
-import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStream;
 
@@ -46,6 +50,9 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 
 	@Resource(name = "srvyDtaDAO")
 	private SrvyDtaDAO srvyDtaDAO;
+	
+	@Autowired
+	private DataSourceTransactionManager transactionManager;
 	
 	/**
 	 * 압축풀기
@@ -259,7 +266,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        fos.flush();
 	        fos.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			fos.flush();
 			fos.close();
 			//e.printStackTrace();
@@ -382,6 +389,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 * @exception Exception
 	 */
 	public void insertTmpExcelData(String fileName) throws Exception {
+		
 		FileInputStream fis = new FileInputStream(fileName);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sheet = wb.getSheet("DBLoading");
