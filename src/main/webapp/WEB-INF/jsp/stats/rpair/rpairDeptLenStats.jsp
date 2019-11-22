@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>포장공사평가 통계</title>
+<title>보수대상선정 통계</title>
 <%@ include file="/include/common_head.jsp" %>
 <script src="<c:url value='/extLib/echarts/echarts.js'/>"></script>
 </head>
@@ -21,10 +21,10 @@
 <div style="margin: 0px 20px 0 20px;">
     <!--  그래프 -->
     <div id="sch_cnt01" class="tabcont">
-        <h3>포장상태 평가 관리기관별 통계</h3>
+        <h3>보수대상 선정 관리기관별 통계</h3>
         <p class="location">
-            <span>포장공사 이력관리</span>
-            <span>포장공사 통계조회</span>
+            <span>통계</span>
+            <span>보수대상 선정</span>
             <strong>관리기관별 통계</strong>
         </p>
         
@@ -32,15 +32,9 @@
             <ul class="statsbx">
                 <li style="float:none; width:97%">
                     <div class="graylinebx p10" style="width:100%;">
-                        <div id="mummDeptGpciChart" class="cont_ConBx2" style="height: 320px; margin-left:20px;"></div>
+                        <div id="rpairDeptChart" class="cont_ConBx2" style="height: 320px; margin-left:20px;"></div>
                     </div>
-                    <h4 style="text-align: center;background:none; width:100%;">관리기관별 포장상태 평가 통계</h4>
-                </li>
-                <li style="float:none; margin-top: 40px; width:97%">
-                    <div class="graylinebx p10" style="width:100%">
-                        <div id="mummDeptDfctChart" class="cont_ConBx2" style="height: 320px; margin-left:20px;"></div>
-                    </div>
-                    <h4 style="text-align: center;background:none; width:100%;">관리기관별 포장상태 파손원인 통계</h4>
+                    <h4 style="text-align: center;background:none; width:100%;">관리기관별 보수대상 선정 통계</h4>
                 </li>
             </ul>
         </div>
@@ -49,27 +43,15 @@
      <div class="cont_ListBx" style="display: none;">
         <table class="tblist" border="1" id="diagram">
             <colgroup>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
-                <col width="10%"/>
+                <col width="25%"/>
+                <col width="25%"/>
+                <col width="25%"/>
             </colgroup>
             <thead style="text-align: center;">
                 <tr>
                     <th scope="col">관리기관</th>
-                    <th scope="col">GPCI</th>
-                    <th scope="col">거북등균열</th>
-                    <th scope="col">선형균열</th>
-                    <th scope="col">패칭</th>
-                    <th scope="col">포트홀</th>
-                    <th scope="col">소성변형</th>
-                    <th scope="col">종단평탄성</th>
-                    <th scope="col">블럭균열</th>
+                    <th scope="col">연장</th>
+                    <th scope="col">구간갯수</th>
                 </tr>
             </thead>
             <tbody>
@@ -101,7 +83,7 @@ $( document ).ready(function() {
     //창 조절시 차트 width 
     var rw = $(window).width()/3;
     
-    fnMummDeptSearch('','','',rw);//관리기관 조회
+    fnDeptSearch('','','',rw);//노선조회
 }); 
 
 //창 조절시 차트 resize
@@ -123,7 +105,7 @@ function fnDeptSearch(deptCd,strDt,endDt,rw){
     $("#SCH_STRWRK_DE").val(strDt);
     $("#SCH_COMPET_DE").val(endDt);
     
-    fnMummDeptCntSearch(deptCd,strDt,endDt,rw);//관리기관 조회
+    fnRpairDeptSearch(deptCd,strDt,endDt,rw);//노선조회
 }
 
 require.config({
@@ -133,11 +115,11 @@ require.config({
     });
 
 //검색 처리
-function fnMummDeptSearch(deptCd,strDt,endDt,rw) {
+function fnRpairDeptSearch(deptCd,strDt,endDt,rw) {
     var data = {"SCH_DEPT_CODE" : deptCd, "SCH_STRWRK_DE" : strDt, "SCH_COMPET_DE" : endDt};
     
     $.ajax({
-         url: '<c:url value="/"/>'+'api/mumm/mummDeptCntStats.do'
+         url: '<c:url value="/"/>'+'api/rpairtrgetgroup/selectRpairDeptLenStats.do'
         ,type: 'post'
         ,contentType: 'application/json'
         //,data: JSON.stringify( $("#frm").cmSerializeObject())
@@ -146,9 +128,7 @@ function fnMummDeptSearch(deptCd,strDt,endDt,rw) {
         ,success: function (data) {
             var dataList = data.rows;
             if(dataList.length !=0){
-                drawDeptGpciChart(dataList,rw);
-                drawDeptDfctChart(dataList,rw);
-                
+                drawDeptChart(dataList,rw);
                 drawTable(dataList);
             }else{
                 ntcNo += 1;
@@ -160,16 +140,19 @@ function fnMummDeptSearch(deptCd,strDt,endDt,rw) {
     });
 }
 
-function drawDeptGpciChart(dataList,rw){
+function drawDeptChart(dataList,rw){
     var gDeptNm    = dataList.map(function(elem){ return elem.dept_nm; });       
-    var gpciData    = dataList.map(function(elem){ return elem.gpci; });
+    var groupLenData    = dataList.map(function(elem){ return elem.group_len; });
+    var maxOfGroupLenData = groupLenData.reduce(function(prev, curr) { return (prev > curr) ? prev : curr; });
+    var groupCntData    = dataList.map(function(elem){ return elem.group_cnt; });
+    var maxOfGroupCntData = groupCntData.reduce(function(prev, curr) { return (prev > curr) ? prev : curr; });
     var degree      = (dataList.length < 10) ? 0 : -90;
     
-    require([   'echarts','echarts/chart/bar'   ],
+    require([   'echarts','echarts/chart/bar', 'echarts/chart/line'   ],
             function (ec) {
-                 var myChart = ec.init(document.getElementById('mummDeptGpciChart'));
+                 var myChart = ec.init(document.getElementById('rpairDeptChart'));
                  myChart.setOption({
-                        title   : { text: 'GPCI'   },
+                        title   : { text: '관리기관별 통계'   },
                         tooltip : { trigger: 'axis'             },
                         toolbox : { show: true,
                             feature: {
@@ -191,117 +174,27 @@ function drawDeptGpciChart(dataList,rw){
                                     },
                                     data : gDeptNm
                                 }],
-                        yAxis : [{  name : '',     type : 'value'      }],
+                        yAxis : [
+                            { name: '연장', type: 'value', min: 0, max: maxOfGroupLenData+10000      },
+                            { name: '구간갯수', type: 'value',  min: 0, max: maxOfGroupCntData }
+                            ],
                         series : [
                             {
-                                name: '',
+                                name: '연장',
                                 type: 'bar',
-                                data: gpciData
+                                data: groupLenData
+                            },
+                            {
+                                name: '구간갯수',
+                                type: 'line',
+                                yAxisIndex: 1,
+                                data: groupCntData
                             }
                         ]
                     });
                  
             });
 }
-
-function drawDeptDfctChart(dataList,rw){
-    var gDeptNm    = dataList.map(function(elem){ return elem.dept_nm; });      
-    var ac_idx_data    = dataList.map(function(elem){ return elem.ac_idx; });
-    var lc_tc_idx_data    = dataList.map(function(elem){ return elem.lc_tc_idx; });
-    var ptchg_idx_data    = dataList.map(function(elem){ return elem.ptchg_idx; });
-    var pothole_idx_data    = dataList.map(function(elem){ return elem.pothole_idx; });
-    var rd_idx_data    = dataList.map(function(elem){ return elem.rd_idx; });
-    var iri_val_data    = dataList.map(function(elem){ return elem.iri_val; });
-    var bc_idx_data    = dataList.map(function(elem){ return elem.rd_idx; });
-    var degree      = (dataList.length < 10) ? 0 : -90;
-    
-    require([   'echarts','echarts/chart/bar'   ],
-            function (ec) {
-                 var myChart = ec.init(document.getElementById('mummDeptDfctChart'));
-                 myChart.setOption({
-                        title   : { text: '파손형태' },
-                        tooltip : { trigger: 'axis'             },
-                        toolbox : { show: true,
-                            feature: {
-                                dataView : {show: true, readOnly: false},   // 상세조회
-                                saveAsExcel : {show: true},                 // 엑셀저장
-                                saveAsImage: {show: true}                   // 이미지저장
-                            }   
-                        },
-                        legend: {
-                            data: ['거북등균열', '선형균열', '패칭', '포트홀', '소성변형', '종단평탄성', '블럭균열'/*, '복합파손'*/]
-                        },
-                        grid :{
-                            x : 50,
-                            y2 : 80 
-                        },
-                        xAxis : [{  
-                                    type : 'category',
-                                    axisLabel : {
-                                        show:true,
-                                        interval: 0,
-                                        rotate: degree
-                                    },
-                                    data : gDeptNm
-                                }],
-                        yAxis : [{  name : '',       type : 'value'      }],
-                        series : [
-                            {
-                                name: '거북등균열',
-                                type: 'bar',
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: ac_idx_data
-                            },
-                            {
-                                name: '선형균열',
-                                type: 'bar',
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: lc_tc_idx_data
-                            },
-                            {
-                                name: '패칭',
-                                type: 'bar',
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: ptchg_idx_data
-                            },
-                            {
-                                name: '포트홀',
-                                type: 'bar',
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: pothole_idx_data
-                            },
-                            {
-                                name: '종단평탄성',
-                                type: 'bar',    
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: rd_idx_data
-                            },
-                            {
-                                name: '소성변형',
-                                type: 'bar',    
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: iri_val_data
-                            },
-                            {
-                                name: '블럭균열',
-                                type: 'bar',    
-                                stack: '합계',
-                                itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                                data: bc_idx_data
-                            }
-                        ]
-                    });
-
-            });
-}
-
-
 
 function drawTable(dataList){
 
@@ -310,15 +203,9 @@ function drawTable(dataList){
     
     for(var i=0; i<mainData.length; i++){
         tHtml   += '<tr>';
-        tHtml   += '<td align="center" class="bg">'             +   mainData[i].dept_nm+ '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].gpci        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].ac_idx        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].lc_tc_idx    + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].ptchg_idx                        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].pothole_idx                        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].rd_idx                        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].iri_val                        + '</td>';
-        tHtml   += '<td style="text-align:right">'              +   mainData[i].rd_idx                        + '</td>';
+        tHtml   += '<td align="center" class="bg">'             +   mainData[i].dept_nm                    + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].group_len        + '</td>';
+        tHtml   += '<td style="text-align:right">'              +   mainData[i].group_cnt        + '</td>';
         tHtml   += '</tr>';
     }
     
@@ -328,9 +215,16 @@ function drawTable(dataList){
 //엑셀 다운로드
 function fnExcel() {
     if( confirm("엑셀 파일로 저장하시겠습니까?") ) {
-        COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/mumm/mummDeptCntStatsExcel.do'/>", "");
+        COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/rpairtrgetgroup/rpairDeptLenStatsExcel.do'/>", "");
     }
 }
+
+//노선변호 String > Integer로 형변환
+function fn_castRouteCode(routeCd){
+    var routeNo = routeCd*1;
+    return routeNo;
+}
+
 
 //에러 메시지
 function fn_msgErr(){

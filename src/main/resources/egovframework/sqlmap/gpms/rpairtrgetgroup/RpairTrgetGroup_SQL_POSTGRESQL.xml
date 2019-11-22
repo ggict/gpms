@@ -1201,7 +1201,7 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
             /* rpairTrgetGroupDAO.selectRpairDeptLenStats */
             /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록을 조회한다. (2019 신규)  */
             with tbl as (
-            select dept_code, dept_nm, sum(group_len), count(group_cnt)
+            select dept_code, dept_nm, sum(group_len) as group_len, count(group_cnt) as group_cnt
             from (
                 SELECT
                     dept.dept_code as dept_code,
