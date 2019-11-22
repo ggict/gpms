@@ -143,6 +143,39 @@ public interface RpairTrgetGroupService {
 	 * @exception Exception
 	 */
 	RpairTrgetGroupVO selectRpairTrgetGroupListTotalSummary(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
+	
+	/**
+	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록을 조회한다. (2019 신규)
+	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+	 * @return 조회한 TN_RPAIR_TRGET_GROUP
+	 * @exception Exception
+	 */
+	List<RpairTrgetGroupVO> selectRpairRoutLenStats(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
+	
+	/**
+	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 엑셀 다운로드 (2019 신규)
+	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+	 * @return 조회한 TN_RPAIR_TRGET_GROUP
+	 * @exception Exception
+	 */
+	List<RpairTrgetGroupVO> selectRpairRoutLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
+
+	/**
+	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 관리기관별 통계 목록을 조회한다. (2019 신규)
+	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+	 * @return 조회한 TN_RPAIR_TRGET_GROUP
+	 * @exception Exception
+	 */
+	List<RpairTrgetGroupVO> selectRpairDeptLenStats(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
+	
+	/**
+	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 관리기관별 통계 엑셀 다운로드 (2019 신규)
+	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+	 * @return 조회한 TN_RPAIR_TRGET_GROUP
+	 * @exception Exception
+	 */
+	List<RpairTrgetGroupVO> selectRpairDeptLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
+	
 
 }
 

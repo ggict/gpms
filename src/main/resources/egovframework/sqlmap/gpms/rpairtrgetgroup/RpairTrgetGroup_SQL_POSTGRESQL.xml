@@ -1124,5 +1124,35 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
 ]]>
 </select>
 
+    <select id="rpairTrgetGroupDAO.selectRpairRoutLenStats" parameterClass="rpairTrgetGroupVO" resultClass="hashmap">
+        <![CDATA[
+                /* rpairTrgetGroupDAO.selectRpairRoutLenStats */
+                /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록을 조회한다. (2019 신규)  */
+        
+        ]]>
+    </select>
 
+    <select id="rpairTrgetGroupDAO.selectRpairRoutLenStatsExcel" parameterClass="rpairTrgetGroupVO" resultClass="hashmap">
+        <![CDATA[
+                /* rpairTrgetGroupDAO.selectRpairRoutLenStatsExcel */
+                /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록 엑셀 다운로드 (2019 신규)  */
+        
+        ]]>
+    </select>
+
+    <select id="rpairTrgetGroupDAO.selectRpairDeptLenStats" parameterClass="rpairTrgetGroupVO" resultClass="hashmap">
+        <![CDATA[
+                /* rpairTrgetGroupDAO.selectRpairDeptLenStats */
+                /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록을 조회한다. (2019 신규)  */
+        
+        ]]>
+    </select>
+
+    <select id="rpairTrgetGroupDAO.selectRpairRoutLenStats" parameterClass="rpairTrgetGroupVO" resultClass="hashmap">
+        <![CDATA[
+                /* rpairTrgetGroupDAO.selectRpairDeptLenStatsExcel */
+                /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록 엑셀 다운로드 (2019 신규)  */
+        
+        ]]>
+    </select>
 </sqlMap>

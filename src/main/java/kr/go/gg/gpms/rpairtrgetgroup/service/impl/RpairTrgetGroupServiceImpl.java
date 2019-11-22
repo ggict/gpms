@@ -159,5 +159,25 @@ public class RpairTrgetGroupServiceImpl extends AbstractServiceImpl implements R
 	public RpairTrgetGroupVO selectRpairTrgetGroupListTotalSummary(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
 		return rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalSummary( rpairTrgetGroupVO);
 	}
+	
+	@Override
+	public List<RpairTrgetGroupVO> selectRpairRoutLenStats(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+		return rpairTrgetGroupDAO.selectRpairRoutLenStats(rpairTrgetGroupVO);
+	}
+	
+	@Override
+	public List<RpairTrgetGroupVO> selectRpairRoutLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+		return rpairTrgetGroupDAO.selectRpairRoutLenStatsExcel(rpairTrgetGroupVO);
+	}
+	
+	@Override
+	public List<RpairTrgetGroupVO> selectRpairDeptLenStats(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+		return rpairTrgetGroupDAO.selectRpairDeptLenStats(rpairTrgetGroupVO);
+	}
+	
+	@Override
+	public List<RpairTrgetGroupVO> selectRpairDeptLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+		return rpairTrgetGroupDAO.selectRpairDeptLenStatsExcel(rpairTrgetGroupVO);
+	}
 
 }

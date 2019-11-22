@@ -132,4 +132,20 @@ public class RpairTrgetGroupDAO extends BaseDAO {
 		return (RpairTrgetGroupVO) select("rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalSummary", rpairTrgetGroupVO);
 	}
 
+	public List<RpairTrgetGroupVO> selectRpairRoutLenStats(RpairTrgetGroupVO rpairTrgetGroupVO) {
+		return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairRoutLenStats", rpairTrgetGroupVO);
+	}
+
+	public List<RpairTrgetGroupVO> selectRpairRoutLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO) {
+		return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairRoutLenStatsExcel", rpairTrgetGroupVO);
+	}
+
+	public List<RpairTrgetGroupVO> selectRpairDeptLenStats(RpairTrgetGroupVO rpairTrgetGroupVO) {
+		return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairDeptLenStats", rpairTrgetGroupVO);
+	}
+
+	public List<RpairTrgetGroupVO> selectRpairDeptLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO) {
+		return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairDeptLenStatsExcel", rpairTrgetGroupVO);
+	}
+
 }

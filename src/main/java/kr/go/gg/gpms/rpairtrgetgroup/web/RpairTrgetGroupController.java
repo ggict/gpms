@@ -879,5 +879,107 @@ public class RpairTrgetGroupController  extends BaseController {
 
         return "/repairtarget/repairtargetAdminStatisticsExcel";
 	}
+	
+	// 2019 신규 통계지표.
+
+	/**
+	 * 통계 > 보수대상 선정 > 노선별통계 페이지 조회
+	 */
+	@RequestMapping(value = "/rpairtrgetgroup/rpairRoutLenStats.do")
+	public String viewRpairRoutLenStats(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
+
+		model.addAttribute("rpairTrgetGroupVO", rpairTrgetGroupVO);
+
+		return "/stats/rpair/rpairRoutLenStats";
+	}
+
+	/**
+	 * 통계 > 보수대상 선정 > 노선별통계 > 데이터조회
+	 */
+	@RequestMapping(value = { "/api/rpairtrgetgroup/selectRpairRoutLenStats.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Map<String, Object> selectRpairRoutLenStats(@RequestBody RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model,HttpSession session) throws Exception {
+
+		// 데이터 조회
+		List<RpairTrgetGroupVO> result = rpairTrgetGroupService.selectRpairRoutLenStats(rpairTrgetGroupVO);
+		
+		int total_page = 0;
+
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("page", rpairTrgetGroupVO.getPage());
+		map.put("total", total_page);
+		map.put("rows", result);
+
+		return map;
+	}
+
+	/**
+	 * 통계 > 보수대상 선정 > 노선별통계 > 엑셀
+	 */
+	@RequestMapping(value = "/rpairtrgetgroup/rpairRoutLenStatsExcel.do")
+	public View rpairRoutLenStatsExcel(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = rpairTrgetGroupService.selectRpairRoutLenStatsExcel(rpairTrgetGroupVO);
+
+		String[] excel_title = { "노선번호", "노선명", "연장", "구간갯수" };
+		String[] excel_column = { "route_code", "road_nm", "group_len","group_cnt" };
+
+		model.addAttribute("file_name","보수구간선정_노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
+
+		return new ExcelView();
+	}
+
+	/**
+	 * 통계 > 보수대상 선정 > 관리기관별통계 페이지 조회
+	 */
+	@RequestMapping(value = "/rpairtrgetgroup/rpairDeptLenStats.do")
+	public String rpairDeptLenStats(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
+
+		model.addAttribute("rpairTrgetGroupVO", rpairTrgetGroupVO);
+
+		return "/stats/rpair/rpairDeptLenStats";
+	}
+
+	/**
+	 * 통계 > 보수대상 선정 > 관리기관별통계 > 데이터조회
+	 */
+	@RequestMapping(value = { "/api/rpairtrgetgroup/selectRpairDeptLenStats.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Map<String, Object> selectRpairDeptLenStats(@RequestBody RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model,HttpSession session) throws Exception {
+
+		// 데이터 조회
+		List<RpairTrgetGroupVO> result = rpairTrgetGroupService.selectRpairDeptLenStats(rpairTrgetGroupVO);
+		
+		int total_page = 0;
+
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("page", rpairTrgetGroupVO.getPage());
+		map.put("total", total_page);
+		map.put("rows", result);
+
+		return map;
+	}
+
+	/**
+	 * 통계 > 보수대상 선정 > 관리기관별통계 > 엑셀
+	 */
+	@RequestMapping(value = "/rpairtrgetgroup/rpairDeptLenStatsExcel.do")
+	public View rpairDeptLenStatsExcel(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO,ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = rpairTrgetGroupService.selectRpairDeptLenStatsExcel(rpairTrgetGroupVO);
+
+		String[] excel_title = { "관리부서명", "연장", "구간갯수" };
+		String[] excel_column = { "dept_nm", "group_len", "group_cnt" };
+
+		model.addAttribute("file_name","보수대상산정_관리기관별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
+
+		return new ExcelView();
+	}
 
 }
