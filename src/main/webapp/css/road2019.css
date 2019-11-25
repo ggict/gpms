@@ -446,6 +446,24 @@ table td select { width: inherit; }
 
 .arrange1 button { height: 28px; margin: 1px; }
 
+.window_panel { background: #fff; }
+
+.window_panel .window_header_normal { background: #fff; color: #333; border-bottom: solid 1px #ddd; padding: 0; margin: 0 10px; }
+
+.window_panel .window_header .window_title_text { color: #333; font-weight: 500; }
+
+.window_panel .window_header .closeImg { background: url(../images/pop_close.gif) no-repeat -21px 0; margin-right: 10px; }
+
+.window_panel .window_header .minimizeImg { background: url(../images/pop_close.gif) no-repeat 0 0; }
+
+.window_panel .window_header .closeImg, .window_panel .window_header .minimizeImg { border: solid 1px #ddd; width: 21px; height: 21px; }
+
+.window_panel .window_header .closeImg:hover, .window_panel .window_header .closeImg:focus, .window_panel .window_header .minimizeImg:hover, .window_panel .window_header .minimizeImg:focus { background-position-y: -21px; }
+
+.window_panel .window_header_minimize .window_title_text { color: #fff; background: url(../images/window_header_maximize.gif) no-repeat 93% -1px; }
+
+.window_panel .window_header .window_title_text, table.tbview th, table.tbview td, .content a, .content input, .content select, .content p, .content span, .content strong { font-family: 'Noto','Malgun Gothic',sans-serif; font-size: 15px; }
+
 /* jsDiv */
 article.jsDiv { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; z-index: 1000; background: rgba(0, 0, 0, 0.3); }
 

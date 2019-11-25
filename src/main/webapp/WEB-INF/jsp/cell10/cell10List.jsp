@@ -166,9 +166,9 @@ function fn_select_route(route_no, cell_id){
                     <option value="">노선검색</option>
                 </select>
                 <select name="">
-                    <option value="">데이터로검색</option>
+                    <option value="">셀단위로검색</option>
                 </select>
-                <h2 class="h2">포장상태평가정보</h2>
+                <h2 class="h2">셀단위로검색</h2>
             </span>
         </div>
     </header>

@@ -84,9 +84,6 @@
     	</article>
     	
     </div>
-
-</div>
-
 </form>
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>

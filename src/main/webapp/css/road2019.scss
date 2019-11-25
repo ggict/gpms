@@ -131,11 +131,11 @@ body{
     }
 }
 
-.location {
+.loc {border-bottom: solid 1px #d6d6d6;
     .container{ border-right: solid 1px #d6d6d6; margin:0 1.5%;
         .locationHeader { float: left;
             select, h2 {border:none; border-left: solid 1px #d6d6d6; height: 42px; border-radius:0;margin: 0; font-size: 16px;padding: 0 50px  0 20px; float: left;}
-            h2 {padding-top: 11px; padding-left: 30px; height: 31px; font-weight: 600;}
+            h2 {padding-top: 11px; padding-left: 30px; height: 31px; font-weight: 600; background: none; line-height: 1;color: #333; text-align: inherit;}
             select { background: url(../images/selecetArrow2.gif) no-repeat 92% 19px;
                 &:hover,&:focus{ background-position: 92% -25px;}
             }
@@ -164,8 +164,24 @@ body{
     }
 }
 
-.contents { border-top:solid 1px #d6d6d6;
-    &.container {padding: 10px 1.5%;}
+.contents {
+    &.container {padding: 10px 0 0 1%;}
+    @include clear;
+    .div1, .div2, .div3, .div4, .div5, .div6, .div7, .div8, .div9, .div10, .div11, .div12 { float: left; margin: 0 0.5%;}
+    .div1  { width: 7.3%}
+    .div2 { width: 15.6%;}
+    .div3 { width: 23%;}
+    .div4 { width: 32.3%;}
+    .div5 { width: 40.6%;}
+    .div6 { width: 49%;}
+    .div7 { width: 57.3%;}
+    .div8 { width: 65.6%;}
+    .div9 { width: 74%;}
+    .div10 { width:82.3%;}
+    .div11 { width: 90.6%;}
+    .div12 { width: 99%;}
+
+    .h3 {font-weight: 600; font-size: 16px; padding: 10px 0; color: #444; font-family: 'Noto','Malgun Gothic',sans-serif; border: none; line-height: 1;}
 }
 
 .maxHeight { overflow-y: auto; border-bottom: solid 1px #ddd;
@@ -246,7 +262,7 @@ button.btnLocView { width: 10px;height: 16px;background: url(../images/btnLocati
 
 }
 
-.mapTool2 { font-size: 0;  position: absolute;right: .5%;top: 12px;height: $mapTool2WH; z-index: 990;
+.mapTool2 { font-size: 0;  position: absolute;right: .6%;top: 12px;height: $mapTool2WH; z-index: 990;
     article {float: left; border-left:solid 1px #ddd;
         &:first-child { border-left:none}
      }
@@ -262,15 +278,22 @@ button.btnLocView { width: 10px;height: 16px;background: url(../images/btnLocati
     .themeMap { background-position:0 -230px}
     .generalMap.on, .satelliteMap.on, .totalSearch.on, .searchInfo.on, .cellEdit.on, .themeMap.on { background-position-x:-46px; background-color: $a; color:#fff}
 }
-.indexMapWrap {position: absolute;right: .5%; top: 70px; width: 195px; box-shadow:$shadow; background:#fff;
+.indexMapWrap {position: absolute;right: .6%; top: 70px; width: 195px; box-shadow:$shadow; background:#fff;z-index: 900; overflow:hidden;
     button {width: 100%; font-size:13px; text-align: left; padding: 5px; background: #94a0bc url(../images/btnMore.gif) no-repeat 95% 6px;color:#fff ;  border-top:solid 1px rgba(0,0,0,0.1)}
     button:hover, button:focus, .on button { background-color: $a;}
-    .ctn {height: 0; transition:$trans1}
+    .ctn {height: 0; transition:$trans1; overflow:hidden}
     .on {
-        .ctn {height: 200px;}
+        .ctn {height: 240px;}
         button { background-position: 95% -18px;}
     }
 }
+#dvIndexMap {height: 165px;}
+.inmapBx3 { font-size: 14px; padding:5px 10px; border-top:solid 1px #ddd;
+    input[type="text"] { width: 120px; height: auto;}
+    p {font-size: 13px; padding: 3px 0 0 0;}
+}
+/* .btmenuarea { display: none;}
+.tab_wrap {margin: 0;} */
 
 .divlayermng ul li p {font-size: 12px; word-break: break-all; line-height: 1;}
 
@@ -301,6 +324,68 @@ input.mapPosition_Y { width: 100px;}
 
 .posR { position: absolute; right: 10px;top: 48px;}
 .btn.btnSearch { width: 30px; font-size: 0;background-image: url('../images/btnSearch.png'); background-repeat: no-repeat; background-position: center}
+
+#snbacc { right: 0.45% ;top: 70px;}
+.bottomBtArea {right:0; top:0;
+    a {width: 42px;height: 42px;display: block; border: solid 1px #d6d6d6; border-top: solid 1px #69707e; border-right: none; background: #fff url(../images/selecetArrow2.gif) no-repeat center 20px;
+        &:hover, &:focus { background-color: #f9f9f9;}
+        &#leftOpenBt { background-position: center -68px}
+    }
+    img {position: fixed; left: -9999px;}
+}
+.tab_wrap {border-top:solid 1px #69707e;}
+
+
+.ui-icon-triangle-1-n {background-position-x:1px}
+.ui-state-default, .ui-widget-content .ui-state-default { background: #f3f3f3;border: 1px solid #cccccc; border-bottom:none; font-size: 13px;font-weight: 600; }
+.ui-jqgrid tr.jqgrow td {padding: 4px 8px; height: inherit}
+.ui-state-default .ui-icon {
+    background-image: url(../images/ui/ui-icons_222222_256x240.png);
+}
+.whitebtn { margin: -2px;
+    img{vertical-align: text-bottom}
+}
+
+.tabContBody {height: 326px;}
+.ui-widget-content {}
+.ui-jqgrid .ui-jqgrid-bdiv { margin-left: -1px;}
+.ui-jqgrid .ui-pager-control { margin-top: -1px; border-top: solid 1px #ddd;}
+
+/* #gview_gridArea {height: 210px;overflow: auto;} */
+
+#gridPager { border:none; height: auto; border-top: solid 1px #ccc; margin-top: -1px !important;}
+#pg_gridPager {
+    td { border:none; padding: 0;}
+}
+table td select { width: inherit;}
+
+.arrange1 {
+    .table td, .table th { padding: 3px;}
+    select, input {width: 100px; height: 28px;}
+    button{height: 28px;margin: 1px;}
+}
+
+.window_panel { background: #fff;
+    .window_header_normal { background: #fff; color: #333; border-bottom:solid 1px #ddd; padding: 0;margin: 0 10px;}
+    .window_header {
+        .window_title_text {color: #333; font-weight: 500;}
+        .closeImg { background: url(../images/pop_close.gif) no-repeat -21px 0; margin-right: 10px; }
+        .minimizeImg { background: url(../images/pop_close.gif) no-repeat 0 0; }
+        .closeImg, .minimizeImg {
+            border:solid 1px #ddd; width: 21px;height: 21px;
+            &:hover, &:focus { background-position-y:-21px}
+
+        }
+    }
+    .window_header_minimize{
+        .window_title_text {color: #fff; background: url(../images/window_header_maximize.gif) no-repeat 93% -1px;}
+    }
+}
+.window_panel .window_header .window_title_text,
+table.tbview th,
+table.tbview td,
+.content a, .content input, .content select, .content p, .content span, .content strong {font-family: 'Noto','Malgun Gothic',sans-serif;font-size: 15px; }
+
 
 /* jsDiv */
 article.jsDiv{ display: none; position: fixed; left: 0;top: 0; width: 100%; height: 100%; z-index: 1000; background: rgba(0, 0, 0, 0.3);

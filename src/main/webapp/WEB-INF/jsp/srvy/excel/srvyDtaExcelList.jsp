@@ -257,88 +257,102 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 </form>
 
-
-
 <div class="tabcont">
-	<div class="fl bgsch">
-			<h3>파일첨부
-				<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
-				<input multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
-			</h3>
-			
-			
-			<ul >
-				<li >
-				<label>조사일자</label>
-				<span class="calendar btn_calendar">
-			 		<input type="text" id="SRVY_DE" name="SRVY_DE" /></span>
-				</li>
-                <li >
-                <label>노선번호</label>
-                    <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input">
-                        <option value="">= 전체 =</option>
-                        <c:forEach items="${ roadNoList }" var="roadNo">
-                            <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
-                        </c:forEach>
-                    </select>
-                </li>
-                <li>
-                    <label>노선명</label>
-                    <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
-                </li>
-                
-                <li>
-                    <label>행선</label>
-                    <select id="DIRECT_CODE" name="DIRECT_CODE" alt="행선" style="width:70px;" class="input">
-                        <option value="">= 전체 =</option>
-                        <option value="S">상행</option>
-                        <option value="E">하행</option>
-                    </select>
 
-                    <label>차로</label>
-                    <input type="number" name="TRACK" id="TRACK" value="" style="width:57px;" onkeydown="fnCheckNumber(this);" maxLength="1" class="MX_80 CS_50 DT_INT input" />
-                </li>
-                
-			</ul>
-	        
-	           
-			<div class="schbx mt10">
-			    <ul class="sch" style="padding: 55px 10px 5px;">
-			        <li>
-			            <div class="btfilebx scroll" style="width:258px; height:40px" id="file_list">
-			            	<ul name="fileSet">
-			            	</ul>
-			            </div>
-			        </li>
-			        <li class="wid100 af">
-			        	※ 첨부 파일은 압축(zip) 파일만 업로드 가능합니다.
-			        </li>
-			        <li class="wid100 af">
-			            <a href="#" onclick="fn_file_upload()" class="schbtn fr" style="width:43%">파일전송</a>
-		            </li>
-		        </ul>
-		    </div>
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">조사자료관리</option>
+                </select>
+                <select name="">
+                    <option value="">조사자료등록</option>
+                </select>
+                <h2 class="h2">조사자료 등록 대상목록</h2>
+            </span>
+            <a href="#" class="whitebtn dpib ml10 vm" onclick="fn_search();"><img src="/gpms/images/ic_reset.png" alt="새로고침"></a>
 
-	</div>
-	<div class="fr listbx">
-	    <h3>조사자료 등록 대상목록
-	        <a href="#" class="whitebtn dpib ml10 vm" onclick="fn_search();"><img src="<c:url value='/images/ic_reset.png'/>" alt="새로고침" title="새로고침" /></a>
-	    </h3>
-	    <p class="location">
-	        <span>조사자료 관리</span>
-	        <span>조사자료 등록</span>
-	        <strong>조사자료 등록 대상목록</strong>
-	    </p>
-    	<div class="mt10 ml10 mr10">
+        </div>
+    </header>
+    
+    <div class="contents container">
+    
+    	<article class="div3">
+    		<h3 class="h3">파일첨부</h3>
+    		<span class="haderBtn">
+    			<input type="button" value="파일선택" class="btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" >
+    		</span>
+
+    		<div class="table">
+    			<table>
+    				<tbody>
+	    				<tr>
+	    					<td class="th"><label for="SRVY_DE">조사일자</labed></td>
+	    					<td>
+	                            <span class="calendar btn_calendar">
+	                                <input type="text" id="SRVY_DE" name="SRVY_DE" />
+	                            </span>           
+	                        </td>
+	    					<td class="th"><label for="ROAD_NO">노선번호</label></td>
+	    					<td>
+	    						<select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input">
+	    						    <option value="">전체</option>
+	    						    <c:forEach items="${ roadNoList }" var="roadNo">
+	    						        <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
+	    						    </c:forEach>
+	    						</select>        
+	                        </td>
+	    				</tr>
+	    				<tr>
+	    					<td class="th"><label for="ROAD_NAME">노선명</label></td>
+	    					<td colspan="3">
+	                            <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
+	                        </td>
+	    				</tr>
+	    				<tr>
+	    					<td class="th"><label>행선</label></td>
+	    					<td>
+	    						<select id="DIRECT_CODE" name="DIRECT_CODE">
+	    						    <option value="">전체</option>
+	    						    <option value="S">상행</option>
+	    						    <option value="E">하행</option>
+	    						</select>	    						
+	    					</td>
+	    					<td class="th"><label>차로</label></td>
+	    					<td>
+	    						<input type="number" name="TRACK" id="TRACK" value="" style="width:57px;" onkeydown="fnCheckNumber(this);" maxLength="1" class="MX_80 CS_50 DT_INT input" />
+	    					</td>
+	    				</tr>
+	    				<tr>
+	    					<td colspan="3">
+			    				<div class="btfilebx scroll" style="width:258px; height:40px" id="file_list">
+					            	<ul name="fileSet"></ul>
+					            </div>
+					            <p>※ 첨부 파일은 압축(zip) 파일만 업로드 가능합니다.			</p>
+	    					</td>
+	    					<td>
+	    						<input type="button" class="btn pri" onclick="fn_file_upload()" value="파일전송" />
+	    					</td>
+	    				</tr>                
+    				</tbody>	
+    			</table>
+    		</div>
+    	</article>
+    	
+    	<article class="div9">
+    		<h3 class="h3">조사자료 등록 대상목록</h3>
+
+
     		<form id="frm" name="frm" method="post" action="">
-			    <div id="div_grid" style="width:100%; height:206px">
-			        <table id="gridArea"></table>
-					<div id="gridPager"></div>
+			    <div id="div_grid" class="table">
+			        <table id="gridArea"></table>					
 	            </div>
+	            <div id="gridPager"></div>
             </form>
-      	</div>
-	</div>
-
+            
+    	</article>
+    	
+    </div>
 </div>
 
 <!-- 공통 (START)-->
