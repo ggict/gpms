@@ -251,6 +251,26 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 	public List cntrwkMthdCntStatsExcel(CntrwkDtlVO cntrwkDtlVO) throws Exception {
 		return cntrwkDtlDAO.cntrwkMthdCntStatsExcel(cntrwkDtlVO);
 	}
+	
+	@Override
+	public List<CntrwkDtlVO> selectCntrwkRoutLenNewStats(CntrwkDtlVO cntrwkDtlVO) throws Exception {
+		return cntrwkDtlDAO.selectCntrwkRoutLenNewStats(cntrwkDtlVO);
+	}
+	
+	@Override
+	public List<CntrwkDtlVO> cntrwkRoutLenNewStatsExcel(CntrwkDtlVO cntrwkDtlVO) throws Exception {
+		return cntrwkDtlDAO.cntrwkRoutLenNewStatsExcel(cntrwkDtlVO);
+	}
+	
+	@Override
+	public List<CntrwkDtlVO> selectCntrwkDeptLenNewStats(CntrwkDtlVO cntrwkDtlVO) throws Exception {
+		return cntrwkDtlDAO.selectCntrwkDeptLenNewStats(cntrwkDtlVO);
+	}
+	
+	@Override
+	public List<CntrwkDtlVO> cntrwkDeptLenNewStatsExcel(CntrwkDtlVO cntrwkDtlVO) throws Exception {
+		return cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel(cntrwkDtlVO);
+	}
 
 	/**
 	 * 공사정보(TN_CNTRWK_DTL)엑셀을 DB에 저장한다.

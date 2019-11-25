@@ -193,4 +193,19 @@ public class CntrwkDtlDAO extends BaseDAO {
 		return (List)list("cntrwkDtlDAO.cntrwkMthdCntStatsExcel", cntrwkDtlVO);
 	}
 	
+	public List<CntrwkDtlVO> selectCntrwkRoutLenNewStats(CntrwkDtlVO cntrwkDtlVO) {
+		return (List<CntrwkDtlVO>)list("cntrwkDtlDAO.selectCntrwkRoutLenNewStats", cntrwkDtlVO);
+	}
+	
+	public List<CntrwkDtlVO> cntrwkRoutLenNewStatsExcel(CntrwkDtlVO cntrwkDtlVO) {
+		return (List<CntrwkDtlVO>)list("cntrwkDtlDAO.cntrwkRoutLenNewStatsExcel", cntrwkDtlVO);
+	}
+	
+	public List<CntrwkDtlVO> selectCntrwkDeptLenNewStats(CntrwkDtlVO cntrwkDtlVO) {
+		return (List<CntrwkDtlVO>)list("cntrwkDtlDAO.selectCntrwkDeptLenNewStats", cntrwkDtlVO);
+	}
+	
+	public List<CntrwkDtlVO> cntrwkDeptLenNewStatsExcel(CntrwkDtlVO cntrwkDtlVO) {
+		return (List<CntrwkDtlVO>)list("cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel", cntrwkDtlVO);
+	}
 }

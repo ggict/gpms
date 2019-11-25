@@ -1221,7 +1221,7 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
     <select id="rpairTrgetGroupDAO.selectRpairDeptLenStats" parameterClass="rpairTrgetGroupVO" resultClass="hashmap">
         <![CDATA[
             /* rpairTrgetGroupDAO.selectRpairDeptLenStats */
-            /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록을 조회한다. (2019 신규)  */
+            /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 관리기관별 통계 목록을 조회한다. (2019 신규)  */
             with tbl as (
             select dept_code, dept_nm, sum(group_len) as group_len, count(group_cnt) as group_cnt
             from (
@@ -1267,7 +1267,7 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
     <select id="rpairTrgetGroupDAO.selectRpairDeptLenStatsExcel" parameterClass="rpairTrgetGroupVO" resultClass="hashmap">
         <![CDATA[
             /* rpairTrgetGroupDAO.selectRpairDeptLenStatsExcel */
-            /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록 엑셀 다운로드 (2019 신규)  */
+            /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 관리기관별 통계 목록 엑셀 다운로드 (2019 신규)  */
             with tbl as (
             select dept_code, dept_nm, sum(group_len) as group_len, count(group_cnt) as group_cnt
             from (

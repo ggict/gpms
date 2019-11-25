@@ -144,6 +144,38 @@ public interface CntrwkDtlService {
 	 List cntrwkMthdCntStatsExcel(CntrwkDtlVO cntrwkDtlVO) throws Exception;
 	 
 	/**
+	 * 포장공사 이력 - 노선별 통계 목록을 조회한다. (2019 신규)
+	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * @return 조회한 TN_CNTRWK_DTL
+	 * @exception Exception
+	 */
+	List<CntrwkDtlVO> selectCntrwkRoutLenNewStats(CntrwkDtlVO cntrwkDtlVO)throws Exception ;
+
+	/**
+	 * 포장공사 이력 - 노선별 통계 엑셀 다운로드 (2019 신규)
+	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * @return 조회한 TN_CNTRWK_DTL
+	 * @exception Exception
+	 */
+	List<CntrwkDtlVO> cntrwkRoutLenNewStatsExcel(CntrwkDtlVO cntrwkDtlVO)throws Exception ;
+
+	/**
+	 * 포장공사 이력 - 관리기관별 통계 목록을 조회한다. (2019 신규)
+	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * @return 조회한 TN_CNTRWK_DTL
+	 * @exception Exception
+	 */
+	List<CntrwkDtlVO> selectCntrwkDeptLenNewStats(CntrwkDtlVO cntrwkDtlVO)throws Exception ;
+	
+	/**
+	 * 포장공사 이력 - 관리기관별 통계 엑셀 다운로드 (2019 신규)
+	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * @return 조회한 TN_CNTRWK_DTL
+	 * @exception Exception
+	 */
+	List<CntrwkDtlVO> cntrwkDeptLenNewStatsExcel(CntrwkDtlVO cntrwkDtlVO)throws Exception ; 
+	 
+	/**
 	 * 공사정보(TN_CNTRWK_DTL)엑셀을 DB에 저장한다.
 	 * @param cntrwkDtlVO - 저장할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception

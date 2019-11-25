@@ -595,23 +595,6 @@ public class CntrwkDtlController extends BaseController {
 	}
 
 	/**
-	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 연장 통계 목록을 조회한다.
-	 * 
-	 * @param cntrwkDtlVO
-	 *            - 조회할 정보가 담긴 CntrwkDtlVO
-	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkRoutLenStats.do" })
-	public String selectCntrwkRoutLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
-			HttpServletRequest request) throws Exception {
-		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
-
-		return "/stats/cntrwk/cntrwkRoutLenStats";
-	}
-
-	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 예산 통계 목록을 조회한다.
 	 * 
 	 * @param cntrwkDtlVO
@@ -659,23 +642,6 @@ public class CntrwkDtlController extends BaseController {
 		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
 
 		return "/stats/cntrwk/cntrwkDeptCntStats";
-	}
-
-	/**
-	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 연장 통계 목록을 조회한다.
-	 * 
-	 * @param cntrwkDtlVO
-	 *            - 조회할 정보가 담긴 CntrwkDtlVO
-	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
-	 * @exception Exception
-	 */
-	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDeptLenStats.do" })
-	public String selectCntrwkDeptLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model,
-			HttpServletRequest request) throws Exception {
-		// 부서 정보 > 맵 컨트롤러 부터 조회 되도록 수정
-		// model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(deptVO));
-
-		return "/stats/cntrwk/cntrwkDeptLenStats";
 	}
 
 	/**
@@ -854,5 +820,116 @@ public class CntrwkDtlController extends BaseController {
 
 		return new ExcelView();
 	}
+	
+	// 2019 신규 통계 지표
+	/**
+	 * 통계 > 포장공사 이력 > 노선별 통계 목록을 조회한다.
+	 * 
+	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkRoutLenStats.do" })
+	public String selectCntrwkRoutLenStats(CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpServletRequest request) throws Exception {
+		
+		model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
+
+		return "/stats/cntrwk/cntrwkRoutLenStats";
+	}
+	
+	/**
+	 * 통계 > 포장공사 이력 > 노선별통계 > 데이터조회
+	 */
+	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkRoutLenNewStats.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Map<String, Object> selectCntrwkRoutLenNewStats(@RequestBody CntrwkDtlVO cntrwkDtlVO, ModelMap model,HttpSession session) throws Exception {
+
+		// 데이터 조회
+		List<CntrwkDtlVO> result = cntrwkDtlService.selectCntrwkRoutLenNewStats(cntrwkDtlVO);
+		
+		int total_page = 0;
+
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("page", cntrwkDtlVO.getPage());
+		map.put("total", total_page);
+		map.put("rows", result);
+
+		return map;
+	}
+	
+	/**
+	 * 통계 > 포장공사 이력 > 노선별통계 > 엑셀
+	 */
+	@RequestMapping(value = "/cntrwkdtl/cntrwkRoutLenNewStatsExcel.do")
+	public View cntrwkRoutLenNewStatsExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = cntrwkDtlService.cntrwkRoutLenNewStatsExcel(cntrwkDtlVO);
+
+		String[] excel_title = { "노선번호", "노선명", "보수대상구간", "포장도로정비" };
+		String[] excel_column = { "route_code", "road_nm", "rpair_len","cntrwk_len" };
+
+		model.addAttribute("file_name","포장공사이력_노선별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
+
+		return new ExcelView();
+	}
+	
+	/**
+	 * 통계 > 포장공사 이력 > 관리기관별 통계 목록을 조회한다.
+	 * 
+	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
+	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDeptLenStats.do" })
+	public String selectCntrwkDeptLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model, HttpServletRequest request) throws Exception {
+		
+		model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
+
+		return "/stats/cntrwk/cntrwkDeptLenStats";
+	}
+	
+	/**
+	 * 통계 > 포장공사 이력 > 관리기관별통계 > 데이터조회
+	 */
+	@RequestMapping(value = { "/api/cntrwkdtl/selectCntrwkDeptLenNewStats.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Map<String, Object> selectCntrwkDeptLenNewStats(@RequestBody CntrwkDtlVO cntrwkDtlVO, ModelMap model,HttpSession session) throws Exception {
+
+		// 데이터 조회
+		List<CntrwkDtlVO> result = cntrwkDtlService.selectCntrwkDeptLenNewStats(cntrwkDtlVO);
+		
+		int total_page = 0;
+
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("page", cntrwkDtlVO.getPage());
+		map.put("total", total_page);
+		map.put("rows", result);
+
+		return map;
+	}
+	
+	/**
+	 * 통계 > 포장공사 이력 > 관리기관별통계 > 엑셀
+	 */
+	@RequestMapping(value = "/cntrwkdtl/cntrwkDeptLenNewStatsExcel.do")
+	public View cntrwkDeptLenNewStatsExcel(@ModelAttribute CntrwkDtlVO cntrwkDtlVO,ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		List dataList = cntrwkDtlService.cntrwkDeptLenNewStatsExcel(cntrwkDtlVO);
+
+		String[] excel_title = { "관리부서명", "보수대상구간", "포장도로정비" };
+		String[] excel_column = { "dept_nm", "rpair_len","cntrwk_len" };
+
+		model.addAttribute("file_name","포장공사이력_관리기관별통계_" + DateUtil.getCurrentDateString("yyyy-MM-dd"));
+		model.addAttribute("excel_title", excel_title);
+		model.addAttribute("excel_column", excel_column);
+		model.addAttribute("data_list", dataList);
+
+		return new ExcelView();
+	}
+	
+
 
 }

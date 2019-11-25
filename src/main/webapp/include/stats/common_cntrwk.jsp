@@ -334,6 +334,31 @@
             </li>
         </ul>
     </div>
+
+    <!-- 통계 > 포장공사 이력 (2019신규) -->
+    <div id="sub_stat_cntrwk">
+        <h2>포장공사 이력 통계</h2>
+        <h4>통계 종류</h4>
+        <ul class="btab_menu" style="min-height: 300px">
+            <li style="height: 100px"><a href="#sch_cnt01" class="tab1" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="cntrwkdtl/selectCntrwkRoutLenStats.do"/>');">노선별<br />통계</a></li>
+            <li style="height: 100px"><a href="#sch_cnt02" class="tab2" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="cntrwkdtl/selectCntrwkDeptLenStats.do"/>');">관리기관별<br />통계</a></li>
+        </ul>
+
+        <h3>검색조건</h3>
+        <ul class="sch">
+            <li class="wid100"><label>선정년도</label></li>
+            <li class="wid100">
+                <select name="SCH_STATS_YEAR" id="SCH_STATS_YEAR" style="width: 120px;">
+                    <c:forEach var="selectData" items="${statsYear}">
+                        <option value="${selectData.STATS_YEAR}">${selectData.STATS_YEAR}</option>
+                    </c:forEach>
+                </select>
+            </li>
+            <li class="wid100">
+                <a href="#" class="schbtn dpb" onclick="fnCntrwkStatsSearch();">검색</a>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <script type="text/javascript" defer="defer">
