@@ -71,6 +71,14 @@ public class RpairTrgetGroupServiceImpl extends AbstractServiceImpl implements R
         return ret;
     }
 
+    /**
+     * 보수대상 CELL_ID 가져오기.
+     */
+    @Override
+    public List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLList(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+        return rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList( rpairTrgetGroupVO);
+    }
+
 
 
 
@@ -136,11 +144,6 @@ public class RpairTrgetGroupServiceImpl extends AbstractServiceImpl implements R
 	}
 
 	@Override
-	public List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLList(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
-		return rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList( rpairTrgetGroupVO);
-	}
-
-	@Override
 	public List<RpairTrgetGroupVO> selectRpairTrgetDeptStatistics(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
 		return rpairTrgetGroupDAO.selectRpairTrgetDeptStatistics( rpairTrgetGroupVO);
 	}
@@ -159,22 +162,22 @@ public class RpairTrgetGroupServiceImpl extends AbstractServiceImpl implements R
 	public RpairTrgetGroupVO selectRpairTrgetGroupListTotalSummary(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
 		return rpairTrgetGroupDAO.selectRpairTrgetGroupListTotalSummary( rpairTrgetGroupVO);
 	}
-	
+
 	@Override
 	public List<RpairTrgetGroupVO> selectRpairRoutLenStats(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
 		return rpairTrgetGroupDAO.selectRpairRoutLenStats(rpairTrgetGroupVO);
 	}
-	
+
 	@Override
 	public List<RpairTrgetGroupVO> selectRpairRoutLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
 		return rpairTrgetGroupDAO.selectRpairRoutLenStatsExcel(rpairTrgetGroupVO);
 	}
-	
+
 	@Override
 	public List<RpairTrgetGroupVO> selectRpairDeptLenStats(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
 		return rpairTrgetGroupDAO.selectRpairDeptLenStats(rpairTrgetGroupVO);
 	}
-	
+
 	@Override
 	public List<RpairTrgetGroupVO> selectRpairDeptLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
 		return rpairTrgetGroupDAO.selectRpairDeptLenStatsExcel(rpairTrgetGroupVO);

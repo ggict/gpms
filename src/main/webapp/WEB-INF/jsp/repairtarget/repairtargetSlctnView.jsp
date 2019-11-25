@@ -517,7 +517,7 @@ function fn_grid_btn(cellValue, options, rowObject) {
 	}
 		break;
 	case "btn_loc2": {
-		btn = "<a href='#' onclick=\"javascript:fn_select_cellSectID('" + rowObject.CELL_IDS + "');\"><img src='" + contextPath + "/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+		btn = "<a href='#' onclick=\"javascript:fn_select_cellSectFilter('" + rowObject.TRGET_SLCTN_NO + "', '" + rowObject.GROUP_ITEM_NO + "');\"><img src='" + contextPath + "/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
 	}
 		break;
 	}
@@ -915,11 +915,12 @@ function fnBudgetRateChange(objNo){
 }
 
 
-function fn_select_cellSectFilter(){
+function fn_select_cellSectFilter(trgetSlctnNo, groupItemNo){
 
 	var vForm = $("#frmRpairTrgetSlctn");
 	var postData = {
-		"TRGET_SLCTN_NO" : vForm.find('#TRGET_SLCTN_NO').val(), "TMPR_SLCTN_AT" : "Y", "USE_AT" : "Y", "DELETE_AT" : "N"
+		"TRGET_SLCTN_NO" : trgetSlctnNo,
+		"GROUP_ITEM_NO" : groupItemNo
 	};
 	var action = '<c:url value="/api/rpairtrgetgroup/selectRpairTrgetGroupCELLListRest.do"/>';
 
@@ -934,20 +935,13 @@ function fn_select_cellSectFilter(){
         processData: false,
 		success: function(datas){
 //			alert(JSON.stringify(datas));
-			var cellids = "";
+			var cellids = [];
 			if (datas != null && datas.length > 0) {
-				for (var i = 0; i < datas.length; i++) {
-					var item = datas[i];
-					if (cellids != "") {
-						if (item.CELL_IDS != "" && item.CELL_IDS != null) {
-							cellids += "," + item.CELL_IDS;
-						}
-					} else {
-						if (item.CELL_IDS != "" && item.CELL_IDS != null) {
-							cellids = item.CELL_IDS;
-						}
-					}
-				}
+				cellids = $.map(datas, function (data) {
+			        return data.CELL_ID;
+				});
+
+				console.log(cellids);
 				fn_select_cellSectIDS(cellids);
 			}
 		}, error : function(a, b, msg) {
@@ -995,14 +989,15 @@ function fn_select_cellSectID(cell_ids){
  * 선정 ID(복수) 위치조회
  */
 function fn_select_cellSectIDS(cell_ids){
-	var tables = [ "CELL_SECT" ];
-	var fields = [];
-	var values = [];
-	var cellList = cell_ids.split(",");
-	for (var i = 0; i < cellList.length; i++) {
-		fields.push("CELL_ID");
-		values.push(cellList[i]);
-	}
+	var tables = [ "CELL_10" ];
+    var fields = [];
+    var values = cell_ids;
+    var cellList = cell_ids;
+    console.log(cellList.length);
+    for (var i = 0; i < cellList.length; i++) {
+        fields.push("CELL_ID");
+//      values.push(cellList[i]);
+    }
 
 	var attribute = {
 		attributes : {

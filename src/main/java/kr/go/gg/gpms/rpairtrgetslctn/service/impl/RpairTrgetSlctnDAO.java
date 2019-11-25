@@ -87,6 +87,7 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
         HashMap param = new HashMap();
         param.put("P_USER_NO", rpairTrgetSlctnVO.getCRTR_NO());
         param.put("P_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
+        param.put("P_ROUTE_CODE", rpairTrgetSlctnVO.getROUTE_CODE());
         param.put("P_ANALS_UNIT_CODE", rpairTrgetSlctnVO.getANALS_UNIT_CODE());
         param.put("P_MODE", "NONE");
 

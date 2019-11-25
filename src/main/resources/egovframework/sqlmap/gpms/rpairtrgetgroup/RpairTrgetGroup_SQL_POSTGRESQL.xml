@@ -309,7 +309,29 @@
         ]]>
     </update>
 
-
+    <!-- 보수대상 CELL_ID 가져오기. -->
+    <select id="rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList" resultClass="rpairTrgetGroupVO">
+        /* rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList */
+        SELECT
+            B.CELL_ID
+        FROM TN_RPAIR_TRGET_GROUP A
+        INNER JOIN CELL_10 B
+            ON B.ROUTE_CODE                  = A.ROUTE_CODE
+            AND B.DIRECT_CODE                = A.DIRECT_CODE
+            AND B.TRACK                      = A.TRACK
+            AND B.STRTPT                     BETWEEN A.STRTPT AND A.ENDPT
+            AND B.ENDPT                      BETWEEN A.STRTPT AND A.ENDPT
+        WHERE
+            1 = 1
+        <isNotEmpty property="GROUP_ITEM_NO">
+            AND A.GROUP_ITEM_NO              = #GROUP_ITEM_NO#::INT
+        </isNotEmpty>
+        <isNotEmpty property="TRGET_SLCTN_NO">
+            AND A.TRGET_SLCTN_NO             = #TRGET_SLCTN_NO#::INT
+        </isNotEmpty>
+            AND A.DELETE_AT                  = 'N'
+            AND A.USE_AT                     = 'Y'
+    </select>
 
 
 
@@ -1137,9 +1159,9 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     rpairgroup.strtpt, rpairgroup.endpt
                     ,rpairgroup.group_item_no as group_cnt
                     ,rpairgroup.TRGET_SLCTN_NO
-                FROM 
+                FROM
                 tn_route_info route
-                left outer join 
+                left outer join
                 (
                     select tnrpairtrgetgroup.route_code,  tnrpairtrgetgroup.strtpt, tnrpairtrgetgroup.endpt,  tnrpairtrgetslctn.trget_slctn_no,
                     tnrpairtrgetgroup.len,
@@ -1173,9 +1195,9 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     rpairgroup.strtpt, rpairgroup.endpt
                     ,rpairgroup.group_item_no as group_cnt
                     ,rpairgroup.TRGET_SLCTN_NO
-                FROM 
+                FROM
                 tn_route_info route
-                left outer join 
+                left outer join
                 (
                     select tnrpairtrgetgroup.route_code,  tnrpairtrgetgroup.strtpt, tnrpairtrgetgroup.endpt,  tnrpairtrgetslctn.trget_slctn_no,
                     tnrpairtrgetgroup.len,
@@ -1210,14 +1232,14 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     rpairgroup.strtpt, rpairgroup.endpt
                     ,rpairgroup.group_item_no as group_cnt
                     ,rpairgroup.TRGET_SLCTN_NO
-                FROM 
+                FROM
                 (   SELECT
                     tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
                     , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
                 FROM TC_DEPT tcdept
                 WHERE tcdept.DEPT_CODE IN ('6411399','6411799')
                     ) dept
-                left outer join 
+                left outer join
                 (
                     select tnrpairtrgetgroup.dept_code,  tnrpairtrgetgroup.strtpt, tnrpairtrgetgroup.endpt,  tnrpairtrgetslctn.trget_slctn_no,
                     tnrpairtrgetgroup.len,
@@ -1234,10 +1256,10 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                 on dept.DEPT_CODE = rpairgroup.dept_code
             ) tbl
             group by dept_code, dept_nm
-            ) 
+            )
             select dept_code, dept_nm, group_len, group_cnt from tbl
-            union all 
-            select '9999999', '경기도', sum(group_len), sum(group_cnt) from tbl 
+            union all
+            select '9999999', '경기도', sum(group_len), sum(group_cnt) from tbl
             ORDER BY dept_code desc
         ]]>
     </select>
@@ -1256,14 +1278,14 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     rpairgroup.strtpt, rpairgroup.endpt
                     ,rpairgroup.group_item_no as group_cnt
                     ,rpairgroup.TRGET_SLCTN_NO
-                FROM 
+                FROM
                 (   SELECT
                     tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
                     , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
                 FROM TC_DEPT tcdept
                 WHERE tcdept.DEPT_CODE IN ('6411399','6411799')
                     ) dept
-                left outer join 
+                left outer join
                 (
                     select tnrpairtrgetgroup.dept_code,  tnrpairtrgetgroup.strtpt, tnrpairtrgetgroup.endpt,  tnrpairtrgetslctn.trget_slctn_no,
                     tnrpairtrgetgroup.len,
@@ -1280,10 +1302,10 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                 on dept.DEPT_CODE = rpairgroup.dept_code
             ) tbl
             group by dept_code, dept_nm
-            ) 
+            )
             select dept_code, dept_nm, group_len, group_cnt from tbl
-            union all 
-            select '9999999', '경기도', sum(group_len), sum(group_cnt) from tbl 
+            union all
+            select '9999999', '경기도', sum(group_len), sum(group_cnt) from tbl
             ORDER BY dept_code desc
         ]]>
     </select>

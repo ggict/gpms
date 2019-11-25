@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION gpms.prc_repair_target_range_string(p_user_no numeric, p_trget_slctn_no numeric, p_anals_unit_code text, p_mode text, OUT o_proccode text, OUT o_procmsg text)
+CREATE OR REPLACE FUNCTION gpms.prc_repair_target_range_string(p_user_no numeric, p_trget_slctn_no numeric, P_ROUTE_CODE TEXT, p_anals_unit_code text, p_mode text, OUT o_proccode text, OUT o_procmsg text)
  RETURNS record
  LANGUAGE plpgsql
 AS $function$
@@ -26,7 +26,9 @@ BEGIN
     END IF;
 
     DELETE FROM TN_RPAIR_TRGET_GROUP
-    WHERE TRGET_SLCTN_NO = P_TRGET_SLCTN_NO;
+    WHERE
+        TRGET_SLCTN_NO = P_TRGET_SLCTN_NO
+        AND ROUTE_CODE = P_ROUTE_CODE;
 
     LOOP
 
@@ -164,50 +166,47 @@ BEGIN
                 FROM (
                     SELECT
                         A.*
-                    FROM (
-                        SELECT
-                            A.*
---                            , B.MNG_RD_CD
-                            , NULL MNG_RD_CD
-                            , AVG(A.CALC_GPCI) OVER(PARTITION BY A.TRGET_SLCTN_NO, A.ROUTE_CODE, A.DIRECT_CODE, A.TRACK, A.DEPT_CODE, A.ROAD_GRAD, A.ADM_CODE/*, A.MNG_RD_CD*/ ORDER BY A.TRGET_SLCTN_NO, A.ROUTE_CODE, A.DIRECT_CODE, A.TRACK, A.STRTPT ROWS BETWEEN CURRENT ROW AND (V_LEN/10 - 1) FOLLOWING) AVER
-                        FROM TN_RPAIR_TRGET A
-                        INNER JOIN CELL_10 B
-                            ON B.ROUTE_CODE           = A.ROUTE_CODE   /* 보수_대상_항목.노선_코드 */
-                            AND B.DIRECT_CODE         = A.DIRECT_CODE     /* 보수_대상_항목.행선_코드 */
-                            AND B.TRACK               = A.TRACK     /* 보수_대상_항목.차로 */
-                            AND B.STRTPT              = A.STRTPT
-                            AND B.ENDPT               = A.ENDPT
-                        WHERE
-                            A.TRGET_SLCTN_NO = P_TRGET_SLCTN_NO
-                    ) A
+                        , B.MNG_RD_CD
+                        , AVG(A.CALC_GPCI) OVER(PARTITION BY A.TRGET_SLCTN_NO, A.ROUTE_CODE, A.DIRECT_CODE, A.TRACK, A.DEPT_CODE, A.ROAD_GRAD, A.ADM_CODE/*, A.MNG_RD_CD*/ ORDER BY A.TRGET_SLCTN_NO, A.ROUTE_CODE, A.DIRECT_CODE, A.TRACK, A.STRTPT ROWS BETWEEN CURRENT ROW AND (V_LEN/10 - 1) FOLLOWING) AVER
+                    FROM TN_RPAIR_TRGET A
+                    INNER JOIN CELL_10 B
+                        ON B.ROUTE_CODE           = A.ROUTE_CODE   /* 보수_대상_항목.노선_코드 */
+                        AND B.DIRECT_CODE         = A.DIRECT_CODE     /* 보수_대상_항목.행선_코드 */
+                        AND B.TRACK               = A.TRACK     /* 보수_대상_항목.차로 */
+                        AND B.STRTPT              = A.STRTPT
+                        AND B.ENDPT               = A.ENDPT
                     WHERE
-                        EXISTS (
-                            SELECT 1
-                            FROM TN_RPAIR_TRGET AA
-                            WHERE
-                                1 = 1
-                                AND AA.TRGET_SLCTN_NO = A.TRGET_SLCTN_NO
-                                AND AA.ROUTE_CODE     = A.ROUTE_CODE   /* 보수_대상_항목.노선_코드 */
-                                AND AA.DIRECT_CODE    = A.DIRECT_CODE     /* 보수_대상_항목.행선_코드 */
-                                AND AA.TRACK          = A.TRACK     /* 보수_대상_항목.차로 */
-                                AND AA.STRTPT         BETWEEN A.STRTPT AND A.STRTPT + V_LEN    /* 보수_대상_항목.시점 */
-                                AND AA.ENDPT          BETWEEN A.STRTPT AND A.STRTPT + V_LEN
-                                AND NOT EXISTS (
-                                    SELECT 1
-                                    FROM TN_RPAIR_TRGET_GROUP BB
-                                    WHERE
-                                        1 = 1
-                                        AND BB.TRGET_SLCTN_NO = A.TRGET_SLCTN_NO
-                                        AND BB.ROUTE_CODE     = A.ROUTE_CODE   /* 보수_대상_항목.노선_코드 */
-                                        AND BB.DIRECT_CODE    = A.DIRECT_CODE     /* 보수_대상_항목.행선_코드 */
-                                        AND BB.TRACK          = A.TRACK     /* 보수_대상_항목.차로 */
-                                        AND AA.STRTPT         BETWEEN BB.STRTPT AND BB.ENDPT   /* 보수_대상_항목.시점 */
-                                        AND AA.ENDPT          BETWEEN BB.STRTPT AND BB.ENDPT   /* 보수_대상_항목.시점 */
-                                )
-                            HAVING
-                                COUNT(*) = V_LEN/10
-                        )
+                        A.TRGET_SLCTN_NO = P_TRGET_SLCTN_NO
+                        AND A.ROUTE_CODE = P_ROUTE_CODE
                 ) A
+                WHERE
+                    EXISTS (
+                        SELECT 1
+                        FROM TN_RPAIR_TRGET AA
+                        WHERE
+                            1 = 1
+                            AND AA.TRGET_SLCTN_NO = A.TRGET_SLCTN_NO
+                            AND AA.ROUTE_CODE     = A.ROUTE_CODE   /* 보수_대상_항목.노선_코드 */
+                            AND AA.DIRECT_CODE    = A.DIRECT_CODE     /* 보수_대상_항목.행선_코드 */
+                            AND AA.TRACK          = A.TRACK     /* 보수_대상_항목.차로 */
+                            AND AA.STRTPT         BETWEEN A.STRTPT AND A.STRTPT + V_LEN    /* 보수_대상_항목.시점 */
+                            AND AA.ENDPT          BETWEEN A.STRTPT AND A.STRTPT + V_LEN
+                            AND NOT EXISTS (
+                                SELECT 1
+                                FROM TN_RPAIR_TRGET_GROUP BB
+                                WHERE
+                                    1 = 1
+                                    AND BB.TRGET_SLCTN_NO = A.TRGET_SLCTN_NO
+                                    AND BB.ROUTE_CODE     = A.ROUTE_CODE   /* 보수_대상_항목.노선_코드 */
+                                    AND BB.DIRECT_CODE    = A.DIRECT_CODE     /* 보수_대상_항목.행선_코드 */
+                                    AND BB.TRACK          = A.TRACK     /* 보수_대상_항목.차로 */
+                                    AND AA.STRTPT         BETWEEN BB.STRTPT AND BB.ENDPT   /* 보수_대상_항목.시점 */
+                                    AND AA.ENDPT          BETWEEN BB.STRTPT AND BB.ENDPT   /* 보수_대상_항목.시점 */
+                            )
+                        HAVING
+                            COUNT(*) = V_LEN/10
+                    )
+                    AND FN_REPAIR_TARGET_RANGE_VALUE('RM', A.TRGET_SLCTN_NO, A.ROUTE_CODE, A.DIRECT_CODE, A.TRACK, A.STRTPT, A.STRTPT + V_LEN) != 'RPIR0001'
                 ORDER BY A.AVER, A.TRGET_SLCTN_NO, A.ROUTE_CODE, A.DIRECT_CODE, A.TRACK, A.STRTPT
                 LIMIT 1
             );
@@ -215,7 +214,7 @@ BEGIN
         GET DIAGNOSTICS RCNT = ROW_COUNT;
         RAISE NOTICE '%', RCNT;
 
-        EXIT WHEN V_LEN2 = 10;
+        EXIT WHEN RCNT = 0;
 
         V_LEN2 := V_LEN2 + 1;
         IF P_MODE = 'DEBUG' THEN

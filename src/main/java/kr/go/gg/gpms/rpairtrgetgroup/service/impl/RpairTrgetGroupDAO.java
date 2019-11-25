@@ -56,6 +56,17 @@ public class RpairTrgetGroupDAO extends BaseDAO {
         return update("rpairTrgetGroupDAO.updatePRIORT", rpairTrgetGroupVO);
     }
 
+    /**
+     * 보수대상 CELL_ID 가져오기.
+     */
+    @SuppressWarnings("unchecked")
+    public List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLList(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception {
+        return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList", rpairTrgetGroupVO);
+    }
+
+
+
+
 
 
 
@@ -109,11 +120,6 @@ public class RpairTrgetGroupDAO extends BaseDAO {
 
 	public int updateInitTMPR_SLCTN_AT(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception {
 		return update("rpairTrgetGroupDAO.updateInitTMPR_SLCTN_AT", rpairTrgetGroupVO);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLList(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception {
-		return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList", rpairTrgetGroupVO);
 	}
 	@SuppressWarnings("unchecked")
 	public List<RpairTrgetGroupVO> selectRpairTrgetDeptStatistics(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception {

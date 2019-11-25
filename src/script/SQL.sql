@@ -395,3 +395,142 @@ INSERT INTO TC_CODE(CODE_VAL, UPPER_CODE_VAL, CL_CODE, PRIOR_RANK, CODE_NM, ATRB
 VALUES('CWSE0008', NULL, 'CWSE', 2, '재포장 공사구간', NULL, '재포장 공사구간', 'Y', 'N', '3', NOW(), '3', NOW());
 INSERT INTO TC_CODE(CODE_VAL, UPPER_CODE_VAL, CL_CODE, PRIOR_RANK, CODE_NM, ATRB_VAL, CN, USE_AT, DELETE_AT, CRTR_NO, CREAT_DT, UPDUSR_NO, UPDT_DT)
 VALUES('CWSE0009', NULL, 'CWSE', 3, '굴착복구 공사구간', NULL, '굴착복구 공사구간', 'Y', 'N', '3', NOW(), '3', NOW());
+
+
+
+-- 200m셀 속성정보 통계
+UPDATE CELL_SECT SET
+    ROAD_GRAD = (
+        SELECT
+            A.ROAD_GRAD
+        FROM (
+            SELECT A.ROAD_GRAD, COUNT(*) CNT
+            FROM CELL_10 A
+            WHERE
+                1 = 1
+                AND A.ROUTE_CODE     = CELL_SECT.ROUTE_CODE     /* 노선_코드 */
+                AND A.DIRECT_CODE    = CELL_SECT.DIRECT_CODE  /* 행선_코드 */
+                AND A.TRACK          = CELL_SECT.TRACK           /* 차로 */
+                AND A.STRTPT         BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 시점 */
+                AND A.ENDPT          BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 종점 */
+            GROUP BY
+                A.ROAD_GRAD
+        ) A
+        ORDER BY CNT DESC
+        LIMIT 1
+    )
+    , ADM_CODE = (
+        SELECT
+            A.ADM_CODE
+        FROM (
+            SELECT A.ADM_CODE, COUNT(*) CNT
+            FROM CELL_10 A
+            WHERE
+                1 = 1
+                AND A.ROUTE_CODE     = CELL_SECT.ROUTE_CODE     /* 노선_코드 */
+                AND A.DIRECT_CODE    = CELL_SECT.DIRECT_CODE  /* 행선_코드 */
+                AND A.TRACK          = CELL_SECT.TRACK           /* 차로 */
+                AND A.STRTPT         BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 시점 */
+                AND A.ENDPT          BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 종점 */
+            GROUP BY
+                A.ADM_CODE
+        ) A
+        ORDER BY CNT DESC
+        LIMIT 1
+    )
+    , DEPT_CODE = (
+        SELECT
+            A.DEPT_CODE
+        FROM (
+            SELECT A.DEPT_CODE, COUNT(*) CNT
+            FROM CELL_10 A
+            WHERE
+                1 = 1
+                AND A.ROUTE_CODE     = CELL_SECT.ROUTE_CODE     /* 노선_코드 */
+                AND A.DIRECT_CODE    = CELL_SECT.DIRECT_CODE  /* 행선_코드 */
+                AND A.TRACK          = CELL_SECT.TRACK           /* 차로 */
+                AND A.STRTPT         BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 시점 */
+                AND A.ENDPT          BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 종점 */
+            GROUP BY
+                A.DEPT_CODE
+        ) A
+        ORDER BY CNT DESC
+        LIMIT 1
+    )
+    , CELL_TYPE = (
+        SELECT
+            A.CELL_TYPE
+        FROM (
+            SELECT A.CELL_TYPE, COUNT(*) CNT
+            FROM CELL_10 A
+            WHERE
+                1 = 1
+                AND A.ROUTE_CODE     = CELL_SECT.ROUTE_CODE     /* 노선_코드 */
+                AND A.DIRECT_CODE    = CELL_SECT.DIRECT_CODE  /* 행선_코드 */
+                AND A.TRACK          = CELL_SECT.TRACK           /* 차로 */
+                AND A.STRTPT         BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 시점 */
+                AND A.ENDPT          BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 종점 */
+            GROUP BY
+                A.CELL_TYPE
+        ) A
+        ORDER BY CNT DESC
+        LIMIT 1
+    )
+    , VMTC_GRAD = (
+        SELECT
+            A.VMTC_GRAD
+        FROM (
+            SELECT A.VMTC_GRAD, COUNT(*) CNT
+            FROM CELL_10 A
+            WHERE
+                1 = 1
+                AND A.ROUTE_CODE     = CELL_SECT.ROUTE_CODE     /* 노선_코드 */
+                AND A.DIRECT_CODE    = CELL_SECT.DIRECT_CODE  /* 행선_코드 */
+                AND A.TRACK          = CELL_SECT.TRACK           /* 차로 */
+                AND A.STRTPT         BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 시점 */
+                AND A.ENDPT          BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 종점 */
+            GROUP BY
+                A.VMTC_GRAD
+        ) A
+        ORDER BY CNT DESC
+        LIMIT 1
+    )
+    , MNG_RD_CD = (
+        SELECT
+            A.MNG_RD_CD
+        FROM (
+            SELECT A.MNG_RD_CD, COUNT(*) CNT
+            FROM CELL_10 A
+            WHERE
+                1 = 1
+                AND A.ROUTE_CODE     = CELL_SECT.ROUTE_CODE     /* 노선_코드 */
+                AND A.DIRECT_CODE    = CELL_SECT.DIRECT_CODE  /* 행선_코드 */
+                AND A.TRACK          = CELL_SECT.TRACK           /* 차로 */
+                AND A.STRTPT         BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 시점 */
+                AND A.ENDPT          BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 종점 */
+            GROUP BY
+                A.MNG_RD_CD
+        ) A
+        ORDER BY CNT DESC
+        LIMIT 1
+    )
+    , SCTN_NO = (
+        SELECT
+            A.SCTN_NO
+        FROM (
+            SELECT A.SCTN_NO, COUNT(*) CNT
+            FROM CELL_10 A
+            WHERE
+                1 = 1
+                AND A.ROUTE_CODE     = CELL_SECT.ROUTE_CODE     /* 노선_코드 */
+                AND A.DIRECT_CODE    = CELL_SECT.DIRECT_CODE  /* 행선_코드 */
+                AND A.TRACK          = CELL_SECT.TRACK           /* 차로 */
+                AND A.STRTPT         BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 시점 */
+                AND A.ENDPT          BETWEEN CELL_SECT.STRTPT AND CELL_SECT.ENDPT  /* 종점 */
+            GROUP BY
+                A.SCTN_NO
+        ) A
+        ORDER BY CNT DESC
+        LIMIT 1
+    )
+;

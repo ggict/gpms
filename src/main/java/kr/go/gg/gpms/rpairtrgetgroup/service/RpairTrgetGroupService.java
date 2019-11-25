@@ -42,6 +42,14 @@ public interface RpairTrgetGroupService {
      */
     int updatePRIORT(List<RpairTrgetGroupVO> lvo, RpairTrgetGroupVO vo) throws Exception ;
 
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP)의 구간 셀 ID 목록을 조회한다.
+     * @param rpairTrgetGroupVO
+     * @return
+     * @throws Exception
+     */
+    List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLList(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception ;
+
 
 
 
@@ -104,14 +112,6 @@ public interface RpairTrgetGroupService {
 	 * @throws Exception
 	 */
 	int updateInitTMPR_SLCTN_AT(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception ;
-
-	/**
-	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP)의 구간 셀 ID 목록을 조회한다.
-	 * @param rpairTrgetGroupVO
-	 * @return
-	 * @throws Exception
-	 */
-	List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLList(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception ;
 
 	/**
 	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 관리기관 별 통계 목록을 조회한다.

@@ -16,7 +16,10 @@ BEGIN
 
     IF P_START_END_CODE = 'S' THEN
         DELETE FROM TN_RPAIR_TRGET
-	    WHERE TRGET_SLCTN_NO = P_TRGET_SLCTN_NO;
+	    WHERE
+	       TRGET_SLCTN_NO = P_TRGET_SLCTN_NO
+	       AND ROUTE_CODE = P_ROUTE_CODE;
+
 	    O_PROCMSG := '보수대상선정 집계 초기화(삭제)완료';
     END IF;
 

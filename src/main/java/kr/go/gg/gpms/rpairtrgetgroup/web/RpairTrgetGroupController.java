@@ -163,6 +163,23 @@ public class RpairTrgetGroupController  extends BaseController {
         return vo;
     }
 
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP)의 구간 셀 ID 목록을 조회한다.
+     * @param rpairTrgetGroupVO
+     * @param model
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = { "/api/rpairtrgetgroup/selectRpairTrgetGroupCELLListRest.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLListRest(@RequestBody RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model, HttpSession session) throws Exception {
+        rpairTrgetGroupVO.setUsePage(false);
+
+        List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectRpairTrgetGroupCELLList(rpairTrgetGroupVO);
+        return items;
+    }
+
+
 
 
 
@@ -503,21 +520,6 @@ public class RpairTrgetGroupController  extends BaseController {
 		rpairTrgetGroupVO.setResultSuccess("true");
 		rpairTrgetGroupVO.setResultMSG("정상 삭제되었습니다.");
 		return rpairTrgetGroupVO;
-	}
-	/**
-	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP)의 구간 셀 ID 목록을 조회한다.
-	 * @param rpairTrgetGroupVO
-	 * @param model
-	 * @param session
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = { "/api/rpairtrgetgroup/selectRpairTrgetGroupCELLListRest.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLListRest(@RequestBody RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model, HttpSession session) throws Exception {
-		rpairTrgetGroupVO.setUsePage(false);
-
-		List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectRpairTrgetGroupCELLList(rpairTrgetGroupVO);
-		return items;
 	}
 
 	/**
@@ -879,7 +881,7 @@ public class RpairTrgetGroupController  extends BaseController {
 
         return "/repairtarget/repairtargetAdminStatisticsExcel";
 	}
-	
+
 	// 2019 신규 통계지표.
 
 	/**
@@ -901,7 +903,7 @@ public class RpairTrgetGroupController  extends BaseController {
 
 		// 데이터 조회
 		List<RpairTrgetGroupVO> result = rpairTrgetGroupService.selectRpairRoutLenStats(rpairTrgetGroupVO);
-		
+
 		int total_page = 0;
 
 		// 결과 JSON 저장
@@ -951,7 +953,7 @@ public class RpairTrgetGroupController  extends BaseController {
 
 		// 데이터 조회
 		List<RpairTrgetGroupVO> result = rpairTrgetGroupService.selectRpairDeptLenStats(rpairTrgetGroupVO);
-		
+
 		int total_page = 0;
 
 		// 결과 JSON 저장

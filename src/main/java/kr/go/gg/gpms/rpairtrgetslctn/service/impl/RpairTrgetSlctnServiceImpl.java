@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.rpairtrgetslctn.service.RpairTrgetSlctnService;
@@ -32,6 +34,9 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 
     @Resource(name = "rpairTrgetSlctnDAO")
 	private RpairTrgetSlctnDAO rpairTrgetSlctnDAO;
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
 	//@Resource(name="RpairTrgetSlctnIdGnrService")
 	//private EgovIdGnrService egovIdGnrService;
@@ -74,21 +79,22 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
     public void procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
 	    // 전체노선을 한번에 돌릴경우 메모리 오류 발생하여 메모리 오류 방지를 위해 노선별로 처리
 	    List<RpairTrgetSlctnVO> routeCodeList = rpairTrgetSlctnDAO.selectRpairTrgetSlctnRouteCodeList(rpairTrgetSlctnVO);
-	    for ( int i = 0; i < routeCodeList.size() && i == 0; i++ ) {
-	        if ( i == 0 )  {  // 시작
-	            rpairTrgetSlctnVO.setSTART_END_CODE("S");
-	        } else if ( routeCodeList.size() - 1 == i ) { // 종료
-	            rpairTrgetSlctnVO.setSTART_END_CODE("E");
-	        } else {
-	            rpairTrgetSlctnVO.setSTART_END_CODE("");
+
+	    for ( int i = 0; i < routeCodeList.size(); i++ ) {
+	        if ( i % 5 == 0 ) {
+    	        if ( i == 0 )  {  // 시작
+    	            rpairTrgetSlctnVO.setSTART_END_CODE("S");
+    	        } else if ( routeCodeList.size() - 1 == i ) { // 종료
+    	            rpairTrgetSlctnVO.setSTART_END_CODE("E");
+    	        } else {
+    	            rpairTrgetSlctnVO.setSTART_END_CODE("");
+    	        }
+    	        rpairTrgetSlctnVO.setROUTE_CODE(routeCodeList.get(i).getROUTE_CODE());
+
+    	        rpairTrgetSlctnDAO.procRepairTargetRangeSelect(rpairTrgetSlctnVO);
+    	        rpairTrgetSlctnDAO.procRepairTargetRangeString(rpairTrgetSlctnVO);
 	        }
-	        rpairTrgetSlctnVO.setROUTE_CODE(routeCodeList.get(i).getROUTE_CODE());
-
-	        rpairTrgetSlctnDAO.procRepairTargetRangeSelect(rpairTrgetSlctnVO);
 	    }
-
-        rpairTrgetSlctnDAO.procRepairTargetRangeString(rpairTrgetSlctnVO);
-//        rpairTrgetSlctnDAO.procRepairTargetBudgetRate(rpairTrgetSlctnVO);
 	}
 
 

@@ -74,6 +74,12 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 	private String PRIORT;
 
 	/**
+	 * 셀ID
+	 */
+	@XmlElement
+	private String CELL_ID;
+
+	/**
 	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO,
 	 * 보수_대상_항목_그룹.그룹_항목_번호 값읽기
 	 * @return
@@ -136,6 +142,15 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 
     public void setPOTHOLE_QY(String pOTHOLE_QY) {
         POTHOLE_QY = pOTHOLE_QY;
+    }
+
+    @JsonProperty(value="CELL_ID")
+    public String getCELL_ID() {
+        return CELL_ID;
+    }
+
+    public void setCELL_ID(String cELL_ID) {
+        CELL_ID = cELL_ID;
     }
 
 }
