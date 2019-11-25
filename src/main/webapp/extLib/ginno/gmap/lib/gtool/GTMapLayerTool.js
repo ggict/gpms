@@ -500,8 +500,8 @@ GTMapLayerTool = OpenLayers.Class({
 						        }
 					    	} else {
 						        if ( table == "MV_SRVYDTA_10_2019" || table == "MV_SRVYDTA_10_2018" || table == "MV_SRVYDTA_10_2017"
-						                    || table == 'MV_GNLSTTUS_SECT_2018' || table == 'MV_GNLSTTUS_SECT_2017'
-						                    || table == "MV_THM_YEAR_10" || table == "MV_CELL_SECT_TYPE" ) {
+						        	|| table == 'MV_GNLSTTUS_SECT_2019' || table == 'MV_GNLSTTUS_SECT_2018' || table == 'MV_GNLSTTUS_SECT_2017'
+						            || table == "MV_THM_YEAR_10" || table == "MV_CELL_SECT_TYPE" ) {
 
                                     arr.push(this.layers[i]);
 

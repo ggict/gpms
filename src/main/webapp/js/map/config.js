@@ -127,6 +127,16 @@ var CONFIG = (function($, undefined){
 	         'show' : '1',
 	         'layerType' : '3'
 	     },
+	     "MV_GNLSTTUS_SECT_2019" : {
+	    	 'tmapid' : '870',
+	    	 'id' : '3763',
+	    	 'table' : 'MV_GNLSTTUS_SECT_2019',
+	    	 'theme' : 'MV_GNLSTTUS_SECT_2019',
+	    	 'alias' : 'Section셀_포장상태_2019',
+	    	 'seq' : '3763',
+	    	 'show' : '1',
+	    	 'layerType' : '3'
+	     },
 	     "MV_GNLSTTUS_SECT_2018" : {
 	         'tmapid' : '870',
 	         'id' : '3762',
