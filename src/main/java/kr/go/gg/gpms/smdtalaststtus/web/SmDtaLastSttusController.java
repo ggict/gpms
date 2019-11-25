@@ -10,21 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.cmmn.service.CmmnService;
-import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
-import kr.go.gg.gpms.code.service.CodeService;
-import kr.go.gg.gpms.code.service.model.CodeVO;
-import kr.go.gg.gpms.dept.service.DeptService;
-import kr.go.gg.gpms.dept.service.model.DeptVO;
-import kr.go.gg.gpms.mummsctnsrvydta.service.model.MummSctnSrvyDtaVO;
-import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
-import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
-import kr.go.gg.gpms.smdtalaststtus.service.SmDtaLastSttusService;
-import kr.go.gg.gpms.smdtalaststtus.service.model.SmDtaLastSttusVO;
-import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
-import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -42,6 +27,20 @@ import egovframework.cmmn.util.DateUtil;
 import egovframework.cmmn.util.ExcelView;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.cmmn.service.CmmnService;
+import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
+import kr.go.gg.gpms.code.service.CodeService;
+import kr.go.gg.gpms.code.service.model.CodeVO;
+import kr.go.gg.gpms.dept.service.DeptService;
+import kr.go.gg.gpms.dept.service.model.DeptVO;
+import kr.go.gg.gpms.mummsctnsrvydta.service.model.MummSctnSrvyDtaVO;
+import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
+import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
+import kr.go.gg.gpms.smdtalaststtus.service.SmDtaLastSttusService;
+import kr.go.gg.gpms.smdtalaststtus.service.model.SmDtaLastSttusVO;
+import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
+import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 
 /**
  * @Class Name : SmDtaLastSttusController.java
@@ -83,7 +82,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 집계_자료_최신_현황(TN_SM_DTA_LAST_STTUS) 목록을 조회한다. (pageing)
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/smdtalaststtus/SmDtaLastSttusList"
@@ -98,7 +97,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 집계_자료_최신_현황(TN_SM_DTA_LAST_STTUS) 목록을 조회한다. (pageing)
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/smdtalaststtus/SmDtaLastSttusList"
@@ -140,7 +139,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 집계_자료_최신_현황(TN_SM_DTA_LAST_STTUS) 상세를 조회한다.
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/smdtalaststtus/SmDtaLastSttusView"
@@ -205,7 +204,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 평가 - 노선단위 수시병가 대상 목록 을 조회한다.
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/srvy/srvyDtaRouteEvlList"
@@ -227,7 +226,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 평가 - 노선단위 수시병가 대상 목록 을 조회한다. (pageing)
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/srvy/srvyDtaRouteEvlList"
@@ -269,7 +268,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 평가 - 노선단위 수시병가를 실행한다.
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/srvy/srvyDtaRouteEvlList"
@@ -292,7 +291,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 예측 - 목록 조회
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/srvy/srvyDtaRouteEvlList"
@@ -308,7 +307,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 예측 - 목록 조회 을 조회한다. (pageing)
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/srvy/srvyDtaRouteEvlList"
@@ -350,7 +349,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 예측 - 예측자료 생성
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/srvy/srvyDtaRouteEvlList"
@@ -359,7 +358,7 @@ public class SmDtaLastSttusController extends BaseController {
 	@RequestMapping(value = { "/smdtalaststtus/createPredct.do" })
 	public String createPredct(
 			@ModelAttribute("searchVO") SmDtaLastSttusVO smDtaLastSttusVO,
-			RouteInfoVO routeInfoVO, ModelMap model) {
+			RouteInfoVO routeInfoVO, ModelMap model) throws Exception {
 
 		int totCnt = 0;
 		int successCnt = 0;
@@ -381,6 +380,7 @@ public class SmDtaLastSttusController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
+		    throw e;
 		}
 
 		model.addAttribute("totCnt", totCnt);
@@ -391,10 +391,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 예측 - 예측정보 상세조회 페이지를 조회한다.
-	 * 
+	 *
 	 * @author : JOY
 	 * @date : 2017. 10. 23.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : "/smdtalaststtus/selectSrvyDtaLastSttusList"
 	 * @exception : Exception
@@ -446,7 +446,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 		List dataList = smDtaLastSttusService
 				.selectSmDtaLastSttusListExcel(smDtaLastSttusVO);
-		String[] excel_title = { "집계번호", "산정년도", "노선번호", "노선명", "도로등급", "관리기관", 
+		String[] excel_title = { "집계번호", "산정년도", "노선번호", "노선명", "도로등급", "관리기관",
 				"섹션구분", "행선", "차로", "시점(km)", "종점(km)", "GPCI", "주파손","파손원인", "보수도래시기" };
 		String[] excel_column = { "sm_no", "calc_year", "road_no_val",
 				"road_name", "road_grad", "dept_code", "sect_se",
@@ -463,10 +463,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 예측 - 예측정보 상세조회 목록 조회한다.
-	 * 
+	 *
 	 * @author : JOY
 	 * @date : 2017. 10. 23.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : map
 	 * @exception : Exception
@@ -528,10 +528,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 예측 - 상세정보 페이지를 조회한다.
-	 * 
+	 *
 	 * @author : JOY
 	 * @date : 2017. 10. 24.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : "/smdtalaststtus/srvyDtaLastSttusDetail"
 	 * @exception : Exception
@@ -553,10 +553,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 예측 - 상세정보의 공사정보를 조회한다.
-	 * 
+	 *
 	 * @author : JOY
 	 * @date : 2017. 10. 24.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : map
 	 * @exception : Exception
@@ -618,7 +618,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 통계 > 포장상태 예측 > 노선별 통계 페이지 조회
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/smdtalaststtus/SmDtaLastSttusList"
@@ -633,10 +633,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 통계 > 포장상태 예측 정보를 조회한다
-	 * 
+	 *
 	 * @author : skc
 	 * @date : 2017. 11. 23.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : map
 	 * @exception : Exception
@@ -651,10 +651,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 통계 > 포장상태 예측 > 노선별 통계 > 도로등급별 엑셀저장
-	 * 
+	 *
 	 * @author : skc
 	 * @date : 2017. 11. 23.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : map
 	 * @exception : Exception
@@ -683,10 +683,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 통계 > 포장상태 예측 > 노선별 통계 > 노선별 엑셀저장
-	 * 
+	 *
 	 * @author : skc
 	 * @date : 2017. 11. 23.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : map
 	 * @exception : Exception
@@ -713,7 +713,7 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 통계 > 포장상태 예측 > 관리기관별 통계 페이지 조회
-	 * 
+	 *
 	 * @param smDtaLastSttusVO
 	 *            - 조회할 정보가 담긴 SmDtaLastSttusVO
 	 * @return "/smdtalaststtus/SmDtaLastSttusList"
@@ -728,10 +728,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 통계 > 포장상태 예측 > 관리기관 통계 > 관리기관별 엑셀저장
-	 * 
+	 *
 	 * @author : skc
 	 * @date : 2017. 11. 23.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : map
 	 * @exception : Exception
@@ -761,10 +761,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 통계 > 포장상태 예측 > 관리기관 통계 > 관리기관별 엑셀저장
-	 * 
+	 *
 	 * @author : skc
 	 * @date : 2017. 11. 23.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : map
 	 * @exception : Exception
@@ -791,10 +791,10 @@ public class SmDtaLastSttusController extends BaseController {
 
 	/**
 	 * 포장상태 예측 - 예측정보 상세조회 목록 조회한다.
-	 * 
+	 *
 	 * @author : JOY
 	 * @date : 2017. 10. 23.
-	 * 
+	 *
 	 * @param : smDtaLastSttusVO - 조회할 정보가 담긴 smDtaLastSttusVO
 	 * @return : map
 	 * @exception : Exception

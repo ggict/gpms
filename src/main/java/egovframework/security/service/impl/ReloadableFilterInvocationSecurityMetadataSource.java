@@ -75,7 +75,7 @@ public class ReloadableFilterInvocationSecurityMetadataSource implements FilterI
 					String url = request.getServletPath();
 
 					MemberInfo currentUser = sessionManager.getCurrentUser(request.getSession());
-					// Authentication authentication = 
+					// Authentication authentication =
 					// SecurityContextHolder.getContext().getAuthentication();
 					if (currentUser != null) {
 						String sessionId = request.getSession().getId();
@@ -95,6 +95,7 @@ public class ReloadableFilterInvocationSecurityMetadataSource implements FilterI
 					// sysConnectService
 				} catch (Exception e) {
 					logger.info("write connect log error=" + e.toString());
+					throw new IllegalArgumentException(e);
 				}
 
 			}
@@ -136,20 +137,20 @@ public class ReloadableFilterInvocationSecurityMetadataSource implements FilterI
 			logger.info("Secured Url Resources - Role Mappings reloaded at Runtime!");
 		}
 	}
-	
+
 	public boolean checkRole(String url) throws Exception {
 		boolean result = true;
 		Iterator<Entry<RequestMatcher, Collection<ConfigAttribute>>> iterator = requestMap.entrySet().iterator();
 		MemberInfo currentUser = sessionManager.getCurrentUser();
-		
+
 		FilterInvocation object = new FilterInvocation(null, url, "GET");
 		HttpServletRequest request = object.getRequest();
-		
+
 		if(currentUser == null || currentUser.getAuthorities() == null) { return result; }
-		
+
 		while (iterator.hasNext()) {
 			Entry<RequestMatcher, Collection<ConfigAttribute>> entry = iterator.next();
-			
+
 			if(entry.getKey().matches(request)){
 				boolean matchAuth = false;
 				for(GrantedAuthority auth : currentUser.getAuthorities()){
@@ -158,14 +159,14 @@ public class ReloadableFilterInvocationSecurityMetadataSource implements FilterI
 						matchAuth = true;
 					}
 				}
-				
+
 				if(!matchAuth){
 					result = false;
 					return result;
 				}
 			}
 		}
-		
+
 		return result;
 	}
 

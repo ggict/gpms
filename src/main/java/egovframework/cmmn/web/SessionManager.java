@@ -23,16 +23,16 @@ public class SessionManager{
 
 	@Resource(name = "sysUserService")
 	SysUserService sysUserService;
-	
+
 	@Resource(name = "userConnectService")
 	UserConnectService userConnectService;
-	
+
 	LoginManager loginManager = LoginManager.getInstance();
-	
+
 	@Autowired
 	@Qualifier("sessionRegistry")
 	SessionRegistry sessionRegistry;
-	
+
 	/**
 	 * 세션 등록(loginManager listener 연결)
 	 * @param session
@@ -40,7 +40,7 @@ public class SessionManager{
 	public void setSession(HttpSession session){
 		session.setAttribute("session.id", loginManager);
 	}
-	
+
 	/**
 	 * 사용자 중복 체크
 	 * @param userNo
@@ -49,7 +49,7 @@ public class SessionManager{
 	public boolean checkDuplicate(String userNo){
 		return loginManager.isUsing(userNo);
 	}
-	
+
 	/**
 	 * 사용자 세션 목록 추가
 	 * @param session
@@ -58,7 +58,7 @@ public class SessionManager{
 	public void setLoginManagerConfig(HttpSession session, String userNo){
 		loginManager.setSession(session, userNo);
 	}
-	
+
 	/**
 	 * 사용자 세션 제거
 	 * @param userNo
@@ -66,7 +66,7 @@ public class SessionManager{
 	public void invalidateSession(String userNo){
 		loginManager.removeSessionByUserId(userNo);
 	}
-	
+
 	/**
 	 * 사용자 세션 ID 조회
 	 * @param userNo
@@ -75,7 +75,7 @@ public class SessionManager{
 	public String getSessionId(String userNo){
 		return loginManager.getSessionId(userNo);
 	}
-	
+
 	public static HttpSession getSession() {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		return attr.getRequest().getSession(true); // true == allow create
@@ -101,13 +101,10 @@ public class SessionManager{
 		getSession().setAttribute(name, value);
 	}
 
-	public void setUser(String userid) {
+	public void setUser(String userid) throws Exception {
 		MemberInfo memberinfo;
-		try {
-			memberinfo = getCurrentUser(userid);
-			setUserInfo(memberinfo);
-		} catch (Exception e) {
-		}
+		memberinfo = getCurrentUser(userid);
+		setUserInfo(memberinfo);
 	}
 
 	public void setUserInfo(MemberInfo memberinfo) {
@@ -125,15 +122,11 @@ public class SessionManager{
 		return memberinfo;
 	}
 
-	public static String getUserId() {
+	public static String getUserId() throws Exception {
 		String userid = "";
-		try {
-			MemberInfo memberInfo = getCurrentUser();
-			if (memberInfo != null) {
-				userid = memberInfo.getUSER_ID();
-			}
-		} catch (Exception e) {
-
+		MemberInfo memberInfo = getCurrentUser();
+		if (memberInfo != null) {
+			userid = memberInfo.getUSER_ID();
 		}
 		return userid;
 	}
@@ -143,19 +136,15 @@ public class SessionManager{
 		session.setMaxInactiveInterval(interval);
 	}
 
-	public static String getUserNo() {
+	public static String getUserNo() throws Exception {
 		String userno = "";
-		try {
-			MemberInfo memberInfo = getCurrentUser();
-			if (memberInfo != null) {
-				userno = memberInfo.getUSER_NO();
-			}
-		} catch (Exception e) {
-
+		MemberInfo memberInfo = getCurrentUser();
+		if (memberInfo != null) {
+			userno = memberInfo.getUSER_NO();
 		}
 		return userno;
 	}
-	
+
 	public static void setSystem(String sysNm) throws Exception {
 		HttpSession session = getSession();
 		session.setAttribute("system", sysNm);

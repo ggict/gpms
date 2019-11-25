@@ -669,13 +669,13 @@ public class ExcelViewSttemnt extends AbstractExcelViewCustom {
 				try {
 					drawSheet( objSheet, wb, 0, 16+i, 2, 17+i, bfePhoto[i]);
 				} catch (Exception e) {
-
+				    throw e;
 				}
 
 				try {
 					drawSheet( objSheet, wb, 0, 16+i, 2, 17+i, aftPhoto[i]);
 				} catch (Exception e) {
-
+				    throw e;
 				}
 			}
 		}

@@ -198,7 +198,7 @@ public class MapController extends BaseController {
 	public void geoProxyPost(HttpServletRequest request, HttpServletResponse res) throws Exception {
 		try {
 			String reqUrl = request.getQueryString();
-			reqUrl = java.net.URLDecoder.decode(reqUrl);
+			reqUrl = java.net.URLDecoder.decode(reqUrl, "UTF-8");
 
 			URL url = new URL(reqUrl);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -294,7 +294,7 @@ public class MapController extends BaseController {
 
 	/**
 	 * 다음지도 위치 통합검색 한다.
-	 * 
+	 *
 	 * @param
 	 * @return "/gmap/selectLocation.do"
 	 * @exception Exception
@@ -307,7 +307,7 @@ public class MapController extends BaseController {
 
 	/**
 	 * iasp 위치검색을 한다.
-	 * 
+	 *
 	 * @param
 	 * @return "/gmap/selectLocation_iasp.do"
 	 * @exception Exception
@@ -321,6 +321,7 @@ public class MapController extends BaseController {
 			model.addAttribute("admCodeList", cmmnService.selectAdmCodeList(codeVO));
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 		return "/map/mapLocationList_iasp";
@@ -340,6 +341,7 @@ public class MapController extends BaseController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 		return "jsonView";
@@ -359,6 +361,7 @@ public class MapController extends BaseController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 
 		return "jsonView";
@@ -375,7 +378,7 @@ public class MapController extends BaseController {
 
 	/**
 	 * 지도 이미지를 base64로 리턴해주는 함수
-	 * 
+	 *
 	 * @param
 	 * @return "/map/saveImageToView.do"
 	 * @exception Exception
@@ -397,12 +400,12 @@ public class MapController extends BaseController {
 		//mapService.setType("save");
 		//mapService.setRootPath(request.getSession().getServletContext().getRealPath("/"));
 		//BufferedImage image = mapService.createImages(decodeStr);
-		
+
 		SaveMapUtils saveMapUtil = new SaveMapUtils();
 		saveMapUtil.setType("save");
 		saveMapUtil.setRootPath(request.getSession().getServletContext().getRealPath("/"));
 		BufferedImage image = saveMapUtil.createImages(decodeStr);
-		
+
 		try {
 			// int width = Integer.parseInt(req.get("width"));
 			// int height = Integer.parseInt(req.get("height"));
@@ -431,7 +434,7 @@ public class MapController extends BaseController {
 
 	/**
 	 * 지도 경위도 좌표이동 화면 조회
-	 * 
+	 *
 	 * @param
 	 * @return "/selectLonLatMoveView.do"
 	 * @exception Exception

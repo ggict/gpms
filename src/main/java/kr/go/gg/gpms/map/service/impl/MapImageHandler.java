@@ -10,7 +10,6 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.io.ByteArrayInputStream;
@@ -26,18 +25,17 @@ import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
-import kr.go.gg.gpms.map.service.MapService;
-import kr.go.gg.gpms.map.service.model.PolygonSymbolVO;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.util.Base64;
-import org.jdom2.Attribute;
 import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.filter.ElementFilter;
 import org.jdom2.input.SAXBuilder;
 import org.springframework.stereotype.Service;
+
+import kr.go.gg.gpms.map.service.MapService;
+import kr.go.gg.gpms.map.service.model.PolygonSymbolVO;
 
 @Service("mapService")
 public class MapImageHandler extends Component implements MapService {
@@ -704,6 +702,7 @@ public class MapImageHandler extends Component implements MapService {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
