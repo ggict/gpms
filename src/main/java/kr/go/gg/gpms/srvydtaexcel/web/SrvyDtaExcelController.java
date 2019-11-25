@@ -13,12 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
-import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
-import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
-import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -34,6 +28,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 //import org.springframework.security.core.context.SecurityContextHolder;
+import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
+import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
+import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
+import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
+import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 
 
 
@@ -101,14 +101,11 @@ public class SrvyDtaExcelController extends BaseController {
 	}
 	
 	@RequestMapping(value = { "/srvydtaexcel/selectSrvyDtaExcelFailList.do" })
-	public String selectSrvyDtaExcelFailList(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, HttpServletRequest request, ModelMap model) throws Exception {
-		Map<String, String> req = requestToHashMap(request);
+	public String selectSrvyDtaExcelFailList(@ModelAttribute SrvyDtaVO srvyDtaVO, HttpServletRequest request, ModelMap model) throws Exception {
 		
-		model.addAttribute("srvyDtaExcelVO", srvyDtaExcelVO);
-		model.addAttribute("cnt", req.get("cnt"));
+		model.addAttribute("srvyDtaVO", srvyDtaVO);
 		return "/srvy/excel/srvyDtaExcelFailList" ;
 	}
-	
 	
 	/**
 	 * 조사_자료_엑셀(TN_SRVY_DTA_EXCEL) 목록을 조회한다. (pageing)

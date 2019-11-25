@@ -243,6 +243,7 @@ public class SrvyDtaController extends BaseController {
 				String seFileNm = "";
 				int csvCount = 0;
 				String csvFileNm = "";
+				
 				//boolean isImg = false;
 				List<SrvyDtaVO> imageList = null;
 		        
@@ -431,13 +432,12 @@ public class SrvyDtaController extends BaseController {
 				}
 
 				srvyDtaLogVO.setPROCESS_SE("PCSE0002");
-				srvyDtaLogVO.setPROCESS_STTUS("PCST0002");
+				srvyDtaLogVO.setPROCESS_STTUS(upLogCode);
 				srvyDtaLogVO.setLOG_MSSAGE(resultMsg);
 				
 				srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
 			}
 			
-			String seCd = "";
 			srvyDtaVO.setSRVY_NO(srvyNo);
 			srvyDtaVO.setUSE_AT("Y");
 			srvyDtaVO.setDELETE_AT("N");
@@ -490,7 +490,15 @@ public class SrvyDtaController extends BaseController {
 					
 					//TMP_MUMM_SCTN_SRVY_DTA 조회
 					srvyDtaVO = srvyDtaService.selectTmpExcelData();
-					seCd = srvyDtaVO.getSE_CD();
+					
+					//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
+					if("N".equals(srvyDtaVO.getSE_CD())) {
+						/*	
+							ai 로직태우고 TMP_MUMM_SCTN_SRVY_DTA 업데이트
+							파라미터 이미지명으로 추정
+						*/
+						srvyDtaService.updateTmpExcelData(srvyDtaVO);
+					}
 
 					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
 
@@ -511,11 +519,6 @@ public class SrvyDtaController extends BaseController {
 
 					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
 					BindBeansToActiveUser(srvyDtaOne);
-				}
-				
-				//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
-				if("N".equals(seCd)) {
-					
 				}
 			
 				// 집계 처리
@@ -601,26 +604,20 @@ public class SrvyDtaController extends BaseController {
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/api/srvyDtaUploadFileList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody Map<String, Object> srvyDtaUploadFileListRest(@RequestBody SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
-
-		if (srvyDtaExcelVO.getPROCESS_STTUS().equals("COMP")) {
-			srvyDtaExcelVO.setPROCESS_STTUS("PCST0002");
-		} else {
-			srvyDtaExcelVO.setPROCESS_STTUS("PCST0003");
-		}
-
+	public @ResponseBody Map<String, Object> srvyDtaUploadFileListRest(@RequestBody SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		
 		PaginationInfo paginationInfo = new PaginationInfo();
-		paginationInfo.setCurrentPageNo(srvyDtaExcelVO.getPage());
-		paginationInfo.setRecordCountPerPage(srvyDtaExcelVO.getPageUnit());
-		paginationInfo.setPageSize(srvyDtaExcelVO.getRows());
-		srvyDtaExcelVO.setUsePage(true);
+		paginationInfo.setCurrentPageNo(srvyDtaVO.getPage());
+		paginationInfo.setRecordCountPerPage(srvyDtaVO.getPageUnit());
+		paginationInfo.setPageSize(srvyDtaVO.getRows());
+		srvyDtaVO.setUsePage(true);
 
-		srvyDtaExcelVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
-		srvyDtaExcelVO.setLastIndex(paginationInfo.getLastRecordIndex());
-		srvyDtaExcelVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+		srvyDtaVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		srvyDtaVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		srvyDtaVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
-		List<SrvyDtaExcelVO> items = srvyDtaExcelService.selectSrvyDtaExcelUploadFileList(srvyDtaExcelVO);
-		int totCnt = srvyDtaExcelService.selectSrvyDtaExcelUploadFileCount(srvyDtaExcelVO);
+		List<SrvyDtaVO> items = srvyDtaService.selectSrvyDtaUploadFileList(srvyDtaVO);
+		int totCnt = srvyDtaService.selectSrvyDtaUploadFileCount(srvyDtaVO);
 
 		int total_page = 0;
 		if (totCnt > 0)
@@ -629,7 +626,7 @@ public class SrvyDtaController extends BaseController {
 		// 결과 JSON 저장
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("page", srvyDtaExcelVO.getPage());
+		map.put("page", srvyDtaVO.getPage());
 		map.put("total", total_page);
 		map.put("records", totCnt);
 		map.put("rows", items);
@@ -707,134 +704,7 @@ public class SrvyDtaController extends BaseController {
 
 		return "jsonView";
 	}
-	
-	/**
-	 * 엑셀 조사자료를 최소구간조사 자료에 입력한다.
-	 *
-	 * @param srvyDtaVO
-	 * @param model
-	 * @param request
-	 * @param session
-	 * @return
-	 * @throws Exception
-	 */
-	
-	/*
-	@RequestMapping(value = "/saveSrvyDta.do")
-	public @ResponseBody Map<String, Object> saveSrvyDta(@RequestBody SrvyDtaVO srvyDtaVO, PavFrmulaVO pavFrmulaVO, ModelMap model, HttpServletRequest request, HttpSession session) {
 
-		String o_PROCCODE = "";
-		String o_PROCMSG = "";
-		String seCd = "";
-
-		Map<String, Object> map = new HashMap<String, Object>();
-		srvyDtaVO.setUSE_AT("Y");
-		srvyDtaVO.setDELETE_AT("N");
-
-		int totCount = 0;
-		//int successCount = 0;
-		List<String> noFileList = new ArrayList<String>();
-
-		try {
-			// 선택 엑셀 데이터 조회
-			List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
-			
-			// 엑셀 데이터가 없으면 종료
-			if (excelList == null || excelList.size() == 0) {
-				map.put("result", "nodata");
-				map.put("resultMSG", "엑셀 데이터가 없습니다.");
-				return map;
-			}
-
-			String frmula_nm = egovPropertyService.getString("FRMULA_NM", "NHPCI");
-			
-			if (StringUtils.isEmpty(pavFrmulaVO.getFRMULA_NM())) {
-				pavFrmulaVO.setFRMULA_NM(frmula_nm);
-			}
-			pavFrmulaVO.setUSE_AT("Y");
-			pavFrmulaVO.setDELETE_AT("N");
-
-			PavFrmulaVO pavFrmulaOne = pavFrmulaService.selectPavFrmula(pavFrmulaVO);
-			totCount = excelList.size();
-
-			// 데이터(list) 수 만큼 for문 실행
-			String fileName = "";
-			for (SrvyDtaVO srvyDtaOne : excelList) {
-				BindBeansToActiveUser(srvyDtaOne);
-
-				// 조사자료 등록 및 수식 평가
-				if (srvyDtaOne.getEVL_PROCESS_AT().equals("N")) {
-
-					AttachFileVO attachFileParam = new AttachFileVO();
-					attachFileParam.setFILE_NO(srvyDtaOne.getFILE_NO());
-					attachFileParam.setUSE_AT("Y");
-					attachFileParam.setDELETE_AT("N");
-					AttachFileVO attachFileOne = attachFileService.selectAttachDetailFile(attachFileParam);
-					if (attachFileOne == null || StringUtils.isEmpty(attachFileOne.getFILE_COURS())) {
-						map.put("result", "nofile"); map.put("resultMSG","엑셀 파일이 없습니다.");
-						noFileList.add(srvyDtaOne.getFILE_NM());
-						continue;
-					}
-					
-					fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
-					
-					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
-					srvyDtaService.insertTmpExcelData(fileName);
-					
-					//TMP_MUMM_SCTN_SRVY_DTA 조회
-					srvyDtaVO = srvyDtaService.selectTmpExcelData();
-					seCd = srvyDtaVO.getSE_CD();
-
-					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
-
-					o_PROCCODE = prc_result.get("o_proccode").toString();
-					o_PROCMSG = prc_result.get("o_procmsg").toString();
-
-					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
-					BindBeansToActiveUser(srvyDtaOne);
-				}
-				
-				// 공간 보정
-				if (srvyDtaOne.getGPS_CORTN_PROCESS_AT().equals("N")) {
-
-					HashMap prc_result = srvyDtaService.procSrvyDtaSysReflct(srvyDtaOne);
-
-					o_PROCCODE = prc_result.get("o_proccode").toString();
-					o_PROCMSG = prc_result.get("o_procmsg").toString();
-
-					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
-					BindBeansToActiveUser(srvyDtaOne);
-				}
-				
-				//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
-				if("N".equals(seCd)) {
-					
-				}
-			
-				// 집계 처리
-				if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
-					srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
-					srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
-					
-					HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
-					
-					o_PROCCODE = (String) prc_result.get("o_proccode");
-					o_PROCMSG = (String) prc_result.get("o_procmsg");
-				}
-			}
-		} catch (Exception e) {
-			//트랜잭션 롤백
-		} finally {
-			map.put("totCount", totCount);
-			//map.put("successCount", successCount);
-			map.put("noFileList", noFileList);
-			map.put("result", o_PROCCODE);
-			map.put("resultMSG", o_PROCMSG);
-		}
-
-		return map;
-	}
-*/
 	/**
 	 * 엑셀 조사자료를 최소구간조사 자료에 입력한다.
 	 *

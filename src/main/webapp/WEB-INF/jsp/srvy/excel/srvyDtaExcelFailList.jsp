@@ -24,12 +24,16 @@ $( document ).ready(function() {
 		,mtype: "POST"
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		//,postData: JSON.stringify( $("#frm").cmSerializeObject()) 
-		,postData: $("#fail_frm").cmSerializeObject()
+		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["파일명", "로그메세지", "작업 일자","작업자"]
+		,colNames:["노선번호", "노선명", "행선", "차로", "파일명", "실패정보", "등록일자","등록자"]
 	   	,colModel:[
-			{name:'FILE_NM',index:'FILE_NM', align:'left', width:220, sortable:false}
-			,{name:'LOG_MSSAGE',index:'LOG_MSSAGE', align:'left', width:120, sortable:false}
+	   		 {name:'route_CODE',index:'route_CODE', align:'center', width:60, sortable:false}
+	   		,{name:'road_NAME',index:'road_NAME', align:'center', width:60, sortable:false}
+	   		,{name:'direct_CODE',index:'direct_CODE', align:'center', width:60, sortable:false}
+	   		,{name:'track',index:'track', align:'center', width:60, sortable:false}
+			,{name:'FILE_NM',index:'FILE_NM', align:'left', width:140, sortable:false}
+			,{name:'LOG_MSSAGE',index:'LOG_MSSAGE', align:'left', width:160, sortable:false}
 			,{name:'CREAT_DT',index:'CREAT_DT', align:'center', width:60, sortable:false} 
 			,{name:'USER_NM',index:'USER_NM', align:'center', width:60, sortable:false} 
 	   	]
@@ -97,14 +101,18 @@ function fn_search() {
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <form id="frm" name="frm" method="post" action="">
+<input type="hidden" id="SRVY_NO" name="SRVY_NO" value="${srvyDtaVO.SRVY_NO}"/>
+<input type="hidden" id="CRTR_NO" name="CRTR_NO" value="${srvyDtaVO.CRTR_NO}"/>
+<input type="hidden" id="PROCESS_STTUS" name="PROCESS_STTUS" value="${srvyDtaVO.PROCESS_STTUS}"/>
 
-<input type="hidden" id="CREAT_DT" name="CREAT_DT" value="${srvyDtaExcelVO.CREAT_DT}"/>
-<input type="hidden" id="CRTR_NO" name="CRTR_NO" value="${srvyDtaExcelVO.CRTR_NO}"/>
-<input type="hidden" id="PROCESS_STTUS" name="PROCESS_STTUS" value="${srvyDtaExcelVO.PROCESS_STTUS}"/>
 <div class="tabcont">
 	<div class="content">
-	    <h3>조사자료 등록 실패(${cnt }건) - 상세조회 | 등록일자 : ${srvyDtaExcelVO.CREAT_DT }
+	    <%-- <h3>조사자료 등록 실패(${cnt }건) - 상세조회 | 등록일자 : ${srvyDtaExcelVO.CREAT_DT }
 	        <a href="#" class="whitebtn dpib ml10 vm" onclick="COMMON_UTIL.cmMoveUrl('/srvydtaexcel/selectSrvyDtaExcelList.do')"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기" /></a>
+	    </h3>
+    	--%>
+    	<h3>
+	    	<a href="#" class="whitebtn dpib ml10 vm" onclick="COMMON_UTIL.cmMoveUrl('/srvydtaexcel/selectSrvyDtaExcelList.do')"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기" /></a>
 	    </h3>
 	    <p class="location">
 	        <span>조사자료 관리</span>

@@ -320,7 +320,7 @@
 		/* srvyDtaDAO.selectSrvyDtaUploadResultList */
 		/* 조사_자료_엑셀  파일 업로드 결과 조회  */
 		SELECT * FROM (SELECT ROW_NUMBER() OVER( ORDER BY $sidx$ $sord$  ) rn, tb.* FROM (
-			SELECT  tnsrvydta.ROUTE_CODE
+			SELECT  LTRIM(tnsrvydta.ROUTE_CODE,'0') AS ROUTE_CODE
                  , (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnsrvydta.ROUTE_CODE) AS ROAD_NAME
                  , CASE WHEN tnsrvydta.DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END DIRECT_CODE
                  , tnsrvydta.TRACK
@@ -329,6 +329,7 @@
                  , TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') AS CREAT_DT
 	     		 , tnsrvydta.CRTR_NO
 	     		 , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydta.CRTR_NO and tnsysuser.USE_AT = 'Y' and tnsysuser.DELETE_AT = 'N') CRTR_NM
+	     		 , tnsrvydta.SRVY_NO
 			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
 		   WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
 		   	 AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
@@ -426,6 +427,99 @@
 	</parameterMap>
 	<select id="srvyDtaDAO.PRC_AGGREGATE_GENERAL" parameterMap="prc_aggregate_general_map" resultClass="hashMap">
 		SELECT * FROM PRC_AGGREGATE_GENERAL(?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text)
+	</select>
+	
+	<update id="srvyDtaDAO.updateTmpExcelData">
+<![CDATA[
+		/* srvyDtaDAO.updateTmpExcelData */
+		/* 임시_최소_구간_조사_자료 수정 */
+		UPDATE TMP_MUMM_SCTN_SRVY_DTA SET
+		 	  NHPCI		   = COALESCE(#NHPCI#::numeric,0)                                               
+		    , SPI          = COALESCE(#SPI#::numeric,0)                                           
+		    , XCR          = COALESCE(#XCR#::numeric,0)                                           
+		    , RCI          = COALESCE(#RCI#::numeric,0)                                           
+		    , SCR          = COALESCE(#SCR#::numeric,0)                                           
+		    , AC_LOW       = COALESCE(#AC_LOW#::numeric,0)                                        
+		    , AC_MED       = COALESCE(#AC_MED#::numeric,0)                                        
+		    , AC_HI        = COALESCE(#AC_HI#::numeric,0)                                         
+		    , LC_LOW       = COALESCE(#LC_LOW#::numeric,0)                                        
+		    , LC_MED       = COALESCE(#LC_MED#::numeric,0)                                        
+		    , LC_HI        = COALESCE(#LC_HI#::numeric,0)                                         
+		    , TC_LOW       = COALESCE(#TC_LOW#::numeric,0)                                        
+		    , TC_MED       = COALESCE(#TC_MED#::numeric,0)                                        
+		    , TC_HI        = COALESCE(#TC_HI#::numeric,0)                                         
+		    , AC_IDX       = COALESCE(#AC_IDX#::numeric,0)                                        
+		    , LC_IDX       = COALESCE(#LC_IDX#::numeric,0)                                        
+		    , TC_IDX       = COALESCE(#TC_IDX#::numeric,0)                                        
+		    , PTCHG_IDX    = COALESCE(#PTCHG_IDX#::numeric,0)                                     
+		    , RD_LOW       = COALESCE(#RD_LOW#::numeric,0)                                        
+		    , RD_MED       = COALESCE(#RD_MED#::numeric,0)                                        
+		    , RD_HI        = COALESCE(#RD_HI#::numeric,0)                                         
+		    , STRTPT_TEST  = COALESCE(#STRTPT_TEST#::numeric,0)                                   
+		    , ENDPT_TEST   = COALESCE(#ENDPT_TEST#::numeric,0)                                    
+		    , BLOCK_CR_LOW = COALESCE(#BLOCK_CR_LOW#::numeric,0)                                  
+		    , BLOCK_CR_MED = COALESCE(#BLOCK_CR_MED#::numeric,0)                                  
+		    , BLOCK_CR_HI  = COALESCE(#BLOCK_CR_HI#::numeric,0)                                   
+		    , POTHOLE_IDX  = COALESCE(#POTHOLE_IDX#::numeric,0)                                   
+		    , DMG_CUZ_CLMT = COALESCE(#DMG_CUZ_CLMT#::numeric,0)                                  
+		    , DMG_CUZ_VMTC = COALESCE(#DMG_CUZ_VMTC#::numeric,0)                                  
+		    , DMG_CUZ_ETC  = COALESCE(#DMG_CUZ_ETC#::numeric,0)                                   
+		    , BC_IDX       = COALESCE(#BC_IDX#::numeric,0)                                        
+			, PC_GRAD      = COALESCE(#PC_GRAD#::numeric,0) 
+			, GPCI         = COALESCE(#GPCI#::numeric,0) 
+		WHERE 1 = 1
+		AND RDSRFC_IMG_FILE_NM_1 = #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
+]]>
+	</update>
+	
+	<select id="srvyDtaDAO.selectSrvyDtaUploadFileList"
+		parameterClass="srvyDtaVO" resultClass="srvyDtaVO">
+<![CDATA[
+		/* srvyDtaDAO.selectSrvyDtaUploadFileList */
+		/* 조사_자료_엑셀  파일 업로드 결과 상세 조회  */
+		SELECT * FROM (
+			 SELECT ROW_NUMBER() OVER( ORDER BY tnsrvydta.SRVY_NO ASC, tnsrvydta.FILE_NO DESC ) RN
+				, LTRIM(tnsrvydta.route_code,'0') route_code
+				, (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnsrvydta.ROUTE_CODE) AS ROAD_NAME
+     			, CASE WHEN tnsrvydta.DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END DIRECT_CODE
+     			, tnsrvydta.TRACK	
+			 	, (SELECT tnattachfile.ORGINL_FILE_NM FROM TN_ATTACH_FILE tnattachfile WHERE tnattachfile.FILE_NO = tnsrvydta.FILE_NO) FILE_NM
+			 	, tlsrvydtalog.LOG_MSSAGE
+			    , TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') AS CREAT_DT
+			    , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydta.CRTR_NO) USER_NM
+			    , tlsrvydtalog.LOG_MSSAGE
+			   FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
+			  WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+			  	AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
+			 	AND tnsrvydta.USE_AT = 'Y'
+		   	 	AND tnsrvydta.DELETE_AT = 'N'
+			 	AND tlsrvydtalog.PROCESS_STTUS = #PROCESS_STTUS#
+			 	AND tnsrvydta.CRTR_NO = #CRTR_NO#::int
+			 	AND tnsrvydta.SRVY_NO = #SRVY_NO#::int
+		) tnsrvydta  WHERE 1=1
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+		</isEqual>
+	</select>
+
+	<select id="srvyDtaDAO.selectSrvyDtaUploadFileCount"
+		parameterClass="srvyDtaVO" resultClass="int">
+<![CDATA[
+		/* srvyDtaDAO.selectSrvyDtaUploadFileCount */
+		/* 조사_자료_엑셀  파일 업로드 결과 상세 조회 개수  */
+		SELECT COUNT(*) totCnt
+	      FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
+			  WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+			  	AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
+			 	AND tnsrvydta.USE_AT = 'Y'
+		   	 	AND tnsrvydta.DELETE_AT = 'N'
+			 	AND tlsrvydtalog.PROCESS_STTUS = #PROCESS_STTUS#
+			 	AND tnsrvydta.CRTR_NO = #CRTR_NO#::int
+			 	AND tnsrvydta.SRVY_NO = #SRVY_NO#::int
+]]>
 	</select>
 
 </sqlMap>

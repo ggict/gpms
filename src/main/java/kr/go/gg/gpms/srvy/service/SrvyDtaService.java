@@ -141,5 +141,28 @@ public interface SrvyDtaService {
 	 */
 	HashMap procAggregateGeneral(SrvyDtaVO srvyDtaVO);
 	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return int형
+	 * @exception Exception
+	 */
+	int updateTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception;
+	
+	/**
+	 * 조사_자료_엑셀(TN_SRVY_DTA) 파일 업로드 결과 상세 목록을 조회.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	List<SrvyDtaVO> selectSrvyDtaUploadFileList(SrvyDtaVO srvyDtaVO) throws Exception;
+	
+	/**
+	 * 조사_자료_엑셀(TN_SRVY_DTA) 파일 업로드 결과 상세 목록 갯수를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 파일 업로드 결과  상세 목록 갯수
+	 * @exception
+	 */
+	int selectSrvyDtaUploadFileCount(SrvyDtaVO srvyDtaVO);
 }
 

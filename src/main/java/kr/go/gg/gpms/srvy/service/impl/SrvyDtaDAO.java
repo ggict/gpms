@@ -184,8 +184,6 @@ public class SrvyDtaDAO extends BaseDAO {
 	public SrvyDtaVO selectTmpExcelData() throws Exception {
 		return (SrvyDtaVO) select("srvyDtaDAO.selectTmpExcelData");
 	}
-
-	//==============================================================================
 	
 	/**
 	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
@@ -209,134 +207,35 @@ public class SrvyDtaDAO extends BaseDAO {
     	logger.info("procAggregateGeneralVO: " + resultVO.toString());
     	return resultVO;
 	}
+	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return int형
+	 * @exception Exception
+	 */
+	public int updateTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception {
+		return update("srvyDtaDAO.updateTmpExcelData", srvyDtaVO);
+	}
 
 	/**
-	 * 조사_자료 등록 대상 엑셀별 목록
-	 * @param searchVO - 조회할 정보가 담긴 srvyDtaExcelVO
-	 * @return 조사_자료 등록 대상 엑셀별 목록
+	 * 조사_자료_엑셀(TN_SRVY_DTA) 파일 업로드 결과 상세 목록을 조회.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<SrvyDtaVO> selectSrvyDtaUploadFileList(SrvyDtaVO srvyDtaVO) throws Exception {
+		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectSrvyDtaUploadFileList", srvyDtaVO);
+	}
+	
+	/**
+	 * 조사_자료_엑셀(TN_SRVY_DTA) 파일 업로드 결과 상세 목록 갯수를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 파일 업로드 결과  상세 목록 갯수
 	 * @exception
 	 */
-	@SuppressWarnings("unchecked")
-	public List<SrvyDtaExcelVO> selectSrvyDtaSrvyNoList(SrvyDtaExcelVO srvyDtaExcelVO) throws Exception {
-		return (List<SrvyDtaExcelVO>)list("srvyDtaExcelDAO.selectSrvyDtaSrvyNoList", srvyDtaExcelVO);
+	public int selectSrvyDtaUploadFileCount(SrvyDtaVO srvyDtaVO) {
+		return (Integer) select("srvyDtaDAO.selectSrvyDtaUploadFileCount", srvyDtaVO);
 	}
-
-	/**
-	 * 조사자료엑셀(TN_SRVY_DTA_EXCEL)목록을 조회한다. (paging)
-	 * @param SrvyDtaExcelVO - 조회할 정보가 담긴 SrvyDtaExcelVO
-	 * @return "/api/srvyDtaExcelList.do"
-	 * @exception Exception
-	 */
-	@SuppressWarnings("unchecked")
-	public List<SrvyDtaExcelVO> srvyDtaExcelList(SrvyDtaExcelVO srvyDtaExcelVO) throws Exception {
-		return (List<SrvyDtaExcelVO>)list("srvyDtaExcelDAO.srvyDtaExcelList", srvyDtaExcelVO);
-	}
-
-	/**
-	 * 조사자료엑셀(TN_SRVY_DTA_EXCEL)목록을 갯수를 조회한다. (paging)
-	 * @param SrvyDtaExcelVO - 조회할 정보가 담긴 SrvyDtaExcelVO
-	 * @exception Exception
-	 */
-	public int srvyDtaExcelListCount(SrvyDtaExcelVO srvyDtaExcelVO) {
-		return (Integer) select("srvyDtaExcelDAO.srvyDtaExcelListCount", srvyDtaExcelVO);
-	}
-
-	/**
-	 * 조사_자료_엑셀(TN_SRVY_DTA_EXCEL) 등록일자를 조회한다.
-	 * @param SrvyDtaExcelVO - 조회할 정보가 담긴 SrvyDtaExcelVO
-	 * @exception Exception
-	 */
-	@SuppressWarnings("unchecked")
-	public List<SrvyDtaExcelVO> searchCreatDt(SrvyDtaExcelVO srvyDtaExcelVO) throws Exception {
-		return (List)list("srvyDtaExcelDAO.searchCreatDt", srvyDtaExcelVO);
-	}
-
-	/**
-	 * 조사자료 예측 대상 목록을 조회한다.
-	 * @param SrvyDtaExcelVO - 조회할 정보가 담긴 SrvyDtaExcelVO
-	 * @return
-	 * @exception Exception
-	 */
-	@SuppressWarnings("unchecked")
-	public List<SrvyDtaExcelVO> selectSrvyDtaPredctList(SrvyDtaExcelVO srvyDtaExcelVO) throws Exception {
-		return (List<SrvyDtaExcelVO>)list("srvyDtaExcelDAO.selectSrvyDtaPredctList", srvyDtaExcelVO);
-	}
-
-	/**
-	 * 조사자료 예측 대상 목록의 갯수를 조회한다.
-	 * @param SrvyDtaExcelVO - 조회할 정보가 담긴 SrvyDtaExcelVO
-	 * @exception Exception
-	 */
-	public int selectSrvyDtaPredctListTotalCount(SrvyDtaExcelVO srvyDtaExcelVO) {
-		return (Integer) select("srvyDtaExcelDAO.selectSrvyDtaPredctListTotalCount", srvyDtaExcelVO);
-	}
-
-	/**
-     * 포장상태 평가정보 조회
-     * @param mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
-     * @return
-     * @exception Exception
-     */
-    @SuppressWarnings("unchecked")
-    public List<MummSctnSrvyDtaVO> srvyDtaEvlInfoDetailList(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception {
-        return (List<MummSctnSrvyDtaVO>)list("srvyDtaExcelDAO.srvyDtaEvlInfoDetailList", mummSctnSrvyDtaVO);
-    }
-
-
-    public List selectSrvyDtaEvlInfoListExcel(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) throws Exception {
-        return cmmnDAO.getSelectList("srvyDtaExcelDAO.selectSrvyDtaEvlInfoListExcel", mummSctnSrvyDtaVO);
-    }
-
-
-    public List srvyDtaExcelListExcelDownload(SrvyDtaExcelVO srvyDtaExcelVO) throws Exception {
-		return cmmnDAO.getSelectList("srvyDtaExcelDAO.srvyDtaExcelListExcelDownload", srvyDtaExcelVO);
-	}
-
-    /**
-     * 조사자료 예측 대상 목록의 갯수를 조회한다.
-     * @param mummSctnSrvyDtaVO - 조회할 정보가 담긴 mummSctnSrvyDtaVO
-     * @exception Exception
-     */
-    public int srvyDtaEvlInfoDetailListCnt(MummSctnSrvyDtaVO mummSctnSrvyDtaVO) {
-        return (Integer) select("srvyDtaExcelDAO.srvyDtaEvlInfoDetailListCnt", mummSctnSrvyDtaVO);
-    }
-
-    /**
-     * 관리자 > 수식관리 > 수식 변수 조회
-     * @author    : JOY
-     * @date      : 2017. 11. 14.
-     *
-     * @param     : pavFrmulaVO - 조회할 정보가 담긴 pavFrmulaVO
-     * @return    : result
-     * @exception : Exception
-     */
-    @SuppressWarnings("unchecked")
-    public List<PavFrmulaVO> srvyDtaEvlInitFmlaVar(PavFrmulaVO pavFrmulaVO) throws Exception {
-        return (List<PavFrmulaVO>)list("srvyDtaExcelDAO.srvyDtaEvlInitFmlaVar", pavFrmulaVO);
-    }
-
-    /**
-     * 관리자 > 수식관리 > 수식 번호 조회
-     * @author    : JOY
-     * @date      : 2017. 11. 14.
-     *
-     * @param     : pavFrmulaVO - 조회할 정보가 담긴 pavFrmulaVO
-     * @exception : Exception
-     */
-    public PavFrmulaVO selectPavFrmulaNo(PavFrmulaVO pavFrmulaVO) throws Exception {
-        return (PavFrmulaVO)select("srvyDtaExcelDAO.selectPavFrmulaNo", pavFrmulaVO);
-    };
-
-    /**
-     * 관리자 > 수식관리 > 수식 변경
-     * @author    : JOY
-     * @date      : 2017. 11. 14.
-     *
-     * @param     : pavFrmulaVO - 조회할 정보가 담긴 pavFrmulaVO
-     * @return    : int
-     * @exception : Exception
-     */
-    public int updatePavFrmulaVar(PavFrmulaVO pavFrmulaVO) throws Exception {
-        return update("srvyDtaExcelDAO.updatePavFrmulaVar", pavFrmulaVO);
-    }
 }

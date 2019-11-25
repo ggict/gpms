@@ -27,6 +27,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
+import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStream;
 
@@ -474,7 +475,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
-	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @param 
 	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
 	 * @exception Exception
 	 */
@@ -491,6 +492,36 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	@Override
 	public HashMap procAggregateGeneral(SrvyDtaVO srvyDtaVO) {
 		return srvyDtaDAO.procAggregateGeneral(srvyDtaVO);
+	}
+	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return int형
+	 * @exception Exception
+	 */
+	public int updateTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception {
+		return srvyDtaDAO.updateTmpExcelData(srvyDtaVO);
+	}
+	
+	/**
+	 * 조사_자료_엑셀(TN_SRVY_DTA) 파일 업로드 결과 상세 목록을 조회.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	public List<SrvyDtaVO> selectSrvyDtaUploadFileList(SrvyDtaVO srvyDtaVO) throws Exception {
+		return srvyDtaDAO.selectSrvyDtaUploadFileList(srvyDtaVO);
+	}
+
+	/**
+	 * 조사_자료_엑셀(TN_SRVY_DTA) 파일 업로드 결과 상세 목록 갯수를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_SRVY_DTA 파일 업로드 결과  상세 목록 갯수
+	 * @exception
+	 */
+	public int selectSrvyDtaUploadFileCount(SrvyDtaVO srvyDtaVO) {
+		return srvyDtaDAO.selectSrvyDtaUploadFileCount(srvyDtaVO);
 	}
 	
 }

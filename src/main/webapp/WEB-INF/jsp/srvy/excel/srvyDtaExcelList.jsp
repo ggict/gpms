@@ -35,7 +35,7 @@ $( document ).ready(function() {
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
 		//,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
-		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","등록일자","등록자","분석자료","CRTR_NO"]
+		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","등록일자","등록자","분석자료","조사번호"]
 	   	,colModel:[
 			 {name:'route_CODE',index:'route_CODE', align:'center', width:70}
 			,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
@@ -46,7 +46,7 @@ $( document ).ready(function() {
 			,{name:'CREAT_DT',index:'CREAT_DT', align:'center', width:70}
 			,{name:'crtr_NM',index:'crtr_NM', align:'center', width:50}
 			,{name:'CRTR_NO',index:'CRTR_NO', align:'center', width:50}
-			,{name:'CRTR_NO',index:'CRTR_NO', hidden: true}
+			,{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
 	   	]
 		,async : false
 	   	,sortname: 'CREAT_DT'
@@ -175,27 +175,20 @@ function fn_search() {
 
 
 //버튼생성
-function fn_btn_formatter_comp(cellValue, options, rowObject){
-	var btn ="";
-	btn  = "<span style='width:50px;display:inline-block;'><font>" + rowObject.SUCCESS_CNT + "</font></span>";
-	btn += "<a href='#' class='schbtn' onclick=\"fn_upd_res_log('" + rowObject.CREAT_DT + "', '" + rowObject.CRTR_NO + "', 'COMP', '" + rowObject.SUCCESS_CNT + "');\"><font color=white>상세조회</font></a>";
-	return btn;
-}
-
 function fn_btn_formatter_fail(cellValue, options, rowObject){
 	var btn ="";
 	btn  = "<span style='width:50px;display:inline-block;'><font>" + rowObject.success_KND + "</font></span>";
 	if(rowObject.success_KND == 'F') {
-		btn += "<a href='#' class='schbtn' onclick=\"fn_upd_res_log('" + rowObject.CREAT_DT + "', '" + rowObject.CRTR_NO + "');\"><font color=white>상세조회</font></a>";
+		btn += "<a href='#' class='schbtn' onclick=\"fn_upd_res_log('" + rowObject.SRVY_NO + "' , '" + rowObject.CRTR_NO + "');\"><font color=white>상세조회</font></a>";
 	}
 	
 	return btn;
 }
 
 // 상세조회
-function fn_upd_res_log(creatDt, creatNum){
-	$("#CREAT_DT").val(creatDt);
-	$("#CRTR_NO").val(creatNum);
+function fn_upd_res_log(srvyNo,crtrNo){
+	$("#SRVY_NO").val(srvyNo);
+	$("#CRTR_NO").val(crtrNo);						  
 	COMMON_UTIL.cmMovePage("viewForm", contextPath + "srvydtaexcel/selectSrvyDtaExcelFailList.do");
 }
 
@@ -232,29 +225,6 @@ function fnCheckNumber(obj){
     });
 }
 
-function fnPrcProcess(srvyNo) {
-	
-	var params = {
-			"SRVY_NO" : srvyNo
- 		};
-	
-	$.ajax({
-        url: contextPath + 'srvy/saveSrvyDta.do'
-        ,type: 'post'
-        ,dataType: 'json'
-        ,contentType : 'application/json'
-        ,data : JSON.stringify(params)
-        ,success: function(data){
-            alert(data.result);
-            alert(data.resultMSG);
-            fn_search();
-        }
-        ,error: function(a,b,msg){
-
-        }
-    });
-}
-
 var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
     var vbtnImg = contextPath+ "/images/ico_date.png";
     if(imgPath!=null && imgPath!=undefined  && imgPath!=""){
@@ -276,10 +246,10 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 </head>
 <body style="height:326px;">
 <form id="viewForm" name="viewForm" style="display:none;">
-<input type="hidden" id="CREAT_DT" name="CREAT_DT" value=""/>
+<input type="hidden" id="PROCESS_STTUS" name="PROCESS_STTUS" value="PCST0003"/>
+<input type="hidden" id="SRVY_NO" name="SRVY_NO" value=""/>
 <input type="hidden" id="CRTR_NO" name="CRTR_NO" value=""/>
-<input type="hidden" id="PROCESS_STTUS" name="PROCESS_STTUS" value=""/>
-<input type="hidden" id="cnt" name="cnt" value=""/>
+
 </form>
 <form id="filefrm" name="filefrm" method="post" action="" style="display:none;">
 <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
