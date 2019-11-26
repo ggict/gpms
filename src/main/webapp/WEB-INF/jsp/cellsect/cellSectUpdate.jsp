@@ -474,7 +474,7 @@ function setSelectCombo(data) {
                 <li style="width:38%">
                     <div class="stbx">
                         <h4><span class="step">단계1</span>편집항목</h4>
-                        <div style="height:80px">
+                        <div style="height:100px">
                             <ul class="tblst selbx">
                                 <li style="width:100%" class="tc">
                                     <a class="selbtn btncursor" id="BTN_CELL_SECT">
@@ -489,7 +489,7 @@ function setSelectCombo(data) {
                 <li style="width:62%">
                     <div class="stbx">
                         <h4><span class="step">단계2</span>선택방법</h4>
-                        <div style="height:80px">
+                        <div style="height:100px">
                             <ul class="tblst selbx">
                                 <li style="width:50%;border-left:0px" class="brl tc">
                                     <a class="selbtn btncursor" id="BTN_SECT_POINT">

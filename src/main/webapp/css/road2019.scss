@@ -629,7 +629,7 @@ font-weight:normal !important;
     #result {width: 100%; position: static;}
 
 }
-input#pointArea {width:15px; height: 28px;padding: 0 4px;}
+input#pointArea {width:40px; height: 28px;padding: 0 4px;}
 .stepbx {
     li.wid100 {width: 100%;}
 }
@@ -640,3 +640,5 @@ input#pointArea {width:15px; height: 28px;padding: 0 4px;}
 #step3 {width: 100%; padding-top: 10px;}
 #btab01 {
 }
+body.research {background: url(../images/roadBg.jpg) no-repeat center; background-size: cover;}
+.imageSample {color: #fff; display: inline-block;}
