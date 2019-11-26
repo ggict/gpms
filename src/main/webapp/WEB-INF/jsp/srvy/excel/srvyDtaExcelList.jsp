@@ -20,7 +20,7 @@ $( document ).ready(function() {
 	
 	$("#addFile").change(function(){
 		var extn = ["zip"];
-		COMMON_FILE.setMultiFiles('#file_list', this, extn, 'N', 50);
+		COMMON_FILE.setMultiFiles('#file_list', this, extn, 'N', 1);
 	});
 
 	// 검색 목록 그리드 구성
@@ -35,7 +35,7 @@ $( document ).ready(function() {
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
 		//,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
-		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","등록일자","등록자","분석자료","조사번호"]
+		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","등록일자","등록자","분석자료","등록번호","조사번호"]
 	   	,colModel:[
 			 {name:'route_CODE',index:'route_CODE', align:'center', width:70}
 			,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
@@ -45,7 +45,8 @@ $( document ).ready(function() {
 			,{name:'data_CO',index:'data_CO', align:'center', width:70}
 			,{name:'CREAT_DT',index:'CREAT_DT', align:'center', width:70}
 			,{name:'crtr_NM',index:'crtr_NM', align:'center', width:50}
-			,{name:'CRTR_NO',index:'CRTR_NO', align:'center', width:50}
+			,{name:'분석자료',index:'분석자료', align:'center', width:50, formatter:fn_btn_anal_data}
+			,{name:'CRTR_NO',index:'CRTR_NO', hidden: true}
 			,{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
 	   	]
 		,async : false
@@ -105,6 +106,27 @@ function fn_file_upload(){
     	len ++;
     }
 
+    if($('#SRVY_DE').val() == '' ) {
+    	alert("조사일자를 선택하세요");
+    	$('#SRVY_DE').focus();
+    	return;
+    }
+    if($('#ROAD_NO').val() == '' ) {
+    	alert("노선번호를 선택하세요");
+    	$('#ROAD_NO').focus();
+    	return;
+    }
+    if($('#DIRECT_CODE').val() == '' ) {
+    	alert("행선을 선택하세요");
+    	$('#DIRECT_CODE').focus();
+    	return;
+    }
+    if($('#TRACK').val() == '' ) {
+    	alert("차로를 입력하세요");
+    	$('#TRACK').focus();
+    	return;
+    }
+    
     formData.append("SRVY_DE", $('#SRVY_DE').val());
     formData.append("ROAD_NO", $('#ROAD_NO').val());
     formData.append("ROAD_NAME", $('#ROAD_NAME').val());
@@ -115,6 +137,7 @@ function fn_file_upload(){
 		alert("조사자료 파일을 선택해주세요.");
 		return;
 	}
+	
 
 	parent.$("#dvProgress").dialog("open");
 	parent.$("#t_progress").text("파일 전송 중 입니다.");
@@ -174,10 +197,26 @@ function fn_search() {
 }
 
 
+function fn_btn_anal_data(cellValue, options, rowObject){
+	var btn ="";
+	if(rowObject.success_KND == 'S') {
+		btn += "<a href='#' class='schbtn' onclick=\"fn_anal_data_popup('" + rowObject.SRVY_NO + "');\"><font color=white>분석자료</font></a>";
+	}
+	return btn;
+}
+
+function fn_anal_data_popup(srvyNo){
+	$("#SRVY_NO").val(srvyNo);
+	COMMON_UTIL.cmWindowOpen('분석자료 조회', "<c:url value='/analDataPopupList.do'/>?SRVY_NO="+srvyNo, 1500, 1200, false, null, 'center');
+}
+ 
 //버튼생성
 function fn_btn_formatter_fail(cellValue, options, rowObject){
-	var btn ="";
-	btn  = "<span style='width:50px;display:inline-block;'><font>" + rowObject.success_KND + "</font></span>";
+	var btn ="", knd="";
+	
+	if(rowObject.success_KND == 'F') knd="실패";
+	else knd="성공";
+	btn  = "<span style='width:50px;display:inline-block;'><font>" + knd + "</font></span>";
 	if(rowObject.success_KND == 'F') {
 		btn += "<a href='#' class='schbtn' onclick=\"fn_upd_res_log('" + rowObject.SRVY_NO + "' , '" + rowObject.CRTR_NO + "');\"><font color=white>상세조회</font></a>";
 	}
@@ -241,7 +280,6 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
     });
 };
 
-
 </script>
 </head>
 <body style="height:326px;">
@@ -257,33 +295,34 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 </form>
 
+
+
 <div class="tabcont">
-
 	<header class="loc">
-        <div class="container">
-            <span class="locationHeader">
-                <select name="">
-                    <option value="">조사자료관리</option>
-                </select>
-                <select name="">
-                    <option value="">조사자료등록</option>
-                </select>
-                <h2 class="h2">조사자료 등록 대상목록</h2>
-            </span>
-            <a href="#" class="btnRefresh" onclick="fn_search();"><img src="/gpms/images/ic_reset.png" alt="새로고침"></a>
-
-        </div>
-    </header>
-    
-    <div class="contents container">
-    
-    	<article class="div3">
-    		<h3 class="h3">파일첨부</h3>
-    		<span class="haderBtn">
-    			<input type="file" value="파일선택" class="btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" >
-    		</span>
-
-    		<div class="table">
+	        <div class="container">
+	            <span class="locationHeader">
+	                <select name="">
+	                    <option value="">조사자료관리</option>
+	                </select>
+	                <select name="">
+	                    <option value="">조사자료등록</option>
+	                </select>
+	                <h2 class="h2">조사자료 등록 대상목록</h2>
+	            </span>
+	            <a href="#" class="btnRefresh" onclick="fn_search();"><img src="/gpms/images/ic_reset.png" alt="새로고침"></a>
+	
+	        </div>
+	    </header>
+	    
+		<div class="contents container">
+		  <article class="div3">
+			<h3 class="h3">파일첨부</h3>
+			<span class="haderBtn">
+				<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 1);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
+				<input multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
+			</span>
+			
+			<div class="table">
     			<table>
     				<tbody>
 	    				<tr>
@@ -337,18 +376,14 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
     	
     	<article class="div9">
     		<h3 class="h3">조사자료 등록 대상목록</h3>
-
-
     		<form id="frm" name="frm" method="post" action="">
 			    <div id="div_grid" class="table">
 			        <table id="gridArea"></table>					
 	            </div>
 	            <div id="gridPager"></div>
             </form>
-            
     	</article>
-    	
-    </div>
+	</div>
 </div>
 
 <!-- 공통 (START)-->
