@@ -127,6 +127,22 @@ public interface SrvyDtaService {
 	int selectSrvyDtaUploadResultCount(SrvyDtaVO srvyDtaVO);
 	
 	/**
+	 * 분석결과 목록을 조회.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_MUMM_SCTN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	List<SrvyDtaVO> selectAnalDataPopupResultList(SrvyDtaVO srvyDtaVO) throws Exception;
+	
+	/**
+	 * 분석결과 갯수를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_MUMM_SCTN_SRVY_DTA 결과 갯수
+	 * @exception
+	 */
+	int selectAnalDataPopupResultCount(SrvyDtaVO srvyDtaVO);
+	
+	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
 	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA

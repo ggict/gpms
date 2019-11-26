@@ -31,6 +31,7 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import kr.go.gg.gpms.base.web.BaseController;
 import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
 import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
+import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
 import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
 import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
@@ -321,5 +322,15 @@ public class SrvyDtaExcelController extends BaseController {
 	
 		return map;
 	}
+	
+	@RequestMapping(value = "/analDataPopupList.do")
+	public String analDataPopupList(@ModelAttribute SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		System.out.println("analDataPopupList.do start!: " + srvyDtaVO.toString());
+		
+		
+		model.addAttribute("srvyDtaVO", srvyDtaVO);
+		return "/srvy/excel/analDataPopupList" ;
+	}
+	
 	
 }

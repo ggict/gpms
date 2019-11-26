@@ -474,6 +474,26 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	}
 	
 	/**
+	 * 분석결과 목록을 조회.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_MUMM_SCTN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	public List<SrvyDtaVO> selectAnalDataPopupResultList(SrvyDtaVO srvyDtaVO) throws Exception {
+		return srvyDtaDAO.selectAnalDataPopupResultList(srvyDtaVO);
+	}
+	
+	/**
+	 * 분석결과 갯수를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_MUMM_SCTN_SRVY_DTA 결과 갯수
+	 * @exception
+	 */
+	public int selectAnalDataPopupResultCount(SrvyDtaVO srvyDtaVO) {
+		return srvyDtaDAO.selectAnalDataPopupResultCount(srvyDtaVO);
+	}
+	
+	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
 	 * @param 
 	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA

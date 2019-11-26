@@ -504,7 +504,9 @@ public class SrvyDtaController extends BaseController {
 
 					resultCode = prc_result.get("o_proccode").toString();
 					resultMsg = prc_result.get("o_procmsg").toString();
-
+					System.out.println("resultCode: " + resultCode);
+					System.out.println("resultMsg: " + resultMsg);
+					
 					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
 					BindBeansToActiveUser(srvyDtaOne);
 				}
@@ -594,6 +596,9 @@ public class SrvyDtaController extends BaseController {
 
 		return map;
 	}
+
+	
+	
 
 	/**
 	 * 조사자료엑셀(TN_SRVY_DTA_EXCEL) 업로드 결과 상세 목록을 조회한다. (paging)
@@ -1773,6 +1778,52 @@ public class SrvyDtaController extends BaseController {
 		}
 
 		return result;
+	}
+	
+	/**
+	 * 분석자료 팝업 목록을 조회한다. (paging)
+	 *
+	 * @param SrvyDtaVO
+	 *            - 조회할 정보가 담긴 SrvyDtaExcelVO
+	 * @return "/srvy/srvyDtaUploadResultList"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/api/analDataPopupResultList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Map<String, Object> analDataPopupResultList(@RequestBody SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(srvyDtaVO.getPage());
+		paginationInfo.setRecordCountPerPage(srvyDtaVO.getPageUnit());
+		paginationInfo.setPageSize(srvyDtaVO.getRows());
+		srvyDtaVO.setUsePage(true);
+
+		srvyDtaVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		srvyDtaVO.setLastIndex(paginationInfo.getLastRecordIndex());
+		srvyDtaVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		List<SrvyDtaVO> items = srvyDtaService.selectAnalDataPopupResultList(srvyDtaVO);
+		int totCnt = srvyDtaService.selectAnalDataPopupResultCount(srvyDtaVO);
+		
+		int total_page = 0;
+		if (totCnt > 0)
+			total_page = (int) Math.ceil((float) totCnt / (float) paginationInfo.getPageSize());
+		String routeCode = items.get(0).getROUTE_CODE();
+		String roadName = items.get(0).getROAD_NAME();
+		String directCode = items.get(0).getDIRECT_CODE();
+		String track = items.get(0).getTRACK();
+		
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("routeCode", routeCode);
+		map.put("roadName", roadName);
+		map.put("directCode", directCode);
+		map.put("track", track);
+		map.put("page", srvyDtaVO.getPage());
+		map.put("total", total_page);
+		map.put("records", totCnt);
+		map.put("rows", items);
+		
+		return map;
 	}
 
 }

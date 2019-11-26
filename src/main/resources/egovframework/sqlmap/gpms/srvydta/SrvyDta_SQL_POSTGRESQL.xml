@@ -521,5 +521,115 @@
 			 	AND tnsrvydta.SRVY_NO = #SRVY_NO#::int
 ]]>
 	</select>
+	
+	<select id="srvyDtaDAO.selectAnalDataPopupResultList"
+		parameterClass="srvyDtaVO" resultClass="srvyDtaVO">
+<![CDATA[
+		/* srvyDtaDAO.selectAnalDataPopupResultList */
+		
+		SELECT * FROM (SELECT ROW_NUMBER() OVER( ORDER BY $sidx$ $sord$  ) rn, tb.* FROM (
+			SELECT  LTRIM(tnmummsctnsrvydta.ROUTE_CODE,'0') AS ROUTE_CODE
+                 , (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnmummsctnsrvydta.ROUTE_CODE) AS ROAD_NAME
+                 , CASE WHEN DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END DIRECT_CODE
+                 , TRACK
+                 , STRTPT
+                 , ENDPT
+                 , IRI_VAL /* 최소_구간_조사_자료.종단평탄성_값 */
+				 , RD_VAL /* 최소_구간_조사_자료.소성변형_값 */
+				 , VRTCAL_CR /* 최소_구간_조사_자료.종방향_균열 */
+				 , HRZNTAL_CR /* 최소_구간_조사_자료.횡방향_균열 */
+				 , CNSTRCT_JOINT_CR /* 최소_구간_조사_자료.시공_줄눈_균열 */
+				 , TRTS_BAC_CR /* 최소_구간_조사_자료.거북등_균열 */
+				 , PTCHG_CR /* 최소_구간_조사_자료.패칭_균열 */
+				 , CR_VAL /* 최소_구간_조사_자료.표면손상값 */
+				 , CR_IDX /* 최소_구간_조사_자료.표면손상지수 */
+				 , RD_IDX /* 최소_구간_조사_자료.소성변형지수 */
+				 , CNTL_DFECT /* 최소_구간_조사_자료.지배_결함 */
+				 , SRVY_KND /* 최소_구간_조사_자료.조사_종류 */
+				 , SRVY_MT /* 최소_구간_조사_자료.조사_월 */
+				 , MEMO /* 최소_구간_조사_자료.메모 */
+				 , SRVY_DE /* 최소_구간_조사_자료.조사_일자 */
+				 , TRACE1_LA /* 최소_구간_조사_자료.TRACE1_LA */
+				 , TRACE1_LO /* 최소_구간_조사_자료.TRACE1_LO */
+				 , TRACE2_LA /* 최소_구간_조사_자료.TRACE2_LA */
+				 , TRACE2_LO /* 최소_구간_조사_자료.TRACE2_LO */
+				 , SRVY_NM /* 최소_구간_조사_자료.조사_명 */
+				 , EXMNR_NM /* 최소_구간_조사_자료.조사자_명 */
+				 , SCTN_STRTPT_DC /* 최소_구간_조사_자료.구간_시점_설명 */
+				 , SCTN_ENDPT_DC /* 최소_구간_조사_자료.구간_종점_설명 */
+				 , ROAD_NM /* 최소_구간_조사_자료.도로_명 */
+				 , FRNT_IMG_FILE_NM /* 최소_구간_조사_자료.전방_이미지_파일_명 */
+				 , RDSRFC_IMG_FILE_NM_1 /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
+				 , RDSRFC_IMG_FILE_NM_2 /* 최소_구간_조사_자료.노면_이미지_파일_명_2 */
+				 , EXCEL_DTA_SEQ /* 최소_구간_조사_자료.엑셀_자료_SEQ */
+				 , FRMULA_NO /* 최소_구간_조사_자료.수식_번호 */
+				 , POTHOLE_CR /* 최소_구간_조사_자료.포트홀_균열 */
+				 , RI_IDX /* 최소_구간_조사_자료.평탄성_지수 */
+				 , BLOCK_CR 
+			     , CR_LT 
+			     , CR_WID 
+			     , NHPCI 
+			     , SPI 
+			     , XCR 
+			     , RCI 
+			     , SCR 
+			     , AC_LOW 
+			     , AC_MED 
+			     , AC_HI 
+			     , LC_LOW 
+			     , LC_MED 
+			     , LC_HI 
+			     , TC_LOW 
+			     , TC_MED 
+			     , TC_HI 
+			     , AC_IDX 
+			     , LC_IDX 
+			     , TC_IDX 
+			     , PTCHG_IDX 
+			     , RD_LOW 
+			     , RD_MED 
+			     , RD_HI 
+			     , STRTPT_TEST
+			     , ENDPT_TEST
+			     , BLOCK_CR_LOW 
+			     , BLOCK_CR_MED 
+			     , BLOCK_CR_HI 
+			     , POTHOLE_IDX 
+			     , DMG_CUZ_CLMT 
+			     , DMG_CUZ_VMTC 
+			     , DMG_CUZ_ETC 
+			     , BC_IDX 
+				 , PC_GRAD /* 최소_구간_조사_자료.포장상태등급 */
+				 , GPCI /* 최소_구간_조사_자료.포장상태지수 */
+	     		 , SRVY_NO
+			FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
+		   WHERE 1=1 
+			 AND SRVY_NO = #SRVY_NO#::int
+		   	 AND USE_AT = 'Y'
+		   	 AND DELETE_AT = 'N'
+             ORDER BY STRTPT 
+		) tb) resultlist  WHERE 1=1
+]]>
+		<isEqual prepend=" " property="usePage" compareValue="true">
+<![CDATA[
+    AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+]]>
+		</isEqual>
+	</select>
+	
+	<select id="srvyDtaDAO.selectAnalDataPopupResultCount"
+		parameterClass="srvyDtaVO" resultClass="int">
+<![CDATA[
+		/* srvyDtaDAO.selectAnalDataPopupResultCount */
+		SELECT COUNT(*)
+			FROM TN_MUMM_SCTN_SRVY_DTA 
+		   WHERE 1=1
+		   	 AND SRVY_NO = #SRVY_NO#::int
+		   	 AND USE_AT = 'Y'
+		   	 AND DELETE_AT = 'N'
+]]>
+	</select>
+	
+	
 
 </sqlMap>
