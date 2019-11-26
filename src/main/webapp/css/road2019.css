@@ -60,7 +60,17 @@
 
 .map .copyright { display: none; }
 
-.header { position: fixed; width: 100%; left: 0; top: 0; border-bottom: solid 1px #aaa; height: 56px; background: #f1f3f4; z-index: 900; }
+.header { position: fixed; width: 100%; left: 0; top: 0; border-bottom: solid 1px #aaa; height: 56px; background: #f1f3f4; z-index: 900; /*
+98px
+132px
+166px
+200px
+234px
+268px
+302px
+336px
+370px
+*/ }
 
 .header .h1 { color: #000; font-size: 0; border-right: #aaa solid 1px; float: left; width: 330px; background: #fff; }
 
@@ -90,9 +100,11 @@
 
 .header nav li li a { padding: 8px 0 0 0; height: 26px; font-size: 15px; color: #777; }
 
-.header nav li li:first-child a { padding-top: 18px; }
+.header nav li ul ul { border: none; }
 
-.header nav li li:last-child a { padding-bottom: 18px; }
+.header nav li li li a { padding: 4px 0 0 0; height: 20px; font-size: 13px; background: #f6f6f6; border-top: dotted 1px #ddd; }
+
+.header nav li li li:last-child a { border-bottom: solid 1px #eee; padding-bottom: 4px; }
 
 .header nav li.on > a > span { border-bottom: solid 2px #5391e2; color: #5391e2; }
 
@@ -124,23 +136,25 @@
 
 .header .userArea .user-area:before { display: block; content: ''; width: 20px; height: 10px; background: url(../images/sideDivArrowUp.png) no-repeat 0 0; top: -6px; left: 67.5%; position: absolute; }
 
-.header.nav2.on .nav li ul, .header.nav2.on .navBg { height: 98px; }
+.header.nav2.on .nav li ul, .header.nav2.on .navBg { height: 328px; }
 
-.header.nav3.on .nav li ul, .header.nav3.on .navBg { height: 132px; }
+.header.nav3.on .nav li ul, .header.nav3.on .navBg { height: 362px; }
 
-.header.nav4.on .nav li ul, .header.nav4.on .navBg { height: 166px; }
+.header.nav4.on .nav li ul, .header.nav4.on .navBg { height: 396px; }
 
-.header.nav5.on .nav li ul, .header.nav5.on .navBg { height: 200px; }
+.header.nav5.on .nav li ul, .header.nav5.on .navBg { height: 430px; }
 
-.header.nav6.on .nav li ul, .header.nav6.on .navBg { height: 234px; }
+.header.nav6.on .nav li ul, .header.nav6.on .navBg { height: 464px; }
 
-.header.nav7.on .nav li ul, .header.nav7.on .navBg { height: 268px; }
+.header.nav7.on .nav li ul, .header.nav7.on .navBg { height: 498px; }
 
-.header.nav8.on .nav li ul, .header.nav8.on .navBg { height: 302px; }
+.header.nav8.on .nav li ul, .header.nav8.on .navBg { height: 532px; }
 
-.header.nav9.on .nav li ul, .header.nav9.on .navBg { height: 336px; }
+.header.nav9.on .nav li ul, .header.nav9.on .navBg { height: 566px; }
 
-.header.nav9.on .nav li ul, .header.nav9.on .navBg { height: 370px; }
+.header.nav9.on .nav li ul, .header.nav9.on .navBg { height: 600px; }
+
+.header.nav2.on .nav li ul ul, .header.nav3.on .nav li ul ul, .header.nav4.on .nav li ul ul, .header.nav5.on .nav li ul ul, .header.nav5.on .nav li ul ul, .header.nav6.on .nav li ul ul, .header.nav7.on .nav li ul ul, .header.nav8.on .nav li ul ul, .header.nav9.on .nav li ul ul, .header.nav9.on .nav li ul ul { height: inherit; }
 
 /* 메뉴활성화 */
 body.a00 li.a00 span, body.b00 li.b00 span, body.c00 li.c00 span, body.d00 li.d00 span, body.e00 li.e00 span, body.f00 li.f00 span, body.g00 li.g00 span, body.h00 li.h00 span { border-bottom: solid 2px #5391e2; color: #6aa2ec; }

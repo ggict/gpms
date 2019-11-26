@@ -82,9 +82,12 @@ $trans1:all 0.2s ease 0s;
             }
             li{width: 100%;
                 a {padding: 8px 0 0 0;height: 26px;font-size: 15px; color: #777;}
-                &:first-child a{padding-top: 18px;}
-                &:last-child a{padding-bottom: 18px;}
+                //&:first-child a{padding-top: 18px;}
+                //&:last-child a{padding-bottom: 18px;}
             }
+            ul ul {border:none}
+            li li a {padding: 4px 0 0 0;height: 20px;font-size: 13px;background: #f6f6f6; border-top:dotted 1px #ddd}
+            li li:last-child a{border-bottom:solid 1px #eee; padding-bottom: 4px;}
         }
         li.on> a >span{border-bottom: solid 2px $hover; color: $hover;}
     }
@@ -106,15 +109,28 @@ $trans1:all 0.2s ease 0s;
         }
     }
 
-    &.nav2.on .nav li ul, &.nav2.on .navBg{height: 98px;}
-    &.nav3.on .nav li ul, &.nav3.on .navBg{height: 132px;}
-    &.nav4.on .nav li ul, &.nav4.on .navBg{height: 166px;}
-    &.nav5.on .nav li ul, &.nav5.on .navBg{height: 200px;}
-    &.nav6.on .nav li ul, &.nav6.on .navBg{height: 234px;}
-    &.nav7.on .nav li ul, &.nav7.on .navBg{height: 268px;}
-    &.nav8.on .nav li ul, &.nav8.on .navBg{height: 302px;}
-    &.nav9.on .nav li ul, &.nav9.on .navBg{height: 336px;}
-    &.nav9.on .nav li ul, &.nav9.on .navBg{height: 370px;}
+    &.nav2.on .nav li ul, &.nav2.on .navBg{height: 328px;}
+    &.nav3.on .nav li ul, &.nav3.on .navBg{height: 362px;}
+    &.nav4.on .nav li ul, &.nav4.on .navBg{height: 396px;}
+    &.nav5.on .nav li ul, &.nav5.on .navBg{height: 430px;}
+    &.nav6.on .nav li ul, &.nav6.on .navBg{height: 464px;}
+    &.nav7.on .nav li ul, &.nav7.on .navBg{height: 498px;}
+    &.nav8.on .nav li ul, &.nav8.on .navBg{height: 532px;}
+    &.nav9.on .nav li ul, &.nav9.on .navBg{height: 566px;}
+    &.nav9.on .nav li ul, &.nav9.on .navBg{height: 600px;}
+/*
+98px
+132px
+166px
+200px
+234px
+268px
+302px
+336px
+370px
+*/
+    &.nav2.on .nav li ul ul ,&.nav3.on .nav li ul ul ,&.nav4.on .nav li ul ul ,&.nav5.on .nav li ul ul ,&.nav5.on .nav li ul ul ,&.nav6.on .nav li ul ul ,&.nav7.on .nav li ul ul,
+    &.nav8.on .nav li ul ul ,&.nav9.on .nav li ul ul ,&.nav9.on .nav li ul ul {height: inherit;}
 }
 
 /* 메뉴활성화 */

@@ -133,10 +133,33 @@
                     <li class="f00">
                         <a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.cmMenuUrlContent('<c:url value="stats/selectRouteAllStats.do"/>')"><span>통계</span></a>
                         <ul>
-                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_route', '<c:url value="stats/selectRouteAllStats.do"/>')">노선별 현황</a></li>
-                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_mumm', '<c:url value="mumm/mummRoutCntStats.do"/>')">포장상태 평가</a></li>
-                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_rpair', '<c:url value="rpairtrgetgroup/rpairRoutLenStats.do"/>')">보수대상 선정</a></li>
-                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_cntrwk', '<c:url value="cntrwkdtl/selectCntrwkRoutLenStats.do"/>')">포장공사 이력</a></li>
+                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_route', '<c:url value="stats/selectRouteAllStats.do"/>')">노선별 현황</a>
+                            	<ul>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('stats/selectRouteStats.do');">노선별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('stats/selectDeptStats.do');">관리기관별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('stats/selectTrackStats.do');">차로별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('stats/selectAdmStatsTable.do');">시군구별 통계</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_mumm', '<c:url value="mumm/mummRoutCntStats.do"/>')">포장상태 평가</a>
+                                <ul>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('mumm/mummRoutCntStats.do');">노선별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('mumm/mummDeptCntStats.do');">관리기관별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('mumm/mummAdmCntStats.do');">시군구별 통계</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_rpair', '<c:url value="rpairtrgetgroup/rpairRoutLenStats.do"/>')">보수대상 선정</a>
+                                    <ul>
+                                        <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('rpairtrgetgroup/rpairRoutLenStats.do');">노선별 통계</a></li>
+                                        <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('rpairtrgetgroup/rpairDeptLenStats.do');">관리기관별 통계</a></li>
+                                    </ul>
+                            </li>
+                            <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_cntrwk', '<c:url value="cntrwkdtl/selectCntrwkRoutLenStats.do"/>')">포장공사 이력</a>
+                                <ul>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('cntrwkdtl/selectCntrwkRoutLenStats.do');">노선별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('cntrwkdtl/selectCntrwkDeptLenStats.do');">관리기관별 통계</a></li>
+                                </ul>
+                            </li>
                             <!-- <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat', '<c:url value="cntrwkdtl/selectCntrwkRoutCntStats.do"/>')">포장공사 이력</a></li>  -->
                             <!-- <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_predct', '<c:url value="smdtalaststtus/selectSmDtaLastRoutCntStats.do"/>')">포장상태 예측</a></li>  -->
                             <!-- <li><a href="#" onclick="COMMON_UTIL.fn_set_subMenu('sub_stat_survey', '<c:url value="stats/selectSurveyAllLenStatsTable.do"/>')">포장상태 조사구간</a></li>  -->
