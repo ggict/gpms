@@ -237,6 +237,17 @@ var CONFIG = (function($, undefined){
 	         'show' : '0',
 	         'layerType' : '3'
 	     },
+	     "DORO_TOT_GRS80_50_G" : {
+	    	 'tmapid' : '870',
+	    	 'id' : '3777',
+	    	 'table' : 'gpms:DORO_TOT_GRS80_50_G',
+	    	 'theme' : 'DORO_TOT_GRS80_50_G',
+	    	 'alias' : '도로대장',
+	    	 'seq' : '3777',
+	    	 'show' : '0',
+	    	 'layerType' : '1'
+	     },
+	     /*
 	     "DORO_TOT_GRS80_50_LINE" : {
 	    	 'tmapid' : '870',
 	    	 'id' : '3777',
@@ -257,6 +268,7 @@ var CONFIG = (function($, undefined){
 	    	 'show' : '0',
 	    	 'layerType' : '1'
 	     },
+	     */
 	     "MV_ROAD_CELT0005" : {
 	    	 'tmapid' : '870',
 	    	 'id' : '3779',

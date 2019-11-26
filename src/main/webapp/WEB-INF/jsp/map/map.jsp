@@ -48,7 +48,7 @@
                     </div>
                     <div id="btab01">
                     	<%-- 왼쪽 세부 메뉴 --%>
-						<%@ include file="/include/leftMenu.jsp"%>
+<%-- 						<%@ include file="/include/leftMenu.jsp"%> --%>
                         <div>
                          	<div class="tab_wrap ">
                         		<iframe id="content_area" name="content_area" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; border:0; width:100%; height:560px; overflow: hidden; z-index:9999;" scrolling=no></iframe>
@@ -140,7 +140,7 @@
                     <li><a href="#" class="mtBtn save" id="mCtrlPrint" title="현재화면 저장">저장</a></li>
                     -->
                 </ul>
-                
+
 				<!--
                 <ul class="right_tool">
                     <li><a id="integrated" href="#" class="t1 selecttool" title="통합 정보 조회" onclick="COMMON_UTIL.cmWindowOpen('통합 정보 조회', contextPath + 'topmenu/selectIntegratedView.do', 623, 215, false, null, 'integrated');"><span class="hidden">정보통합조회</span></a></li>
@@ -154,7 +154,7 @@
                     <li id="mCtrlSateliteMap" onclick="MAP.fn_show_externalSateliteMap('skyview')"><a href="#" class="map2"><span class="hidden">위성</span></a></li>
                 </ul>
                 -->
-                
+
                 <nav class="mapTool2">
 	                <div class="group toggleBtn">
 	                    <article>
@@ -180,8 +180,8 @@
 	                    </article>
 	                </div>
             	</nav>
-            	
-            	
+
+
 
                 <!-- indexMapWrap S -->
 	            <nav class="indexMapWrap">
@@ -378,7 +378,7 @@ var layersMngObj = {
 			var baseLayer = gMap.getLayerByName("baseLayer");
 			var params = baseLayer.getParams();
 			var layers = (params.LAYERS) ? params.LAYERS.split(',') : [];
-			
+
 			if(obj.hasClass('active')){
 				obj.removeClass('active');
 				if(layers.indexOf(layernm) > -1){
@@ -391,7 +391,7 @@ var layersMngObj = {
 					layers.push(layernm);
 				}
 			}
-			
+
 			if(layers.length == 0) baseLayer.setVisibility(false);
 			else baseLayer.setVisibility(true);
 			baseLayer.mergeNewParams({

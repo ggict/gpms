@@ -357,11 +357,11 @@ var COMMON_UTIL = (function($,undefined){
 
             }
         });
-        
+
         if (typeof noFocusScroll === 'undefined') {
         	$("#"+_oFrmId).find("input[type='text']:enabled").first().focus();
         }
-        
+
     };
 
     /**
@@ -1135,6 +1135,8 @@ var COMMON_UTIL = (function($,undefined){
     * @param {String} _oUrl : 삽입할 url
     */
     var cmMenuUrlContent = function(_oUrl, _oClearFlag){
+    	$("#repairtargets").hide();
+
         fn_check_session();
 
         if (_oClearFlag == undefined || _oClearFlag == false) {
