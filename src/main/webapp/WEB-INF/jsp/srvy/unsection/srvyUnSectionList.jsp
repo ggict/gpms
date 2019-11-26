@@ -15,59 +15,81 @@
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
+
 <div class="tabcont">
-	<div class="fl bgsch">
-	    <h3>검색조건</h3>
-	    <div class="schbx mt10">
-	        <ul class="sch">
-	            <li class="wid100">
-	                <label>조사연도</label>
-	                <select id="SRVY_YEAR" name="SRVY_YEAR" alt="조사연도" class="input" style="width:100px;">
-	                	<!-- <option value="">== 전체 ==</option> -->
-		        		<c:forEach items="${srvyYearList }" var="srvyYear" varStatus="status">
-		        			
-		        			<option value="${srvyYear.SRVY_YEAR }" <c:if test="${status.last}"> selected</c:if>>${srvyYear.SRVY_YEAR } </option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li class="wid100">
-	                <label>노선번호</label>
-	                <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input" style="width:100px;">
-		                <option value="">== 전체 ==</option>
-		        		<c:forEach items="${roadNoList }" var="roadNo">
-		        			<option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
-		        		</c:forEach>
-	                </select>
-	            </li>
-	            <li>
-	                <label>노선명</label>
-	                <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" style="width:197px;" class="MX_80 CS_50 input" />
-	            </li>
-	            <li class="wid100" style="margin-top: 10px;">
-	                <a href="#" class="schbtn dpb" onclick="javascript:fn_search();">검색</a>
-	            </li>
-	        </ul>
-	    </div>
-	</div>
-	<div class="fr listbx">
-	    <h3>미조사구간 조회</h3>
-	    <p class="location">
-	        <span>조사자료 관리</span>
-	        <strong>미조사구간 조회</strong>
-	    </p>
-	    <div class="mt10 ml10 mr10">
-            <div id="div_grid" style="width:100%; height:240px;">
-				<table id="gridArea"></table>
-				<div id="gridPager"></div>
-			</div>
-			<div class="mt10 tc">
-	            <div class="fr">
-	            	<a href="#" onclick="fn_chart();" class="schbtn">차트</a>
-	           	</div>
-	        </div>
-        </div>        
-	</div>
-	
+
+    <header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">조사자료관리</option>
+                </select>
+                <select name="">
+                    <option value="">미조사구간조회</option>
+                </select>
+                <h2 class="h2">미조사구간 조회</h2>
+            </span>
+           
+        </div>
+    </header>
+    
+    <div class="contents container">
+    
+        <article class="div3">
+            <h3 class="h3">검색조건</h3>
+            <div class="table">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="th"><label for="SRVY_YEAR">조사년도</labed></td>
+                        <td>
+                            <select id="SRVY_YEAR" name="SRVY_YEAR" alt="조사연도">
+                                <!-- <option value="">== 전체 ==</option> -->
+                                <c:forEach items="${srvyYearList }" var="srvyYear" varStatus="status">
+                                    
+                                    <option value="${srvyYear.SRVY_YEAR }" <c:if test="${status.last}"> selected</c:if>>${srvyYear.SRVY_YEAR } </option>
+                                </c:forEach>
+                            </select>         
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="th"><label for="ROAD_NO">노선번호</label></td>
+                        <td>
+                            <select id="ROAD_NO" name="ROAD_NO" onchange="fn_change_roadNm();">
+                                <option value="">전체</option>
+                                <c:forEach items="${roadNoList }" var="roadNo">
+                                    <option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
+                                </c:forEach>
+                            </select>              
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="th"><label for="ROAD_NAME">노선명</label></td>
+                        <td>
+                            <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
+                        </td>
+                    </tr>
+                    </tbody>    
+                </table>
+                <div class="btnArea">
+                    <input type="button" class="btn pri" onclick="javascript:fn_search();" value="검색"/>
+                </div>
+            </div>
+        </article>
+        
+        <article class="div9">
+            <h3 class="h3">미조사구간 조회</h3>
+            <div id="div_grid" class="table">
+                <table id="gridArea"></table>               
+            </div>
+            <a href="#" onclick="fn_chart();" class="btn pri">차트</a>
+
+            <div id="gridPager"></div>
+             
+        </div>
+        </article>
+        
+    </div>
 </form>
 
 <!-- 공통 (START)-->
