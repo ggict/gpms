@@ -26,9 +26,9 @@
             <li id="tab2"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('rpairmthdfrmula/selectRpairMthdFrmulaList.do')">임계값 설정</a></li>
         </ul>
     </div>
-    <div id="tabcont1">
-        <table class="adminlist mt10" summary="정보를 제공합니다.">
-            <caption>정보</caption>
+    <div id="tabcont1" class="table">
+        <table class="table20">
+            <caption class="hidden">보수공법</caption>
             <colgroup>
                 <col width="15%" />
                 <col width="*" />
@@ -104,9 +104,9 @@
             </tbody>
         </table>
     </div>
-    <div class="mr10 fr mt10">
-        <a href="#" class="schbtn" onclick="fnRepairTargetUntpcStart();" style="width:50px">저장</a>
-        <a href="#" class="graybtn" onclick="fn_close_dialog();" style="width:50px">취소</a>
+    <div class="btnArea">
+   		<input type="button" class="btn pri" value="저장" onclick="fnRepairTargetUntpcStart();"/>
+   		<input type="button" class="btn" value="취소" onclick="fn_close_dialog();"/>
     </div>
 </div>
 </form>  

@@ -5,76 +5,48 @@
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<style>
-<%--
 
---%>
-.srtmenuarea .ui-accordion-header {color:black !important;background-color:#e6e6e6 !important;border-color:#e6e6e6 !important;font-size:14px;}
-.srtmenuarea .ui-accordion .ui-accordion-icons {
-     padding-left: 0em !important;
-}
-.srtmenuarea .ui-accordion .ui-accordion-header .ui-accordion-header-icon{
-left:0em  !important;
-}
-.srtmenuarea .ui-widget-content{
-background-color:#e6e6e6 !important;
-}
-.srtmenuarea .ui-helper-reset{
-line-height:1.5em !important;
-}
-
-.srtmenuarea .ui-accordion .ui-accordion-content {
-    padding: 1em 1em 1em 2.2em;
-    border-top: 0;
-    overflow: auto;
-
-}
-
-.srtmenuarea .ui-accordion-header-active{
-background-color:#ffd9ad  !important;
-}
-.srtmenuarea .ui-state-default, .srtmenuarea .ui-widget-content .ui-state-default, .srtmenuarea .ui-widget-header .ui-state-default, .srtmenuarea .ui-widget-header .ui-state-default{
-font-weight:normal !important;
-}
-
-</style>
-<div class="srtmenuarea" style="width:220px;height:777px;">
+<div class="srtmenuarea">
     <div id="sub_repairtargets">
-        <h2  class="tl pl15">보수대상 선정 <a href="#" class="leftmenu" onclick="fnOpenRpairConfig();">환경설정</a></h2>
-        <h4 class="leftTit">보수대상 선정</h4>
-        <div>
-        <div class="schbx mt10" style="min-height:250px">
-        <ul class="sch" style="height:160px;">
-            <li class="wid100 mt10"><label  class="wid100" >분석단위</label></li>
-            <li class="wid100">
-                <input type="hidden" id="SLCTN_MTH" name="SLCTN_MTH" value=""/>
-                <input type="hidden" id="SLCTN_STTUS" name="SLCTN_STTUS" value="RTSS0001"/>  <%-- 보수대상선정상태(RTSS)[시작(RTSS0001), 임시저장(RTSS0002), 보수대상선정(RTSS0003)...] --%>
-                <input type="hidden" id="SLCTN_PURPS" name="SLCTN_PURPS" value="RTSP0002"/>  <%-- 보수대상선정목적(RTSP)[차트용(시스템이 생성)(RTSP0001), 사용자 보수 대상 선정(RTSP0002)] --%>
-                <input type="hidden" id="TRGET_SLCTN_NO" name="TRGET_SLCTN_NO" value=""/>
+        <a href="#" class="leftmenu" onclick="fnOpenRpairConfig();">환경설정</a>
+        <h3 class="h3 borderNone">보수대상 선정</h3>
+    		<div class="table">
+    			<table>
+    				<tbody>
+    				<tr>
+    					<td class="th"><label>분석단위</label></td>
+    					<td>
+    					 	<input type="hidden" id="SLCTN_MTH" name="SLCTN_MTH" value=""/>
+			                <input type="hidden" id="SLCTN_STTUS" name="SLCTN_STTUS" value="RTSS0001"/>  <%-- 보수대상선정상태(RTSS)[시작(RTSS0001), 임시저장(RTSS0002), 보수대상선정(RTSS0003)...] --%>
+			                <input type="hidden" id="SLCTN_PURPS" name="SLCTN_PURPS" value="RTSP0002"/>  <%-- 보수대상선정목적(RTSP)[차트용(시스템이 생성)(RTSP0001), 사용자 보수 대상 선정(RTSP0002)] --%>
+			                <input type="hidden" id="TRGET_SLCTN_NO" name="TRGET_SLCTN_NO" value=""/>
+			
+			            <c:forEach var="anun" items="${anunList}" varStatus="status">
+			                <input type="radio" id="ANALS_UNIT_CODE<c:out value="${status.index}" />" name="ANALS_UNIT_CODE" value="<c:out value="${anun.CODE_VAL}" />" /><label for="ANALS_UNIT_CODE<c:out value="${status.index}" />" class="wid30" ><c:out value="${anun.CODE_NM}" /></label>
+			            </c:forEach>
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="SLCTN_YEAR">대상연도</label></td>
+    					<td>
+	    					<select id="SLCTN_YEAR" name="SLCTN_YEAR">
+			                    <c:forEach var="slctnYear" items="${slctnYearList}">
+			                        <option value="${slctnYear}">${slctnYear}년</option>
+			                    </c:forEach>
+			                </select>
 
-            <c:forEach var="anun" items="${anunList}" varStatus="status">
-                <input type="radio" id="ANALS_UNIT_CODE<c:out value="${status.index}" />" name="ANALS_UNIT_CODE" value="<c:out value="${anun.CODE_VAL}" />" /><label for="ANALS_UNIT_CODE<c:out value="${status.index}" />" class="wid30" ><c:out value="${anun.CODE_NM}" /></label>
-            </c:forEach>
-
-            </li>
-            <li class="wid100 mt15"><label class="wid100">보수대상 선정년도</label></li>
-            <li class="wid100">
-                <select id="SLCTN_YEAR" name="SLCTN_YEAR" title="선정년도" style="width:100px;" class="input">
-                    <c:forEach var="slctnYear" items="${slctnYearList}">
-                        <option value="${slctnYear}">${slctnYear}년</option>
-                    </c:forEach>
-                </select>
-            </li>
-            <li class="wid100 mt10">
-                <a href="#" class="playbtn" onclick="fnRepairTargetStart();">선정 시작</a>
-            </li>
-        </ul>
-        </div>
-        <div class="posila">
-        <h4 class="leftTit">보수대상선정이력</h4>
-        <div class="scroll" id="repairTargetList">
-        </div>
-        </div></div>
+                        </td>
+    				</tr>
+    				</tbody>	
+    			</table>
+                <div class="btnArea">
+                     <input type="button" class="btn pri" value="선정시작" onclick="fnRepairTargetStart();">
+                </div>
+    		</div>
+    		
+    		
+    		<h3 class="h3">보수대상선정이력</h3>
+    		<div class="scroll" id="repairTargetList"></div>
 
 </div>
 </div>

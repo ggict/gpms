@@ -90,6 +90,20 @@
                 </div>
             </div>
             <div id="repairtargets" style="display:none;">
+            
+            <header class="loc">
+		        <div class="container">
+		            <span class="locationHeader">
+		                <select name="">
+		                    <option value="">보수대상선정</option>
+		                </select>
+		                <select name="">
+		                    <option value="">보수대상선정</option>
+		                </select>
+		                <!-- <h2 class="h2">조사자료 등록 대상목록</h2> -->
+		            </span>		
+		        </div>
+		    </header>
 
                 <div id="bottom_cont">
                     <div class="bottomBtArea">
