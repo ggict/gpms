@@ -256,65 +256,84 @@ function fnExcel() {
 <!-- 필수 파라메터(END) -->
 <input type="hidden" id="SRVY_DE" name="SRVY_DE" value=""/>
 
-<div id="sch_cnt01" class="tabcont">
-<div class="fl bgsch" style="width:250px">
-	<h3>검색조건</h3>
-	<!--검색영역-->
-	 <div class="schbx mt10">
-	 	<ul class="sch">
-	 		<li class="wid100">
-                <label>노선번호</label>
-                <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" style="width: 116px;" class="input">
-	                <option value="">== 전체 ==</option>
-	        		<c:forEach items="${roadNoList }" var="roadNo">
-	        			<option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
-	        		</c:forEach>
-                </select>
-            </li>
-            <li>
-                <label>노선명</label>
-                <input type="text" id="ROAD_NAME"  name="ROAD_NAME" readonly="readonly" value="" style="width: 108px;" class="MX_80 CS_50 input" />
-	            </li>
-	 		</li>
-			<li class="wid100">
-                <label>조사일자</label>
-            </li>
-            <li>
-                <span class="calendar">
-                    <input type="text" id="SCH_SRVY_DE1" name="SCH_SRVY_DE1" style="width:60px" />
 
-                </span> ~
-                <span class="calendar">
-                    <input type="text" id="SCH_SRVY_DE2" name="SCH_SRVY_DE2" style="width:60px" />
-                </span>
-            </li>
-			<li class="wid100">
-                <a href="#" class="schbtn dpb" onclick="fn_searchCreatDt();"> 검색</a>
-            </li>
-		</ul>
-	</div>
-</div>
-		<div class="fr listbx">
-			<h3>조사자료 이력조회</h3>
-			<p class="location">
-				<span>조사자료 관리</span>
-				<span>조사자료 이력조회</span>
-				<strong>조사자료 이력 목록</strong>
-	        </p>
-		    <div class="mt10 mr10">
-				<div id="div_grid" style="position:left; width: 100%; height: 240px;">
-					<table id="gridArea"></table>
-					<div id="gridPager"></div>
-				</div>	
+
+
+<div id="sch_cnt01">
+
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">조사자료관리</option>
+                </select>
+                <select name="">
+                    <option value="">조사자료이력조회</option>
+                </select>
+                <h2 class="h2">조사자료 이력 목록</h2>
+            </span>
+        </div>
+    </header>
+    
+    <div class="contents container">
+    
+    	<article class="div3">
+    		<h3 class="h3">검색조건</h3>
+    		<div class="table">
+    			<table>
+    				<tbody>
+    				<tr>
+    					<td class="th"><label for="ROAD_NO">노선번호</labed></td>
+    					<td>
+                            <select id="ROAD_NO" name="ROAD_NO" onchange="fn_change_roadNm();" class="input">
+            	                <option value="">전체</option>
+            	        		<c:forEach items="${roadNoList }" var="roadNo">
+            	        			<option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
+            	        		</c:forEach>
+                            </select>        
+                        </td>
+
+                     </tr>
+                     <tr>
+                        <td class="th"><label for="ROAD_NAME">노선명</labed></td>
+    					<td>
+                            <input type="text" id="ROAD_NAME"  name="ROAD_NAME" readonly="readonly" value="" class="MX_80 CS_50 input" />
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="SCH_SRVY_DE1">조사일자</label></td>
+    					<td>
+                             <span class="calendar">
+                                 <input type="text" id="SCH_SRVY_DE1" name="SCH_SRVY_DE1" />
+
+                             </span> ~
+                             <span class="calendar">
+                                 <input type="text" id="SCH_SRVY_DE2" name="SCH_SRVY_DE2" />
+                             </span>              
+                        </td>
+    				</tr>
+    			</table>
+                <div class="btnArea">
+                    <input type="button" class="btn pri" onclick="fn_searchCreatDt();" value="검색"> 
+                </div>
+    		</div>
+    	</article>
+    	
+    	<article class="div9">
+    		<h3 class="h3">조사자료 이력 목록</h3>
+    		<div id="div_grid" class="table">
+				<table id="gridArea"></table>			
 			</div>
-			<div class="tc mr10" >
-			<div class="fr">
-            <a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
-			</div>
-			</div>
-		</div>
-</div>
-</div>
+			<div id="gridPager"></div>
+			<input type="button" class="btn pri" onclick="fnExcel();" value="엑셀저장"/>
+        </div>
+    	</article>
+    	
+    </div>
+
+
+
+
 </div>
 </form>
 <!-- 공통 (START)-->

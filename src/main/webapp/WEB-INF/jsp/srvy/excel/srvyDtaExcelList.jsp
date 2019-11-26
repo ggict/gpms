@@ -270,7 +270,7 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
                 </select>
                 <h2 class="h2">조사자료 등록 대상목록</h2>
             </span>
-            <a href="#" class="whitebtn dpib ml10 vm" onclick="fn_search();"><img src="/gpms/images/ic_reset.png" alt="새로고침"></a>
+            <a href="#" class="btnRefresh" onclick="fn_search();"><img src="/gpms/images/ic_reset.png" alt="새로고침"></a>
 
         </div>
     </header>
@@ -280,7 +280,7 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
     	<article class="div3">
     		<h3 class="h3">파일첨부</h3>
     		<span class="haderBtn">
-    			<input type="button" value="파일선택" class="btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" >
+    			<input type="file" value="파일선택" class="btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" >
     		</span>
 
     		<div class="table">
@@ -322,20 +322,16 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 	    					<td>
 	    						<input type="number" name="TRACK" id="TRACK" value="" style="width:57px;" onkeydown="fnCheckNumber(this);" maxLength="1" class="MX_80 CS_50 DT_INT input" />
 	    					</td>
-	    				</tr>
-	    				<tr>
-	    					<td colspan="3">
-			    				<div class="btfilebx scroll" style="width:258px; height:40px" id="file_list">
-					            	<ul name="fileSet"></ul>
-					            </div>
-					            <p>※ 첨부 파일은 압축(zip) 파일만 업로드 가능합니다.			</p>
-	    					</td>
-	    					<td>
-	    						<input type="button" class="btn pri" onclick="fn_file_upload()" value="파일전송" />
-	    					</td>
-	    				</tr>                
+	    				</tr>         
     				</tbody>	
     			</table>
+    			<div class="btfilebx" id="file_list">
+	            	<ul name="fileSet"></ul>
+	            	<input type="button" class="btn pri" onclick="fn_file_upload()" value="전송" />
+	            </div>	            
+
+	            <p>※ 첨부 파일은 압축(zip) 파일만 업로드 가능합니다.</p>
+
     		</div>
     	</article>
     	

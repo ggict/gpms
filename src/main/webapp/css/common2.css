@@ -175,7 +175,7 @@ input[type="button"] { cursor: pointer; }
 
 input[type="text"], input[type="password"], select, .input, textarea
 { border: solid 1px #bcbcbc; border-radius: 2px; background: #fff; padding: 0 8px; margin: 1px; box-sizing: border-box;-moz-box-sizing: border-box;-webkit-box-sizing: border-box;}
-input[type="text"], input[type="password"], select, .input { height: 30px; line-height: 1em}
+input[type="text"], input[type="password"],input[type="number"], select, .input { height: 30px; line-height: 1em}
 textarea {overflow:auto; padding:10px; line-height: 1.3em;font-family:'Noto', 'Malgun Gothic',sans-serif; font-size: 15px}
 .js-elasticArea {transition: all 0.3s ease 0.0s}
 
