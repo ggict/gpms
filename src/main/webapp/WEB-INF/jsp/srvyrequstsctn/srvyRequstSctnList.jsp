@@ -24,55 +24,74 @@
 <input type="hidden" id="sidx" name="sidx" value=""/>
 <input type="hidden" id="sord" name="sord" value=""/>
 
-
 <div class="tabcont">
-    <div class="fl bgsch">
-        <h3>검색조건</h3>
-        <div class="schbx mt10">
-            <ul class="sch">
-                <li class="wid100">
-                    <label>노선번호</label>
-                    <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input" style="width:100px;">
-                        <option value="">== 전체 ==</option>
-                        <c:forEach items="${roadNoList }" var="roadNo">
-                            <option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
-                        </c:forEach>
-                    </select>
-                </li>
-                <li>
-                    <label>노선명</label>
-                    <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" style="width:197px;" class="MX_80 CS_50 input" />
-                </li>
-                <li class="wid100">
-                    <label>조사요청일자</label>
-                    <input type="text" name="SRVY_REQUST_DE1" id="SRVY_REQUST_DE1" style="width:70px; margin-right: 3px;" class="DT_DATE input" /> ~
-                    <input type="text" name="SRVY_REQUST_DE2" id="SRVY_REQUST_DE2" style="width:70px; margin-right: 3px;" class="DT_DATE input" />
-                </li>
-                <li class="wid100">
-                    <a href="#" class="schbtn dpb" onclick="javascript:fnSearch();">검색</a>
-                </li>
-            </ul>
+
+    <header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">조사자료관리</option>
+                </select>
+                <select name="">
+                    <option value="">조사요청구간관리</option>
+                </select>
+                <h2 class="h2">조사요청구간 목록</h2>
+            </span>
+
         </div>
-    </div>
-    <div class="fr listbx">
-        <h3>조사요청구간 목록</h3>
-        <p class="location">
-            <span>조사자료 관리</span>
-            <strong>조사요청구간 관리</strong>
-        </p>
-        <div class="mt10 ml10 mr10">
-            <div id="div_grid" style="width:100%; height:240px;">
-                <table id="gridArea"></table>
-                <div id="gridPager"></div>
-            </div>
-            <div class="mt10 tc">
-                <div class="fl">
-                    <!-- <a href="javascript" onclick="fn_cntrwkExcel();" class="schbtn">엑셀저장</a>  -->
-                    <a href="javascript:;" onclick="fnDelete();" class="schbtn">삭제</a>
+    </header>
+    
+    <div class="contents container">
+    
+        <article class="div3">
+            <h3 class="h3">검색조건</h3>
+            <div class="table">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="th"><label for="">노선번호</label></td>
+                        <td>
+                            <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input">
+                                <option value=""> 전체 </option>
+                                <c:forEach items="${roadNoList }" var="roadNo">
+                                    <option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="th"><label for="">노선명</label></td>
+                        <td>
+                            <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="th"><label for="">조사요청일자</label></td>
+                        <td>
+                            <input type="text" name="SRVY_REQUST_DE1" id="SRVY_REQUST_DE1" class="dateInput" /> ~
+                            <input type="text" name="SRVY_REQUST_DE2" id="SRVY_REQUST_DE2" class="dateInput" />
+                        </td>
+                    </tr>
+                    </tbody>    
+                </table>
+                <div class="btnArea">
+                     <input type="button" class="btn pri" value="검색" onclick="javascript:fnSearch();" />
                 </div>
             </div>
+        </article>
+        
+        <article class="div9">
+            <h3 class="h3">조사요청구간 목록</h3>
+            <div id="div_grid" class="table">
+                <table id="gridArea"></table>               
+            </div>
+            <a href="javascript:;" onclick="fnDelete();" class="btn wrn">삭제</a>
+            <div id="gridPager"></div>
         </div>
+        </article>
+        
     </div>
+
 </div>
 </form>
 <!-- 공통 (START)-->

@@ -723,7 +723,7 @@ var COMMON_UTIL = (function($,undefined){
             changeMonth: true,changeYear: true,numberOfMonths: 1,showOn: "button",buttonImage: imgPath ,buttonImageOnly: true
             ,onClose: function( selectedDate ) {
                 $( "#"+_oEndId ).datepicker( "option", "minDate", selectedDate );
-                $( "#"+_oEndId ).parent().find("img").css("margin-bottom", "3px");
+                //$( "#"+_oEndId ).parent().find("img").css("margin-bottom", "3px");
             }
             ,beforeShow : function(input){
 	            var offset = $(input).offset();
@@ -735,7 +735,7 @@ var COMMON_UTIL = (function($,undefined){
             changeMonth: true,changeYear: true,numberOfMonths: 1,showOn: "button",buttonImage: imgPath ,buttonImageOnly: true
             ,onClose: function( selectedDate ) {
                 $( "#"+_oStartId ).datepicker( "option", "maxDate", selectedDate );
-                $( "#"+_oStartId ).parent().find("img").css("margin-bottom", "3px");
+                //$( "#"+_oStartId ).parent().find("img").css("margin-bottom", "3px");
             }
 	        ,beforeShow : function(input){
 	            var offset = $(input).offset();

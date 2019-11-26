@@ -418,6 +418,8 @@ div select, select.input {padding-right: 20px; background: url(../images/selecet
     .ui-pg-selbox,.ui-pg-input { font-size: 13px;background-color: #fff;}
     .ui-pg-selbox {background-position:90% 7px}
 }
+td input[type="text"].hasDatepicker {width: 120px;}
+td input[type="text"].hasDatepicker + img.ui-datepicker-trigger { margin:0 6px -4px -20px;}
 
 /* jsDiv */
 article.jsDiv{ display: none; position: fixed; left: 0;top: 0; width: 100%; height: 100%; z-index: 1000; background: rgba(0, 0, 0, 0.3);
