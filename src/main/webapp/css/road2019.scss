@@ -642,3 +642,12 @@ input#pointArea {width:40px; height: 28px;padding: 0 4px;}
 }
 body.research {background: url(../images/roadBg.jpg) no-repeat center; background-size: cover;}
 .imageSample {color: #fff; display: inline-block;}
+
+.ui-datepicker {
+    .ui-state-default, .ui-widget-content .ui-state-default {color:#444; border:none; background: #fff; padding: 1px 2px;}
+    th {padding: 0; font-size: 14px;font-weight: 400;color: #999; text-align: right; padding-top: 2px;}
+    select.ui-datepicker-month, select.ui-datepicker-year { border:none; color: #fff; padding: 0; width: 50px;
+        option{ color: #333;}
+    }
+    select.ui-datepicker-year {width: 60px;}
+}
