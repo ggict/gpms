@@ -30,7 +30,7 @@
             <h4 class="stit">보수공법 선정 알고리즘</h4>
             <div class="graybx posiR">
                 <img src="<c:url value='/images/flow1.png'/>" />
-                <a href="#" class="probtn1 posiA frmulaBtn" style="bottom:10px;left:10px;width:160px" id="BTN_SPATIAL" onclick="fn_initFrmula('SPATIAL');" >① 특별관리도로 보수공법</a>
+                <a href="#" class="probtn1 posiA frmulaBtn" style="bottom:10px;left:10px;width:165px" id="BTN_SPATIAL" onclick="fn_initFrmula('SPATIAL');" >① 특별관리도로 보수공법</a>
                 <a href="#" class="probtn1 posiA frmulaBtn" style="bottom:10px;left:215px;width:160px" id="BTN_INTERSECT" onclick="fn_initFrmula('INTERSECT');">② 교차로 보수공법</a>
                 <a href="#" class="probtn1 posiA frmulaBtn" style="bottom:10px;left:420px;width:160px" id="BTN_1TRACK" onclick="fn_initFrmula('1TRACK');">③ 1차로 보수공법</a>
                 <a href="#" class="probtn2 posiA frmulaBtn" style="top:37px;left:640px;width:160px" id="BTN_NOMAL" onclick="fn_initFrmula('NOMAL');">④ 일반도로 보수공법</a>

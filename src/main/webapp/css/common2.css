@@ -188,6 +188,9 @@ select:focus { background-position: right -32px}
 input[type="text"]:hover, input[type="password"]:hover, select:hover, .input:hover,
 input[type="text"]:focus, input[type="password"]:focus, select:focus, .input:focus { border-color:#40b2cd; }
 
+.posiR {position: relative}
+.posiA {position: absolute}
+
 .input02, .width02 { width: 2% }
 .input03, .width03 { width: 3% }
 .input04, .width04 { width: 4% }
