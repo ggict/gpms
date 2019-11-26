@@ -62,9 +62,8 @@ function fn_update() {
 
 // 저장 callback
 function fn_save_callback(){
-	alert("공지사항을 수정하였습니다.");
 	window.parent.fnSearch();
-	COMMON_UTIL.cmMovePage( "frm", "<c:url value='/api/notice/selectNoticeUpdate.do'/>");
+	COMMON_UTIL.cmWindowClose($("#wnd_id").val());
 }
 
 // 파일 삭제 처리
@@ -90,6 +89,7 @@ function fn_delete(){
 				if (res != null) {
 					alert("삭제되었습니다.");
 					window.parent.fnSearch();
+					COMMON_UTIL.cmWindowClose($("#wnd_id").val());
 					return;
 				}
 			}

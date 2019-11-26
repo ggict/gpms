@@ -170,8 +170,13 @@
 		/* noticeDAO.updateNotice */
 		/* 공지사항 수정 */
 		UPDATE TN_NOTICE
-		   SET POS = #POS#::int              /*POS*/
-				,SUB = 0              /*SUB*/
+		   SET 
+	]]>	   
+		<isNotEmpty property="POS">
+		   		POS = #POS#::int,              /*POS*/
+		</isNotEmpty>
+	<![CDATA[ 	   
+				SUB = 0              /*SUB*/
 				,DEP = 1              /*DEP*/
 				,WRTER = #WRTER#          /*작성자*/
 				,SJ = #SJ#                /*제목*/
