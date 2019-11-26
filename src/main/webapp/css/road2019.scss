@@ -410,7 +410,7 @@ span.calendar { border:none; position: relative; height: 32px; width: 113px; pad
     input[type="text"] {width: 100%;text-indent: 5px; height: 30px; border:solid 1px #bcbcbc;border-radius:2px; }
     img { position: absolute; right: 11px; top: 9px;}
 }
-div select, select.input {padding-right: 20px; background: url(../images/selecetArrow2.gif) no-repeat 90% 13px;}
+div select, select.input {padding-right: 20px; background: url(../images/selecetArrow2.gif) no-repeat right 12px;}
 
 #div_grid + .btn {float: right;margin-top: -24px; position: relative; z-index: 900; padding: 3px 15px;}
 
@@ -437,6 +437,12 @@ a.btnJsDivClose{ background: url(../../images/btnPopupClose.gif) no-repeat cente
 	&:focus { opacity: 1; background-color: #ededed; }
 }
 
+#MINGPCI, #MAXGPCI, #TRACK {width: 60px;}
+
+.tabcont.c10{
+    .ui-jqgrid .ui-jqgrid-htable th div {font-size: 13px;left: -1px;}
+    .div9 .div_grid { overflow-x:auto}
+}
 
 /* sideDiv */
 article.sideDiv{ display: none; position: absolute; left:45px;top: 0; z-index: 1000; padding: 10px; background: #fff; border:solid 1px rgba(0,0,0,0.2); border-radius: 2px; box-shadow: 0 3px 5px rgba(0,0,0,.2); width: 300px;
