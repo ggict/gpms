@@ -79,7 +79,7 @@
         <isNotEmpty property="SCH_MENU_D"><![CDATA[ /* 시스템메뉴.시스템구분 */ AND a.SYS_CODE = #SCH_MENU_D# ]]></isNotEmpty>
         <isNotEmpty property="SCH_MENU_DP"><![CDATA[  AND a.MENU_DP = #SCH_MENU_DP# ]]></isNotEmpty>
     </sql>
-	
+    	
 		<select id="menuDAO.selectMenu"	resultClass="menuVO">
 		<![CDATA[ 
 			/* menuDAO.selectMenu */
@@ -170,12 +170,11 @@
                 1 as LEVEL, array[menu_id]::varchar as PATH
             FROM tn_menu
         ]]>
-            <include refid="menuDAO.selectMenuList.where" />
             <isNotEmpty property="SCH_MENU_S">
-                <![CDATA[ AND upper_menu_id = #UPPER_MENU_ID# ]]>
+                <![CDATA[ WHERE upper_menu_id = #UPPER_MENU_ID# ]]>
             </isNotEmpty>
             <isEmpty property="SCH_MENU_S">
-                <![CDATA[ AND upper_menu_id IS NULL ]]>
+                <![CDATA[ WHERE upper_menu_id IS NULL ]]>
             </isEmpty>
         <![CDATA[
             UNION ALL
@@ -185,10 +184,8 @@
                 LEVEL+1, PATH||a.menu_id
             FROM
                 tn_menu a, tnmenu b
-        ]]>
-            <include refid="menuDAO.selectMenuList.recursive.where" />
-        <![CDATA[
-            AND a.upper_menu_id = b.menu_id
+
+            WHERE a.upper_menu_id = b.menu_id
         )
         SELECT
             tnmenu.menu_id /* 시스템메뉴.메뉴_ID */, 
@@ -213,6 +210,9 @@
                 AND tnsysuser.CONFM_AT = 'Y'
                 AND tnsysuser.DELETE_AT = 'N' ) UPDUSR_ID 
         FROM tnmenu
+        ]]>
+        <include refid="menuDAO.selectMenuList.where" />
+        <![CDATA[
         ORDER BY path
         ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
@@ -235,12 +235,11 @@
                 1 as LEVEL, array[menu_id]::varchar as PATH
             FROM tn_menu
         ]]>
-            <include refid="menuDAO.selectMenuList.where" />
             <isNotEmpty property="SCH_MENU_S">
-                <![CDATA[ AND upper_menu_id = #UPPER_MENU_ID# ]]>
+                <![CDATA[ WHERE upper_menu_id = #UPPER_MENU_ID# ]]>
             </isNotEmpty>
             <isEmpty property="SCH_MENU_S">
-                <![CDATA[ AND upper_menu_id IS NULL ]]>
+                <![CDATA[ WHERE upper_menu_id IS NULL ]]>
             </isEmpty>
         <![CDATA[
             UNION ALL
@@ -250,14 +249,13 @@
                 LEVEL+1, PATH||a.menu_id
             FROM
                 tn_menu a, tnmenu b
-        ]]>
-            <include refid="menuDAO.selectMenuList.recursive.where" />
-        <![CDATA[
-            AND a.upper_menu_id = b.menu_id
+        
+            WHERE a.upper_menu_id = b.menu_id
         )
         SELECT COUNT(*) AS totCnt
         FROM tnmenu
         ]]>
+        <include refid="menuDAO.selectMenuList.where" />
 	</select>
 	
 	<select id="menuDAO.selectSysCodeList" resultClass="menuVO">
