@@ -108,13 +108,17 @@ $(function(){
 
     // sidDiv 띄우기
 	$("a.sideDiv").click(function(){
-		var sideDivHref = $(this).attr("href");
-		var sideDiv = sideDivHref.replace('#','');
-		$("#"+ sideDiv).addClass("on");
-
-		var height = $(sideDivHref + "> .sideDivContent" ).height();
-		$(sideDivHref + "> .sideDivContent" ).css("top","50%").css("margin-top", - height * 0.5 );
-		return false;
+		try{
+			var sideDivHref = $(this).attr("href");
+			var sideDiv = sideDivHref.replace('#','');
+			$("#"+ sideDiv).addClass("on");
+			
+			var height = $(sideDivHref + "> .sideDivContent" ).height();
+			$(sideDivHref + "> .sideDivContent" ).css("top","50%").css("margin-top", - height * 0.5 );
+			return false;
+		}catch(e){
+			console.log(e);
+		}
 	});
 
 	$("a.sideDivClose").click(function(){
