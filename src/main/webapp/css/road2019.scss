@@ -621,7 +621,22 @@ font-weight:normal !important;
 .txtbx { font-size: 16px;}
 .tc {text-align: center; border-top: solid 1px #ededed; padding-top: 10px;}
 .mt20 {margin-top: 20px;}
+.stbx {
+    h4 { background: none; color: #333; padding: 0;
+        .step {color: #000000; line-height: 1; height: 22px;}
+    }
+    div { padding: 0;border-radius:0}
+    #result {width: 100%; position: static;}
 
+}
+input#pointArea {width:15px; height: 28px;padding: 0 4px;}
+.stepbx {
+    li.wid100 {width: 100%;}
+}
+
+#step2_sel {
+    li {height: 87px;}
+}
+#step3 {width: 100%; padding-top: 10px;}
 #btab01 {
-    
 }
