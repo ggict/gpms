@@ -127,7 +127,7 @@
                         <a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_repairtargets','<c:url value="rpairtrgetslctn/intro.do"/>')"><span>보수대상선정</span></a>
                         <ul>
                             <li class="s10"><a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.fn_set_subMenu('sub_repairtargets','<c:url value="rpairtrgetslctn/intro.do"/>')">보수대상선정</a></li>
-                            <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmWindowOpen('유지보수 실적집계 엑셀출력', contextPath +'/cntrwk/setDownloadReport.do', 390, 150, true, null, 'center');">유지보수 실적집계</a></li>
+                            <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmWindowOpen('유지보수 실적집계 엑셀출력', contextPath +'/cntrwk/setDownloadReport.do', 390, 220, true, null, 'center');">유지보수 실적집계</a></li>
                         </ul>
                     </li>
                     <li class="f00">

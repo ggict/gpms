@@ -529,6 +529,10 @@ a.btnJsDivClose:hover, a.btnJsDivClose:focus { opacity: 1; background-color: #ed
 
 .tabcont.c10 .div9 .div_grid { overflow-x: auto; }
 
+#repairtargets { z-index: 101; }
+
+#bottom_cont { margin: 0; z-index: 120; }
+
 /* sideDiv */
 article.sideDiv, article.sideDiv.up { display: none; position: absolute; left: 45px; top: 0; z-index: 1000; padding: 10px; background: #fff; border: solid 1px rgba(0, 0, 0, 0.2); border-radius: 2px; box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); width: 300px; }
 
