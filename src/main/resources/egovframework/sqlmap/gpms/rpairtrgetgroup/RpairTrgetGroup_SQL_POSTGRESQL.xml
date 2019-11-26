@@ -1099,35 +1099,45 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
         <![CDATA[
             /* rpairTrgetGroupDAO.selectRpairRoutLenStats */
             /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록을 조회한다. (2019 신규)  */
-            select route_code, road_nm, sum(group_len) as group_len, count(group_cnt) as group_cnt
-            from (
+            SELECT
+                route_code,
+                road_nm,
+                SUM(GROUP_LEN) as group_len,
+                COUNT(GROUP_CNT) as group_cnt
+            FROM (
                 SELECT
-                    route.road_no as route_code,
-                    route.road_name as road_nm,
-                    COALESCE(rpairgroup.len,0) as group_len,
-                    rpairgroup.strtpt, rpairgroup.endpt
-                    ,rpairgroup.group_item_no as group_cnt
-                    ,rpairgroup.TRGET_SLCTN_NO
+                    route.ROAD_NO as ROUTE_CODE,
+                    route.ROAD_NAME as ROAD_NM,
+                    COALESCE(rpairgroup.LEN,0) as GROUP_LEN,
+                    rpairgroup.STRTPT,
+                    rpairgroup.ENDPT,
+                    pairgroup.GROUP_ITEM_NO as GROUP_CNT,
+                    Rpairgroup.TRGET_SLCTN_NO
                 FROM
-                tn_route_info route
-                left outer join
+                TN_ROUTE_INFO route
+                LEFT OUTER JOIN
                 (
-                    select tnrpairtrgetgroup.route_code,  tnrpairtrgetgroup.strtpt, tnrpairtrgetgroup.endpt,  tnrpairtrgetslctn.trget_slctn_no,
-                    tnrpairtrgetgroup.len,
-                    tnrpairtrgetgroup.group_item_no
-                    from TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-                    inner join tn_rpair_trget_slctn tnrpairtrgetslctn
-                    on tnrpairtrgetgroup.trget_slctn_no = tnrpairtrgetslctn.trget_slctn_no
-                    where tnrpairtrgetgroup.DELETE_AT = 'N'
+                    SELECT
+                        tnrpairtrgetgroup.ROUTE_CODE,
+                        tnrpairtrgetgroup.STRTPT,
+                        tnrpairtrgetgroup.ENDPT,
+                        tnrpairtrgetslctn.TRGET_SLCTN_NO,
+                        tnrpairtrgetgroup.LEN,
+                        tnrpairtrgetgroup.GROUP_ITEM_NO
+                    FROM TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                    INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                        ON tnrpairtrgetgroup.TRGET_SLCTN_NO = tnrpairtrgetslctn.TRGET_SLCTN_NO
+                    WHERE 1=1
+                    AND tnrpairtrgetgroup.DELETE_AT = 'N'
                     AND tnrpairtrgetgroup.USE_AT = 'Y'
-                    and tnrpairtrgetslctn.delete_at = 'N'
-                    and tnrpairtrgetslctn.use_at = 'Y'
-                    and tnrpairtrgetslctn.slctn_year = '2019'
+                    AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                    AND tnrpairtrgetslctn.USE_AT = 'Y'
+                    AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
                     )  rpairgroup
-                on route.road_no = rpairgroup.route_code
+                ON route.ROAD_NO = rpairgroup.ROUTE_CODE
             ) tbl
-            group by route_code,road_nm
-            order by route_code
+            GROUP BY ROUTE_CODE, ROAD_NM
+            ORDER BY ROUTE_CODE
         ]]>
     </select>
 
@@ -1135,35 +1145,45 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
         <![CDATA[
             /* rpairTrgetGroupDAO.selectRpairRoutLenStatsExcel */
             /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록 엑셀 다운로드 (2019 신규)  */
-            select route_code, road_nm, sum(group_len) as group_len, count(group_cnt) as group_cnt
-            from (
+            SELECT
+                route_code,
+                road_nm,
+                SUM(GROUP_LEN) as group_len,
+                COUNT(GROUP_CNT) as group_cnt
+            FROM (
                 SELECT
-                    route.road_no as route_code,
-                    route.road_name as road_nm,
-                    COALESCE(rpairgroup.len,0) as group_len,
-                    rpairgroup.strtpt, rpairgroup.endpt
-                    ,rpairgroup.group_item_no as group_cnt
-                    ,rpairgroup.TRGET_SLCTN_NO
+                    route.ROAD_NO as ROUTE_CODE,
+                    route.ROAD_NAME as ROAD_NM,
+                    COALESCE(rpairgroup.LEN,0) as GROUP_LEN,
+                    rpairgroup.STRTPT,
+                    rpairgroup.ENDPT,
+                    pairgroup.GROUP_ITEM_NO as GROUP_CNT,
+                    Rpairgroup.TRGET_SLCTN_NO
                 FROM
-                tn_route_info route
-                left outer join
+                TN_ROUTE_INFO route
+                LEFT OUTER JOIN
                 (
-                    select tnrpairtrgetgroup.route_code,  tnrpairtrgetgroup.strtpt, tnrpairtrgetgroup.endpt,  tnrpairtrgetslctn.trget_slctn_no,
-                    tnrpairtrgetgroup.len,
-                    tnrpairtrgetgroup.group_item_no
-                    from TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-                    inner join tn_rpair_trget_slctn tnrpairtrgetslctn
-                    on tnrpairtrgetgroup.trget_slctn_no = tnrpairtrgetslctn.trget_slctn_no
-                    where tnrpairtrgetgroup.DELETE_AT = 'N'
+                    SELECT
+                        tnrpairtrgetgroup.ROUTE_CODE,
+                        tnrpairtrgetgroup.STRTPT,
+                        tnrpairtrgetgroup.ENDPT,
+                        tnrpairtrgetslctn.TRGET_SLCTN_NO,
+                        tnrpairtrgetgroup.LEN,
+                        tnrpairtrgetgroup.GROUP_ITEM_NO
+                    FROM TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                    INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                        ON tnrpairtrgetgroup.TRGET_SLCTN_NO = tnrpairtrgetslctn.TRGET_SLCTN_NO
+                    WHERE 1=1
+                    AND tnrpairtrgetgroup.DELETE_AT = 'N'
                     AND tnrpairtrgetgroup.USE_AT = 'Y'
-                    and tnrpairtrgetslctn.delete_at = 'N'
-                    and tnrpairtrgetslctn.use_at = 'Y'
-                    and tnrpairtrgetslctn.slctn_year = '2019'
+                    AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                    AND tnrpairtrgetslctn.USE_AT = 'Y'
+                    AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
                     )  rpairgroup
-                on route.road_no = rpairgroup.route_code
+                ON route.ROAD_NO = rpairgroup.ROUTE_CODE
             ) tbl
-            group by route_code,road_nm
-            order by route_code
+            GROUP BY ROUTE_CODE, ROAD_NM
+            ORDER BY ROUTE_CODE
         ]]>
     </select>
 
@@ -1171,45 +1191,58 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
         <![CDATA[
             /* rpairTrgetGroupDAO.selectRpairDeptLenStats */
             /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 관리기관별 통계 목록을 조회한다. (2019 신규)  */
-            with tbl as (
-            select dept_code, dept_nm, sum(group_len) as group_len, count(group_cnt) as group_cnt
-            from (
+            WITH tbl as (
                 SELECT
-                    dept.dept_code as dept_code,
-                    dept.dept_nm as dept_nm,
-                    COALESCE(rpairgroup.len,0) as group_len,
-                    rpairgroup.strtpt, rpairgroup.endpt
-                    ,rpairgroup.group_item_no as group_cnt
-                    ,rpairgroup.TRGET_SLCTN_NO
-                FROM
-                (   SELECT
-                    tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
-                    , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
-                FROM TC_DEPT tcdept
-                WHERE tcdept.DEPT_CODE IN ('6411399','6411799')
-                    ) dept
-                left outer join
+                    DEPT_CODE,
+                    DEPT_NM,
+                    SUM(GROUP_LEN) as GROUP_LEN,
+                    COUNT(GROUP_CNT) as GROUP_CNT
+                FROM 
                 (
-                    select tnrpairtrgetgroup.dept_code,  tnrpairtrgetgroup.strtpt, tnrpairtrgetgroup.endpt,  tnrpairtrgetslctn.trget_slctn_no,
-                    tnrpairtrgetgroup.len,
-                    tnrpairtrgetgroup.group_item_no
-                    from TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-                    inner join tn_rpair_trget_slctn tnrpairtrgetslctn
-                    on tnrpairtrgetgroup.trget_slctn_no = tnrpairtrgetslctn.trget_slctn_no
-                    where tnrpairtrgetgroup.DELETE_AT = 'N'
-                    AND tnrpairtrgetgroup.USE_AT = 'Y'
-                    and tnrpairtrgetslctn.delete_at = 'N'
-                    and tnrpairtrgetslctn.use_at = 'Y'
-                    and tnrpairtrgetslctn.slctn_year = '2019'
-                    )  rpairgroup
-                on dept.DEPT_CODE = rpairgroup.dept_code
-            ) tbl
-            group by dept_code, dept_nm
+                    SELECT
+                        dept.DEPT_CODE as DEPT_CODE,
+                        dept.DEPT_NM as DEPT_NM,
+                        COALESCE(rpairgroup.LEN,0) as GROUP_LEN,
+                        rpairgroup.STRTPT,
+                        rpairgroup.ENDPT,
+                        rpairgroup.GROUP_ITEM_NO as GROUP_CNT,
+                        rpairgroup.TRGET_SLCTN_NO
+                    FROM
+                    (
+                        SELECT
+                            tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
+                            , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
+                        FROM TC_DEPT tcdept
+                        WHERE tcdept.DEPT_CODE IN ('6411399','6411799')
+                    ) dept
+                    LEFT OUTER JOIN
+                    (
+                        SELECT
+                            tnrpairtrgetgroup.DEPT_CODE,
+                            tnrpairtrgetgroup.STRTPT,
+                            tnrpairtrgetgroup.ENDPT,
+                            tnrpairtrgetslctn.TRGET_SLCTN_NO,
+                            tnrpairtrgetgroup.LEN,
+                            tnrpairtrgetgroup.GROUP_ITEM_NO
+                        FROM
+                            TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                        INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                            ON tnrpairtrgetgroup.TRGET_SLCTN_NO = tnrpairtrgetslctn.TRGET_SLCTN_NO
+                        WHERE 1=1
+                            AND tnrpairtrgetgroup.DELETE_AT = 'N'
+                            AND tnrpairtrgetgroup.USE_AT = 'Y'
+                            AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                            AND tnrpairtrgetslctn.USE_AT = 'Y'
+                            AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                    ) rpairgroup
+                    ON dept.DEPT_CODE = rpairgroup.DEPT_CODE
+                ) tbl
+                GROUP BY DEPT_CODE, DEPT_NM
             )
-            select dept_code, dept_nm, group_len, group_cnt from tbl
-            union all
-            select '9999999', '경기도', sum(group_len), sum(group_cnt) from tbl
-            ORDER BY dept_code desc
+            SELECT dept_code, dept_nm, group_len, group_cnt FROM tbl
+            UNION ALL
+            SELECT '9999999', '경기도', SUM(group_len), SUM(group_cnt) FROM tbl
+            ORDER BY DEPT_CODE DESC
         ]]>
     </select>
 
@@ -1217,45 +1250,58 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
         <![CDATA[
             /* rpairTrgetGroupDAO.selectRpairDeptLenStatsExcel */
             /* 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 관리기관별 통계 목록 엑셀 다운로드 (2019 신규)  */
-            with tbl as (
-            select dept_code, dept_nm, sum(group_len) as group_len, count(group_cnt) as group_cnt
-            from (
+            WITH tbl as (
                 SELECT
-                    dept.dept_code as dept_code,
-                    dept.dept_nm as dept_nm,
-                    COALESCE(rpairgroup.len,0) as group_len,
-                    rpairgroup.strtpt, rpairgroup.endpt
-                    ,rpairgroup.group_item_no as group_cnt
-                    ,rpairgroup.TRGET_SLCTN_NO
-                FROM
-                (   SELECT
-                    tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
-                    , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
-                FROM TC_DEPT tcdept
-                WHERE tcdept.DEPT_CODE IN ('6411399','6411799')
-                    ) dept
-                left outer join
+                    DEPT_CODE,
+                    DEPT_NM,
+                    SUM(GROUP_LEN) as GROUP_LEN,
+                    COUNT(GROUP_CNT) as GROUP_CNT
+                FROM 
                 (
-                    select tnrpairtrgetgroup.dept_code,  tnrpairtrgetgroup.strtpt, tnrpairtrgetgroup.endpt,  tnrpairtrgetslctn.trget_slctn_no,
-                    tnrpairtrgetgroup.len,
-                    tnrpairtrgetgroup.group_item_no
-                    from TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-                    inner join tn_rpair_trget_slctn tnrpairtrgetslctn
-                    on tnrpairtrgetgroup.trget_slctn_no = tnrpairtrgetslctn.trget_slctn_no
-                    where tnrpairtrgetgroup.DELETE_AT = 'N'
-                    AND tnrpairtrgetgroup.USE_AT = 'Y'
-                    and tnrpairtrgetslctn.delete_at = 'N'
-                    and tnrpairtrgetslctn.use_at = 'Y'
-                    and tnrpairtrgetslctn.slctn_year = '2019'
-                    )  rpairgroup
-                on dept.DEPT_CODE = rpairgroup.dept_code
-            ) tbl
-            group by dept_code, dept_nm
+                    SELECT
+                        dept.DEPT_CODE as DEPT_CODE,
+                        dept.DEPT_NM as DEPT_NM,
+                        COALESCE(rpairgroup.LEN,0) as GROUP_LEN,
+                        rpairgroup.STRTPT,
+                        rpairgroup.ENDPT,
+                        rpairgroup.GROUP_ITEM_NO as GROUP_CNT,
+                        rpairgroup.TRGET_SLCTN_NO
+                    FROM
+                    (
+                        SELECT
+                            tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
+                            , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
+                        FROM TC_DEPT tcdept
+                        WHERE tcdept.DEPT_CODE IN ('6411399','6411799')
+                    ) dept
+                    LEFT OUTER JOIN
+                    (
+                        SELECT
+                            tnrpairtrgetgroup.DEPT_CODE,
+                            tnrpairtrgetgroup.STRTPT,
+                            tnrpairtrgetgroup.ENDPT,
+                            tnrpairtrgetslctn.TRGET_SLCTN_NO,
+                            tnrpairtrgetgroup.LEN,
+                            tnrpairtrgetgroup.GROUP_ITEM_NO
+                        FROM
+                            TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                        INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                            ON tnrpairtrgetgroup.TRGET_SLCTN_NO = tnrpairtrgetslctn.TRGET_SLCTN_NO
+                        WHERE 1=1
+                            AND tnrpairtrgetgroup.DELETE_AT = 'N'
+                            AND tnrpairtrgetgroup.USE_AT = 'Y'
+                            AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                            AND tnrpairtrgetslctn.USE_AT = 'Y'
+                            AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                    ) rpairgroup
+                    ON dept.DEPT_CODE = rpairgroup.DEPT_CODE
+                ) tbl
+                GROUP BY DEPT_CODE, DEPT_NM
             )
-            select dept_code, dept_nm, group_len, group_cnt from tbl
-            union all
-            select '9999999', '경기도', sum(group_len), sum(group_cnt) from tbl
-            ORDER BY dept_code desc
+            SELECT dept_code, dept_nm, group_len, group_cnt FROM tbl
+            UNION ALL
+            SELECT '9999999', '경기도', SUM(group_len), SUM(group_cnt) FROM tbl
+            ORDER BY DEPT_CODE DESC
         ]]>
     </select>
 </sqlMap>

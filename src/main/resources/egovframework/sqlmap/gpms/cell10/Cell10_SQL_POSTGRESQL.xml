@@ -1724,19 +1724,12 @@ select '전체', '', '', sum(total_l), sum(sum_l), sum(sub_sum_l), sum(track2_le
         </select>
 
     <select id="cell10DAO.selectStatsYearList"  parameterClass="cell10VO" resultClass="cell10VO">
-    <![CDATA[
+        <![CDATA[
             /* cell10DAO.selectStatsYearList */
             /* 통계 > 노선현황 > 검색조건_통계연도조회 */
-              SELECT  STATS_YEAR /*통계연도*/
-               FROM ( SELECT MAX(STATS_YEAR) AS STATS_YEAR FROM UNI_ROUTE_ST /*국토부총괄 노선별통계*/
-                       UNION
-                      SELECT MAX(STATS_YEAR) AS STATS_YEAR  FROM UNI_MGN_ST /*국토부총괄 관리기관별통계*/
-                       UNION
-                      SELECT MAX(STATS_YEAR) AS STATS_YEAR FROM UNI_ADM_ST /*국토부총괄 행정구역별통계*/ ) as sub_uni
-            ORDER BY STATS_YEAR
-
-    ]]>
-        </select>
+            SELECT generate_series(extract(year from now())::int,  2017,  -1 ) as STATS_YEAR;    /* (시작연도, 종료연도, 증가값) */ 
+        ]]>
+    </select>
 
     <select id="cell10DAO.selectCellList" parameterClass="cell10VO" resultClass="cell10VO">
     <![CDATA[

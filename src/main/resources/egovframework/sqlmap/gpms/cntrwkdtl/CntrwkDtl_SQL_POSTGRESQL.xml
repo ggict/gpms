@@ -2192,248 +2192,268 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
 		) AS SUB_CNTRWK
         GROUP BY DEPT_NM
 	</select>
-	
-
 
     <select id="cntrwkDtlDAO.selectCntrwkRoutLenNewStats"  resultClass="hashmap">
         <![CDATA[       
-                /* cntrwkDtlDAO.selectCntrwkRoutLenNewStats */
-                /* 포장공사이력2019노선별통계정보 데이터조회 */
-
+            /* cntrwkDtlDAO.selectCntrwkRoutLenNewStats */
+            /* 포장공사이력2019노선별통계정보 데이터조회 */
+            SELECT
+                route.ROAD_NO as route_code,
+                route.ROAD_NAME as road_nm,
+                COALESCE(rpairgroup.RPAIR_LEN,0) as rpair_len,
+                COALESCE(rpairgroup.RPAIR_CNT,0) as rpair_cnt,
+                COALESCE(cntrwkdtl.ROAD_LEN, 0) as cntrwk_len,
+                COALESCE(cntrwkdtl.ROAD_CNT, 0) as cntrwk_cnt
+            FROM
+                TN_ROUTE_INFO route
+            LEFT OUTER JOIN
+            (
                 SELECT
-                    route.road_no as route_code,
-                    route.road_name as road_nm,
-                    COALESCE(rpairgroup.rpair_len,0) as rpair_len,
-                    COALESCE(rpairgroup.rpair_cnt,0) as rpair_cnt,
-                coalesce(cntrwkdtl.road_len, 0) as cntrwk_len,
-                coalesce(cntrwkdtl.road_cnt, 0) as cntrwk_cnt
+                    tnrpairtrgetgroup.ROUTE_CODE, 
+                    SUM(COALESCE(tnrpairtrgetgroup.LEN, 0)) as RPAIR_LEN,
+                    COUNT(tnrpairtrgetgroup.GROUP_ITEM_NO) as RPAIR_CNT
                 FROM
-                tn_route_info route
-                left outer join
-                (
-                    select tnrpairtrgetgroup.route_code, 
-                    sum(coalesce(tnrpairtrgetgroup.len, 0)) as rpair_len,
-                    count(tnrpairtrgetgroup.group_item_no) as rpair_cnt
-                    from TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-                    inner join tn_rpair_trget_slctn tnrpairtrgetslctn
-                    on tnrpairtrgetgroup.trget_slctn_no = tnrpairtrgetslctn.trget_slctn_no
-                    where tnrpairtrgetgroup.DELETE_AT = 'N'
+                    TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                    ON tnrpairtrgetgroup.TRGET_SLCTN_NO = tnrpairtrgetslctn.TRGET_SLCTN_NO
+                WHERE 1=1
+                    AND tnrpairtrgetgroup.DELETE_AT = 'N'
                     AND tnrpairtrgetgroup.USE_AT = 'Y'
-                    and tnrpairtrgetslctn.delete_at = 'N'
-                    and tnrpairtrgetslctn.use_at = 'Y'
-                    and tnrpairtrgetslctn.slctn_year = '2019'
-                    group by tnrpairtrgetgroup.route_code
-                    )  rpairgroup
-                on route.road_no = rpairgroup.route_code
-                left outer join
-                (
-                    select
+                    AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                    AND tnrpairtrgetslctn.USE_AT = 'Y'
+                    AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                GROUP BY
+                    tnrpairtrgetgroup.ROUTE_CODE
+            ) rpairgroup
+            ON route.ROAD_NO = rpairgroup.ROUTE_CODE
+            LEFT OUTER JOIN
+            (
+                SELECT
                     tncntrwkdtl.ROUTE_CODE,
-                    count(cellinfo.pav_cell_id) as road_cnt,
-                    sum(coalesce(cell10.road_l, 0)) as road_len
-                        FROM TN_CNTRWK tncntrwk
-                            INNER JOIN TN_CNTRWK_DTL tncntrwkdtl
-                        ON tncntrwk.CNTRWK_ID = tncntrwkdtl.CNTRWK_ID
-                    inner join tn_cntrwk_cell_info cellinfo
-                    on tncntrwkdtl.detail_cntrwk_id = cellinfo.detail_cntrwk_id
-            inner join cell_10 cell10
-                    on cellinfo.pav_cell_id = cell10.cell_id
-                        WHERE 1=1                   
-                                              AND tncntrwk.USE_AT = 'Y'
-                          AND tncntrwkdtl.USE_AT = 'Y'
-                          AND tncntrwk.DELETE_AT = 'N'
-                          AND tncntrwkdtl.DELETE_AT = 'N'
-                    group by tncntrwkdtl.route_code
-                ) cntrwkdtl
-                on route.road_no = cntrwkdtl.route_code
-    order by route.road_no asc
+                    COUNT(cellinfo.PAV_CELL_ID) as ROAD_CNT,
+                    SUM(COALESCE(cell10.ROAD_L, 0)) as ROAD_LEN
+                FROM
+                    TN_CNTRWK tncntrwk
+                INNER JOIN TN_CNTRWK_DTL tncntrwkdtl
+                    ON tncntrwk.CNTRWK_ID = tncntrwkdtl.CNTRWK_ID
+                INNER JOIN TN_CNTRWK_CELL_INFO cellinfo
+                    ON tncntrwkdtl.DETAIL_CNTRWK_ID = cellinfo.DETAIL_CNTRWK_ID
+                INNER JOIN CELL_10 cell10
+                    ON cellinfo.PAV_CELL_ID = cell10.CELL_ID
+                WHERE 1=1                   
+                    AND tncntrwk.USE_AT = 'Y'
+                    AND tncntrwkdtl.USE_AT = 'Y'
+                    AND tncntrwk.DELETE_AT = 'N'
+                    AND tncntrwkdtl.DELETE_AT = 'N'
+                GROUP BY
+                    tncntrwkdtl.ROUTE_CODE
+            ) cntrwkdtl
+            ON route.ROAD_NO = cntrwkdtl.ROUTE_CODE
+            ORDER BY route.ROAD_NO ASC
         ]]>
     </select>
 
     <select id="cntrwkDtlDAO.cntrwkRoutLenNewStatsExcel"  resultClass="hashmap">
         <![CDATA[       
-                /* cntrwkDtlDAO.cntrwkRoutLenNewStatsExcel */
-                /* 포장공사이력2019노선별통계정보 엑셀조회 */
-
+            /* cntrwkDtlDAO.cntrwkRoutLenNewStatsExcel */
+            /* 포장공사이력2019노선별통계정보 엑셀조회 */
+            SELECT
+                route.ROAD_NO as route_code,
+                route.ROAD_NAME as road_nm,
+                COALESCE(rpairgroup.RPAIR_LEN,0) as rpair_len,
+                COALESCE(rpairgroup.RPAIR_CNT,0) as rpair_cnt,
+                COALESCE(cntrwkdtl.ROAD_LEN, 0) as cntrwk_len,
+                COALESCE(cntrwkdtl.ROAD_CNT, 0) as cntrwk_cnt
+            FROM
+                TN_ROUTE_INFO route
+            LEFT OUTER JOIN
+            (
                 SELECT
-                    route.road_no as route_code,
-                    route.road_name as road_nm,
-                    COALESCE(rpairgroup.rpair_len,0) as rpair_len,
-                    COALESCE(rpairgroup.rpair_cnt,0) as rpair_cnt,
-                coalesce(cntrwkdtl.road_len, 0) as cntrwk_len,
-                coalesce(cntrwkdtl.road_cnt, 0) as cntrwk_cnt
+                    tnrpairtrgetgroup.ROUTE_CODE, 
+                    SUM(COALESCE(tnrpairtrgetgroup.LEN, 0)) as RPAIR_LEN,
+                    COUNT(tnrpairtrgetgroup.GROUP_ITEM_NO) as RPAIR_CNT
                 FROM
-                tn_route_info route
-                left outer join
-                (
-                    select tnrpairtrgetgroup.route_code, 
-                    sum(coalesce(tnrpairtrgetgroup.len, 0)) as rpair_len,
-                    count(tnrpairtrgetgroup.group_item_no) as rpair_cnt
-                    from TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-                    inner join tn_rpair_trget_slctn tnrpairtrgetslctn
-                    on tnrpairtrgetgroup.trget_slctn_no = tnrpairtrgetslctn.trget_slctn_no
-                    where tnrpairtrgetgroup.DELETE_AT = 'N'
+                    TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                    ON tnrpairtrgetgroup.TRGET_SLCTN_NO = tnrpairtrgetslctn.TRGET_SLCTN_NO
+                WHERE 1=1
+                    AND tnrpairtrgetgroup.DELETE_AT = 'N'
                     AND tnrpairtrgetgroup.USE_AT = 'Y'
-                    and tnrpairtrgetslctn.delete_at = 'N'
-                    and tnrpairtrgetslctn.use_at = 'Y'
-                    and tnrpairtrgetslctn.slctn_year = '2019'
-                    group by tnrpairtrgetgroup.route_code
-                    )  rpairgroup
-                on route.road_no = rpairgroup.route_code
-                left outer join
-                (
-                    select
+                    AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                    AND tnrpairtrgetslctn.USE_AT = 'Y'
+                    AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                GROUP BY
+                    tnrpairtrgetgroup.ROUTE_CODE
+            ) rpairgroup
+            ON route.ROAD_NO = rpairgroup.ROUTE_CODE
+            LEFT OUTER JOIN
+            (
+                SELECT
                     tncntrwkdtl.ROUTE_CODE,
-                    count(cellinfo.pav_cell_id) as road_cnt,
-                    sum(coalesce(cell10.road_l, 0)) as road_len
-                        FROM TN_CNTRWK tncntrwk
-                            INNER JOIN TN_CNTRWK_DTL tncntrwkdtl
-                        ON tncntrwk.CNTRWK_ID = tncntrwkdtl.CNTRWK_ID
-                    inner join tn_cntrwk_cell_info cellinfo
-                    on tncntrwkdtl.detail_cntrwk_id = cellinfo.detail_cntrwk_id
-            inner join cell_10 cell10
-                    on cellinfo.pav_cell_id = cell10.cell_id
-                        WHERE 1=1                   
-                                              AND tncntrwk.USE_AT = 'Y'
-                          AND tncntrwkdtl.USE_AT = 'Y'
-                          AND tncntrwk.DELETE_AT = 'N'
-                          AND tncntrwkdtl.DELETE_AT = 'N'
-                    group by tncntrwkdtl.route_code
-                ) cntrwkdtl
-                on route.road_no = cntrwkdtl.route_code
-    order by route.road_no asc
+                    COUNT(cellinfo.PAV_CELL_ID) as ROAD_CNT,
+                    SUM(COALESCE(cell10.ROAD_L, 0)) as ROAD_LEN
+                FROM
+                    TN_CNTRWK tncntrwk
+                INNER JOIN TN_CNTRWK_DTL tncntrwkdtl
+                    ON tncntrwk.CNTRWK_ID = tncntrwkdtl.CNTRWK_ID
+                INNER JOIN TN_CNTRWK_CELL_INFO cellinfo
+                    ON tncntrwkdtl.DETAIL_CNTRWK_ID = cellinfo.DETAIL_CNTRWK_ID
+                INNER JOIN CELL_10 cell10
+                    ON cellinfo.PAV_CELL_ID = cell10.CELL_ID
+                WHERE 1=1                   
+                    AND tncntrwk.USE_AT = 'Y'
+                    AND tncntrwkdtl.USE_AT = 'Y'
+                    AND tncntrwk.DELETE_AT = 'N'
+                    AND tncntrwkdtl.DELETE_AT = 'N'
+                GROUP BY
+                    tncntrwkdtl.ROUTE_CODE
+            ) cntrwkdtl
+            ON route.ROAD_NO = cntrwkdtl.ROUTE_CODE
+            ORDER BY route.ROAD_NO ASC
         ]]>
     </select>
 
     <select id="cntrwkDtlDAO.selectCntrwkDeptLenNewStats"  resultClass="hashmap">
         <![CDATA[       
-                /* cntrwkDtlDAO.selectCntrwkDeptLenNewStats */
-                /* 포장공사이력2019관리기관별통계정보 데이터조회 */
-with tbl as (
+            /* cntrwkDtlDAO.selectCntrwkDeptLenNewStats */
+            /* 포장공사이력2019관리기관별통계정보 데이터조회 */
+            WITH tbl AS (
                 SELECT
                     dept.DEPT_CODE as DEPT_CODE,
                     dept.DEPT_NM as DEPT_NM,
-                    COALESCE(rpairgroup.rpair_len,0) as rpair_len,
-                    COALESCE(rpairgroup.rpair_cnt,0) as rpair_cnt,
-                coalesce(cntrwkdtl.road_len, 0) as cntrwk_len,
-                coalesce(cntrwkdtl.road_cnt, 0) as cntrwk_cnt
+                    COALESCE(rpairgroup.RPAIR_LEN,0) as RPAIR_LEN,
+                    COALESCE(rpairgroup.RPAIR_CNT,0) as RPAIR_CNT,
+                    COALESCE(cntrwkdtl.ROAD_LEN, 0) as CNTRWK_LEN,
+                    COALESCE(cntrwkdtl.ROAD_CNT, 0) as CNTRWK_CNT
                 FROM
-                (   SELECT
-                    tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
-                    , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
-                FROM TC_DEPT tcdept
-                WHERE tcdept.DEPT_CODE IN ('6411399','6411799')
-                    ) dept
-                left outer join
                 (
-                    select tnrpairtrgetgroup.dept_code, 
-                    sum(coalesce(tnrpairtrgetgroup.len, 0)) as rpair_len,
-                    count(tnrpairtrgetgroup.group_item_no) as rpair_cnt
-                    from TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-                    inner join tn_rpair_trget_slctn tnrpairtrgetslctn
-                    on tnrpairtrgetgroup.trget_slctn_no = tnrpairtrgetslctn.trget_slctn_no
-                    where tnrpairtrgetgroup.DELETE_AT = 'N'
-                    AND tnrpairtrgetgroup.USE_AT = 'Y'
-                    and tnrpairtrgetslctn.delete_at = 'N'
-                    and tnrpairtrgetslctn.use_at = 'Y'
-                    and tnrpairtrgetslctn.slctn_year = '2019'
-                    group by tnrpairtrgetgroup.dept_code
-                    )  rpairgroup
-                on dept.dept_code = rpairgroup.dept_code
-                left outer join
+                    SELECT
+                        tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
+                        , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
+                    FROM
+                        TC_DEPT tcdept
+                    WHERE
+                        tcdept.DEPT_CODE IN ('6411399','6411799')
+                ) dept
+                LEFT OUTER JOIN
                 (
-                    select
-                    tncntrwk.dept_code,
-                    count(cellinfo.pav_cell_id) as road_cnt,
-                    sum(coalesce(cell10.road_l, 0)) as road_len
-                        FROM TN_CNTRWK tncntrwk
-                            INNER JOIN TN_CNTRWK_DTL tncntrwkdtl
+                    SELECT
+                        tnrpairtrgetgroup.DEPT_CODE,
+                        SUM(COALESCE(tnrpairtrgetgroup.LEN, 0)) as RPAIR_LEN,
+                        COUNT(tnrpairtrgetgroup.GROUP_ITEM_NO) as RPAIR_CNT
+                    FROM
+                        TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                    INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                        ON tnrpairtrgetgroup.TRGET_SLCTN_NO = tnrpairtrgetslctn.TRGET_SLCTN_NO
+                    WHERE 1=1
+                        AND tnrpairtrgetgroup.DELETE_AT = 'N'
+                        AND tnrpairtrgetgroup.USE_AT = 'Y'
+                        AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                        AND tnrpairtrgetslctn.USE_AT = 'Y'
+                        AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                    GROUP BY
+                        tnrpairtrgetgroup.DEPT_CODE
+                ) rpairgroup
+                ON dept.DEPT_CODE = rpairgroup.DEPT_CODE
+                LEFT OUTER JOIN
+                (
+                    SELECT
+                        tncntrwk.DEPT_CODE,
+                        COUNT(cellinfo.PAV_CELL_ID) as ROAD_CNT,
+                        SUM(COALESCE(cell10.ROAD_L, 0)) as ROAD_LEN
+                    FROM
+                        TN_CNTRWK tncntrwk
+                    INNER JOIN TN_CNTRWK_DTL tncntrwkdtl
                         ON tncntrwk.CNTRWK_ID = tncntrwkdtl.CNTRWK_ID
-                    inner join tn_cntrwk_cell_info cellinfo
-                    on tncntrwkdtl.detail_cntrwk_id = cellinfo.detail_cntrwk_id
-            inner join cell_10 cell10
-                    on cellinfo.pav_cell_id = cell10.cell_id
-                        WHERE 1=1                   
-                                              AND tncntrwk.USE_AT = 'Y'
-                          AND tncntrwkdtl.USE_AT = 'Y'
-                          AND tncntrwk.DELETE_AT = 'N'
-                          AND tncntrwkdtl.DELETE_AT = 'N'
-                    group by tncntrwk.dept_code
+                    INNER JOIN TN_CNTRWK_CELL_INFO cellinfo
+                        ON tncntrwkdtl.DETAIL_CNTRWK_ID = cellinfo.DETAIL_CNTRWK_ID
+                    INNER JOIN CELL_10 cell10
+                        ON cellinfo.PAV_CELL_ID = cell10.CELL_ID
+                    WHERE 1=1
+                        AND tncntrwk.USE_AT = 'Y'
+                        AND tncntrwkdtl.USE_AT = 'Y'
+                        AND tncntrwk.DELETE_AT = 'N'
+                        AND tncntrwkdtl.DELETE_AT = 'N'
+                    GROUP BY tncntrwk.DEPT_CODE
                 ) cntrwkdtl
-                on dept.dept_code = cntrwkdtl.dept_code
-    )
-    
-                select dept_code, dept_nm, rpair_len, cntrwk_len from tbl
-            union all
-            select '9999999', '경기도', sum(rpair_len), sum(cntrwk_len) from tbl
-            ORDER BY dept_code desc
-    
+                ON dept.DEPT_CODE = cntrwkdtl.DEPT_CODE
+            )
+            SELECT dept_code, dept_nm, rpair_len, cntrwk_len FROM tbl
+            UNION ALL
+            SELECT '9999999', '경기도', SUM(rpair_len), SUM(cntrwk_len) FROM tbl       
+            ORDER BY dept_code DESC     /* 경기도 - 북부도로과 - 도로건설과 순 */
         ]]>
     </select>
 
     <select id="cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel"  resultClass="hashmap">
         <![CDATA[       
-                /* cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel */
-                /* 포장공사이력2019관리기관별통계정보 엑셀조회 */
-with tbl as (
+            /* cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel */
+            /* 포장공사이력2019관리기관별통계정보 엑셀조회 */
+            WITH tbl AS (
                 SELECT
                     dept.DEPT_CODE as DEPT_CODE,
                     dept.DEPT_NM as DEPT_NM,
-                    COALESCE(rpairgroup.rpair_len,0) as rpair_len,
-                    COALESCE(rpairgroup.rpair_cnt,0) as rpair_cnt,
-                coalesce(cntrwkdtl.road_len, 0) as cntrwk_len,
-                coalesce(cntrwkdtl.road_cnt, 0) as cntrwk_cnt
+                    COALESCE(rpairgroup.RPAIR_LEN,0) as RPAIR_LEN,
+                    COALESCE(rpairgroup.RPAIR_CNT,0) as RPAIR_CNT,
+                    COALESCE(cntrwkdtl.ROAD_LEN, 0) as CNTRWK_LEN,
+                    COALESCE(cntrwkdtl.ROAD_CNT, 0) as CNTRWK_CNT
                 FROM
-                (   SELECT
-                    tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
-                    , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
-                FROM TC_DEPT tcdept
-                WHERE tcdept.DEPT_CODE IN ('6411399','6411799')
-                    ) dept
-                left outer join
                 (
-                    select tnrpairtrgetgroup.dept_code, 
-                    sum(coalesce(tnrpairtrgetgroup.len, 0)) as rpair_len,
-                    count(tnrpairtrgetgroup.group_item_no) as rpair_cnt
-                    from TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
-                    inner join tn_rpair_trget_slctn tnrpairtrgetslctn
-                    on tnrpairtrgetgroup.trget_slctn_no = tnrpairtrgetslctn.trget_slctn_no
-                    where tnrpairtrgetgroup.DELETE_AT = 'N'
-                    AND tnrpairtrgetgroup.USE_AT = 'Y'
-                    and tnrpairtrgetslctn.delete_at = 'N'
-                    and tnrpairtrgetslctn.use_at = 'Y'
-                    and tnrpairtrgetslctn.slctn_year = '2019'
-                    group by tnrpairtrgetgroup.dept_code
-                    )  rpairgroup
-                on dept.dept_code = rpairgroup.dept_code
-                left outer join
+                    SELECT
+                        tcdept.DEPT_CODE /* 부서_코드.부서_코드 */
+                        , tcdept.LOWEST_DEPT_NM DEPT_NM/* 부서_코드.최하위_부서_명 */
+                    FROM
+                        TC_DEPT tcdept
+                    WHERE
+                        tcdept.DEPT_CODE IN ('6411399','6411799')
+                ) dept
+                LEFT OUTER JOIN
                 (
-                    select
-                    tncntrwk.dept_code,
-                    count(cellinfo.pav_cell_id) as road_cnt,
-                    sum(coalesce(cell10.road_l, 0)) as road_len
-                        FROM TN_CNTRWK tncntrwk
-                            INNER JOIN TN_CNTRWK_DTL tncntrwkdtl
+                    SELECT
+                        tnrpairtrgetgroup.DEPT_CODE,
+                        SUM(COALESCE(tnrpairtrgetgroup.LEN, 0)) as RPAIR_LEN,
+                        COUNT(tnrpairtrgetgroup.GROUP_ITEM_NO) as RPAIR_CNT
+                    FROM
+                        TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                    INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                        ON tnrpairtrgetgroup.TRGET_SLCTN_NO = tnrpairtrgetslctn.TRGET_SLCTN_NO
+                    WHERE 1=1
+                        AND tnrpairtrgetgroup.DELETE_AT = 'N'
+                        AND tnrpairtrgetgroup.USE_AT = 'Y'
+                        AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                        AND tnrpairtrgetslctn.USE_AT = 'Y'
+                        AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                    GROUP BY
+                        tnrpairtrgetgroup.DEPT_CODE
+                ) rpairgroup
+                ON dept.DEPT_CODE = rpairgroup.DEPT_CODE
+                LEFT OUTER JOIN
+                (
+                    SELECT
+                        tncntrwk.DEPT_CODE,
+                        COUNT(cellinfo.PAV_CELL_ID) as ROAD_CNT,
+                        SUM(COALESCE(cell10.ROAD_L, 0)) as ROAD_LEN
+                    FROM
+                        TN_CNTRWK tncntrwk
+                    INNER JOIN TN_CNTRWK_DTL tncntrwkdtl
                         ON tncntrwk.CNTRWK_ID = tncntrwkdtl.CNTRWK_ID
-                    inner join tn_cntrwk_cell_info cellinfo
-                    on tncntrwkdtl.detail_cntrwk_id = cellinfo.detail_cntrwk_id
-            inner join cell_10 cell10
-                    on cellinfo.pav_cell_id = cell10.cell_id
-                        WHERE 1=1                   
-                                              AND tncntrwk.USE_AT = 'Y'
-                          AND tncntrwkdtl.USE_AT = 'Y'
-                          AND tncntrwk.DELETE_AT = 'N'
-                          AND tncntrwkdtl.DELETE_AT = 'N'
-                    group by tncntrwk.dept_code
+                    INNER JOIN TN_CNTRWK_CELL_INFO cellinfo
+                        ON tncntrwkdtl.DETAIL_CNTRWK_ID = cellinfo.DETAIL_CNTRWK_ID
+                    INNER JOIN CELL_10 cell10
+                        ON cellinfo.PAV_CELL_ID = cell10.CELL_ID
+                    WHERE 1=1
+                        AND tncntrwk.USE_AT = 'Y'
+                        AND tncntrwkdtl.USE_AT = 'Y'
+                        AND tncntrwk.DELETE_AT = 'N'
+                        AND tncntrwkdtl.DELETE_AT = 'N'
+                    GROUP BY tncntrwk.DEPT_CODE
                 ) cntrwkdtl
-                on dept.dept_code = cntrwkdtl.dept_code
-    )
-    
-                select dept_code, dept_nm, rpair_len, cntrwk_len from tbl
-            union all
-            select '9999999', '경기도', sum(rpair_len), sum(cntrwk_len) from tbl
-            ORDER BY dept_code desc
-    
+                ON dept.DEPT_CODE = cntrwkdtl.DEPT_CODE
+            )
+            SELECT dept_code, dept_nm, rpair_len, cntrwk_len FROM tbl
+            UNION ALL
+            SELECT '9999999', '경기도', SUM(rpair_len), SUM(cntrwk_len) FROM tbl       
+            ORDER BY dept_code DESC     /* 경기도 - 북부도로과 - 도로건설과 순 */
         ]]>
     </select>
 
