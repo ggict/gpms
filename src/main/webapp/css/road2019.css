@@ -726,9 +726,9 @@ input#pointArea { width: 40px; height: 28px; padding: 0 4px; }
 
 #step3 { width: 100%; padding-top: 10px; }
 
-body.research { background: url(../images/roadBg.jpg) no-repeat center; background-size: cover; }
+body.research .srvyImageB { width: 100%; }
 
-.imageSample { color: #fff; display: inline-block; }
+body.research #srvyImage { position: absolute; left: 0; top: 0; width: 100%; }
 
 .ui-datepicker .ui-state-default, .ui-datepicker .ui-widget-content .ui-state-default { color: #444; border: none; background: #fff; padding: 1px 2px; }
 
