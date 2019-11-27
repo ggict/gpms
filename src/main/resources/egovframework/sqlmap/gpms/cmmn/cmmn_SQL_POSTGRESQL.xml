@@ -117,24 +117,35 @@
 	</select>
 	
      
-     <select id="cmmnDAO.selectAdmguCodeList" parameterClass="codeVO" resultClass="codeVO">
-      <![CDATA[
-		SELECT NAME,BJCD FROM N3A_G0100000 WHERE 
+    <select id="cmmnDAO.selectAdmguCodeList" parameterClass="codeVO" resultClass="codeVO">
+        <![CDATA[
+            SELECT NAME,BJCD FROM N3A_G0100000 WHERE 
 		]]> 
 		<isNotEmpty property="CODE_VAL">
-		<![CDATA[ BJCD LIKE  #CODE_VAL# || '%']]>
+            <![CDATA[ BJCD LIKE  #CODE_VAL# || '%']]>
 		</isNotEmpty>
-		</select>
+	</select>
 	<select id="cmmnDAO.selectAdmCodeList" parameterClass="codeVO" resultClass="codeVO">
-	<![CDATA[
-		/* cmmnDAO.selectAdmCodeList */
-		/* 행정구역 코드 조회 */
-		SELECT SUBSTR(BJCD,1,5) AS CODE_VAL, NAME AS CODE_NM
-		  FROM N3A_G0100000
-		 WHERE SUBSTR(BJCD,5,1) = '0'
-		 ORDER BY CODE_NM
-	]]>
-		</select>
+    	<![CDATA[
+    		/* cmmnDAO.selectAdmCodeList */
+    		/* 행정구역 코드 조회 - 시.군 조회 */
+    		SELECT SUBSTR(BJCD,1,5) AS CODE_VAL, NAME AS CODE_NM
+    		  FROM N3A_G0100000
+    		 WHERE SUBSTR(BJCD,5,1) = '0'
+    		 ORDER BY CODE_NM
+    	]]>
+    </select>
+	<select id="cmmnDAO.selectAllAdmCodeList" parameterClass="codeVO" resultClass="codeVO">
+    	<![CDATA[
+    		/* cmmnDAO.selectAllAdmCodeList */
+    		/* 행정구역 코드 조회 - 시.군.구 전체 조회 */
+    		SELECT
+                SUBSTR(BJCD,1,5) AS CODE_VAL,
+                NAME AS CODE_NM
+            FROM N3A_G0100000
+    		ORDER BY CODE_VAL asc
+    	]]>
+    </select>
 
 		<select id="cmmnDAO.selectLaygerList" resultClass="egovMap">
 		<![CDATA[

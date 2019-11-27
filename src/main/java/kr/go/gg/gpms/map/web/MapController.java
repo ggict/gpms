@@ -120,6 +120,9 @@ public class MapController extends BaseController {
 		// 통계연도
 		Cell10VO cell10vo = new Cell10VO();
 		List<Cell10VO> statsYear = cell10Service.selectStatsYearList(cell10vo);
+		
+		// 행정구역(시군구)
+		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());
 
 		/*
 		 * 임시주석_sdh model.addAttribute("layerInfoList", layerInfoList);
@@ -133,6 +136,7 @@ public class MapController extends BaseController {
 		model.addAttribute("roadGradList", roadGradList);
 		model.addAttribute("RpairMthds", rpairMthdList);
 		model.addAttribute("statsYear", statsYear);
+		model.addAttribute("admList", allAdmList);
 
 		session.setAttribute("system", "map");
 		return "/map/map";

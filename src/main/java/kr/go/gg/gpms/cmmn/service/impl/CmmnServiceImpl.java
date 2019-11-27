@@ -143,6 +143,9 @@ public class CmmnServiceImpl extends AbstractServiceImpl implements CmmnService 
 	 * @return N3A_G0100000 목록
 	 * @exception Exception
 	 */
+	public List<CodeVO> selectAllAdmCodeList(CodeVO codeVO) throws Exception {
+		return cmmnDAO.selectAllAdmCodeList(codeVO);
+	}
 	public List<CodeVO> selectAdmCodeList(CodeVO codeVO) throws Exception {
 		return cmmnDAO.selectAdmCodeList(codeVO);
 	}

@@ -109,6 +109,9 @@ public class CmmnDAO extends BaseDAO {
 	 * @return N3A_G0100000 목록
 	 * @exception Exception
 	 */
+	public List<CodeVO> selectAllAdmCodeList(CodeVO codeVO) {
+		return (List<CodeVO>)list("cmmnDAO.selectAllAdmCodeList", codeVO);
+	}
 	public List<CodeVO> selectAdmCodeList(CodeVO codeVO) {
 		return (List<CodeVO>)list("cmmnDAO.selectAdmCodeList", codeVO);
 	}

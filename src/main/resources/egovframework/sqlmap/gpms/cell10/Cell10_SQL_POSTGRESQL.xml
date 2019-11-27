@@ -1196,6 +1196,10 @@
                     SUBSTR(BJCD, 1, 5) AS ADM_CODE,
                     NAME AS ADM_NAME
                  FROM    N3A_G0100000
+                 WHERE 1=1
+            ]]>
+                <isNotEmpty property="ADM_CODE"><![CDATA[ AND SUBSTR(BJCD, 1, 5) = #ADM_CODE# ]]></isNotEmpty>
+            <![CDATA[
                 ) N3A 
                 JOIN 
                 ( SELECT '1' AS TRACK UNION ALL SELECT '3' UNION ALL SELECT '5' ) TRK

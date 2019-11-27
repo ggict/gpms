@@ -90,7 +90,7 @@ var ntcNo=0;
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
     
-    parent.schFlag = 1;
+    parent.schFlag = 1;     //{0:표, 1:차트}
   //  var height = $(window).height() - 370;
    // $("#chartArea").height(height + "px");
     

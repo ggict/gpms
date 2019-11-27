@@ -82,6 +82,14 @@ public interface CmmnService {
 	 * @return N3A_G0100000 목록
 	 * @exception Exception
 	 */
+	List<CodeVO> selectAllAdmCodeList(CodeVO codeVO) throws Exception;
+	
+	/**
+	 * 행정구역 코드명(N3A_G0100000)을 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 codeVO
+	 * @return N3A_G0100000 목록
+	 * @exception Exception
+	 */
 	List<CodeVO> selectAdmCodeList(CodeVO codeVO) throws Exception;
 	
 	/**
