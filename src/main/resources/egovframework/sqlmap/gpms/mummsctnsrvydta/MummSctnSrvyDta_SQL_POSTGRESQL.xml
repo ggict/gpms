@@ -2285,8 +2285,8 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 	<isNotEmpty property="SRVY_YEAR">
 	AND SRVY_YEAR = #SRVY_YEAR#
 	</isNotEmpty>
-	and sctn_no = (
-		select sctn_no from cell_sect 
+	and sctn_code = (
+		select sctn_code from cell_sect 
 		where 1=1
 		<isNotEmpty property="CELL_ID">
 		and cell_id = #CELL_ID#
