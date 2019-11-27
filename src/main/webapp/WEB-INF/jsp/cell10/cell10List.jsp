@@ -96,6 +96,7 @@ function fn_search() {
 	}
 	
 	var postData = {"USE_AT":"Y"};
+	postData = $("#frm").cmSerializeObject();
 	$("#gridArea").jqGrid("setGridParam",{
 		datatype: "json"
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
@@ -281,7 +282,7 @@ function fn_select_route(route_no, cell_id){
     						                 ~ 
     						                <label>종점(m)</label>
     						                <input type="text" name="ENDPT" id="ENDPT" value="" style="width:53px;" class="MX_80 CS_50 DT_INT input" />
-    						           <button class="btn pri fr" onclick="javascript:fn_search();">검색</button>
+    						           <button type="button" class="btn pri fr" onclick="javascript:fn_search();">검색</button>
     						       </td>
     					</tr>
     				</tbody>

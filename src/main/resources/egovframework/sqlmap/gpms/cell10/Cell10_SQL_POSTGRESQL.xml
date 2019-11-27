@@ -187,38 +187,38 @@
         SELECT gid, route_code,
 			(SELECT tnrouteinfo.road_name 
 	 		FROM tn_route_info tnrouteinfo 
-	 		WHERE tnrouteinfo.road_no = cell1015.route_code)road_name, 
+	 		WHERE tnrouteinfo.road_no = cell10.route_code)road_name, 
 	
 			(SELECT tc_dept.lowest_dept_nm 
 			FROM tc_dept 
-	 		WHERE tc_dept.dept_code = trunc(cell1015.dept_code)::text)dept_nm, 
+	 		WHERE tc_dept.dept_code = trunc(cell10.dept_code)::text)dept_nm, 
 	
 			(SELECT n3a.NAME 
 		 	FROM   n3a_g0100000 n3a 
-			WHERE  substr(n3a.bjcd,1,5) = cell1015.adm_code) adm_nm, 
+			WHERE  substr(n3a.bjcd,1,5) = cell10.adm_code) adm_nm, 
 	 
 	 		(SELECT tccode.code_nm 
       		FROM   tc_code tccode 
-      		WHERE  tccode.code_val = cell1015.road_grad 
+      		WHERE  tccode.code_val = cell10.road_grad 
       		AND    tccode.cl_code = 'RDGD' 
       		AND    tccode.delete_at='N' 
       		AND    tccode.use_at='Y') road_grad , 
 	 
 	 		(SELECT tccode.code_nm 
       		FROM   tc_code tccode 
-      		WHERE  tccode.code_val = cell1015.vmtc_grad 
+      		WHERE  tccode.code_val = cell10.vmtc_grad 
       		AND    tccode.cl_code = 'VNTC' 
       		AND    tccode.delete_at='N' 
       		AND    tccode.use_at='Y') vmtc_grad ,  
 	
 			(SELECT tccode.code_nm 
      		FROM   tc_code tccode 
-     		WHERE  tccode.code_val = cell1015.cell_type 
+     		WHERE  tccode.code_val = cell10.cell_type 
      		AND    tccode.cl_code = 'CELT' 
      		AND    tccode.delete_at='N' 
      		AND    tccode.use_at='Y') cell_type , 
 	
-			CASE cell1015.direct_cod 
+			CASE cell10.direct_code 
 			WHEN 'S' THEN '상행' 
 			WHEN 'E' THEN '하행' 
 			ELSE '양방향' END direct_code,
@@ -226,15 +226,15 @@
 	
 			(SELECT tn_route_sctn_info.sctn_nm 
 	 		FROM tn_route_sctn_info 
-	 		WHERE tn_route_sctn_info.sctn_no = cell1015.sctn_no) sctn_nm,
+	 		WHERE tn_route_sctn_info.sctn_code = cell10.sctn_code) sctn_nm,
 			trunc(strtpt)strtpt, trunc(endpt)endpt, cell_id
 	
-		FROM cell_10_1015 cell1015
+		FROM cell_10 cell10
 ]]>
-
+<include refid="cell10DAO.selectCell10List.where" />
 <![CDATA[
         ORDER BY
-               gid, cell1015.ROUTE_CODE, cell1015.DIRECT_COD, cell1015.TRACK, cell1015.STRTPT, cell1015.ENDPT ASC
+               gid, cell10.ROUTE_CODE, cell10.DIRECT_CODE, cell10.TRACK, cell10.STRTPT, cell10.ENDPT ASC
 ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
         <![CDATA[
