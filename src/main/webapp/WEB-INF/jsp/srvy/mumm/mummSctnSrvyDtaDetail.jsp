@@ -780,9 +780,9 @@ function fnFloat(val) {
 
             <!-- 섹션 기본정보 START -->
             <div id="baseInfo" style="width:34%; height: 210px; float: left; padding-right: 10px;">
-                <h3 style="line-height: 30px; font-size: 15px;">기본정보</h3>
-                <table class="tbview" style="width: 100%; height: 100%; margin-top: 20px;">
-                    <caption>포장상태 기본정보</caption>
+                <h3 class="h3">기본정보</h3>
+                <table class="table">
+                    <caption class="hidden">포장상태 기본정보</caption>
                     <colgroup>
                         <col width="20%" />
                         <col width="30%" />
@@ -832,9 +832,9 @@ function fnFloat(val) {
 
             <!-- 포장상태 조사자료 START -->
             <div id="srvyData" style="width:32%; height: 210px; float: left; padding-right: 10px; border-radius: 5px;">
-                <h3 style="line-height: 30px; font-size: 15px;">조사자료</h3>
-                <table class="tbview" style="width: 100%; height: 100%; margin-top: 20px; text-align: center;">
-                    <caption>포장상태 조사자료</caption>
+                <h3 class="h3">조사자료</h3>
+                <table class="table">
+                    <caption class="hidden">포장상태 조사자료</caption>
                     <colgroup>
                         <col width="25%" />
                         <col width="25%" />

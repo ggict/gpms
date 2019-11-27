@@ -3,16 +3,7 @@
 
     <!-- 통계 > 노선현황 -->
     <div id="sub_stat_route">
-        <h2>노선현황 통계</h2>
-        <h4>통계 종류</h4>
-        <ul class="btab_menu" style="min-height: 300px">
-            <li style="height: 100px"><a href="#sch_cnt01" class="tab1" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectRouteStats.do"/>');">노선별<br />통계</a></li>
-            <li style="height: 100px"><a href="#sch_cnt01" class="tab2" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectDeptStats.do"/>');">관리기관별<br />통계</a></li>
-            <li style="height: 100px"><a href="#sch_cnt02" class="tab3" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectTrackStats.do"/>');">차로별<br />통계</a></li>
-            <li style="height: 100px"><a href="#sch_cnt03" class="tab4" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectAdmStatsTable.do"/>');">시군구별<br />통계</a></li>
-        </ul>
-
-        <h3>검색조건</h3>
+        <h3 class="h3">검색조건</h3>
         <ul class="sch">
             <li class="wid100"><label>국토부</br>  통계연도</label></li>
             <li class="wid100">

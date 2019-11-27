@@ -475,14 +475,9 @@ function fn_msgNtc(){
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
-<div style="margin: 0px 20px 0 20px;">
+<div style="margin: 0px 20px 0 140px;">
     <div id="sch_cnt01" class="tabcont">
         <h3>노선별 도로연장 통계</h3>
-        <p class="location">
-            <span>통계</span>
-            <span>노선 현황</span>
-            <strong>노선별 통계</strong>
-        </p>
     </div>
     <div class="cont_ListBx">
         <div class="btnbx mb10">

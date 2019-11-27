@@ -85,7 +85,7 @@
 			
 			<div class="mt10 tc">
 				<div class="fr">
-					<a href="#" onclick="check = false; fn_save();" class="schbtn" >등록</a>
+					<a href="#" onclick="javascript: fn_check_from();" class="schbtn" >등록</a>
 					<a href="#" class="schbtn" onclick="javascript: fn_close_dialog();">닫기</a>
 				</div>
 			</div>
@@ -136,11 +136,22 @@ function fn_save() {
         }
     }); */
 }
-
+function fn_check_from(){
+	if($('#SJ').val() == "" || $('#SJ').val() == null){
+		alert("제목을 입력하세요.");
+		$('#SJ').focus();
+		return;
+	}
+	if($('#CN').val() == "" || $('#CN').val() == null){
+		alert("내용을 입력하세요.");
+		$('#CN').focus();
+		return;
+	}
+	fn_save();
+}
 //파일 전송 callback
 function fn_file_upload_callback(){
     
-    alert("공지사항을 등록하였습니다.");
     window.parent.fnSearch();
     var wnd_id = $("#wnd_id").val();
     COMMON_UTIL.cmWindowClose(wnd_id);

@@ -69,7 +69,7 @@
     				</tbody>	
     			</table>
                 <div class="btnArea">
-                    <button class="btn pri" onclick="javascript:fn_search();">검색</button>
+                    <button type="button" class="btn pri" onclick="javascript:fn_search();">검색</button>
                 </div>
     		</div>
     	</article>

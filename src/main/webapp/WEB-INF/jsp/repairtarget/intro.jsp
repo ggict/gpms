@@ -41,23 +41,14 @@ $(window).on('resize', function(){
 <input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
 <input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
-<div style="margin: 0px 20px 0 20px;">
-	<div style="margin: 0px 20px 0 20px;">
+
 		<div id="sch_cnt01" class="tabcont">
 			<h3>보수대상 선정 전체 PROCESS 설명 화면</h3>
-		<p class="location">
-			<span>설명</span> <strong>IMG</strong>
-		</p>
-    
-	<div>
-		<ul class="statsbx">
-			<img src="<c:url value='/images/img_rpair.png' />" style="margin-left: 300px;"/>
-		</ul>
-	</div>
-	
-</div>
-</div>
-</div>
+			<div class="img_rpair">
+				<img src="<c:url value='/images/img_rpair.png' />" />
+			</div>
+		</div>
+
 </form>
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>

@@ -21,7 +21,7 @@
 <div class="tabcont">
 	<!-- Content -->
 	<div class="content">
-	    <h3>노선 데이터로 검색
+	    <h3>노선정보 수정
 	    	<a href="#" class="whitebtn dpib ml10 vm" onclick="COMMON_UTIL.cmMoveUrl('/routeinfo/selectRouteInfoList.do')"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기"/></a>
 	    </h3>
 	    <p class="location">
@@ -31,7 +31,7 @@
 	    <div class="mt10 ml10 mr10">
 	    	<div class="scroll" style="height:240px;">
 		        <table class="tbview" summary="노선정보를 수정합니다.">
-		            <caption>노선정보 수정</caption>
+		            
 		            <colgroup>
 		                <col width="15%" />
 		                <col width="35%" />

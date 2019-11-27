@@ -91,7 +91,7 @@ public class SrvyDtaDAO extends BaseDAO {
 		HashMap param = new HashMap();
     	param.put("p_USER_NO", srvyDtaOne.getCRTR_NO());
     	param.put("p_SRVY_NO", srvyDtaOne.getSRVY_NO());
-    	param.put("p_FRMULA_NM", srvyDtaOne.getFRMULA_NM());
+    	param.put("p_FRMULA_NM", "GPCI");
     	param.put("P_ROW_COUNT", srvyDtaOne.getDATA_CO());
     	//param.put("p_RECORDSET", srvyDtaOne.getRECORDSET());
     	param.put("p_MODE", "NONE");
@@ -173,6 +173,27 @@ public class SrvyDtaDAO extends BaseDAO {
 	 */
 	public int selectSrvyDtaUploadResultCount(SrvyDtaVO srvyDtaVO) {
 		return (Integer) select("srvyDtaDAO.selectSrvyDtaUploadResultCount", srvyDtaVO);
+	}
+	
+	/**
+	 * 분석결과 목록을 조회.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_MUMM_SCTN_SRVY_DTA 목록
+	 * @exception Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<SrvyDtaVO> selectAnalDataPopupResultList(SrvyDtaVO srvyDtaVO) throws Exception {
+		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectAnalDataPopupResultList", srvyDtaVO);
+	}
+	
+	/**
+	 * 분석결과 갯수를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
+	 * @return TN_MUMM_SCTN_SRVY_DTA 결과 갯수
+	 * @exception
+	 */
+	public int selectAnalDataPopupResultCount(SrvyDtaVO srvyDtaVO) {
+		return (Integer) select("srvyDtaDAO.selectAnalDataPopupResultCount", srvyDtaVO);
 	}
 	
 	/**

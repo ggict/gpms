@@ -31,7 +31,7 @@
                 <li style="width:50%" id="step1">
                     <div class="stbx">
                         <h4><span class="step">단계1</span>항목선택</h4>
-                        <div style="height:80px; padding: 10px 2px;">
+                        <div>
                             <ul class="tblst selbx" id="step1_sel">
                                 <li style="width:33%" class="tc on">
                                     <a class="selbtn btncursor" id="btn_selRouteInfo">
@@ -59,13 +59,13 @@
                 <li style="width:50%" id="step2">
                     <div class="stbx">
                         <h4><span class="step">단계2</span>선택방법</h4>
-                        <div style="height:80px">
+                        <div>
                             <ul class="tblst selbx" id="step2_sel">
                                 <li style="width:50%; border-left:0px" class="brl tc">
                                     <a class="selbtn btncursor" id="btn_selPoint">
                                         <!-- 노선정보 / 교량정보 -->
                                         <span class="roundbx normalmode"><img src="<c:url value='/images/ic_shape1.png' />" alt="점" /></span>
-                                        <span class="normalmode">점 <input type="text" name="pointArea" id="pointArea" maxLength="4" value="100" style="width:33px" /> m</span>
+                                        <span class="normalmode">점 <input type="text" name="pointArea" id="pointArea" maxLength="4" value="100" /> m</span>
                                         <!-- 포장상태평가 -->
                                         <span class="roundbx statusmode" style="display: none;"><img src="<c:url value='/images/ic_t1.png'/>" alt="단일선택" /></span>
                                         <span class="statusmode" style="display: none;">단일선택</span>
@@ -109,13 +109,13 @@
                         <h4>
                             <span class="step">2-1</span>다중선택도구
                         </h4>
-                        <div style="height: 100px">
+                        <div style="height: 150px">
                             <ul class="tblst selbx" id="step_2_1_multiSelect">
-                                <li style="width: 18%; height: 90px; padding-top: 10px; border-left: 0px;" class="brl tc btn_ms_tools"><a class="selbtn btncursor" id="btn_selectPoly"> <span class="roundbx"><img src="<c:url value='/images/ic_shape2.png'/>" alt="다각형선택" /></span> <span>다각형선택</span>
+                                <li style="width: 18%; height: 100px; padding-top: 10px; border-left: 0px;" class="brl tc btn_ms_tools"><a class="selbtn btncursor" id="btn_selectPoly"> <span class="roundbx"><img src="<c:url value='/images/ic_shape2.png'/>" alt="다각형선택" /></span> <span>다각형선택</span>
                                 </a></li>
-                                <li style="width: 18%; height: 90px; padding-top: 10px; border-left: 0px;" class="brl tc btn_ms_tools"><a class="selbtn btncursor" id="btn_selectline"> <span class="roundbx"><img src="<c:url value='/images/ic_shape6.png'/>" alt="선형선택" /></span> <span>선형선택</span>
+                                <li style="width: 18%; height: 100px; padding-top: 10px; border-left: 0px;" class="brl tc btn_ms_tools"><a class="selbtn btncursor" id="btn_selectline"> <span class="roundbx"><img src="<c:url value='/images/ic_shape6.png'/>" alt="선형선택" /></span> <span>선형선택</span>
                                 </a></li>
-                                <li style="width: 18%; height: 90px; padding-top: 10px; border-left: 0px;" class="brl tc btn_ms_tools"><a class="selbtn btncursor" id="btn_userInput"> <span class="roundbx"><img src="<c:url value='/images/ic_shape7.png'/>" alt="시종점입력" /></span> <span>시종점입력</span>
+                                <li style="width: 18%; height: 100px; padding-top: 10px; border-left: 0px;" class="brl tc btn_ms_tools"><a class="selbtn btncursor" id="btn_userInput"> <span class="roundbx"><img src="<c:url value='/images/ic_shape7.png'/>" alt="시종점입력" /></span> <span>시종점입력</span>
                                 </a></li>
                                 <li style="border-left: 0px; height: 90px; padding-left: 10px; padding-top: 5px; display:none;" class="tc" id="dv_userInput">
                                     <p style="margin-bottom: 3px;">

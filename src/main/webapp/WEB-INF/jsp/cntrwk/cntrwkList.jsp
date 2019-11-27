@@ -25,32 +25,110 @@
 <input type="hidden" id="sord" name="sord" value=""/>
 
 
+
+
+<div class="tabcont e10">
+
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">포장공사이력관리</option>
+                </select>
+                <select name="">
+                    <option value="">포장공사이력관리</option>
+                </select>
+                <h2 class="h2">포장공사이력 조회</h2>
+            </span>
+        </div>
+    </header>
+    
+    <div class="contents container">
+    
+    	<article class="div3">
+    		<h3 class="h3">검색조건</h3>
+    		<div class="table">
+    			<table>
+    				<tbody>
+    				<tr>
+    					<td class="th"><label for="SCH_CNTRWK_SE">공사구분</label></td>
+    					<td>
+			                <select name="SCH_CNTRWK_SE" id="SCH_CNTRWK_SE">
+			                	<option value="">전체</option>
+								<c:forEach var="selectData" items="${codesCWSE}">
+									<option value="${selectData.CODE_VAL}">${selectData.CODE_NM}</option>
+								</c:forEach>
+			                </select>
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="SCH_CNTRWK_NM">공사명</label></td>
+    					<td>
+    						 <input type="text" name="SCH_CNTRWK_NM" id="SCH_CNTRWK_NM" value="<c:out value="${param.SCH_CNTRWK_NM}"/>" />
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="SCH_CO_NM">시공사</label></td>
+    					<td>
+                             <input type="text" name="SCH_CO_NM" id="SCH_CO_NM" value="<c:out value="${param.SCH_CO_NM}"/>" />
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="SCH_STRWRK_DE">계약기간</label></td>
+    					<td>
+                            <input type="text" name="SCH_STRWRK_DE" id="SCH_STRWRK_DE" /> ~
+            				<input type="text" name="SCH_COMPET_DE" id="SCH_COMPET_DE" />
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for=""></label></td>
+    					<td>
+                            
+                        </td>
+    				</tr>
+    				</tbody>	
+    			</table>
+                <div class="btnArea">
+                     <input type="button" class="btn pri" value="검색"/>
+                </div>
+    		</div>
+    	</article>
+    	
+    	<article class="div9">
+    		<h3 class="h3">포장공사 이력조회</h3>
+    		<div id="div_grid" class="table">
+				<table id="gridArea"></table>				
+			</div>
+			<div id="gridPager"></div>
+        </div>
+    	</article>
+    	
+    </div>
+
+
+
+
+
+
 <div class="tabcont">
 	<div class="fl bgsch">
 	    <h3>검색조건</h3>
 	    <div class="schbx mt10">
 	        <ul class="sch">
 	            <li class="wid100">
-	                <label>공사구분</label>
-	                <select name="SCH_CNTRWK_SE" id="SCH_CNTRWK_SE" style="width:205px;" class="input">
-	                	<option value="">===== 전체 =====</option>
-						<c:forEach var="selectData" items="${codesCWSE}">
-							<option value="${selectData.CODE_VAL}">${selectData.CODE_NM}</option>
-						</c:forEach>
-	                </select>
+	                
 	            </li>
 	            <li class="wid100">
 	                <label>공사명</label>
-	                <input type="text" name="SCH_CNTRWK_NM" id="SCH_CNTRWK_NM" style="width:197px;" value="<c:out value="${param.SCH_CNTRWK_NM}"/>" class="MX_80 CS_50 input" />
+	               
 	            </li>
 	            <li class="wid100">
-	                <label>시공사</label>
-	                <input type="text" name="SCH_CO_NM" id="SCH_CO_NM" style="width:197px;" value="<c:out value="${param.SCH_CO_NM}"/>" class="MX_80 CS_50 input" />
+	                <label></label>
+	               
 	            </li>
 	            <li class="wid100">
 	                <label>계약기간</label>
-	                <input type="text" name="SCH_STRWRK_DE" id="SCH_STRWRK_DE" style="width:70px; margin-right: 3px;" class="DT_DATE input" /> ~
-					<input type="text" name="SCH_COMPET_DE" id="SCH_COMPET_DE" style="width:70px; margin-right: 3px;" class="DT_DATE input" />
+	               
 	            </li>
 	            <li class="wid100">
 	                <a href="#" class="schbtn dpb" onclick="javascript:fnSearch();">검색</a>
@@ -59,7 +137,7 @@
 	    </div>
 	</div>
 	<div class="fr listbx">
-	    <h3>포장공사 이력조회</h3>
+	    <h3>포장공사 이력조회1</h3>
 	    <p class="location">
 	        <span>포장공사 이력관리</span>
 	        <span>포장공사 이력관리</span>
@@ -214,7 +292,7 @@ function fnWrite() {
 
 //유지보수 실적집계 엑셀 출력
 function fn_cntrwkReportExcel(){
-	COMMON_UTIL.cmWindowOpen("유지보수 실적집계 엑셀출력", "<c:url value='/cntrwk/setDownloadReport.do'/>", 320, 150, true, $("#wnd_id").val(), 'center');
+	COMMON_UTIL.cmWindowOpen("유지보수 실적집계 엑셀출력", "<c:url value='/cntrwk/setDownloadReport.do'/>", 320, 300, true, $("#wnd_id").val(), 'center');
 }
 
 //위치이동 버튼 생성

@@ -22,133 +22,158 @@
 <input type="hidden" id="sidx" name="sidx" value=""/>
 <input type="hidden" id="sord" name="sord" value=""/>
 <!-- 필수 파라메터(END) -->
-<div class="tabcont">
-	<c:if test="${empty mummSctnSrvyDtaVO.CELL_ID }">
-	<div class="fl bgsch">
-    	<h3>검색조건</h3>
-    	<div class="scroll" style="height:300px;">
-	    <div class="schbx mt10">
-	        <ul class="sch">
-	           <li class="wid100">
-                    <label>관리기관</label>
-                    <select id="DEPT_CODE" name="DEPT_CODE" alt="관리기관" style="width: 74.5%;" class="input">
-                        <option value="">===== 전체 =====</option>
-                        <c:forEach items="${ deptList }" var="dept">
-                            <option value="${ dept.DEPT_CODE }">${ dept.LOWEST_DEPT_NM }</option>
-                        </c:forEach>
-                    </select>
-                    <label>조사년도</label>
-                    <select id="SRVY_YEAR" name="SRVY_YEAR" alt="조사년도" style="width: 74.5%;" class="input">
-                        <option value="">===== 전체 =====</option>
-                        <c:forEach items="${ srvyYearList }" var="srvyYear">
-                            <option value="${ srvyYear.SRVY_YEAR }">${ srvyYear.SRVY_YEAR }</option>
-                        </c:forEach>
-                    </select>
-                </li>
-                <li class="wid100">
-                    <label>도로등급</label>
-                    <select id="ROAD_GRAD" name="ROAD_GRAD" alt="도로등급" onchange="fn_change_roadNo();" style="width:25%;" class="input">
-                        <option value="">= 전체 =</option>
-                        <c:forEach items="${ roadGradList }" var="roadGrad">
-                            <option value="${ roadGrad.CODE_VAL }">${ roadGrad.CODE_NM }</option>
-                        </c:forEach>
-                    </select>
-
-                    <label>노선번호</label>
-                    <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" style="width:25%;" class="input">
-                        <option value="">= 전체 =</option>
-                        <c:forEach items="${ roadNoList }" var="roadNo">
-                            <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
-                        </c:forEach>
-                    </select>
-                </li>
-                <li>
-                    <label>노선명</label>
-                    <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" style="width:194px;" class="MX_80 CS_50 input" />
-                </li>
-                <li>
-                	<label>관리도로</label>
-                	<select id="MNG_RD_CD" name="MNG_RD_CD" title="관리도로" style="width:110px;" class="input">
-	                	<option value="">== 전체 ==</option>
-		        		<c:forEach items="${mngRdList }" var="mngRd">
-		        			<option value="${mngRd.CODE_VAL}">${mngRd.CODE_NM}</option>
-		        		</c:forEach>
-	                </select></li>
-                <li>
-                    <label>행선</label>
-                    <select id="DIRECT_CODE" name="DIRECT_CODE" alt="행선" style="width:70px;" class="input">
-                        <option value="">= 전체 =</option>
-                        <option value="S">상행</option>
-                        <option value="E">하행</option>
-                    </select>
-
-                    <label>차로</label>
-                    <input type="number" name="TRACK" id="TRACK" value="" style="width:57px;" onkeydown="fnCheckNumber(this);" maxLength="1" class="MX_80 CS_50 DT_INT input" />
-                </li>
-                <li class="wid100">
-                    <label>시점(m)</label>
-                    <input type="text" name="STRTPT" id="STRTPT" value="" style="width:62px;" onkeydown="fnCheckNumber(this);" maxLength="5" class="MX_80 CS_50 DT_INT input" />
-
-                    <label>~종점(m)</label>
-                    <input type="text" name="ENDPT" id="ENDPT" value="" style="width:57px;" onkeydown="fnCheckNumber(this);" maxLength="5" class="MX_80 CS_50 DT_INT input" />
-                </li>
-                <li class="wid100">
-                    <label>주 파손</label>
-                    <select id="CNTL_DFECT" name="CNTL_DFECT" alt="주파손" style="width:74.5%;" class="input">
-                        <option value="">===== 전체=====</option>
-                        <option value="DFCT0001">거북등균열</option>
-                        <option value="DFCT0002">선형균열</option>
-                        <option value="DFCT0004">패칭</option>
-                        <option value="DFCT0005">포트홀</option>
-                        <option value="DFCT0006">소성변형</option>
-                        <option value="DFCT0007">종단평탄성</option>
-                        <option value="DFCT0008">블럭균열</option>
-                        <option value="DFCT0009">복합파손</option>
-                    </select>
-                </li>
-                <li class="wid100">
-                    <label></label>
-                    <input type="text" name="MINGPCI" id="MINGPCI" value="" style="width:59px;" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" class="MX_80 CS_50 DT_INT input" />
-                    <label> ≤ GPCI ≤ </label>
-                    <input type="text" name="MAXGPCI" id="MAXGPCI" value="" style="width:59px;" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" class="MX_80 CS_50 DT_INT input" />
-                </li>
-                <li class="wid100 mt10">
-                    <a href="#" class="schbtn dpb" onclick="javascript: fn_search();">검색</a>
-                </li>
 
 
-	        </ul>
-	    </div>
-	    </div>
-	</div>
-	</c:if>
-	<c:if test="${empty mummSctnSrvyDtaVO.CELL_ID }">
-	<div class="fr listbx">
-	</c:if>
-	<c:if test="${not empty mummSctnSrvyDtaVO.CELL_ID }">
-	<div class="" style="position: absolute; left: 0px; width: 100%;">
-	</c:if>
-	    <h3>포장상태 평가정보 조회</h3>
-	    <p class="location">
-	        <span>포장상태 평가</span>
-	        <strong>포장상태 평가정보 조회</strong>
-	    </p>
+<div class="tabcont c10">
 
-	    <div class="mt10 ml10 mr10">
-            <div id="div_grid" style="width:100%; height:190px;">
-				<table id="gridArea"></table>
-				<div id="gridPager"></div>
-			</div>
-			<div class="tc" style="margin-top: 58px">
-			<div class="fr">
-
-            <a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
-			</div>
-			</div>
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">포장상태평가</option>
+                </select>
+                <select name="">
+                    <option value="">평가정보조회</option>
+                </select>
+                <h2 class="h2">포장상태 평가정보</h2>
+            </span>
         </div>
-
-  </div>
+    </header>
+    
+    <div class="contents container">
+    
+    	<article class="div3">
+    		<h3 class="h3">검색조건</h3>
+    		<c:if test="${empty mummSctnSrvyDtaVO.CELL_ID }">
+    		<div class="table" style="height:248px; overflow-y: auto">
+    			<table>
+    				<tbody>
+    				<tr>
+    					<td class="th"><label for="DEPT_CODE">관리기관</label></td>
+    					<td>
+    						<select id="DEPT_CODE" name="DEPT_CODE">
+    						    <option value="">전체</option>
+    						    <c:forEach items="${ deptList }" var="dept">
+    						        <option value="${ dept.DEPT_CODE }">${ dept.LOWEST_DEPT_NM }</option>
+    						    </c:forEach>
+    						</select>
+                        </td>
+    					<td class="th"><label for="SRVY_YEAR">조사년도</label></td>
+    					<td>
+    						<select id="SRVY_YEAR" name="SRVY_YEAR">
+    						    <option value="">전체</option>
+    						    <c:forEach items="${ srvyYearList }" var="srvyYear">
+    						        <option value="${ srvyYear.SRVY_YEAR }">${ srvyYear.SRVY_YEAR }</option>
+    						    </c:forEach>
+    						</select>
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="ROAD_GRAD">도로등급</label></td>
+    					<td>
+                            <select id="ROAD_GRAD" name="ROAD_GRAD" onchange="fn_change_roadNo();">
+                                <option value="">전체</option>
+                                <c:forEach items="${ roadGradList }" var="roadGrad">
+                                    <option value="${ roadGrad.CODE_VAL }">${ roadGrad.CODE_NM }</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+    					<td class="th"><label for="ROAD_NO">노선번호</label></td>
+    					<td>
+                            <select id="ROAD_NO" name="ROAD_NO" onchange="fn_change_roadNm();">
+                                <option value="">전체</option>
+                                <c:forEach items="${ roadNoList }" var="roadNo">
+                                    <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="ROAD_NAME">노선명</label></td>
+    					<td>
+                            <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
+                        </td>
+    					<td class="th"><label for="MNG_RD_CD">관리도로</label></td>
+    					<td>
+                        	<select id="MNG_RD_CD" name="MNG_RD_CD">
+        	                	<option value="">전체</option>
+        		        		<c:forEach items="${mngRdList }" var="mngRd">
+        		        			<option value="${mngRd.CODE_VAL}">${mngRd.CODE_NM}</option>
+        		        		</c:forEach>
+        	                </select>
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="DIRECT_CODE">행선</label></td>
+    					<td>
+		                    <select id="DIRECT_CODE" name="DIRECT_CODE">
+		                        <option value="">전체</option>
+		                        <option value="S">상행</option>
+		                        <option value="E">하행</option>
+		                    </select>
+                        </td>
+    					<td class="th"><label for="TRACK">차로</label></td>
+    					<td>
+    						<input type="number" name="TRACK" id="TRACK" value="" onkeydown="fnCheckNumber(this);" maxLength="1">
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="STRTPT">시점(m)</td>
+    					<td>
+                            <input type="text" name="STRTPT" id="STRTPT" value="" onkeydown="fnCheckNumber(this);" maxLength="5" />
+                        </td>
+    					<td class="th"><label for="ENDPT">종점(m)</td>
+    					<td>
+                            <input type="text" name="ENDPT" id="ENDPT" value="" onkeydown="fnCheckNumber(this);" maxLength="5" />
+                        </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="CNTL_DFECT">주 파손</label></td>
+    					<td colspan="3">
+                            <select id="CNTL_DFECT" name="CNTL_DFECT">
+                                <option value=""> 전체</option>
+                                <option value="DFCT0001">거북등균열</option>
+                                <option value="DFCT0002">선형균열</option>
+                                <option value="DFCT0004">패칭</option>
+                                <option value="DFCT0005">포트홀</option>
+                                <option value="DFCT0006">소성변형</option>
+                                <option value="DFCT0007">종단평탄성</option>
+                                <option value="DFCT0008">블럭균열</option>
+                                <option value="DFCT0009">복합파손</option>
+                            </select><br>
+                            <input type="text" name="MINGPCI" id="MINGPCI" value="" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" />
+                            ≤ GPCI ≤ 
+                            <input type="text" name="MAXGPCI" id="MAXGPCI" value="" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" />
+                        </td>
+    				</tr>
+    				</tbody>	
+    			</table>
+                <div class="btnArea">
+                     <input type="button" class="btn pri" onclick="javascript: fn_search();" value="검색"/>
+                </div>
+				</c:if>
+    		</div>
+    	</article>
+    	
+    	<c:if test="${empty mummSctnSrvyDtaVO.CELL_ID }">
+    	<article class="div9">
+    	</c:if>
+    	<c:if test="${not empty mummSctnSrvyDtaVO.CELL_ID }">
+    	<article class="div9">
+    	</c:if>
+    		<h3 class="h3">포장상태 평가정보 조회</h3>
+    		<div id="div_grid" class="table">
+				<table id="gridArea"></table>				
+			</div>
+			<input type="button" class="btn pri" onclick="fnExcel();" value="엑셀저장">
+			<div id="gridPager"></div>
+        </div>
+    	</article>
+    	
+    </div>
 </div>
+
+
 </form>
 
 <!-- 공통 (START)-->

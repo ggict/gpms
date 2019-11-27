@@ -114,7 +114,7 @@ function fnShowImage(imgNm, imgYear, imgRoadno) {
 </head>
 
 <body class="research">
-
+<div class="imageSample">요렇게만 하면 되는건가요??</div>
 <!-- 필수 파라메터(START) -->
 <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
@@ -122,7 +122,9 @@ function fnShowImage(imgNm, imgYear, imgRoadno) {
 <!-- 필수 파라메터(END) -->
 
 <!-- 셀이미지팝업 -->  
-<div id="srvyImage" style="width: 100%;"></div>
+<div id="srvyImage" style="width: 100%;">
+	
+</div>
 
 <%@ include file="/include/common.jsp" %>
 <!-- 공통 (END)-->

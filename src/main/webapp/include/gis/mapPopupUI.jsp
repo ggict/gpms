@@ -12,8 +12,8 @@
         </div>
 	</div>
     <div id="divSrvyProc1" class="content loadingbx">
-        <table class="tbview" summary="정보를 제공합니다.">
-            <caption>정보</caption>
+        <table class="tbview">
+            <caption class="hidden">정보</caption>
             <colgroup>
                 <col width="30%" />
                 <col width="70%" />

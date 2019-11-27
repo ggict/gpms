@@ -53,42 +53,41 @@ $(parent).resize(function() {
 
 <!-- Content -->
 <div class="content">
-    <table class="tbview fl" summary="정보를 제공합니다." style="width:300px">
-        <caption>정보</caption>
-        <colgroup>
-            <col width="25%" />
-            <col width="75%" />
-        </colgroup>
-        <tbody>
-            <tr>
-                <th scope="row">
-                    기간
-                </th>
-                <td>
-                    <select name="CNTRWK_YEAR" id="CNTRWK_YEAR" class="select">
-						<c:forEach var="selectData" items="${yearList}">
-						<option value="${selectData.CNTRWK_YEAR}">${selectData.CNTRWK_YEAR}</option>
-						</c:forEach>
-					</select>년
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">
-                    관리 기관
-
-                </th>
-                <td>
-                    <select name="DEPT_CODE" id="DEPT_CODE" class="select">
-						<option value="">===== 전체 =====</option>
-						<c:forEach var="selectData" items="${deptList}">
-						<option value="${selectData.DEPT_CODE}">${selectData.LOWEST_DEPT_NM}</option>
-						</c:forEach>
-					</select>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <a href="#" class="schbtn ml5" style="height:58px;line-height:58px" onclick="fn_download_report_excel();" >엑셀저장</a>
+	<div class="table">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="th">
+                        <label for="CNTRWK_YEAR">기간</label>
+                    </th>
+                    <td>
+                        <select name="CNTRWK_YEAR" id="CNTRWK_YEAR">
+    						<c:forEach var="selectData" items="${yearList}">
+    						<option value="${selectData.CNTRWK_YEAR}">${selectData.CNTRWK_YEAR}</option>
+    						</c:forEach>
+    					</select>년
+                    </td>
+                </tr>
+                <tr>
+                    <td class="th">
+                        <label for="DEPT_CODE">관리 기관</label>
+                    </th>
+                    <td>
+                        <select name="DEPT_CODE" id="DEPT_CODE">
+    						<option value="">전체</option>
+    						<c:forEach var="selectData" items="${deptList}">
+    						<option value="${selectData.DEPT_CODE}">${selectData.LOWEST_DEPT_NM}</option>
+    						</c:forEach>
+    					</select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="btnArea">
+    	<input type="button" class="btn pri" onclick="fn_download_report_excel();" value="엑셀저장" >
+    </div>
+    
 </div>
 </form>
 <%@ include file="/include/common.jsp" %>

@@ -46,128 +46,132 @@
 
             <!-- 섹션 기본정보 START -->
             <div id="baseInfo" style="width:24%; height: 210px; float: left; padding-right: 10px;">
-                <h3 style="line-height: 30px; font-size: 15px;">기본정보</h3>
-                <table class="tbview" style="width: 100%; height: 100%; margin-top: 20px;">
-                    <caption>포장상태 기본정보</caption>
-                    <colgroup>
-                        <col width="21%" />
-                        <col width="29%" />
-                        <col width="21%" />
-                        <col width="29%" />
-                    </colgroup>
-                    <tbody style="text-align: center;">
-                        <tr>
-                            <th colspan="2" scope="row" style="border-right: solid 0px">조사년월</th>
-                            <td colspan="2">${smDtaGnlSttusVO.SRVY_YEAR }. ${smDtaGnlSttusVO.SRVY_MT }</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">노선번호</th>
-                            <td>${smDtaGnlSttusVO.ROAD_NO_VAL }</td>
-                            <th scope="row">노선명</th>
-                            <td>${smDtaGnlSttusVO.ROAD_NM }</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">행선</th>
-                            <td>${smDtaGnlSttusVO.DIRECT_NM }</td>
-                            <th scope="row">차로</th>
-                            <td>${smDtaGnlSttusVO.TRACK }</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">도로등급</th>
-                            <td>${smDtaGnlSttusVO.ROAD_GRAD }</td>
-                            <th scope="row">이정(m)</th>
-                            <td>${smDtaGnlSttusVO.STRTPT } ~ ${smDtaGnlSttusVO.ENDPT }</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">관리기관</th>
-                            <td>${smDtaGnlSttusVO.DEPT_CODE }</td>
-                            <th scope="row">셀종류</th>
-                            <td>${smDtaGnlSttusVO.CELL_TYPE }</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">교통용량</th>
-                            <td>${smDtaGnlSttusVO.VMTC_GRAD }</td>
-                            <th scope="row">행정구역</th>
-                            <td>${smDtaGnlSttusVO.ADM_CODE }</td>
-                        </tr>
-                        <tr>
-                        	<th scope="row">관리도로</th>
-                        	<td>${smDtaGnlSttusVO.MRG_RD_NM }</td>
-                        </tr>
-                        <tr>
-                        	<th scope="row">공사구간</th>
-                        	<td>${smDtaGnlSttusVO.CNTRWK_AT }</td>
-                        	<th scope="row">미개통구간</th>
-                        	<td>${smDtaGnlSttusVO.UNOPN_AT }</td>
-                        </tr>
-                    </tbody>
-
-                </table>
+                <h3 class="h3">기본정보 </h3>
+                <div class="table">
+	                <table class="table20">
+	                    <caption class="hidden">포장상태 기본정보</caption>
+	                    <colgroup>
+	                        <col width="21%" />
+	                        <col width="29%" />
+	                        <col width="21%" />
+	                        <col width="29%" />
+	                    </colgroup>
+	                    <tbody>
+	                        <tr>
+	                            <th colspan="2" scope="row" style="border-right: solid 0px">조사년월</th>
+	                            <td colspan="2">${smDtaGnlSttusVO.SRVY_YEAR }. ${smDtaGnlSttusVO.SRVY_MT }</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">노선번호</th>
+	                            <td>${smDtaGnlSttusVO.ROAD_NO_VAL }</td>
+	                            <th scope="row">노선명</th>
+	                            <td>${smDtaGnlSttusVO.ROAD_NM }</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">행선</th>
+	                            <td>${smDtaGnlSttusVO.DIRECT_NM }</td>
+	                            <th scope="row">차로</th>
+	                            <td>${smDtaGnlSttusVO.TRACK }</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">도로등급</th>
+	                            <td>${smDtaGnlSttusVO.ROAD_GRAD }</td>
+	                            <th scope="row">이정(m)</th>
+	                            <td>${smDtaGnlSttusVO.STRTPT } ~ ${smDtaGnlSttusVO.ENDPT }</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">관리기관</th>
+	                            <td>${smDtaGnlSttusVO.DEPT_CODE }</td>
+	                            <th scope="row">셀종류</th>
+	                            <td>${smDtaGnlSttusVO.CELL_TYPE }</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">교통용량</th>
+	                            <td>${smDtaGnlSttusVO.VMTC_GRAD }</td>
+	                            <th scope="row">행정구역</th>
+	                            <td>${smDtaGnlSttusVO.ADM_CODE }</td>
+	                        </tr>
+	                        <tr>
+	                        	<th scope="row">관리도로</th>
+	                        	<td colspan="3">${smDtaGnlSttusVO.MRG_RD_NM }</td>
+	                        </tr>
+	                        <tr>
+	                        	<th scope="row">공사구간</th>
+	                        	<td>${smDtaGnlSttusVO.CNTRWK_AT }</td>
+	                        	<th scope="row">미개통구간</th>
+	                        	<td>${smDtaGnlSttusVO.UNOPN_AT }</td>
+	                        </tr>
+	                    </tbody>
+	
+	                </table>
+                </div>
             </div>
             <!-- 섹션 기본정보 END -->
 
             <!-- 포장상태 조사자료 START -->
             <div id="srvyData" style="width:24%; height: 210px; float: left; padding-right: 10px; border-radius: 5px;">
-                <h3 style="line-height: 30px; font-size: 15px;">조사자료</h3>
-                <table class="tbview" style="width: 100%; height: 100%; margin-top: 20px; text-align: center;">
-                    <caption>포장상태 조사자료</caption>
-                    <colgroup>
-                        <col width="25%" />
-                        <col width="25%" />
-                        <col width="25%" />
-                        <col width="25%" />
-                    </colgroup>
-                    <tbody>
-                        <tr style="height: auto;">
-                            <th scope="row">거북등균열<br/>(㎡)</th>
-                            <td>
-                                <fmt:parseNumber value="${smDtaGnlSttusVO.TRTS_BAC_CR }" type="number" var="TRTS_BAC_CR" />
-                                <fmt:formatNumber value="${TRTS_BAC_CR }" minFractionDigits="2" />
-                            </td>
-                            <th scope="row">선형균열<br/>(m)</th>
-                            <td>
-                                <fmt:parseNumber value="${smDtaGnlSttusVO.VRTCAL_CR }" type="number" var="VRTCAL_CR" />
-                                <fmt:formatNumber value="${VRTCAL_CR }" minFractionDigits="2" />
-                            </td>
-                        </tr>
-                        <tr style="height: auto;">
-                            <th scope="row">블럭균열<br/>(㎡)</th>
-                            <td colspan="3">
-                                <fmt:parseNumber value="${smDtaGnlSttusVO.BLOCK_CR }" type="number" var="BLOCK_CR" />
-                                <fmt:formatNumber value="${BLOCK_CR }" minFractionDigits="2" />
-                            </td>
-                        </tr>
-                        <tr style="height: auto;">
-                            <th scope="row">패칭(㎡)</th>
-                            <td>
-                                <fmt:parseNumber value="${smDtaGnlSttusVO.PTCHG_CR }" type="number" var="PTCHG_CR" />
-                                <fmt:formatNumber value="${PTCHG_CR }" minFractionDigits="2" />
-                            </td>
-                            <th scope="row">포트홀(㎡)</th>
-                            <td>
-                                <fmt:parseNumber value="${smDtaGnlSttusVO.POTHOLE_CR }" type="number" var="POTHOLE_CR" />
-                                <fmt:formatNumber value="${POTHOLE_CR }" minFractionDigits="2" />
-                            </td>
-                        </tr>
-                        <tr style="height: 20%;">
-                            <th scope="row">소성변형<br/>(mm)</th>
-                            <td>
-                                <fmt:parseNumber value="${smDtaGnlSttusVO.RD_VAL }" type="number" var="RD_VAL" />
-                                <fmt:formatNumber value="${RD_VAL }" minFractionDigits="2" />
-                            </td>
-                            <th scope="row">종단평탄성<br/>(m/km)</th>
-                            <td>
-                                <fmt:parseNumber value="${smDtaGnlSttusVO.IRI_VAL }" type="number" var="IRI_VAL" />
-                                <fmt:formatNumber value="${IRI_VAL }" minFractionDigits="2" />
-                            </td>
-                        </tr>
-                        <tr style="height: auto;">
-                            <th scope="row">교통량</th>
-                            <td colspan="3">-</td>
-                        </tr>
-                    </tbody>
-
-                </table>
+                <h3 class="h3">조사자료</h3>
+                <div class="table">
+	                <table class="table20">
+	                    <caption class="hidden">포장상태 조사자료</caption>
+	                    <colgroup>
+	                        <col width="25%" />
+	                        <col width="25%" />
+	                        <col width="25%" />
+	                        <col width="25%" />
+	                    </colgroup>
+	                    <tbody>
+	                        <tr style="height: auto;">
+	                            <th scope="row">거북등균열<br/>(㎡)</th>
+	                            <td>
+	                                <fmt:parseNumber value="${smDtaGnlSttusVO.TRTS_BAC_CR }" type="number" var="TRTS_BAC_CR" />
+	                                <fmt:formatNumber value="${TRTS_BAC_CR }" minFractionDigits="2" />
+	                            </td>
+	                            <th scope="row">선형균열<br/>(m)</th>
+	                            <td>
+	                                <fmt:parseNumber value="${smDtaGnlSttusVO.VRTCAL_CR }" type="number" var="VRTCAL_CR" />
+	                                <fmt:formatNumber value="${VRTCAL_CR }" minFractionDigits="2" />
+	                            </td>
+	                        </tr>
+	                        <tr style="height: auto;">
+	                            <th scope="row">블럭균열<br/>(㎡)</th>
+	                            <td colspan="3">
+	                                <fmt:parseNumber value="${smDtaGnlSttusVO.BLOCK_CR }" type="number" var="BLOCK_CR" />
+	                                <fmt:formatNumber value="${BLOCK_CR }" minFractionDigits="2" />
+	                            </td>
+	                        </tr>
+	                        <tr style="height: auto;">
+	                            <th scope="row">패칭(㎡)</th>
+	                            <td>
+	                                <fmt:parseNumber value="${smDtaGnlSttusVO.PTCHG_CR }" type="number" var="PTCHG_CR" />
+	                                <fmt:formatNumber value="${PTCHG_CR }" minFractionDigits="2" />
+	                            </td>
+	                            <th scope="row">포트홀(㎡)</th>
+	                            <td>
+	                                <fmt:parseNumber value="${smDtaGnlSttusVO.POTHOLE_CR }" type="number" var="POTHOLE_CR" />
+	                                <fmt:formatNumber value="${POTHOLE_CR }" minFractionDigits="2" />
+	                            </td>
+	                        </tr>
+	                        <tr style="height: 20%;">
+	                            <th scope="row">소성변형<br/>(mm)</th>
+	                            <td>
+	                                <fmt:parseNumber value="${smDtaGnlSttusVO.RD_VAL }" type="number" var="RD_VAL" />
+	                                <fmt:formatNumber value="${RD_VAL }" minFractionDigits="2" />
+	                            </td>
+	                            <th scope="row">종단평탄성<br/>(m/km)</th>
+	                            <td>
+	                                <fmt:parseNumber value="${smDtaGnlSttusVO.IRI_VAL }" type="number" var="IRI_VAL" />
+	                                <fmt:formatNumber value="${IRI_VAL }" minFractionDigits="2" />
+	                            </td>
+	                        </tr>
+	                        <tr style="height: auto;">
+	                            <th scope="row">교통량</th>
+	                            <td colspan="3">-</td>
+	                        </tr>
+	                    </tbody>
+	
+	                </table>
+	              </div>
             </div>
             <!-- 포장상태 조사자료 END -->
 
@@ -181,13 +185,13 @@
 		            </ul>
 		        </div>
                 <!-- <a href="#" style="float:right; line-height: 11px; margin-top: 5px;" class="titbtn" onclick="">수시평가정보조회</a> -->
-                <ul class="tblst mt15">
+                <ul class="tblst mt15" style="clear: both">
                     <li style="width:21%;border-left:0px" class="brl tc">
                         <span class="circle bc6" id="gpci" style="width: 85%; height: 40px; line-height: 40px; font-size: 16px;">0</span>
                         <span>GPCI</span>
                     </li>
                     <li style="width:37%" class="brl tc">
-                        <span class="circle bc5" id="crVal" style="width: 85%; height: 40px; line-height: 40px; font-size: 16px;">없음</span>
+                        <span class="circle bc5" id="crVal" style="width: 85%; line-height: 40px; font-size: 16px;">없음</span>
                         <span>주 파손</span>
                     </li>
                     <li style="width:40%" class="tc">
@@ -197,7 +201,7 @@
                 </ul>
 
                 <table class="tbview" style="width: 100%; height: 121px; margin-top: 7px;">
-                    <caption>포장상태 평가정보</caption>
+                    <caption class="hidden">포장상태 평가정보</caption>
                     <colgroup>
                         <col width="30%" />
                         <col width="20%" />

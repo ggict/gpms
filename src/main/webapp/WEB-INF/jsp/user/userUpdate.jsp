@@ -24,8 +24,8 @@
     <form name="frm" id="frm" method="post" action="" style="height: 80%;">
     <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
 
-    <table class="tbview" summary="사용자 정보수정를 제공합니다.">
-        <caption>사용자 정보수정</caption>
+    <table class="tbview">
+        <caption class="hidden">암호확인</caption>
         <colgroup>
             <col width="30%" />
             <col width="70%" />
