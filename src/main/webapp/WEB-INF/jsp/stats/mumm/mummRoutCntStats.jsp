@@ -27,7 +27,22 @@
 	        <span>포장상태 평가</span>
 	        <strong>노선별 통계</strong>
 	    </p>
-	    
+    <div class="search-area" style="text-align:right;">
+       <label for="road-grad-select">도로등급</label>
+       <select>
+           <option>전체</option>
+           <option>국지도</option>
+           <option>지방도</option>
+       </select>
+       <label for="rout-select">노선번호</label>
+       <select id="rout-select">
+           <option>전체</option>
+           <option>23호선</option>
+           <option>301호선</option>
+       </select>
+       <input type="text" readonly disabled value="천안-파주" />
+       <button type="button">검색</button>
+    </div>
         <div id="divStatChart" style="overflow-y:auto;">
             <ul class="statsbx">
                 <li style="float:none; width:97%">
