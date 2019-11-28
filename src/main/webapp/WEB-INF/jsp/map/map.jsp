@@ -291,7 +291,7 @@ var MAIN = (function(_mod_map, $, undefined) {
 		},
 		userStyle : ''
 	});
-
+	/* 
 	//레이어 관리
 	$("#divLayerTool").dialog({
 		title: '레이어 관리',
@@ -312,7 +312,7 @@ var MAIN = (function(_mod_map, $, undefined) {
 			}
 		}
 	});
-
+ 	*/
 	var fn_get_layerInfoList = function (_oLayer){
 		return oLayerInfoList[_oLayer];
 	}
