@@ -653,3 +653,25 @@ body.research {
     }
     select.ui-datepicker-year {width: 60px;}
 }
+
+.divlayermng {
+    ul {list-style:none;margin:0;padding:0;
+        li {padding: 5px; float: left; text-align: center;
+            a { display: block; width: 38px;padding: 37px 0 0 0; font-size: 0; background:#f9f9f9 url(../images/layerMngIcon.png) no-repeat 3px 2px;
+                p{font-size: 12px; background-color: #fff; border-top:solid 1px #ededed; padding: 3px 0;}
+                &:hover,&:focus {background-color:#ededed}
+            }
+            &.active a { background-color: #6aa2ec; background-position-x:-32px; }
+
+        }
+        li:nth-child(2) a{background-position-y:-32px;}
+        li:nth-child(3) a{background-position-y:-67px;}
+        li:nth-child(4) a{background-position-y:-101px;}
+        li:nth-child(5) a{background-position-y:-134px;}
+        li:nth-child(6) a{background-position-y:-167px;}
+        li:nth-child(7) a{background-position-y:-201px;}
+        li:nth-child(8) a{background-position-y:-235px;}
+        li:nth-child(9) a{background-position-y:-268px;}
+        li:nth-child(10) a{background-position-y:-303px;}
+    }
+}
