@@ -636,8 +636,8 @@ function bottomOpen() {
 function bottomClose() {
     $('#leftCloseBt').addClass('hidden');
     $('#leftOpenBt').removeClass('hidden');
-    $('#bottom').css("height", "50px");
-    wWindowsResizeMinHeight(50);
+    $('#bottom').css("height", "44px");
+    wWindowsResizeMinHeight(44);
 }
 function goodStatsOpen() {
     $('#leftCloseSt').removeClass('hidden');

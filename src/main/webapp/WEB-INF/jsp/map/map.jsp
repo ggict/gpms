@@ -18,18 +18,6 @@
     String flag = "gpms";
     session.setAttribute("sFlag", flag);
 %>
-<style>
-
-/**
-레이어 선택 공간 css
-*/
-.divlayermng ul {list-style:none;margin:0;padding:0;}
-.divlayermng ul li {margin: 5px 5px 0px 5px; padding: 0 0 0 0; border : 0; float: left; text-align: center; height: 70px;}
-.divlayermng ul li p {width:43px;}
-.divlayermng ul li a img {width:32px; height:32px;}
-.divlayermng ul .active a img {border: 2px solid blue;}
-
-</style>
 </head>
 <body>
 	<div id="wrap">
@@ -381,7 +369,8 @@ var layersMngObj = {
 		var imageUrl = contextPath + 'images/common/gps.png';
 		var template = ''
 				+ '<li class="{class}">'
-				+ '<a href="#"><img src="'+imageUrl+'"/><p data-layer="{layernm}">{title}</p></a>'
+				//+ '<a href="#"><img src="'+imageUrl+'"/><p data-layer="{layernm}">{title}</p></a>'
+				+ '<a href="#"><p data-layer="{layernm}">{title}</p></a>'
 				+ '</li>';
 		return template;
 	}

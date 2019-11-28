@@ -201,7 +201,9 @@ body.a00 li.a00 span, body.b00 li.b00 span, body.c00 li.c00 span, body.d00 li.d0
 
 .contentsWrap button.btnContentClose:hover, .contentsWrap button.btnContentClose:focus { background-position: center -13px; }
 
-.contents.container { padding: 10px 0 0 1%; }
+.input[type="checkbox"] + label.hiddenLabel.onlyCk:before { margin: -4px 0 0 -14px; }
+
+.contents.container { padding: 0 0 0 1%; }
 
 .contents:after { display: block; content: ''; clear: both; }
 
@@ -433,6 +435,7 @@ input.mapPosition_X, input.mapPosition_Y { width: 100px; }
 
 .tab_wrap { border-top: solid 1px #69707e; }
 
+/* ui-grid */
 .ui-icon-triangle-1-n { background-position-x: 1px; }
 
 .ui-state-default, .ui-widget-content .ui-state-default { background: #f3f3f3; border: 1px solid #cccccc; border-bottom: none; font-size: 13px; font-weight: 600; }
@@ -440,6 +443,10 @@ input.mapPosition_X, input.mapPosition_Y { width: 100px; }
 .ui-jqgrid tr.jqgrow td { padding: 4px 8px; height: inherit; }
 
 .ui-state-default .ui-icon { background-image: url(../images/ui/ui-icons_222222_256x240.png); }
+
+.ui-widget-header { font-weight: normal; }
+
+.cont_ListBx .ui-state-default, .cont_ListBx .ui-widget-content .ui-state-default { color: #333; border-bottom: solid 1px #ccc; }
 
 .whitebtn { margin: -2px; }
 
@@ -450,6 +457,8 @@ input.mapPosition_X, input.mapPosition_Y { width: 100px; }
 .ui-jqgrid .ui-jqgrid-bdiv { margin-left: -1px; }
 
 .ui-jqgrid .ui-pager-control { margin-top: -1px; border-top: solid 1px #ddd; }
+
+.ui-jqgrid-ftable .ui-jqgrid tr.footrow td { background: #f9f9f9; }
 
 /* #gview_gridArea {height: 210px;overflow: auto;} */
 #gridPager { border: none; height: auto; border-top: solid 1px #ccc; margin-top: -1px !important; }
@@ -521,6 +530,8 @@ div select, select.input { padding-right: 20px; background: url(../images/selece
 td input[type="text"].hasDatepicker { width: 120px; }
 
 td input[type="text"].hasDatepicker + img.ui-datepicker-trigger { margin: 0 6px -4px -20px; }
+
+td span.calendar input[type="text"].hasDatepicker + img.ui-datepicker-trigger { margin: 0; }
 
 /* jsDiv */
 article.jsDiv { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; z-index: 1000; background: rgba(0, 0, 0, 0.3); }
@@ -702,8 +713,6 @@ a.btnSideDivClose:hover, a.btnSideDivClose:focus { opacity: 1; }
 
 #tabcont1 + .btnArea { padding-top: 10px; }
 
-.ui-widget-header { font-weight: normal; }
-
 .txtbx { font-size: 16px; }
 
 .tc { text-align: center; border-top: solid 1px #ededed; padding-top: 10px; }
@@ -739,5 +748,35 @@ body.research #srvyImage { position: absolute; left: 0; top: 0; width: 100%; }
 .ui-datepicker select.ui-datepicker-month option, .ui-datepicker select.ui-datepicker-year option { color: #333; }
 
 .ui-datepicker select.ui-datepicker-year { width: 60px; }
+
+.divlayermng ul { list-style: none; margin: 0; padding: 0; }
+
+.divlayermng ul li { padding: 5px; float: left; text-align: center; }
+
+.divlayermng ul li a { display: block; width: 38px; padding: 37px 0 0 0; font-size: 0; background: #f9f9f9 url(../images/layerMngIcon.png) no-repeat 3px 2px; }
+
+.divlayermng ul li a p { font-size: 12px; background-color: #fff; border-top: solid 1px #ededed; padding: 3px 0; }
+
+.divlayermng ul li a:hover, .divlayermng ul li a:focus { background-color: #ededed; }
+
+.divlayermng ul li.active a { background-color: #6aa2ec; background-position-x: -32px; }
+
+.divlayermng ul li:nth-child(2) a { background-position-y: -32px; }
+
+.divlayermng ul li:nth-child(3) a { background-position-y: -67px; }
+
+.divlayermng ul li:nth-child(4) a { background-position-y: -101px; }
+
+.divlayermng ul li:nth-child(5) a { background-position-y: -134px; }
+
+.divlayermng ul li:nth-child(6) a { background-position-y: -167px; }
+
+.divlayermng ul li:nth-child(7) a { background-position-y: -201px; }
+
+.divlayermng ul li:nth-child(8) a { background-position-y: -235px; }
+
+.divlayermng ul li:nth-child(9) a { background-position-y: -268px; }
+
+.divlayermng ul li:nth-child(10) a { background-position-y: -303px; }
 
 /*# sourceMappingURL=road2019.css.map */

@@ -506,9 +506,9 @@ function fn_grid_btn(cellValue, options, rowObject) {
 		break;
 	case "btn_check": {
 		if (rowObject.TMPR_SLCTN_AT == "Y") {// || rowObject.SLCTN_AT=="Y"
-			btn = "<input type='checkbox' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
+			btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
 		} else {
-			btn = "<input type='checkbox' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
+			btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
 		}
 	}
 		break;

@@ -14,9 +14,9 @@ function fn_grid_btn(cellValue, options, rowObject) {
 		break;
 	case "btn_check": {
 		if (rowObject.TMPR_SLCTN_AT == "Y") {
-			btn = "<input type='checkbox' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
+			btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
 		} else {
-			btn = "<input type='checkbox' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
+			btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
 		}
 
 	}
@@ -71,7 +71,7 @@ function fn_checkItem(objThis, group_item_no, tmpr_slctn_at, fix_amount_calc) {
 
 function fnInitRangeSelection(isSearch) {
 	var action = '<c:url value="/api/rpairtrgetgroup/updateInitTMPR_SLCTN_AT.do"/>';
-	var vForm = $("#frmRpairTrgetGroup");
+	var vForm = $("#frmRpairTrgetGroup"); 
 	var vPostData = {
 		"TRGET_SLCTN_NO" : vForm.find("#TRGET_SLCTN_NO").val()
 	};

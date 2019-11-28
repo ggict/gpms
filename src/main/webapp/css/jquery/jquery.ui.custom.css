@@ -829,19 +829,13 @@ body .ui-tooltip {
 
 /* Component containers
 ----------------------------------*/
-.ui-widget {
-	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
-	/*font-size: 1.1em;*/
-	/* 2015.12.16 다이얼로그 폰트 크기 작게 */	
-}
 .ui-widget .ui-widget {
 	font-size: 1em;
 }
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
-.ui-widget button {
-	font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+.ui-widget button {	
 	font-size: 1em;
 }
 .ui-widget-content {
