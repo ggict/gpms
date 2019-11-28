@@ -220,7 +220,7 @@
                 </div>
                  -->
 
-                <div id="divLayerTool">
+                <div id="divLayerTool" style="margin-left: 50px;">
 	                <div id="divLayerMngList" class="divlayermng">
 	                	<ul id="divLayerMngList_ul">
 	                	<%--
