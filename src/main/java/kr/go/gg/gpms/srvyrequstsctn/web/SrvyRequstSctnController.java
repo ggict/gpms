@@ -171,7 +171,10 @@ public class SrvyRequstSctnController extends BaseController {
 
 			resultCode = "SAVE_SUCCESS";
 			BindBeansToActiveUser(srvyRequstSctnVO);
-
+			
+			String SRVY_REQUST_DE = srvyRequstSctnVO.getSRVY_REQUST_DE().replace("-", "");
+			srvyRequstSctnVO.setSRVY_REQUST_DE(SRVY_REQUST_DE);
+			
 			String srvyRequstSctnNo = srvyRequstSctnService.insertSrvyRequstSctn(srvyRequstSctnVO);
 			//위치 정보 등록
 			String cellIdList[] = srvyRequstSctnCellInfoVO.getPAV_CELL_ID().split(",");

@@ -10,10 +10,7 @@
 <head>
 <title>조사요청구간 관리 </title>
 <%@ include file="/include/common_head.jsp" %>
-<script src="<c:url value='/js/common/cu_alert.js'/>"></script>
-<script type="text/javaScript" language="javascript" defer="defer">
 
-</script>
 </head>
 
 <body id="wrap">
