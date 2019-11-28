@@ -263,7 +263,7 @@ $.fn.accessibleDropDown = function () {
         }
 
         fnWindowPopupClose();
-        
+        /*
         //레이어 관리 show/hide
         var layerBoxHiddenMenuList = ['menu4', 'menu6'];
         var length = layerBoxHiddenMenuList.length;
@@ -277,7 +277,7 @@ $.fn.accessibleDropDown = function () {
         		$("#divLayerTool").dialog('open');
         	}
         }
-
+        */
     });
 
     // 새로고침/초기 로그인 시 랜덤으로 topmenu에 focus되는 경우가 있어서 focus 시 select 되는 것은 보류.
@@ -664,14 +664,14 @@ function statsOpen() {
     $('#unptcSenario').addClass('hidden');
     $('#bottom').css("height", "0px");
     wWindowsResizeMinHeight(0);
-    $("#divLayerTool").dialog('close');
+    //$("#divLayerTool").dialog('close');
 }
 function statsClose() {
     $('#leftCloseSt').addClass('hidden');
     $('#leftOpenSt').removeClass('hidden');
     $('#stats').css("top", $(window).height()-44);
     wWindowsResizeMinHeight(50);
-    $("#divLayerTool").dialog('open');
+    //$("#divLayerTool").dialog('open');
 }
 /* full windows style 적용    */
 function repairtargetsOpen() {
@@ -703,7 +703,7 @@ function repairtargetsShow() {
     $('#repairtargets').removeClass('hidden');
     $('#repairtargets').css("top", "97px");
     wWindowsResizeMinHeight(0);
-    $("#divLayerTool").dialog('close');
+    //$("#divLayerTool").dialog('close');
 
 }
 function repairtargetsHideBottom() {
@@ -712,7 +712,7 @@ function repairtargetsHideBottom() {
     //$('#repairtargets').css("height", "50px");
     $('#repairtargets').css("top", $(window).height()-44);
     wWindowsResizeMinHeight(50);
-    $("#divLayerTool").dialog('open');
+    //$("#divLayerTool").dialog('open');
 }
 
 function unptcSenarioOpen(type) {
