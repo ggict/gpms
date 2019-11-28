@@ -738,8 +738,7 @@ GRequest.WFS = {
 
 	REQUEST : null,
 	
-	//geometryCN : 'G2_SPATIAL',
-	geometryCN : 'geom',
+	geoColumn : 'geom',
 
 	format : {
 		gml : new OpenLayers.Format.GML(),
@@ -1068,7 +1067,7 @@ GRequest.WFS = {
             var filter = new OpenLayers.Filter.Spatial({
                 type: params.type,
                 //property: "G2_SPATIAL",
-                property: this.geometryCN,
+                property: parameters.geoColumn || this.geoColumn,
                 value: params.values[0],
             });
             if (oXMLHttpRequest && !bIE7) queryStr += this.format.xml.write(this.format.filter.write(filter));
@@ -1107,7 +1106,7 @@ GRequest.WFS = {
             var filter = new OpenLayers.Filter.Spatial({
                 type: params.type,
                 //property: "G2_SPATIAL",
-                property: this.geometryCN,
+                property: parameters.geoColumn || this.geoColumn,
                 value: params.values[0],
             });
             if (oXMLHttpRequest && !bIE7) queryStr += this.format.xml.write(this.format.filter.write(filter));
@@ -1146,7 +1145,7 @@ GRequest.WFS = {
 			var filter = new OpenLayers.Filter.Spatial({
 				type: params.type,
 				//property : "G2_SPATIAL",
-				property: this.geometryCN,
+				property: parameters.geoColumn || this.geoColumn,
 				value: params.values[0],
 				distance: params.distance,
 				distanceUnits: 'm'
@@ -1194,7 +1193,7 @@ GRequest.WFS = {
 			var filter = new OpenLayers.Filter.Spatial({
 				type: params.type,
 				//property : "G2_SPATIAL",
-				property: this.geometryCN,
+				property: parameters.geoColumn || this.geoColumn,
 				value: params.values[0]
 			});
 
@@ -1496,10 +1495,10 @@ GRequest.WFS = {
 		wfsStr += '<wfs:Insert>';
 		wfsStr += '<' + prefix + ':' + table + ' xmlns:' + prefix + '="http://geogate.g-inno.com/dataserver/' + prefix + '">';
 		//wfsStr += '<' + prefix + ':G2_SPATIAL>';
-		wfsStr += '<' + prefix + ':'+ this.geometryCN +'>';
+		wfsStr += '<' + prefix + ':'+ this.geoColumn +'>';
 		wfsStr += this.createGmlXml(features);
 		//wfsStr += '</' + prefix + ':G2_SPATIAL>';
-		wfsStr += '</' + prefix + ':'+ this.geometryCN +'>';
+		wfsStr += '</' + prefix + ':'+ this.geoColumn +'>';
 		if(fields && fields.length > 0) wfsStr += this.createAttrXml(prefix, fields, values);
 		wfsStr += '</' + prefix + ':' + table + '>';
 		wfsStr += '</wfs:Insert>';
@@ -1550,7 +1549,7 @@ GRequest.WFS = {
 		wfsStr += '<wfs:Update typeName="' + prefix + ':' + table + '" xmlns:' + prefix + '="http://geogate.g-inno.com/dataserver/' + prefix + '">';
 		wfsStr += '<wfs:Property>';
 		//wfsStr += '<wfs:Name>G2_SPATIAL</wfs:Name>';
-		wfsStr += '<wfs:Name>'+ this.geometryCN +'</wfs:Name>';
+		wfsStr += '<wfs:Name>'+ this.geoColumn +'</wfs:Name>';
 		wfsStr += '<wfs:Value>';
 		wfsStr += this.createGmlXml(features);
 		wfsStr += '</wfs:Value>';
