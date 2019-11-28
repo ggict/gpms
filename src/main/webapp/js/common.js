@@ -669,7 +669,7 @@ function statsOpen() {
 function statsClose() {
     $('#leftCloseSt').addClass('hidden');
     $('#leftOpenSt').removeClass('hidden');
-    $('#stats').css("top", $(window).height()-55);
+    $('#stats').css("top", $(window).height()-44);
     wWindowsResizeMinHeight(50);
     $("#divLayerTool").dialog('open');
 }
@@ -691,7 +691,7 @@ function repairtargetsOpen() {
 function repairtargetsClose() {
     $('#leftCloseRt').addClass('hidden');
     $('#leftOpenRt').removeClass('hidden');
-    $('#repairtargets').css("top", $(window).height()-55);
+    $('#repairtargets').css("top", $(window).height()-44);
     $('#repairtargets').css("display", "none");
 
     wWindowsResizeMinHeight(50);
@@ -710,7 +710,7 @@ function repairtargetsHideBottom() {
     $('#leftCloseRt').addClass('hidden');
     $('#leftOpenRt').removeClass('hidden');
     //$('#repairtargets').css("height", "50px");
-    $('#repairtargets').css("top", $(window).height()-55);
+    $('#repairtargets').css("top", $(window).height()-44);
     wWindowsResizeMinHeight(50);
     $("#divLayerTool").dialog('open');
 }

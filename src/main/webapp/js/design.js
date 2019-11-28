@@ -131,14 +131,8 @@ $(function(){
 
 	// 탭메뉴
 	$(".tab a").click(function(){
-		$(".h3.tab").removeClass("on");
-		$(this).parent().addClass("on");
-		$(".tabArticle").removeClass("on");
-
-		var tabHref = $(this).attr("href");
-		var tabHrefArticle = tabHref.replace('#','')
-		$("#"+ tabHrefArticle).addClass("on");
-		return false;
+		$(".tab a").removeClass("on");
+		$(this).addClass("on");
 	});
 
 	// 모바일 메뉴 여닫기

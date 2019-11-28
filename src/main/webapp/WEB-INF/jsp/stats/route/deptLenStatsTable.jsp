@@ -193,12 +193,15 @@ function fnExcel() {
 		<p class="location">
 			<span>통계</span>
 			<span>노선 현황</span>
-			<strong>관리기관별 통계</strong>
+			<strong>관리기관별 통계  첫번째탭</strong>
 		</p>
 	</div>
+	<div class="tab">
+			<a href="#statsChart" onclick="fnToggle('Table')" class="on">상세보기</a>
+			<a href="#statsTable" onclick="location.replace('<c:url value="selectDeptLenStats.do"/>');">그래프보기</a>	
+	</div>
 	<div class="cont_ListBx">
-		<div class="btnbx mb10">
-          	<a href="javascript:;" class="schbtn" onclick="location.replace('<c:url value="selectDeptLenStats.do"/>');">그래프보기</a>
+		<div class="btnbx mb10">          	
           	<a href="javascript:;" class="schbtn" onclick="fnExcel();">엑셀저장</a>
         </div>
 		<div id="div_grid" >

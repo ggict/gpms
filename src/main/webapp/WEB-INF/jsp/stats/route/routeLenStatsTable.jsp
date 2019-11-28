@@ -352,55 +352,86 @@ function fnExcel() {
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
 <!-- container start -->
-<div style="margin: 0px 20px 0 20px;">
 	<div id="sch_cnt01" class="tabcont">
-		<h3>노선별 도로연장 통계</h3>
-		<p class="location">
-			<span>통계</span>
-			<span>노선 현황</span>
-			<strong>노선별 통계</strong>
-		</p>
+		<header class="loc">
+	        <div class="container">
+	            <span class="locationHeader">
+	                <select name="">
+	                    <option value="">통계</option>
+	                </select>
+	                <select name="">
+	                    <option value="">노선별현황</option>
+	                </select>
+	                <select name="">
+	                    <option value="">노선별통계</option>
+	                </select>
+	            </span>
+	        </div>
+	    </header>
 	</div>
-	<div class="search-area" style="text-align:right;">
-	   <label for="road-grad-select">도로등급</label>
-	   <select>
-	       <option>전체</option>
-	       <option>국지도</option>
-	       <option>지방도</option>
-	   </select>
-	   <label for="rout-select">노선번호</label>
-	   <select id="rout-select">
-	       <option>전체</option>
-	       <option>23호선</option>
-	       <option>301호선</option>
-	   </select>
-	   <input type="text" readonly disabled value="천안-파주" />
-	   <button type="button">검색</button>
-	</div>
-	<div class="cont_ListBx"  id="statsTable">
-		<div class="btnbx mb10">
-          	<a href="#" class="schbtn" onclick="fnToggle('Chart')">그래프보기</a>
-          	<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
-        </div>
-		<div id="div_grid" >
-			<table class="adminlist" id="gridArea"></table>
+	
+	<!-- container2 S -->
+	<div class="container2">
+	
+	    <div class="table searchBox top">
+	        <table>
+	            <tbody>
+	                <tr>
+	                    <td class="th">
+	                        <label for="road-grad-select">도로등급</label>
+	                    </td>
+	                    <td>
+	                        <select>
+	                            <option>전체</option>
+	                            <option>국지도</option>
+	                            <option>지방도</option>
+	                        </select>
+	                    </td>
+	                    <td class="th">
+	                        <label for="rout-select">노선번호</label>
+	                    </td>
+	                    <td>
+	                        <select id="rout-select">
+	                            <option>전체</option>
+	                            <option>23호선</option>
+	                            <option>301호선</option>
+	                        </select>
+	                    </td>
+	                    <td><input type="text" readonly disabled value="천안-파주" /></td>
+	                    <td class="btnCell"><button type="button" class="btn pri">검색</button></td>
+	                </tr>
+	            </tbody>
+	        </table>
+	    </div>
+	
+		<div class="tab">
+			<a href="#statsChart" onclick="fnToggle('Table')" class="on">상세보기</a>
+			<a href="#statsTable" onclick="fnToggle('Chart')">그래프보기</a>			
 		</div>
-	</div>
-	<div class="cont_ListBx" id="statsChart">
-		<div class="btnbx mb10">
-          	<a href="#" class="schbtn" onclick="fnToggle('Table')">상세보기</a>
-        </div>
-		<div id="divStatChart" style="overflow-y:auto;">
-			<ul class="statsbx">
-				<li style="margin-left: 1px;">
-					<div class="graylinebx p10" style="width:195%;">
-						<div id="lenBarChart" class="cont_ConBx2" style="height: 500px; margin-left:20px;"></div>
-					</div>
-				</li>
-			</ul>
+		<div id="statsTable">
+			<div class="btnArea_top tabR">	          	
+	          	<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
+	        </div>
+			<div id="div_grid" >
+				<table class="adminlist" id="gridArea"></table>
+			</div>
 		</div>
-	</div>	
-</div>
+	
+		<div id="statsChart">
+			<div id="divStatChart" style="overflow-y:auto;">
+				<ul class="statsbx">
+					<li style="margin-left: 1px;">
+						<div class="graylinebx p10" style="width:195%;">
+							<div id="lenBarChart" class="cont_ConBx2" style="height: 500px; margin-left:20px;"></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+	</div>
+	<!-- container2 E -->
+
 </form>
 
 <!-- 공통 (START)-->

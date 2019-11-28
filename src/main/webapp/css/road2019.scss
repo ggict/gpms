@@ -223,6 +223,7 @@ body{
         td, th {padding: 3px;}
     }
 }
+.container2 { padding: 0 1.5%;}
 .leftmenu {font-size: 13px; left: -1px;}
 .coInfo {padding: 3px 0 0 0;
     button{font-size: 12px; border:solid 1px #ddd; border-radius:2px; padding: 1px 4px 1px 20px; background: #fff url(../images/iconView.gif) no-repeat 4px 2px;
@@ -345,9 +346,10 @@ input.mapPosition_Y { width: 100px;}
 
 #snbacc { right: 0.45% ;top: 70px;}
 .bottomBtArea {right:0; top:0;
-    a {width: 42px;height: 42px;display: block; border: solid 1px #d6d6d6; border-top: solid 1px #69707e; border-right: none; background: #fff url(../images/selecetArrow2.gif) no-repeat center 20px;
+    a {width: 42px;height: 42px;display: block; border: solid 1px #d6d6d6; border-top: solid 1px #69707e; border-right: none; background: #fff url(../images/selecetArrow2.gif) no-repeat 60% 20px;
         &:hover, &:focus { background-color: #f9f9f9;}
         &#leftOpenBt { background-position: center -68px}
+        &#leftOpenRt { background-position: center -68px}
     }
     img {position: fixed; left: -9999px;}
 }
@@ -367,6 +369,7 @@ input.mapPosition_Y { width: 100px;}
 .cont_ListBx {
     .ui-state-default, .ui-widget-content .ui-state-default { color: #333; border-bottom:solid 1px #ccc}
 }
+.ui-state-default, .ui-widget-content .ui-state-default { color: #333; border-bottom:solid 1px #ccc}
 
 .whitebtn { margin: -2px;
     img{vertical-align: text-bottom}
@@ -380,6 +383,7 @@ input.mapPosition_Y { width: 100px;}
 .ui-jqgrid-ftable {
     .ui-jqgrid tr.footrow td {background: #f9f9f9;}
 }
+
 
 /* #gview_gridArea {height: 210px;overflow: auto;} */
 
@@ -430,6 +434,9 @@ table.tbview td,
         }
     }
     .th{ background: #f9f9f9;border: #e1e1e0 solid 1px;}
+    &.top { margin: 10px 0;
+        table {border-bottom:solid 1px #ddd}
+    }
 }
 .searchBox + .table {margin-top: -1px; border-top:#777 solid 1px}
 
@@ -689,3 +696,14 @@ body.research {
         li:nth-child(10) a{background-position-y:-303px;}
     }
 }
+.tab {border-bottom:solid 1px #6aa2ec;
+    a { display: inline-block; padding: 10px 50px 0 50px; height: 30px; border:solid 1px #ddd; border-bottom:solid 1px #6aa2ec; margin-bottom: -1px; float: left; color: #999;}
+    a.on {border:solid 1px #6aa2ec; border-bottom:solid 1px #fff; color: #6aa2ec;}
+    &:after { display: block; content: ''; clear: both;}
+}
+.btnArea_top.tabR { text-align: right; position: relative;
+    a {margin-top: -37px}
+}
+
+
+.stmenuarea { display: none;}

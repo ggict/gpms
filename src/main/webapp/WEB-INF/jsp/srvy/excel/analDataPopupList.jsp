@@ -105,31 +105,35 @@ function fn_search() {
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>
 <!-- 공통 (END)-->
-	
-	<div class="table" style="margin-bottom: 100px;">
-		<table>
-			<tbody>
-				<tr>
-					<td class="th">노선번호</td>
-					<td class="th">노선명</td>
-					<td class="th">행선</td>
-					<td class="th">차로</td>
-				</tr>
-				<tr id="dataTr"></tr>
-			</tbody>
-		</table>
-	</div>
-    		
-	<div class="fr listbx">
-    	<div class="mt10 ml10 mr10">
-    		<form id="frm" name="frm" method="post" action="">
-    		<input type="hidden" id="SRVY_NO" name="SRVY_NO" value="${srvyDtaVO.SRVY_NO}"/>
-			    <div id="div_grid" style="width:100%; height:206px">
-			        <table id="gridArea"></table>
-					<div id="gridPager"></div>
-	            </div>
-            </form>
-      	</div>
+
+	<div style="margin:0 2%">
+		<div class="table" style="margin:0 0 20px 0">
+			<table class="table20">			
+				<thead>
+					<tr>
+						<th scope="col">노선번호</th>
+						<th scope="col">노선명</th>
+						<th scope="col">행선</th>
+						<th scope="col">차로</th>
+					</tr>
+				<thead>
+				<tbody>
+					<tr id="dataTr"></tr>
+				</tbody>
+			</table>
+		</div>
+	    		
+
+
+   		<form id="frm" name="frm" method="post" action="">
+   			<input type="hidden" id="SRVY_NO" name="SRVY_NO" value="${srvyDtaVO.SRVY_NO}"/>
+		    <div id="div_grid" style="max-height:400px">
+		        <table id="gridArea"></table>
+				<div id="gridPager"></div>
+            </div>
+        </form>
+
+      	
 	</div>
 </body>
 </html>
