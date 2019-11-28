@@ -181,25 +181,34 @@ function fnExcel() {
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
 <!-- container start -->
-<div style="margin: 0px 20px 0 20px;">
-	<div id="sch_cnt01" class="tabcont">
-		<h3>차로별 도로연장 통계</h3>
-		<p class="location">
-			<span>통계</span>
-			<span>노선 현황</span>
-			<strong>차로별 통계</strong>
-		</p>
-	</div>
-	<div class="cont_ListBx">
-		<div class="btnbx mb10">
-          	<a href="#" class="schbtn" onclick="location.replace('<c:url value="selectTrackLenStats.do"/>');">그래프보기</a>
-          	<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">통계</option>
+                </select>
+                <select name="">
+                    <option value="">노선별현황</option>
+                </select>
+                <select name="">
+                    <option value="">차로별 통계</option>
+                </select>
+            </span>
         </div>
+	</header>
+
+	<div class="container2">
+		<div class="tab">
+				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="selectTrackStats.do"/>');">상세보기</a>
+				<a href="#divStatChart" onclick="location.replace('<c:url value="selectTrackLenStats.do"/>');">그래프보기</a>
+		</div>
+		<div class="btnArea_top tabR">	          	
+				<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
+		</div>		
 		<div id="div_grid" >
 			<table class="adminlist" id="gridArea"></table>
 		</div>
 	</div>
-</div>
 </form>
 
 <!-- 공통 (START)-->

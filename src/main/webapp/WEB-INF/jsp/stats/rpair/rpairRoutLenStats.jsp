@@ -18,17 +18,24 @@
 <input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
 <input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
-<div style="margin: 0px 20px 0 20px;">
-    <!--  그래프 -->
-	<div id="sch_cnt01" class="tabcont">
-	    <h3>보수대상 선정 노선별 통계</h3>
-	    <p class="location">
-	        <span>통계</span>
-	        <span>보수대상 선정</span>
-	        <strong>노선별 통계</strong>
-	    </p>
+
+<header class="loc">
+	        <div class="container">
+	            <span class="locationHeader">
+	                <select name="">
+	                    <option value="">통계</option>
+	                </select>
+	                <select name="">
+	                    <option value="">보수대상 선정</option>
+	                </select>
+	                <select name="">
+	                    <option value="">노선별 통계</option>
+	                </select>
+	            </span>
+	        </div>
+	    </header>
 	    
-        <div id="divStatChart" style="overflow-y:auto;">
+	    <div id="divStatChart" style="overflow-y:auto;">
             <ul class="statsbx">
                 <li style="float:none; width:97%">
                     <div class="graylinebx p10" style="width:100%;">
@@ -38,8 +45,8 @@
                 </li>
             </ul>
         </div>
-    </div>
-    <!-- 표 -->
+        
+        <!-- 표 -->
      <div class="cont_ListBx" style="display: none;">
         <table class="tblist" border="1" id="diagram">
             <colgroup>
@@ -60,7 +67,8 @@
             </tbody>
         </table>
     </div>
-</div>
+	    
+	    
 </form>
 
 <!-- 공통 (START)-->

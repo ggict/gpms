@@ -18,15 +18,24 @@
 <input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
 <input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
-<div style="margin: 0px 20px 0 20px;">
-    <!--  그래프 -->
-    <div id="sch_cnt01" class="tabcont">
-        <h3>포장상태 평가 관리기관별 통계</h3>
-        <p class="location">
-            <span>포장공사 이력관리</span>
-            <span>포장공사 통계조회</span>
-            <strong>관리기관별 통계</strong>
-        </p>
+
+<header class="loc">
+	        <div class="container">
+	            <span class="locationHeader">
+	                <select name="">
+	                    <option value="">통계</option>
+	                </select>
+	                <select name="">
+	                    <option value="">포장상태 평가</option>
+	                </select>
+	                <select name="">
+	                    <option value="">관리기관별 통계</option>
+	                </select>
+	            </span>
+	        </div>
+	    </header>
+
+
         
         <div id="divStatChart" style="overflow-y:auto;">
             <ul class="statsbx">
@@ -44,7 +53,7 @@
                 </li>
             </ul>
         </div>
-    </div>
+
     <!-- 표 -->
      <div class="cont_ListBx" style="display: none;">
         <table class="tblist" border="1" id="diagram">
@@ -76,7 +85,6 @@
             </tbody>
         </table>
     </div>
-</div>
 </form>
 
 <!-- 공통 (START)-->

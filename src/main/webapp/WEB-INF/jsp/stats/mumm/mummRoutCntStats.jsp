@@ -18,31 +18,67 @@
 <input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
 <input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
-<div style="margin: 0px 20px 0 20px;">
-    <!--  그래프 -->
+
+	<header class="loc">
+	        <div class="container">
+	            <span class="locationHeader">
+	                <select name="">
+	                    <option value="">통계</option>
+	                </select>
+	                <select name="">
+	                    <option value="">포장상태 평가</option>
+	                </select>
+	                <select name="">
+	                    <option value="">노선별 통계</option>
+	                </select>
+	            </span>
+	        </div>
+	    </header>
+	    
+	    <!-- container2 S -->
+	<div class="container2">
+	
+	    <div class="table searchBox top">
+	        <table>
+	            <tbody>
+	                <tr>
+	                    <td class="th">
+	                        <label for="road-grad-select">도로등급</label>
+	                    </td>
+	                    <td>
+	                        <select>
+	                            <option>전체</option>
+	                            <option>국지도</option>
+	                            <option>지방도</option>
+	                        </select>
+	                    </td>
+	                    <td class="th">
+	                        <label for="rout-select">노선번호</label>
+	                    </td>
+	                    <td>
+	                        <select id="rout-select">
+	                            <option>전체</option>
+	                            <option>23호선</option>
+	                            <option>301호선</option>
+	                        </select>
+	                    </td>
+	                    <td><input type="text" readonly disabled value="천안-파주" /></td>
+	                    <td class="btnCell"><button type="button" class="btn pri">검색</button></td>
+	                </tr>
+	            </tbody>
+	        </table>
+	    </div>
+	    
+	    <!-- <div class="tab">
+			<a href="#statsChart" onclick="fnShowTable();" class="on">상세보기</a>
+			<a href="#statsTable" onclick="fnToggle('Chart')">그래프보기</a>			
+		</div> -->
+	    
+	</div>
+	    
+	    
+   
 	<div id="sch_cnt01" class="tabcont">
-	    <h3>포장상태 평가 노선별 통계</h3>
-	    <p class="location">
-	        <span>통계</span>
-	        <span>포장상태 평가</span>
-	        <strong>노선별 통계</strong>
-	    </p>
-    <div class="search-area" style="text-align:right;">
-       <label for="road-grad-select">도로등급</label>
-       <select>
-           <option>전체</option>
-           <option>국지도</option>
-           <option>지방도</option>
-       </select>
-       <label for="rout-select">노선번호</label>
-       <select id="rout-select">
-           <option>전체</option>
-           <option>23호선</option>
-           <option>301호선</option>
-       </select>
-       <input type="text" readonly disabled value="천안-파주" />
-       <button type="button">검색</button>
-    </div>
         <div id="divStatChart" style="overflow-y:auto;">
             <ul class="statsbx">
                 <li style="float:none; width:97%">
@@ -93,7 +129,8 @@
             </tbody>
         </table>
     </div>
-</div>
+    
+    
 </form>
 
 <!-- 공통 (START)-->

@@ -759,7 +759,7 @@ body.research #srvyImage { position: absolute; left: 0; top: 0; width: 100%; }
 
 .ui-datepicker select.ui-datepicker-year { width: 60px; }
 
-#divLayerTool { position: absolute; left: 55px; top: 14px; width: 240px; z-index: 999; border: solid 1px rgba(0, 0, 0, 0.2); background: #fff; }
+#divLayerTool { position: absolute; left: 55px; top: 13px; width: 240px; z-index: 999; border: solid 1px rgba(0, 0, 0, 0.2); background: #fff; }
 
 #divLayerTool ul li { padding: 5px; float: left; text-align: center; height: 70px; }
 
@@ -800,6 +800,8 @@ body.research #srvyImage { position: absolute; left: 0; top: 0; width: 100%; }
 .btnArea_top.tabR { text-align: right; position: relative; }
 
 .btnArea_top.tabR a { margin-top: -37px; }
+
+.loc + .container2 > .tab { margin: 20px 0 0 0; }
 
 .stmenuarea { display: none; }
 

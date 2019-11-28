@@ -199,20 +199,31 @@ function fn_msgNtc(){
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
-<div style="margin: 0px 20px 0 20px;">
-	<div id="sch_cnt01" class="tabcont">
-		<h3>차로별 도로연장 통계</h3>
-		<p class="location">
-			<span>통계</span>
-			<span>노선 현황</span>
-			<strong>차로별 통계</strong>
-		</p>
-	</div>
-	<div class="cont_ListBx">
-		<div class="btnbx mb10">
-          	<a href="#" class="schbtn" onclick="location.replace('<c:url value="selectTrackStats.do"/>');">상세보기</a>
+
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">통계</option>
+                </select>
+                <select name="">
+                    <option value="">노선별현황</option>
+                </select>
+                <select name="">
+                    <option value="">차로별 통계</option>
+                </select>
+            </span>
         </div>
-        <div id="divStatChart" style="overflow-y:auto;">
+	</header>
+	
+	<div class="container2">
+		<div class="tab">
+				<a href="#div_grid" onclick="location.replace('<c:url value="selectTrackStats.do"/>');">상세보기</a>
+				<a class="on" href="#divStatChart" onclick="location.replace('<c:url value="selectTrackLenStats.do"/>');">그래프보기</a>
+		</div>
+		<div id="lenBarChart" class="cont_ConBx2" style="height: 500px;"></div>
+<!-- 		
+		<div id="divStatChart" style="overflow-y:auto;">
 			<ul class="statsbx">
                 <li style="margin-left: 1px;">
                     <div class="graylinebx p10" style="width:195%; text-align:center;">
@@ -220,9 +231,9 @@ function fn_msgNtc(){
                     </div>
                 </li>
 			</ul>
-		</div>	
+		</div>
+		 -->
 	</div>
-</div>
 </form>
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>

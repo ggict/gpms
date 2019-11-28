@@ -15,14 +15,26 @@
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<div style="margin: 0px 20px 0 20px;">
+
+		<header class="loc">
+	        <div class="container">
+	            <span class="locationHeader">
+	                <select name="">
+	                    <option value="">통계</option>
+	                </select>
+	                <select name="">
+	                    <option value="">포장상태 평가</option>
+	                </select>
+	                <select name="">
+	                    <option value="">노선별 통계</option>
+	                </select>
+	            </span>
+	        </div>
+	    </header>
+	    
+	    
+
 	<div id="sch_cnt01" class="tabcont">
-		<h3>포장상태 평가 노선별 통계</h3>
-		<p class="location">
-			<span>통계</span>
-			<span>포장상태 평가</span>
-			<strong>노선별 통계</strong>
-		</p>
 
 	    <div style="margin-top: 10px; margin-bottom: 45px;">
 	        <a href="#" onclick="fnShowTable();" class="schbtn" style="float: right; margin-right: 8px;">상세조회</a>
@@ -75,7 +87,7 @@
 		</table>
 	</div>
 	<!-- 표 END -->
-</div>
+
 </form>
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>
