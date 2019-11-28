@@ -16,7 +16,7 @@
 <input id="" name="" type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-	<div id="container">
+	<div class="scroll" id="container">
            <div class="admin_content">
                	<h2>포장상태 평가수식조회</h2>
 				<div>
@@ -38,12 +38,12 @@
 				            <tr id='AC'>
 				                <td class="center">거북등균열<br/>(ACI)</td>
 				                <td>
-				                    = <input class="ac_var1" idxNm='지수1'> - AC <br/>
-				                    = <input class="ac_var1" idxNm='지수1'> - <input class="ac_var2" idxNm='지수2'> * 망상균열량(㎡)/<input class="ac_var3" idxNm='지수3'>(㎡) <br/>
-				                    = <input id="AC_VAR1" name="AC_VAR1" class="ac_var1" idxNm='지수1'>
-				                        - <input id="AC_VAR2" name="AC_VAR2" class="ac_var2" idxNm='지수2'>
+				                    = <input class="ac_var1" idxNm='지수1' readonly > - AC <br/>
+				                    = <input class="ac_var1" idxNm='지수1' readonly > - <input class="ac_var2" idxNm='지수2' readonly > * 망상균열량(㎡)/<input class="ac_var3" idxNm='지수3' readonly >(㎡) <br/>
+				                    = <input id="AC_VAR1" name="AC_VAR1" class="ac_var1" idxNm='지수1' readonly >
+				                        - <input id="AC_VAR2" name="AC_VAR2" class="ac_var2" idxNm='지수2' readonly >
 				                        * ( Low거북등균열량(㎡)/<input id="AC_VAR3" name="AC_VAR3" class="ac_var3" readonly>(㎡)
-				                        + Med거북등균열량(㎡)/<input id="AC_VAR4" name="AC_VAR4" class="ac_var3" idxNm='지수3'>(㎡)
+				                        + Med거북등균열량(㎡)/<input id="AC_VAR4" name="AC_VAR4" class="ac_var3" idxNm='지수3' readonly >(㎡)
 				                        + Hi거북등균열량(㎡)/<input id="AC_VAR5" name="AC_VAR5" class="ac_var3" readonly>(㎡) )
 				                </td>
 				                <td class="center">0</td>
@@ -52,12 +52,12 @@
                             <tr>
                                 <td class="center">블럭균열<br/>(BCI)</td>
                                 <td>
-                                    = <input class="bc_var1" idxNm='지수1'> - BC <br/>
-                                    = <input class="bc_var1" idxNm='지수1'> - <input class="bc_var2" idxNm='지수2'> * 망상균열량(㎡)/<input class="bc_var3" idxNm='지수3'>(㎡) <br/>
-                                    = <input id="BC_VAR1" name="BC_VAR1" class="bc_var1" idxNm='지수1'>
-                                        - <input id="BC_VAR2" name="BC_VAR2" class="bc_var2" idxNm='지수2'>
+                                    = <input class="bc_var1" idxNm='지수1' readonly> - BC <br/>
+                                    = <input class="bc_var1" idxNm='지수1' readonly> - <input class="bc_var2" idxNm='지수2' readonly> * 망상균열량(㎡)/<input class="bc_var3" idxNm='지수3' readonly>(㎡) <br/>
+                                    = <input id="BC_VAR1" name="BC_VAR1" class="bc_var1" idxNm='지수1' readonly>
+                                        - <input id="BC_VAR2" name="BC_VAR2" class="bc_var2" idxNm='지수2' readonly>
                                         * ( Low블럭균열량(㎡)/<input id="BC_VAR3" name="BC_VAR3" class="bc_var3" readonly>(㎡)
-                                        + Med블럭균열량(㎡)/<input id="BC_VAR4" name="BC_VAR4" class="bc_var3" idxNm='지수3'>(㎡)
+                                        + Med블럭균열량(㎡)/<input id="BC_VAR4" name="BC_VAR4" class="bc_var3" idxNm='지수3' readonly>(㎡)
                                         + Hi블럭균열량(㎡)/<input id="BC_VAR5" name="BC_VAR5" class="bc_var3" readonly>(㎡) )
                                 </td>
                                 <td class="center">0</td>
@@ -66,12 +66,12 @@
 				            <tr>
                                 <td class="center">종방향균열<br/>(LCI)</td>
                                 <td>
-                                    = <input class="lc_var1" idxNm='지수1'> - LC <br/>
-                                    = <input class="lc_var1" idxNm='지수1'> - <input class="lc_var2" idxNm='지수2'> * 선형균열량(m)/<input class="lc_var3" idxNm='지수3'>(m) <br/>
-                                    = <input id="LC_VAR1" name="LC_VAR1" class="lc_var1" idxNm='지수1'>
-                                        - <input id="LC_VAR2" name="LC_VAR2" class="lc_var2" idxNm='지수2'>
+                                    = <input class="lc_var1" idxNm='지수1' readonly> - LC <br/>
+                                    = <input class="lc_var1" idxNm='지수1' readonly> - <input class="lc_var2" idxNm='지수2' readonly> * 선형균열량(m)/<input class="lc_var3" idxNm='지수3' readonly>(m) <br/>
+                                    = <input id="LC_VAR1" name="LC_VAR1" class="lc_var1" idxNm='지수1' readonly>
+                                        - <input id="LC_VAR2" name="LC_VAR2" class="lc_var2" idxNm='지수2' readonly>
                                         * ( Low선형균열량(m)/<input id="LC_VAR3" name="LC_VAR3" class="lc_var3" readonly>(m)
-                                        + Med선형균열량(m)/<input id="LC_VAR4" name="LC_VAR4" class="lc_var3" idxNm='지수3'>(m)
+                                        + Med선형균열량(m)/<input id="LC_VAR4" name="LC_VAR4" class="lc_var3" idxNm='지수3' readonly>(m)
                                         + Hi선형균열량(m)/<input id="LC_VAR5" name="LC_VAR5" class="lc_var3" readonly>(m) )
                                 </td>
                                 <td class="center">0</td>
@@ -80,12 +80,12 @@
                             <tr>
                                 <td class="center">횡방향균열<br/>(TCI)</td>
                                 <td>
-                                    = <input class="tc_var1" idxNm='지수1'> - TC <br/>
-                                    = <input class="tc_var1" idxNm='지수1'> - <input class="tc_var2" idxNm='지수2'> * 선형균열량(m)/<input class="tc_var3" idxNm='지수3'>(m) <br/>
-                                    = <input id="TC_VAR1" name="TC_VAR1" class="tc_var1" idxNm='지수1'>
-                                        - <input id="TC_VAR2" name="TC_VAR2" class="tc_var2" idxNm='지수2'>
+                                    = <input class="tc_var1" idxNm='지수1' readonly> - TC <br/>
+                                    = <input class="tc_var1" idxNm='지수1' readonly> - <input class="tc_var2" idxNm='지수2' readonly> * 선형균열량(m)/<input class="tc_var3" idxNm='지수3' readonly>(m) <br/>
+                                    = <input id="TC_VAR1" name="TC_VAR1" class="tc_var1" idxNm='지수1' readonly>
+                                        - <input id="TC_VAR2" name="TC_VAR2" class="tc_var2" idxNm='지수2' readonly>
                                         * ( Low선형균열량(m)/<input id="TC_VAR3" name="TC_VAR3" class="tc_var3" readonly>(m)
-                                        + Med선형균열량(m)/<input id="TC_VAR4" name="TC_VAR4" class="tc_var3" idxNm='지수3'>(m)
+                                        + Med선형균열량(m)/<input id="TC_VAR4" name="TC_VAR4" class="tc_var3" idxNm='지수3' readonly>(m)
                                         + Hi선형균열량(m)/<input id="TC_VAR5" name="TC_VAR5" class="tc_var3" readonly>(m) )
                                 </td>
                                 <td class="center">0</td>
@@ -94,9 +94,9 @@
                             <tr>
                                 <td class="center">패칭<br/>(PATI)</td>
                                 <td>
-                                    = <input class="ptchg_var1" idxNm='지수1'> - PAT <br/>
-                                    = <input id="PTCHG_VAR1" name="PTCHG_VAR1" class="ptchg_var1" idxNm='지수1'>
-                                        - <input id="PTCHG_VAR2" name="PTCHG_VAR2" class="ptchg_var2" idxNm='지수2'> * 소파보수(㎡)/<input id="PTCHG_VAR3" name="PTCHG_VAR3" class="ptchg_var3" idxNm='지수3'>(㎡) <br/>
+                                    = <input class="ptchg_var1" idxNm='지수1' readonly> - PAT <br/>
+                                    = <input id="PTCHG_VAR1" name="PTCHG_VAR1" class="ptchg_var1" idxNm='지수1' readonly>
+                                        - <input id="PTCHG_VAR2" name="PTCHG_VAR2" class="ptchg_var2" idxNm='지수2' readonly> * 소파보수(㎡)/<input id="PTCHG_VAR3" name="PTCHG_VAR3" class="ptchg_var3" idxNm='지수3' readonly>(㎡) <br/>
                                 </td>
                                 <td class="center">0</td>
                                 <td class="center">10</td>
@@ -104,9 +104,9 @@
                             <tr>
                                 <td class="center">포트홀<br/>(POTI)</td>
                                 <td>
-                                    = <input class="pot_var1" idxNm='지수1'> - POT <br/>
-                                    = <input id="POT_VAR1" name="POT_VAR1" class="pot_var1" idxNm='지수1'>
-                                        - <input id="POT_VAR2" name="POT_VAR2" class="pot_var2" idxNm='지수2'> * 소파보수(㎡)/<input id="POT_VAR3" name="POT_VAR3" class="pot_var3" idxNm='지수3'>(㎡) <br/>
+                                    = <input class="pot_var1" idxNm='지수1' readonly> - POT <br/>
+                                    = <input id="POT_VAR1" name="POT_VAR1" class="pot_var1" idxNm='지수1' readonly>
+                                        - <input id="POT_VAR2" name="POT_VAR2" class="pot_var2" idxNm='지수2' readonly> * 소파보수(㎡)/<input id="POT_VAR3" name="POT_VAR3" class="pot_var3" idxNm='지수3' readonly>(㎡) <br/>
                                 </td>
                                 <td class="center">0</td>
                                 <td class="center">10</td>
@@ -114,12 +114,12 @@
                             <tr>
                                 <td class="center">소성변형<br/>(RDI)</td>
                                 <td>
-                                    = <input class="rd_var1" idxNm='지수1'> - RD <br/>
-                                    = <input class="rd_var1" idxNm='지수1'> - <input class="rd_var2" idxNm='지수2'> * 소성변형깊이(mm)/<input class="rd_var3" idxNm='지수3'>(mm) <br/>
-                                    = <input id="RD_VAR1" name="RD_VAR1" class="rd_var1" idxNm='지수1'>
-                                        - <input id="RD_VAR2" name="RD_VAR2" class="rd_var2" idxNm='지수2'>
+                                    = <input class="rd_var1" idxNm='지수1' readonly> - RD <br/>
+                                    = <input class="rd_var1" idxNm='지수1' readonly> - <input class="rd_var2" idxNm='지수2' readonly> * 소성변형깊이(mm)/<input class="rd_var3" idxNm='지수3' readonly>(mm) <br/>
+                                    = <input id="RD_VAR1" name="RD_VAR1" class="rd_var1" idxNm='지수1' readonly>
+                                        - <input id="RD_VAR2" name="RD_VAR2" class="rd_var2" idxNm='지수2' readonly>
                                         * ( Low소성변형깊이(mm)/<input id="RD_VAR3" name="RD_VAR3" class="rd_var3" readonly>(mm)
-                                        + Med소성변형깊이(mm)/<input id="RD_VAR4" name="RD_VAR4" class="rd_var3" idxNm='지수3'>(mm)
+                                        + Med소성변형깊이(mm)/<input id="RD_VAR4" name="RD_VAR4" class="rd_var3" idxNm='지수3' readonly>(mm)
                                         + Hi소성변형깊이(mm)/<input id="RD_VAR5" name="RD_VAR5" class="rd_var3" readonly>(mm) )
                                 </td>
                                 <td class="center">0</td>
@@ -128,8 +128,8 @@
                             <tr>
                                 <td class="center">RCI</td>
                                 <td>
-                                    = (e^<input id="RCI_VAR1" name="RCI_VAR1" class="rci_var1" idxNm='지수1'>
-                                        x IRI^(<input id="RCI_VAR2" name="RCI_VAR2" class="rci_var2" idxNm='지수2'>))/<input id="RCI_VAR3" name="RCI_VAR3" class="rci_var3" idxNm='지수3'>
+                                    = (e^<input id="RCI_VAR1" name="RCI_VAR1" class="rci_var1" idxNm='지수1' readonly>
+                                        x IRI^(<input id="RCI_VAR2" name="RCI_VAR2" class="rci_var2" idxNm='지수2' readonly>))/<input id="RCI_VAR3" name="RCI_VAR3" class="rci_var3" idxNm='지수3' readonly>
                                 </td>
                                 <td class="center">4</td>
                                 <td class="center">10</td>
@@ -137,7 +137,7 @@
                             <tr>
                                 <td class="center">SCR</td>
                                 <td>
-                                    = <input id="SCR_VAR1" name="SCR_VAR1" class="scr_var1" idxNm='지수1'> - ( AC + BC + LC + TC + PAT + POT + RD )<br/>
+                                    = <input id="SCR_VAR1" name="SCR_VAR1" class="scr_var1" idxNm='지수1' readonly> - ( AC + BC + LC + TC + PAT + POT + RD )<br/>
                                     &nbsp;&nbsp;&nbsp; 미국 FHWA 모델 인용, SCR >= 0, AC, BC, LC, TC, PAT, POT, RD >= 0<br/><br/>
 
                                     <table style="width: 200px;" class="inner">
@@ -148,31 +148,31 @@
                                         <tbody>
 	                                        <tr>
 	                                            <td>* AC</td>
-	                                            <td>= <input id="SCR_VAR2" name="SCR_VAR2" class="scr_var2" idxNm='지수2'> - ACI</td>
+	                                            <td>= <input id="SCR_VAR2" name="SCR_VAR2" class="scr_var2" idxNm='지수2' readonly> - ACI</td>
 	                                        </tr>
 	                                        <tr>
                                                 <td>* BC</td>
-                                                <td>= <input id="SCR_VAR3" name="SCR_VAR3" class="scr_var3" idxNm='지수3'> - BCI</td>
+                                                <td>= <input id="SCR_VAR3" name="SCR_VAR3" class="scr_var3" idxNm='지수3' readonly> - BCI</td>
                                             </tr>
 	                                        <tr>
 	                                            <td>* LC</td>
-	                                            <td>= <input id="SCR_VAR4" name="SCR_VAR4" class="scr_var4" idxNm='지수4'> - LCI</td>
+	                                            <td>= <input id="SCR_VAR4" name="SCR_VAR4" class="scr_var4" idxNm='지수4' readonly> - LCI</td>
 	                                        </tr>
 	                                        <tr>
 	                                            <td>* TC</td>
-	                                            <td>= <input id="SCR_VAR5" name="SCR_VAR5" class="scr_var5" idxNm='지수5'> - TCI</td>
+	                                            <td>= <input id="SCR_VAR5" name="SCR_VAR5" class="scr_var5" idxNm='지수5' readonly> - TCI</td>
 	                                        </tr>
 	                                        <tr>
 	                                            <td>* PAT</td>
-	                                            <td>= <input id="SCR_VAR6" name="SCR_VAR6" class="scr_var6" idxNm='지수6'> - PATI</td>
+	                                            <td>= <input id="SCR_VAR6" name="SCR_VAR6" class="scr_var6" idxNm='지수6' readonly> - PATI</td>
 	                                        </tr>
 	                                        <tr>
 	                                            <td>* POT</td>
-	                                            <td>= <input id="SCR_VAR7" name="SCR_VAR7" class="scr_var7" idxNm='지수7'> - POTI</td>
+	                                            <td>= <input id="SCR_VAR7" name="SCR_VAR7" class="scr_var7" idxNm='지수7' readonly> - POTI</td>
 	                                        </tr>
 	                                        <tr>
 	                                            <td>* RD</td>
-	                                            <td>= <input id="SCR_VAR8" name="SCR_VAR8" class="scr_var8" idxNm='지수8'> - RDI</td>
+	                                            <td>= <input id="SCR_VAR8" name="SCR_VAR8" class="scr_var8" idxNm='지수8' readonly> - RDI</td>
 	                                        </tr>
                                         </tbody>
                                     </table>
@@ -184,7 +184,7 @@
                                 <td class="center">GPCI</td>
                                 <td colspan="3">
                                     = α (SCR : 구조적 표면상태) + β (RCI : 평탄성)<br/>
-                                    = <input id="GPCI_VAR1" name="GPCI_VAR1" class="gpci_var1" idxNm='SCR가중도계수'> * SCR + <input id="GPCI_VAR2" name="GPCI_VAR2" class="gpci_var2" idxNm='RCI가중도계수'> * RCI<br/><br/>
+                                    = <input id="GPCI_VAR1" name="GPCI_VAR1" class="gpci_var1" idxNm='SCR가중도계수' readonly> * SCR + <input id="GPCI_VAR2" name="GPCI_VAR2" class="gpci_var2" idxNm='RCI가중도계수' readonly> * RCI<br/><br/>
                                     * α, β : 가중분배계수
                                 </td>
                             </tr>
