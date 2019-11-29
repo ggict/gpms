@@ -117,7 +117,7 @@ $( document ).ready(function() {
 
     var colModels = new Array();
     var colIndex = 0;
-    colModels[colIndex++]={name: "btn_check",  index: "btn_check", comments: "선택",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
+    //colModels[colIndex++]={name: "btn_check",  index: "btn_check", comments: "선택",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
     colModels[colIndex++]={name: "DEPT_NM",  index: "DEPT_NM", comments: "관리<br/>기관",  width: 80,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.부서코드 */
     colModels[colIndex++]={name: "ROAD_GRAD",  index: "ROAD_GRAD", comments: "도로등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.도로등급 */
     colModels[colIndex++]={name: "ROAD_GRAD_NM",  index: "ROAD_GRAD_NM", comments: "도로<br/>등급",  width: 80,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.도로등급 */
@@ -149,7 +149,7 @@ $( document ).ready(function() {
     colModels[colIndex++]={name: "TRNSPORT_QY",  index: "TRNSPORT_QY", comments: "교통_량",  width: 80,align: "center", hidden: false, sortable :true }; /*보수_대상_항목_그룹.교통_량 */
     colModels[colIndex++]={name: "POTHOLE_QY",  index: "POTHOLE_QY", comments: "포트홀_량",  width: 80,align: "center", hidden: false, sortable :true }; /*보수_대상_항목_그룹.포트홀_량 */
     colModels[colIndex++]={name: "PAV_CELL_LEN",  index: "PAV_CELL_LEN", comments: "포장공사_진행량",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.포장공사_진행량 */
-    colModels[colIndex++]={name: "PAV_CELL_PERCENT",  index: "PAV_CELL_PERCENT", comments: "포장공사<br/>진행률",  width: 80,align: "center", hidden: false, sortable :true, formatter: function(cellvalue,options,rowObject){ return Math.ceil(rowObject.PAV_CELL_LEN/rowObject.LEN *100)+'%'; } };/*보수_대상_항목_그룹.포장공사_진행률 */
+    colModels[colIndex++]={name: "PAV_CELL_PERCENT",  index: "PAV_CELL_PERCENT", comments: "포장공사<br/>진행률",  width: 80,align: "center", hidden: false, sortable :true, formatter: fn_grid_item };/*보수_대상_항목_그룹.포장공사_진행률 */
     //colModels[colIndex++]={name: "PRIORT",  index: "PRIORT", comments: "우선순위",  width: 80,align: "center", hidden: false, sortable :false, formatter: fn_priort_txt}; /*보수_대상_항목_그룹.우선순위 */
 //  colModels[colIndex++]={name: "btn_loc",  index: "btn_loc", comments: "위치<br/>보기",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
     colModels[colIndex++]={name: "btn_loc2",  index: "btn_loc2", comments: "보수선정<br/>위치보기",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.보수선정위치보기 */
@@ -321,32 +321,40 @@ function fn_grid_btn(cellValue, options, rowObject) {
     var nm = options.colModel.name;
 
     switch (nm) {
-    case "btn_down":// 파일 다운로드
-        btn = "<a href='#' onclick=\"fn_select_dwg('" + rowObject.ROAD_NO + "')\"><img src='" + contextPath + "/images/ic_download.png' alt='다운로드' title='다운로드' ></a>";
+        // 파일 다운로드
+	    case "btn_down": {
+	        btn = "<a href='#' onclick=\"fn_select_dwg('" + rowObject.ROAD_NO + "')\"><img src='" + contextPath + "/images/ic_download.png' alt='다운로드' title='다운로드' ></a>";
+	    }
+	    break;
+	    
+	    // 위치보기(미사용)
+	    case "btn_loc": { 
+	        btn = "<a href='#' onclick=\"javascript:fn_select_cellSectRange('" + rowObject.ROUTE_CODE + "', '" + rowObject.DIRECT_CODE + "', '" + rowObject.TRACK + "', '" + rowObject.STRTPT + "', '" + rowObject.ENDPT + "');\"><img src='" + contextPath + "/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+	    }
         break;
-    case "btn_loc": { // 위치보기(미사용)
-        btn = "<a href='#' onclick=\"javascript:fn_select_cellSectRange('" + rowObject.ROUTE_CODE + "', '" + rowObject.DIRECT_CODE + "', '" + rowObject.TRACK + "', '" + rowObject.STRTPT + "', '" + rowObject.ENDPT + "');\"><img src='" + contextPath + "/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
-    }
+        
+        // row선택 체크박스
+	    case "btn_check": { 
+	        if (rowObject.TMPR_SLCTN_AT == "Y") {// || rowObject.SLCTN_AT=="Y"
+	            btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
+	        } else {
+	            btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
+	        }
+	    }
         break;
-    case "btn_check": { // row선택 체크박스
-        if (rowObject.TMPR_SLCTN_AT == "Y") {// || rowObject.SLCTN_AT=="Y"
-            btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
-        } else {
-            btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
-        }
-    }
+        
+        // 보수선정 위치보기
+	    case "btn_loc2": { 
+	        btn = "<a href='#' onclick=\"javascript:fn_select_cellSectFilter('" + rowObject.TRGET_SLCTN_NO + "', '" + rowObject.GROUP_ITEM_NO + "');\"><img src='" + contextPath + "/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+	    }
         break;
-    case "btn_loc2": { // 보수선정 위치보기
-        btn = "<a href='#' onclick=\"javascript:fn_select_cellSectFilter('" + rowObject.TRGET_SLCTN_NO + "', '" + rowObject.GROUP_ITEM_NO + "');\"><img src='" + contextPath + "/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
-    }
-        break;
-    case "btn_loc3": { // 포장공사 위치보기
-        btn = "<a href='#' onclick=\"javascript:fn_select_pav_cellSectFilter('" + rowObject.PAV_CELL_IDS + "');\"><img src='" + contextPath + "/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
-    }
+        
+        // 포장공사 위치보기
+	    case "btn_loc3": { 
+	        btn = "<a href='#' onclick=\"javascript:fn_select_pav_cellSectFilter('" + rowObject.PAV_CELL_IDS + "');\"><img src='" + contextPath + "/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+	    }
         break;
     }
-
-
     return btn;
 }
 // jqGrid 상.하행 버튼 생성 custom-formatter
@@ -355,15 +363,20 @@ function fn_grid_item(cellValue, options, rowObject) {
     var nm = options.colModel.name;
 
     switch (nm) {
-    case "DIRECT_CODE": {
-        if (cellValue == "S")
-            return "상행";
-        else if (cellValue == "E")
-            return "하행";
-        else
-            return "";
-    }
+	    case "DIRECT_CODE": {
+	        if (cellValue == "S")
+	            return "상행";
+	        else if (cellValue == "E")
+	            return "하행";
+	        else
+	            return "";
+	    }
         break;
+        
+	    case "PAV_CELL_PERCENT": {
+	    	return Math.ceil(rowObject.PAV_CELL_LEN / rowObject.LEN * 100) + '%';
+	    }
+	    break;
     }
     return btn;
 }
