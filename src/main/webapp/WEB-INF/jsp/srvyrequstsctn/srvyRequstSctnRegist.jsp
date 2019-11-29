@@ -176,7 +176,8 @@ var _routeCd="", _directCd="", _track="", _strtpt="", _endpt="", _cellIdList="",
 $( document ).ready(function() {
 	
     // 달력 생성
-    cmCreateDatepicker('SRVY_REQUST_DE', 10);
+    cmCreateDatepickerLinked('SRVY_REQUST_DE', 10, 205);
+    
 
     // 검색 목록 그리드 구성
     var cell_id_arrays = $('#PAV_CELL_ID').val() && $('#PAV_CELL_ID').val().split(',');
@@ -260,13 +261,28 @@ function removeCheck(){
 		$('#gridArea').jqGrid('delRowData', recs[i]);
 	}
 } 
-var cmCreateDatepicker = function(_oId, _oSize){
-	var date = new Date();
-    var currentMonth = date.getMonth();
-    var currentDate = date.getDate();
-    var currentYear = date.getFullYear();
-    $( "#"+_oId ).width(_oSize*8).datepicker({
-        changeMonth: true,changeYear: true,numberOfMonths: 1,showOn: "button",buttonImage: contextPath+ "/images/ico_date.png",buttonImageOnly: true, minDate: new Date(currentYear, currentMonth, currentDate)
+
+var cmCreateDatepickerLinked = function(_oStartId, _oSize, _loc_top, _loc_left, _imgPath){
+
+	var today = $.datepicker.formatDate('yy-mm-dd', new Date());
+
+	// 디폴트 이미지 경로
+	var imgPath = contextPath+ "/images/btn_calendar.gif" ;
+
+	if ( _imgPath ){
+		imgPath = _imgPath
+	}
+
+    $( "#"+_oStartId ).datepicker({
+        changeMonth: true,changeYear: true,numberOfMonths: 1,showOn: "button",buttonImage: imgPath ,buttonImageOnly: true, maxDate : today
+        ,onClose: function( selectedDate ) {
+            //$( "#"+_oEndId ).parent().find("img").css("margin-bottom", "3px");
+        }
+        ,beforeShow : function(input){
+            var offset = $(input).offset();
+            var height = $(input).height();
+            window.setTimeout(function () {
+                $("#ui-datepicker-div").css({ top: (offset.top + height- _loc_top) + 'px', left: (offset.left +_loc_left )+ 'px' }) }, 1); }
     });
 };
 //검색 처리

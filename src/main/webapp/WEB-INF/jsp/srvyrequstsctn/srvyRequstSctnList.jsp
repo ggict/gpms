@@ -102,7 +102,7 @@
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
     // 달력 생성
-    COMMON_UTIL.cmCreateDatepickerLinked('SRVY_REQUST_DE1', 'SRVY_REQUST_DE2', 10);
+    COMMON_UTIL.cmCreateDatepickerLinked('SRVY_REQUST_DE1', 'SRVY_REQUST_DE2', 10, 205);
 
     // 검색 목록 그리드 구성
     $("#gridArea").jqGrid({
