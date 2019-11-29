@@ -66,12 +66,12 @@ $trans1:all 0.2s ease 0s;
 
 .header { position: fixed; width: 100%; left: 0;top: 0;border-bottom:solid 1px #aaa; height: 56px; background: #f1f3f4; z-index: 900;
 
-    .h1 { color: #000; font-size: 0; border-right:#aaa solid 1px; float: left; width: 330px; background: #fff;
+    .h1 { color: #000; font-size: 0; border-right:#aaa solid 1px; float: left; width: 330px; background: #fff; transition: $trans1;
         span{font-size: 21px;color: #000000; font-weight:600;letter-spacing: -1px;}
         img, span { vertical-align:middle}
     }
     nav { float: left;
-        li { float: left; width: 150px; position: relative;
+        li { float: left; width: 150px; position: relative;  transition: $trans1;
             a {display:block; text-align: center;  @include a1;
                 span{ display: inline-block; padding: 20px 0 0 0 ; height: 35px; font-weight:500; font-size: 16px;  border-bottom:solid 2px rgba(255,255,255,0) }
                 &:hover span, &:focus span{border-bottom: solid 2px $hover}
@@ -98,12 +98,12 @@ $trans1:all 0.2s ease 0s;
             &:hover, &:focus {background-color:$hover}
         }
         a, #userDept {display: inline-block; padding: 21px 20px 0 20px; height: 35px; font-size: 16px;line-height: 1; border-left: 1px solid #ededed;@include a1}
-        #userDept {padding-left: 58px; background: #ededed url(../images/userIcon.png) no-repeat 17px 13px;}
+        #userDept {padding-left: 58px; background: #ededed url(../images/userIcon.png) no-repeat 17px 13px;transition: $trans1;}
         a.btnMonitoring {padding-left: 58px; background: #fff url(../images/topLink.png) no-repeat 17px 17px;}
     }
-    .userArea { position: relative;
+    .userArea { position: relative; height: 55px; display: inline-block;
         &.on .user-area{ display: block;}
-        .user-area { position: absolute; top:20px; padding: 4px 0 0 0; right: 0; width: 300px; display: none; box-shadow:$shadow; border-bottom:solid 1px #aaa;
+        .user-area { position: absolute; top:55px; padding: 4px 0 0 0; right: 0; width: 300px; display: none; box-shadow:$shadow; border-bottom:solid 1px #aaa;
             a { background: #fff;}
             &:before { display: block; content: ''; width: 20px;height: 10px;background: url(../images/sideDivArrowUp.png) no-repeat 0 0; top: -6px; left: 67.5%; position: absolute;}
         }
@@ -354,6 +354,24 @@ input.mapPosition_Y { width: 100px;}
     img {position: fixed; left: -9999px;}
 }
 .tab_wrap {border-top:solid 1px #69707e;}
+
+/* admin */
+.admin_sch {border:none; border-top: solid 1px #333; border-radius: 0; border-bottom:solid 1px #ddd;background: #fff;padding: 0; position: relative;
+    li {margin: 0;
+        .btn { height: 20px}
+        .posR {position: absolute; right: 0;top: 8px;}
+    }
+    label {padding:14px 10px;background: #f9f9f9; border-left: #e1e1e0 solid 1px;border-right: #e1e1e0 solid 1px;}
+    li + li label {margin-left: 5px;}
+}
+#div_grid + .btnArea{padding-top: 20px;}
+.PopTitBx + .btnArea {padding: 20px 10px;}
+
+.userLog {border-radius:0;height: 20px;padding: 5px 15px;color: #eee;background:#999; margin-right: -3px;font-weight: 500;
+    &:hover, &:focus {background:#162d52; color: #eee}
+ }
+.userLog + .userLog {margin-left: -3px; border-left:solid 1px #888 }
+.userLog.on {background:#162d52; color: #ffec49}
 
 
 /* ui-grid */
@@ -708,3 +726,17 @@ body.research {
 
 
 .stmenuarea { display: none;}
+@media ( max-width: 1460px ) {
+    .header .h1 {width: 310px; letter-spacing: -1px;}
+}
+
+@media ( max-width: 1400px ) {
+    .header .topMenu #userDept {padding-left: 44px; padding-right: 10px; background-position-x: 10px; font-size: 14px;}
+    .header nav li {width: 124px; letter-spacing: -1px;}
+}
+
+@media ( max-width: 1220px ) {
+    .header .topMenu #userDept {padding-left: 54px; padding-right: 0;width: 0;  background-position-x: 13px; overflow:hidden; text-indent: 15px; color:#ededed;
+        &:hover,&:focus { width: 120px; color: #666;padding-left: 44px; padding-right: 10px; }
+    }
+}

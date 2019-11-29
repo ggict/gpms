@@ -24,7 +24,8 @@
     <form name="frm" id="frm" method="post" action="" style="height: 80%;">
     <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
 
-    <table class="tbview">
+	<div class="table">
+    <table class="">
         <caption class="hidden">암호확인</caption>
         <colgroup>
             <col width="30%" />
@@ -51,6 +52,7 @@
             </tr>
         </tbody>
     </table>
+    </div>
     <div class="loginfooter">
         <%-- <p class="txt_copyright">
             <img src="<c:url value='/images/intro/txt_copyright.gif' />"
@@ -68,8 +70,9 @@
     </form>
     
     <!-- 2018. 03. 12. JOY. 추가 -->
-    <table class="tbview mt10" summary="사용자 정보수정를 제공합니다.">
-        <caption>사용자 정보수정</caption>
+    <div class="table">
+    <table>
+        <caption class="hidden">사용자 정보수정</caption>
         <colgroup>
             <col width="30%" />
             <col width="70%" />
@@ -79,12 +82,13 @@
                  <th scope="row">메뉴접근권한</th>
                  <td>
                      <c:forEach items="${menuAuthList}" var="menu">
-                         <input type="checkbox" name="APPLY_MENUACC" style="margin-right: 5px;" <c:if test="${result.REQ_USER_GRP == 'ROLE_ADMIN' }">disabled="disabled"</c:if>  value="${menu.AUTHOR_ID}" <c:if test="${fn: indexOf(result.REQ_MENUACC_ROLE, menu.AUTHOR_ID) > -1}">checked="checked"</c:if>/><c:out value="${menu.AUTHOR_NM }" /><br/>
+                         <input type="checkbox" name="APPLY_MENUACC" <c:if test="${result.REQ_USER_GRP == 'ROLE_ADMIN' }">disabled="disabled"</c:if> id="${menu.AUTHOR_ID}"  value="${menu.AUTHOR_ID}" <c:if test="${fn: indexOf(result.REQ_MENUACC_ROLE, menu.AUTHOR_ID) > -1}">checked="checked"</c:if>/><label for="${menu.AUTHOR_ID}"><c:out value="${menu.AUTHOR_NM }" /></label><br/>
                      </c:forEach>
                  </td>
             </tr>
         </tbody>
     </table>
+    </div>
     <div class="loginfooter">
         <p class="tr mt10" id="chg-admin" style="display: none;">
             <span style="background: #aaaaaa; border: 1px solid rgba(255, 255, 255, 0.2); margin-top: 0px; margin-bottom: 0px; border-image: none; " class="schbtn">권한변경요청</span>

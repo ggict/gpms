@@ -23,45 +23,43 @@
 <input type="hidden" id="UPPER_MENU_ID" name="UPPER_MENU_ID" value="<c:out value="${param.UPPER_MENU_ID}"/>"/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<div id="container">
+<div class="container"> <!-- id="container" -->
  <div class="admin_content">
 		<h2>${screen_title}</h2>
 	<!--검색영역-->
 		<ul class="admin_sch">
-			<li><label>시스템구분</label>
-				<select name="SCH_MENU_D" id="SCH_MENU_D" class="select sBx120" style="width: 150px; margin-left: 5px;">
-					<option value="">===== 전체 =====</option>
+			<li><label for="SCH_MENU_D">시스템구분</label>
+				<select name="SCH_MENU_D" id="SCH_MENU_D">
+					<option value="">전체</option>
 					<c:forEach var="codeInfo" items="${codesSYSM}">
 						<option value="${codeInfo.CODE_VAL}">${codeInfo.CODE_NM}</option>
 					</c:forEach>
 				</select>
-			</li>
-			<li><label>상위메뉴</label>
-				<select name="SCH_MENU_S" id="SCH_MENU_S" class="select sBx120" style="width: 150px; margin-left: 5px;">
-					<option value="">===== 전체 =====</option>
+				<label for="SCH_MENU_S">상위메뉴</label>
+				<select name="SCH_MENU_S" id="SCH_MENU_S">
+					<option value="">전체</option>
 					<c:forEach var="selectData" items="${menu_s_list}">
 						<option value="${selectData.MENU_ID}"
 							<c:if test = "${selectData.CODE_VAL == menuVO.SYS_CODE}"> selected="selected" </c:if>>${selectData.MENU_NM}</option>
 					</c:forEach>
 				</select>
-			</li>
-			<li><label>메뉴명</label>
-				<input type="text" name="MENU_NM" id="MENU_NM" value="" class="MX_50 CS_25 input" />
-			</li>
-			<li><label>URL</label>
-				<input type="text" name="SCH_URL" id="SCH_URL" value="" class="MX_50 CS_25 input" />
-			</li>
-			<li class="fr"><a href="#" class="schbtn dpb" onclick="javascript:fnSearch();">검색</a></li>
+			
+			<label for="MENU_NM">메뉴명</label>
+				<input type="text" name="MENU_NM" id="MENU_NM" value="" />
+			
+			<label for="SCH_URL">URL</label>
+				<input type="text" name="SCH_URL" id="SCH_URL" value="" />
+			<a href="#" class="btn pri posR" onclick="javascript:fnSearch();">검색</a></li>
 		</ul>
 				
-		<div id="div_grid" style="width: 100%;">
+		<div id="div_grid">
 			<table class="adminlist" id="gridArea"></table>
 			<div id="gridPager"></div>
 		</div>
 		
-	<div class="btnbx">
-		<a href="#" onclick="fn_menuDadd();" class="schbtn">메뉴추가</a>
-		<a href="#" onclick="fn_menuSadd();" class="schbtn">하위메뉴추가</a>
+	<div class="btnArea">
+		<a href="#" onclick="fn_menuDadd();" class="btn pri">메뉴추가</a>
+		<a href="#" onclick="fn_menuSadd();" class="btn pri">하위메뉴추가</a>
 	</div>
 </div>
 </div>
@@ -235,7 +233,7 @@ function fn_selectMenuList(){
 //추가
 function fn_menuDadd() {
 	var page = "<c:url value='/manage/menu/addMenuView.do'/>";
-	COMMON_UTIL.cmWindowOpen('시스템 메뉴 관리', page, 600, 255, false, $("#wnd_id").val(), 'center');
+	COMMON_UTIL.cmWindowOpen('시스템 메뉴 관리', page, 600, 400, false, $("#wnd_id").val(), 'center');
 }
 
 function fn_menuSadd(){
@@ -246,7 +244,7 @@ function fn_menuSadd(){
 		var menuId = rowData["MENU_ID"];
 		var sysCode = rowData["SYS_CODE"];
 		var page = "<c:url value='/manage/menu/addMenuView.do' />"+"?UPPER_MENU_ID="+menuId+"&SYS_CODE="+sysCode;
-		COMMON_UTIL.cmWindowOpen('시스템 메뉴 관리', page, 600, 255, false, $("#wnd_id").val(), 'center');
+		COMMON_UTIL.cmWindowOpen('시스템 메뉴 관리', page, 600, 400, false, $("#wnd_id").val(), 'center');
 	}
 	else{
 		alert('<spring:message code="warn.checkplz.msg" />');

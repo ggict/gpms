@@ -22,7 +22,7 @@
 
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" name="DEPT_CODE" id="DEPT_CODE" value="" />
-    <div id="container">
+    <div class="container"><!-- id="container" -->
         <div class="admin_content">
             <h2>사용자 신청 관리</h2>
             <ul class="admin_sch">
@@ -35,47 +35,42 @@
                     </select>
                 </li> --%>
                 <li><label>사용자명</label>
-                   <input type="text" id="USER_NM" name="USER_NM" class="MX_50 CS_25 input" onkeydown="fnCheckEnter(event);"/>
+                   <input type="text" id="USER_NM" name="USER_NM" onkeydown="fnCheckEnter(event);"/>
                </li>
-                <li class="out"><label>업체</label>
-                    <select id="CO_NO" name="CO_NO" onchange="COMMON_UTIL.fn_set_value(this.value, 'CO_NO')" alt="공사업체" class="input">
-                        <option value="">====== 전체 ======</option>
+               <li class="out"><label for="CO_NO">업체</label>
+                    <select id="CO_NO" name="CO_NO" onchange="COMMON_UTIL.fn_set_value(this.value, 'CO_NO')">
+                        <option value="">전체</option>
                         <c:forEach items="${compList }" var="comp">
                             <option value="${comp.CO_NO }">${comp.CO_NM }</option>
                         </c:forEach>
                     </select>
+                    <label>계약명</label>
+                     <input type="text" onkeyup="COMMON_UTIL.fn_set_value(this.value, 'CNTRCT_NM')" onkeydown="fnCheckEnter(event);"/>
                 </li>
-                <li class="out"><label>계약명</label>
-                     <input type="text" onkeyup="COMMON_UTIL.fn_set_value(this.value, 'CNTRCT_NM')" class="MX_50 CS_25 input" onkeydown="fnCheckEnter(event);"/>
-                </li>
-                <li class="in"><label>소속기관</label>
-                    <select id="DEPT_1" alt="소속기관" class="input" onchange="COMMON_UTIL.fn_change_dept('DEPT_1', 'DEPT_2', '3', 'DEPT_3');"  onkeydown="fnCheckEnter(event);">
-                        <option value="">====== 전체 ======</option>
+                <li class="in"><label for="DEPT_1">소속기관</label>
+                    <select id="DEPT_1" onchange="COMMON_UTIL.fn_change_dept('DEPT_1', 'DEPT_2', '3', 'DEPT_3');"  onkeydown="fnCheckEnter(event);">
+                        <option value="">전체</option>
                         <c:forEach items="${deptCdList }" var="deptCd">
                             <option value="${deptCd.DEPT_CODE }">${deptCd.LOWEST_DEPT_NM }</option>
                         </c:forEach>
                     </select>
-                </li>
-                <li class="in">
-                    <select id="DEPT_2" style="width: 190px;" class="input" onchange="COMMON_UTIL.fn_change_dept('DEPT_2', 'DEPT_3', '4');"  onkeydown="fnCheckEnter(event);">
-                        <option value="">====== 전체 ======</option>
+                    <select id="DEPT_2" onchange="COMMON_UTIL.fn_change_dept('DEPT_2', 'DEPT_3', '4');"  onkeydown="fnCheckEnter(event);">
+                        <option value="">전체</option>
                     </select>
-                </li>
-                <li class="in">
-                    <select id="DEPT_3" style="width: 190px;" class="input"  onkeydown="fnCheckEnter(event);">
-                        <option value="">====== 전체 ======</option>
+                    <select id="DEPT_3"  onkeydown="fnCheckEnter(event);">
+                        <option value="">전체</option>
                     </select>
-                </li>
-                <li class="fr" style="margin:0 15px;"><a href="#" class="schbtn dpb" onclick="javascript:fn_search();">검색</a></li>
+
+                    <a href="#" class="btn pri posR" onclick="javascript:fn_search();">검색</a></li>
             </ul>
 
-            <div id="div_grid" style="width: 100%;">
+            <div id="div_grid">
                 <table class="adminlist" id="gridArea"></table>
                 <div id="gridPager"></div>
             </div>
 
-            <div class="btnbx">
-                <a href="#" class="schbtn" onclick="fn_view();">상세조회</a>
+            <div class="btnArea">
+                <a href="#" class="btn pri" onclick="fn_view();">상세조회</a>
             </div>
         </div>
     </div>

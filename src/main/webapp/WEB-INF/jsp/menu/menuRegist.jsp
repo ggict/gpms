@@ -41,10 +41,11 @@
 	<div class="ConBx">
 		<div class="Pop_Section">
 			<div class="PopTitBx"><!-- <p>시스템메뉴 정보</p> -->
-				<div class="content" id="menu_Regist-div" style="padding: 0px 10px;">
+				<div id="menu_Regist-div" style="padding: 0px 10px;">
 				<form:form commandName="menuVO" id="menu_Regist-form">
-					<table class="tbview"	summary="시스템코드 정보를 등록/수정합니다.">
-						<caption>시스템메뉴 정보</caption>
+				<div class="table">
+					<table>
+						<caption class="hidden">시스템메뉴 정보</caption>
 						<colgroup>
 			                <col width="30%" />
 			                <col width="70%" />
@@ -65,8 +66,8 @@
 							<tr>
 								<th scope="row"><span class="fcred">* </span>시스템구분</th>
 								<td>
-									<form:select path="SYS_CODE" style="width: 99%;">
-										<form:option value="" label="===== 전체 =====" />
+									<form:select path="SYS_CODE">
+										<form:option value="" label="전체" />
 										<form:options items="${codesSYSM}" itemValue="CODE_VAL" itemLabel="CODE_NM" />
 									</form:select>
 								</td>		
@@ -92,13 +93,14 @@
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</form:form>
 			</div>
 			</div>
-			<div class="btnbx" style="margin-right: 15px;">
-				<a href="#"  class="schbtn"  onclick="document.getElementById('menu_Regist-form').reset(); return false;">초기화</a>
-				<a href="#"  class="schbtn"  onclick="check = false; fn_menu_save(); return false;">등록</a>
-				<a href="#"  class="schbtn" onclick="javascript: fn_close_dialog();">닫기</a></div>
+			<div class="btnArea">
+				<a href="#"  class="btn"  onclick="document.getElementById('menu_Regist-form').reset(); return false;">초기화</a>				
+				<a href="#"  class="btn" onclick="javascript: fn_close_dialog();">닫기</a>
+				<a href="#"  class="btn pri"  onclick="check = false; fn_menu_save(); return false;">등록</a>
 			</div>
 	</div>
 </div>

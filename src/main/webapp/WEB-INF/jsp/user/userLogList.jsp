@@ -26,8 +26,8 @@
 		<ul class="admin_sch">
 			<li>
 				<label>상위메뉴</label>
-				<select id="SCH_MENU_ID" name="SCH_MENU_ID"  class="select sBx120" style="width: 150px; margin-left: 5px;" onkeydown="fnCheckEnter(event);">
-					<option value="">===== 전체 =====</option>
+				<select id="SCH_MENU_ID" name="SCH_MENU_ID"  class="select sBx120" onkeydown="fnCheckEnter(event);">
+					<option value="">전체</option>
 					<c:forEach var="selectData" items="${menu_list}">
 						<option value="${selectData.MENU_ID}">${selectData.MENU_NM}</option>
 					</c:forEach>
@@ -35,36 +35,32 @@
 			</li>
 			<li>
 				<label>메뉴명</label>
-				<input type="text" id="SCH_MENU_NM" name="SCH_MENU_NM"  class="MX_50 CS_25 input" onkeydown="fnCheckEnter(event);" />
+				<input type="text" id="SCH_MENU_NM" name="SCH_MENU_NM" onkeydown="fnCheckEnter(event);" />
 			</li>
-			<li style="line-height: 20px;">
+			<li>
 				<label>접속일자</label>
-				<ul style="float:right; ">
-				    <li style="margin-top: 2px;">
-					    <a href="#" id="btnPeriod" class="userLog on" onclick="fnChangePeriod($(this)); return false;" style="padding: 6px 8px; color: white;">기간지정</a>
-	                    <a href="#" id="btnMonth" class="userLog" onclick="fnChangePeriod($(this)); return false;" style="padding: 6px 8px; color: white;">월별</a>
-	                    <a href="#" id="btnQuarter" class="userLog" onclick="fnChangePeriod($(this)); return false;" style="padding: 6px 8px; color: white;">분기별</a>
-                    </li>
-
+					    <a href="#" id="btnPeriod" class="userLog on" onclick="fnChangePeriod($(this)); return false;">기간지정</a>
+	                    <a href="#" id="btnMonth" class="userLog" onclick="fnChangePeriod($(this)); return false;">월별</a>
+	                    <a href="#" id="btnQuarter" class="userLog" onclick="fnChangePeriod($(this)); return false;">분기별</a>
+               
                     <!-- 기간지정 -->
-                    <li id="dvPeriod" style="width:300px;">
+                    <span id="dvPeriod">
 						<span class="calendar">
-							<input type="text" id="SCH_STRCON_DE" name="SCH_STRCON_DE" style="width: 82px" onkeydown="fnCheckEnter(event);"/>
+							<input type="text" id="SCH_STRCON_DE" name="SCH_STRCON_DE" onkeydown="fnCheckEnter(event);"/>
 						</span>~
 						<span class="calendar">
-							<input type="text" id="SCH_ENDCON_DE" name="SCH_ENDCON_DE" style="width: 82px" onkeydown="fnCheckEnter(event);"/>
+							<input type="text" id="SCH_ENDCON_DE" name="SCH_ENDCON_DE" onkeydown="fnCheckEnter(event);"/>
 						</span>
-					</li>
+					</span>
 
 					<!-- 월별 -->
-					<li id="dvMonth" style="display: none; width:300px">
+					<span id="dvMonth" style="display: none;">
                         <span>
-	                        <label></label>
-	                        <select id="dvMonth_Year"  style="width:36%;" onkeydown="fnCheckEnter(event);">
+	                        <select id="dvMonth_Year"  onkeydown="fnCheckEnter(event);">
 	                        </select>
 	                    </span>
 	                    <span>
-	                        <select id="dvMonth_Month" style="width:36%;" onkeydown="fnCheckEnter(event);">
+	                        <select id="dvMonth_Month"onkeydown="fnCheckEnter(event);">
 	                            <option value="01"  id="mt1" >1월</option>
 	                            <option value="02"  id="mt2" >2월</option>
 	                            <option value="03"  id="mt3" >3월</option>
@@ -79,35 +75,32 @@
 	                            <option value="12"  id="mt12">12월</option>
 	                        </select>
 	                    </span>
-                    </li>
+                    </span>
 
                     <!-- 분기별 -->
-                    <li id="dvQuarter" style="display: none; width:300px;" >
-	                    <span>
-	                        <label></label>
-	                        <select id="dvQuarter_Year" style="width:36%;" onkeydown="fnCheckEnter(event);">
+                    <span id="dvQuarter" style="display: none; " >
+	                    <span>	                        
+	                        <select id="dvQuarter_Year"onkeydown="fnCheckEnter(event);">
 	                        </select>
 	                    </span>
 	                    <span>
-	                        <select id="dvQuarter_Quarter" style="width:36%;" onkeydown="fnCheckEnter(event);">
+	                        <select id="dvQuarter_Quarter" onkeydown="fnCheckEnter(event);">
 	                            <option value="1"  id="qt_q1" >1분기</option>
 	                            <option value="2"  id="qt_q2" >2분기</option>
 	                            <option value="3"  id="qt_q3" >3분기</option>
 	                            <option value="4"  id="qt_q4" >4분기</option>
 	                        </select>
 	                    </span>
-                    </li>
-				</ul>
-			</li>
-			<li class="fr"><a href="#" class="schbtn dpb" onclick="javascript:fn_search();">검색</a>
+                    </span>
+			<a href="#" class="btn pri posR" onclick="javascript:fn_search();">검색</a>
 			</li>
 		</ul>
 		<div id="div_grid" >
 			<table class="adminlist" id="gridArea"></table>
 			<div id="gridPager"></div>
 		</div>
-		<div class="btnbx">
-           	 	<a href="#" class="schbtn" onclick="fn_usrLogExcel();">엑셀저장</a>
+		<div class="btnArea">
+           	 	<a href="#" class="btn pri" onclick="fn_usrLogExcel();">엑셀저장</a>
         </div>
 	</div>
 </div>
@@ -148,7 +141,7 @@ $( document ).ready(function() {
     var maxQuarter = (maxMonth / 3 <= 1)? 1 : ((maxMonth / 3 <= 2)? 2 : ((maxMonth / 3 <= 3)? 3 : 4 )) ;
 
 
-    // ============ 셀렉트박스 날짜세팅 ============
+    // ====트박스 날짜세팅 ============
     //var d = new Date();
     //var yr = d.getFullYear();
 
@@ -226,7 +219,7 @@ function fn_search() {
 	postData["USE_AT"]= "Y" ;
 
 
-// =========== 날짜값 셋팅 ===========
+// =값 셋팅 ===========
 	// 1. 기간별
     if ( $("#btnPeriod").hasClass("on") ) {
         startDt = $("#SCH_STRCON_DE").val();

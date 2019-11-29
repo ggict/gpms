@@ -72,7 +72,7 @@
 370px
 */ }
 
-.header .h1 { color: #000; font-size: 0; border-right: #aaa solid 1px; float: left; width: 330px; background: #fff; }
+.header .h1 { color: #000; font-size: 0; border-right: #aaa solid 1px; float: left; width: 330px; background: #fff; transition: all 0.2s ease 0s; }
 
 .header .h1 span { font-size: 21px; color: #000000; font-weight: 600; letter-spacing: -1px; }
 
@@ -80,7 +80,7 @@
 
 .header nav { float: left; }
 
-.header nav li { float: left; width: 150px; position: relative; }
+.header nav li { float: left; width: 150px; position: relative; transition: all 0.2s ease 0s; }
 
 .header nav li a { display: block; text-align: center; color: #6b6b6b; }
 
@@ -122,15 +122,15 @@
 
 .header .topMenu a:hover, .header .topMenu a:focus, .header .topMenu a.on, .header .topMenu #userDept:hover, .header .topMenu #userDept:focus, .header .topMenu #userDept.on { color: #5391e2; }
 
-.header .topMenu #userDept { padding-left: 58px; background: #ededed url(../images/userIcon.png) no-repeat 17px 13px; }
+.header .topMenu #userDept { padding-left: 58px; background: #ededed url(../images/userIcon.png) no-repeat 17px 13px; transition: all 0.2s ease 0s; }
 
 .header .topMenu a.btnMonitoring { padding-left: 58px; background: #fff url(../images/topLink.png) no-repeat 17px 17px; }
 
-.header .userArea { position: relative; }
+.header .userArea { position: relative; height: 55px; display: inline-block; }
 
 .header .userArea.on .user-area { display: block; }
 
-.header .userArea .user-area { position: absolute; top: 20px; padding: 4px 0 0 0; right: 0; width: 300px; display: none; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); border-bottom: solid 1px #aaa; }
+.header .userArea .user-area { position: absolute; top: 55px; padding: 4px 0 0 0; right: 0; width: 300px; display: none; box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); border-bottom: solid 1px #aaa; }
 
 .header .userArea .user-area a { background: #fff; }
 
@@ -438,6 +438,31 @@ input.mapPosition_X, input.mapPosition_Y { width: 100px; }
 .bottomBtArea img { position: fixed; left: -9999px; }
 
 .tab_wrap { border-top: solid 1px #69707e; }
+
+/* admin */
+.admin_sch { border: none; border-top: solid 1px #333; border-radius: 0; border-bottom: solid 1px #ddd; background: #fff; padding: 0; position: relative; }
+
+.admin_sch li { margin: 0; }
+
+.admin_sch li .btn { height: 20px; }
+
+.admin_sch li .posR { position: absolute; right: 0; top: 8px; }
+
+.admin_sch label { padding: 14px 10px; background: #f9f9f9; border-left: #e1e1e0 solid 1px; border-right: #e1e1e0 solid 1px; }
+
+.admin_sch li + li label { margin-left: 5px; }
+
+#div_grid + .btnArea { padding-top: 20px; }
+
+.PopTitBx + .btnArea { padding: 20px 10px; }
+
+.userLog { border-radius: 0; height: 20px; padding: 5px 15px; color: #eee; background: #999; margin-right: -3px; font-weight: 500; }
+
+.userLog:hover, .userLog:focus { background: #162d52; color: #eee; }
+
+.userLog + .userLog { margin-left: -3px; border-left: solid 1px #888; }
+
+.userLog.on { background: #162d52; color: #ffec49; }
 
 /* ui-grid */
 .ui-icon-triangle-1-n { background-position-x: 1px; }
@@ -804,5 +829,13 @@ body.research #srvyImage { position: absolute; left: 0; top: 0; width: 100%; }
 .loc + .container2 > .tab { margin: 20px 0 0 0; }
 
 .stmenuarea { display: none; }
+
+@media (max-width: 1460px) { .header .h1 { width: 310px; letter-spacing: -1px; } }
+
+@media (max-width: 1400px) { .header .topMenu #userDept { padding-left: 44px; padding-right: 10px; background-position-x: 10px; font-size: 14px; }
+				.header nav li { width: 124px; letter-spacing: -1px; } }
+
+@media (max-width: 1220px) { .header .topMenu #userDept { padding-left: 54px; padding-right: 0; width: 0; background-position-x: 13px; overflow: hidden; text-indent: 15px; color: #ededed; }
+				.header .topMenu #userDept:hover, .header .topMenu #userDept:focus { width: 120px; color: #666; padding-left: 44px; padding-right: 10px; } }
 
 /*# sourceMappingURL=road2019.css.map */
