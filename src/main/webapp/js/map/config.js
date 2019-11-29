@@ -299,16 +299,6 @@ var CONFIG = (function($, undefined){
 	     }
 	     
 	     /*
-	     "CELL_10_0301" : {
-	    	 'tmapid' : '870',
-	    	 'id' : '3803',
-	    	 'table' : 'CELL_10_0301',
-	    	 'theme' : 'CELL_10_0301',
-	    	 'alias' : 'CELL_10_0301',
-	    	 'seq' : '3803',
-	    	 'show' : '0',
-	    	 'layerType' : '3'
-	     }
 	     "CMPTNC_ZONE" : {
 	         'tmapid' : '870',
 	         'id' : '3769',
@@ -328,18 +318,7 @@ var CONFIG = (function($, undefined){
 	         'seq' : '3774',
 	         'show' : '1',
 	         'layerType' : '3'
-	     },
-		"CELL_200" : {
-	    	 
-	    	 'tmapid' : '870',
-	    	 'id' : '3800',
-	    	 'table' : 'CELL_200',
-	    	 'theme' : 'CELL_200',
-	    	 'alias' : 'CELL_200',
-	    	 'seq' : '3800',
-	    	 'show' : '1',
-	    	 'layerType' : '3'
-	     },
+	     }
 	      */
 	};	
 
