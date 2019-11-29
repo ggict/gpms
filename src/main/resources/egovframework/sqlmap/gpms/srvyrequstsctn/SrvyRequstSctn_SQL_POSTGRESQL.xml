@@ -57,10 +57,10 @@
             , TRACK            = #TRACK#
             , STRTPT           = (CASE WHEN length(#STRTPT#) = 0 THEN NULL ELSE #STRTPT# END)::numeric
             , ENDPT            = (CASE WHEN length(#ENDPT#) = 0 THEN NULL ELSE #ENDPT# END)::numeric
-            , UPDUSR_NO        = #UPDUSR_NO#
-            , UPDT_DT          = #UPDT_DT#
+            , UPDUSR_NO        = #UPDUSR_NO#::numeric
+            , UPDT_DT          = now()
 		WHERE 1 = 1
-		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO# 
+		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric 
 ]]>
 	</update>
 
