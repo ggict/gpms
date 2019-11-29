@@ -1135,7 +1135,10 @@ var COMMON_UTIL = (function($,undefined){
     * @param {String} _oUrl : 삽입할 url
     */
     var cmMenuUrlContent = function(_oUrl, _oClearFlag){
-    	$("#repairtargets").hide();
+    	//$("#repairtargets").hide();
+    	
+    	//하단 메뉴 hide
+    	bottomHide();
 
         fn_check_session();
 
@@ -1173,6 +1176,10 @@ var COMMON_UTIL = (function($,undefined){
     * @param {String} _oUrl : 삽입할 url
     */
     var statsMenuUrlContent = function(_oUrl){
+    	
+    	//하단 메뉴 hide
+    	bottomHide();
+    	
         fn_check_session();
 
         if(contextPath.endsWith("/")){
@@ -1220,6 +1227,10 @@ var COMMON_UTIL = (function($,undefined){
 
     var untpcMenuUrlContent = function(_oUrl){
         //alert(_oUrl);
+    	
+    	//하단 메뉴 hide
+    	bottomHide();
+    	
         fn_check_session();
 
         if(contextPath.endsWith("/")){
@@ -1879,6 +1890,10 @@ var COMMON_UTIL = (function($,undefined){
     * 20180221 YYK  _oClearFlag : map clear 여부 추가
     */
     function fn_set_subMenu(_oDivId, _oUrl, _oType, _oClearFlag){
+    	
+    	//하단 메뉴 hide
+    	bottomHide();
+    	
         var strUrl = "";
         if(_oUrl!=null && _oUrl!=undefined){
             if(_oUrl.startsWith(contextPath)){

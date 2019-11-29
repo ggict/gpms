@@ -223,11 +223,6 @@
                 <div id="divLayerTool">
 	                <div id="divLayerMngList" class="divlayermng">
 	                	<ul id="divLayerMngList_ul">
-	                	<%--
-	                		<li>
-			                	<a href="#"><img src="<c:url value='/images/common/gps.png'/>"/><p>10m</p></a>
-	                		</li>
-	                		 --%>
 	                	</ul>
 	                </div>
                 </div>
@@ -271,11 +266,6 @@ $(document).ready(function() {
 	//하단 메뉴 hide
 	bottomHide();
 
-	//인덱스맵 토글이벤트
-	var indexmapToggle = function(){
-		$('.indexmap').toggle();
-	};
-	$('#snbacc').find('dt').click(indexmapToggle);
 });
 
 var MAIN = (function(_mod_map, $, undefined) {
@@ -291,28 +281,7 @@ var MAIN = (function(_mod_map, $, undefined) {
 		},
 		userStyle : ''
 	});
-	/* 
-	//레이어 관리
-	$("#divLayerTool").dialog({
-		title: '레이어 관리',
-		resizable: false,
-		height: 300,
-		width: 210,
-		open: function(e, ui){
-			var obj = $("#divLayerTool").parent();
-			obj.offset({top:110, left:55});
-		},
-		dragStop: function( event, ui ) {
-			var obj = $("#divLayerTool").parent();
-			var offset = obj.offset();
-			var top = offset['top'];
-			var left = offset['left'];
-			if(top < 110){
-				obj.offset({top:110, left:55});
-			}
-		}
-	});
- 	*/
+	
 	var fn_get_layerInfoList = function (_oLayer){
 		return oLayerInfoList[_oLayer];
 	}
@@ -356,9 +325,9 @@ var layersMngObj = {
 			var active = (show == '1') ? 'active' : '';
 
 			var format =
-				this.template().replace("{title}", alias)
-					.replace("{layernm}", table)
-					.replace("{class}", active);
+				this.template().replace(/{title}/g, alias)
+					.replace(/{layernm}/g, table)
+					.replace(/{class}/g, active);
 
 			templates.push(format);
 		}
@@ -366,10 +335,8 @@ var layersMngObj = {
 		this.clickevt();
 	}
 	,template : function() {
-		var imageUrl = contextPath + 'images/common/gps.png';
 		var template = ''
 				+ '<li class="{class}">'
-				//+ '<a href="#"><img src="'+imageUrl+'"/><p data-layer="{layernm}">{title}</p></a>'
 				+ '<a href="#"><p data-layer="{layernm}">{title}</p></a>'
 				+ '</li>';
 		return template;
