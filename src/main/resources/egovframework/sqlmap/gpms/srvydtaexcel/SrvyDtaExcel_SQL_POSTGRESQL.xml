@@ -1263,8 +1263,11 @@ FROM   (SELECT Row_number()
                 WHERE  1 = 1 
                        AND tnsmdtagnlsttus.use_at = 'Y' 
                        AND tnsmdtagnlsttus.delete_at = 'N'
+			) tb
+			ORDER BY $orderByColumn$ $orderByType$
+		) tnsmdtagnlsttus
+		WHERE 1=1
     ]]>
-
 		<isNotEmpty property="CELL_ID"><![CDATA[ AND OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
@@ -1275,15 +1278,10 @@ FROM   (SELECT Row_number()
 		<isNotEmpty property="STRTPT"><![CDATA[ AND STRTPT >= #STRTPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="ENDPT"><![CDATA[ AND ENDPT <= #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
+		<isNotEmpty property="CNTRWK_AT"><![CDATA[ AND CNTRWK_AT = #CNTRWK_AT# ]]></isNotEmpty>
+		<isNotEmpty property="UNOPN_AT"><![CDATA[ AND UNOPN_AT = #UNOPN_AT# ]]></isNotEmpty>
 		<isNotEmpty property="MINGPCI"><![CDATA[ AND GPCI >= #MINGPCI# ]]></isNotEmpty>
 		<isNotEmpty property="MAXGPCI"><![CDATA[ AND GPCI <= #MAXGPCI# ]]></isNotEmpty>
-    <![CDATA[
-			) tb
-			ORDER BY $orderByColumn$ $orderByType$
-		) tnsmdtagnlsttus
-		WHERE 1=1
-    ]]>
-
 		<isEqual prepend=" " property="usePage" compareValue="true">
     <![CDATA[
         AND tnsmdtagnlsttus.rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#

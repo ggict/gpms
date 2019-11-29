@@ -141,10 +141,20 @@
                                 <option value="DFCT0008">블럭균열</option>
                                 <option value="DFCT0009">복합파손</option>
                             </select><br>
-                            <input type="text" name="MINGPCI" id="MINGPCI" value="" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" />
-                            ≤ GPCI ≤ 
-                            <input type="text" name="MAXGPCI" id="MAXGPCI" value="" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" />
                         </td>
+    				</tr>
+    				<tr>
+    					<td class="th"><label for="CNTRWK_AT">공사구간</label></td>
+    					<td><input type="checkbox" name="CNTRWK_AT" id="CNTRWK_AT" value=""/></td>
+    					<td class="th"><label for="UNOPN_AT">미개통구간</label></td>
+    					<td><input type="checkbox" name="UNOPN_AT" id="UNOPN_AT" value=""/></td>    					  			
+    				</tr>
+    				<tr>
+    					<td class="th" colspan="4"><label for="GPCI"></label>
+    					<input type="text" name="MINGPCI" id="MINGPCI" value="" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" />
+                        ≤ GPCI ≤ 
+                        <input type="text" name="MAXGPCI" id="MAXGPCI" value="" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" />
+    					</td>
     				</tr>
     				</tbody>	
     			</table>
@@ -196,7 +206,7 @@ var ENDPT           = "${mummSctnSrvyDtaVO.ENDPT}";
 var CNTL_DFECT      = "${mummSctnSrvyDtaVO.CNTL_DFECT}";
 var MINGPCI         = "${mummSctnSrvyDtaVO.MINGPCI}";
 var MAXGPCI         = "${mummSctnSrvyDtaVO.MAXGPCI}"
-var SRVY_YEAR         = "${mummSctnSrvyDtaVO.SRVY_YEAR}"
+var SRVY_YEAR       = "${mummSctnSrvyDtaVO.SRVY_YEAR}"
 
 $( document ).ready(function() {
 
@@ -209,7 +219,7 @@ $( document ).ready(function() {
     if ( isNotNull(CNTL_DFECT) )    { $("#CNTL_DFECT").val(CNTL_DFECT); }
     if ( isNotNull(MINGPCI) )       { $("#MINGPCI").val(MINGPCI); }
     if ( isNotNull(MAXGPCI) )       { $("#MAXGPCI").val(MAXGPCI); }
-    if ( isNotNull(SRVY_YEAR) )       { $("#SRVY_YEAR").val(SRVY_YEAR); }
+    if ( isNotNull(SRVY_YEAR) )     { $("#SRVY_YEAR").val(SRVY_YEAR); }
 
     if ( isNotNull(ROAD_GRAD) ) {
         $("#ROAD_GRAD").val(ROAD_GRAD);
@@ -349,20 +359,43 @@ $( document ).ready(function() {
     });
 
 });
+//Check
+$('#CNTRWK_AT').click(function(){
+	debugger;
+	if($('#CNTRWK_AT').prop("checked")){
+		$('#CNTRWK_AT').val("O");
+	}else{
+		$('#CNTRWK_AT').val("");
+    }
+});
 
+$('#UNOPN_AT').click(function(){
+	if($('#UNOPN_AT').prop("checked")){
+		$('#UNOPN_AT').val("O");
+	}else{
+		$('#UNOPN_AT').val("");
+    }
+});
+    
 //검색 처리
 function fn_search() {
-
+	var cntrwk_at = $('#CNTRWK_AT').val();
+	var unopn_at = $('#UNOPN_AT').val();
+	
     if ( !fnFormCheck($("#frm")) ) { return; }
 
     param = $("#frm").fnGetParameter();
 
+    var postData = $("#frm").cmSerializeObject();
+    postData["CNTRWK_AT"] = cntrwk_at;
+    postData["UNOPN_AT"] = unopn_at;
+ 	
 	$("#gridArea").jqGrid("setGridParam",{
 		datatype: "json"
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,contentType: "application/json"
 		,page: 1
-		,postData:   $("#frm").cmSerializeObject()
+		,postData:  postData
 		,mtype: "POST"
 	   	,loadComplete: function(data) {
 
