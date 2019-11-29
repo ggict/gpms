@@ -68,21 +68,6 @@ var CONFIG = (function($, undefined){
 		//"version" : "1.3.0" //지도서비스 GetMap Version
 		"version" : "1.1.0"
 	};
-
-	
-	//시스템별 참조레이어(벡터)의 유효축척  - 편집 기본축척 (min:1417 max:300) 이외 영역이 넓은 레이어에 한해 유효축척 설정이 필요한 경우
-	var oRefWfsScaleInfo = {
-		"RDL" : {
-			"TEST_SAMPLE" : {
-				"max" : "300",
-				"min" : "2834"
-			},
-			"TEST_SAMPLE2" : {
-				"max" : "300",
-				"min" : "100000"
-			}
-		}
-	};
 	
 	
 	//레이어 목록
