@@ -68,21 +68,6 @@ var CONFIG = (function($, undefined){
 		//"version" : "1.3.0" //지도서비스 GetMap Version
 		"version" : "1.1.0"
 	};
-
-	
-	//시스템별 참조레이어(벡터)의 유효축척  - 편집 기본축척 (min:1417 max:300) 이외 영역이 넓은 레이어에 한해 유효축척 설정이 필요한 경우
-	var oRefWfsScaleInfo = {
-		"RDL" : {
-			"TEST_SAMPLE" : {
-				"max" : "300",
-				"min" : "2834"
-			},
-			"TEST_SAMPLE2" : {
-				"max" : "300",
-				"min" : "100000"
-			}
-		}
-	};
 	
 	
 	//레이어 목록
@@ -299,16 +284,6 @@ var CONFIG = (function($, undefined){
 	     }
 	     
 	     /*
-	     "CELL_10_0301" : {
-	    	 'tmapid' : '870',
-	    	 'id' : '3803',
-	    	 'table' : 'CELL_10_0301',
-	    	 'theme' : 'CELL_10_0301',
-	    	 'alias' : 'CELL_10_0301',
-	    	 'seq' : '3803',
-	    	 'show' : '0',
-	    	 'layerType' : '3'
-	     }
 	     "CMPTNC_ZONE" : {
 	         'tmapid' : '870',
 	         'id' : '3769',
@@ -328,18 +303,7 @@ var CONFIG = (function($, undefined){
 	         'seq' : '3774',
 	         'show' : '1',
 	         'layerType' : '3'
-	     },
-		"CELL_200" : {
-	    	 
-	    	 'tmapid' : '870',
-	    	 'id' : '3800',
-	    	 'table' : 'CELL_200',
-	    	 'theme' : 'CELL_200',
-	    	 'alias' : 'CELL_200',
-	    	 'seq' : '3800',
-	    	 'show' : '1',
-	    	 'layerType' : '3'
-	     },
+	     }
 	      */
 	};	
 
