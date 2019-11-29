@@ -25,11 +25,18 @@ import kr.go.gg.gpms.cntrwkcellinfo.service.CntrwkCellInfoService;
 import kr.go.gg.gpms.cntrwkcellinfo.service.model.CntrwkCellInfoVO;
 import kr.go.gg.gpms.cntrwkdtl.service.CntrwkDtlService;
 import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
+import kr.go.gg.gpms.code.service.model.CodeVO;
 import kr.go.gg.gpms.company.service.model.CompanyVO;
 import kr.go.gg.gpms.dept.service.DeptService;
 import kr.go.gg.gpms.dept.service.model.DeptVO;
 import kr.go.gg.gpms.flawcntrwk.service.FlawCntrwkService;
 import kr.go.gg.gpms.flawcntrwk.service.model.FlawCntrwkVO;
+import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
+import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
+import kr.go.gg.gpms.rpairtrgetgroup.service.RpairTrgetGroupService;
+import kr.go.gg.gpms.rpairtrgetgroup.service.model.RpairTrgetGroupVO;
+import kr.go.gg.gpms.rpairtrgetslctn.service.RpairTrgetSlctnService;
+import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -85,14 +92,20 @@ public class CntrwkController  extends BaseController {
 	private DeptService deptService;
 	@Resource(name = "cntrwkDtlService")
 	private CntrwkDtlService cntrwkDtlService;
-	
+	@Resource(name = "cntrwkCellInfoService")
+	private CntrwkCellInfoService cntrwkCellInfoService;	
 	@Resource(name = "flawCntrwkService")
 	private FlawCntrwkService flawCntrwkService;
+	@Resource(name = "routeInfoService")
+	private RouteInfoService routeInfoService;
+	@Resource(name = "rpairTrgetSlctnService")
+	private RpairTrgetSlctnService rpairTrgetSlctnService;
+	@Resource(name = "rpairTrgetGroupService")
+	private RpairTrgetGroupService rpairTrgetGroupService;
 		
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService egovPropertyService;
-	@Resource(name = "cntrwkCellInfoService")
-	private CntrwkCellInfoService cntrwkCellInfoService;
+
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CntrwkController.class);
 
@@ -687,81 +700,178 @@ public class CntrwkController  extends BaseController {
 	}
 	
 	 private int setHeaderCell(HSSFSheet sheet, int fixedLoc, HashMap hMap, int iBaseCursor, String subTitle, HSSFWorkbook wb) throws Exception{
-	    	//상단
-		 	sheet.getRow(fixedLoc).getCell(4).setCellValue(hMap.get("route_cn").toString() + "개 노선 " + hMap.get("detail_cntrwk_cn").toString() + "개소 정비");
-	        sheet.getRow(fixedLoc).getCell(5).setCellValue(nvl(hMap.get("min_rpair_bt")) + "-" + nvl(hMap.get("max_rpair_bt")));
-	        sheet.getRow(fixedLoc).getCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_len")));
-	        sheet.getRow(fixedLoc).getCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_ar")) / 100);
-	        sheet.getRow(fixedLoc).getCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("cntrwk_amount")) / 1000000);
-	        //하부
-	        iBaseCursor = iBaseCursor + 1;
-			HSSFRow row = sheet.createRow(iBaseCursor);
-			row.createCell(0).setCellValue(subTitle);
-			row.createCell(1).setCellValue("소 계");
-			row.createCell(2).setCellValue("");
-			row.createCell(3).setCellValue("");
-			row.createCell(4).setCellValue(hMap.get("route_cn").toString() + "개 노선 " + hMap.get("detail_cntrwk_cn").toString() + "개소 정비");
-			row.createCell(5).setCellValue(nvl(hMap.get("min_rpair_bt")) + "-" + nvl(hMap.get("max_rpair_bt")));
-			row.createCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_len")));
-			row.createCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_ar")) / 100);
-			row.createCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("cntrwk_amount")) / 1000000);
-			row.createCell(9).setCellValue("");
-			row.createCell(10).setCellValue("");
-			row.createCell(11).setCellValue("");
-			row.createCell(12).setCellValue("");
-			row.createCell(13).setCellValue("");
-			row.createCell(14).setCellValue("");
-			row.createCell(15).setCellValue("");
-			row.createCell(16).setCellValue("");
-			row.createCell(17).setCellValue("");
-			row.createCell(18).setCellValue("");
-			row.createCell(19).setCellValue("");
-			row.createCell(20).setCellValue("");
-			row.createCell(21).setCellValue("");
+    	//상단
+	 	sheet.getRow(fixedLoc).getCell(4).setCellValue(hMap.get("route_cn").toString() + "개 노선 " + hMap.get("detail_cntrwk_cn").toString() + "개소 정비");
+        sheet.getRow(fixedLoc).getCell(5).setCellValue(nvl(hMap.get("min_rpair_bt")) + "-" + nvl(hMap.get("max_rpair_bt")));
+        sheet.getRow(fixedLoc).getCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_len")));
+        sheet.getRow(fixedLoc).getCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_ar")) / 100);
+        sheet.getRow(fixedLoc).getCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("cntrwk_amount")) / 1000000);
+        //하부
+        iBaseCursor = iBaseCursor + 1;
+		HSSFRow row = sheet.createRow(iBaseCursor);
+		row.createCell(0).setCellValue(subTitle);
+		row.createCell(1).setCellValue("소 계");
+		row.createCell(2).setCellValue("");
+		row.createCell(3).setCellValue("");
+		row.createCell(4).setCellValue(hMap.get("route_cn").toString() + "개 노선 " + hMap.get("detail_cntrwk_cn").toString() + "개소 정비");
+		row.createCell(5).setCellValue(nvl(hMap.get("min_rpair_bt")) + "-" + nvl(hMap.get("max_rpair_bt")));
+		row.createCell(6).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_len")));
+		row.createCell(7).setCellValue(NumberUtil.parseDouble(hMap.get("rpair_ar")) / 100);
+		row.createCell(8).setCellValue(NumberUtil.parseDouble(hMap.get("cntrwk_amount")) / 1000000);
+		row.createCell(9).setCellValue("");
+		row.createCell(10).setCellValue("");
+		row.createCell(11).setCellValue("");
+		row.createCell(12).setCellValue("");
+		row.createCell(13).setCellValue("");
+		row.createCell(14).setCellValue("");
+		row.createCell(15).setCellValue("");
+		row.createCell(16).setCellValue("");
+		row.createCell(17).setCellValue("");
+		row.createCell(18).setCellValue("");
+		row.createCell(19).setCellValue("");
+		row.createCell(20).setCellValue("");
+		row.createCell(21).setCellValue("");
 
-			CellRangeAddress cellRangeAddress = new CellRangeAddress(iBaseCursor, iBaseCursor, 1, 21);
-			HSSFRegionUtil.setBorderTop(HSSFCellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
-			HSSFRegionUtil.setBorderRight(HSSFCellStyle.BORDER_MEDIUM, cellRangeAddress, sheet, wb);
-			HSSFRegionUtil.setBorderBottom(HSSFCellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
-			return iBaseCursor;
-	    }
+		CellRangeAddress cellRangeAddress = new CellRangeAddress(iBaseCursor, iBaseCursor, 1, 21);
+		HSSFRegionUtil.setBorderTop(HSSFCellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
+		HSSFRegionUtil.setBorderRight(HSSFCellStyle.BORDER_MEDIUM, cellRangeAddress, sheet, wb);
+		HSSFRegionUtil.setBorderBottom(HSSFCellStyle.BORDER_THIN, cellRangeAddress, sheet, wb);
+		return iBaseCursor;
+    }
 	    
-	    private void setLoopCell(HSSFRow row, Map map) throws Exception {
-			row.createCell(1).setCellValue(nvl(map.get("route_nm")));
-			row.createCell(2).setCellValue(nvl(map.get("road_nm")));
-			row.createCell(3).setCellValue(nvl(map.get("cntrwk_cl_nm")));
-			row.createCell(4).setCellValue(nvl(map.get("detail_cntrwk_nm")));
-			row.createCell(5).setCellValue(NumberUtil.parseDouble(map.get("rpair_bt")));
-			row.createCell(6).setCellValue(NumberUtil.parseDouble(map.get("rpair_len")));
-			row.createCell(7).setCellValue(NumberUtil.parseDouble(map.get("rpair_ar")) / 100);
-			row.createCell(8).setCellValue(NumberUtil.parseDouble(map.get("cntrwk_amount")) / 1000000);
-			row.createCell(9).setCellValue(nvl(map.get("rpair_matrl_prdct_co_nm")));
-			row.createCell(10).setCellValue(nvl(map.get("cnstrct_co_nm")));
-			row.createCell(11).setCellValue(nvl(map.get("before_pav_year")));
-			row.createCell(12).setCellValue(nvl(map.get("rpair_begin_de")));
-			row.createCell(13).setCellValue(nvl(map.get("rpair_end_de")));
-			row.createCell(14).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_ascon")));
-			row.createCell(15).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_cntr")));
-			row.createCell(16).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_base")));
-			row.createCell(17).setCellValue(nvl(map.get("pav_matrl_ascon_nm")));
-			row.createCell(18).setCellValue(nvl(map.get("pav_matrl_cntr_nm")));
-			row.createCell(19).setCellValue(nvl(map.get("pav_matrl_base_nm")));
-			row.createCell(20).setCellValue(nvl(map.get("dept_nm")));
-			row.createCell(21).setCellValue(nvl(map.get("full_cntrwk_nm")));
-	    }
+    private void setLoopCell(HSSFRow row, Map map) throws Exception {
+		row.createCell(1).setCellValue(nvl(map.get("route_nm")));
+		row.createCell(2).setCellValue(nvl(map.get("road_nm")));
+		row.createCell(3).setCellValue(nvl(map.get("cntrwk_cl_nm")));
+		row.createCell(4).setCellValue(nvl(map.get("detail_cntrwk_nm")));
+		row.createCell(5).setCellValue(NumberUtil.parseDouble(map.get("rpair_bt")));
+		row.createCell(6).setCellValue(NumberUtil.parseDouble(map.get("rpair_len")));
+		row.createCell(7).setCellValue(NumberUtil.parseDouble(map.get("rpair_ar")) / 100);
+		row.createCell(8).setCellValue(NumberUtil.parseDouble(map.get("cntrwk_amount")) / 1000000);
+		row.createCell(9).setCellValue(nvl(map.get("rpair_matrl_prdct_co_nm")));
+		row.createCell(10).setCellValue(nvl(map.get("cnstrct_co_nm")));
+		row.createCell(11).setCellValue(nvl(map.get("before_pav_year")));
+		row.createCell(12).setCellValue(nvl(map.get("rpair_begin_de")));
+		row.createCell(13).setCellValue(nvl(map.get("rpair_end_de")));
+		row.createCell(14).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_ascon")));
+		row.createCell(15).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_cntr")));
+		row.createCell(16).setCellValue(NumberUtil.parseDouble(map.get("rpair_thick_base")));
+		row.createCell(17).setCellValue(nvl(map.get("pav_matrl_ascon_nm")));
+		row.createCell(18).setCellValue(nvl(map.get("pav_matrl_cntr_nm")));
+		row.createCell(19).setCellValue(nvl(map.get("pav_matrl_base_nm")));
+		row.createCell(20).setCellValue(nvl(map.get("dept_nm")));
+		row.createCell(21).setCellValue(nvl(map.get("full_cntrwk_nm")));
+    }
 	    
-	    /**
-		 * 공사정보(TN_CNTRWK)에 따른 셀ID(CELL_10)를 조회한다.
-		 * @param cntrwkVO - 조회할 정보가 담긴 CntrwkVO
-		 * @return "/api/cntrwk/selectCntrwkCellId
-		 * @exception Exception
-		 */
-		@RequestMapping(value = {  "/api/cntrwk/selectCntrwkCellId.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-		public  @ResponseBody Map<String, Object>  selectCntrwkCellId(@RequestBody  CntrwkVO cntrwkVO, ModelMap model, HttpSession session) throws Exception {	
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("res", cntrwkService.selectCntrwkCellId(cntrwkVO));
+    /**
+	 * 공사정보(TN_CNTRWK)에 따른 셀ID(CELL_10)를 조회한다.
+	 * @param cntrwkVO - 조회할 정보가 담긴 CntrwkVO
+	 * @return "/api/cntrwk/selectCntrwkCellId
+	 * @exception Exception
+	 */
+	@RequestMapping(value = {  "/api/cntrwk/selectCntrwkCellId.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public  @ResponseBody Map<String, Object>  selectCntrwkCellId(@RequestBody  CntrwkVO cntrwkVO, ModelMap model, HttpSession session) throws Exception {	
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("res", cntrwkService.selectCntrwkCellId(cntrwkVO));
+	
+		return map;
+	}
 		
-			return map;
-		}
+	/**
+	 * 2019신규
+	 * [포장공사이력관리 > 포장공사진행현황]
+	 * 보수대상선정 대비 포장공사 진행현황 view
+	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+	 * @return "/cntrwk/cntrwkProgressList"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/cntrwk/cntrwkProgressList.do" })
+	public String selectRouteInfoList(@ModelAttribute("searchVO") RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
+		
+		// 산정년도
+		RpairTrgetSlctnVO rpairTrgetSlctnVO = new RpairTrgetSlctnVO();
+		rpairTrgetSlctnVO.setUSE_AT("Y");
+		rpairTrgetSlctnVO.setUsePage(false);
+		List<RpairTrgetSlctnVO> slctnYearList = rpairTrgetSlctnService.selectRpairTrgetSlctnList(rpairTrgetSlctnVO);
+		
+		//도로 등급
+		List<CodeVO> roadGradList = getCodeList("RDGD");
+		
+		//노선 번호
+		RouteInfoVO routeInfoVO = new RouteInfoVO();
+		routeInfoVO.setUsePage(false);
+		routeInfoVO.setSidx("ROAD_NO");
+		List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+
+		model.addAttribute("slctnYearList", slctnYearList);
+		model.addAttribute("roadGradList", roadGradList);
+		model.addAttribute("roadNoList", roadNoList);
+		
+		return "/cntrwk/cntrwkProgressList" ;
+	}
+		
+	/**
+	 * 2019신규
+	 * [포장공사이력관리 > 포장공사진행현황]
+	 * 보수대상선정 대비 포장공사 진행현황 조회 api
+	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+	 * @return "/cntrwk/cntrwkProgressList"
+	 * @exception Exception
+	 */
+	//api/cntrwk/selectRpairTrgetGroupList.do
+    @RequestMapping(value = {  "/api/cntrwk/selectCntrwkProgressList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public  @ResponseBody Map<String, Object>  selectRpairTrgetGroupListPageRest(@RequestBody  RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model, HttpSession session) throws Exception {
+        int pageIndex = 1;
+        int pageSize = egovPropertyService.getInt("pageSize");
+        if (rpairTrgetGroupVO.getPageIndex() > 0) {
+            pageIndex = rpairTrgetGroupVO.getPageIndex();
+        } else {
+            rpairTrgetGroupVO.setPageUnit(egovPropertyService.getInt("pageUnit"));
+        }
+
+        if (rpairTrgetGroupVO.getPageSize() > 0) {
+            pageSize = rpairTrgetGroupVO.getPageSize();
+        } else {
+            rpairTrgetGroupVO.setPageSize(egovPropertyService.getInt("pageSize"));
+        }
+
+        if (rpairTrgetGroupVO.getPageUnit() <= 0) {
+            rpairTrgetGroupVO.setPageUnit(egovPropertyService.getInt("pageUnit"));
+        }
+
+        int firstIndex = pageSize * pageIndex - pageSize;
+        int lastIndex = firstIndex + pageSize;
+        PaginationInfo paginationInfo = new PaginationInfo();
+        paginationInfo.setCurrentPageNo(pageIndex);
+        paginationInfo.setRecordCountPerPage(pageSize);
+        paginationInfo.setPageSize(rpairTrgetGroupVO.getPageSize());
+
+        rpairTrgetGroupVO.setFirstIndex(firstIndex);
+        rpairTrgetGroupVO.setLastIndex(lastIndex);
+        rpairTrgetGroupVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+        rpairTrgetGroupVO.setUsePage(true);
+
+        rpairTrgetGroupVO.setFirstIndex(paginationInfo.getFirstRecordIndex());
+        rpairTrgetGroupVO.setLastIndex(paginationInfo.getLastRecordIndex());
+        rpairTrgetGroupVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+        // 보수대상선정 그룹 목록
+        List<RpairTrgetGroupVO> items = rpairTrgetGroupService.selectCntrwkByRpairTrgetGroupList(rpairTrgetGroupVO);
+        // 보수대상선정 그룹 갯수
+        int total_count = rpairTrgetGroupService.selectCntrwkByRpairTrgetGroupListTotalCount(rpairTrgetGroupVO);
+        // 보수대상선정 그룹 페이지 갯수
+        int total_page = 0;
+        if (total_count > 0)
+            total_page = (int) Math.ceil((float) total_count / (float) pageSize);
+
+        // 결과 JSON 저장
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("page", pageIndex);
+        map.put("total", total_page);
+        map.put("records", total_count);
+        map.put("rows", items);
+
+        return map;
+    }
 		
 }

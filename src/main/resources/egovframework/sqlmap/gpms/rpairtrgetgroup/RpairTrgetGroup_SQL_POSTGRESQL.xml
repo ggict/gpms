@@ -334,6 +334,153 @@
     </select>
 
 
+    <!-- 보수대상항목 그룹 대비 포장공사진행 리스트 -->
+    <select id="rpairTrgetGroupDAO.selectCntrwkByRpairTrgetGroupList" parameterClass="rpairTrgetGroupVO" resultClass="rpairTrgetGroupVO">
+        <![CDATA[
+            /* rpairTrgetGroupDAO.selectCntrwkByRpairTrgetGroupList */
+            /* 보수_대상_항목_그룹 대비 포장공사진행 조회 */
+            WITH rpairgroup as
+            (
+                SELECT 
+                    tb.ROUTE_CODE::int ROAD_NO_VAL
+                    , ( SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tb.ROUTE_CODE ) as ROAD_NM
+                    , SUM( tb.FIX_BUDGET_ASIGN) OVER() TOTAL_FIX_BUDGET_ASIGN
+                    , SUM( tb.FIX_AMOUNT_CALC) OVER() TOTAL_FIX_AMOUNT_CALC
+                    , SUM( tb.TMPR_FIX_BUDGET_ASIGN) OVER() TOTAL_TMPR_FIX_BUDGET_ASIGN
+                    , SUM( tb.BUDGET_ASIGN) OVER() TOTAL_BUDGET_ASIGN
+                    , SUM( tb.AMOUNT_CALC) OVER() TOTAL_AMOUNT_CALC
+                    , SUM(CASE WHEN tb.TMPR_SLCTN_AT = 'Y' THEN tb.AMOUNT_CALC ELSE 0 END) OVER() TOTAL_TMPR_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
+                    , tb.*
+                FROM (
+                    SELECT
+                           tnrpairtrgetgroup.GROUP_ITEM_NO    /* 보수_대상_항목_그룹.그룹_항목_번호 */
+                         , tnrpairtrgetgroup.TRGET_SLCTN_NO    /* 보수_대상_항목_그룹.대상_선정_번호 */
+                         , tnrpairtrgetgroup.SLCTN_STEP    /* 보수_대상_항목_그룹.선정_단계 */
+                         , tnrpairtrgetgroup.ITEM_SLCTN_STTUS    /* 보수_대상_항목_그룹.항목_선정_상태 */
+                         , tnrpairtrgetgroup.ROUTE_CODE    /* 보수_대상_항목_그룹.노선_코드 */
+                         , tnrpairtrgetgroup.DIRECT_CODE    /* 보수_대상_항목_그룹.행선_코드 */
+                         , tnrpairtrgetgroup.TRACK    /* 보수_대상_항목_그룹.차로 */
+                         , tnrpairtrgetgroup.STRTPT    /* 보수_대상_항목_그룹.시점 */
+                         , tnrpairtrgetgroup.ENDPT    /* 보수_대상_항목_그룹.종점 */
+                         , tnrpairtrgetgroup.CELL_TYPE    /* 보수_대상_항목_그룹.셀_타입 */
+                         , ( SELECT celtcode.CODE_NM FROM TC_CODE celtcode 
+                             WHERE tnrpairtrgetgroup.CELL_TYPE = celtcode.CODE_VAL AND celtcode.CL_CODE = 'CELT' AND celtcode.USE_AT = 'Y' AND celtcode.DELETE_AT = 'N' )
+                           as CELL_TYPE_NM
+                         , tnrpairtrgetgroup.DEPT_CODE    /* 보수_대상_항목_그룹.부서코드 */
+                         , ( SELECT tcdept.LOWEST_DEPT_NM AS DEPT_NM FROM GPMS.TC_DEPT  tcdept 
+                             WHERE tcdept.DEPT_CODE = tnrpairtrgetgroup.DEPT_CODE    AND tcdept.USE_AT = 'Y'  AND tcdept.DELETE_AT = 'N' )
+                           as DEPT_NM
+                         , tnrpairtrgetgroup.SRVY_MT    /* 보수_대상_항목_그룹.조사_월 */
+                         , tnrpairtrgetgroup.SRVY_YEAR    /* 보수_대상_항목_그룹.조사_년도 */
+                         , tnrpairtrgetgroup.GPCI    /* 보수_대상_항목_그룹.GPCI */
+                         , tnrpairtrgetgroup.PC_GRAD    /* 보수_대상_항목_그룹.포장상태등급 */
+                         , tnrpairtrgetgroup.CALC_YEAR    /* 보수_대상_항목_그룹.산정_년도 */
+                         , tnrpairtrgetgroup.CALC_MT    /* 보수_대상_항목_그룹.산정_월 */
+                         , tnrpairtrgetgroup.CALC_GPCI    /* 보수_대상_항목_그룹.산정_GPCI */
+                         , tnrpairtrgetgroup.CALC_PC_GRAD    /* 보수_대상_항목_그룹.산정_포장상태등급 */
+                         , tnrpairtrgetgroup.DMG_VAL   /* 보수_대상_항목_그룹.파손도_값 */
+                         , tnrpairtrgetgroup.CNTRWK_YEAR    /* 보수_대상_항목_그룹.공사_년도 */
+                         , tnrpairtrgetgroup.TRNSPORT_QY    /* 보수_대상_항목_그룹.교통_량 */
+                         , tnrpairtrgetgroup.LEN    /* 보수_대상_항목_그룹.연장 */
+                         , ROUND(tnrpairtrgetgroup.LEN /1000,2) KILLO_LEN    /* 보수_대상_항목_그룹.연장 */
+                         , tnrpairtrgetgroup.AR    /* 보수_대상_항목_그룹.면적 */
+                         , tnrpairtrgetgroup.RPAIR_MTHD_CODE    /* 보수_대상_항목_그룹.보수_공법_코드 */
+                         , tnrpairtrgetgroup.MSR_DM_CODE    /* 보수_대상_항목_그룹.공법선정비율_결정방식_코드 */
+                         , tnrpairtrgetgroup.THRHLD    /* 보수_대상_항목_그룹.임계값 */
+                         , tnrpairtrgetgroup.AMOUNT_CALC    /* 보수_대상_항목_그룹.금액_산정 */
+                         , ROUND(tnrpairtrgetgroup.AMOUNT_CALC  ,0) FIX_AMOUNT_CALC     /* 보수_대상_항목_그룹.금액_산정 */
+                         , ROUND( CASE WHEN tnrpairtrgetgroup.TMPR_SLCTN_AT = 'Y' THEN tnrpairtrgetgroup.AMOUNT_CALC ELSE 0 END ,0) TMPR_FIX_BUDGET_ASIGN     /* 보수_대상_항목_그룹.금액_산정 */
+                         , tnrpairtrgetgroup.BUDGET_ASIGN    /* 보수_대상_항목_그룹.예산_배정 */
+                         , ROUND(tnrpairtrgetgroup.BUDGET_ASIGN  ,0) FIX_BUDGET_ASIGN  /* 보수_대상_항목_그룹.예산_배정 */
+                         , tnrpairtrgetgroup.FIXING_AT    /* 보수_대상_항목_그룹.고정_여부 */
+                         , tnrpairtrgetgroup.BUDGET_CECK    /* 보수_대상_항목_그룹.예산_체크 */
+                         , tnrpairtrgetgroup.ACCMLT_CALC    /* 보수_대상_항목_그룹.누적_산정 */
+                         , tnrpairtrgetgroup.SLCTN_AT    /* 보수_대상_항목_그룹.선정_여부 */
+                         , tnrpairtrgetgroup.SLCTN_DT    /* 보수_대상_항목_그룹.선정_일시 */
+                         , tnrpairtrgetgroup.TMPR_SLCTN_AT    /* 보수_대상_항목_그룹.임시_선정_여부 */
+                         , tnrpairtrgetgroup.NODE_CO    /* 보수_대상_항목_그룹.노드_개수 */
+                         , ( SELECT vntccode.CODE_NM FROM TC_CODE vntccode 
+                             WHERE tnrpairtrgetgroup.VMTC_GRAD = vntccode.CODE_VAL AND vntccode.CL_CODE = 'VNTC' AND vntccode.USE_AT = 'Y' AND vntccode.DELETE_AT = 'N' )
+                           as VMTC_GRAD_NM                /* 보수_대상_항목_그룹.교통량등급 */
+                         , tnrpairtrgetgroup.VMTC_GRAD    /* 보수_대상_항목_그룹.교통량등급 */
+                         , tnrpairtrgetgroup.ROAD_GRAD    /* 보수_대상_항목_그룹.도로등급 */
+                         , (SELECT tccode.CODE_NM FROM TC_CODE tccode WHERE 1 = 1 AND tccode.CODE_VAL = tnrpairtrgetgroup.ROAD_GRAD AND tccode.USE_AT = 'Y' AND tccode.DELETE_AT = 'N' ) ROAD_GRAD_NM
+                         , tnrpairtrgetgroup.ADM_CODE    /* 보수_대상_항목_그룹.행정구역코드 */
+                         , ( SELECT  n3ag0100000.NAME FROM N3A_G0100000  n3ag0100000 WHERE  1=1 AND n3ag0100000.BJCD = tnrpairtrgetgroup.ADM_CODE) ADM_NM
+                         , tnrpairtrgetgroup.SLCTN_ORDR    /* 보수_대상_항목_그룹.선정_순서 */
+                         , tnrpairtrgetgroup.DELETE_AT    /* 보수_대상_항목_그룹.삭제_여부 */
+                         , tnrpairtrgetgroup.USE_AT    /* 보수_대상_항목_그룹.사용_여부 */
+                         , tnrpairtrgetgroup.CRTR_NO    /* 보수_대상_항목_그룹.생성자_번호 */
+                         , tnrpairtrgetgroup.CREAT_DT    /* 보수_대상_항목_그룹.생성_일시 */
+                         , tnrpairtrgetgroup.UPDUSR_NO    /* 보수_대상_항목_그룹.수정자_번호 */
+                         , tnrpairtrgetgroup.UPDT_DT    /* 보수_대상_항목_그룹.수정_일시 */
+                         , tnrpairtrgetgroup.CELL_IDS    /* 보수_대상_항목_그룹.섹션목록 */
+                         , tnrpairtrgetgroup.MNG_RD_CD    /* 보수_대상_항목_그룹.관리_도로_코드 */
+                         , ( SELECT mngrdcode.CODE_NM FROM TC_CODE mngrdcode 
+                             WHERE tnrpairtrgetgroup.MNG_RD_CD = mngrdcode.CODE_VAL AND mngrdcode.CL_CODE = 'MNRD' AND mngrdcode.USE_AT = 'Y' AND mngrdcode.DELETE_AT = 'N' )
+                           as MNG_RD_NM                /* 보수_대상_항목_그룹.관리_도로_명 */
+                         , tnrpairtrgetgroup.POTHOLE_QY   /* 보수_대상_항목_그룹.포트홀_량 */
+                         , tnrpairtrgetgroup.PRIORT   /* 보수_대상_항목_그룹.우선순위 */
+                    FROM TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+                    INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                    ON tnrpairtrgetslctn.TRGET_SLCTN_NO = tnrpairtrgetgroup.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
+                        AND tnrpairtrgetslctn.DELETE_AT = 'N'
+                        AND tnrpairtrgetslctn.USE_AT = 'Y'
+                    ]]>
+                    <include refid="rpairTrgetGroupDAO.selectRpairTrgetGroupList.where" />
+                    <![CDATA[
+                ) tb
+            )
+            , cntrwk as
+            (
+                SELECT
+                    rpairgroup.ROUTE_CODE,
+                    rpairgroup.GROUP_ITEM_NO,
+                    rpairgroup.TRGET_SLCTN_NO,
+                    SUM(COALESCE(CASE WHEN cellinfo.PAV_CELL_ID IS NOT NULL THEN cell10.ROAD_L END, 0)) as PAV_ROAD_L,
+                    string_agg(cellinfo.PAV_CELL_ID, ',') as PAV_CELL_IDS
+                    FROM rpairgroup
+                    JOIN CELL_10 cell10
+                        ON rpairgroup.ROUTE_CODE = cell10.ROUTE_CODE
+                        AND rpairgroup.DIRECT_CODE = cell10.DIRECT_CODE
+                        AND rpairgroup.TRACK = cell10.TRACK
+                        AND rpairgroup.STRTPT <= cell10.STRTPT
+                        AND rpairgroup.ENDPT >= cell10.ENDPT
+                    LEFT OUTER JOIN TN_CNTRWK_CELL_INFO cellinfo
+                    ON cell10.CELL_ID = cellinfo.PAV_CELL_ID
+                    GROUP BY rpairgroup.ROUTE_CODE, rpairgroup.GROUP_ITEM_NO, rpairgroup.TRGET_SLCTN_NO
+            )
+            SELECT
+                rpairgroup.*,
+                coalesce(cntrwk.PAV_ROAD_L, 0) as PAV_CELL_LEN,
+                cntrwk.PAV_CELL_IDS
+            FROM rpairgroup
+            LEFT OUTER JOIN cntrwk
+            ON rpairgroup.GROUP_ITEM_NO = cntrwk.GROUP_ITEM_NO
+            ]]>
+            <isEmpty property="sidx"> ORDER BY rpairgroup.PRIORT, rpairgroup.CALC_GPCI ASC </isEmpty>
+            <isNotEmpty  property="sidx"> ORDER BY $sidx$ $sord$ </isNotEmpty>
+            <isEqual prepend=" " property="usePage" compareValue="true">
+            <![CDATA[
+                LIMIT #recordCountPerPage# OFFSET #firstIndex#
+            ]]>
+            </isEqual>
+    </select>
+
+    <!-- 보수대상항목 그룹 대비 포장공사진행 갯수 -->
+    <select id="rpairTrgetGroupDAO.selectCntrwkByRpairTrgetGroupListTotalCount" parameterClass="rpairTrgetGroupVO" resultClass="int">
+        <![CDATA[
+            /* rpairTrgetGroupDAO.selectCntrwkRpairTrgetGroupListTotalCount */
+            /* 보수대상항목 그룹 대비 포장공사진행 개수 조회  */
+            SELECT COUNT(*) AS totCnt
+            FROM TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
+            INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+            ON tnrpairtrgetslctn.TRGET_SLCTN_NO = tnrpairtrgetgroup.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
+            AND tnrpairtrgetslctn.DELETE_AT = 'N'
+            AND tnrpairtrgetslctn.USE_AT = 'Y'
+        ]]>
+        <include refid="rpairTrgetGroupDAO.selectRpairTrgetGroupList.where" />
+    </select>
 
 
 

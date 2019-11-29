@@ -120,7 +120,7 @@
                         <a href="#none" onclick="fnSelectFirst($(this)); COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/selectCntrwkList.do"/>')"><span>포장공사이력관리</span></a>
                         <ul>
                             <li class="s10" onclick="fnSelectFirst($(this)); COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/selectCntrwkList.do"/>')"><a href="#none">포장공사이력관리</a></li>
-                            <li class="s30"><a href="#none">포장공사진행현황</a></li>
+                            <li class="s30" onclick="fnSelectFirst($(this)); COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/cntrwkProgressList.do"/>')"><a href="#none">포장공사진행현황</a></li>
                         </ul>
                     </li>
                     <li class="d00">

@@ -78,6 +78,18 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 	 */
 	@XmlElement
 	private String CELL_ID;
+	
+	/**
+	 * PAV_CELL_LEN
+	 */
+	@XmlElement
+	private String PAV_CELL_LEN;
+	
+	/**
+	 * PAV_CELL_IDS
+	 */
+	@XmlElement
+	private String PAV_CELL_IDS;
 
 	/**
 	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO,
@@ -152,5 +164,26 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
     public void setCELL_ID(String cELL_ID) {
         CELL_ID = cELL_ID;
     }
+
+    @JsonProperty(value="PAV_CELL_LEN")
+	public String getPAV_CELL_LEN() {
+		return PAV_CELL_LEN;
+	}
+
+	public void setPAV_CELL_LEN(String pAV_CELL_LEN) {
+		PAV_CELL_LEN = pAV_CELL_LEN;
+	}
+
+	@JsonProperty(value="PAV_CELL_IDS")
+	public String getPAV_CELL_IDS() {
+		return PAV_CELL_IDS;
+	}
+
+	public void setPAV_CELL_IDS(String pAV_CELL_IDS) {
+		PAV_CELL_IDS = pAV_CELL_IDS;
+	}
+	
+	
+
 
 }

@@ -270,6 +270,8 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	private java.lang.String ROUTE_CODE;
 	@XmlElement
 	private java.lang.String ROAD_NO;
+	@XmlElement
+	private java.lang.String ROAD_NM;
 
 	@XmlElement
 	private java.lang.String ROAD_NO_VAL;
@@ -807,6 +809,14 @@ public class RpairTrgetSlctnVO extends BaseVO {
 
 	public void setROAD_NO(java.lang.String rOAD_NO) {
 		ROAD_NO = rOAD_NO;
+	}
+	@JsonProperty(value="ROAD_NM")
+	public java.lang.String getROAD_NM() {
+		return ROAD_NM;
+	}
+	
+	public void setROAD_NM(java.lang.String rOAD_NM) {
+		ROAD_NM = rOAD_NM;
 	}
 	@JsonProperty(value="ROAD_NO_VAL")
 	public java.lang.String getROAD_NO_VAL() {

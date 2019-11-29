@@ -64,7 +64,26 @@ public class RpairTrgetGroupDAO extends BaseDAO {
         return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairTrgetGroupCELLList", rpairTrgetGroupVO);
     }
 
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 대비 포장공사 진행 목록을 조회한다.
+     * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+     * @return TN_RPAIR_TRGET_GROUP 목록
+     * @exception Exception
+     */
+    @SuppressWarnings("unchecked")
+    public List<RpairTrgetGroupVO> selectCntrwkByRpairTrgetGroupList(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+        return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectCntrwkByRpairTrgetGroupList", rpairTrgetGroupVO);
+    }
 
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 대비 포장공사 진행 총 갯수를 조회한다.
+     * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+     * @return TN_RPAIR_TRGET_GROUP 총 갯수
+     * @exception
+     */
+    public int selectCntrwkByRpairTrgetGroupListTotalCount(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+        return (Integer) select("rpairTrgetGroupDAO.selectCntrwkByRpairTrgetGroupListTotalCount", rpairTrgetGroupVO);
+    }
 
 
 

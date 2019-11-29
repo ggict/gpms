@@ -51,7 +51,21 @@ public interface RpairTrgetGroupService {
     List<RpairTrgetGroupVO> selectRpairTrgetGroupCELLList(RpairTrgetGroupVO rpairTrgetGroupVO)  throws Exception ;
 
 
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 대비 포장공사 진행 목록을 조회한다.
+     * @param searchVO - 조회할 정보가 담긴 rpairTrgetGroupVO
+     * @return TN_RPAIR_TRGET_GROUP 목록
+     * @exception Exception
+     */
+    List<RpairTrgetGroupVO> selectCntrwkByRpairTrgetGroupList(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception;
 
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 대비 포장공사 진행 총 갯수를 조회한다.
+     * @param searchVO - 조회할 정보가 담긴 rpairTrgetGroupVO
+     * @return TN_RPAIR_TRGET_GROUP 총 갯수
+     * @exception
+     */
+    int selectCntrwkByRpairTrgetGroupListTotalCount(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception ;
 
 
 
