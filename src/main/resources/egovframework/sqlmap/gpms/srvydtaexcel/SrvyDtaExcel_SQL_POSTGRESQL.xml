@@ -1211,6 +1211,18 @@ FROM   (SELECT Row_number()
                             AND code.cl_code = 'MNRD' 
                             AND code.use_at = 'Y' 
                             AND code.delete_at = 'N' ) MRG_RD_NM,
+                            (SELECT case when count(cntrwk_at) = 0 OR NULL then 'X' else 'O' end
+ 						 FROM cell_10 cell10
+						 WHERE cell10.route_code = sect.route_code
+						 	AND cell10.direct_code = sect.direct_code
+						    AND cell10.track = sect.track
+							AND cell10.strtpt = sect.strtpt) CNTRWK_AT,
+				 		(SELECT case when count(unopn_at) = 0 OR NULL then 'X' else 'O' end
+ 						 FROM cell_10 cell10
+						 WHERE cell10.route_code = sect.route_code
+						 	AND cell10.direct_code = sect.direct_code
+						    AND cell10.track = sect.track
+							AND cell10.strtpt = sect.strtpt) UNOPN_AT,
                        tnsmdtagnlsttus.strtpt 
                        /* 최소_구간_조사_자료.시점 */, 
                        tnsmdtagnlsttus.endpt 

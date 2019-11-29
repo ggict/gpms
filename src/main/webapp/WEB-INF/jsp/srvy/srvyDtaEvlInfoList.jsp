@@ -226,7 +226,7 @@ $( document ).ready(function() {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["SRVY_NO", "SM_NO", "SRVY_YEAR", "OBJECT_ID", "CELL_ID", "조사년도", "관리기관", "도로등급", "노선번호", "노선명", "행선", "차로", "관리도로" ,"시점(km)", "종점(km)", "교통량" , "GPCI", "주 파손", "파손원인", "위치"
+		,colNames:["SRVY_NO", "SM_NO", "SRVY_YEAR", "OBJECT_ID", "CELL_ID", "조사년도", "관리기관", "도로등급", "노선번호", "노선명", "행선", "차로", "관리도로" ,"공사구간","미개통구간","시점(km)", "종점(km)", "교통량" , "GPCI", "주 파손", "파손원인", "위치"
 		           , "CNTL_DFECT", "CODE_NM", "AC_IDX", "LC_IDX", "BC_IDX", "PTCHG_IDX", "POTHOLE_IDX", "RD_IDX", "RCI", "DMG_CUZ_CLMT", "DMG_CUZ_VMTC", "DMG_CUZ_ETC" ]
 	   	,colModel:[
 			{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
@@ -242,6 +242,8 @@ $( document ).ready(function() {
 			,{name:'DIRECT_CODE',index:'DIRECT_CODE', align:'center', width:50, sortable: true}
 			,{name:'TRACK',index:'TRACK', align:'center', width:40, sortable: true}
 			,{name:'MRG_RD_NM',index:'MRG_RD_NM', align:'center', width:40, sortable: true}
+			,{name:'CNTRWK_AT',index:'MRG_RD_NM', align:'center', width:40, sortable: true}
+			,{name:'UNOPN_AT',index:'MRG_RD_NM', align:'center', width:40, sortable: true}
 			,{name:'STRTPT',index:'STRTPT', align:'center', width:60, sortable:false, formatter: fnConvertKm}
 			,{name:'ENDPT',index:'ENDPT', align:'center', width:60, sortable: true, formatter: fnConvertKm}
 			,{name:'TRNSPORT_QY',index:'TRNSPORT_QY', align:'center', width:60, sortable: true, formatter: fnConvertKm}

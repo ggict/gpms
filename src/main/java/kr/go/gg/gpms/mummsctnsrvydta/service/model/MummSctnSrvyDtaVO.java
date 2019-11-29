@@ -433,12 +433,22 @@ public class MummSctnSrvyDtaVO extends BaseVO {
 	private java.lang.String FILE_NM;
     @XmlElement
 	private java.lang.String DIRECTION;
+    
+    //공사구간
+    @XmlElement
+	private java.lang.String CNTRWK_AT;
+    //미개통구간
+    @XmlElement
+	private java.lang.String UNOPN_AT;
+    //교통량
+    @XmlElement
+	private java.lang.String TRNSPORT_QY;
 	
     @XmlElement
 	public String SCH_PERIOD_1;
     @XmlElement
 	public String SCH_PERIOD_2;
-    @XmlElement
+	@XmlElement
 	public String SCH_ROUTCODE;
     @XmlElement
 	public String SCH_BSCODE;
@@ -2177,5 +2187,32 @@ public class MummSctnSrvyDtaVO extends BaseVO {
     public void setSRVY_YEAR_MAX(java.lang.String sRVY_YEAR_MAX) {
         SRVY_YEAR_MAX = sRVY_YEAR_MAX;
     }
+    
+    @JsonProperty(value="CNTRWK_AT")
+    public java.lang.String getCNTRWK_AT() {
+		return CNTRWK_AT;
+	}
+
+	public void setCNTRWK_AT(java.lang.String cNTRWK_AT) {
+		CNTRWK_AT = cNTRWK_AT;
+	}
+
+	@JsonProperty(value="UNOPN_AT")
+	public java.lang.String getUNOPN_AT() {
+		return UNOPN_AT;
+	}
+
+	@JsonProperty(value="TRNSPORT_QY")
+	public java.lang.String getTRNSPORT_QY() {
+		return TRNSPORT_QY;
+	}
+
+	public void setTRNSPORT_QY(java.lang.String tRNSPORT_QY) {
+		TRNSPORT_QY = tRNSPORT_QY;
+	}
+
+	public void setUNOPN_AT(java.lang.String uNOPN_AT) {
+		UNOPN_AT = uNOPN_AT;
+	}
     
 }

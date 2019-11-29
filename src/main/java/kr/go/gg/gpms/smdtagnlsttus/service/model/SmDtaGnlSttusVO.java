@@ -648,7 +648,7 @@ public class SmDtaGnlSttusVO extends BaseVO {
 	}
 
 	public void setCNTRWK_AT(String cNTRWK_AT) {
-		CNTRWK_AT = CNTRWK_AT;
+		CNTRWK_AT = cNTRWK_AT;
 	}
 
 	@JsonProperty(value="UNOPN_AT")
@@ -657,7 +657,7 @@ public class SmDtaGnlSttusVO extends BaseVO {
 	}
 
 	public void setUNOPN_AT(String uNOPN_AT) {
-		UNOPN_AT = UNOPN_AT;
+		UNOPN_AT = uNOPN_AT;
 	}
 
 	/**
