@@ -1253,18 +1253,18 @@ FROM   (SELECT Row_number()
                        AND tnsmdtagnlsttus.delete_at = 'N'
     ]]>
 
-		<isNotEmpty property="CELL_ID"><![CDATA[ AND cell10.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND cell10.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND cell10.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
-		<isNotEmpty property="SRVY_YEAR"><![CDATA[ AND tnsmdtagnlsttus.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtagnlsttus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
-		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtagnlsttus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtagnlsttus.TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
-		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND tnsmdtagnlsttus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
-		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI# ]]></isNotEmpty>
-		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI# ]]></isNotEmpty>
+		<isNotEmpty property="CELL_ID"><![CDATA[ AND OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_YEAR"><![CDATA[ AND SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_NO"><![CDATA[ AND ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
+		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK"><![CDATA[ AND TRACK = #TRACK# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ AND STRTPT >= #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ AND ENDPT <= #ENDPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
+		<isNotEmpty property="MINGPCI"><![CDATA[ AND GPCI >= #MINGPCI# ]]></isNotEmpty>
+		<isNotEmpty property="MAXGPCI"><![CDATA[ AND GPCI <= #MAXGPCI# ]]></isNotEmpty>
     <![CDATA[
 			) tb
 			ORDER BY $orderByColumn$ $orderByType$
