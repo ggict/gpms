@@ -82,8 +82,8 @@ GRequest.WMS = {
 	getStyles : function(serviceUrl, layers, callback) {
 		var params = {
 			service : this.service,
-			//version : this.version,
-			version : '1.1.1',
+			version : this.version,
+			//version : '1.1.1',
 			request : "GetStyles",
 			layers : layers
 		};
