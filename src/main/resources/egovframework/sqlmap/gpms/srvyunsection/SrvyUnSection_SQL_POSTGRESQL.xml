@@ -32,7 +32,7 @@
 					,case 
 						when ROAD_TOT_LEN_JYG_Y = 0 
 						then 0
-						else (t2.road_l / DO_MANAGE_SCTN_LEN) * 100
+						else (DO_MANAGE_SCTN_LEN / ROAD_TOT_LEN_JYG_Y) * 100
 						end persent
 				from tn_route_info t1
 				left outer join 
@@ -53,27 +53,21 @@
 						AND tn_mumm_sctn_srvy_dta.delete_at = 'N'
 					)
 					where 1=1
-					<isNotEmpty property="SRVY_YEAR">
-					AND tn_mumm_sctn_srvy_dta.SRVY_YEAR = #SRVY_YEAR#
-					</isNotEmpty>
-					<isNotEmpty property="ROAD_NO">
-					AND cell_10.route_code = #ROAD_NO#
-					</isNotEmpty>
-					group by cell_10.route_code, srvy_year
-					
+					group by cell_10.route_code, srvy_year					
 				) t2
 				on (t1.road_no = t2.route_code)
-				where 1=1
-				<isNotEmpty property="ROAD_NO">
-				AND t1.road_no = #ROAD_NO#
+				WHERE  1 = 1 
+				<isNotEmpty property="SRVY_YEAR">
+					AND SRVY_YEAR = #SRVY_YEAR#
 				</isNotEmpty>
-				
+				<isNotEmpty property="ROAD_NO">
+					AND road_no = #ROAD_NO#
+				</isNotEmpty>
 				order by t1.road_no asc, t2.srvy_year asc
 			) as sub_t
 			
 		) as res	
 		where 1=1
-		
 		<isEqual prepend="  " property="usePage" compareValue="true">
 		<![CDATA[
 			AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#

@@ -226,6 +226,85 @@ BEGIN
     O_PROCCODE :='true';
     O_PROCMSG := '보수대상선정 집계 연속 구간 GPIC 재개산 및 공법 결정 완료';
 
+
+    -- 포트홀_량 저장
+    UPDATE TN_RPAIR_TRGET_GROUP SET
+        POTHOLE_QY = (
+            SELECT
+                (
+                    SELECT COUNT(*)
+                    FROM TN_POTHOLE_STTEMNT AA
+                    WHERE
+                        1 = 1
+                        AND AA.CORTN_AT = 'Y' -- 보정여부
+                        AND AA.DPLCT_STTEMNT_AT = 'N' -- 중복신고여부
+                        AND AA.USE_AT = 'Y'
+                        AND AA.DELETE_AT = 'N'
+                        AND ST_INTERSECTS(ST_BUFFER(ST_UNION(B.GEOM), 50, 'quad_segs=1'), AA.GEOM)
+                ) POTHOLE_QY
+            FROM TN_RPAIR_TRGET_GROUP A
+            INNER JOIN CELL_10 B
+                ON B.ROUTE_CODE                  = A.ROUTE_CODE
+                AND B.DIRECT_CODE                = A.DIRECT_CODE
+                AND B.TRACK                      = A.TRACK
+                AND B.STRTPT                     BETWEEN A.STRTPT AND A.ENDPT
+                AND B.ENDPT                      BETWEEN A.STRTPT AND A.ENDPT
+            WHERE
+                1 = 1
+                AND A.TRGET_SLCTN_NO             = TN_RPAIR_TRGET_GROUP.TRGET_SLCTN_NO
+                AND A.GROUP_ITEM_NO              = TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO
+                AND A.DELETE_AT                  = 'N'
+                AND A.USE_AT                     = 'Y'
+            GROUP BY
+                A.GROUP_ITEM_NO
+        )
+        , TRNSPORT_QY = (
+            SELECT
+                (
+                    SELECT
+                        SUM(BB.TOTAL) TOTAL
+                    FROM TN_VMTC_SRVY_LC AA
+                    INNER JOIN TN_SRVY_LC_DALY_VMTC BB
+                        ON BB.YEAR = AA.YEAR
+                        AND BB.SPOT = AA.SPOT
+                        AND BB.DIRECT = CASE A.DIRECT_CODE WHEN 'S' THEN '1' ELSE '2' END
+                    WHERE
+                        AA.YEAR = (
+                            SELECT
+                                AAA.YEAR
+                            FROM TN_VMTC_SRVY_LC AAA
+                            ORDER BY
+                                AAA.YEAR DESC
+                            LIMIT 1
+                        )
+                        AND ST_INTERSECTS(ST_BUFFER(ST_UNION(B.GEOM), 50, 'quad_segs=1'), ST_TRANSFORM(ST_GEOMFROMTEXT('POINT ('|| AA.YCODE || ' ' || AA.XCODE ||')', 4326), 5181))
+                    GROUP BY
+                        AA.SPOT
+                        , AA.XCODE
+                        , AA.YCODE
+                ) TRNSPORT_QY
+            FROM TN_RPAIR_TRGET_GROUP A
+            INNER JOIN CELL_10 B
+                ON B.ROUTE_CODE                  = A.ROUTE_CODE
+                AND B.DIRECT_CODE                = A.DIRECT_CODE
+                AND B.TRACK                      = A.TRACK
+                AND B.STRTPT                     BETWEEN A.STRTPT AND A.ENDPT
+                AND B.ENDPT                      BETWEEN A.STRTPT AND A.ENDPT
+            WHERE
+                1 = 1
+                AND A.TRGET_SLCTN_NO             = TN_RPAIR_TRGET_GROUP.TRGET_SLCTN_NO
+                AND A.GROUP_ITEM_NO              = TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO
+                AND A.DELETE_AT                  = 'N'
+                AND A.USE_AT                     = 'Y'
+            GROUP BY
+                A.GROUP_ITEM_NO
+        )
+    WHERE
+        1 = 1
+        AND TRGET_SLCTN_NO = P_TRGET_SLCTN_NO::NUMERIC /* 보수_대상_선정.대상_선정_번호 */
+        AND A.ROUTE_CODE = P_ROUTE_CODE
+    ;
+
     UPDATE TN_RPAIR_TRGET_SLCTN SET
         SLCTN_STTUS = 'RTSS0010' /* 완료 */
         , UPDUSR_NO = P_USER_NO::NUMERIC /* 보수_대상_선정.수정자_번호 */

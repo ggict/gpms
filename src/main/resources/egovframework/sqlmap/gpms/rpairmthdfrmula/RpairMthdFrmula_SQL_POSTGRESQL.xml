@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="rpairMthdFrmulaDAO">
- 
+
 	<typeAlias alias="egovMap"	type="egovframework.rte.psl.dataaccess.util.EgovMap" />
 	<typeAlias  alias="rpairMthdFrmulaSerarchVO" type="kr.go.gg.gpms.rpairmthdfrmula.service.model.RpairMthdFrmulaDefaultVO"/>
 	<typeAlias alias="rpairMthdFrmulaVO"	type="kr.go.gg.gpms.rpairmthdfrmula.service.model.RpairMthdFrmulaVO" />
@@ -30,10 +30,10 @@
  		select nextval('SEQ_TN_RPAIR_MTHD_FRMULA')
   	]]>
   	</selectKey>
-	<![CDATA[ 
+	<![CDATA[
 		/* rpairMthdFrmulaDAO.insertRpairMthdFrmula */
 		/* 보수_공법_수식_관리 등록 */
-		
+
 		INSERT INTO TN_RPAIR_MTHD_FRMULA (
 			STEP_STTUS_CODE /* 보수_공법_수식_관리.단계_상태_코드 */
 			, STEP_SE_CODE /* 보수_공법_수식_관리.단계_구분_코드 */
@@ -69,17 +69,17 @@
 		)
 ]]>
 	</insert>
-	
+
 	<insert id="rpairMthdFrmulaDAO.insertRpairMthdFrmulaHist">
 	<selectKey resultClass="String" keyProperty="MF_HIST_NO">
   	<![CDATA[
  		select nextval('SEQ_TH_RPAIR_MTHD_FRMULA')
   	]]>
   	</selectKey>
-	<![CDATA[ 
+	<![CDATA[
 		/* rpairMthdFrmulaDAO.insertRpairMthdFrmulaHist */
 		/* 보수_공법_수식_관리_이력 등록 */
-		
+
 		INSERT INTO TH_RPAIR_MTHD_FRMULA (
 			  MF_HIST_NO
 			, STEP_STTUS_CODE
@@ -95,8 +95,8 @@
 			, CREAT_DT
 			, UPDUSR_NO
 			, UPDT_DT
-		) 
-	   SELECT #MF_HIST_NO#
+		)
+	   SELECT #MF_HIST_NO#::int
 			, STEP_STTUS_CODE
 			, STEP_SE_CODE
 			, STEP_STTUS_NM
@@ -116,7 +116,7 @@
 	</insert>
 
 	<update id="rpairMthdFrmulaDAO.updateRpairMthdFrmula">
-	<![CDATA[ 
+	<![CDATA[
 		/* rpairMthdFrmulaDAO.updateRpairMthdFrmula */
 		/* 보수_공법_수식_관리 수정 */
 		UPDATE TN_RPAIR_MTHD_FRMULA SET
@@ -130,7 +130,7 @@
 	</update>
 
 	<delete id="rpairMthdFrmulaDAO.deleteRpairMthdFrmula">
-	<![CDATA[ 
+	<![CDATA[
 		/* rpairMthdFrmulaDAO.deleteRpairMthdFrmula */
 		/* 보수_공법_수식_관리 삭제 */
 		UPDATE TN_RPAIR_MTHD_FRMULA SET
@@ -145,7 +145,7 @@
 	<select id="rpairMthdFrmulaDAO.selectRpairMthdFrmula"
 		parameterClass="rpairMthdFrmulaVO"
 		resultClass="rpairMthdFrmulaVO">
-	<![CDATA[ 
+	<![CDATA[
 		/* rpairMthdFrmulaDAO.selectRpairMthdFrmula */
 		/* 보수_공법_수식_관리 조회 */
 		SELECT
@@ -176,7 +176,7 @@
 		WHERE 1 = 1
 			AND tnrpairmthdfrmula.USE_AT = 'Y'
 			AND tnrpairmthdfrmula.DELETE_AT = 'N'
-			
+
 		<isEqual property="searchCondition" compareValue="0">
 			<![CDATA[
 				AND tnrpairmthdfrmula.STEP_STTUS_CODE = #searchKeyword#
@@ -205,7 +205,7 @@
 	<select id="rpairMthdFrmulaDAO.selectRpairMthdFrmulaList"
 		parameterClass="rpairMthdFrmulaVO"
 		resultClass="rpairMthdFrmulaVO">
-<![CDATA[ 		
+<![CDATA[
 		/* rpairMthdFrmulaDAO.selectRpairMthdFrmulaList */
 		/* 보수_공법_수식_관리 조회 */
 		SELECT * FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
@@ -226,7 +226,7 @@
 				, tnrpairmthdfrmula.CALC_ORDR /* 보수_공법_수식_관리.계산_순서 */
 				, tnrpairmthdfrmula.FRMULA_NO /* 보수_공법_수식_관리.수식_번호 */
 			FROM TN_RPAIR_MTHD_FRMULA tnrpairmthdfrmula
-]]>		
+]]>
 		<include refid="rpairMthdFrmulaDAO.selectRpairMthdFrmulaList.where" />
 		<isNotEmpty property="FRMULA_TYPE">
 		<![CDATA[
@@ -259,7 +259,7 @@
 				AND tnrpairmthddecsnmap.VMTC_STTUS_CODE = 'VMTC0003'
 			]]>
 			</isEqual>
-		<![CDATA[	     
+		<![CDATA[
 					     AND tnrpairmthddecsnmap.USE_AT = 'Y'
 					     AND tnrpairmthddecsnmap.DELETE_AT = 'N'
 					     AND tnrpairmthddecsnmap.FRMULA_NO = tnrpairmthdfrmula.FRMULA_NO
@@ -272,10 +272,10 @@
 		]]>
 		</isNotEmpty>
 <![CDATA[
- 
+
 		ORDER BY
 				tnrpairmthdfrmula.STEP_STTUS_CODE DESC /* 보수_공법_수식_관리.단계_상태_코드 */
-		) tb) as sub_tb WHERE 1=1 
+		) tb) as sub_tb WHERE 1=1
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 		<![CDATA[
@@ -283,23 +283,23 @@
 		]]>
 		</isEqual>
 <![CDATA[
-]]>		
-	</select>		
- 
+]]>
+	</select>
+
 
 	<select id="rpairMthdFrmulaDAO.selectRpairMthdFrmulaListTotalCount"
 		parameterClass="rpairMthdFrmulaVO"
 		resultClass="int">
-<![CDATA[ 		
+<![CDATA[
 		/* rpairMthdFrmulaDAO.selectRpairMthdFrmulaListTotalCount */
 		/* 보수_공법_수식_관리 목록 개수 조회  */
 		SELECT COUNT(*) AS totCnt
 		FROM TN_RPAIR_MTHD_FRMULA tnrpairmthdfrmula
-]]>		
+]]>
 		<include refid="rpairMthdFrmulaDAO.selectRpairMthdFrmulaList.where" />
-<![CDATA[		
-]]>		
+<![CDATA[
+]]>
 	</select>
- 
+
 
 </sqlMap>
