@@ -217,7 +217,8 @@ width:100% !important;
 		        		</c:forEach>
 	                </select></li>
 	                <li class="ml10 fr">
-	                    <a href="#" onclick="javascript:fnFilterApply();" class="schbtn" id="btnFilterSearch" >필터적용</a>
+<!-- 	                    <a href="#" onclick="javascript:fnFilterApply();" class="schbtn" id="btnFilterSearch" >검색</a> -->
+                        <button type="button" id="btnFilterSearch" class="btn pri" onclick="fnFilterApply();">검색</button>
 	                </li>
 	            </ul>
 	        </div>
@@ -233,8 +234,9 @@ width:100% !important;
 <!--                     <a href="#" class="schbtn" onclick="javascript:fnInitRangeSelection(true);">상태 초기화</a> -->
                     <a href="#" class="schbtn" onclick="javascript:fn_select_cellSectFilter();" >선정구간 지도위치보기</a>
                     <a href="#" class="schbtn" onclick="javascript:fn_showChart_RepairTarget();">차트 조회</a>
-                    <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}"><a href="#" class="graybtn"  disabled >엑셀 저장</a></c:if>
-                    <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS eq 'RTSS0010'}"><a href="#" class="schbtn"  onclick="javascript:fndownload_RepairTarget();"  >엑셀 저장</a></c:if>
+<%--                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}"><a href="#" class="graybtn"  disabled >엑셀 저장</a></c:if> --%>
+<%--                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS eq 'RTSS0010'}"><a href="#" class="schbtn"  onclick="javascript:fndownload_RepairTarget();"  >엑셀 저장</a></c:if> --%>
+                    <a href="#" class="schbtn"  onclick="javascript:fndownload_RepairTarget();"  >엑셀 저장</a>
                 </div>
                 <div class="fr">
                     <a href="#" class="schbtn" onclick="javascript:fnPriortSave();" >우선순위 저장</a>
@@ -430,9 +432,9 @@ $( document ).ready(function() {
 		,emptyrecords: "검색된 데이터가 없습니다."
 		,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
 		, afterInsertRow: function(id, data){
-			if (data.TMPR_SLCTN_AT == 'Y') {
-				$('tr#' + id).addClass('notempty-price');
-			}
+// 			if (data.TMPR_SLCTN_AT == 'Y') {
+// 				$('tr#' + id).addClass('notempty-price');
+// 			}
 				/*
 	            if(parseInt(data.FIX_BUDGET_ASIGN) > 0) {
 	                $('tr#' + id).addClass('notempty-price');
@@ -505,11 +507,11 @@ function fn_grid_btn(cellValue, options, rowObject) {
 	}
 		break;
 	case "btn_check": {
-		if (rowObject.TMPR_SLCTN_AT == "Y") {// || rowObject.SLCTN_AT=="Y"
-			btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
-		} else {
-			btn = "<input type='checkbox' id='ck" + rowObject.GROUP_ITEM_NO + "' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" /><label for='ck" + rowObject.GROUP_ITEM_NO + "' class='hiddenLabel onlyCk'>선택</label>";
-		}
+// 		if (rowObject.TMPR_SLCTN_AT == "Y") {// || rowObject.SLCTN_AT=="Y"
+// 			btn = "<input type='checkbox' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
+// 		} else {
+			btn = "<input type='checkbox' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
+// 		}
 	}
 		break;
 	case "btn_loc2": {
@@ -563,17 +565,17 @@ function fn_checkItem(objThis, group_item_no, tmpr_slctn_at, fix_amount_calc){
 	var postData = {
 		"GROUP_ITEM_NO" : group_item_no, "TRGET_SLCTN_NO" : trget_slctn_no
 	};
-	var totalAmount = parseInt(footData.FIX_AMOUNT_CALC.replace(/,/gi, ""));
-	if (checked) {
-		totalAmount += parseInt(fix_amount_calc);
-		$(objThis).closest('tr').addClass('notempty-price');
-	} else {
-		totalAmount -= parseInt(fix_amount_calc);
-		$(objThis).closest('tr').removeClass('notempty-price');
-	}
-	$('#gridArea').jqGrid('footerData', 'set', {
-		DEPT_NM : '합계', FIX_AMOUNT_CALC : totalAmount
-	});
+// 	var totalAmount = parseInt(footData.FIX_AMOUNT_CALC.replace(/,/gi, ""));
+// 	if (checked) {
+// 		totalAmount += parseInt(fix_amount_calc);
+// 		$(objThis).closest('tr').addClass('notempty-price');
+// 	} else {
+// 		totalAmount -= parseInt(fix_amount_calc);
+// 		$(objThis).closest('tr').removeClass('notempty-price');
+// 	}
+// 	$('#gridArea').jqGrid('footerData', 'set', {
+// 		DEPT_NM : '합계', FIX_AMOUNT_CALC : totalAmount
+// 	});
 	//
 	$.ajax({
 		url: action,
@@ -1056,23 +1058,23 @@ function fn_select_cellSectRange(route_code, direct_code, track, strtpt, endpt){
 //필터적용
 function fnFilterApply(){
 	//btnFilterSearch
-	var vForm = $("#frmRpairTrgetGroup");
+// 	var vForm = $("#frmRpairTrgetGroup");
 
-	var vUseFilter = vForm.find("#useFilter").val();
-	if(vUseFilter=="false"){
-		vForm.find("#useFilter").val(true);
-		$("#btnFilterSearch").html("필터해제");
-	}
-	else{
-		vForm.find("#useFilter").val(false);
-		vForm.find("#ROAD_GRAD").val("");
-		vForm.find("#ROUTE_CODE").val("");
-		vForm.find("#ROAD_NO_VAL").val("");
-		vForm.find("#ROAD_NAME").val("");
-		vForm.find("#ADM_CODE").val("");
-		vForm.find("#MNG_RD_CD").val("");
-		$("#btnFilterSearch").html("필터적용");
-	}
+// 	var vUseFilter = vForm.find("#useFilter").val();
+// 	if(vUseFilter=="false"){
+// 		vForm.find("#useFilter").val(true);
+// 		$("#btnFilterSearch").html("필터해제");
+// 	}
+// 	else{
+// 		vForm.find("#useFilter").val(false);
+// 		vForm.find("#ROAD_GRAD").val("");
+// 		vForm.find("#ROUTE_CODE").val("");
+// 		vForm.find("#ROAD_NO_VAL").val("");
+// 		vForm.find("#ROAD_NAME").val("");
+// 		vForm.find("#ADM_CODE").val("");
+// 		vForm.find("#MNG_RD_CD").val("");
+// 		$("#btnFilterSearch").html("필터적용");
+// 	}
 	fnSearch();
 }
 function fnFilterSelect(){
