@@ -32,7 +32,7 @@
 					,case 
 						when ROAD_TOT_LEN_JYG_Y = 0 
 						then 0
-						else (DO_MANAGE_SCTN_LEN / ROAD_TOT_LEN_JYG_Y) * 100
+						else (t2.road_l / DO_MANAGE_SCTN_LEN) * 100
 						end persent
 				from tn_route_info t1
 				left outer join 
