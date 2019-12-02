@@ -1198,6 +1198,7 @@ var COMMON_UTIL = (function($,undefined){
         }
 
         statsOpen();
+        $("#stats").addClass("active");
         $("#content_stArea").attr("src", _oUrl);
     };
     /* full windows style 적용    */
