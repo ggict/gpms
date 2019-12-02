@@ -203,6 +203,10 @@ body.a00 li.a00 span, body.b00 li.b00 span, body.c00 li.c00 span, body.d00 li.d0
 
 .input[type="checkbox"] + label.hiddenLabel.onlyCk:before { margin: -4px 0 0 -14px; }
 
+th input[type="checkbox"].cbox + label.hiddenLabel:before { margin: -10px 0 0 -21px; }
+
+td input[type="checkbox"].cbox + label.hiddenLabel:before { margin: -3px 0 0 -18px; }
+
 .contents.container { padding: 0 0 0 1%; }
 
 .contents:after { display: block; content: ''; clear: both; }

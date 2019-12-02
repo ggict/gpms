@@ -182,6 +182,9 @@ body{
 
 .input[type="checkbox"] + label.hiddenLabel.onlyCk:before {margin: -4px 0 0 -14px;}
 
+th input[type="checkbox"].cbox + label.hiddenLabel:before {margin: -10px 0 0 -21px;}
+td input[type="checkbox"].cbox + label.hiddenLabel:before {margin: -3px 0 0 -18px;}
+
 .contents {
     &.container {padding: 0 0 0 1%;}
     @include clear;

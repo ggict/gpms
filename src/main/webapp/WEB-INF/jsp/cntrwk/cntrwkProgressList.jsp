@@ -51,7 +51,7 @@
     				<tr>
     					<td class="th"><label for="ROAD_GRAD">도로등급</labed></td>
     					<td>
-                             <select id="ROAD_GRAD" name="ROAD_GRAD" alt="도로등급" onchange="fn_change_roadNo();" class="input" style="width:100px;">
+                             <select id="ROAD_GRAD" name="ROAD_GRAD" onchange="fn_change_roadNo();" class="input" style="width:100px;">
                                 <option value="">== 전체 ==</option>
                                 <c:forEach items="${roadGradList }" var="roadGrad">
                                     <option value="${roadGrad.CODE_VAL }">${roadGrad.CODE_NM }</option>

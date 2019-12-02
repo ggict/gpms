@@ -1141,7 +1141,7 @@ $.fn.jqGrid = function( pin ) {
 			return "<td role=\"gridcell\" "+prp+">"+v+"</td>";
 		},
 		addMulti = function(rowid,pos,irow,checked){
-			var	v = "<input role=\"checkbox\" type=\"checkbox\""+" id=\"jqg_"+ts.p.id+"_"+rowid+"\" class=\"cbox\" name=\"jqg_"+ts.p.id+"_"+rowid+"\"" + (checked ? "checked=\"checked\"" : "")+"/>",
+			var	v = "<input role=\"checkbox\" type=\"checkbox\""+" id=\"jqg_"+ts.p.id+"_"+rowid+"\" class=\"cbox\" name=\"jqg_"+ts.p.id+"_"+rowid+"\"" + (checked ? "checked=\"checked\"" : "")+"/><label for=\"jqg_"+ts.p.id+"_"+rowid+"\" class=\"hiddenLabel\">선택</label>",
 			prp = formatCol( pos,irow,'',null, rowid, true);
 			return "<td role=\"gridcell\" "+prp+">"+v+"</td>";
 		},
@@ -2447,7 +2447,7 @@ $.fn.jqGrid = function( pin ) {
 			try { $(ts).jqGrid("setSubGrid");} catch (s){}
 		}
 		if(this.p.multiselect) {
-			this.p.colNames.unshift("<input role='checkbox' id='cb_"+this.p.id+"' class='cbox' type='checkbox'/>");
+			this.p.colNames.unshift("<input role='checkbox' id='cb_"+this.p.id+"' class='cbox' type='checkbox'/><label for='cb_"+this.p.id+"' class='hiddenLabel'>선택</label>");
 			this.p.colModel.unshift({name:'cb',width:$.jgrid.cell_width ? ts.p.multiselectWidth+ts.p.cellLayout : ts.p.multiselectWidth,sortable:false,resizable:false,hidedlg:true,search:false,align:'center',fixed:true});
 		}
 		if(this.p.rownumbers) {
