@@ -228,7 +228,8 @@ function fn_codeusemap_save() {
 	            	
 	            	var vform = $('#codeusemap_Regist-form');
 	            	window.parent.fnSearchCodeMap(COMMON_LANG.trimdata( vform.find('#CL_CODE').val()));
-	            	
+	            	var wnd_id = $("#wnd_id").val();
+	            	$('#'+wnd_id, window.parent.document).remove();
 	                return;
 	            }
 	        },
