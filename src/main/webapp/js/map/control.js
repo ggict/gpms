@@ -75,32 +75,22 @@ MAP.CONTROL = (function($, undefined){
 
 		// 지도 이동
 		$("#mCtrlPan").bind("click", function() {
-			/*
-			$("#goodMap .top-tool #status").hasClass('on') ?
-				gMap.activeControls(['stteSelectFeature', 'drag']) : gMap.activeControls(['dmgtSelectFeature', 'drag'])
-			*/
 			gMap.activeControls("drag");
 		});
 
 		// 지도 확대
 		$("#mCtrlZoomIn").bind("click", function() {
-			/*$("#goodMap .top-tool #status").hasClass('on') ?
-					gMap.activeControls(['stteSelectFeature', 'zoomIn']) : gMap.activeControls(['dmgtSelectFeature', 'zoomIn'])*/
 			gMap.activeControls("zoomIn");
 		});
 
 		// 지도 축소
 		$("#mCtrlZoomOut").bind("click", function() {
-			/*$("#goodMap .top-tool #status").hasClass('on') ?
-					gMap.activeControls(['stteSelectFeature', 'zoomOut']) : gMap.activeControls(['dmgtSelectFeature', 'zoomOut'])*/
 			gMap.activeControls("zoomOut");
 		});
 
 		// 전체영역으로 이동
 		$("#mCtrlFullExt").bind("click", function() {
 			gMap.zoomToMaxExtent();
-			/*$("#goodMap .top-tool #status").hasClass('on') ?
-				gMap.activeControls(['stteSelectFeature', 'drag']) : gMap.activeControls(['dmgtSelectFeature', 'drag'])*/
 			gMap.activeControls("drag");
 		});
 
@@ -118,8 +108,6 @@ MAP.CONTROL = (function($, undefined){
 		$("#mCtrlClear").bind("click", function() {
 			if ( $('#header #gnb').hasClass('good-header') ){
 				gMap.cleanMeasure();
-				/*$("#goodMap .top-tool #status").hasClass('on') ?
-						gMap.activeControls(['stteSelectFeature', 'drag']) : gMap.activeControls(['dmgtSelectFeature', 'drag'])*/
 				gMap.activeControls("drag");
 				gMap.getLayerByName('GAttrLayer').removeAllFeatures();
 				gMap.getLayerByName('SttemntLayer').removeAllFeatures();
@@ -131,55 +119,38 @@ MAP.CONTROL = (function($, undefined){
 				return;
 			}
 			gMap.cleanMap();
-			/*$("#goodMap .top-tool #status").hasClass('on') ?
-					gMap.activeControls(['stteSelectFeature', 'drag']) : gMap.activeControls(['dmgtSelectFeature', 'drag'])*/
 			gMap.activeControls("drag");
 		});
 
 		// 거리 측정
 		$("#mCtrlMesureLength").bind("click", function() {
 			if ( $('#header #gnb').hasClass('good-header') ){
-				/*$("#goodMap .top-tool #status").hasClass('on') ?
-						gMap.activeControls(['stteSelectFeature', 'measurePath']) : gMap.activeControls(['dmgtSelectFeature', 'measurePath'])*/
 				gMap.activeControls("measurePath");
 				return;
 			}
 			gMap.cleanMap();
-			/*$("#goodMap .top-tool #status").hasClass('on') ?
-					gMap.activeControls(['stteSelectFeature', 'measurePath']) : gMap.activeControls(['dmgtSelectFeature', 'measurePath'])*/
 			gMap.activeControls("measurePath");
 		});
 
 		// 면적 측정
 		$("#mCtrlMesureArea").bind("click", function() {
 			if ( $('#header #gnb').hasClass('good-header') ){
-				/*$("#goodMap .top-tool #status").hasClass('on') ?
-						gMap.activeControls(['stteSelectFeature', 'measurePolygon']) : gMap.activeControls(['dmgtSelectFeature', 'measurePolygon'])*/
 				gMap.activeControls("measurePolygon");
 				return;
 			}
 			gMap.cleanMap();
-			/*$("#goodMap .top-tool #status").hasClass('on') ?
-					gMap.activeControls(['stteSelectFeature', 'measurePolygon']) : gMap.activeControls(['dmgtSelectFeature', 'measurePolygon'])*/
 			gMap.activeControls("measurePolygon");
 		});
 
 		//단일통합조회
 		$("#mCtrlIdentify").bind("click", function(){
-			//마우스 포인터 변경
 			fn_cursor_map('attrPoint');
-			/*$("#goodMap .top-tool #status").hasClass('on') ?
-					gMap.activeControls(['stteSelectFeature', 'attrPoint']) : gMap.activeControls(['dmgtSelectFeature', 'attrPoint'])*/
 			gMap.activeControls("attrPoint");
-			//범위 추가
-			//gMap.getControl("attrPoint").setDistance(50);
 			gMap.cleanMap();
 		});
 
 		//다각형통합조회
 		$("#mCtrlIdentifyPoly").bind("click", function(){
-			/*$("#goodMap .top-tool #status").hasClass('on') ?
-					gMap.activeControls(['stteSelectFeature', 'attrPolygon']) : gMap.activeControls(['dmgtSelectFeature', 'attrPolygon'])*/
 			gMap.activeControls("attrPolygon");
 			gMap.cleanMap();
 		});
@@ -263,7 +234,8 @@ MAP.CONTROL = (function($, undefined){
             for ( var i = 0; i < wndpop.length; i++ ) {
                 var wndid = wndpop[i].getWindowId();
                 if ( $("#" + wndid).find("iframe").contents().find("body").hasClass("left-tool") ) {
-                	if ($(this).hasClass('t1') || $(this).hasClass('t2')) {
+                	//if ($(this).hasClass('t1') || $(this).hasClass('t2')) {
+                	if($(this).hasClass('sideDiv')){
                 		wndpop[i].close();
                 	}
                 }

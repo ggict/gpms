@@ -21,7 +21,7 @@
 <form id="imgMap_frm" name="imgMap_frm" method="post" action="">
 <div class="content">
         <table class="tbview fl" summary="경위도 좌표 이동 합니다." style="width:400px">
-        <caption>정보</caption>
+        <%-- <caption>정보</caption> --%>
         <colgroup>
             <col width="15%" />
             <col width="35%" />
