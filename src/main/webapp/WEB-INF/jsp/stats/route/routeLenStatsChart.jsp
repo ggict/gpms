@@ -4,91 +4,87 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<title>관리기관별 통계 </title>
+<title>노선별 통계 </title>
 <%@ include file="/include/common_head.jsp" %>
 <script src="<c:url value='/extLib/echarts/echarts.js'/>"></script>
 <script type="text/javascript" defer="defer">
-
-//에러 메시지 변수
-var errNo=0;
-//경고 메시지 변수
-var ntcNo=0;
+var errNo=0; //에러 메시지 변수
+var ntcNo=0; //경고 메시지 변수
+var myChart;
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	
-	$("#divStatChart").height($(parent.window).height() - 220);
-
-	//창 조절시 차트 width 
-	var rw1 = $(window).width()-400;
-	var rw = $(window).width()/3;
-	
-	fnGpmsGradLenSearch(rw);//GPMS 도로등급별 도로연장 통계 조회
+    $("#divStatChart").height($(parent.window).height() - 220);
+    
+    fnGpmsLenSearch();//GPMS 도로 총연장 통계 조회
 }); 
 
 //창 조절시 차트 resize
-$(window).on('resize', function(){
-		$("#divStatChart").height($(parent.window).height() - 220);
-		
-		var rw1 = $(window).width()-400;
-    	var rw = $(window).width()/3;
-    	
-});
-
-require.config({
-   paths: {
-        echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
+$(window).resize(function(){
+    if(this.resizeTO) {
+        clearTimeout(this.resizeTO);
     }
-});
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+})
+$(window).on("resizeEnd", function(){
+    $("#divStatChart").height($(parent.window).height() - 220);
+    myChart.resize();
+})
 
-//검색 처리
-function fnGpmsGradLenSearch(rw) {
-	
-  	 $.ajax({
-        url: '<c:url value="/"/>'+'api/cell10/selectDeptLenStatsResult.do',
-        data: JSON.stringify( $("#frm").cmSerializeObject()),
+// 차트
+function fnGpmsLenSearch() {
+    
+     $.ajax({
+        url: '<c:url value="/"/>'+'api/stats/selectRoutStatsPageList.do',
         //data: JSON.stringify(data),
+        data: JSON.stringify( $("#frm").cmSerializeObject()),
         contentType: 'application/json',
         dataType: "json",
         cache: false,
         type: 'POST',
         processData: false,
         success: function (data) {
-        	var dataList = data.data;
-			if(dataList.length !=0){
-				drawLenChart(dataList,rw);
-			}else{
-				ntcNo += 1;
-				fn_msgNtc();
-			}
+            var dataList = data.rows;
+            if(dataList.length !=0){
+            	drawLenChart(dataList);
+            }else{
+                ntcNo += 1;
+                COMMON_UTIL.fn_msgNtc(ntcNo);
+            }
         },
         error: function () {
-        	errNo += 1;
-        	fn_msgErr();
+            errNo += 1;
+            COMMON_UTIL.fn_msgErr(errNo);
         }
     });
 }
 
-function drawLenChart(dataList,rw){
-    var gDeptNm    = [];       
+// 차트
+require.config({
+	   paths: {
+	        echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
+	    }
+	});
+ function drawLenChart(dataList){
+    var gRouteNm    = [];       
     var twoData     = [];
     var fourData      = [];
-    var sixData      = [];
     var cntrwkData      = [];
     var unopnData = [];
     var degree = (dataList.length > 10) ? 40 : 0;
     
+    
     for(var i=0; i<dataList.length; i++){
-        gDeptNm.push(dataList[i].dept_nm);
+        gRouteNm.push(dataList[i].route_code+" "+ dataList[i].route_name);
         twoData.push(Number(dataList[i].track2_len));
         fourData.push(Number(dataList[i].track4_len));
-        sixData.push(Number(dataList[i].track6_len));
         cntrwkData.push(Number(dataList[i].cntrwk_len));
         unopnData.push(Number(dataList[i].unopn_len));
     }
-    require([   'echarts','echarts/chart/bar'   ],
-            function (ec) {
-        var myChart = ec.init(document.getElementById('lenBarChart'));
+    require([   'echarts','echarts/chart/bar'   ], function (ec) {
+        myChart = ec.init(document.getElementById('lenBarChart'));
         myChart.setOption({
             //color: ['#003366', '#4cabce'], 
             title  : { text: '총연장(km)' },
@@ -101,11 +97,11 @@ function drawLenChart(dataList,rw){
                    }   
             },
             legend: {
-                data: ['2차로', '4차로', '6차로', '공사구간', '미개통구간']
+                data: ['2차로', '4차로', '공사구간', '미개통구간']
             },
             grid :{
-                /* width : rw+'px',
-                x : 50, */
+                /* width : rw+'px', */
+                x : 50, 
                 y2 : 100
             },
             xAxis : [{  
@@ -115,7 +111,7 @@ function drawLenChart(dataList,rw){
                             interval: 0,
                             rotate: degree
                         },
-                        data : gDeptNm
+                        data : gRouteNm
                     }],
             yAxis : [{  name : 'km',        type : 'value'      }],
             series : [
@@ -134,13 +130,6 @@ function drawLenChart(dataList,rw){
                     data: fourData
                 },
                 {
-                    name: '6차로',
-                    type: 'bar',
-                    stack: '합계',
-                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                    data: sixData
-                },
-                {
                     name: '공사구간',
                     type: 'bar',
                     stack: '합계',
@@ -156,29 +145,8 @@ function drawLenChart(dataList,rw){
                 }
             ]
         });
-        
    });
  }
-
-//에러 메시지
-function fn_msgErr(){
-	if(errNo >= 1){
-		alert("오류가 발생하였습니다.\n새로고침 하시기 바랍니다.");
-		return;
-	}else {
-		return;
-	}
-}
-
-//경고 메시지
-function fn_msgNtc(){
-	if(ntcNo >= 1){
-		alert("해당 조건에 검색 결과가 없습니다.\n검색 조건을 변경하여 조회 하시기 바랍니다.");
-		return;
-	}else {
-		return;
-	}
-}
 
 </script>
 </head>
@@ -189,42 +157,46 @@ function fn_msgNtc(){
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
 
-	<header class="loc">
-	        <div class="container">
-	            <span class="locationHeader">
-	                <select name="">
-	                    <option value="">통계</option>
-	                </select>
-	                <select name="">
-	                    <option value="">노선별현황</option>
-	                </select>
-	                <select name="">
-	                    <option value="">관리기관별 통계</option>
-	                </select>
-	            </span>
-	        </div>
-	</header>
-	<div class="container2">
-		<div class="tab">
-				<a href="#div_grid" onclick="location.replace('<c:url value="selectDeptStats.do"/>');">상세보기</a>
-				<a class="on" href="#divStatChart" onclick="location.replace('<c:url value="selectDeptLenStats.do"/>');">그래프보기</a>	
-		</div>
-	
-		<div class="cont_ListBx">
-	        <div id="divStatChart" style="overflow-y:auto;">
-				<ul class="statsbx">
-	                <li style="margin-left: 1px;">
-	                    <div class="graylinebx p10" style="width:100%; text-align:center;">
-	                        <div id="lenBarChart" class="cont_ConBx2" style="height: 500px; margin-left:20px;"></div>
-	                    </div>
-	                </li>
-				</ul>
-			</div>	
-		</div>
-	</div>
+    <header class="loc">
+            <div class="container">
+                <span class="locationHeader">
+                    <select name="">
+                        <option value="">통계</option>
+                    </select>
+                    <select name="">
+                        <option value="">노선별현황</option>
+                    </select>
+                    <select name="">
+                        <option value="">노선별통계</option>
+                    </select>
+                </span>
+            </div>
+    </header>
+    
+    <div class="container2">
+        <div class="tab">
+                <a href="#div_grid" onclick="location.replace('<c:url value="viewRoutLenStats.do"/>');">상세보기</a>
+                <a class="on" href="#divStatChart" onclick="location.replace('<c:url value="viewRoutLenStatsChart.do"/>');">그래프보기</a>  
+        </div>
+        <div id="lenBarChart" class="cont_ConBx2" style="height: 500px; margin:30px 0 auto;"></div>
 
+        <!-- 
+        <div class="cont_ListBx">
+            <div id="divStatChart" style="overflow-y:auto;">
+                <ul class="statsbx">
+                    <li style="margin-left: 1px;">
+                        <div class="graylinebx p10" style="width:100%; text-align:center;">
+                            <div id="lenBarChart" class="cont_ConBx2" style="height: 500px; margin-left:20px;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>  
+        </div>
+         -->
+    </div>
+    
+</div>
 </form>
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>

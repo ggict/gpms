@@ -8,16 +8,11 @@
 <title>차로별 통계 </title>
 <%@ include file="/include/common_head.jsp" %>
 <script type="text/javascript">
-
 //cell rowspan 중복 체크
 var chkcell={cellId:undefined, chkval:undefined};
-var nYear;
+
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	
-	//검색조건초기화
-	parent.$("#SCH_STATS_YEAR option:eq(0)").attr("selected", "selected");
-	nYear = parent.$("#SCH_STATS_YEAR option:selected").val();
 	
 	var postData = {"USE_AT":"Y"};
 	
@@ -75,6 +70,10 @@ $( document ).ready(function() {
 		//,scroll: true
 	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 	
+	var height = $(parent.window).height() - 250;
+	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
+	
+	fnSearch();
 	
 	$("#gridArea").jqGrid('setGroupHeaders', {
 		useColSpanStyle: true, 
@@ -82,21 +81,30 @@ $( document ).ready(function() {
 			{startColumnName: 'sum_l', numberOfColumns: 3, titleText: '도 관리구간(km)'}
 		]	
 	});
-	
-	var height = $(parent.window).height() - 250;
-	
-	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-	
-	fnSearch();
-	
-	$(window).resize(function(){
-		var height = $(parent.window).height() - 250;
-		
-		COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-	});
-	
-	
-}); 
+});
+
+//창 조절시 차트 resize
+$(window).resize(function(){
+    if(this.resizeTO) {
+        clearTimeout(this.resizeTO);
+    }
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+})
+$(window).on("resizeEnd", function(){
+    //테이블 크기 조정
+    var height = $(parent.window).height() - 250;       
+    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
+    
+    $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
+    $("#gridArea").jqGrid('setGroupHeaders', {
+        useColSpanStyle: true, 
+        groupHeaders:[
+            {startColumnName: 'sum_l', numberOfColumns: 3, titleText: '도 관리구간(km)'}
+        ]   
+    });
+})
 
 //검색 처리
 function fnSearch() {
@@ -110,7 +118,6 @@ function fnSearch() {
 		,postData:   $("#frm").cmSerializeObject()
 		,mtype: "POST"
 	   	,loadComplete: function(data) {
-	   		
 			var grid = this;
             
             $('td[name="cellRowspan"]', grid).each(function() {
@@ -125,27 +132,6 @@ function fnSearch() {
 	}).trigger("reloadGrid");
 }
 
-
-function changRoutCol(yy){
-	nYear = yy;
-	var colModel = $("#gridArea").jqGrid('getGridParam', 'colModel'); 
-    $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
-                
-    $("#gridArea").jqGrid('setGroupHeaders', {
-        useColSpanStyle: true, 
-        groupHeaders:[
-            {startColumnName: 'sum_l', numberOfColumns: 3, titleText: '도 관리구간(km)'}
-        ]   
-    });
-}
-
-function fnTrackStatsSearch(sYear){
-	$("#STATS_YEAR").val(sYear);
-	changRoutCol(sYear);
-	fnSearch();
-}
-
-
 //관리기관 병합
 function jsFormatterCell(rowid, val, rowObject, cm, rdata){
   var result = "";
@@ -153,11 +139,9 @@ function jsFormatterCell(rowid, val, rowObject, cm, rdata){
   if(chkcell.chkval != val){ //check 값이랑 비교값이 다른 경우
       var cellId = this.id + '_row_'+rowid+'-'+cm.name;
       result = ' rowspan="1" id ="'+cellId+'" + name="cellRowspan"';
-      //alert(result);
       chkcell = {cellId:cellId, chkval:val};
   }else{
       result = 'style="display:none"  rowspanid="'+chkcell.cellId+'"'; //같을 경우 display none 처리
-      //alert(result);
   }
   return result;
 }
@@ -179,7 +163,7 @@ function fnExcel() {
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
+<input type="hidden" id="ROUTE_CODE" name="ROUTE_CODE" value=""/>
 <!-- container start -->
 	<header class="loc">
         <div class="container">
@@ -199,8 +183,8 @@ function fnExcel() {
 
 	<div class="container2">
 		<div class="tab">
-				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="selectTrackStats.do"/>');">상세보기</a>
-				<a href="#divStatChart" onclick="location.replace('<c:url value="selectTrackLenStats.do"/>');">그래프보기</a>
+				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="viewTrackLenStats.do"/>');">상세보기</a>
+				<a href="#divStatChart" onclick="location.replace('<c:url value="viewTrackLenStatsChart.do"/>');">그래프보기</a>
 		</div>
 		<div class="btnArea_top tabR">	          	
 				<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>

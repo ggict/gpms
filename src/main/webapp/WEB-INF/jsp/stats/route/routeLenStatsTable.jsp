@@ -9,29 +9,10 @@
 <%@ include file="/include/common_head.jsp" %>
 <script src="<c:url value='/extLib/echarts/echarts.js'/>"></script>
 <script type="text/javascript">
-//cell rowspan 중복 체크
-//에러 메시지 변수
-var errNo=0;
-//경고 메시지 변수
-var ntcNo=0;
 var chkcell={cellId:undefined, chkval:undefined};
-var nYear;
-var rw;
-var rw1;
 
-var routeStatsTable_Utils = {
-	toFiexd : function(arg, n){
-		var formatNum = (arg) ? arg : 0;  
-		return Number.parseFloat(formatNum).toFixed(n);
-	}	 
- };
-	 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-    
-    //검색조건초기화
-    parent.$("#SCH_STATS_YEAR option:eq(0)").attr("selected", "selected");
-    nYear = parent.$("#SCH_STATS_YEAR option:selected").val();
     
     var postData = {"USE_AT":"Y"};
     
@@ -101,7 +82,6 @@ $( document ).ready(function() {
     }).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
     
     var height = $(parent.window).height() - 250;
-    
     COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
     
     fnSearch();
@@ -118,36 +98,23 @@ $( document ).ready(function() {
                     {startColumnName: 'sub_sum_l', numberOfColumns: 3, titleText: '포장구간'}
                 ]   
             })
-    
-    $(window).resize(function(){
-        var height = $(parent.window).height() - 250;
-        
-        COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-    });
-    
-}); 
-
-//창 조절시  resize
-$(window).on('resize', function(){
-		
-		//테이블 크기 조정
-		var height = $(parent.window).height() - 250;		
-		COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-		
-		//차트크기 조정
-		$("#divStatChart").height($(parent.window).height() - 220);	
-    	rw = $(window).width()/3;
-		rw1 = $(window).width()-400;
-    	
 });
 
+//창 조절시 차트 resize
+$(window).resize(function(){
+    if(this.resizeTO) {
+        clearTimeout(this.resizeTO);
+    }
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+})
+$(window).on("resizeEnd", function(){
+    //테이블 크기 조정
+    var height = $(parent.window).height() - 250;       
+    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
+})
 
-require.config({
-	   paths: {
-	        echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
-	    }
-	});
-	
 //검색 처리
 function fnSearch() {
     
@@ -170,51 +137,10 @@ function fnSearch() {
             });  
                         
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
-
-	   		//차트그리기
-	   		//var totalList = data.chartTotal;
-        	//var dataList = data.chartData;
-			//drawGradLenChart(totalList,rw);
-			//drawGpmsGradLenChart(totalList,rw);
-			//drawLenChart(dataList,rw);
-	   		drawLenChart(data.rows,rw);
-
 	   	}
 	}).trigger("reloadGrid");
 }
 
-function changRoutCol(yy){
-    nYear = yy;
-    var colModel = $("#gridArea").jqGrid('getGridParam', 'colModel'); 
-    $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
-                
-    $("#gridArea").jqGrid('setGroupHeaders', {
-        useColSpanStyle: true,
-                groupHeaders:[
-                    {startColumnName: 'road_grad', numberOfColumns: 4, titleText: ''},
-                    {startColumnName: 'sum_l', numberOfColumns: 6, titleText: '도 관리구간(km)'}
-                ]   
-            }).jqGrid('setGroupHeaders', {
-        useColSpanStyle: true,
-                groupHeaders:[
-                    {startColumnName: 'sub_sum_l', numberOfColumns: 3, titleText: '포장구간'}
-                ]   
-            })
-}
-
-function fnRoutStatsSearch(sYear){
-		
-	$("#STATS_YEAR").val(sYear);
-	changRoutCol(sYear);
-	
-	if(sYear != ''){
-		$("#label").text("도로등급별 도로연장 통계("+sYear+")");
-	}else{
-		$("#label").text("도로등급별 도로연장 통계(전체)");
-	}
-	
-	fnSearch();
-}
 
 //도로등급 row 병합
 function jsFormatterCell(rowid, val, rowObject, cm, rdata){
@@ -238,108 +164,6 @@ function fnExcel() {
     }
 }
  
- function fnToggle(type){
-	 if(type=='Chart'){
-		 $("#statsChart").show();
-		 $("#statsTable").hide();
-	 }else {
-		 $("#statsChart").hide(); 
-		 $("#statsTable").show();
-	 }
- }
- 
- //국토부 
- function drawLenChart(dataList,rw){
-    var gRouteNm    = [];       
-    var twoData     = [];
-    var fourData      = [];
-    var cntrwkData      = [];
-    var unopnData = [];
-    var degree = (dataList.length > 10) ? 40 : 0;
-    
-    for(var i=0; i<dataList.length; i++){
-        gRouteNm.push(dataList[i].route_code+" "+ dataList[i].route_name);
-        twoData.push(Number(dataList[i].track2_len));
-        fourData.push(Number(dataList[i].track4_len));
-        cntrwkData.push(Number(dataList[i].cntrwk_len));
-        unopnData.push(Number(dataList[i].unopn_len));
-    }
- 	require([	'echarts','echarts/chart/bar'	],
-            function (ec) {
-        var myChart = ec.init(document.getElementById('lenBarChart'));
-        myChart.setOption({
-            //color: ['#003366', '#4cabce'], 
-            title  : { text: '총연장(km)' },
-            tooltip : { trigger: 'axis'             },
-            toolbox : { show: true,
-                   feature: {
-                       //dataView : {show: true, readOnly: false},     // 상세조회
-                       //saveAsExcel : {show: true},                   // 엑셀저장
-                       saveAsImage: {show: true}                   // 이미지저장
-                   }   
-            },
-            legend: {
-                data: ['2차로', '4차로', '공사구간', '미개통구간']
-            },
-            grid :{
-                /* width : rw+'px',
-                x : 50, */
-                y2 : 100
-            },
-            xAxis : [{  
-                        type : 'category',
-                        axisLabel : {
-                            show:true,
-                            interval: 0,
-                            rotate: degree
-                        },
-                        data : gRouteNm
-                    }],
-            yAxis : [{  name : 'km',        type : 'value'      }],
-            series : [
-                {
-                    name: '2차로',
-                    type: 'bar',
-                    stack: '합계',
-                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                    data: twoData
-                },
-                {
-                    name: '4차로',
-                    type: 'bar',
-                    stack: '합계',
-                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                    data: fourData
-                },
-                {
-                    name: '공사구간',
-                    type: 'bar',
-                    stack: '합계',
-                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                    data: cntrwkData
-                },
-                {
-                    name: '미개통구간',
-                    type: 'bar',    
-                    stack: '합계',
-                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
-                    data: unopnData
-                }
-            ]
-        });
-        
-   });
- }
- 
-//경고 메시지
- function fn_msgNtc(){
- 	if(ntcNo >= 1){
- 		alert("해당 조건에 검색 결과가 없습니다.\n검색 조건을 변경하여 조회 하시기 바랍니다.");
- 		return;
- 	}else {
- 		return;
- 	}
- }
 </script>
 </head>
 
@@ -350,9 +174,7 @@ function fnExcel() {
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
 <!-- container start -->
-	<div id="sch_cnt01" class="tabcont">
 		<header class="loc">
 	        <div class="container">
 	            <span class="locationHeader">
@@ -368,67 +190,26 @@ function fnExcel() {
 	            </span>
 	        </div>
 	    </header>
-	</div>
 	
 	<!-- container2 S -->
 	<div class="container2">
 	
-	    <div class="table searchBox top">
-	        <table>
-	            <tbody>
-	                <tr>
-	                    <td class="th">
-	                        <label for="road-grad-select">도로등급</label>
-	                    </td>
-	                    <td>
-	                        <select>
-	                            <option>전체</option>
-	                            <option>국지도</option>
-	                            <option>지방도</option>
-	                        </select>
-	                    </td>
-	                    <td class="th">
-	                        <label for="rout-select">노선번호</label>
-	                    </td>
-	                    <td>
-	                        <select id="rout-select">
-	                            <option>전체</option>
-	                            <option>23호선</option>
-	                            <option>301호선</option>
-	                        </select>
-	                    </td>
-	                    <td><input type="text" readonly disabled value="천안-파주" /></td>
-	                    <td class="btnCell"><button type="button" class="btn pri">검색</button></td>
-	                </tr>
-	            </tbody>
-	        </table>
-	    </div>
-	
 		<div class="tab">
-			<a href="#statsChart" onclick="fnToggle('Table')" class="on">상세보기</a>
-			<a href="#statsTable" onclick="fnToggle('Chart')">그래프보기</a>			
-		</div>
-		<div id="statsTable">
-			<div class="btnArea_top tabR">	          	
-	          	<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
-	        </div>
-			<div id="div_grid" >
-				<table class="adminlist" id="gridArea"></table>
-			</div>
-		</div>
-	
-		<div id="statsChart">
-			<div id="divStatChart" style="overflow-y:auto;">
-				<ul class="statsbx">
-					<li style="margin-left: 1px;">
-						<div class="graylinebx p10" style="width:195%;">
-							<div id="lenBarChart" class="cont_ConBx2" style="height: 500px; margin-left:20px;"></div>
-						</div>
-					</li>
-				</ul>
-			</div>
+			<a class="on" href="#div_grid" onclick="location.replace('<c:url value="viewRoutLenStats.do"/>');">상세보기</a>
+			<a href="#divStatChart" onclick="location.replace('<c:url value="viewRoutLenStatsChart.do"/>');">그래프보기</a>
 		</div>
 		
+		<div class="cont_ListBx">
+
+            <div class="btnArea_top tabR">              
+                <a href="javascript:;" class="schbtn" onclick="fnExcel();">엑셀저장</a>
+            </div>
+            
+            <div id="div_grid" >
+                <table class="adminlist" id="gridArea"></table>
+            </div>
+		</div>
+	
 	</div>
 	<!-- container2 E -->
 

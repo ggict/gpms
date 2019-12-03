@@ -8,63 +8,50 @@
 <%@ include file="/include/common_head.jsp" %>
 <script src="<c:url value='/extLib/echarts/echarts.js'/>"></script>
 <script type="text/javascript" defer="defer">
-
-//에러 메시지 변수
-var errNo=0;
-//경고 메시지 변수
-var ntcNo=0;
+var errNo=0; //에러 메시지 변수
+var ntcNo=0; //경고 메시지 변수
+var myChart;
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	
 	 $("#divStatChart").height($(parent.window).height() - 220);
-
-	//창 조절시 차트 width 
-	var rw1 = $(window).width()-400;
-	var rw = $(window).width()/3;
 	
+    var selectedAdm = $('#selectAdm option:selected').val();
+	fnTrackStatsSearch(selectedAdm);
 	
-	fnTrackStatsSearch(rw);
-	
+	$('#selectAdm').change(function() {
+		var selectedAdm = this.value;
+		fnTrackStatsSearch(selectedAdm);
+	})
+	$('#btnSearch').click(function() {
+	    var selectedAdm = $('#selectAdm option:selected').val();
+	    fnTrackStatsSearch(selectedAdm);	
+	})
 }); 
 
 //창 조절시 차트 resize
-$(window).on('resize', function(){
-		$("#divStatChart").height($(parent.window).height() - 220);
-	
-		var rw1 = $(window).width()-400;
-    	var rw = $(window).width()/3;
-    	var sYear = parent.document.getElementById("SCH_STATS_YEAR").value;
-    	
-    	fnTrackStatsSearch(rw);
-});
-
-//조건에 맞는 검색조회
-function fnTrackStatsSearch(sYear,rw1,rw){
-	fnGpmsGradLenSearch(rw);//GPMS 관리기관별 시군구 총연장조회
-	
-	if(sYear != ''){
-		$("#label").text("도로등급별 도로연장 통계("+sYear+")");
-	}else{
-		$("#label").text("도로등급별 도로연장 통계(전체)");
-	}
-}
-
-require.config({
-   paths: {
-        echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
+$(window).resize(function(){
+    if(this.resizeTO) {
+        clearTimeout(this.resizeTO);
     }
-});
-
-
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+})
+$(window).on("resizeEnd", function(){
+    $("#divStatChart").height($(parent.window).height() - 220);
+    myChart.resize();
+})
 
 //검색 처리
-function fnGpmsGradLenSearch(rw) {
+function fnTrackStatsSearch(selectedAdm) {
+	
+	var data = { 'ADM_CODE': selectedAdm };
     
      $.ajax({
         url: '<c:url value="/"/>'+'api/cell10/selectTrackLenStatsResult.do',
-        data: JSON.stringify( $("#frm").cmSerializeObject()),
-        //data: JSON.stringify(data),
+        //data: JSON.stringify( $("#frm").cmSerializeObject()),
+        data: JSON.stringify(data),
         contentType: 'application/json',
         dataType: "json",
         cache: false,
@@ -73,26 +60,26 @@ function fnGpmsGradLenSearch(rw) {
         success: function (data) {
             var dataList = data.data;
             if(dataList.length !=0){
-                drawLenChart(dataList,rw);
+                drawLenChart(dataList);
             }else{
                 ntcNo += 1;
-                fn_msgNtc();
+                COMMON_UTIL.fn_msgNtc(ntcNo);
             }
         },
         error: function () {
             errNo += 1;
-            fn_msgErr();
+            COMMON_UTIL.fn_msgErr(errNo);
         }
     });
 }
 
-function drawLenChart(dataList,rw){
-	/*
-    var gDeptNm    = [];
-    var pavData     = [];
-    var cntrwkData      = [];
-    var unopnData = [];
-    */
+// 차트
+require.config({
+	   paths: {
+	        echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
+	    }
+	});
+function drawLenChart(dataList){
     var degree = (dataList.length > 10) ? 40 : 0;
     
     var deptList = dataList.map(function(elem) { return elem.adm_nm }).reduce(function(a,b) { if(a.indexOf(b)<0) a.push(b); return a; }, []);
@@ -100,21 +87,14 @@ function drawLenChart(dataList,rw){
     var pavData = dataList.map(function(elem) { return elem.total_l });
     var cntrwkData = dataList.map(function(elem) { return elem.cntrwk_len });
     var unopnData = dataList.map(function(elem) { return elem.unopn_len });
-    
-    /*
-    for(var i=0; i<dataList.length; i++){
-        gDeptNm.push(dataList[i].adm_nm);
-        pavData.push(Number(dataList[i].total_l));
-        cntrwkData.push(Number(dataList[i].cntrwk_len));
-        unopnData.push(Number(dataList[i].unopn_len));
-    }
-    */
+
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
-        var myChart = ec.init(document.getElementById('lenBarChart'));
+        myChart = ec.init(document.getElementById('lenBarChart'));
         myChart.setOption({
             //color: ['#003366', '#4cabce'], 
-            title  : { text: '총연장(km)' },
+            //title  : { text: '차로 연장', x:'left' },
+            title    : { text: deptList[0], x:'left' },
             tooltip : { trigger: 'axis'             },
             toolbox : { show: true,
                    feature: {
@@ -124,23 +104,27 @@ function drawLenChart(dataList,rw){
                    }   
             },
             legend: {
-                data: ['포장구간', '공사구간', '미개통구간']
+                data: ['포장구간', '공사구간', '미개통구간'],
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'bottom',
+                borderWidth: 0
             },
             grid :{
-                /* width : rw+'px',
-                x : 50, */
-                y2 : 100
+                 width : '50%',
+                y2 : 100,
+                align: 'center'
             },
-            xAxis : [{  
+            xAxis : [{ 
                         type : 'category',
                         axisLabel : {
                             show:true,
                             interval: 0,
                             rotate: degree
                         },
-                        data : deptList
+                        data : trackList
                     }],
-            yAxis : [{  name : 'km',        type : 'value'      }],
+            yAxis : [{   name: '총연장(km)',        type : 'value'      }],
             series : [
                 {
                     name: '포장구간',
@@ -169,26 +153,6 @@ function drawLenChart(dataList,rw){
    });
  }
 
-//에러 메시지
-function fn_msgErr(){
-	if(errNo >= 1){
-		alert("오류가 발생하였습니다.\n새로고침 하시기 바랍니다.");
-		return;
-	}else {
-		return;
-	}
-}
-
-//경고 메시지
-function fn_msgNtc(){
-	if(ntcNo >= 1){
-		alert("해당 조건에 검색 결과가 없습니다.\n검색 조건을 변경하여 조회 하시기 바랍니다.");
-		return;
-	}else {
-		return;
-	}
-}
-
 </script>
 </head>
 <body id="wrap">
@@ -198,7 +162,7 @@ function fn_msgNtc(){
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
+<input type="hidden" id="ADM_CODE" name="ADM_CODE" value=""/>
 
 	<header class="loc">
         <div class="container">
@@ -217,11 +181,36 @@ function fn_msgNtc(){
 	</header>
 	
 	<div class="container2">
+	
+        <div class="table searchBox top">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="th" style="width:50%;">
+                            <label for="temp"></label>
+                        </td>
+                        <td class="th">
+                            <label for="selectAdm">시군구</label>
+                        </td>
+                        <td>
+                            <select id="selectAdm">
+                                <c:forEach items="${admList}" var="adm">
+                                <option value="${adm.CODE_VAL}">${adm.CODE_NM}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td class="btnCell"><button type="button" id="btnSearch" class="btn pri">검색</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 		<div class="tab">
-				<a href="#div_grid" onclick="location.replace('<c:url value="selectTrackStats.do"/>');">상세보기</a>
-				<a class="on" href="#divStatChart" onclick="location.replace('<c:url value="selectTrackLenStats.do"/>');">그래프보기</a>
+				<a href="#div_grid" onclick="location.replace('<c:url value="viewTrackLenStats.do"/>');">상세보기</a>
+				<a class="on" href="#divStatChart" onclick="location.replace('<c:url value="viewTrackLenStatsChart.do"/>');">그래프보기</a>
 		</div>
-		<div id="lenBarChart" class="cont_ConBx2" style="height: 500px;"></div>
+		<div style="text-align: center;">
+		  <div id="lenBarChart" class="cont_ConBx2" style="height: 500px;margin:30px 0 auto;"></div>
+		</div>
 <!-- 		
 		<div id="divStatChart" style="overflow-y:auto;">
 			<ul class="statsbx">

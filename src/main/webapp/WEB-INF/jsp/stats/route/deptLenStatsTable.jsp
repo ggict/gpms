@@ -15,14 +15,10 @@
 
 //cell rowspan 중복 체크
 var chkcell={cellId:undefined, chkval:undefined};
-var nYear;
+
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
 	
-	//검색조건초기화
-	parent.$("#SCH_STATS_YEAR option:eq(0)").attr("selected", "selected");
-	nYear = parent.$("#SCH_STATS_YEAR option:selected").val();
-
 	var postData = {"USE_AT":"Y"};
 	
 	// 검색 목록 그리드 구성
@@ -87,26 +83,36 @@ $( document ).ready(function() {
     COMMON_UTIL.cmInitGridSize('gridArea','div_grid', $('#gridArea').height());
 	
 	fnSearch();
-	
-	$(window).resize(function(){
-		COMMON_UTIL.cmInitGridSize('gridArea','div_grid', $('#gridArea').height());
-	    $('.ui-jqgrid .ui-jqgrid-bdiv').css('overflow-x','hidden');
-	    
-	    $("#gridArea").jqGrid('setGroupHeaders', {
-	        useColSpanStyle: true,
-	                groupHeaders:[
-	                    {startColumnName: 'dept_nm', numberOfColumns: 2, titleText: ''},
-	                    {startColumnName: 'sum_l', numberOfColumns: 7, titleText: '도 관리구간(km)'}
-	                ]   
-	            }).jqGrid('setGroupHeaders', {
-	        useColSpanStyle: true,
-	                groupHeaders:[
-	                    {startColumnName: 'sub_sum_l', numberOfColumns: 4, titleText: '포장구간'}
-	                ]   
-	            })
-	});
-	
 }); 
+
+//창 조절시 차트 resize
+$(window).resize(function(){
+    if(this.resizeTO) {
+        clearTimeout(this.resizeTO);
+    }
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+})
+$(window).on("resizeEnd", function(){
+    //테이블 크기 조정
+    COMMON_UTIL.cmInitGridSize('gridArea','div_grid', $('#gridArea').height());
+    $('.ui-jqgrid .ui-jqgrid-bdiv').css('overflow-x','hidden');
+    
+    $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
+    $("#gridArea").jqGrid('setGroupHeaders', {
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'dept_nm', numberOfColumns: 2, titleText: ''},
+                    {startColumnName: 'sum_l', numberOfColumns: 7, titleText: '도 관리구간(km)'}
+                ]   
+            }).jqGrid('setGroupHeaders', {
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'sub_sum_l', numberOfColumns: 4, titleText: '포장구간'}
+                ]   
+            })
+})
 
 //검색 처리
 function fnSearch() {
@@ -149,25 +155,6 @@ function fnSearch() {
 	}).trigger("reloadGrid");
 }
 
-function changRoutCol(yy){
-	nYear = yy;
-	var colModel = $("#gridArea").jqGrid('getGridParam', 'colModel'); 
-    $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
-                
-
-}
-
-function fnDeptStatsSearch(sYear){
-	$("#STATS_YEAR").val(sYear);
-	changRoutCol(sYear);
-	fnSearch();
-}
-
-//관리기관 병합
- function jsFormatterCell(rowid, val, rowObject, cm, rdata){
-
-}
- 
 //엑셀 다운로드
 function fnExcel() {
 	if( confirm("엑셀 파일로 저장하시겠습니까?") ) {
@@ -185,7 +172,6 @@ function fnExcel() {
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
 <!-- container start -->
 
 	<header class="loc">
@@ -207,8 +193,8 @@ function fnExcel() {
 	<div class="container2">
 	    
 		<div class="tab">
-				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="selectDeptStats.do"/>');">상세보기</a>
-				<a href="#divStatChart" onclick="location.replace('<c:url value="selectDeptLenStats.do"/>');">그래프보기</a>	
+				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="viewDeptLenStats.do"/>');">상세보기</a>
+				<a href="#divStatChart" onclick="location.replace('<c:url value="viewDeptLenStatsChart.do"/>');">그래프보기</a>	
 		</div>
 		<div class="cont_ListBx">
 			

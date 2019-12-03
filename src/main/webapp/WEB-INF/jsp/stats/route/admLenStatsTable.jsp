@@ -212,7 +212,7 @@ function fnExcel() {
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
+<input type="hidden" id="ROUTE_CODE" name="ROUTE_CODE" value=""/>
 <!-- container start -->
 	<header class="loc">
 	        <div class="container">
@@ -233,8 +233,8 @@ function fnExcel() {
 	<div class="container2">
 	    
 		<div class="tab">
-				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="selectAdmStatsTable.do"/>');">상세보기</a>
-				<a href="#divStatChart" onclick="location.replace('<c:url value="selectAdmStats.do"/>');">그래프보기</a>	
+				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="viewAdmLenStats.do"/>');">상세보기</a>
+				<a href="#divStatChart" onclick="location.replace('<c:url value="viewAdmLenStatsChart.do"/>');">그래프보기</a>	
 		</div>
 		<div class="btnArea_top tabR">	          	
 				<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>

@@ -651,8 +651,8 @@ public class Cell10Controller extends BaseController {
 	 * @return "/stats/route/selectAdmStats"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/stats/selectRouteStats.do" })
-	public String selectRouteStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/stats/viewRoutLenStats.do" })
+	public String viewRoutLenStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
 
 		return "/stats/route/routeLenStatsTable";
 	}
@@ -662,10 +662,10 @@ public class Cell10Controller extends BaseController {
 	 * @return "/stats/route/selectRouteLenStats"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/stats/selectRouteLenStats.do" })
-	public String selectRouteLenStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/stats/viewRoutLenStatsChart.do" })
+	public String viewRoutLenStatsChart(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
 
-		return "/stats/route/routeLenStats" ;
+		return "/stats/route/routeLenStatsChart" ;
 	}
 
 	/**
@@ -1029,8 +1029,8 @@ public class Cell10Controller extends BaseController {
 	 * @return "/stats/route/selectAdmStats"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/stats/selectDeptStats.do" })
-	public String selectDeptStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/stats/viewDeptLenStats.do" })
+	public String viewDeptLenStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
 
 		return "/stats/route/deptLenStatsTable";
 	}
@@ -1040,10 +1040,10 @@ public class Cell10Controller extends BaseController {
 	 * @return "/stats/route/selectDeptLenStats"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/stats/selectDeptLenStats.do" })
-	public String selectDeptLenStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/stats/viewDeptLenStatsChart.do" })
+	public String viewDeptLenStatsChart(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
 
-		return "/stats/route/deptLenStats" ;
+		return "/stats/route/deptLenStatsChart" ;
 	}
 
 	/**
@@ -1245,10 +1245,10 @@ public class Cell10Controller extends BaseController {
 	 * @return "/stats/route/selectRoadGradeLenStats"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/stats/selectTrackLenStats.do" })
-	public String selectTrackLenStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/stats/viewTrackLenStats.do" })
+	public String viewTrackLenStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
 
-		return "/stats/route/trackLenStats" ;
+		return "/stats/route/trackLenStatsTable" ;
 	}
 
 	/**
@@ -1256,10 +1256,14 @@ public class Cell10Controller extends BaseController {
 	 * @return "/stats/route/selectRoadGradeLenStats"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/stats/selectTrackStats.do" })
-	public String selectTrackStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/stats/viewTrackLenStatsChart.do" })
+	public String viewTrackLenStatsChart(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
 
-		return "/stats/route/trackLenStatsTable" ;
+		// 행정구역(시군구)
+		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());
+		model.addAttribute("admList", allAdmList);
+		
+		return "/stats/route/trackLenStatsChart" ;
 	}
 
 	/**
@@ -1548,10 +1552,10 @@ public class Cell10Controller extends BaseController {
 	 * @return "/stats/route/selectAdmStats"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/stats/selectAdmStats.do" })
-	public String selectAdmStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/stats/viewAdmLenStats.do" })
+	public String viewAdmLenStats(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
 
-		return "/stats/route/admStats";
+		return "/stats/route/admLenStatsTable";
 	}
 
 	/**
@@ -1559,10 +1563,14 @@ public class Cell10Controller extends BaseController {
 	 * @return "/stats/route/selectAdmStats"
 	 * @exception Exception
 	 */
-	@RequestMapping(value = { "/stats/selectAdmStatsTable.do" })
-	public String selectAdmStatsTable(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+	@RequestMapping(value = { "/stats/viewAdmLenStatsChart.do" })
+	public String viewAdmLenStatsChart(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
+		
+		// 행정구역(시군구)
+		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());
+		model.addAttribute("admList", allAdmList);
 
-		return "/stats/route/admStatsTable";
+		return "/stats/route/admLenStatsChart";
 	}
 
 	/**

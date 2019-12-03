@@ -2151,6 +2151,25 @@ var COMMON_UTIL = (function($,undefined){
         });
 
     };
+    
+    //에러 메시지
+    var fn_msgErr = function(errNo) {
+        if(errNo >= 1){
+            alert("오류가 발생하였습니다.\n새로고침 하시기 바랍니다.");
+            return;
+        }else {
+            return;
+        }
+    }
+    //경고 메시지
+    var fn_msgNtc = function(ntcNo) {
+        if(ntcNo >= 1){
+            alert("해당 조건에 검색 결과가 없습니다.\n검색 조건을 변경하여 조회 하시기 바랍니다.");
+            return;
+        }else {
+            return;
+        }
+    }
 
 
 
@@ -2253,7 +2272,10 @@ var COMMON_UTIL = (function($,undefined){
         fn_change_roadNo            :           fn_change_roadNo,
         fn_change_roadNm            :           fn_change_roadNm,
         cmWindowOpen2              :           cmWindowOpen2,
-        cmWindowOpenIasp            :           cmWindowOpenIasp
+        cmWindowOpenIasp            :           cmWindowOpenIasp,
+        
+        fn_msgErr                   :           fn_msgErr,
+        fn_msgNtc                   :           fn_msgNtc
     }
 }(jQuery));
 

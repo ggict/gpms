@@ -8,11 +8,8 @@
 <%@ include file="/include/common_head.jsp" %>
 <script src="<c:url value='/extLib/echarts/echarts.js'/>"></script>
 <script type="text/javascript" defer="defer">
-
-//에러 메시지 변수
-var errNo=0;
-//경고 메시지 변수
-var ntcNo=0;
+var errNo=0; //에러 메시지 변수
+var ntcNo=0; //경고 메시지 변수
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
@@ -466,7 +463,7 @@ function fn_msgNtc(){
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
-<input type="hidden" id="STATS_YEAR" name="STATS_YEAR" value=""/>
+<input type="hidden" id="ROUTE_CODE" name="ROUTE_CODE" value=""/>
 	
 	<header class="loc">
 	        <div class="container">
@@ -485,6 +482,26 @@ function fn_msgNtc(){
 	</header>
 	
 	<div class="container2">
+	
+        <div class="table searchBox top">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="th">
+                            <label for="admSelect">노선번호</label>
+                        </td>
+                        <td>
+                            <select id="admSelect"><option>전체</option>
+                                <c:forEach items="${admList}" var="adm">
+                                <option value="${adm.CODE_VAL}">${adm.CODE_NM}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td class="btnCell"><button type="button" class="btn pri">검색</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 	    
 		<div class="tab">
 				<a href="#div_grid" onclick="location.replace('<c:url value="selectAdmStatsTable.do"/>');">상세보기</a>
