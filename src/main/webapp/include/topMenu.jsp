@@ -131,15 +131,15 @@
                         </ul>
                     </li>
                     <li class="f00">
-                        <a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectRouteStats.do"/>');return false;"><span>통계</span></a>
+                        <a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewRoutLenStats.do"/>');return false;"><span>통계</span></a>
                         <ul>
                             <!-- sub_stat_route -->
-                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent( '<c:url value="stats/selectRouteStats.do"/>');return false;">노선별 현황</a>
+                            <li class="s10"><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent( '<c:url value="stats/viewRoutLenStats.do"/>');return false;">노선별 현황</a>
                             	<ul>
-                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectRouteStats.do"/>');return false;">노선별 통계</a></li>
-                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectDeptStats.do"/>');return false;">관리기관별 통계</a></li>
-                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectTrackStats.do"/>');return false;">차로별 통계</a></li>
-                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/selectAdmStatsTable.do"/>');return false;">시군구별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewRoutLenStats.do"/>');return false;">노선별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewDeptLenStats.do"/>');return false;">관리기관별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewTrackLenStats.do"/>');return false;">차로별 통계</a></li>
+                                    <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewAdmLenStats.do"/>');return false;">시군구별 통계</a></li>
                                 </ul>
                             </li>
                             <!-- sub_stat_mumm -->
