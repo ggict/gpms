@@ -261,23 +261,7 @@ $.fn.accessibleDropDown = function () {
             $('.submenubg').show();
 
         }
-
         fnWindowPopupClose();
-        /*
-        //레이어 관리 show/hide
-        var layerBoxHiddenMenuList = ['menu4', 'menu6'];
-        var length = layerBoxHiddenMenuList.length;
-        for(var i=0; i<length; i++){
-        	var menu = layerBoxHiddenMenuList[i];
-        	var isMenuClass = $(this).find('a').hasClass(menu);
-        	if(isMenuClass){
-        		$("#divLayerTool").dialog('close');
-        		break;
-        	}else{
-        		$("#divLayerTool").dialog('open');
-        	}
-        }
-        */
     });
 
     // 새로고침/초기 로그인 시 랜덤으로 topmenu에 focus되는 경우가 있어서 focus 시 select 되는 것은 보류.
@@ -429,35 +413,21 @@ function fnSelectFirst(menu) {
 // 2017. 11. 09. JOY
 // 메뉴 선택 시 전체 팝업 닫기 (right-tool, left-tool, research)
 function fnWindowPopupClose() {
-
     var wndpop = $.window.getAll();
     var len = wndpop.length;
-
     for ( var i = len - 1; i >= 0; i-- ) {
-
         var wndid = wndpop[i].getWindowId();
-
-        if ( $("#" + wndid).find("iframe").contents().find("body").hasClass("right-tool")
-                || $("#" + wndid).find("iframe").contents().find("body").hasClass("left-tool")
-                || $("#" + wndid).find("iframe").contents().find("body").hasClass("research") ) {
-
-            if ( $("#" + wndid).find("iframe").contents().find("body").hasClass("research") ) {
-
+        var wndidBody = $("#" + wndid).find("iframe").contents().find("body");
+        if ( wndidBody.hasClass("right-tool") || wndidBody.hasClass("left-tool") || wndidBody.hasClass("research") ) {
+            if (wndidBody.hasClass("research") ) {
                 rshInfoCnt--;
-                $(".selecttool").parent("li").removeClass("active");
-                $("#mCtrlPan").parent().addClass("active");
                 gMap.cleanMap();
-                gMap.activeControls("drag");
+                $("#mCtrlPan").click();
                 bottomClose();
-
             }
-
             wndpop[i].close();
-
         }
-
     }
-
 }
 
 function snbacc() {

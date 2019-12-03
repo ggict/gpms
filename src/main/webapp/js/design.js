@@ -19,6 +19,12 @@ $(function(){
 			$(this).parents("li").removeClass('on');
             $('header.header').removeClass('on');
 		});
+		
+		//상단 메뉴 클릭 시 지도화면에 보여지는 windowPopup 창 닫기
+		$('.nav ul a').click(function() {
+			fnWindowPopupClose();
+		});
+		
 		$('.nav ul').mouseover(function() {
 			$(this).parents("li").addClass('on');
 		 	$('header.header').addClass('on');
