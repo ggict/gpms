@@ -53,7 +53,9 @@
             </select>
             <select id="DEPT_3" onkeydown="fnCheckEnter(event);">
                     <option value="">전체</option>
-            </select></li>
+            </select>
+            <a href="#" class="btn pri" onclick="javascript:fn_search();">검색</a>
+            </li>
         </ul>
         <div id="div_grid">
             <table class="adminlist" id="gridArea"></table>
