@@ -234,7 +234,9 @@ function fn_code_save() {
 	            	alert("코드를 등록하였습니다.");
 	            	var vform = $('#code_Regist-form');
 	            	window.parent.fnSearchCode(COMMON_LANG.trimdata( vform.find('#CL_CODE').val()));
-	                return;
+	            	var wnd_id = $("#wnd_id").val();
+	            	$('#'+wnd_id, window.parent.document).remove();
+	            	return;
 	            }
 	        },
 	
