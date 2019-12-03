@@ -471,6 +471,9 @@ span.calendar { border:none; position: relative; height: 32px; width: 113px; pad
 div select, select.input {padding-right: 20px; background: url(../images/selecetArrow2.gif) no-repeat right 12px;}
 
 #div_grid + .btn {float: right;margin-top: -24px; position: relative; z-index: 900; padding: 3px 15px;}
+#div_grid + .btnArea2 {float: right;margin-top: -24px; position: relative; z-index: 900;
+    .btn { padding: 3px 10px; letter-spacing:1px}
+}
 
 .ui-jqgrid {
     .ui-pg-selbox,.ui-pg-input { font-size: 13px;background-color: #fff;}
@@ -480,6 +483,7 @@ td input[type="text"].hasDatepicker {width: 120px;}
 td input[type="text"].hasDatepicker + img.ui-datepicker-trigger { margin:0 6px -4px -20px;}
 td span.calendar input[type="text"].hasDatepicker + img.ui-datepicker-trigger { margin:0}
 
+caption {position: fixed;left: -9999px;}
 /* jsDiv */
 article.jsDiv{ display: none; position: fixed; left: 0;top: 0; width: 100%; height: 100%; z-index: 1000; background: rgba(0, 0, 0, 0.3);
 	&.on { display: block; }

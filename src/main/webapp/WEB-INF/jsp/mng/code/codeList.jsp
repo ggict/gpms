@@ -31,24 +31,21 @@
 		<form:form commandName="clCodeVO" id="clcodeform">
 		<li>
 			<label>분류코드</label>
-		</li>
-		<li>
-			<form:select path="CL_CODE" style="width: 100%;">
-                <form:option value="" label="===== 전체 =====" />
+
+			<form:select path="CL_CODE">
+                <form:option value="" label="전체" />
                 <form:options items="${items}" itemValue="CL_CODE" itemLabel="CL_CODE_NM" />
             </form:select>
-	   </li>
-	   <li>
 			<label>분류코드명</label>
-				<input type="text" name="CL_CODE_NM" id="CL_CODE_NM" value="<c:out value="${param.CL_CODE_NM}"/>" class="MX_50 CS_25 input" />
+				<input type="text" name="CL_CODE_NM" id="CL_CODE_NM" value="<c:out value="${param.CL_CODE_NM}"/>" />
 			<label>사용여부</label>
-				<select name="USE_AT" id="USE_AT" class="select">
-					<option value="">== 전체 ==</option>
+				<select name="USE_AT" id="USE_AT">
+					<option value="">전체</option>
 					<option value="Y">예</option>
 					<option value="N">아니오</option>
 				</select>
-		</li>
-		<li class="fr"><a href="#" class="schbtn dpb" onclick="javascript:fnSearch();">검색</a></li>
+				<a href="#" class="btn pri posR" onclick="javascript:fnSearch();">검색</a>
+			</li>
 		</form:form>
 	</ul>	
 	

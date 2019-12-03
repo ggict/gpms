@@ -34,98 +34,132 @@
 <input type="hidden" id="ENDPT" name="ENDPT" value="${srvyRequstSctnVO.ENDPT}"/>
 <input type="hidden" id="PAV_CELL_ID" name="PAV_CELL_ID" value=""/>
 
-
 <div class="tabcont">
-    <div class="fl bgsch" style="width:400px;">
-        <h3>검색조건</h3>
-        <div class="schbx mt10">
-            <ul class="sch">
-                <li class="wid100">
-                    <label>조사명</label>
-                    <input type="text" name="SRVY_NM" id="SRVY_NM" style="width:197px;" value="<c:out value="${srvyRequstSctnVO.SRVY_NM}"/>" class="MX_80 CS_50 input" />
-                </li>
-                <li>
-                	<label>조사요청기관</label>
-                	<input type="text" name="DEPT_NM" id="DEPT_NM" style="width:197px;" value="" class="MX_80 CS_50 input"/>
-                </li>
-                <li>
-                    <label>조사내용</label>
-                    <input type="text" name="SRVY_CN" id="SRVY_CN" style="width:197px;" value="<c:out value="${srvyRequstSctnVO.SRVY_CN}"/>" class="MX_80 CS_50 input" />
-                </li>
-                <li class="wid100">
-                    <label>조사요청일자</label>
-                    <input type="text" name="SRVY_REQUST_DE" id="SRVY_REQUST_DE" style="width:70px; margin-right: 3px;" class="DT_DATE input" value="<c:out value="${srvyRequstSctnVO.SRVY_REQUST_DE}"/>"/>
-                </li>
-            </ul>
+
+    <header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">조사자료관리</option>
+                </select>
+                <select name="">
+                    <option value="">조사요청구간관리</option>
+                </select>
+                <h2 class="h2">조사요청구간 목록</h2>
+            </span>
+
         </div>
-    </div>
-    <div class="fr listbx" style="left:400px;">
-        <h3>조사요청구간</h3>
-        <p class="location">
-            <span>조사자료 관리</span>
-            <span>조사요청구간 관리</span>
-            <strong>조사요청구간 수정</strong>
-        </p>
-        <div class="mt10 ml10 mr10">
-            <table class="tbview" summary="포장 세부공사 위치정보를 조회한다.">
-                <colgroup>
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="10%" />
-                    <col width="20%" />
-                </colgroup>
-                <tbody>
+    </header>
+    
+    <div class="contents container">
+    
+        <article class="div3">
+            <h3 class="h3">검색조건</h3>
+            <div class="table">
+                <table>
+                    <tbody>
+                   
                     <tr>
-                        <th scope="row">행선</th>
+                        <td class="th"><label for="SRVY_NM">조사명</label></td>
                         <td>
-                            <select name="search_direct" id="search_direct" onchange="javascript:;" class="select" style="width: 100%;">
-                                <option value="">전체</option>
-                                <option value="상행">상행</option>
-                                <option value="하행">하행</option>
-                            </select>
-                        </td>
-                        <th scope="row">차로</th>
-                        <td>
-                            <label for="search_track"></label>
-                            <input type="text" name="search_track" id="search_track" value="" class="MX_100 CS_80 input" />
-                        </td>
-                        <th scope="row">시점(m)</th>
-                        <td>
-                            <label for="search_strtpt"></label>
-                            <input type="text" name="search_strtpt" id="search_strtpt" value="" class="MX_100 CS_80 input" />
-                        </td>
-                        <th scope="row">종점(m)</th>
-                        <td>
-                            <label for="search_endpt"></label>
-                            <input type="text" name="search_endpt" id="search_endpt" value="" class="MX_100 CS_80 input" />
-                        </td>
-                        <td>
-                            <div class="fr"><input type="button" id="search_btn" class="schbtn" value="검색" /></div>
+                            <input type="text" name="SRVY_NM" id="SRVY_NM" value="<c:out value="${srvyRequstSctnVO.SRVY_NM}"/>" />
                         </td>
                     </tr>
-                </tbody>
-            </table>
-            <div id="div_grid" style="width:100%; height:210px;">
+                    <tr>
+                        <td class="th"><label for="DEPT_NM">조사요청기관</label></td>
+                        <td>
+                            <input type="text" name="DEPT_NM" id="DEPT_NM" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="th"><label for="SRVY_CN">조사내용</label></td>
+                        <td>
+                            <input type="text" name="SRVY_CN" id="SRVY_CN" value="<c:out value="${srvyRequstSctnVO.SRVY_CN}"/>" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="th"><label for="SRVY_REQUST_DE">조사요청일자</label></td>
+                        <td>
+                            <input type="text" name="SRVY_REQUST_DE" id="SRVY_REQUST_DE" value="<c:out value="${srvyRequstSctnVO.SRVY_REQUST_DE}"/>"/>
+                        </td>
+                    </tr>
+                    </tbody>    
+                </table>
+            </div>
+        </article>
+        
+        <article class="div9">
+            <h3 class="h3">조사요청구간</h3>
+
+            <div class="table searchBox">
+                <table>
+                    <colgroup>
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="10%" />
+                        <col width="20%" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td class="th"><label for="search_direct">행선</label></td>
+                            <td>
+                                <select name="search_direct" id="search_direct" onchange="javascript:;">
+                                    <option value="">전체</option>
+                                    <option value="상행">상행</option>
+                                    <option value="하행">하행</option>
+                                </select>
+                            </td>
+                            <td class="th"><label for="search_track">차로</label></td>
+                            <td>
+                                <label for="search_track"></label>
+                                <input type="text" name="search_track" id="search_track" value="" />
+                            </td>
+                            <td class="th"><label for="search_strtpt">시점(m)</label></td>
+                            <td>
+                                <label for="search_strtpt"></label>
+                                <input type="text" name="search_strtpt" id="search_strtpt" value="" />
+                            </td>
+                            <td class="th"><label for="search_endpt">종점(m)</label></td>
+                            <td>
+                                <label for="search_endpt"></label>
+                                <input type="text" name="search_endpt" id="search_endpt" value="" />
+                            </td>
+                            <td class="btnCell">
+                                <input type="button" id="search_btn" class="btn pri" value="검색" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="div_grid" class="table">
                 <table id="gridArea"></table>
                 <div id="gridPager"></div>
             </div>
-            <div class="mt10 tc">
-                <div class="fl">
-                    <a href="javascript:;" onclick="removeCheck();" class="schbtn" style="left">삭제</a>
-                </div>        
-                <div class="fr">
-                    <a href="javascript:;" onclick="fnAddCell();" class="schbtn">조사요청구간 추가</a>
-                    <a href="javascript:;" onclick="fnViewLocation();" class="schbtn">조사요청구간 지도위치보기</a>
-                    <a href="javascript:;" onclick="fnUpdate();" class="schbtn">조사요청구간 수정</a>
-                </div>
+
+
+            <div id="div_grid" class="table">
+                <table id="gridArea"></table>               
             </div>
-        </div>
+
+            <div class="btnArea2">
+                <a href="javascript:;" onclick="removeCheck();" class="btn wrn">삭제</a>
+                <a href="javascript:;" onclick="fnAddCell();" class="btn">조사요청구간 추가</a>
+                <a href="javascript:;" onclick="fnViewLocation();" class="btn">조사요청구간 지도위치보기</a>
+                <a href="javascript:;" onclick="fnUpdate();" class="btn">조사요청구간 수정</a>
+            </div>
+            <div id="gridPager"></div>
+
+        </article>
+        
     </div>
+
+
 </div>
 </form>
 <!-- 공통 (START)-->

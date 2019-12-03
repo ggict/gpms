@@ -153,22 +153,21 @@ function fn_view(rowId) {
 		<!--검색영역-->
 		<ul class="admin_sch">
 			<li>
-				<label>구분</label>
-					<select id="SCH_SJCN" name="SCH_SJCN" class="input">
-						<option value="0">== 전체 ==</option>
+				<label for="SCH_SJCN">구분</label>
+					<select id="SCH_SJCN" name="SCH_SJCN">
+						<option value="0">전체</option>
 						<option value="1">제목</option>
 						<option value="2">내용</option>
 					</select>
-			</li>
-			<li><input type="text" id="SCH_SJCN_TXT" name="SCH_SJCN_TXT" class="MX_50 CS_25 input" /></li>
-			<li class="fr"><a href="#" class="schbtn dpb" onclick="javascript:fnSearch();">검색</a></li>	
+					<input type="text" id="SCH_SJCN_TXT" name="SCH_SJCN_TXT" class="MX_50 CS_25 input" />
+					<a href="#" class="btn pri posR" onclick="javascript:fnSearch();">검색</a></li>	
 		</ul>
 		<div id="div_grid" >
 			<table class="adminlist" id="gridArea"></table>
 			<div id="gridPager"></div>
 		</div>
 		<div class="btnbx">
-           	 	<a href="#" class="schbtn" onclick="fnWrite();">등록</a>
+           	 	<a href="#" class="btn pri" onclick="fnWrite();">등록</a>
            	</div>
 	</div>
 </div>

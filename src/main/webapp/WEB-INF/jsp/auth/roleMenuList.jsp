@@ -29,14 +29,14 @@
 		<form:form commandName="roleMenuVO" id="rolemenuform">
 			<ul class="admin_sch">
 			    <li>
-			    	<label>시스템메뉴 접근권한 그룹</label>&nbsp; 
-			    	<form:select path="SCH_AUTH" style="width:120px;">
+			    	<label for="SCH_AUTH">시스템메뉴 접근권한 그룹</label> 
+			    	<form:select path="SCH_AUTH">
 			    		<c:forEach var="codeInfo" items="${auth_list}">
 							<form:option value="${codeInfo.CODE_VAL}">${codeInfo.CODE_NM}</form:option>
 						</c:forEach>
 			    	</form:select>
+			    	<a href="#" class="btn pri posR" onclick="javascript:fnSearch();">검색</a>
 			    </li>
-			    <li class="fr"><a href="#" class="schbtn dpb" onclick="javascript:fnSearch();">검색</a></li>
 			</ul>
 		</form:form>
 		<div>
