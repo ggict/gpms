@@ -1339,25 +1339,15 @@ function($,undefined){
      *            _oEl : #btn_map_satelite HTML element 개체
      */
     var fn_show_externalSateliteMap = function(maptype) {
-
-        //if ($("#mCtrlSateliteMap").parent("li").hasClass("active")) {
-        //  $(".maptool").parent("li").removeClass("active");
-
         var roadmapControl = document.getElementById('mCtrlSatenomalMap');
         var skyviewControl = document.getElementById('mCtrlSateliteMap');
-
         if (maptype === 'roadmap') {
             MAP.fn_get_daumMap().setVisibility(true);
             MAP.fn_get_daumMap().setMapMode(1);
-            //roadmapControl.className = 'selected_btn';
-            //skyviewControl.className = 'btn';
         } else {
             MAP.fn_get_daumMap().setVisibility(true);
             MAP.fn_get_daumMap().setMapMode(2);
-            //skyviewControl.className = 'selected_btn';
-            //roadmapControl.className = 'btn';
         }
-
         return false;
     };
 

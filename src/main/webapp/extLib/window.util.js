@@ -73,7 +73,7 @@ function wDialogOpen(div_title, call_url, width, height, modal, opener_id,
 								gMap.getLayerByName("GStatusLayer")
 										.setVisibility(true);
 								// 좌측 메뉴
-								$(".maptool").parent("li")
+								$(".mtBtn").parent("li")
 										.removeClass("active");
 								$("#mCtrlPan").parent().addClass("active");
 								gMap.activeControls("drag");
@@ -84,7 +84,7 @@ function wDialogOpen(div_title, call_url, width, height, modal, opener_id,
 								gMap.cleanMap();
 
 								//좌측 툴 이동모드 활성화
-								$(".maptool").parent("li")
+								$(".mtBtn").parent("li")
 										.removeClass("active");
 								$("#mCtrlPan").parent("li").addClass("active");
 								gMap.activeControls("drag");
@@ -264,7 +264,7 @@ function wWindowOpen(div_title, call_url, width, height, modal, opener_id, posit
 
 							gMap.cleanMap(CONFIG.fn_get_exceptLayerList());
 							// 좌측 메뉴
-							$(".maptool").parent("li").removeClass("active");
+							$(".mtBtn").parent("li").removeClass("active");
 							$("#mCtrlPan").parent().addClass("active");
 							gMap.activeControls("drag");
 
@@ -279,7 +279,7 @@ function wWindowOpen(div_title, call_url, width, height, modal, opener_id, posit
 							markersLoc = [];
 							gMap.cleanMap(CONFIG.fn_get_exceptLayerList());
 							// 좌측 메뉴
-							$(".maptool").parent("li").removeClass("active");
+							$(".mtBtn").parent("li").removeClass("active");
 							$("#mCtrlPan").parent().addClass("active");
 							gMap.activeControls("drag");
 							return;
@@ -309,7 +309,7 @@ function wWindowOpen(div_title, call_url, width, height, modal, opener_id, posit
 							gMap.cleanMap();
 
 							//좌측 툴 이동모드 활성화
-							$(".maptool").parent("li").removeClass("active");
+							$(".mtBtn").parent("li").removeClass("active");
 							$("#mCtrlPan").parent("li").addClass("active");
 							gMap.activeControls("drag");
 
@@ -339,7 +339,7 @@ function wWindowOpen(div_title, call_url, width, height, modal, opener_id, posit
 							}
 
 							// 좌측 메뉴
-							$(".maptool").parent("li").removeClass("active");
+							$(".mtBtn").parent("li").removeClass("active");
 							$("#mCtrlPan").parent().addClass("active");
 							gMap.cleanMap();
 							gMap.activeControls("drag");
