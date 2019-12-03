@@ -336,7 +336,7 @@ $( document ).ready(function() {
 
 	var colModels = new Array();
 	var colIndex = 0;
-	colModels[colIndex++]={name: "btn_check",  index: "btn_check", comments: "선택",  width: 50,align: "center", hidden: false, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
+	colModels[colIndex++]={name: "btn_check",  index: "btn_check", comments: "선택",  width: 50,align: "center", hidden: true, sortable :false,  formatter: fn_grid_btn}; /*보수_대상_항목_그룹.행정구역코드 */
 	colModels[colIndex++]={name: "DEPT_NM",  index: "DEPT_NM", comments: "관리<br/>기관",  width: 80,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.부서코드 */
 	colModels[colIndex++]={name: "ROAD_GRAD",  index: "ROAD_GRAD", comments: "도로등급",  width: 80,align: "center", hidden: true, sortable :false }; /*보수_대상_항목_그룹.도로등급 */
 	colModels[colIndex++]={name: "ROAD_GRAD_NM",  index: "ROAD_GRAD_NM", comments: "도로<br/>등급",  width: 80,align: "left", hidden: false, sortable :false }; /*보수_대상_항목_그룹.도로등급 */
@@ -510,7 +510,8 @@ function fn_grid_btn(cellValue, options, rowObject) {
 // 		if (rowObject.TMPR_SLCTN_AT == "Y") {// || rowObject.SLCTN_AT=="Y"
 // 			btn = "<input type='checkbox' checked onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
 // 		} else {
-			btn = "<input type='checkbox' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
+        btn += "<input type='checkbox' id='" + options.rowId + "' class='cbox' onclick=\"javascript:fn_checkItem(this, '" + rowObject.GROUP_ITEM_NO + "', '" + rowObject.TMPR_SLCTN_AT + "', '" + rowObject.FIX_AMOUNT_CALC + "');\" />";
+		btn += "<label for=\""+options.rowId+"\" class=\"hiddenLabel\">선택</label>"
 // 		}
 	}
 		break;
@@ -917,7 +918,7 @@ function fn_select_cellSectFilter(trgetSlctnNo, groupItemNo){
 
 	var vForm = $("#frmRpairTrgetSlctn");
 	var postData = {
-		"TRGET_SLCTN_NO" : trgetSlctnNo,
+		"TRGET_SLCTN_NO" : $("#TRGET_SLCTN_NO").val(),
 		"GROUP_ITEM_NO" : groupItemNo
 	};
 	var action = '<c:url value="/api/rpairtrgetgroup/selectRpairTrgetGroupCELLListRest.do"/>';
@@ -939,7 +940,6 @@ function fn_select_cellSectFilter(trgetSlctnNo, groupItemNo){
 			        return data.CELL_ID;
 				});
 
-				console.log(cellids);
 				fn_select_cellSectIDS(cellids);
 			}
 		}, error : function(a, b, msg) {
