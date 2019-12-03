@@ -13,9 +13,9 @@
           select nextval('SEQ_TN_SRVY_REQUST_SCTN')
           ]]>
 		</selectKey>
-	<![CDATA[ 
+	<![CDATA[
 		/* srvyRequstSctnDAO.insertSrvyRequstSctn */
-		/* 조사요청구간 등록 */		
+		/* 조사요청구간 등록 */
 		INSERT INTO TN_SRVY_REQUST_SCTN (
             SRVY_REQUST_SCTN_NO
             , SRVY_NM
@@ -45,7 +45,7 @@
 	</insert>
 
 	<update id="srvyRequstSctnDAO.updateSrvyRequstSctn">
-	<![CDATA[ 
+	<![CDATA[
 		/* srvyRequstSctnDAO.updateSrvyRequstSctn */
 		/* 조사요청구간 수정 */
 		UPDATE TN_SRVY_REQUST_SCTN SET
@@ -60,12 +60,12 @@
             , UPDUSR_NO        = #UPDUSR_NO#::numeric
             , UPDT_DT          = now()
 		WHERE 1 = 1
-		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric 
+		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric
 ]]>
 	</update>
 
 	<delete id="srvyRequstSctnDAO.deleteSrvyRequstSctn">
-	<![CDATA[ 
+	<![CDATA[
 		/* srvyRequstSctnDAO.deleteSrvyRequstSctn */
 		/* 조사요청구간 삭제 */
 		DELETE FROM TN_SRVY_REQUST_SCTN
@@ -73,12 +73,12 @@
 		AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric
 ]]>
 	</delete>
-	
+
     <select id="srvyRequstSctnDAO.selectSrvyRequstSctnList" parameterClass="srvyRequstSctnVO" resultClass="srvyRequstSctnVO">
-<![CDATA[       
+<![CDATA[
         /* srvyRequstSctnDAO.selectSrvyRequstSctnList */
         /* 조사요청구간 조회 */
-            SELECT 
+            SELECT
                 srvyrequstsctn.SRVY_REQUST_SCTN_NO
                 , srvyrequstsctn.SRVY_NM
                 , srvyrequstsctn.SRVY_CN
@@ -96,52 +96,52 @@
             LEFT OUTER JOIN TN_ROUTE_INFO routeinfo
                 ON srvyrequstsctn.ROUTE_CODE = routeinfo.ROAD_NO
             WHERE 1=1
- ]]>           
+ ]]>
             <isNotEmpty property="ROUTE_CODE">
                 <![CDATA[ AND ROUTE_CODE = #ROUTE_CODE# ]]>
             </isNotEmpty>
             <isNotEmpty property="SRVY_REQUST_DE_STRT"><isNotEmpty property="SRVY_REQUST_DE_ENDT">
                 <![CDATA[ AND SRVY_REQUST_DE >=  #SRVY_REQUST_DE_STRT# AND SRVY_REQUST_DE <= #SRVY_REQUST_DE_ENDT# ]]>
             </isNotEmpty></isNotEmpty>
-            
+
             <isNotEmpty property="SRVY_REQUST_SCTN_NO">
             	<![CDATA[ AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric ]]>
             </isNotEmpty>
-            
+
             <isEqual prepend=" " property="usePage" compareValue="true">
                 <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
             </isEqual>
     </select>
-	
+
     <select id="srvyRequstSctnDAO.selectSrvyRequstSctnListTotalCount" parameterClass="srvyRequstSctnVO" resultClass="int">
-<![CDATA[       
+<![CDATA[
         /* srvyRequstSctnDAO.selectSrvyRequstSctnListTotalCount */
         /* 조사요청구간 조회 카운트 */
             SELECT count(*)
             FROM TN_SRVY_REQUST_SCTN
             WHERE 1=1
- ]]>           
+ ]]>
             <isNotEmpty property="ROUTE_CODE">
                 <![CDATA[ AND ROUTE_CODE = #ROUTE_CODE#]]>
             </isNotEmpty>
             <isNotEmpty property="SRVY_REQUST_DE_STRT"><isNotEmpty property="SRVY_REQUST_DE_ENDT">
                 <![CDATA[ AND SRVY_REQUST_DE >=  #SRVY_REQUST_DE_STRT# AND SRVY_REQUST_DE < #SRVY_REQUST_DE_ENDT# ]]>
             </isNotEmpty></isNotEmpty>
-            
+
             <isEqual prepend=" " property="usePage" compareValue="true">
                 <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
             </isEqual>
-    </select>	
-    
+    </select>
+
     <select id="srvyRequstSctnDAO.selectSrvyRequstSctn" parameterClass="srvyRequstSctnVO" resultClass="srvyRequstSctnVO">
-<![CDATA[       
+<![CDATA[
         /* srvyRequstSctnDAO.selectSrvyRequstSctn */
         /* 조사요청구간 조회 */
-            SELECT 
+            SELECT
                 srvyrequstsctn.SRVY_REQUST_SCTN_NO
                 , srvyrequstsctn.SRVY_NM
                 , srvyrequstsctn.SRVY_CN
-                , srvyrequstsctn.SRVY_REQUST_DE
+                , TO_CHAR(TO_DATE(srvyrequstsctn.SRVY_REQUST_DE, 'YYYYMMDD'), 'YYYY-MM-DD') SRVY_REQUST_DE
                 , srvyrequstsctn.ROUTE_CODE
                 , routeinfo.ROAD_NAME as ROAD_NAME
                 , srvyrequstsctn.DIRECT_CODE
@@ -155,8 +155,8 @@
             LEFT OUTER JOIN TN_ROUTE_INFO routeinfo
                 ON srvyrequstsctn.ROUTE_CODE = routeinfo.ROAD_NO
             WHERE 1=1
- ]]>           
-          
+ ]]>
+
             <isNotEmpty property="SRVY_REQUST_SCTN_NO">
             	<![CDATA[ AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric ]]>
             </isNotEmpty>

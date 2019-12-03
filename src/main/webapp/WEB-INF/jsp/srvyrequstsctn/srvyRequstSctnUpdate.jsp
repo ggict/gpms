@@ -171,7 +171,8 @@ var _routeCd="", _directCd="", _track="", _strtpt="", _endpt="", _cellIdList="",
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
 	// 달력 생성
-    cmCreateDatepicker('SRVY_REQUST_DE', 10);
+//     cmCreateDatepicker('SRVY_REQUST_DE', 10);
+    COMMON_UTIL.cmCreateDatepickerLinked('SRVY_REQUST_DE', 'SRVY_REQUST_DE', 30, 210);
 
     var ids = '${cells}';
     $('#PAV_CELL_ID').val(ids);
