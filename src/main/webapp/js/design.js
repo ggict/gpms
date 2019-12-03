@@ -117,7 +117,7 @@ $(function(){
 			$(sideDivHref + "> .sideDivContent" ).css("top","50%").css("margin-top", - height * 0.5 );
 			return false;
 		}catch(e){
-			console.log(e);
+			console.log("a < sideDiv click event error");
 		}
 	});
 

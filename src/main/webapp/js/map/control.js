@@ -222,19 +222,18 @@ MAP.CONTROL = (function($, undefined){
 
 		// 17.10.16 JOY 수정
 		// 18.05.25.YYK 추가 수정
-		// : 위치통합검색/경위도에서 지도조작 클릭시에는 팝업 안 닫힘, 위치통합/경위도 끼리는 닫힘
-		//지도 컨트롤 활성화 ui
+		// 위치통합검색/경위도에서 지도조작 클릭시에는 팝업 안 닫힘, 위치통합/경위도 끼리는 닫힘
+		// 지도 컨트롤 활성화 ui
         $(".mtBtn").bind("click", function() {
             $(".mtBtn").parent("li").removeClass("active");
             $("#researchInfo").parent().removeClass("active"); // 조사정보 control 초기화
             $(this).parent("li").addClass("active");
 
-            // 다른 팝업이 열리는 경우 활성화 된 조회 컨트롤 닫기
             var wndpop = $.window.getAll();
             for ( var i = 0; i < wndpop.length; i++ ) {
                 var wndid = wndpop[i].getWindowId();
-                if ( $("#" + wndid).find("iframe").contents().find("body").hasClass("left-tool") ) {
-                	//if ($(this).hasClass('t1') || $(this).hasClass('t2')) {
+                var wndidBody = $("#" + wndid).find("iframe").contents().find("body");
+                if(wndidBody.hasClass("left-tool") ){
                 	if($(this).hasClass('sideDiv')){
                 		wndpop[i].close();
                 	}
@@ -243,39 +242,22 @@ MAP.CONTROL = (function($, undefined){
         });
 
 		// 조회 컨트롤 활성화 ui
-        $(".selecttool").bind("click", function() {
-
-            $(".selecttool").parent("li").removeClass("active");
-            $(this).parent("li").addClass("active");
-
-            // 다른 팝업이 열리는 경우 활성화 된 조회 컨트롤 닫기
+        $(".mt2Btn").bind("click", function() {
             var wndpop = $.window.getAll();
             var len = wndpop.length;
-
             for ( var i = len - 1; i >= 0; i-- ) {
-
                 var wndid = wndpop[i].getWindowId();
-
-                if ( $("#" + wndid).find("iframe").contents().find("body").hasClass("right-tool")
-                        || $("#" + wndid).find("iframe").contents().find("body").hasClass("research") ) {
-
-                    if ( $("#" + wndid).find("iframe").contents().find("body").hasClass("research") ) {
-
+                var wndidBody = $("#" + wndid).find("iframe").contents().find("body");
+                if(wndidBody.hasClass("right-tool") || wndidBody.hasClass("research") ) {
+                    if(wndidBody.hasClass("research") ) {
                         rshInfoCnt--;
-                        $(".selecttool").parent("li").removeClass("active");
-                        $("#mCtrlPan").parent().addClass("active");
+                        $("#mCtrlPan").click();
                         gMap.cleanMap();
-                        gMap.activeControls("drag");
                         bottomClose();
-
                     }
-
                     wndpop[i].close();
-
                 }
-
             }
-
         });
 
 		//위치 통합조회
