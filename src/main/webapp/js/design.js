@@ -117,10 +117,11 @@ $(function(){
 		try{
 			var sideDivHref = $(this).attr("href");
 			var sideDiv = sideDivHref.replace('#','');
-			$("#"+ sideDiv).addClass("on");
-			
-			var height = $(sideDivHref + "> .sideDivContent" ).height();
-			$(sideDivHref + "> .sideDivContent" ).css("top","50%").css("margin-top", - height * 0.5 );
+			if(sideDiv){
+				$("#"+ sideDiv).addClass("on");
+				var height = $(sideDivHref + "> .sideDivContent" ).height();
+				$(sideDivHref + "> .sideDivContent" ).css("top","50%").css("margin-top", - height * 0.5 );
+			}
 			return false;
 		}catch(e){
 			console.log("a < sideDiv click event error");
