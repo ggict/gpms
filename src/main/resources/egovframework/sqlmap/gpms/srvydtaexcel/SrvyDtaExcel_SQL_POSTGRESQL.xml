@@ -587,7 +587,7 @@
 		/* srvyDtaExcelDAO.selectSrvyDtaExcelListTotalCount */
 		/* 조사_자료_엑셀 목록 개수 조회  */
 		SELECT COUNT(*) AS totCnt
-		FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
+		FROM TN_SRVY_DTA tnsrvydta
 ]]>
 		<include refid="srvyDtaExcelDAO.selectSrvyDtaExcelList.where" />
 <![CDATA[
@@ -628,16 +628,16 @@
 		/* srvyDtaExcelDAO.selectSrvyDtaExcelUploadResultCount */
 		/* 조사_자료_엑셀  파일 업로드 결과 개수 조회  */
 		SELECT COUNT(*) FROM (
-			 SELECT TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD') AS CREAT_DT
-			FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
+			 SELECT TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') AS CREAT_DT
+			FROM TN_SRVY_DTA tnsrvydta
 			   , TL_SRVY_DTA_LOG tlsrvydtalog
-	      WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
-	      	AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
-	      	AND tnsrvydtaexcel.USE_AT = 'Y'
-		   	AND tnsrvydtaexcel.DELETE_AT = 'N'
+	      WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+	      	AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
+	      	AND tnsrvydta.USE_AT = 'Y'
+		   	AND tnsrvydta.DELETE_AT = 'N'
 	        AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
-		  GROUP BY TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD')
-		)as sub_SrvyDtaExcel
+		  GROUP BY TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD')
+		)as sub_SrvyDta
 ]]>
 	</select>
 
@@ -653,16 +653,16 @@
 			       , tnsrvydtaexcel.CREAT_DT
 			       , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydtaexcel.CRTR_NO) USER_NM
 			       , tlsrvydtalog.LOG_MSSAGE
-			   FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel, TL_SRVY_DTA_LOG tlsrvydtalog
-			  WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
-			  	AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
-			 	AND tnsrvydtaexcel.USE_AT = 'Y'
-		   	 	AND tnsrvydtaexcel.DELETE_AT = 'N'
-			 	AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
+			   FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
+			  WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+			  	AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
+			 	AND tnsrvydta.USE_AT = 'Y'
+		   	 	AND tnsrvydta.DELETE_AT = 'N'
+			 	AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 			 	AND tlsrvydtalog.PROCESS_STTUS = #PROCESS_STTUS#
-			 	AND TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD') = TO_CHAR(cast(#CREAT_DT# as date), 'YYYY-MM-DD')
-			 	AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#::int
-		) tnsrvydtaexcel  WHERE 1=1
+			 	AND TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') = TO_CHAR(cast(#CREAT_DT# as date), 'YYYY-MM-DD')
+			 	AND tnsrvydta.CRTR_NO = #CRTR_NO#::int
+		) tnsrvydta WHERE 1=1
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 <![CDATA[
@@ -677,16 +677,16 @@
 		/* srvyDtaExcelDAO.selectSrvyDtaExcelUploadFileCount */
 		/* 조사_자료_엑셀  파일 업로드 결과 상세 조회 개수  */
 		SELECT COUNT(*) totCnt
-	      FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
+	      FROM TN_SRVY_DTA tnsrvydta
 	      	 , TL_SRVY_DTA_LOG tlsrvydtalog
-	     WHERE tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
-	       AND tnsrvydtaexcel.CRTR_NO = tlsrvydtalog.CRTR_NO
-	       AND tnsrvydtaexcel.USE_AT = 'Y'
-		   AND tnsrvydtaexcel.DELETE_AT = 'N'
-		   AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
+	     WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+	       AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
+	       AND tnsrvydta.USE_AT = 'Y'
+		   AND tnsrvydta.DELETE_AT = 'N'
+		   AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 	 	   AND tlsrvydtalog.PROCESS_STTUS = #PROCESS_STTUS#
-	 	   AND TO_CHAR(tnsrvydtaexcel.CREAT_DT, 'YYYY-MM-DD') = TO_CHAR(cast(#CREAT_DT# as date), 'YYYY-MM-DD')
-	 	   AND tnsrvydtaexcel.CRTR_NO = #CRTR_NO#::int
+	 	   AND TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') = TO_CHAR(cast(#CREAT_DT# as date), 'YYYY-MM-DD')
+	 	   AND tnsrvydta.CRTR_NO = #CRTR_NO#::int
 ]]>
 	</select>
 
@@ -880,38 +880,38 @@
 			SELECT * FROM (
 				SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 					SELECT DISTINCT
-					tnsrvydtaexcel.SRVY_NO /* 조사_자료_엑셀.조사_번호 */
-					, tnsrvydtaexcel.FILE_NO /* 조사_자료_엑셀.파일_번호 */
-					, tnsrvydtaexcel.DATA_CO /* 조사_자료_엑셀.데이터_건수 */
-					, tnsrvydtaexcel.ROUTE_CODE /* 조사_자료_엑셀.노선_코드 */
-					, tnsrvydtaexcel.DIRECT_CODE /* 조사_자료_엑셀.행선_코드 */
-					, tnsrvydtaexcel.TRACK /* 조사_자료_엑셀.차로 */
-					, tnsrvydtaexcel.STRTPT /* 조사_자료_엑셀.시점 */
-					, tnsrvydtaexcel.ENDPT /* 조사_자료_엑셀.종점 */
-					, tnsrvydtaexcel.SRVY_DE /* 조사_자료_엑셀.조사_일자 */
-					, tnsrvydtaexcel.SRVY_NM /* 조사_자료_엑셀.조사_명 */
-					, tnsrvydtaexcel.EXMNR_NM /* 조사_자료_엑셀.조사자_명 */
-				  /*, tnsrvydtaexcel.EVL_PROCESS_AT 조사_자료_엑셀.평가_처리_여부 */
-					, tnsrvydtaexcel.GPS_CORTN_PROCESS_AT /* 조사_자료_엑셀.GPS_보정_처리_여부 */
-					, tnsrvydtaexcel.SM_PROCESS_AT /* 조사_자료_엑셀.집계_처리_여부 */
-					, tnsrvydtaexcel.VAL_EVL_AT /* 조사_자료_엑셀.유효성_평가_여부 */
-					, tnsrvydtaexcel.DELETE_AT /* 조사_자료_엑셀.삭제_여부 */
-					, tnsrvydtaexcel.USE_AT /* 조사_자료_엑셀.사용_여부 */
-					, tnsrvydtaexcel.CRTR_NO /* 조사_자료_엑셀.생성자_번호 */
-					, tnsrvydtaexcel.CREAT_DT /* 조사_자료_엑셀.생성_일시 */
-					, tnsrvydtaexcel.UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
-					, tnsrvydtaexcel.UPDT_DT /* 조사_자료_엑셀.수정_일시 */
-					, (SELECT tnattachfile.ORGINL_FILE_NM FROM TN_ATTACH_FILE  tnattachfile WHERE tnattachfile.FILE_NO = tnsrvydtaexcel.FILE_NO) AS FILE_NM/*공통첨부파일.파일명*/
+					tnsrvydta.SRVY_NO /* 조사_자료_엑셀.조사_번호 */
+					, tnsrvydta.FILE_NO /* 조사_자료_엑셀.파일_번호 */
+					, tnsrvydta.DATA_CO /* 조사_자료_엑셀.데이터_건수 */
+					, tnsrvydta.ROUTE_CODE /* 조사_자료_엑셀.노선_코드 */
+					, tnsrvydta.DIRECT_CODE /* 조사_자료_엑셀.행선_코드 */
+					, tnsrvydta.TRACK /* 조사_자료_엑셀.차로 */
+					, tnsrvydta.STRTPT /* 조사_자료_엑셀.시점 */
+					, tnsrvydta.ENDPT /* 조사_자료_엑셀.종점 */
+					, tnsrvydta.SRVY_DE /* 조사_자료_엑셀.조사_일자 */
+					, tnsrvydta.SRVY_NM /* 조사_자료_엑셀.조사_명 */
+					, tnsrvydta.EXMNR_NM /* 조사_자료_엑셀.조사자_명 */
+				  /*, tnsrvydta.EVL_PROCESS_AT 조사_자료_엑셀.평가_처리_여부 */
+					, tnsrvydta.GPS_CORTN_PROCESS_AT /* 조사_자료_엑셀.GPS_보정_처리_여부 */
+					, tnsrvydta.SM_PROCESS_AT /* 조사_자료_엑셀.집계_처리_여부 */
+					, tnsrvydta.VAL_EVL_AT /* 조사_자료_엑셀.유효성_평가_여부 */
+					, tnsrvydta.DELETE_AT /* 조사_자료_엑셀.삭제_여부 */
+					, tnsrvydta.USE_AT /* 조사_자료_엑셀.사용_여부 */
+					, tnsrvydta.CRTR_NO /* 조사_자료_엑셀.생성자_번호 */
+					, tnsrvydta.CREAT_DT /* 조사_자료_엑셀.생성_일시 */
+					, tnsrvydta.UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
+					, tnsrvydta.UPDT_DT /* 조사_자료_엑셀.수정_일시 */
+					, (SELECT tnattachfile.ORGINL_FILE_NM FROM TN_ATTACH_FILE  tnattachfile WHERE tnattachfile.FILE_NO = tnsrvydta.FILE_NO) AS FILE_NM/*공통첨부파일.파일명*/
 		            , (SELECT CODE_NM FROM TC_CODE  tccode WHERE tccode.CODE_VAL = tlsrvydtalog.PROCESS_STTUS) AS PROCESS_STTUS
 		            , CASE
-		                WHEN  tnsrvydtaexcel.EVL_PROCESS_AT = 'Y'/*조사_자료_엑셀.평가_처리_여부*/
-		                		AND tnsrvydtaexcel.GPS_CORTN_PROCESS_AT = 'Y'/* 조사_자료_엑셀.GPS_보정_처리_여부 */
-		                      	AND tnsrvydtaexcel.SM_PROCESS_AT = 'Y'/* 조사_자료_엑셀.집계_처리_여부 */
+		                WHEN  tnsrvydta.EVL_PROCESS_AT = 'Y'/*조사_자료_엑셀.평가_처리_여부*/
+		                		AND tnsrvydta.GPS_CORTN_PROCESS_AT = 'Y'/* 조사_자료_엑셀.GPS_보정_처리_여부 */
+		                      	AND tnsrvydta.SM_PROCESS_AT = 'Y'/* 조사_자료_엑셀.집계_처리_여부 */
 			              THEN 'Y'
 			            ELSE 'N'
 		             	END EVL_PROCESS_AT
-				FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel LEFT OUTER JOIN  TL_SRVY_DTA_LOG tlsrvydtalog ON tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
-			WHERE tnsrvydtaexcel.USE_AT = 'Y' AND tnsrvydtaexcel.DELETE_AT = 'N'
+				FROM TN_SRVY_DTA tnsrvydta LEFT OUTER JOIN  TL_SRVY_DTA_LOG tlsrvydtalog ON tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+			WHERE tnsrvydta.USE_AT = 'Y' AND tnsrvydta.DELETE_AT = 'N'
 ]]>
 		<isNotEmpty property="orderByColumn">
 			ORDER BY $orderByColumn$ $orderByType$
@@ -937,38 +937,38 @@
 		/* 조사_자료  목록 갯수  */
 			SELECT COUNT(*) FROM (
 					SELECT DISTINCT
-					tnsrvydtaexcel.SRVY_NO /* 조사_자료_엑셀.조사_번호 */
-					, tnsrvydtaexcel.FILE_NO /* 조사_자료_엑셀.파일_번호 */
-					, tnsrvydtaexcel.DATA_CO /* 조사_자료_엑셀.데이터_건수 */
-					, tnsrvydtaexcel.ROUTE_CODE /* 조사_자료_엑셀.노선_코드 */
-					, tnsrvydtaexcel.DIRECT_CODE /* 조사_자료_엑셀.행선_코드 */
-					, tnsrvydtaexcel.TRACK /* 조사_자료_엑셀.차로 */
-					, tnsrvydtaexcel.STRTPT /* 조사_자료_엑셀.시점 */
-					, tnsrvydtaexcel.ENDPT /* 조사_자료_엑셀.종점 */
-					, tnsrvydtaexcel.SRVY_DE /* 조사_자료_엑셀.조사_일자 */
-					, tnsrvydtaexcel.SRVY_NM /* 조사_자료_엑셀.조사_명 */
-					, tnsrvydtaexcel.EXMNR_NM /* 조사_자료_엑셀.조사자_명 */
-				  /*, tnsrvydtaexcel.EVL_PROCESS_AT 조사_자료_엑셀.평가_처리_여부 */
-					, tnsrvydtaexcel.GPS_CORTN_PROCESS_AT /* 조사_자료_엑셀.GPS_보정_처리_여부 */
-					, tnsrvydtaexcel.SM_PROCESS_AT /* 조사_자료_엑셀.집계_처리_여부 */
-					, tnsrvydtaexcel.VAL_EVL_AT /* 조사_자료_엑셀.유효성_평가_여부 */
-					, tnsrvydtaexcel.DELETE_AT /* 조사_자료_엑셀.삭제_여부 */
-					, tnsrvydtaexcel.USE_AT /* 조사_자료_엑셀.사용_여부 */
-					, tnsrvydtaexcel.CRTR_NO /* 조사_자료_엑셀.생성자_번호 */
-					, tnsrvydtaexcel.CREAT_DT /* 조사_자료_엑셀.생성_일시 */
-					, tnsrvydtaexcel.UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
-					, tnsrvydtaexcel.UPDT_DT /* 조사_자료_엑셀.수정_일시 */
-					, (SELECT tnattachfile.ORGINL_FILE_NM FROM TN_ATTACH_FILE  tnattachfile WHERE tnattachfile.FILE_NO = tnsrvydtaexcel.FILE_NO) AS FILE_NM/*공통첨부파일.파일명*/
+					tnsrvydta.SRVY_NO /* 조사_자료_엑셀.조사_번호 */
+					, tnsrvydta.FILE_NO /* 조사_자료_엑셀.파일_번호 */
+					, tnsrvydta.DATA_CO /* 조사_자료_엑셀.데이터_건수 */
+					, tnsrvydta.ROUTE_CODE /* 조사_자료_엑셀.노선_코드 */
+					, tnsrvydta.DIRECT_CODE /* 조사_자료_엑셀.행선_코드 */
+					, tnsrvydta.TRACK /* 조사_자료_엑셀.차로 */
+					, tnsrvydta.STRTPT /* 조사_자료_엑셀.시점 */
+					, tnsrvydta.ENDPT /* 조사_자료_엑셀.종점 */
+					, tnsrvydta.SRVY_DE /* 조사_자료_엑셀.조사_일자 */
+					, tnsrvydta.SRVY_NM /* 조사_자료_엑셀.조사_명 */
+					, tnsrvydta.EXMNR_NM /* 조사_자료_엑셀.조사자_명 */
+				  /*, tnsrvydta.EVL_PROCESS_AT 조사_자료_엑셀.평가_처리_여부 */
+					, tnsrvydta.GPS_CORTN_PROCESS_AT /* 조사_자료_엑셀.GPS_보정_처리_여부 */
+					, tnsrvydta.SM_PROCESS_AT /* 조사_자료_엑셀.집계_처리_여부 */
+					, tnsrvydta.VAL_EVL_AT /* 조사_자료_엑셀.유효성_평가_여부 */
+					, tnsrvydta.DELETE_AT /* 조사_자료_엑셀.삭제_여부 */
+					, tnsrvydta.USE_AT /* 조사_자료_엑셀.사용_여부 */
+					, tnsrvydta.CRTR_NO /* 조사_자료_엑셀.생성자_번호 */
+					, tnsrvydta.CREAT_DT /* 조사_자료_엑셀.생성_일시 */
+					, tnsrvydta.UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
+					, tnsrvydta.UPDT_DT /* 조사_자료_엑셀.수정_일시 */
+					, (SELECT tnattachfile.ORGINL_FILE_NM FROM TN_ATTACH_FILE  tnattachfile WHERE tnattachfile.FILE_NO = tnsrvydta.FILE_NO) AS FILE_NM/*공통첨부파일.파일명*/
 		            , (SELECT CODE_NM FROM TC_CODE  tccode WHERE tccode.CODE_VAL = tlsrvydtalog.PROCESS_STTUS) AS PROCESS_STTUS
 		            , CASE
-		                WHEN  tnsrvydtaexcel.EVL_PROCESS_AT = 'Y'/*조사_자료_엑셀.평가_처리_여부*/
-		                		AND tnsrvydtaexcel.GPS_CORTN_PROCESS_AT = 'Y'/* 조사_자료_엑셀.GPS_보정_처리_여부 */
-		                      	AND tnsrvydtaexcel.SM_PROCESS_AT = 'Y'/* 조사_자료_엑셀.집계_처리_여부 */
+		                WHEN  tnsrvydta.EVL_PROCESS_AT = 'Y'/*조사_자료_엑셀.평가_처리_여부*/
+		                		AND tnsrvydta.GPS_CORTN_PROCESS_AT = 'Y'/* 조사_자료_엑셀.GPS_보정_처리_여부 */
+		                      	AND tnsrvydta.SM_PROCESS_AT = 'Y'/* 조사_자료_엑셀.집계_처리_여부 */
 			              THEN 'Y'
 			            ELSE 'N'
 		             	END EVL_PROCESS_AT
-			FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel LEFT OUTER JOIN  TL_SRVY_DTA_LOG tlsrvydtalog ON tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
-		WHERE tnsrvydtaexcel.USE_AT = 'Y' AND tnsrvydtaexcel.DELETE_AT = 'N'
+			FROM TN_SRVY_DTA tnsrvydta LEFT OUTER JOIN  TL_SRVY_DTA_LOG tlsrvydtalog ON tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+		WHERE tnsrvydta.USE_AT = 'Y' AND tnsrvydta.DELETE_AT = 'N'
 		  	 ) tb
 		 WHERE PROCESS_STTUS ='완료'
 ]]>
@@ -986,12 +986,12 @@
 			SELECT SRVY_DE FROM (
 				SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
 					SELECT DISTINCT
-					   to_char(tnsrvydtaexcel.SRVY_DE::timestamp,'YYYY-MM-DD') AS SRVY_DE /* 조사_자료_엑셀.조사_일시 */
+					   to_char(tnsrvydta.SRVY_DE::timestamp,'YYYY-MM-DD') AS SRVY_DE /* 조사_자료_엑셀.조사_일시 */
 		            , (SELECT CODE_NM FROM TC_CODE  tccode WHERE tccode.CODE_VAL = tlsrvydtalog.PROCESS_STTUS) AS PROCESS_STTUS
 		            , SRVY_NM
-		            , tnsrvydtaexcel.ROUTE_CODE
-				FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel LEFT OUTER JOIN  TL_SRVY_DTA_LOG tlsrvydtalog ON tnsrvydtaexcel.SRVY_NO = tlsrvydtalog.SRVY_NO
-			WHERE tnsrvydtaexcel.USE_AT = 'Y' AND tnsrvydtaexcel.DELETE_AT = 'N'
+		            , tnsrvydta.ROUTE_CODE
+				FROM TN_SRVY_DTA tnsrvydta LEFT OUTER JOIN  TL_SRVY_DTA_LOG tlsrvydtalog ON tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
+			WHERE tnsrvydta.USE_AT = 'Y' AND tnsrvydta.DELETE_AT = 'N'
 		]]>
 		) tb
 		WHERE PROCESS_STTUS ='완료'
@@ -1008,12 +1008,12 @@
 		/* srvyDtaExcelDAO.selectSrvyDtaPredctList */
 		/* 조사_자료_예측 대상 조회 */
 		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN, tb.* FROM (
-			SELECT tnsrvydtaexcel.SRVY_NO
+			SELECT tnsrvydta.SRVY_NO
 			     , tnattachfile.ORGINL_FILE_NM FILE_NM
-			     , concat(SUBSTR(tnsrvydtaexcel.SRVY_DE, 1, 4), '년 ', SUBSTR(tnsrvydtaexcel.SRVY_DE, 5, 2), '월') SRVY_DE
+			     , concat(SUBSTR(tnsrvydta.SRVY_DE, 1, 4), '년 ', SUBSTR(tnsrvydta.SRVY_DE, 5, 2), '월') SRVY_DE
 			     , TO_CHAR(NOW(), 'YYYY') || '년 ' || TO_CHAR(NOW(), 'MM') || '월' CALC_DE
 			     , to_char(now()::timestamp + '12 month', 'YYYY') || '~' || to_char(now()::timestamp + '120 month', 'YYYY') PREDCT_DE
-			     , tnsrvydtaexcel.DATA_CO
+			     , tnsrvydta.DATA_CO
 			     , COALESCE((
 			           SELECT CASE 
                                	WHEN tlsrvydtalog.PROCESS_STTUS = 'PCST0002' THEN '성공'
@@ -1025,21 +1025,21 @@
 			              WHERE PROCESS_SE = 'PCSE0008'
 			          ) tlsrvydtalog
 			          WHERE tlsrvydtalog.RN = 1
-			          AND tlsrvydtalog.SRVY_NO = tnsrvydtaexcel.SRVY_NO
+			          AND tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO
 			          ), '미평가') PRDTMDL_PROCESS
-			  FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
+			  FROM TN_SRVY_DTA tnsrvydta
 			  LEFT OUTER JOIN TN_ATTACH_FILE tnattachfile
-			    ON tnattachfile.FILE_NO = tnsrvydtaexcel.FILE_NO
+			    ON tnattachfile.FILE_NO = tnsrvydta.FILE_NO
 			   AND tnattachfile.USE_AT = 'Y'
 			   AND tnattachfile.DELETE_AT = 'N'
-			 WHERE tnsrvydtaexcel.USE_AT = 'Y'
-			   AND tnsrvydtaexcel.DELETE_AT = 'N'
-			   AND tnsrvydtaexcel.PRDTMDL_PROCESS_AT = 'N'
-			   AND tnsrvydtaexcel.VAL_EVL_AT = 'Y'
-			   AND tnsrvydtaexcel.EVL_PROCESS_AT = 'Y'
-			   AND tnsrvydtaexcel.GPS_CORTN_PROCESS_AT = 'Y'
-			   AND tnsrvydtaexcel.SM_PROCESS_AT = 'Y'
-		) tb) tnsrvydtaexcel  WHERE 1=1
+			 WHERE tnsrvydta.USE_AT = 'Y'
+			   AND tnsrvydta.DELETE_AT = 'N'
+			   AND tnsrvydta.PRDTMDL_PROCESS_AT = 'N'
+			   AND tnsrvydta.VAL_EVL_AT = 'Y'
+			   AND tnsrvydta.EVL_PROCESS_AT = 'Y'
+			   AND tnsrvydta.GPS_CORTN_PROCESS_AT = 'Y'
+			   AND tnsrvydta.SM_PROCESS_AT = 'Y'
+		) tb) tnsrvydta  WHERE 1=1
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
 <![CDATA[
@@ -1054,14 +1054,14 @@
 		/* srvyDtaExcelDAO.selectSrvyDtaPredctListTotalCount */
 		/* 조사_자료_예측 대상 조회 목록 갯수  */
 		SELECT COUNT(*) totCnt
-		  FROM TN_SRVY_DTA_EXCEL tnsrvydtaexcel
-		 WHERE tnsrvydtaexcel.USE_AT = 'Y'
-		   AND tnsrvydtaexcel.DELETE_AT = 'N'
-		   AND tnsrvydtaexcel.PRDTMDL_PROCESS_AT = 'N'
-		   AND tnsrvydtaexcel.VAL_EVL_AT = 'Y'
-		   AND tnsrvydtaexcel.EVL_PROCESS_AT = 'Y'
-		   AND tnsrvydtaexcel.GPS_CORTN_PROCESS_AT = 'Y'
-		   AND tnsrvydtaexcel.SM_PROCESS_AT = 'Y'
+		  FROM TN_SRVY_DTA tnsrvydta
+		 WHERE tnsrvydta.USE_AT = 'Y'
+		   AND tnsrvydta.DELETE_AT = 'N'
+		   AND tnsrvydta.PRDTMDL_PROCESS_AT = 'N'
+		   AND tnsrvydta.VAL_EVL_AT = 'Y'
+		   AND tnsrvydta.EVL_PROCESS_AT = 'Y'
+		   AND tnsrvydta.GPS_CORTN_PROCESS_AT = 'Y'
+		   AND tnsrvydta.SM_PROCESS_AT = 'Y'
 ]]>
 	</select>
 
@@ -1263,25 +1263,28 @@ FROM   (SELECT Row_number()
                 WHERE  1 = 1 
                        AND tnsmdtagnlsttus.use_at = 'Y' 
                        AND tnsmdtagnlsttus.delete_at = 'N'
+            ]]>
+        <isNotEmpty property="CELL_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND sect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
+		<isNotEmpty property="SRVY_YEAR"><![CDATA[ AND tnsmdtagnlsttus.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
+		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtagnlsttus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
+		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtagnlsttus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
+		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtagnlsttus.TRACK = #TRACK# ]]></isNotEmpty>
+		<isNotEmpty property="MRG_RD_NM"><![CDATA[ AND sect.mng_rd_cd = #MRG_RD_NM# ]]></isNotEmpty>
+		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
+		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND tnsmdtagnlsttus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
+		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI# ]]></isNotEmpty>
+		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI# ]]></isNotEmpty>
+		<![CDATA[         
 			) tb
 			ORDER BY $orderByColumn$ $orderByType$
 		) tnsmdtagnlsttus
 		WHERE 1=1
     ]]>
-		<isNotEmpty property="CELL_ID"><![CDATA[ AND OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
-		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
-		<isNotEmpty property="SRVY_YEAR"><![CDATA[ AND SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
-		<isNotEmpty property="ROAD_NO"><![CDATA[ AND ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
-		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
-		<isNotEmpty property="TRACK"><![CDATA[ AND TRACK = #TRACK# ]]></isNotEmpty>
-		<isNotEmpty property="STRTPT"><![CDATA[ AND STRTPT >= #STRTPT#::int ]]></isNotEmpty>
-		<isNotEmpty property="ENDPT"><![CDATA[ AND ENDPT <= #ENDPT#::int ]]></isNotEmpty>
-		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
-		<isNotEmpty property="CNTRWK_AT"><![CDATA[ AND CNTRWK_AT = #CNTRWK_AT# ]]></isNotEmpty>
+    	<isNotEmpty property="CNTRWK_AT"><![CDATA[ AND CNTRWK_AT = #CNTRWK_AT# ]]></isNotEmpty>
 		<isNotEmpty property="UNOPN_AT"><![CDATA[ AND UNOPN_AT = #UNOPN_AT# ]]></isNotEmpty>
-		<isNotEmpty property="MINGPCI"><![CDATA[ AND GPCI >= #MINGPCI# ]]></isNotEmpty>
-		<isNotEmpty property="MAXGPCI"><![CDATA[ AND GPCI <= #MAXGPCI# ]]></isNotEmpty>
 		<isEqual prepend=" " property="usePage" compareValue="true">
     <![CDATA[
         AND tnsmdtagnlsttus.rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
@@ -1296,83 +1299,131 @@ FROM   (SELECT Row_number()
         /* srvyDtaExcelDAO.srvyDtaEvlInfoDetailListCnt */
         /* JOY_포장상태 평가정보.상세정보 목록 조회 */
         SELECT count(*)
-        FROM (
-            SELECT ROW_NUMBER() OVER() AS rn, tb.*
-            FROM (
-                SELECT
-                    tnsmdtagnlsttus.SRVY_NO /* 최소_구간_조사_자료.조사번호 */
-                    , sect.OBJECT_ID
-                    , concat(tnsmdtagnlsttus.SRVY_YEAR , '.' , tnsmdtagnlsttus.SRVY_MT) AS SRVY_DE /* 최소_구간_조사_자료.조사월 */
-                    , tnsmdtagnlsttus.SRVY_YEAR
-                    , ( SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
-                        WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */
-                    , ( SELECT code.CODE_NM FROM TC_CODE code
-                        WHERE code.CODE_VAL = sect.ROAD_GRAD ) AS ROAD_GRAD /* 셀.도로등급 */
-                    , sect.ADM_CODE /* 셀.행정구역코드 */
-                    , tnsmdtagnlsttus.ROUTE_CODE AS ROAD_NO /* 최소_구간_조사_자료.노선번호 */
-                    , tnsmdtagnlsttus.ROUTE_CODE::int AS ROAD_NO_VAL
-                    , tnrouteinfo.ROAD_NAME AS ROAD_NM
-                    , CASE tnsmdtagnlsttus.DIRECT_CODE
-                        WHEN 'S' THEN '상행'
-                        WHEN 'E' THEN '하행'
-                        WHEN 'SE' THEN '상하행'
-                        ELSE ''
-                    END AS DIRECT_CODE /* 최소_구간_조사_자료.행선 */
-                    , tnsmdtagnlsttus.TRACK /* 최소_구간_조사_자료.차로 */
-                    , tnsmdtagnlsttus.STRTPT /* 최소_구간_조사_자료.시점 */
-                    , tnsmdtagnlsttus.ENDPT /* 최소_구간_조사_자료.종점 */
-                    , ROUND(tnsmdtagnlsttus.GPCI, 2) AS GPCI /* 최소_구간_조사_자료.GPCI */
-
-                    , tnsmdtagnlsttus.CNTL_DFECT
-                    , ( SELECT tccode.CODE_NM FROM TC_CODE tccode
-                        WHERE tccode.CODE_VAL = tnsmdtagnlsttus.CNTL_DFECT ) AS CODE_NM
-                    , tnsmdtagnlsttus.AC_IDX /* 주 파손.거북등균열 */
-                    , tnsmdtagnlsttus.LC_IDX /* 주 파손.선형균열 */
-                    , tnsmdtagnlsttus.BC_IDX /* 주 파손.블럭균열 */
-                    , tnsmdtagnlsttus.PTCHG_IDX /* 주 파손.패칭 */
-                    , tnsmdtagnlsttus.POTHOLE_IDX /* 주 파손.포트홀 */
-                    , tnsmdtagnlsttus.RD_IDX /* 주 파손.소성변형 */
-                    , tnsmdtagnlsttus.RCI /* 주 파손.종단평탄성 */
-
-                    , tnsmdtagnlsttus.DMG_CUZ_CLMT /* 주 파손.파손원인_기후 */
-                    , tnsmdtagnlsttus.DMG_CUZ_VMTC /* 주 파손.파손원인_교통량 */
-                    , tnsmdtagnlsttus.DMG_CUZ_ETC /* 주 파손.파손원인_기타 */
-                FROM
-                    TN_SM_DTA_GNL_STTUS tnsmdtagnlsttus
-                    INNER JOIN CELL_SECT sect
-                            ON sect.ROUTE_CODE = tnsmdtagnlsttus.ROUTE_CODE
-                           AND sect.DIRECT_CODE = tnsmdtagnlsttus.DIRECT_CODE
-                           AND sect.TRACK = tnsmdtagnlsttus.TRACK
-                           AND sect.STRTPT = tnsmdtagnlsttus.STRTPT
-                           AND sect.ENDPT = tnsmdtagnlsttus.ENDPT
-                    LEFT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
-                                 ON tnrouteinfo.ROAD_NO = tnsmdtagnlsttus.ROUTE_CODE
-                WHERE 1=1
-                    AND tnsmdtagnlsttus.USE_AT = 'Y'
-                    AND tnsmdtagnlsttus.DELETE_AT = 'N'
-                   /* AND tnsmdtagnlsttus.LAST_DTA_AT = 'Y' */
-    ]]>
-
-		<isNotEmpty property="CELL_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
+        FROM   (SELECT Row_number() 
+                 over() AS rn, 
+               tb.* 
+        FROM   (SELECT tnsmdtagnlsttus.srvy_no 
+                       /* 최소_구간_조사_자료.조사번호 */, 
+                       sect.object_id, 
+                       sect.cell_id, 
+                       tnsmdtagnlsttus.sm_no, 
+                       Concat(tnsmdtagnlsttus.srvy_year, '.', 
+                       tnsmdtagnlsttus.srvy_mt) 
+                       AS 
+                               SRVY_DE 
+                       /* 최소_구간_조사_자료.조사월 */, 
+                       tnsmdtagnlsttus.srvy_year, 
+                       (SELECT tcdept.lowest_dept_nm 
+                        FROM   tc_dept tcdept 
+                        WHERE  tcdept.dept_code = sect.dept_code :: text) 
+                       AS 
+                               DEPT_CODE /* 셀.부서코드 */, 
+                       (SELECT code.code_nm 
+                        FROM   tc_code code 
+                        WHERE  code.code_val = sect.road_grad) 
+                       AS 
+                               ROAD_GRAD /* 셀.도로등급 */, 
+                       sect.adm_code /* 셀.행정구역코드 */, 
+                       tnsmdtagnlsttus.route_code 
+                       AS 
+                               ROAD_NO 
+                       /* 최소_구간_조사_자료.노선번호 */, 
+                       tnsmdtagnlsttus.route_code :: INT 
+                       AS 
+                               ROAD_NO_VAL, 
+                       tnrouteinfo.road_name 
+                       AS 
+                               ROAD_NM, 
+                       CASE tnsmdtagnlsttus.direct_code 
+                         WHEN 'S' THEN '상행' 
+                         WHEN 'E' THEN '하행' 
+                         WHEN 'SE' THEN '상하행' 
+                         ELSE '' 
+                       END 
+                       AS 
+                               DIRECT_CODE 
+                       /* 최소_구간_조사_자료.행선 */, 
+                       tnsmdtagnlsttus.track 
+                       /* 최소_구간_조사_자료.차로 */, 
+						(select code_nm from tc_code code
+						WHERE code.code_val = sect.mng_rd_cd 
+                            AND code.cl_code = 'MNRD' 
+                            AND code.use_at = 'Y' 
+                            AND code.delete_at = 'N' ) MRG_RD_NM,
+                            (SELECT case when count(cntrwk_at) = 0 OR NULL then 'X' else 'O' end
+ 						 FROM cell_10 cell10
+						 WHERE cell10.route_code = sect.route_code
+						 	AND cell10.direct_code = sect.direct_code
+						    AND cell10.track = sect.track
+							AND cell10.strtpt = sect.strtpt) CNTRWK_AT,
+				 		(SELECT case when count(unopn_at) = 0 OR NULL then 'X' else 'O' end
+ 						 FROM cell_10 cell10
+						 WHERE cell10.route_code = sect.route_code
+						 	AND cell10.direct_code = sect.direct_code
+						    AND cell10.track = sect.track
+							AND cell10.strtpt = sect.strtpt) UNOPN_AT,
+                       tnsmdtagnlsttus.strtpt 
+                       /* 최소_구간_조사_자료.시점 */, 
+                       tnsmdtagnlsttus.endpt 
+                       /* 최소_구간_조사_자료.종점 */, 
+                       tnsmdtagnlsttus.trnsport_qy /* 교통량 */,
+                       Round(tnsmdtagnlsttus.gpci, 2) 
+                       AS GPCI 
+                               /* 최소_구간_조사_자료.GPCI */, 
+                       tnsmdtagnlsttus.cntl_dfect, 
+                       (SELECT tccode.code_nm 
+                        FROM   tc_code tccode 
+                        WHERE  tccode.code_val = tnsmdtagnlsttus.cntl_dfect) 
+                       AS 
+                               CODE_NM, 
+                       tnsmdtagnlsttus.ac_idx /* 주 파손.거북등균열 */, 
+                       tnsmdtagnlsttus.lc_idx /* 주 파손.선형균열 */, 
+                       tnsmdtagnlsttus.bc_idx /* 주 파손.블럭균열 */, 
+                       tnsmdtagnlsttus.ptchg_idx /* 주 파손.패칭 */, 
+                       tnsmdtagnlsttus.pothole_idx /* 주 파손.포트홀 */, 
+                       tnsmdtagnlsttus.rd_idx /* 주 파손.소성변형 */, 
+                       tnsmdtagnlsttus.rci /* 주 파손.종단평탄성 */, 
+                       tnsmdtagnlsttus.dmg_cuz_clmt 
+                       /* 주 파손.파손원인_기후 */, 
+                       tnsmdtagnlsttus.dmg_cuz_vmtc 
+                       /* 주 파손.파손원인_교통량 */, 
+                       tnsmdtagnlsttus.dmg_cuz_etc 
+               /* 주 파손.파손원인_기타 */ 
+                FROM   tn_sm_dta_gnl_sttus tnsmdtagnlsttus 
+                       inner join cell_sect sect 
+                               ON sect.route_code = tnsmdtagnlsttus.route_code 
+                                  AND sect.direct_code = 
+                                      tnsmdtagnlsttus.direct_code 
+                                  AND sect.track = tnsmdtagnlsttus.track 
+                                  AND sect.strtpt = tnsmdtagnlsttus.strtpt  
+                       left outer join tn_route_info tnrouteinfo 
+                                    ON tnrouteinfo.road_no = 
+                                       tnsmdtagnlsttus.route_code 
+                WHERE  1 = 1 
+                       AND tnsmdtagnlsttus.use_at = 'Y' 
+                       AND tnsmdtagnlsttus.delete_at = 'N'
+            ]]>
+        <isNotEmpty property="CELL_ID"><![CDATA[ AND sect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
 		<isNotEmpty property="DEPT_CODE"><![CDATA[ AND sect.DEPT_CODE = #DEPT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_GRAD"><![CDATA[ AND sect.ROAD_GRAD = #ROAD_GRAD# ]]></isNotEmpty>
 		<isNotEmpty property="SRVY_YEAR"><![CDATA[ AND tnsmdtagnlsttus.SRVY_YEAR = #SRVY_YEAR# ]]></isNotEmpty>
 		<isNotEmpty property="ROAD_NO"><![CDATA[ AND tnsmdtagnlsttus.ROUTE_CODE = #ROAD_NO# ]]></isNotEmpty>
 		<isNotEmpty property="DIRECT_CODE"><![CDATA[ AND tnsmdtagnlsttus.DIRECT_CODE = #DIRECT_CODE# ]]></isNotEmpty>
 		<isNotEmpty property="TRACK"><![CDATA[ AND tnsmdtagnlsttus.TRACK = #TRACK# ]]></isNotEmpty>
+		<isNotEmpty property="MRG_RD_NM"><![CDATA[ AND sect.mng_rd_cd = #MRG_RD_NM# ]]></isNotEmpty>
 		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND tnsmdtagnlsttus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
 		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI# ]]></isNotEmpty>
 		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI# ]]></isNotEmpty>
-
-    <![CDATA[
-                ORDER BY tnsmdtagnlsttus.STRTPT ASC
-            ) tb
-        ) tnsmdtagnlsttus
-        WHERE 1=1
+		<![CDATA[         
+			) tb
+			ORDER BY $orderByColumn$ $orderByType$
+		) tnsmdtagnlsttus
+		WHERE 1=1
     ]]>
-
+    	<isNotEmpty property="CNTRWK_AT"><![CDATA[ AND CNTRWK_AT = #CNTRWK_AT# ]]></isNotEmpty>
+		<isNotEmpty property="UNOPN_AT"><![CDATA[ AND UNOPN_AT = #UNOPN_AT# ]]></isNotEmpty>
 	</select>
 
 	<select id="srvyDtaExcelDAO.srvyDtaEvlInitFmlaVar" parameterClass="pavFrmulaVO" resultClass="pavFrmulaVO">
