@@ -14,28 +14,25 @@
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
-<input type="hidden" id="SCH_DEPT_CODE" name="SCH_DEPT_CODE" value=""/>
-<input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
-<input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
 
 	<header class="loc">
-	        <div class="container">
-	            <span class="locationHeader">
-	                <select name="">
-	                    <option value="">통계</option>
-	                </select>
-	                <select name="">
-	                    <option value="">포장상태 평가</option>
-	                </select>
-	                <select name="">
-	                    <option value="">노선별 통계</option>
-	                </select>
-	            </span>
-	        </div>
-	    </header>
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">통계</option>
+                </select>
+                <select name="">
+                    <option value="">포장상태 평가</option>
+                </select>
+                <select name="">
+                    <option value="">노선별 통계</option>
+                </select>
+            </span>
+        </div>
+    </header>
 	    
-	    <!-- container2 S -->
+	<!-- container2 S -->
 	<div class="container2">
 	
 	    <div class="table searchBox top">
@@ -43,27 +40,42 @@
 	            <tbody>
 	                <tr>
 	                    <td class="th">
-	                        <label for="road-grad-select">도로등급</label>
+	                        <label for="SRVY_YEAR">기준년도</label>
 	                    </td>
 	                    <td>
-	                        <select>
-	                            <option>전체</option>
-	                            <option>국지도</option>
-	                            <option>지방도</option>
+	                        <select id="SRVY_YEAR">
+	                            <option value="2019">2019</option>
+	                            <option value="2018">2018</option>
+	                            <option value="2017">2017</option>
 	                        </select>
 	                    </td>
 	                    <td class="th">
-	                        <label for="rout-select">노선번호</label>
+	                        <label for="SCH_ROAD_GRAD">도로등급</label>
 	                    </td>
 	                    <td>
-	                        <select id="rout-select">
-	                            <option>전체</option>
-	                            <option>23호선</option>
-	                            <option>301호선</option>
+                            <select id="SCH_ROAD_GRAD" name="SCH_ROAD_GRAD" alt="도로등급" onchange="fn_change_roadNo();">
+		                        <option value="">== 전체 ==</option>
+		                        <c:forEach items="${roadGradList }" var="roadGrad">
+		                            <option value="${roadGrad.CODE_VAL }">${roadGrad.CODE_NM }</option>
+		                        </c:forEach>
+                            </select>
+	                    </td>
+	                    <td class="th">
+	                        <label for="ROAD_NO">노선번호</label>
+	                    </td>
+	                    <td>
+	                        <select id="ROAD_NO" name="ROAD_NO" onchange="fn_change_roadNm();" alt="노선번호"  onchange="fn_change_roadNm();">
+	                            <option value="">== 전체 ==</option>
+	                            <c:forEach items="${roadNoList }" var="roadNo">
+	                                <option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
+	                            </c:forEach>
 	                        </select>
 	                    </td>
-	                    <td><input type="text" readonly disabled value="천안-파주" /></td>
-	                    <td class="btnCell"><button type="button" class="btn pri">검색</button></td>
+	                    <td class="th">
+	                       <label for="ROAD_NAME">노선명</label>
+	                    </td>
+	                    <td><input type="text" id="ROAD_NAME" name="ROAD_NAME" readonly disabled value="" /></td>
+	                    <td class="btnCell"><button type="button" id="btnSearch" class="btn pri">검색</button></td>
 	                </tr>
 	            </tbody>
 	        </table>
@@ -130,7 +142,6 @@
         </table>
     </div>
     
-    
 </form>
 
 <!-- 공통 (START)-->
@@ -138,58 +149,43 @@
 <!-- 공통 (END)-->
 
 <script type="text/javascript" defer="defer">
-
-//에러 메시지 변수
-var errNo=0;
-//경고 메시지 변수
-var ntcNo=0;
+var errNo=0;    //에러 메시지 변수
+var ntcNo=0;    //경고 메시지 변수
+var myChart1;   // gpci 차트 obj
+var myChart2;   // 파손형태 차트 obj
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
 	
 	$("#divStatChart").height($(parent.window).height() - 170);
+    fnMummRoutSearch(); //노선조회
     
-    // input, select 항목 init
-    COMMON_UTIL.cmFormObjectInit("frm");
-    
-    //창 조절시 차트 width 
-    var rw = $(window).width()/3;
-    
-    fnMummRoutSearch('','','',rw);//노선조회
+    $('#btnSearch').click(function() {
+    	fnMummRoutSearch();
+    })
 }); 
 
 //창 조절시 차트 resize
-$(window).on('resize', function(){
-        $("#divStatChart").height($(parent.window).height() - 170);
-    
-        var rw = $(window).width()/3;
-        var deptCd = $("#SCH_DEPT_CODE").val();
-        var strDt = $("#SCH_STRWRK_DE").val();
-        var endDt = $("#SCH_COMPET_DE").val();
-        
-        fnRoutSearch(deptCd,strDt,endDt,rw);
-});
+$(window).resize(function(){
+    if(this.resizeTO) {
+        clearTimeout(this.resizeTO);
+    }
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+})
+$(window).on("resizeEnd", function(){
+	$("#divStatChart").height($(parent.window).height() - 170);
+	myChart1.resize();
+	myChart2.resize();
+})
 
-//조건에 맞는 검색조회
-function fnRoutSearch(deptCd,strDt,endDt,rw){
-    //검색 조건 값 set
-    $("#SCH_DEPT_CODE").val(deptCd);
-    $("#SCH_STRWRK_DE").val(strDt);
-    $("#SCH_COMPET_DE").val(endDt);
-    
-    fnMummRoutSearch(deptCd,strDt,endDt,rw);//노선조회
-}
-
-require.config({
-	   paths: {
-	        echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
-	    }
-	});
-
-//검색 처리
-function fnMummRoutSearch(deptCd,strDt,endDt,rw) {
-    var data = {"SCH_DEPT_CODE" : deptCd, "SCH_STRWRK_DE" : strDt, "SCH_COMPET_DE" : endDt};
-    
+function fnMummRoutSearch() {
+	var SRVY_YEAR = $('#SRVY_YEAR option:selected').val();
+	var ROAD_GRAD = $('#SCH_ROAD_GRAD option:selected').val();
+	var ROUTE_CODE = $('#ROAD_NO option:selected').val();
+	var data = { "SRVY_YEAR": SRVY_YEAR, "ROAD_GRAD" : ROAD_GRAD, "ROUTE_CODE" : ROUTE_CODE };
+	
     $.ajax({
          url: '<c:url value="/"/>'+'api/mumm/mummRoutCntStatsGPCI.do'
         ,type: 'post'
@@ -200,65 +196,70 @@ function fnMummRoutSearch(deptCd,strDt,endDt,rw) {
         ,success: function (data) {
             var dataList = data.rows;
             if(dataList.length !=0){
-            	drawRoutGpciChart(dataList,rw);
-            	drawRoutDfctChart(dataList,rw);
-                
-                drawTable(dataList);
+            	drawRoutGpciChart(dataList);    // GPCI
+            	drawRoutDfctChart(dataList);    // 파손형태
+                drawTable(dataList);    // echarts 테이블
             }else{
                 ntcNo += 1;
+                COMMON_UTIL.fn_msgNtc(ntcNo);
             }
         },
         error: function () {
             errNo += 1;
+            COMMON_UTIL.fn_msgErr(errNo);
         }
     });
 }
 
-function drawRoutGpciChart(dataList,rw){
+//차트
+require.config({
+       paths: {
+            echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
+        }
+    });
+function drawRoutGpciChart(dataList){
     var gRouteNm    = dataList.map(function(elem){ return Number(elem.route_code)+"호선"; });       
     var gpciData    = dataList.map(function(elem){ return elem.gpci; });
     var degree      = (dataList.length < 10) ? 0 : -90;
     
-    require([   'echarts','echarts/chart/bar'   ],
-            function (ec) {
-                 var myChart = ec.init(document.getElementById('mummRoutGpciChart'));
-                 myChart.setOption({
-                        title   : { text: 'GPCI'   },
-                        tooltip : { trigger: 'axis'             },
-                        toolbox : { show: true,
-                            feature: {
-                                dataView : {show: true, readOnly: false},   // 상세조회
-                                saveAsExcel : {show: true},                 // 엑셀저장
-                                saveAsImage: {show: true}                   // 이미지저장
-                            }   
+    require([   'echarts','echarts/chart/bar'   ], function (ec) {
+    	myChart1 = ec.init(document.getElementById('mummRoutGpciChart'));
+        myChart1.setOption({
+            title   : { text: 'GPCI'   },
+            tooltip : { trigger: 'axis'             },
+            toolbox : { show: true,
+                feature: {
+                    dataView : {show: true, readOnly: false},   // 상세조회
+                    saveAsExcel : {show: true},                 // 엑셀저장
+                    saveAsImage: {show: true}                   // 이미지저장
+                }   
+            },
+            grid :{
+                x : 50,
+                y2 : 80
+            },
+            xAxis : [{  
+                        type : 'category',
+                        axisLabel : {
+                            show:true,
+                            interval: 0,
+                            rotate: degree
                         },
-                        grid :{
-                            x : 50,
-                            y2 : 80
-                        },
-                        xAxis : [{  
-                                    type : 'category',
-                                    axisLabel : {
-                                        show:true,
-                                        interval: 0,
-                                        rotate: degree
-                                    },
-                                    data : gRouteNm
-                                }],
-                        yAxis : [{  name : '',     type : 'value'      }],
-                        series : [
-                            {
-                                name: '',
-                                type: 'bar',
-                                data: gpciData
-                            }
-                        ]
-                    });
-                 
-            });
+                        data : gRouteNm
+                    }],
+            yAxis : [{  name : '',     type : 'value'      }],
+            series : [
+                {
+                    name: '',
+                    type: 'bar',
+                    data: gpciData
+                }
+            ]
+        });
+    });
 }
 
-function drawRoutDfctChart(dataList,rw){
+function drawRoutDfctChart(dataList){
 	var gRouteNm    = dataList.map(function(elem){ return Number(elem.route_code)+"호선"; });      
     var ac_idx_data    = dataList.map(function(elem){ return elem.ac_idx; });
     var lc_tc_idx_data    = dataList.map(function(elem){ return elem.lc_tc_idx; });
@@ -271,8 +272,8 @@ function drawRoutDfctChart(dataList,rw){
     
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
-                 var myChart = ec.init(document.getElementById('mummRoutDfctChart'));
-                 myChart.setOption({
+                 myChart2 = ec.init(document.getElementById('mummRoutDfctChart'));
+                 myChart2.setOption({
                         title   : { text: '파손형태' },
                         tooltip : { trigger: 'axis'             },
                         toolbox : { show: true,
@@ -355,8 +356,6 @@ function drawRoutDfctChart(dataList,rw){
             });
 }
 
-
-
 function drawTable(dataList){
 
     var mainData    = dataList;
@@ -376,7 +375,6 @@ function drawTable(dataList){
         tHtml   += '<td style="text-align:right">'              +   mainData[i].rd_idx                        + '</td>';
         tHtml   += '</tr>';
     }
-    
     $('#diagram tbody').empty().append(tHtml);
 }
 
@@ -387,32 +385,65 @@ function fnExcel() {
     }
 }
 
-//노선변호 String > Integer로 형변환
-function fn_castRouteCode(routeCd){
-    var routeNo = routeCd*1;
-    return routeNo;
+//도로등급 변경 시 노선번호 자동 조회
+function fn_change_roadNo(val) {
+    var roadGrad = $("#SCH_ROAD_GRAD").val();
+
+    $.ajax({
+        url: contextPath + 'api/routeinfo/selectRouteInfoListByGrad.do'
+        ,type: 'post'
+        ,dataType: 'json'
+        ,contentType : 'application/json'
+        ,data : JSON.stringify({ROAD_GRAD : roadGrad})
+        ,success: function(data){
+            var txtHtml = "<option value=''>== 전체 ==</option>";
+
+            for(var i=0; i < data.length; i++){
+                txtHtml += "<option value='" + data[i].ROAD_NO + "'>" + data[i].ROAD_NO_VAL + "</option>";
+            }
+            
+            $("#ROAD_NO").html(txtHtml);
+            $("#ROAD_NAME").val("");
+
+            if(val != undefined){
+                $("#ROAD_NO").val(val);
+                fn_change_roadNm();
+            }
+        }
+        ,error: function(a,b,msg){
+
+        }
+    });
 }
 
+//노선 번호 변경 시 노선명 자동 조회
+function fn_change_roadNm() {
+    var roadNo = $("#ROAD_NO").val();
+    var roadGrad = $("#SCH_ROAD_GRAD").val();
 
-//에러 메시지
-function fn_msgErr(){
-    if(errNo >= 1){
-        alert("오류가 발생하였습니다. 새로고침 하시기 바랍니다.");
-        return;
-    }else {
+    if(roadNo == "") {
+        $("#ROAD_NAME").val("");
+        $("#SCH_ROAD_GRAD").val("");
         return;
     }
+
+    $.ajax({
+        url: contextPath + 'api/routeinfo/selectRouteInfo.do'
+        ,type: 'post'
+        ,dataType: 'json'
+        ,contentType : 'application/json'
+        ,data : JSON.stringify({ROAD_NO : roadNo})
+        ,success: function(data){
+            $("#ROAD_NAME").val(data.ROAD_NAME);
+            
+            $("#SCH_ROAD_GRAD").val(data.ROAD_GRAD);
+        }
+        ,error: function(a,b,msg){
+
+        }
+    });
 }
 
-//경고 메시지
-function fn_msgNtc(){
-    if(ntcNo >= 1){
-        alert("해당 조건에 검색 결과가 없습니다. 검색 조건을 변경하여 조회 하시기 바랍니다.");
-        return;
-    }else {
-        return;
-    }
-}
 </script>
 
 </body>

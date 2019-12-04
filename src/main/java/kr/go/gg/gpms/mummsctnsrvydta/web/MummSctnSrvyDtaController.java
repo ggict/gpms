@@ -10,13 +10,18 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.go.gg.gpms.base.web.BaseController;
 import kr.go.gg.gpms.cmmn.service.CmmnService;
 import kr.go.gg.gpms.cntrwk.service.CntrwkService;
 import kr.go.gg.gpms.cntrwk.service.model.CntrwkVO;
 import kr.go.gg.gpms.code.service.CodeService;
 import kr.go.gg.gpms.code.service.model.CodeVO;
+import kr.go.gg.gpms.dept.service.DeptService;
+import kr.go.gg.gpms.dept.service.model.DeptVO;
 import kr.go.gg.gpms.mummsctnsrvydta.service.MummSctnSrvyDtaService;
 import kr.go.gg.gpms.mummsctnsrvydta.service.model.MummSctnSrvyDtaVO;
+import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
+import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
 import kr.go.gg.gpms.smdtagnlsttus.service.SmDtaGnlSttusService;
 import kr.go.gg.gpms.smdtagnlsttus.service.model.SmDtaGnlSttusVO;
 
@@ -51,7 +56,7 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
  */
 
 @Controller("mummSctnSrvyDtaController")
-public class MummSctnSrvyDtaController {
+public class MummSctnSrvyDtaController extends BaseController {
 
 	@Resource(name = "cmmnService")
 	private CmmnService cmmnService;
@@ -70,6 +75,12 @@ public class MummSctnSrvyDtaController {
 
 	@Resource(name = "cntrwkService")
 	private CntrwkService cntrwkService;
+	
+	@Resource(name = "routeInfoService")
+	private RouteInfoService routeInfoService;
+	
+	@Resource(name = "deptService")
+	private DeptService deptService;
 
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(MummSctnSrvyDtaController.class);
@@ -701,6 +712,7 @@ public class MummSctnSrvyDtaController {
 	}
 
 	// 통계
+	/************************************************* 통계 > 포장상태 평가 > 노선별 통계 **************************************************/
 
 	/**
 	 * 통계 > 포장상태 평가 > 노선별통계 페이지 조회
@@ -715,6 +727,25 @@ public class MummSctnSrvyDtaController {
 	@RequestMapping(value = "/mumm/mummRoutCntStats.do")
 	public String selectRoutCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
 
+		// 도로 등급
+		List<CodeVO> roadGradList = getCodeList("RDGD");
+		model.addAttribute("roadGradList", roadGradList);
+		
+		// 노선 번호
+		RouteInfoVO routeInfoVO = new RouteInfoVO();
+		routeInfoVO.setUsePage(false);
+		routeInfoVO.setSidx("ROAD_NO");
+		List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+		model.addAttribute("roadNoList", roadNoList);
+		
+		// 행정구역(시군구)
+		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());
+		model.addAttribute("admList", allAdmList);
+		
+		// 부서정보
+		model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(new DeptVO()));
+		
+		
 		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
 
 		return "/stats/mumm/mummRoutCntStats";
@@ -792,6 +823,8 @@ public class MummSctnSrvyDtaController {
 
 		return new ExcelView();
 	}
+	
+	/************************************************* 통계 > 포장상태 평가 > 관리기관별 통계 **************************************************/
 
 	/**
 	 * 통계 > 포장상태 평가 > 관리기관별통계 페이지 조회
@@ -805,6 +838,24 @@ public class MummSctnSrvyDtaController {
 	 */
 	@RequestMapping(value = "/mumm/mummDeptCntStats.do")
 	public String selectDeptCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
+		
+		// 도로 등급
+		List<CodeVO> roadGradList = getCodeList("RDGD");
+		model.addAttribute("roadGradList", roadGradList);
+		
+		// 노선 번호
+		RouteInfoVO routeInfoVO = new RouteInfoVO();
+		routeInfoVO.setUsePage(false);
+		routeInfoVO.setSidx("ROAD_NO");
+		List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+		model.addAttribute("roadNoList", roadNoList);
+		
+		// 행정구역(시군구)
+		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());
+		model.addAttribute("admList", allAdmList);
+		
+		// 부서정보
+		model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(new DeptVO()));
 
 		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
 
@@ -884,6 +935,8 @@ public class MummSctnSrvyDtaController {
 		return new ExcelView();
 	}
 	
+	/************************************************* 통계 > 포장상태 평가 > 시군구별 통계 **************************************************/
+	
 	/**
 	 * 통계 > 포장상태 평가 > 시군구별통계 페이지 조회
 	 *
@@ -895,6 +948,24 @@ public class MummSctnSrvyDtaController {
 	 */
 	@RequestMapping(value = "/mumm/mummAdmCntStats.do")
 	public String selectAdmCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
+		
+		// 도로 등급
+		List<CodeVO> roadGradList = getCodeList("RDGD");
+		model.addAttribute("roadGradList", roadGradList);
+		
+		// 노선 번호
+		RouteInfoVO routeInfoVO = new RouteInfoVO();
+		routeInfoVO.setUsePage(false);
+		routeInfoVO.setSidx("ROAD_NO");
+		List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+		model.addAttribute("roadNoList", roadNoList);
+		
+		// 행정구역(시군구)
+		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());
+		model.addAttribute("admList", allAdmList);
+		
+		// 부서정보
+		model.addAttribute("deptCdList", deptService.selectCntrwkDeptList(new DeptVO()));
 
 		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
 

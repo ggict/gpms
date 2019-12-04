@@ -14,9 +14,6 @@
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
-<input type="hidden" id="SCH_DEPT_CODE" name="SCH_DEPT_CODE" value=""/>
-<input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
-<input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
 
 <header class="loc">
@@ -34,9 +31,68 @@
 	            </span>
 	        </div>
 	    </header>
-
-
+	    
+    <div class="container2">
+    
+        <div class="table searchBox top">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="th">
+                            <label for="SRVY_YEAR">기준년도</label>
+                        </td>
+                        <td>
+                            <select id="SRVY_YEAR">
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                            </select>
+                        </td>
+<%--                         <td class="th">
+                            <label for="SCH_DEPT_CODE">관리기관</label>
+                        </td>
+                        <td>
+			                <select name="SCH_DEPT_CODE" id="SCH_DEPT_CODE" style="width: 120px;">
+			                    <option value="">== 전체 ==</option>
+			                    <c:forEach var="selectData" items="${deptCdList}">
+			                        <option value="${selectData.DEPT_CODE}">${selectData.LOWEST_DEPT_NM}</option>
+			                    </c:forEach>
+			                </select>
+                        </td> --%>
+                        <td class="th">
+                            <label for="SCH_ROAD_GRAD">도로등급</label>
+                        </td>
+                        <td>
+                            <select id="SCH_ROAD_GRAD" name="SCH_ROAD_GRAD" alt="도로등급" onchange="fn_change_roadNo();">
+                                <option value="">== 전체 ==</option>
+                                <c:forEach items="${roadGradList }" var="roadGrad">
+                                    <option value="${roadGrad.CODE_VAL }">${roadGrad.CODE_NM }</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td class="th">
+                            <label for="ROAD_NO">노선번호</label>
+                        </td>
+                        <td>
+                            <select id="ROAD_NO" name="ROAD_NO" onchange="fn_change_roadNm();" alt="노선번호"  onchange="fn_change_roadNm();">
+                                <option value="">== 전체 ==</option>
+                                <c:forEach items="${roadNoList }" var="roadNo">
+                                    <option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td class="th">
+                           <label for="ROAD_NAME">노선명</label>
+                        </td>
+                        <td><input type="text" id="ROAD_NAME" name="ROAD_NAME" readonly disabled value="" /></td>
+                        <td class="btnCell"><button type="button" id="btnSearch" class="btn pri">검색</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
         
+    <div id="sch_cnt01" class="tabcont">
         <div id="divStatChart" style="overflow-y:auto;">
             <ul class="statsbx">
                 <li style="float:none; width:97%">
@@ -53,6 +109,7 @@
                 </li>
             </ul>
         </div>
+	</div>
 
     <!-- 표 -->
      <div class="cont_ListBx" style="display: none;">
@@ -85,6 +142,7 @@
             </tbody>
         </table>
     </div>
+    
 </form>
 
 <!-- 공통 (START)-->
@@ -92,57 +150,44 @@
 <!-- 공통 (END)-->
 
 <script type="text/javascript" defer="defer">
-
-//에러 메시지 변수
-var errNo=0;
-//경고 메시지 변수
-var ntcNo=0;
+var errNo=0;    //에러 메시지 변수
+var ntcNo=0;    //경고 메시지 변수
+var myChart1;   // gpci 차트 obj
+var myChart2;   // 파손형태 차트 obj
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
     
     $("#divStatChart").height($(parent.window).height() - 170);
+    fnMummDeptSearch();//관리기관 조회
     
-    // input, select 항목 init
-    COMMON_UTIL.cmFormObjectInit("frm");
-    
-    //창 조절시 차트 width 
-    var rw = $(window).width()/3;
-    
-    fnMummDeptSearch('','','',rw);//관리기관 조회
+    $('#btnSearch').click(function() {
+        fnMummDeptSearch();
+    })
 }); 
 
 //창 조절시 차트 resize
-$(window).on('resize', function(){
-        $("#divStatChart").height($(parent.window).height() - 170);
-    
-        var rw = $(window).width()/3;
-        var deptCd = $("#SCH_DEPT_CODE").val();
-        var strDt = $("#SCH_STRWRK_DE").val();
-        var endDt = $("#SCH_COMPET_DE").val();
-        
-        fnDeptSearch(deptCd,strDt,endDt,rw);
-});
-
-//조건에 맞는 검색조회
-function fnDeptSearch(deptCd,strDt,endDt,rw){
-    //검색 조건 값 set
-    $("#SCH_DEPT_CODE").val(deptCd);
-    $("#SCH_STRWRK_DE").val(strDt);
-    $("#SCH_COMPET_DE").val(endDt);
-    
-    fnMummDeptCntSearch(deptCd,strDt,endDt,rw);//관리기관 조회
-}
-
-require.config({
-       paths: {
-            echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
-        }
-    });
+$(window).resize(function(){
+    if(this.resizeTO) {
+        clearTimeout(this.resizeTO);
+    }
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+})
+$(window).on("resizeEnd", function(){
+    $("#divStatChart").height($(parent.window).height() - 170);
+    myChart1.resize();
+    myChart2.resize();
+})
 
 //검색 처리
 function fnMummDeptSearch(deptCd,strDt,endDt,rw) {
-    var data = {"SCH_DEPT_CODE" : deptCd, "SCH_STRWRK_DE" : strDt, "SCH_COMPET_DE" : endDt};
+    var SRVY_YEAR = $('#SRVY_YEAR option:selected').val();
+    var DEPT_CODE = $('#SCH_DEPT_CODE option:selected').val();
+    var ROAD_GRAD = $('#SCH_ROAD_GRAD option:selected').val();
+    var ROUTE_CODE = $('#ROAD_NO option:selected').val();
+    var data = { "SRVY_YEAR": SRVY_YEAR, "DEPT_CODE" : DEPT_CODE, "ROAD_GRAD" : ROAD_GRAD, "ROUTE_CODE" : ROUTE_CODE };
     
     $.ajax({
          url: '<c:url value="/"/>'+'api/mumm/mummDeptCntStats.do'
@@ -154,29 +199,36 @@ function fnMummDeptSearch(deptCd,strDt,endDt,rw) {
         ,success: function (data) {
             var dataList = data.rows;
             if(dataList.length !=0){
-                drawDeptGpciChart(dataList,rw);
-                drawDeptDfctChart(dataList,rw);
-                
-                drawTable(dataList);
+                drawDeptGpciChart(dataList);     // GPCI
+                drawDeptDfctChart(dataList);     // 파손형태
+                drawTable(dataList);        // echarts 테이블
             }else{
                 ntcNo += 1;
+                COMMON_UTIL.fn_msgNtc(ntcNo);
             }
         },
         error: function () {
             errNo += 1;
+            COMMON_UTIL.fn_msgErr(errNo);
         }
     });
 }
 
-function drawDeptGpciChart(dataList,rw){
+// 차트
+require.config({
+    paths: {
+         echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
+     }
+ });
+function drawDeptGpciChart(dataList){
     var gDeptNm    = dataList.map(function(elem){ return elem.dept_nm; });       
     var gpciData    = dataList.map(function(elem){ return elem.gpci; });
     var degree      = (dataList.length < 10) ? 0 : -90;
     
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
-                 var myChart = ec.init(document.getElementById('mummDeptGpciChart'));
-                 myChart.setOption({
+                 myChart1 = ec.init(document.getElementById('mummDeptGpciChart'));
+                 myChart1.setOption({
                         title   : { text: 'GPCI'   },
                         tooltip : { trigger: 'axis'             },
                         toolbox : { show: true,
@@ -212,7 +264,7 @@ function drawDeptGpciChart(dataList,rw){
             });
 }
 
-function drawDeptDfctChart(dataList,rw){
+function drawDeptDfctChart(dataList){
     var gDeptNm    = dataList.map(function(elem){ return elem.dept_nm; });      
     var ac_idx_data    = dataList.map(function(elem){ return elem.ac_idx; });
     var lc_tc_idx_data    = dataList.map(function(elem){ return elem.lc_tc_idx; });
@@ -225,8 +277,8 @@ function drawDeptDfctChart(dataList,rw){
     
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
-                 var myChart = ec.init(document.getElementById('mummDeptDfctChart'));
-                 myChart.setOption({
+                 myChart2 = ec.init(document.getElementById('mummDeptDfctChart'));
+                 myChart2.setOption({
                         title   : { text: '파손형태' },
                         tooltip : { trigger: 'axis'             },
                         toolbox : { show: true,
@@ -309,8 +361,6 @@ function drawDeptDfctChart(dataList,rw){
             });
 }
 
-
-
 function drawTable(dataList){
 
     var mainData    = dataList;
@@ -340,24 +390,63 @@ function fnExcel() {
     }
 }
 
-//에러 메시지
-function fn_msgErr(){
-    if(errNo >= 1){
-        alert("오류가 발생하였습니다. 새로고침 하시기 바랍니다.");
-        return;
-    }else {
-        return;
-    }
+//도로등급 변경 시 노선번호 자동 조회
+function fn_change_roadNo(val) {
+    var roadGrad = $("#SCH_ROAD_GRAD").val();
+
+    $.ajax({
+        url: contextPath + 'api/routeinfo/selectRouteInfoListByGrad.do'
+        ,type: 'post'
+        ,dataType: 'json'
+        ,contentType : 'application/json'
+        ,data : JSON.stringify({ROAD_GRAD : roadGrad})
+        ,success: function(data){
+            var txtHtml = "<option value=''>== 전체 ==</option>";
+
+            for(var i=0; i < data.length; i++){
+                txtHtml += "<option value='" + data[i].ROAD_NO + "'>" + data[i].ROAD_NO_VAL + "</option>";
+            }
+            
+            $("#ROAD_NO").html(txtHtml);
+            $("#ROAD_NAME").val("");
+
+            if(val != undefined){
+                $("#ROAD_NO").val(val);
+                fn_change_roadNm();
+            }
+        }
+        ,error: function(a,b,msg){
+
+        }
+    });
 }
 
-//경고 메시지
-function fn_msgNtc(){
-    if(ntcNo >= 1){
-        alert("해당 조건에 검색 결과가 없습니다. 검색 조건을 변경하여 조회 하시기 바랍니다.");
-        return;
-    }else {
+//노선 번호 변경 시 노선명 자동 조회
+function fn_change_roadNm() {
+    var roadNo = $("#ROAD_NO").val();
+    var roadGrad = $("#SCH_ROAD_GRAD").val();
+
+    if(roadNo == "") {
+        $("#ROAD_NAME").val("");
+        $("#SCH_ROAD_GRAD").val("");
         return;
     }
+
+    $.ajax({
+        url: contextPath + 'api/routeinfo/selectRouteInfo.do'
+        ,type: 'post'
+        ,dataType: 'json'
+        ,contentType : 'application/json'
+        ,data : JSON.stringify({ROAD_NO : roadNo})
+        ,success: function(data){
+            $("#ROAD_NAME").val(data.ROAD_NAME);
+            
+            $("#SCH_ROAD_GRAD").val(data.ROAD_GRAD);
+        }
+        ,error: function(a,b,msg){
+
+        }
+    });
 }
 </script>
 
