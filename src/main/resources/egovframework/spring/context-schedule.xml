@@ -13,14 +13,14 @@
     <context:component-scan base-package="kr.go.gg.gpms.pothole.crontab" />
 
         <!-- schedule 재생성 스케줄러  - cron : ss mm hh domonth month doweek -->
-        <task:scheduled-tasks scheduler="smsScheduler">
-		    <task:scheduled ref="smsJob" method="setCronTime"
-		      cron="00 00 01 * * *"/>
-		</task:scheduled-tasks>
+<!--         <task:scheduled-tasks scheduler="smsScheduler"> -->
+<!-- 		    <task:scheduled ref="smsJob" method="setCronTime" -->
+<!-- 		      cron="00 00 01 * * *"/> -->
+<!-- 		</task:scheduled-tasks> -->
 
-        <task:scheduler id="smsScheduler" pool-size="10" />
-        <task:annotation-driven scheduler="smsScheduler" />
+<!--         <task:scheduler id="smsScheduler" pool-size="10" /> -->
+<!--         <task:annotation-driven scheduler="smsScheduler" /> -->
 
-        <bean id="smsJob" class="kr.go.gg.gpms.pothole.crontab.Scheduler" />
+<!--         <bean id="smsJob" class="kr.go.gg.gpms.pothole.crontab.Scheduler" /> -->
 
 </beans>
