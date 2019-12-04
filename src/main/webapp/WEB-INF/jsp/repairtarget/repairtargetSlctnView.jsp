@@ -173,7 +173,7 @@ width:100% !important;
 <input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
 <input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <div id="sch_cnt01" class="tabcont">
-	<h3 class="tc">(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${rpairTrgetSlctnVO.SLCTN_DT}" />) <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}">(작업중)</c:if> 보수대상 선정 과정을 진행합니다.</h3>
+	<h3 class="tc">(<fmt:formatDate pattern = "yyyy-MM-dd" value = "${rpairTrgetSlctnVO.SLCTN_DT}" />) 진행률(<c:out value="${rpairTrgetSlctnVO.PROGRS_RT}" />) 보수대상 선정 과정을 진행합니다.</h3>
 	<div>
 	    <div class="m20">
 	    	<form id="frmRpairTrgetGroup" name="frmRpairTrgetGroup" method="post" action="">

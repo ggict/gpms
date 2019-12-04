@@ -1,5 +1,6 @@
 package kr.go.gg.gpms.rpairtrgetslctn.service.impl;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,10 +8,12 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.rpairtrgetslctn.service.RpairTrgetSlctnService;
@@ -30,7 +33,7 @@ import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
  *
  *  Copyright (C)  All right reserved.
  */
-
+@EnableAsync
 @Service("rpairTrgetSlctnService")
 public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements RpairTrgetSlctnService {
 
@@ -39,8 +42,9 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 
 //    @Resource(name = "transactionManager")
 //    private DataSourceTransactionManager transactionManager;
-//    @Autowired
-//    private PlatformTransactionManager transactionManager;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
+
     @Autowired
     DataSource dataSource;
 
@@ -82,16 +86,10 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 	 * 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
 	 */
 	@Async
-//	@Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-//    @Transactional(propagation=Propagation.REQUIRES_NEW)
     public void procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
-//	    DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-//	    def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-//	    TransactionStatus status= transactionManager.getTransaction(def);
-//	    TransactionSynchronizationManager.initSynchronization(); // 트랜잭션 동기화 작업 초기화
         // Connection 오브젝트 생성, 저장소 바인딩, 참조변수 값 리턴
-//        Connection conn = DataSourceUtils.getConnection(dataSource);
-//        conn.setAutoCommit(false); // 트랜잭션 시작
+        Connection conn = DataSourceUtils.getConnection(dataSource);
+        conn.setAutoCommit(false); // 트랜잭션 시작
 
 
 
@@ -111,15 +109,18 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
     	        rpairTrgetSlctnDAO.procRepairTargetRangeSelect(rpairTrgetSlctnVO);
     	        rpairTrgetSlctnDAO.procRepairTargetRangeString(rpairTrgetSlctnVO);
 
-//    	        transactionManager.commit(status);// 트랜잭션 커밋
-//    	        conn.commit(); // 성공
+    	        // 진행_률 수정
+    	        rpairTrgetSlctnVO.setPROGRS_RT((i + 1) + "/" + routeCodeList.size());
+    	        rpairTrgetSlctnDAO.updateRpairTrgetSlctnProgrsRt(rpairTrgetSlctnVO);
+
+    	        conn.commit(); // 성공
 	    }
 
-//	    DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
+	    DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
 
         // 동기화 작업을 종료하고 저장소를 비운다
-//        TransactionSynchronizationManager.unbindResource(this.dataSource);
-//        TransactionSynchronizationManager.clearSynchronization();
+        TransactionSynchronizationManager.unbindResource(this.dataSource);
+        TransactionSynchronizationManager.clearSynchronization();
 	}
 
 	/**

@@ -105,7 +105,12 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
         return (int)select("rpairTrgetSlctnDAO.selectRpairTrgetSlctnSlctnYearListCnt", rpairTrgetSlctnVO);
     }
 
-
+    /**
+     * 보수대상선정시작 처리(보수대상선정 진행_률 수정)
+     */
+    public int updateRpairTrgetSlctnProgrsRt(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception {
+        return update("rpairTrgetSlctnDAO.updateRpairTrgetSlctnProgrsRt", rpairTrgetSlctnVO);
+    }
 
 
 

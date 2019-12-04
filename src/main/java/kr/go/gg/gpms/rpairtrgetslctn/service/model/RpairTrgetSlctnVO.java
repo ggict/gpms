@@ -292,6 +292,10 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	@XmlElement
 	private java.lang.String START_END_CODE;
 
+	/** 진행_률 */
+	@XmlElement
+	private java.lang.String PROGRS_RT;
+
 
 	/**
 	 * TN_RPAIR_TRGET_SLCTN.TRGET_SLCTN_NO,
@@ -814,7 +818,7 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	public java.lang.String getROAD_NM() {
 		return ROAD_NM;
 	}
-	
+
 	public void setROAD_NM(java.lang.String rOAD_NM) {
 		ROAD_NM = rOAD_NM;
 	}
@@ -886,6 +890,15 @@ public class RpairTrgetSlctnVO extends BaseVO {
 
     public void setSTART_END_CODE(java.lang.String sTART_END_CODE) {
         START_END_CODE = sTART_END_CODE;
+    }
+
+    @JsonProperty(value="PROGRS_RT")
+    public java.lang.String getPROGRS_RT() {
+        return PROGRS_RT;
+    }
+
+    public void setPROGRS_RT(java.lang.String pROGRS_RT) {
+        PROGRS_RT = pROGRS_RT;
     }
 
 }
