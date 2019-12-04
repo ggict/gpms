@@ -2193,7 +2193,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
         GROUP BY DEPT_NM
 	</select>
 
-    <select id="cntrwkDtlDAO.selectCntrwkRoutLenNewStats"  resultClass="hashmap">
+    <select id="cntrwkDtlDAO.selectCntrwkRoutLenNewStats" parameterClass="cntrwkDtlVO" resultClass="hashmap">
         <![CDATA[       
             /* cntrwkDtlDAO.selectCntrwkRoutLenNewStats */
             /* 포장공사이력2019노선별통계정보 데이터조회 */
@@ -2221,7 +2221,9 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
                     AND tnrpairtrgetgroup.USE_AT = 'Y'
                     AND tnrpairtrgetslctn.DELETE_AT = 'N'
                     AND tnrpairtrgetslctn.USE_AT = 'Y'
-                    AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                ]]>
+                    <isNotEmpty property="SLCTN_YEAR"><![CDATA[AND tnrpairtrgetslctn.SLCTN_YEAR = #SLCTN_YEAR#]]></isNotEmpty>
+                <![CDATA[
                 GROUP BY
                     tnrpairtrgetgroup.ROUTE_CODE
             ) rpairgroup
@@ -2245,6 +2247,9 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
                     AND tncntrwkdtl.USE_AT = 'Y'
                     AND tncntrwk.DELETE_AT = 'N'
                     AND tncntrwkdtl.DELETE_AT = 'N'
+                ]]>
+                    <isNotEmpty property="CNTRWK_YEAR"><![CDATA[AND tncntrwk.CNTRWK_YEAR = #CNTRWK_YEAR#]]></isNotEmpty>
+                <![CDATA[
                 GROUP BY
                     tncntrwkdtl.ROUTE_CODE
             ) cntrwkdtl
@@ -2253,7 +2258,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
         ]]>
     </select>
 
-    <select id="cntrwkDtlDAO.cntrwkRoutLenNewStatsExcel"  resultClass="hashmap">
+    <select id="cntrwkDtlDAO.cntrwkRoutLenNewStatsExcel" parameterClass="cntrwkDtlVO" resultClass="hashmap">
         <![CDATA[       
             /* cntrwkDtlDAO.cntrwkRoutLenNewStatsExcel */
             /* 포장공사이력2019노선별통계정보 엑셀조회 */
@@ -2281,7 +2286,9 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
                     AND tnrpairtrgetgroup.USE_AT = 'Y'
                     AND tnrpairtrgetslctn.DELETE_AT = 'N'
                     AND tnrpairtrgetslctn.USE_AT = 'Y'
-                    AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                ]]>
+                    <isNotEmpty property="SLCTN_YEAR"><![CDATA[AND tnrpairtrgetslctn.SLCTN_YEAR = #SLCTN_YEAR#]]></isNotEmpty>
+                <![CDATA[
                 GROUP BY
                     tnrpairtrgetgroup.ROUTE_CODE
             ) rpairgroup
@@ -2305,6 +2312,9 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
                     AND tncntrwkdtl.USE_AT = 'Y'
                     AND tncntrwk.DELETE_AT = 'N'
                     AND tncntrwkdtl.DELETE_AT = 'N'
+               ]]>
+                    <isNotEmpty property="CNTRWK_YEAR"><![CDATA[AND tncntrwk.CNTRWK_YEAR = #CNTRWK_YEAR#]]></isNotEmpty>
+                <![CDATA[
                 GROUP BY
                     tncntrwkdtl.ROUTE_CODE
             ) cntrwkdtl
@@ -2313,7 +2323,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
         ]]>
     </select>
 
-    <select id="cntrwkDtlDAO.selectCntrwkDeptLenNewStats"  resultClass="hashmap">
+    <select id="cntrwkDtlDAO.selectCntrwkDeptLenNewStats" parameterClass="cntrwkDtlVO"  resultClass="hashmap">
         <![CDATA[       
             /* cntrwkDtlDAO.selectCntrwkDeptLenNewStats */
             /* 포장공사이력2019관리기관별통계정보 데이터조회 */
@@ -2350,7 +2360,9 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
                         AND tnrpairtrgetgroup.USE_AT = 'Y'
                         AND tnrpairtrgetslctn.DELETE_AT = 'N'
                         AND tnrpairtrgetslctn.USE_AT = 'Y'
-                        AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                    ]]>
+                        <isNotEmpty property="SLCTN_YEAR"><![CDATA[AND tnrpairtrgetslctn.SLCTN_YEAR = #SLCTN_YEAR#]]></isNotEmpty>
+                    <![CDATA[
                     GROUP BY
                         tnrpairtrgetgroup.DEPT_CODE
                 ) rpairgroup
@@ -2374,6 +2386,9 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
                         AND tncntrwkdtl.USE_AT = 'Y'
                         AND tncntrwk.DELETE_AT = 'N'
                         AND tncntrwkdtl.DELETE_AT = 'N'
+                   ]]>
+                        <isNotEmpty property="CNTRWK_YEAR"><![CDATA[AND tncntrwk.CNTRWK_YEAR = #CNTRWK_YEAR#]]></isNotEmpty>
+                    <![CDATA[
                     GROUP BY tncntrwk.DEPT_CODE
                 ) cntrwkdtl
                 ON dept.DEPT_CODE = cntrwkdtl.DEPT_CODE
@@ -2385,7 +2400,7 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
         ]]>
     </select>
 
-    <select id="cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel"  resultClass="hashmap">
+    <select id="cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel" parameterClass="cntrwkDtlVO"  resultClass="hashmap">
         <![CDATA[       
             /* cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel */
             /* 포장공사이력2019관리기관별통계정보 엑셀조회 */
@@ -2422,7 +2437,9 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
                         AND tnrpairtrgetgroup.USE_AT = 'Y'
                         AND tnrpairtrgetslctn.DELETE_AT = 'N'
                         AND tnrpairtrgetslctn.USE_AT = 'Y'
-                        AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                    ]]>
+                        <isNotEmpty property="SLCTN_YEAR"><![CDATA[AND tnrpairtrgetslctn.SLCTN_YEAR = #SLCTN_YEAR#]]></isNotEmpty>
+                    <![CDATA[
                     GROUP BY
                         tnrpairtrgetgroup.DEPT_CODE
                 ) rpairgroup
@@ -2446,6 +2463,9 @@ CNTRWK_ID = #CNTRWK_ID# /* 공사상세정보.공사_ID */
                         AND tncntrwkdtl.USE_AT = 'Y'
                         AND tncntrwk.DELETE_AT = 'N'
                         AND tncntrwkdtl.DELETE_AT = 'N'
+                   ]]>
+                        <isNotEmpty property="CNTRWK_YEAR"><![CDATA[AND tncntrwk.CNTRWK_YEAR = #CNTRWK_YEAR#]]></isNotEmpty>
+                    <![CDATA[
                     GROUP BY tncntrwk.DEPT_CODE
                 ) cntrwkdtl
                 ON dept.DEPT_CODE = cntrwkdtl.DEPT_CODE

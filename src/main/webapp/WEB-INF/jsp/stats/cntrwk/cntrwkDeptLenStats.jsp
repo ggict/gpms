@@ -14,25 +14,49 @@
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
-<input type="hidden" id="SCH_DEPT_CODE" name="SCH_DEPT_CODE" value=""/>
-<input type="hidden" id="SCH_STRWRK_DE" name="SCH_STRWRK_DE" value=""/>
-<input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
-<header class="loc">
-	        <div class="container">
-	            <span class="locationHeader">
-	                <select name="">
-	                    <option value="">통계</option>
-	                </select>
-	                <select name="">
-	                    <option value="">포장공사 이력</option>
-	                </select>
-	                <select name="">
-	                    <option value="">관리기관별 통계</option>
-	                </select>
-	            </span>
-	        </div>
-	    </header>
+<input type="hidden" id="SLCTN_YEAR" name="SLCTN_YEAR" value="" />
+<input type="hidden" id="CNTRWK_YEAR" name="CNTRWK_YEAR" value="" />
+
+    <header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">통계</option>
+                </select>
+                <select name="">
+                    <option value="">포장공사 이력</option>
+                </select>
+                <select name="">
+                    <option value="">관리기관별 통계</option>
+                </select>
+            </span>
+        </div>
+    </header>
+    
+    <div class="container2">
+    
+        <div class="table searchBox top">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="width:50%;">
+                        </td>
+                        <td class="th">
+                            <label for="SLCTN_YEAR_SELECT">선정년도</label>
+                        </td>
+                        <td>
+                            <select id="SLCTN_YEAR_SELECT">
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                            </select>
+                        </td>
+                        <td class="btnCell"><button type="button" id="btnSearch" class="btn pri">검색</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 	    
 	     <div id="divStatChart" style="overflow-y:auto;">
             <ul class="statsbx">
@@ -46,24 +70,25 @@
         </div>
         
         <!-- 표 -->
-     <div class="cont_ListBx" style="display: none;">
-        <table class="tblist" border="1" id="diagram">
-            <colgroup>
-                <col width="25%"/>
-                <col width="25%"/>
-                <col width="25%"/>
-            </colgroup>
-            <thead style="text-align: center;">
-                <tr>
-                    <th scope="col">관리기관</th>
-                    <th scope="col">보수대상구간</th>
-                    <th scope="col">포장도로정비</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
+	     <div class="cont_ListBx" style="display: none;">
+	        <table class="tblist" border="1" id="diagram">
+	            <colgroup>
+	                <col width="25%"/>
+	                <col width="25%"/>
+	                <col width="25%"/>
+	            </colgroup>
+	            <thead style="text-align: center;">
+	                <tr>
+	                    <th scope="col">관리기관</th>
+	                    <th scope="col">보수대상구간</th>
+	                    <th scope="col">포장도로정비</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	            </tbody>
+	        </table>
+	    </div>
+	</div>
 
 </form>
 <!-- 공통 (START)-->
@@ -71,57 +96,41 @@
 <!-- 공통 (END)-->
 
 <script type="text/javascript" defer="defer">
-
-//에러 메시지 변수
-var errNo=0;
-//경고 메시지 변수
-var ntcNo=0;
+var errNo=0;    //에러 메시지 변수
+var ntcNo=0;    //경고 메시지 변수
+var myChart;    // echarts
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
     
     $("#divStatChart").height($(parent.window).height() - 170);
+    fnCntrwkDeptSearch();   //관리기관조회
     
-    // input, select 항목 init
-    COMMON_UTIL.cmFormObjectInit("frm");
-    
-    //창 조절시 차트 width 
-    var rw = $(window).width()/3;
-    
-    fnDeptSearch('','','',rw);//노선조회
+    $('#btnSearch').click(function() {
+    	fnCntrwkDeptSearch();
+    })
 }); 
 
 //창 조절시 차트 resize
-$(window).on('resize', function(){
-        $("#divStatChart").height($(parent.window).height() - 170);
-    
-        var rw = $(window).width()/3;
-        var deptCd = $("#SCH_DEPT_CODE").val();
-        var strDt = $("#SCH_STRWRK_DE").val();
-        var endDt = $("#SCH_COMPET_DE").val();
-        
-        fnDeptSearch(deptCd,strDt,endDt,rw);
-});
-
-//조건에 맞는 검색조회
-function fnDeptSearch(deptCd,strDt,endDt,rw){
-    //검색 조건 값 set
-    $("#SCH_DEPT_CODE").val(deptCd);
-    $("#SCH_STRWRK_DE").val(strDt);
-    $("#SCH_COMPET_DE").val(endDt);
-    
-    fnCntrwkDeptSearch(deptCd,strDt,endDt,rw);//노선조회
-}
-
-require.config({
-       paths: {
-            echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
-        }
-    });
+$(window).resize(function(){
+    if(this.resizeTO) {
+        clearTimeout(this.resizeTO);
+    }
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+})
+$(window).on("resizeEnd", function(){
+    $("#divStatChart").height($(parent.window).height() - 170);
+    myChart.resize();
+})
 
 //검색 처리
-function fnCntrwkDeptSearch(deptCd,strDt,endDt,rw) {
-    var data = {"SCH_DEPT_CODE" : deptCd, "SCH_STRWRK_DE" : strDt, "SCH_COMPET_DE" : endDt};
+function fnCntrwkDeptSearch() {
+    var SLCTN_YEAR = $('#SLCTN_YEAR_SELECT option:selected').val();
+    $('#SLCTN_YEAR').val(SLCTN_YEAR);
+    $('#CNTRWK_YEAR').val(SLCTN_YEAR);
+    var data = { "SLCTN_YEAR": SLCTN_YEAR, "CNTRWK_YEAR": SLCTN_YEAR };
     
     $.ajax({
          url: '<c:url value="/"/>'+'api/cntrwkdtl/selectCntrwkDeptLenNewStats.do'
@@ -133,19 +142,27 @@ function fnCntrwkDeptSearch(deptCd,strDt,endDt,rw) {
         ,success: function (data) {
             var dataList = data.rows;
             if(dataList.length !=0){
-                drawDeptChart(dataList,rw);
+                drawDeptChart(dataList);
                 drawTable(dataList);
             }else{
                 ntcNo += 1;
+                COMMON_UTIL.fn_msgNtc(ntcNo);
             }
         },
         error: function () {
             errNo += 1;
+            COMMON_UTIL.fn_msgErr(errNo);
         }
     });
 }
 
-function drawDeptChart(dataList,rw){
+// 차트
+require.config({
+    paths: {
+         echarts: '<%=request.getContextPath() %>/extLib/echarts' //js 파일 경로
+     }
+ });
+function drawDeptChart(dataList){
     var gDeptNm    = dataList.map(function(elem){ return elem.dept_nm; });       
     var rpairLenData    = dataList.map(function(elem){ return elem.rpair_len; });
     var maxOfRpairLenData = rpairLenData.reduce(function(prev, curr) { return (prev > curr) ? prev : curr; });
@@ -155,7 +172,7 @@ function drawDeptChart(dataList,rw){
     
     require([   'echarts','echarts/chart/bar', 'echarts/chart/line'   ],
             function (ec) {
-                 var myChart = ec.init(document.getElementById('cntrwkDeptChart'));
+                 myChart = ec.init(document.getElementById('cntrwkDeptChart'));
                  myChart.setOption({
                         title   : { text: '관리기관별 통계'   },
                         tooltip : { trigger: 'axis'             },
@@ -225,32 +242,6 @@ function fnExcel() {
     }
 }
 
-//노선변호 String > Integer로 형변환
-function fn_castRouteCode(routeCd){
-    var routeNo = routeCd*1;
-    return routeNo;
-}
-
-
-//에러 메시지
-function fn_msgErr(){
-    if(errNo >= 1){
-        alert("오류가 발생하였습니다. 새로고침 하시기 바랍니다.");
-        return;
-    }else {
-        return;
-    }
-}
-
-//경고 메시지
-function fn_msgNtc(){
-    if(ntcNo >= 1){
-        alert("해당 조건에 검색 결과가 없습니다. 검색 조건을 변경하여 조회 하시기 바랍니다.");
-        return;
-    }else {
-        return;
-    }
-}
 </script>
 </body>
 </html>
