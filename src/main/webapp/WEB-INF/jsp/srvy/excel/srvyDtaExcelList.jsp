@@ -319,6 +319,7 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 			<h3 class="h3">파일첨부</h3>
 			<span class="haderBtn">
 				<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 1);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
+				<!-- <input type="button" class="btn pri btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 1);"  value="파일선택"> -->
 				<input multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
 			</span>
 			

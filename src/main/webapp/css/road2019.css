@@ -838,6 +838,17 @@ body.research #srvyImage { position: absolute; left: 0; top: 0; width: 100%; }
 
 .loc + .container2 > .tab { margin: 20px 0 0 0; }
 
+/* 엑셀업로드 */
+.xlsUp { padding: 15px; }
+
+.xlsUp ul { border-top: solid 1px #444; }
+
+.xlsUp li { border-bottom: solid 1px #ddd; padding: 10px; position: relative; }
+
+.xlsUp .delbtn { display: inline-block; padding: 5px; position: absolute; right: 0; top: 5px; border: solid 1px #ddd; border-radius: 2px; }
+
+.note { color: #1c6f9a; font-size: 14px; padding: 10px 0; }
+
 .stmenuarea { display: none; }
 
 @media (max-width: 1460px) { .header .h1 { width: 310px; letter-spacing: -1px; } }

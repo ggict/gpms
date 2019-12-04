@@ -731,6 +731,14 @@ body.research {
 }
 .loc + .container2 > .tab {margin: 20px 0 0 0;}
 
+/* 엑셀업로드 */
+.xlsUp { padding: 15px;
+    ul{ border-top: solid 1px #444}
+    li {border-bottom:solid 1px #ddd; padding: 10px;position: relative;}
+    .delbtn { display: inline-block; padding: 5px; position: absolute;right: 0; top: 5px; border:solid 1px #ddd;border-radius:2px}
+}
+
+.note {color:#1c6f9a; font-size: 14px; padding: 10px 0;}
 
 .stmenuarea { display: none;}
 @media ( max-width: 1460px ) {

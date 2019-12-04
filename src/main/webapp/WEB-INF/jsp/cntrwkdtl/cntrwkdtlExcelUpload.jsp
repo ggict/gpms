@@ -39,28 +39,25 @@
 <input type="hidden" id="CNSTRCT_CO_TELNO" name="CNSTRCT_CO_TELNO"/>
 <input type="hidden" id="SPT_AGENT_NM" name="SPT_AGENT_NM"/>
 <input type="hidden" id="SPT_AGENT_TELNO" name="SPT_AGENT_TELNO"/>
-		<div class="fl bgsch">
-			 <ul class="sch">
-				<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
+		<div class="xlsUp">
+			 <div class="btnAreaTop">
+				<%-- <a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a> --%>				
 				<input multiple="multiple" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
-			</ul>
-			<div class="schbx mt10">
-				<ul class="sch">
-		       	 <li>
-		            	<div class="btfilebx scroll" style="width:258px; height:215px" id="file_list">
-		            		<ul name="fileSet">
-		            		</ul>
-		            	</div>
-		        	</li>
-		       		<li class="wid100 af">
-						※ 첨부 파일은 엑셀(xlsx)파일만 업로드 가능합니다.
-		        	</li>
-					<div class="fr">
-						<a href="#" onclick="fn_file_upload()" class="schbtn">파일전송</a>
-						<a href="#" class="schbtn" onclick="javascript: fn_close_dialog();">닫기</a>
-					</div>	
-				</ul>	
-			</div>	    					
+			</div>
+			<div id="file_list">
+           		<ul name="fileSet">
+           		</ul>
+           	</div>
+		    <p class="note">※ 첨부 파일은 엑셀(xlsx)파일만 업로드 가능합니다.</p>
+		    
+		    <div class="btnArea">
+		    	<input type="button" class="btn pri btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 50);" value="파일선택">
+				<input type="button" class="btn" onclick="fn_file_upload()" value="파일전송">
+				<!--
+				<input type="button" class="btn" onclick="javascript: fn_close_dialog();" value="닫기">
+				-->
+			</div>
+		            	  					
 		</div>
 </form>
 <%@ include file="/include/common.jsp" %>
