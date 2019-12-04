@@ -39,9 +39,9 @@
             </span>
         </div>
     </header>
-    
+
     <div class="contents container">
-    
+
     	<article class="div3">
     		<h3 class="h3">검색조건</h3>
     		<c:if test="${empty mummSctnSrvyDtaVO.CELL_ID }">
@@ -147,16 +147,16 @@
     					<td class="th"><label for="CNTRWK_AT">공사구간</label></td>
     					<td><input type="checkbox" name="CNTRWK_AT" id="CNTRWK_AT" value=""/></td>
     					<td class="th"><label for="UNOPN_AT">미개통구간</label></td>
-    					<td><input type="checkbox" name="UNOPN_AT" id="UNOPN_AT" value=""/></td>    					  			
+    					<td><input type="checkbox" name="UNOPN_AT" id="UNOPN_AT" value=""/></td>
     				</tr>
     				<tr>
     					<td class="th" colspan="4"><label for="GPCI"></label>
     					<input type="text" name="MINGPCI" id="MINGPCI" value="" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" />
-                        ≤ GPCI ≤ 
+                        ≤ GPCI ≤
                         <input type="text" name="MAXGPCI" id="MAXGPCI" value="" onkeydown="fnCheckNumberGPCI(this);" maxLength="2" />
     					</td>
     				</tr>
-    				</tbody>	
+    				</tbody>
     			</table>
                 <div class="btnArea">
                      <input type="button" class="btn pri" onclick="javascript: fn_search();" value="검색"/>
@@ -164,7 +164,7 @@
 				</c:if>
     		</div>
     	</article>
-    	
+
     	<c:if test="${empty mummSctnSrvyDtaVO.CELL_ID }">
     	<article class="div9">
     	</c:if>
@@ -173,13 +173,13 @@
     	</c:if>
     		<h3 class="h3">포장상태 평가정보 조회</h3>
     		<div id="div_grid" class="table">
-				<table id="gridArea"></table>				
+				<table id="gridArea"></table>
 			</div>
 			<input type="button" class="btn pri" onclick="fnExcel();" value="엑셀저장">
 			<div id="gridPager"></div>
         </div>
     	</article>
-    	
+
     </div>
 </div>
 
@@ -347,7 +347,7 @@ $( document ).ready(function() {
 	   	}
 		,multiselect: false
 		,multiboxonly: true
-		,shrinkToFit : false
+// 		,shrinkToFit : false
 	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 
 	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', 190);
@@ -376,12 +376,12 @@ $('#UNOPN_AT').click(function(){
 		$('#UNOPN_AT').val("");
     }
 });
-    
+
 //검색 처리
 function fn_search() {
 	var cntrwk_at = $('#CNTRWK_AT').val();
 	var unopn_at = $('#UNOPN_AT').val();
-	
+
     if ( !fnFormCheck($("#frm")) ) { return; }
 
     param = $("#frm").fnGetParameter();
@@ -389,7 +389,7 @@ function fn_search() {
     var postData = $("#frm").cmSerializeObject();
     postData["CNTRWK_AT"] = cntrwk_at;
     postData["UNOPN_AT"] = unopn_at;
- 	
+
     console.log(postData);
 	$("#gridArea").jqGrid("setGridParam",{
 		datatype: "json"
@@ -410,15 +410,15 @@ function fn_search() {
 
 // jqgrid 하단 및 넓이 설정
 function fnSetGridWith() {
-    var grid = $("#gridArea");
+//     var grid = $("#gridArea");
 
-    var gridWidth = window.innerWidth - 320;
+//     var gridWidth = window.innerWidth - 320;
 
-    grid.setGridWidth(gridWidth);
+//     grid.setGridWidth(gridWidth);
 
-    $(".ui-jqgrid-htable").css("width", gridWidth-18);
-    $(".ui-jqgrid-btable").css("width", gridWidth-18);
-    $(".ui-jqgrid-ftable").css("width", gridWidth-18);
+//     $(".ui-jqgrid-htable").css("width", gridWidth-18);
+//     $(".ui-jqgrid-btable").css("width", gridWidth-18);
+//     $(".ui-jqgrid-ftable").css("width", gridWidth-18);
 }
 
 function fnFormCheck(form) {
@@ -644,7 +644,7 @@ function fnFormatter(cellValue, options, rowObject) {
                 for ( var i = 0; i < valArr.length; i++ ) {
                     // min값과 같은 경우 텍스트 추가
                     if ( valArr[i] == minVal ) {
-                    	/* 
+                    	/*
                         if ( i != 0 ) {
                             html += ", ";
                         }
