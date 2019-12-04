@@ -195,7 +195,6 @@ public class SrvyRequstSctnController extends BaseController {
 	    	model.addAttribute("resultMsg", resultMsg);
 	    	model.addAttribute("callBackFunction", StringUtils.isNotEmpty(srvyRequstSctnVO.getCallBackFunction()) ?
 	    			srvyRequstSctnVO.getCallBackFunction().trim():"" );	// 처리후 호출 함수
-	    	System.out.println("cellback2 : " + srvyRequstSctnVO.getCallBackFunction());
 	    	status.setComplete();	//Double Submit 방지
 		} catch (Exception e) {
 			resultCode = "ERROR";
@@ -298,6 +297,9 @@ public class SrvyRequstSctnController extends BaseController {
 		try {
 
 			srvyRequstSctnCellInfoService.deleteSrvyRequstSctnCellInfo(srvyRequstSctnCellInfoVO);
+			
+			String SRVY_REQUST_DE = srvyRequstSctnVO.getSRVY_REQUST_DE().replace("-", "");
+			srvyRequstSctnVO.setSRVY_REQUST_DE(SRVY_REQUST_DE);
 			
 			resultCode = "UPDATE_SUCCESS";
 			BindBeansToActiveUser(srvyRequstSctnVO);
