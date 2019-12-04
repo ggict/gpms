@@ -66,7 +66,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="th"><label for="">조사요청일자</label></td>
+                        <td class="th"><label for="">조사접수일</label></td>
                         <td>
                             <input type="text" name="SRVY_REQUST_DE1" id="SRVY_REQUST_DE1" class="dateInput" /> ~
                             <input type="text" name="SRVY_REQUST_DE2" id="SRVY_REQUST_DE2" class="dateInput" />

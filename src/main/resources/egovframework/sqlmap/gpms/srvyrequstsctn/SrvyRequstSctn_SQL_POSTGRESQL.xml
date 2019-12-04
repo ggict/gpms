@@ -27,8 +27,6 @@
             , TRACK
             , STRTPT
             , ENDPT
-            , UPDUSR_NO
-            , UPDT_DT
 		) VALUES (
             #SRVY_REQUST_SCTN_NO#::numeric
             , #SRVY_NM#
@@ -40,8 +38,7 @@
             , #TRACK#
             , #STRTPT#::numeric
             , #ENDPT#::numeric
-            , #UPDUSR_NO#::numeric
-            , NOW()
+            
 		)
 ]]>
 	</insert>
@@ -84,7 +81,6 @@
             SELECT
                 srvyrequstsctn.SRVY_REQUST_SCTN_NO
                 , srvyrequstsctn.SRVY_NM
-                , srvyrequstsctn.SRVY_REQUST_INSTT
                 , srvyrequstsctn.SRVY_CN
                 , srvyrequstsctn.SRVY_REQUST_DE
                 , srvyrequstsctn.ROUTE_CODE
