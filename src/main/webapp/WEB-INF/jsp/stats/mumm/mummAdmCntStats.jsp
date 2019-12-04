@@ -228,8 +228,8 @@ function drawAdmGpciChart(dataList){
     
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
-                 var myChart = ec.init(document.getElementById('mummAdmGpciChart'));
-                 myChart.setOption({
+                 myChart1 = ec.init(document.getElementById('mummAdmGpciChart'));
+                 myChart1.setOption({
                         title   : { text: 'GPCI'   },
                         tooltip : { trigger: 'axis'             },
                         toolbox : { show: true,
@@ -278,8 +278,8 @@ function drawAdmDfctChart(dataList){
     
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
-                 var myChart = ec.init(document.getElementById('mummAdmDfctChart'));
-                 myChart.setOption({
+                 myChart2 = ec.init(document.getElementById('mummAdmDfctChart'));
+                 myChart2.setOption({
                         title   : { text: '파손형태' },
                         tooltip : { trigger: 'axis'             },
                         toolbox : { show: true,

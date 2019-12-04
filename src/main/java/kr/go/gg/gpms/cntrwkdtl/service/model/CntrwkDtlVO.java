@@ -692,6 +692,14 @@ public class CntrwkDtlVO extends BaseVO {
 	//검색_포장공법
 	@XmlElement
 	private java.lang.String SCH_RPAIR_MTHD;
+
+	//검색_보수대상_선정년도
+	@XmlElement
+	private java.lang.String SLCTN_YEAR;
+	
+	//검색_공사년도
+	@XmlElement
+	private java.lang.String CNTRWK_YEAR;
 	
 	
 	/**
@@ -2481,6 +2489,24 @@ public class CntrwkDtlVO extends BaseVO {
 
 	public void setSCH_RPAIR_MTHD(java.lang.String sCH_RPAIR_MTHD) {
 		this.SCH_RPAIR_MTHD = sCH_RPAIR_MTHD;
+	}
+
+	@JsonProperty(value="SLCTN_YEAR")
+	public java.lang.String getSLCTN_YEAR() {
+		return SLCTN_YEAR;
+	}
+
+	public void setSLCTN_YEAR(java.lang.String sLCTN_YEAR) {
+		SLCTN_YEAR = sLCTN_YEAR;
+	}
+
+	@JsonProperty(value="CNTRWK_YEAR")
+	public java.lang.String getCNTRWK_YEAR() {
+		return CNTRWK_YEAR;
+	}
+
+	public void setCNTRWK_YEAR(java.lang.String cNTRWK_YEAR) {
+		CNTRWK_YEAR = cNTRWK_YEAR;
 	}
 	
 	
