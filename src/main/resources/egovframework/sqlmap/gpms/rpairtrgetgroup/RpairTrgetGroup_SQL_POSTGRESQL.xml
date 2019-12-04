@@ -1258,7 +1258,7 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     COALESCE(rpairgroup.LEN,0) as GROUP_LEN,
                     rpairgroup.STRTPT,
                     rpairgroup.ENDPT,
-                    pairgroup.GROUP_ITEM_NO as GROUP_CNT,
+                    rpairgroup.GROUP_ITEM_NO as GROUP_CNT,
                     Rpairgroup.TRGET_SLCTN_NO
                 FROM
                 TN_ROUTE_INFO route
@@ -1279,7 +1279,9 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     AND tnrpairtrgetgroup.USE_AT = 'Y'
                     AND tnrpairtrgetslctn.DELETE_AT = 'N'
                     AND tnrpairtrgetslctn.USE_AT = 'Y'
-                    AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                ]]>
+                    <isNotEmpty property="SLCTN_YEAR"><![CDATA[AND tnrpairtrgetslctn.SLCTN_YEAR = #SLCTN_YEAR#]]></isNotEmpty>
+                <![CDATA[
                     )  rpairgroup
                 ON route.ROAD_NO = rpairgroup.ROUTE_CODE
             ) tbl
@@ -1304,7 +1306,7 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     COALESCE(rpairgroup.LEN,0) as GROUP_LEN,
                     rpairgroup.STRTPT,
                     rpairgroup.ENDPT,
-                    pairgroup.GROUP_ITEM_NO as GROUP_CNT,
+                    rpairgroup.GROUP_ITEM_NO as GROUP_CNT,
                     Rpairgroup.TRGET_SLCTN_NO
                 FROM
                 TN_ROUTE_INFO route
@@ -1325,7 +1327,9 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     AND tnrpairtrgetgroup.USE_AT = 'Y'
                     AND tnrpairtrgetslctn.DELETE_AT = 'N'
                     AND tnrpairtrgetslctn.USE_AT = 'Y'
-                    AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                ]]>
+                    <isNotEmpty property="SLCTN_YEAR"><![CDATA[AND tnrpairtrgetslctn.SLCTN_YEAR = #SLCTN_YEAR#]]></isNotEmpty>
+                <![CDATA[
                     )  rpairgroup
                 ON route.ROAD_NO = rpairgroup.ROUTE_CODE
             ) tbl
@@ -1380,7 +1384,9 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                             AND tnrpairtrgetgroup.USE_AT = 'Y'
                             AND tnrpairtrgetslctn.DELETE_AT = 'N'
                             AND tnrpairtrgetslctn.USE_AT = 'Y'
-                            AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                        ]]>
+                            <isNotEmpty property="SLCTN_YEAR"><![CDATA[AND tnrpairtrgetslctn.SLCTN_YEAR = #SLCTN_YEAR#]]></isNotEmpty>
+                        <![CDATA[
                     ) rpairgroup
                     ON dept.DEPT_CODE = rpairgroup.DEPT_CODE
                 ) tbl
@@ -1439,7 +1445,9 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                             AND tnrpairtrgetgroup.USE_AT = 'Y'
                             AND tnrpairtrgetslctn.DELETE_AT = 'N'
                             AND tnrpairtrgetslctn.USE_AT = 'Y'
-                            AND tnrpairtrgetslctn.SLCTN_YEAR = '2019'
+                        ]]>
+                            <isNotEmpty property="SLCTN_YEAR"><![CDATA[AND tnrpairtrgetslctn.SLCTN_YEAR = #SLCTN_YEAR#]]></isNotEmpty>
+                        <![CDATA[
                     ) rpairgroup
                     ON dept.DEPT_CODE = rpairgroup.DEPT_CODE
                 ) tbl

@@ -182,7 +182,7 @@ $(window).on("resizeEnd", function(){
 })
 
 //검색 처리
-function fnMummDeptSearch(deptCd,strDt,endDt,rw) {
+function fnMummDeptSearch() {
     var SRVY_YEAR = $('#SRVY_YEAR option:selected').val();
     var DEPT_CODE = $('#SCH_DEPT_CODE option:selected').val();
     var ROAD_GRAD = $('#SCH_ROAD_GRAD option:selected').val();
