@@ -26,12 +26,14 @@ var selRow = 0;
 $( document ).ready(function() {
     //지도 우측 툴 셀 속성 아이콘 활성화
     parent.$("#editCellInfo").parent().addClass("active");
-
-    // 지도 초기화
-    parent.gMap.cleanMap();
-    parent.gMap.activeControls("drag");
-    parent.$("#map .left_tool li").removeClass("active");
-    parent.$("#mCtrlPan").parent().addClass("active");
+    
+    var mapReset = function(){
+	    parent.gMap.cleanMap(); // 지도 초기화
+	    parent.gMap.activeControls("drag");
+	    parent.$("#map .left_tool li").removeClass("active");
+	    parent.$("#mCtrlPan").parent().addClass("active");
+    }
+    mapReset();
 
     // 하단 팝업 초기화
     parent.bottomHide();
@@ -108,6 +110,12 @@ $( document ).ready(function() {
         // 1단계 선택
         } else if ( id == "BTN_CELL_SECT" && classArr.indexOf(" on") == -1 ) {
             $(this).parent().toggleClass('on');
+        
+        // 1단계로 선택 시 2단계 이벤트 초기화 및 지도 기본 이벤트 활성화    
+        } else if ( id == "BTN_CELL_SECT") {
+        	mapReset();
+            $(".selbtn").parent("li").removeClass('on');
+            $(this).parent().addClass("on");
         }
 
     });
