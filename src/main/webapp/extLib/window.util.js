@@ -394,7 +394,10 @@ function wWindowOpen(div_title, call_url, width, height, modal, opener_id, posit
 
 		//181120 wijy 추가
 		else if (position == "updCell") {
-			w -= 250; //인덱스맵 영역 buffer
+			if (w > 1240) {
+				w -= 15;
+			}
+			//w -= 250; //인덱스맵 영역 buffer
 			w -= 620; //팝업창 영역 buffer
 
 			nWid = w;

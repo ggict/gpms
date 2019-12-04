@@ -769,7 +769,7 @@ $(function () {
 
     // 초기 로딩 시 default
     $("#btn_selStatusEvaluation").click();
-    $("#btn_selPoint").click();
+    //$("#btn_selPoint").click();
 
 });
 

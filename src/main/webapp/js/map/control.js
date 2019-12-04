@@ -243,7 +243,11 @@ MAP.CONTROL = (function($, undefined){
 
 		// 조회 컨트롤 활성화 ui
         $(".mt2Btn").bind("click", function() {
-            var wndpop = $.window.getAll();
+            $(".mtBtn").parent("li").removeClass("active");
+            $("#mCtrlPan").parent("li").addClass("active");
+            gMap.activeControls("drag");
+            
+        	var wndpop = $.window.getAll();
             var len = wndpop.length;
             for ( var i = len - 1; i >= 0; i-- ) {
                 var wndid = wndpop[i].getWindowId();
@@ -251,7 +255,6 @@ MAP.CONTROL = (function($, undefined){
                 if(wndidBody.hasClass("right-tool") || wndidBody.hasClass("research") ) {
                     if(wndidBody.hasClass("research") ) {
                         rshInfoCnt--;
-                        $("#mCtrlPan").click();
                         gMap.cleanMap();
                         bottomClose();
                     }
