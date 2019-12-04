@@ -19,6 +19,7 @@
 		INSERT INTO TN_SRVY_REQUST_SCTN (
             SRVY_REQUST_SCTN_NO
             , SRVY_NM
+            , SRVY_REQUST_INSTT
             , SRVY_CN
             , SRVY_REQUST_DE
             , ROUTE_CODE
@@ -31,6 +32,7 @@
 		) VALUES (
             #SRVY_REQUST_SCTN_NO#::numeric
             , #SRVY_NM#
+            , #SRVY_REQUST_INSTT#
             , #SRVY_CN#
             , #SRVY_REQUST_DE#
             , #ROUTE_CODE#
@@ -51,6 +53,7 @@
 		UPDATE TN_SRVY_REQUST_SCTN SET
             SRVY_NM          = #SRVY_NM#
             , SRVY_CN          = #SRVY_CN#
+            , SRVY_REQUST_INSTT = #SRVY_REQUST_INSTT#
             , SRVY_REQUST_DE       = #SRVY_REQUST_DE#
             , ROUTE_CODE           = #ROUTE_CODE#
             , DIRECT_CODE          = #DIRECT_CODE#
@@ -81,6 +84,7 @@
             SELECT
                 srvyrequstsctn.SRVY_REQUST_SCTN_NO
                 , srvyrequstsctn.SRVY_NM
+                , srvyrequstsctn.SRVY_REQUST_INSTT
                 , srvyrequstsctn.SRVY_CN
                 , srvyrequstsctn.SRVY_REQUST_DE
                 , srvyrequstsctn.ROUTE_CODE
@@ -140,6 +144,7 @@
             SELECT
                 srvyrequstsctn.SRVY_REQUST_SCTN_NO
                 , srvyrequstsctn.SRVY_NM
+                , srvyrequstsctn.SRVY_REQUST_INSTT
                 , srvyrequstsctn.SRVY_CN
                 , TO_CHAR(TO_DATE(srvyrequstsctn.SRVY_REQUST_DE, 'YYYYMMDD'), 'YYYY-MM-DD') SRVY_REQUST_DE
                 , srvyrequstsctn.ROUTE_CODE

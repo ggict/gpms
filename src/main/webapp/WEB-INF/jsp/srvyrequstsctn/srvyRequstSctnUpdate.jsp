@@ -66,9 +66,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="th"><label for="DEPT_NM">조사요청기관</label></td>
+                        <td class="th"><label for="SRVY_REQUST_INSTT">조사요청기관</label></td>
                         <td>
-                            <input type="text" name="DEPT_NM" id="DEPT_NM" value="" />
+                            <input type="text" name="SRVY_REQUST_INSTT" id="SRVY_REQUST_INSTT" value="<c:out value="${srvyRequstSctnVO.SRVY_REQUST_INSTT}"/>" />
                         </td>
                     </tr>
                     <tr>

@@ -51,6 +51,13 @@ public class SrvyRequstSctnVO extends BaseVO {
 	 */
 	@XmlElement
 	private java.lang.String SRVY_CN;
+	
+	/** 
+	 * TN_SRVY_REQUST_SCTN.SRVY_REQUST_INSTT, 
+	 * 조사_요청_구간.조사_요청_기관
+	 */
+	@XmlElement
+	private java.lang.String SRVY_REQUST_INSTT;
 
 	/** 
 	 * TN_SRVY_REQUST_SCTN.SRVY_REQUST_DE, 
@@ -161,6 +168,15 @@ public class SrvyRequstSctnVO extends BaseVO {
 		this.SRVY_NM = srvyNm;
 	}
 	
+	@JsonProperty(value="SRVY_REQUST_INSTT")
+	public java.lang.String getSRVY_REQUST_INSTT() {
+		return SRVY_REQUST_INSTT;
+	}
+
+	public void setSRVY_REQUST_INSTT(java.lang.String sRVY_REQUST_INSTT) {
+		SRVY_REQUST_INSTT = sRVY_REQUST_INSTT;
+	}
+
 	/**
 	 * TN_SRVY_REQUST_SCTN.SRVY_CN, 
 	 * 조사_요청_구간.조사_내용 값읽기
