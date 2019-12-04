@@ -93,9 +93,9 @@
     					<td>
                             <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
                         </td>
-    					<td class="th"><label for="MNG_RD_CD">관리도로</label></td>
+    					<td class="th"><label for="MRG_RD_NM">관리도로</label></td>
     					<td>
-                        	<select id="MNG_RD_CD" name="MNG_RD_CD">
+                        	<select id="MRG_RD_NM" name="MRG_RD_NM">
         	                	<option value="">전체</option>
         		        		<c:forEach items="${mngRdList }" var="mngRd">
         		        			<option value="${mngRd.CODE_VAL}">${mngRd.CODE_NM}</option>
@@ -252,8 +252,8 @@ $( document ).ready(function() {
 			,{name:'DIRECT_CODE',index:'DIRECT_CODE', align:'center', width:50, sortable: true}
 			,{name:'TRACK',index:'TRACK', align:'center', width:40, sortable: true}
 			,{name:'MRG_RD_NM',index:'MRG_RD_NM', align:'center', width:40, sortable: true}
-			,{name:'CNTRWK_AT',index:'MRG_RD_NM', align:'center', width:40, sortable: true}
-			,{name:'UNOPN_AT',index:'MRG_RD_NM', align:'center', width:40, sortable: true}
+			,{name:'CNTRWK_AT',index:'CNTRWK_AT', align:'center', width:40, sortable: true}
+			,{name:'UNOPN_AT',index:'UNOPN_AT', align:'center', width:40, sortable: true}
 			,{name:'STRTPT',index:'STRTPT', align:'center', width:60, sortable:false, formatter: fnConvertKm}
 			,{name:'ENDPT',index:'ENDPT', align:'center', width:60, sortable: true, formatter: fnConvertKm}
 			,{name:'TRNSPORT_QY',index:'TRNSPORT_QY', align:'center', width:60, sortable: true, formatter: fnConvertKm}
@@ -390,6 +390,7 @@ function fn_search() {
     postData["CNTRWK_AT"] = cntrwk_at;
     postData["UNOPN_AT"] = unopn_at;
  	
+    console.log(postData);
 	$("#gridArea").jqGrid("setGridParam",{
 		datatype: "json"
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
