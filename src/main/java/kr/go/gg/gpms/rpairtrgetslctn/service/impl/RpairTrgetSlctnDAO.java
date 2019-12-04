@@ -89,6 +89,7 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
         param.put("P_TRGET_SLCTN_NO", rpairTrgetSlctnVO.getTRGET_SLCTN_NO());
         param.put("P_ROUTE_CODE", rpairTrgetSlctnVO.getROUTE_CODE());
         param.put("P_ANALS_UNIT_CODE", rpairTrgetSlctnVO.getANALS_UNIT_CODE());
+        param.put("P_START_END_CODE", rpairTrgetSlctnVO.getSTART_END_CODE());
         param.put("P_MODE", "NONE");
 
         HashMap resultVO = (HashMap) select("rpairTrgetSlctnDAO.PRC_REPAIR_TARGET_RANGE_STRING", param);
