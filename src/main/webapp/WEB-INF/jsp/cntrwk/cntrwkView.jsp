@@ -37,29 +37,33 @@
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <input type="hidden" id="DETAIL_CNTRWK_ID" name="DETAIL_CNTRWK_ID" value="${cntrwkVO.DETAIL_CNTRWK_ID}">
 <!-- 필수 파라메터(END) --> 
-<div>
-	<div class="posiR">
-       	<ul class="ctab_menu">
-            <li class="sel"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('cntrwk/selectCntrwkView.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}')">기본정보</a></li>
-			<li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('cntrwkdtl/selectCntrwkDtlList.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}&CNTRWK_SE=${cntrwkVO.CNTRWK_SE}')">세부공사</a></li>
-			<%-- <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('flaw/selectFlaw.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}')">하자기본정보</a></li>
-			<li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('flawcntrwk/selectFlawCntrwkList.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}')">하자보수공사</a></li> --%>
-       	</ul>
-       	<h5 class="info" style="left: 310px;">
-			<a href="#" class="whitebtn dpib ml10 vm" onclick="COMMON_UTIL.cmMoveUrl('cntrwk/selectCntrwkList.do')"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기" /></a>
-		</h5>
-		<p class="location">
-	        <span>포장공사 이력관리</span>
-	        <span>포장공사 이력관리</span>
-	        <span>포장공사 이력조회</span>
-	        <strong>포장공사 기본정보</strong>
-	    </p>
-   </div>
-	<!-- Content -->
-	<div class="ctab_wrap">
-		<div class="tabcont">
-	    	<div class="scroll" style="height:240px; width:50%; float:left;">
-	    	<form:form commandName="cntrwkVO" id="cntrwk_Regist-form">
+
+
+
+
+<div class="tabcont">
+
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">포장공사이력관리</option>
+                </select>
+                <select name="">
+                    <option value="">포장공사이력관리</option>
+                </select>
+                <h2 class="h2">포장공사이력 조회</h2>
+                <h3 class="h3"><c:out value="${cntrwkVO.FULL_CNTRWK_NM}"/></h3> 
+                <input type="button" class="btnDetailView" onclick="COMMON_UTIL.cmMoveUrl('cntrwkdtl/selectCntrwkDtlList.do?CNTRWK_ID=${cntrwkVO.CNTRWK_ID}&CNTRWK_SE=${cntrwkVO.CNTRWK_SE}')" value="세부공사">
+            </span>
+        </div>
+    </header>
+    
+    <div class="contents container">
+    
+    	<article class="div5" style="height:300px; overflow-y: auto">
+    		<form:form commandName="cntrwkVO" id="cntrwk_Regist-form">
+    		<div class="table">
 		        <table class="tbview" summary="포장공사 기본정보를 조회합니다.">
 		            <caption>포장공사 기본정보</caption>
 		            <colgroup>
@@ -72,8 +76,8 @@
 		                <tr>
 						<th scope="row">사업소</th>
 						<td>
-							<select name="DEPT_CODE" id="DEPT_CODE" class="select" disabled="true" style="width: 100%;">
-								<option value="">===== 전체 =====</option>
+							<select name="DEPT_CODE" id="DEPT_CODE" class="select" disabled="true" >
+								<option value="">전체</option>
 								<c:forEach var="selectData" items="${deptList}">
 								<option value="${selectData.DEPT_CODE}" <c:if test = "${selectData.DEPT_CODE == cntrwkVO.DEPT_CODE}"> selected="selected" </c:if> >${selectData.LOWEST_DEPT_NM}</option>
 								</c:forEach>
@@ -81,15 +85,15 @@
 						</td>
 						<th scope="row">공사년도</th>
 							<td>
-								<select name="CNTRWK_YEAR" id="CNTRWK_YEAR" style="width:90px" class="select"  disabled="true">
-									<option value="">== 전체 ==</option>
+								<select name="CNTRWK_YEAR" id="CNTRWK_YEAR" class="select"  disabled="true">
+									<option value="">전체</option>
 									<c:forEach var="selectData" items="${cntrwkYears}">
 									<option value="${selectData}" <c:if test = "${selectData == cntrwkVO.CNTRWK_YEAR}"> selected="selected" </c:if> >${selectData}</option>
 									</c:forEach>
-								</select> 년
+								</select>
 								<input type="hidden" id="SRVY_YEAR" name="SRVY_YEAR" value="${cntrwkVO.CNTRWK_YEAR}">
 								<select name="HT_SE" id="HT_SE" class="select" style="width:80px; margin-left: 5px;" disabled="true">
-								<option value="">== 전체 ==</option>
+								<option value="">전체</option>
 									<c:forEach var="code" items="${codesHTSE}">
 									<option value="${code.CODE_VAL}" <c:if test = "${code.CODE_VAL == cntrwkVO.HT_SE}"> selected="selected" </c:if> >${code.CODE_NM}</option>
 									</c:forEach>
@@ -99,8 +103,8 @@
 						<tr>
 						<th scope="row">공사구분</th>
 						<td>
-							<select name="CNTRWK_SE" id="CNTRWK_SE" class="select"  disabled="true" style="width: 100%;">
-								<option value="">===== 전체 =====</option>
+							<select name="CNTRWK_SE" id="CNTRWK_SE" class="select"  disabled="true" >
+								<option value="">전체</option>
 								<c:forEach var="code" items="${codesCWSE}">
 								<option value="${code.CODE_VAL}" <c:if test = "${code.CODE_VAL == cntrwkVO.CNTRWK_SE}"> selected="selected" </c:if> >${code.CODE_NM}</option>
 								</c:forEach>
@@ -108,8 +112,8 @@
 						</td>
 						<th scope="row">공사분류</th>
 							<td>
-								<select name="CNTRWK_CL" id="CNTRWK_CL" class="select"  disabled="true" style="width: 80%;">
-									<option value="">===== 전체 =====</option>
+								<select name="CNTRWK_CL" id="CNTRWK_CL" class="select"  disabled="true">
+									<option value="">전체</option>
 									<c:forEach var="code" items="${codesCWCL}">
 									<option value="${code.CODE_VAL}" <c:if test = "${code.CODE_VAL == cntrwkVO.CNTRWK_CL}"> selected="selected" </c:if> >${code.CODE_NM}</option>
 									</c:forEach>
@@ -230,31 +234,23 @@
 						</tr>
 					</tbody>
 		        </table>
+		    </div>
 		    </form:form>
-	        </div>
-		</div>
-		<div class="scroll" style="width:50%;float:left;">
-	        	<form id="cellFrm2">
-                <input type="hidden" id="CELL_IDS" name="CELL_IDS" value=""/>
-                <div class="titbx">
-                    <h4>이전 공사이력</h4>
-                   
-                        <div id="div_grid2" style="width:100%; height:210px;">
-                            <table id="gridArea2"></table>
-                            <div id="gridPager2"></div>
-                        </div>                    
-                </div>
-           		</form>
-	        </div>
-	        <div class="mt10 tc">
-	            <div class="fr mr10">
-		           	<!-- <a href="#" onclick="fnViewLocation();" class="schbtn">위치조회</a> -->
-					<a href="#" class="schbtn" onclick="fnUpdate();">수정</a>
-					<a href="#" class="graybtn" onclick="fnDelete();">삭제</a>
-	           	</div>
-	        </div>
-	</div>
-</div>
+    	</article>
+    	
+    	<article class="div7" style="height:300px; overflow-y: auto">
+    		<h3 class="h3">이전 공사이력</h3>
+    		<form id="cellFrm2">
+	    		<div id="div_grid2" class="table">
+					<table id="gridArea2"></table>			
+				</div>
+				<div id="gridPager"></div>
+			</form>
+    	</article>
+    	
+    </div>
+
+
 
 <script type="text/javascript" defer="defer">
 

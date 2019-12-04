@@ -165,9 +165,11 @@ body.a00 li.a00 span, body.b00 li.b00 span, body.c00 li.c00 span, body.d00 li.d0
 
 .loc .container .locationHeader { float: left; }
 
-.loc .container .locationHeader select, .loc .container .locationHeader h2 { border: none; border-left: solid 1px #d6d6d6; height: 42px; border-radius: 0; margin: 0; font-size: 16px; padding: 0 50px  0 20px; float: left; }
+.loc .container .locationHeader select, .loc .container .locationHeader h2, .loc .container .locationHeader h3 { border: none; border-left: solid 1px #d6d6d6; height: 42px; border-radius: 0; margin: 0; font-size: 16px; padding: 0 50px  0 20px; float: left; }
 
-.loc .container .locationHeader h2 { padding-top: 11px; padding-left: 30px; height: 31px; font-weight: 600; background: none; line-height: 1; color: #333; text-align: inherit; }
+.loc .container .locationHeader h2, .loc .container .locationHeader h3 { padding-top: 11px; padding-left: 20px; padding-right: 20px; height: 31px; font-weight: 600; background: none; line-height: 1; color: #333; text-align: inherit; }
+
+.loc .container .locationHeader h3 { color: #555; background: url(../images/arrow14.gif) no-repeat 0 -45px; border-left: none; }
 
 .loc .container .locationHeader select { background: url(../images/selecetArrow2.gif) no-repeat 92% 19px; }
 
@@ -180,6 +182,8 @@ body.a00 li.a00 span, body.b00 li.b00 span, body.c00 li.c00 span, body.d00 li.d0
 .loc .container .locationSearch label { padding-left: 12px; color: #999; }
 
 .loc .container .locationSearch .btnSearch { width: 30px; height: 30px; font-size: 0; background: #777 url(../images/btnSearch.png) no-repeat center; border-radius: 3px; margin: 2px 6px 0 0; vertical-align: top; }
+
+.btnDetailView { border: solid 1px #ddd; background: #fff; color: #1e4c7f; vertical: middle; font-size: 14px; margin: 7px 0 0 0; padding: 3px 16px; border-radius: 2px; }
 
 .contentsWrap { border-top: 1px solid #69707e; position: fixed; width: 100%; bottom: 0; left: 0; height: 0; background: #fff; transition: all 0.2s ease 0s; z-index: 200; }
 
