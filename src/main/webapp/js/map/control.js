@@ -253,10 +253,14 @@ MAP.CONTROL = (function($, undefined) {
                         rshInfoCnt--;
                         gMap.cleanMap();
                         bottomClose();
-                    }else{
-                    	gMap.activeControls("drag");        	
                     }
                     wndpop[i].close();
+                    
+                    //이벤트 활성화 순서가 문제로 인한 조치
+                    var id = $(this).attr("id");
+                    if(id == 'researchInfo'){
+                    	$("#researchInfo").click();
+                    }
                 }
             }
         });
