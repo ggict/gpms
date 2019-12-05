@@ -246,6 +246,7 @@ MAP.CONTROL = (function($, undefined) {
             var wndpop = $.window.getAll();
             var len = wndpop.length;
             for (var i = len - 1; i >= 0; i--) {
+            	if(!wndpop[i]) return ;
                 var wndid = wndpop[i].getWindowId();
                 var wndidBody = $("#" + wndid).find("iframe").contents().find("body");
                 if (wndidBody.hasClass("right-tool") || wndidBody.hasClass("research")) {
