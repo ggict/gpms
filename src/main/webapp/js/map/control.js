@@ -1,50 +1,27 @@
 MAP.CONTROL = (function($, undefined) {
-    /**
-     * 속성 컨트롤 Tool
-     * @member {Object} attrControls
-     */
+	
+	//속성 컨트롤 Tool
     var attrControls = null;
 
-    /**
-     * 포장 셀 리스트
-     * @member {Array} selectFidList
-     */
+    //포장 셀 리스트
     var selectFidList = [];
 
-
-    /**
-     * 포장 셀 교차로 리스트
-     * @member {Array} crossCellList
-     */
+    //포장 셀 교차로 리스트
     var crossCellList = [];
 
-    /**
-     * 조사자료 조회 시 여러 셀 선택 되었을 경우 셀 리스트
-     * @member {Array} multiCellList
-     */
+    //조사자료 조회 시 여러 셀 선택 되었을 경우 셀 리스트
     var multiCellList = [];
 
-    /**
-     * 포장 셀 컨트롤 옵션
-     * @member {Object} option
-     */
+    //포장 셀 컨트롤 옵션
     var option = {}
 
-    //180807 wijy
-    /**
-     * 통합검색 셀 선택시 노선, 방향별 결과목록
-     * @member {Object} oCellsPerRD
-     */
+    //통합검색 셀 선택시 노선, 방향별 결과목록
     var oCellsPerRD = {};
 
-    //180809 wijy
     //통합검색 셀 시종점입력검색
     var listDef = [$.Deferred(), $.Deferred(), $.Deferred()];
 
-
-    /**
-     * @description 지도 컨트롤 이벤트를 추가한다.
-     */
+    //지도 컨트롤 이벤트를 추가한다
     var fn_add_mapControl = function() {
         fn_init_attr('');
         init_cellSel();
@@ -62,9 +39,11 @@ MAP.CONTROL = (function($, undefined) {
         //2019년 고도화 사업 - 포트홀신고정보(시군관리) 편집용 컨트롤 추가
         init_editPothole();
 
-        /**
-         * 지도 기본 컨트롤
-         */
+        //위치 통합조회
+        $("#mCtrlLocSearch").bind("click", function() {
+            COMMON_UTIL.cmWindowOpen('위치 통합검색(키워드검색)', contextPath + 'gmap/selectLocation.do', 322, 100, false, null, 'locsearch');
+        });
+        
         // 경위도 위치 이동
         $("#mCtrlLonLatMove").bind("click", function() {
             COMMON_UTIL.cmWindowOpen('경위도 좌표 이동', contextPath + 'selectLonLatMoveView.do', 590, 100, false, null, 'mvLonlan');
@@ -217,10 +196,7 @@ MAP.CONTROL = (function($, undefined) {
                 gMap.zoomToScale(scale);
         });
 
-        // 17.10.16 JOY 수정
-        // 18.05.25.YYK 추가 수정
-        // 위치통합검색/경위도에서 지도조작 클릭시에는 팝업 안 닫힘, 위치통합/경위도 끼리는 닫힘
-        // 지도 컨트롤 활성화 ui
+        // 지도 컨트롤 활성화 ui - 위치통합검색/경위도에서 지도조작 클릭시에는 팝업 안 닫힘, 위치통합/경위도 끼리는 닫힘
         $(".mtBtn").bind("click", function() {
             $(".mtBtn").parent("li").removeClass("active");
             $("#researchInfo").parent().removeClass("active"); // 조사정보 control 초기화
@@ -246,41 +222,28 @@ MAP.CONTROL = (function($, undefined) {
             var wndpop = $.window.getAll();
             var len = wndpop.length;
             for (var i = len - 1; i >= 0; i--) {
-            	if(!wndpop[i]) return ;
-                var wndid = wndpop[i].getWindowId();
-                var wndidBody = $("#" + wndid).find("iframe").contents().find("body");
-                if (wndidBody.hasClass("right-tool") || wndidBody.hasClass("research")) {
-                    if (wndidBody.hasClass("research")) {
-                        rshInfoCnt--;
-                        gMap.cleanMap();
-                        bottomClose();
-                    }
-                    wndpop[i].close();
-                    
-                    //right-tool 팝업창이 보여지고 있는 상태이면 이벤트 활성화에 문제가 발생하여 조치
-                    var id = $(this).attr("id");
-                    if(id == 'researchInfo'){
-                    	$("#researchInfo").click();
-                    }
-                }
+            	if(wndpop[i]){
+            		var wndid = wndpop[i].getWindowId();
+            		var wndidBody = $("#" + wndid).find("iframe").contents().find("body");
+            		if (wndidBody.hasClass("right-tool") || wndidBody.hasClass("research")) {
+            			if (wndidBody.hasClass("research")) {
+            				rshInfoCnt--;
+            				gMap.cleanMap();
+            				bottomClose();
+            			}
+            			wndpop[i].close();
+            			
+            			//right-tool 팝업창이 보여지고 있는 상태이면 이벤트 활성화에 문제가 발생하여 조치
+            			var id = $(this).attr("id");
+            			if(id == 'researchInfo'){
+            				$("#researchInfo").click();
+            			}
+            		}
+            	}
             }
         });
 
-        //위치 통합조회
-        $("#mCtrlLocSearch").bind("click", function() {
-            COMMON_UTIL.cmWindowOpen('위치 통합검색(키워드검색)', contextPath + 'gmap/selectLocation.do', 322, 100, false, null, 'locsearch');
-        });
-
-        /**
-         * 속성조회
-         */
-        $(".btnCloseAttr").bind("click", function() {
-            $(".divAttr").hide();
-        });
-
-        /**
-         * 포장 셀 등록
-         */
+        //포장 셀 등록
         $("#dvChoiceNSRes").dialog({
             width: 400,
             height: 150,
@@ -294,9 +257,7 @@ MAP.CONTROL = (function($, undefined) {
 
         //셀 단일 선택
         $("#btn_cellSelectWithClick").bind("click", function() {
-
             gMap.activeControls(["drag", "cellPoint"]);
-
             $("#dv_multiSelectPoly").slideUp();
             $("#dv_cellSelectionHelp").slideDown();
             var obj = $('#dvCellSelctionTool').find('a');
@@ -307,26 +268,23 @@ MAP.CONTROL = (function($, undefined) {
 
         //다중선택 Open
         $("#btn_openMultiSelectDv").on("click", function(e) {
-
             gMap.activeControls("drag");
-
-            //다중선택창 open
             var bHasOn = $(this).hasClass("on");
             if (bHasOn) {
                 $("#dv_multiSelectPoly").slideUp();
                 $(this).removeClass("on");
                 $("#dv_inputForSelectCells").slideUp();
                 $("#dv_cellSelectionHelp").slideUp();
-
             } else {
                 $("#dv_multiSelectPoly").slideDown();
                 $(this).addClass("on");
             }
             $("#dv_multiSelectPoly").find("li").removeClass("sel");
         });
-
+        
+        /*
         //노선입력 Open
-        /*$("#btn_cellSelectWithInput").on("click", function(e) {
+        $("#btn_cellSelectWithInput").on("click", function(e) {
         	var bHasOn = $(this).hasClass("on");
         	if(bHasOn) {
         		$("#dv_inputForSelectCells").slideUp();
@@ -334,21 +292,18 @@ MAP.CONTROL = (function($, undefined) {
         		$(this).parent().removeClass("sel");
         	} else {
         		//노선binding 및 초기화
-
         		fn_set_routeInfo();
         		$("#sel_cs_route option:eq(0)").prop("selected", true);
         	    $("#sel_cs_direct").html("<option value=''></option>");
         	    $("#sel_cs_track").html("<option value=''></option>");
         	    $("#ip_cs_strtpt").val("0");
         	    $("#ip_cs_endpt").val("0");
-
         		$("#dv_inputForSelectCells").slideDown();
         		$(this).addClass("on");
         	}
-
-        	//도움말
         	$("#dv_cellSelectionHelp").slideUp();
-        });*/
+        });
+        */
 
         //다각형 선택 클릭
         $("#btn_cellSelectWithPolygon").on("click", function() {
@@ -621,16 +576,8 @@ MAP.CONTROL = (function($, undefined) {
         }
     }
 
-
-
-    /** 속성 조회 */
-
-    /**
-     * @description 속성 조회 컨트롤을 추가한다.
-     * @param {String} _oChkTable : 체크할 테이블명
-     */
+    //속성 조회
     var fn_init_attr = function(_oChkTable) {
-        //test code insert
         var table = [];
 
         if (_oChkTable == '' || _oChkTable == null) {
@@ -657,7 +604,6 @@ MAP.CONTROL = (function($, undefined) {
             }),
             polygon: new GGetFeature(GPolygon, {
                 persist: false,
-                //serviceUrl : CONFIG.fn_get_serviceUrl(),
                 serviceUrl: CONFIG.fn_get_wfsServiceUrl(),
                 prefix: CONFIG.fn_get_dataHouseName(),
                 tables: table,
@@ -671,30 +617,25 @@ MAP.CONTROL = (function($, undefined) {
             attrControls[i].events.on({
                 "callback": fn_event_attr
             });
-
             // 속성 조회 컨트롤 추가
             gMap.addControl(attrControls[i]);
 
         }
     };
 
-    /**
-     * @description 속성 조회 callback
-     */
+    //속성 조회 callback
     var fn_event_attr = function(res) {
         if (typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
         if (res.success()) {
             if (res.data.length == "0") {
                 //영역내에 해당하는 자료가 없음
                 alert('검색 결과가 없습니다.');
-
                 //거리 표시 삭제
                 for (var i = gMap.popups.length - 1; i >= 0; i--) {
                     if (gMap.popups[i].type == "attrCircle") {
                         gMap.removePopup(gMap.popups[i]);
                     }
                 }
-
                 //검색 조건 피쳐 삭제
                 /*if(gMap.getControl("attrPoint") && gMap.getControl("attrPoint").handler && gMap.getControl("attrPoint").handler.layer && gMap.getControl("attrPoint").handler.layer.features && gMap.getControl("attrPoint").handler.layer.features.length > 0) {
                 	gMap.getControl("attrPoint").handler.layer.removeAllFeatures();
@@ -705,15 +646,11 @@ MAP.CONTROL = (function($, undefined) {
             }
 
         } else {
-            //요청 실패
             alert('요청 실패');
         }
     };
 
-    /**
-     * @description 속성 조회 대상 목록을 생성한다.
-     * @param {Object} _obj : 속성 조회 대상 객체
-     */
+    //속성 조회 대상 목록을 생성한다.
     var fn_create_attrTitle = function(_obj) {
         //거리 표시 삭제
         for (var i = gMap.popups.length - 1; i >= 0; i--) {
@@ -724,9 +661,7 @@ MAP.CONTROL = (function($, undefined) {
 
         //검색 조건 피쳐 삭제
         if (gMap.getControl("attrPoint") && gMap.getControl("attrPoint").handler && gMap.getControl("attrPoint").handler.layer && gMap.getControl("attrPoint").handler.layer.features && gMap.getControl("attrPoint").handler.layer.features.length > 0) {
-
             gMap.getControl("attrPoint").handler.layer.removeAllFeatures();
-
         }
 
         // 이전 결과 삭제
@@ -799,10 +734,7 @@ MAP.CONTROL = (function($, undefined) {
 
     };
 
-    /**
-     * @description 지도 위의 마우스 포인터를 변경한다.
-     * @param {String} _sCursor : 변경 대상 커서명
-     */
+    //지도 위의 마우스 포인터를 변경한다.
     function fn_cursor_map(_sCursor) {
         if (_sCursor == 'attrPoint') {
             //포인터조회
@@ -812,18 +744,10 @@ MAP.CONTROL = (function($, undefined) {
         }
     }
 
-    /**
-     * @description 속성 조회 상세 결과 리스트를 생성한다.
-     * @param {Object} _obj : 속성조회 결과를 가지고 있는 객체
-     * @param {Integer} _oTblInx : 테이블 index
-     * @param {Integer} _oRetInx : 선택한 객체 index
-     * @param {boolean} _oAlis : alias 여부
-     */
+    //속성 조회 상세 결과 리스트를 생성한다.
     var fn_create_attrContent = function(_obj, _oTblInx, _oRetInx, _oAlis) {
-
         //선택한 featuer 초기화
         fn_create_dtlinfo(_obj, _oTblInx, _oRetInx);
-        /* 테이블 스타일 수정*/
         $("#tbIdenti").css("margin-left", "5px");
         $("#tbIdenti td").css("text-align", "center");
 
@@ -933,13 +857,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-    /**
-     * @description 공통코드 값을 가져온다.
-     * @param {String} _oConFld : 컬럼 값
-     * @param {String} _oTblNam : 테이블 명
-     * @param {String} _oCdeNam : 코드 명
-     * @param {String} _oCdeVal : 코드 값
-     */
+    //공통코드 값을 가져온다.
     var fn_get_cdeval = function(_oConFld, _oTblNam, _oCdeNam, _oCdeVal) {
         $.post(contextPath + "api/code/selectCodeName.do", {
             COLUM_VAL: _oConFld,
@@ -961,12 +879,7 @@ MAP.CONTROL = (function($, undefined) {
         }, 'json');
     };
 
-    /**
-     * @description 속성조회 상세정보를 생성한다.
-     * @param {Object} _obj : 속성조회 결과를 가지고 있는 객체
-     * @param {Integer} _oTblInx : 테이블 index
-     * @param {Integer} _oRetInx : 선택한 객체 index
-     */
+    //속성조회 상세정보를 생성한다.
     var fn_create_dtlinfo = function(_obj, _oTblInx, _oRetInx) {
         var tagStr = "";
 
@@ -1065,10 +978,7 @@ MAP.CONTROL = (function($, undefined) {
     }
 
 
-    /** 포장셀 컨트롤 */
-    /**
-     * @description 포장셀 컨트롤을 등록한다.
-     */
+    //포장셀 컨트롤 
     var init_cellSel = function() {
         //181123 wijy 다중컨트롤 활성화를 위해 handler변경
         var selControls = {
@@ -1085,7 +995,6 @@ MAP.CONTROL = (function($, undefined) {
             //polygon : new GGetFeature(GPolygon, {
             polygon: new GGetFeature(OpenLayers.Handler.Polygon, {
                 persist: false,
-                //serviceUrl : CONFIG.fn_get_serviceUrl(),
                 serviceUrl: CONFIG.fn_get_wfsServiceUrl(),
                 prefix: CONFIG.fn_get_dataHouseName(),
                 tables: ["CELL_10"],
@@ -1097,7 +1006,6 @@ MAP.CONTROL = (function($, undefined) {
             //line : new GGetFeature(GPath, {
             line: new GGetFeature(OpenLayers.Handler.Path, {
                 persist: false,
-                //serviceUrl : CONFIG.fn_get_serviceUrl(),
                 serviceUrl: CONFIG.fn_get_wfsServiceUrl(),
                 prefix: CONFIG.fn_get_dataHouseName(),
                 tables: ["CELL_10"],
@@ -1111,19 +1019,15 @@ MAP.CONTROL = (function($, undefined) {
                 "callback": event_selFeature,
                 "mousemove": function() {}
             });
-
             // 속성 조회 컨트롤 추가
             gMap.addControl(selControls[i]);
-
         }
     };
-
 
     var init_cellSelLonLat = function() {
         var selControls = {
             point: new GGetFeature(GPoint, {
                 persist: true,
-                //serviceUrl : CONFIG.fn_get_serviceUrl(),
                 serviceUrl: CONFIG.fn_get_wfsServiceUrl(),
                 prefix: CONFIG.fn_get_dataHouseName(),
                 tables: ["CELL_10"],
@@ -1144,10 +1048,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-    /**
-     * @description 포장셀 컨트롤을 활성화 시킨다.
-     * @param {String} _sTableNm : 테이블명
-     */
+    //포장셀 컨트롤을 활성화 시킨다.
     var activate_cellSel = function(_sTableNm, data) {
         // 2017.10.12 ERROR : 개체가 'select_node' 속성이나 메서드를 지원하지 않습니다.
         //$("#dvLayerList").jstree(true).select_node("#"+_sTableNm);
@@ -1159,7 +1060,6 @@ MAP.CONTROL = (function($, undefined) {
         // 수정 여부
         if (option.cellIdList != undefined && option.cellIdList.length > 0 && option.selField != undefined && option.selField.length > 0) {
             selectFidList = option.cellIdList;
-
             //MAP.fn_get_selectFeatureByAttr(gMap, [_sTableNm], [option.selField], [option.cellIdList], null, "OR");
             MAP.fn_get_selectFeatureByAttrMulti(gMap, [_sTableNm], [option.selField], [option.cellIdList], null, "OR");
         }
@@ -1202,68 +1102,50 @@ MAP.CONTROL = (function($, undefined) {
         bottomClose();
     };
 
-    /**
-     * @description 포장셀 마우스 event
-     */
+    //포장셀 마우스 event
     var select_mouseEvent = function() {
         //다중선택시
         $(document).on("mouseenter", ".tr_nsInfosRow", function(evt) {
             $(this).css("background-color", "#ddd");
             var idx = $(this).find("td:eq(0)").text();
-
             var feats = get_crossCellFeat(idx);
-
             for (var i = 0; i < feats.length; i++) {
                 feats[i].attributes = {
                     fillColor: '#0000FF',
                     strokeColor: '#0000FF'
                 };
-
                 gMap.getLayerByName('GAttrLayer').addFeatures(feats[i]);
-
             }
         }).on("mouseleave", ".tr_nsInfosRow", function(evt) {
             $(this).css("background-color", "#fff");
-
             var idx = $(this).find("td:eq(0)").text();
             var feats = get_crossCellFeat(idx);
-
             for (var i = 0; i < feats.length; i++) {
-
                 gMap.getLayerByName('GAttrLayer').removeFeatures(feats[i]);
-
             }
         }).on("click", ".tr_nsInfosRow", function(evt) {
             var idx = $(this).find("td:eq(0)").text();
-
             var feats = get_crossCellFeat(idx);
-
             for (var i = 0; i < feats.length; i++) {
                 add_feature(feats[i], "GAttrLayer");
             }
-
             $("#res_ChoidNSList").html('');
             $("#dvChoiceNSRes").dialog("close");
         });
     };
 
-    /**
-     * @description 포장셀 컨트롤 event
-     */
+    //포장셀 컨트롤 event
     var event_selFeature = function(res) {
         //로딩바 숨김
         $("#dvMapLoading").hide();
-
         if (!res.success()) {
             return;
         }
-
         //검색 조건 피쳐 삭제
         if (gMap.getControl(res.object.id) && gMap.getControl(res.object.id).handler &&
             gMap.getControl(res.object.id).handler.layer && gMap.getControl(res.object.id).handler.layer.features &&
             gMap.getControl(res.object.id).handler.layer.features.length > 0) {
             gMap.getControl(res.object.id).handler.layer.removeAllFeatures();
-
         }
 
         if (res.data == undefined || res.data.length < 1) {
@@ -1299,7 +1181,6 @@ MAP.CONTROL = (function($, undefined) {
 
     // 위경도 위치조회-> 셀선택1개만되게
     var event_selFeatureLonLat = function(res) {
-
         if (gMap.getLayerByName("GAttrLayerMulti").features.length != 0) {
             alert("이미 선택된 레이어가 존재합니다.");
             parent.gMap.activeControls("drag");
@@ -1310,7 +1191,6 @@ MAP.CONTROL = (function($, undefined) {
         if (!res.success()) {
             return;
         }
-
 
         // 검색 조건 피쳐 삭제
         if (gMap.getControl(res.object.id) &&
@@ -1354,37 +1234,23 @@ MAP.CONTROL = (function($, undefined) {
             alert(err);
         }
     };
-
-
-    /**
-     * @description 선택된 셀 중 교차로 여부를 체크한다.
-     * @param {Array} _oResList : 체크 대상 리스트
-     */
+    
+    //선택된 셀 중 교차로 여부를 체크한다.
     var check_intersection = function(_oResList) {
         var routeCodeList = [];
         var result = false;
-
         for (var i in _oResList) {
             var route_code = _oResList[i].fields.ROUTE_CODE || _oResList[i].fields.route_code;
             routeCodeList.push(route_code);
         }
-
         var chkList = COMMON_UTIL.unique(routeCodeList);
-
         if (chkList.length > 1) {
             result = true;
         }
-
         return result;
     };
 
-    /**
-     * @description feature를 vector layer에 등록한다.
-     * @param {Object} _oFeature : 등록 대상 feature
-     * @param {Object} _oEvt : 컨트롤 event
-     * //181107 wijy 추가
-     * @param {String} _sTargetLayer : 대상레이어
-     */
+    //feature를 vector layer에 등록한다.
     var add_feature = function(_oFeature, _oEvt, _sTargetLayer) {
         var fid = _oFeature.data.CELL_ID || _oFeature.data.cell_id;
         // 기존에 remove_feature는 GAttrLayer에서 하고 addFeature는 GAttrLayerMulti에서 하고 있음. 확인 필요
@@ -1407,11 +1273,7 @@ MAP.CONTROL = (function($, undefined) {
         gMap.getLayerByName(_sTargetLayer).addFeatures(_oFeature);
     };
 
-    /**
-     * @description feature를 vector layer에 등록한다. ( Multi Layer )
-     * @param {Object} _oFeature : 등록 대상 feature
-     * @param {Object} _oEvt : 컨트롤 event
-     */
+    //feature를 vector layer에 등록한다. ( Multi Layer )
     var add_feature_multi = function(_oFeature, _oEvt) {
         var fid = _oFeature.data.CELL_ID || _oFeature.data.cell_id;
 
@@ -1432,11 +1294,7 @@ MAP.CONTROL = (function($, undefined) {
         gMap.getLayerByName('GAttrLayerMulti').addFeatures(_oFeature);
     };
 
-    /**
-     * @description 교량 feature를 vector layer에 등록한다.
-     * @param {Object} _oFeature : 등록 대상 feature
-     * @param {Object} _oEvt : 컨트롤 event
-     */
+    //교량 feature를 vector layer에 등록한다.
     //181107 wijy : GAttrLayer사용하도록 수정
     var add_brdg_feature = function(_oFeature, _oEvt) {
         var fid = _oFeature.data.BRDG_SEQ || _oFeature.data.brdg_seq;
@@ -1460,11 +1318,7 @@ MAP.CONTROL = (function($, undefined) {
 
     };
 
-    /**
-     * @description section feature를 vector layer에 등록한다.
-     * @param {Object} _oFeature : 등록 대상 feature
-     * @param {Object} _oEvt : 컨트롤 event
-     */
+    //section feature를 vector layer에 등록한다.
     var add_sect_feature = function(_oFeature, _oEvt) {
 
         var fid = _oFeature.data.OBJECT_ID;
@@ -1487,13 +1341,9 @@ MAP.CONTROL = (function($, undefined) {
     };
 
 
-
     /*============ YYK 20180219 ============*/
-    /**
-     * @description section marker를 vector layer에 등록한다.
-     * @param {Object} _oMarker : 등록 대상 marker
-     * @param {Object} _oEvt : 컨트롤 event
-     */
+    
+    //section marker를 vector layer에 등록한다.
     var add_sttemnt_feature = function(_oFeature, _oEvt) {
 
         // JOY
@@ -1547,11 +1397,8 @@ MAP.CONTROL = (function($, undefined) {
 
 
     /*============ YYK. 2018.02.27 ============*/
-    /**
-     * @description section Feature를 vector layer에 등록한다.
-     * @param {Object} _oFeature : 등록 대상 Feature
-     * @param {Object} _oEvt : 컨트롤 event
-     */
+    
+    //section Feature를 vector layer에 등록한다.
     var add_dmgt_feature = function(_oFeature, _oEvt) {
 
         var pth = _oFeature.data.allData.PTH_RG_NO;
@@ -1603,14 +1450,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-
-
-    /**
-     * @description feature를 vector layer에서 삭제한다.
-     * @param {String} _sFid : 삭제 대상 id
-     * //181107 wijy 레이어 조건 추가
-     * @param {String} _sTargetLayer : 삭제 대상 Layer
-     */
+    //feature를 vector layer에서 삭제한다.
     var remove_feature = function(_sFid, _sTargetLayer) {
         if (_sTargetLayer == null || _sTargetLayer == "") _sTargetLayer = "GAttrLayer";
 
@@ -1635,12 +1475,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-    /**
-     * @description 여러개의 노선이 선택되었는지 체크한다.
-     * @param {String} _sCellIds : cell id
-     * @param {Object} _oRes : feature 리스트
-     * @param {String} _sCheckType : 체크 대상 (단일검색 / 다중검색)
-     */
+    //여러개의 노선이 선택되었는지 체크한다.
     var check_routeInfo_new = function(_sCellIds, _oRes, _sCheckType) {
         var sUrl = contextPath + 'api/cell10/selectRouteInfos.do';
 
@@ -1725,11 +1560,7 @@ MAP.CONTROL = (function($, undefined) {
         });
     };
 
-    /**
-     * @description 단일 검색의 중용구간 목록을 보여준다.
-     * @param {Object} _oRes : feature 리스트
-     * @param {Object} _oData : 중용구간 목록 정보
-     */
+    //단일 검색의 중용구간 목록을 보여준다.
     var set_routeInfo_single = function(_oRes, _oData) {
         var html = "<table class='tblist' style='background-color:#fff;'>" +
             "<colgroup>" +
@@ -1794,11 +1625,7 @@ MAP.CONTROL = (function($, undefined) {
         return html;
     };
 
-    /**
-     * @description 다중 검색의 중용구간 목록을 보여준다.
-     * @param {Object} _oRes : feature 리스트
-     * @param {Object} _oData : 중용구간 목록 정보
-     */
+    //다중 검색의 중용구간 목록을 보여준다.
     var set_routeInfo_Multi = function(_oRes, _oData) {
         var html = "<table class='tblist' style='background-color:#fff;'>" +
             "<colgroup>" +
@@ -1846,9 +1673,7 @@ MAP.CONTROL = (function($, undefined) {
         return html;
     }
 
-    /**
-     * @description 셀 필드 정보를 feature.data에 복사한다.
-     */
+    //셀 필드 정보를 feature.data에 복사한다.
     var set_dataField = function(res) {
         for (var i in res) {
             var result = res[i];
@@ -1858,9 +1683,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     }
 
-    /**
-     * @description cell_id 값을 배열로 가져온다.
-     */
+    //cell_id 값을 배열로 가져온다.
     var get_cellIds = function(res) {
         var cellIds = "";
         for (var i in res) {
@@ -1874,10 +1697,7 @@ MAP.CONTROL = (function($, undefined) {
         return cellIds;
     };
 
-    /**
-     * @description 교차로 구간의 feature들을 가져온다.
-     * @param {String} _sRouteCd : 가져올 대상 노선 코드
-     */
+    //교차로 구간의 feature들을 가져온다.
     var get_crossCellFeat = function(_sRouteCd) {
         var feats = [];
         for (var i = 0; i < crossCellList.length; i++) {
@@ -1889,7 +1709,7 @@ MAP.CONTROL = (function($, undefined) {
         return feats;
     };
 
-    /** 통합정보조회 컨트롤 */
+    //통합정보조회 컨트롤
     var init_inteSelRoad = function() {
         var selControls = {
             point: new GGetFeature(GPoint, {
@@ -1920,9 +1740,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-    /**
-     * @description 통합정보조회 컨트롤 event - 노선조회
-     */
+    //통합정보조회 컨트롤 event - 노선조회
     var event_selFeatureRoad = function(res) {
         if (typeof $("#dvMapLoading") == "object") {
             $("#dvMapLoading").hide();
@@ -1998,12 +1816,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     }
 
-
-    // =========================== RESEARCH INFO =========================== //
-
-    /**
-     * @description 통합정보조회 컨트롤을 등록한다. - 포장상태 조사정보
-     */
+    //통합정보조회 컨트롤을 등록한다. - 포장상태 조사정보
     var init_inteSelResearch = function() {
         var selControls = {
             point: new GGetFeature(GPoint, {
@@ -2034,9 +1847,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-    /**
-     * @description 통합정보조회 컨트롤 event - 포장상태 조사정보
-     */
+	//통합정보조회 컨트롤 event - 포장상태 조사정보
     var event_selFeatureResearch = function(res) {
         if (typeof $("#dvMapLoading") == "object") {
             $("#dvMapLoading").hide();
@@ -2104,15 +1915,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-
-
-    // =========================== STTEMNT INFO =========================== //
-
-    /** 2018.02.18. YYK. 포트홀신고관리 컨트롤
-     *
-     * @description 포트홀신고관리 컨트롤을 등록
-     */
-    // JOY
+    // JOY  포트홀신고관리 컨트롤
     var init_inteSelSttemnt = function() {
         var selControls = {
             point: new GGetFeature(GPoint, {
@@ -2182,9 +1985,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-    /**
-     * @description 신고정보 공간검색 컨트롤 event
-     */
+    //신고정보 공간검색 컨트롤 event
     var event_selFeatureSttemnt = function(res) {
         // 레이어 선택 ( GStatusLayer / GTypeLayer )
         var layerNm = $("#status").hasClass("on") ? "GStatusLayer" : "GTypeLayer";
@@ -2337,13 +2138,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-    /**
-     * 통합정보조회 - 조사정보조회
-     * @description 여러개의 셀이 선택되었는지 체크한다.
-     * @param {String} _sCellIds : CELL_ID
-     * @param {Object} _oRes : feature 리스트
-     * @param {String} _sCheckType : 체크 대상 (단일검색 / 다중검색)
-     */
+    //통합정보조회 - 조사정보조회
     var check_researchInfo = function(_sCellIds, _oRes, _sCheckType) {
         var sUrl = "";
         switch (_sCheckType) {
@@ -2396,12 +2191,7 @@ MAP.CONTROL = (function($, undefined) {
         });
     };
 
-    /**
-     * 통합정보조회 - 조사정보조회
-     * @description 단일 검색의 중용구간 목록을 보여준다.
-     * @param {Object} _oRes : feature 리스트
-     * @param {Object} _oData : 중용구간 목록 정보
-     */
+    //통합정보조회 - 조사정보조회 단일 검색의 중용구간 목록을 보여준다.
     var set_researchInfo_single = function(_oRes, _oData) {
         var html = "";
         html += "<table class='tblist' style='background-color:#fff;'>" +
@@ -2460,9 +2250,7 @@ MAP.CONTROL = (function($, undefined) {
         return html;
     };
 
-    /**
-     * @description 섹션리스트 마우스 event
-     */
+    //섹션리스트 마우스 event
     var select_SctnMouseEvent = function() {
         //다중선택시
         $(document).on("mouseenter", ".tr_SctnInfosRows", function(evt) {
@@ -2505,9 +2293,7 @@ MAP.CONTROL = (function($, undefined) {
         });
     };
 
-    /**
-     * @description multi select 된 셀 리스트 조회
-     */
+    //multi select 된 셀 리스트 조회
     var get_multiCellFeat = function(_sCellId) {
         var feats = [];
         for (var i = 0; i < multiCellList.length; i++) {
@@ -2520,7 +2306,7 @@ MAP.CONTROL = (function($, undefined) {
         return feats;
     };
 
-    /** 통합정보조회 컨트롤 */
+    //통합정보조회 컨트롤
     var init_inteSelRange = function() {
         var selControls = {
             point: new GGetFeature(GPoint, {
@@ -2740,9 +2526,7 @@ MAP.CONTROL = (function($, undefined) {
         }
     }
 
-    /**
-     * @description 통합정보조회 컨트롤 event - 포장상태평가 (셀조회)
-     */
+    //통합정보조회 컨트롤 event - 포장상태평가 (셀조회)
     var event_selFeatureRange = function(res) {
         $("#dvMapLoading").hide();
         MAP.CONTROL.oCellsPerRD = {};
@@ -2813,7 +2597,6 @@ MAP.CONTROL = (function($, undefined) {
         }
     };
 
-    // =========================== BRIDGE INFO =========================== //
     //통합조회_교량
     var init_inteSelBrdg = function() {
         var selBrdgControls = {
@@ -2867,62 +2650,37 @@ MAP.CONTROL = (function($, undefined) {
 
             } else {
                 try {
-
                     // 검색할 내용이 선택된 경우
                     for (var i = 0; i < res.data.length; i++) {
-
-                        if (res.data[i].results == undefined ||
-                            res.data[i].results.length < 1) {
-
+                        if (res.data[i].results == undefined || res.data[i].results.length < 1) {
                             continue;
-
                         } else if (res.data[i].results.length > 500) {
-
                             alert("검색할 교량이 너무 많습니다.");
                             gMap.cleanMap();
-
                             return;
-
                         }
 
                         gMap.cleanMap();
                         var evt = gMap.getControl(res.object.id).handler.evt;
                         set_dataField(res.data[i].results);
-
                         for (var j = 0; j < res.data[i].results.length; j++) {
-
                             add_brdg_feature(res.data[i].results[j].feature, evt);
-
                         }
-
                     }
-
                     if (option.callback != undefined && option.callback != "") {
-
-                        // 함수 콜백
                         option.iframe[option.callback](option);
-
                     }
-
                 } catch (err) {
-
                     alert(err);
-
                 }
             }
 
         } else {
-            //요청 실패
             alert('요청 실패');
         }
     };
 
-    // ====================================================================== //
-
-
-    /**
-     * @description 2019년 고도화 사업 - 포트홀신고정보(시군관리) 편집용 컨트롤 생성
-     */
+    //2019년 고도화 사업 - 포트홀신고정보(시군관리) 편집용 컨트롤 생성
     var init_editPothole = function() {
 
         var defaultStyle = {
@@ -3036,9 +2794,7 @@ MAP.CONTROL = (function($, undefined) {
 
     };
 
-    /**
-     * @description 2019년 고도화 사업 - 포트홀신고정보(시군관리) 편집용 컨트롤 event
-     */
+    //2019년 고도화 사업 - 포트홀신고정보(시군관리) 편집용 컨트롤 event
     var event_editFeaturePthmnt = function() {
 
         //위치그린거 가져오기
@@ -3151,10 +2907,7 @@ MAP.CONTROL = (function($, undefined) {
 
     };
 
-
-    /**
-     * @description 2019년 고도화 사업 - 포트홀신고정보(시군관리) 편집용 컨트롤 event
-     */
+    //2019년 고도화 사업 - 포트홀신고정보(시군관리) 편집용 컨트롤 event
     var event_modifyFeaturePthmnt = function() {
 
         //위치그린거 가져오기
@@ -3266,7 +3019,6 @@ MAP.CONTROL = (function($, undefined) {
         gMap.activeControls("drag");
         $("#dvMapLoading").hide();
     };
-
 
     var event_modifyFeaturePthmnt2 = function() {
 
@@ -3381,10 +3133,7 @@ MAP.CONTROL = (function($, undefined) {
 
     };
 
-
-    /**
-     * @description 포트홀 신고등록 - 삭제 처리
-     */
+    //포트홀 신고등록 - 삭제 처리
     var deleteFeaturePthmnt = function() {
 
         //위치선택 가져오기
@@ -3422,7 +3171,6 @@ MAP.CONTROL = (function($, undefined) {
                 contentType: 'application/json; charset=UTF-8',
                 data: JSON.stringify(postData),
                 success: function(res) {
-
                     if (res != 1) {
                         alert("삭제 실패하였습니다.");
                         return;
@@ -3430,18 +3178,14 @@ MAP.CONTROL = (function($, undefined) {
 
                     //위치 정보 삭제
                     if (MGG_ID != "") {
-
                         //위치정보 삭제하지 않음.
                         //MAP.fn_del_feature("PTH_CTSMNT",MGG_ID);
                         fnSelectLayer();
-
                         gMap.activeControls("drag");
                         gMap.getLayerByName('SttemntLayer').removeAllFeatures();
                         gMap.getLayerByName('DmgtLayer').removeAllFeatures();
-
                     }
                     alert("삭제되었습니다.");
-
                 }
             });
         } else {
@@ -3454,15 +3198,11 @@ MAP.CONTROL = (function($, undefined) {
 
     };
 
-
-    /**
-     * @description 셀 속성 편집
-     */
+    //셀 속성 편집
     var init_selSectControls = function() {
         var selSectControls = {
             point: new GGetFeature(GPoint, {
                 persist: true,
-                //serviceUrl : CONFIG.fn_get_serviceUrl(),
                 serviceUrl: CONFIG.fn_get_wfsServiceUrl(),
                 prefix: CONFIG.fn_get_dataHouseName(),
                 tables: ["CELL_SECT"],
@@ -3471,7 +3211,6 @@ MAP.CONTROL = (function($, undefined) {
             }),
             polygon: new GGetFeature(GPolygon, {
                 persist: false,
-                //serviceUrl : CONFIG.fn_get_serviceUrl(),
                 serviceUrl: CONFIG.fn_get_wfsServiceUrl(),
                 prefix: CONFIG.fn_get_dataHouseName(),
                 tables: ["CELL_SECT"],
@@ -3485,21 +3224,15 @@ MAP.CONTROL = (function($, undefined) {
                 "callback": event_selSectFeature,
                 "mousemove": function() {}
             });
-
-            // 속성 조회 컨트롤 추가
             gMap.addControl(selSectControls[i]);
-
         }
     };
-
 
     var set_option = function(_oData) {
         option = _oData;
     }
 
-    /**
-     * @description 셀 속성 컨트롤 event
-     */
+    //셀 속성 컨트롤 event
     var event_selSectFeature = function(res) {
         if (typeof $("#dvMapLoading") == "object") $("#dvMapLoading").hide();
         if (res.success()) {
@@ -3521,49 +3254,29 @@ MAP.CONTROL = (function($, undefined) {
                 try {
                     // 검색할 내용이 선택된 경우
                     for (var i = 0; i < res.data.length; i++) {
-
-                        if (res.data[i].results == undefined ||
-                            res.data[i].results.length < 1) {
-
+                        if (res.data[i].results == undefined || res.data[i].results.length < 1) {
                             continue;
-
                         } else if (res.data[i].results.length > 500) {
-
                             alert("검색할 섹션이 너무 많습니다.");
                             gMap.cleanMap();
-
                             return;
-
                         }
 
                         gMap.cleanMap();
                         var evt = gMap.getControl(res.object.id).handler.evt;
                         set_dataField(res.data[i].results);
-
                         for (var j = 0; j < res.data[i].results.length; j++) {
-
                             add_sect_feature(res.data[i].results[j].feature, evt);
-
                         }
-
                     }
-
                     if (option.callback != undefined && option.callback != "") {
-
-                        // 함수 콜백
                         option.iframe[option.callback](option);
-
                     }
-
                 } catch (err) {
-
                     alert(err);
-
                 }
             }
-
         } else {
-            //요청 실패
             alert('요청 실패');
         }
     };
@@ -3604,11 +3317,9 @@ MAP.CONTROL = (function($, undefined) {
         init_inteSelResearch: init_inteSelResearch,
         event_selFeatureResearch: event_selFeatureResearch,
 
-        // YYK 2180219
         init_inteSelSttemnt: init_inteSelSttemnt,
         event_selFeatureSttemnt: event_selFeatureSttemnt,
 
-        //2019년 고도화 사업 - 포트홀신고정보(시군관리) 편집용 컨트롤, 이벤트
         init_editPothole: init_editPothole,
         event_editFeaturePthmnt: event_editFeaturePthmnt,
         event_modifyFeaturePthmnt: event_modifyFeaturePthmnt,
