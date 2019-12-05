@@ -82,7 +82,7 @@ require.config({
 function drawLenChart(dataList){
     var degree = (dataList.length > 10) ? 40 : 0;
     
-    var deptList = dataList.map(function(elem) { return elem.adm_nm }).reduce(function(a,b) { if(a.indexOf(b)<0) a.push(b); return a; }, []);
+    var admList = dataList.map(function(elem) { return elem.adm_nm }).reduce(function(a,b) { if(a.indexOf(b)<0) a.push(b); return a; }, []);
     var trackList = dataList.map(function(elem) { return elem.track }).reduce(function(a,b) { if(a.indexOf(b)<0) a.push(b); return a; }, []);
     var pavData = dataList.map(function(elem) { return elem.total_l });
     var cntrwkData = dataList.map(function(elem) { return elem.cntrwk_len });
@@ -94,7 +94,7 @@ function drawLenChart(dataList){
         myChart.setOption({
             //color: ['#003366', '#4cabce'], 
             //title  : { text: '차로 연장', x:'left' },
-            title    : { text: deptList[0], x:'left' },
+            title    : { text: admList[0], x:'left' },
             tooltip : { trigger: 'axis'             },
             toolbox : { show: true,
                    feature: {

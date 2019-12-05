@@ -43,22 +43,11 @@
                         </td>
                         <td>
                             <select id="SRVY_YEAR">
-                                <option value="2019">2019</option>
-                                <option value="2018">2018</option>
-                                <option value="2017">2017</option>
+                                <c:forEach items="${slctnYearList}" var="slctnYear">
+                                    <option value="${slctnYear}">${slctnYear}</option>
+                                </c:forEach>
                             </select>
                         </td>
-<%--                         <td class="th">
-                            <label for="SCH_DEPT_CODE">관리기관</label>
-                        </td>
-                        <td>
-			                <select name="SCH_DEPT_CODE" id="SCH_DEPT_CODE" style="width: 120px;">
-			                    <option value="">== 전체 ==</option>
-			                    <c:forEach var="selectData" items="${deptCdList}">
-			                        <option value="${selectData.DEPT_CODE}">${selectData.LOWEST_DEPT_NM}</option>
-			                    </c:forEach>
-			                </select>
-                        </td> --%>
                         <td class="th">
                             <label for="SCH_ROAD_GRAD">도로등급</label>
                         </td>

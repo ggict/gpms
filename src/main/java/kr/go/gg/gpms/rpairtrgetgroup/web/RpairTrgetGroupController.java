@@ -889,6 +889,9 @@ public class RpairTrgetGroupController  extends BaseController {
 	 */
 	@RequestMapping(value = "/rpairtrgetgroup/rpairRoutLenStats.do")
 	public String viewRpairRoutLenStats(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
+		
+		// 선정년도 (2017 ~ 현재연도)
+		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
 
 		model.addAttribute("rpairTrgetGroupVO", rpairTrgetGroupVO);
 
@@ -939,6 +942,9 @@ public class RpairTrgetGroupController  extends BaseController {
 	 */
 	@RequestMapping(value = "/rpairtrgetgroup/rpairDeptLenStats.do")
 	public String rpairDeptLenStats(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
+		
+		// 선정년도 (2017 ~ 현재연도)
+		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
 
 		model.addAttribute("rpairTrgetGroupVO", rpairTrgetGroupVO);
 
