@@ -256,7 +256,7 @@ MAP.CONTROL = (function($, undefined) {
                     }
                     wndpop[i].close();
                     
-                    //이벤트 활성화 순서가 문제로 인한 조치
+                    //right-tool 팝업창이 보여지고 있는 상태이면 이벤트 활성화에 문제가 발생하여 조치
                     var id = $(this).attr("id");
                     if(id == 'researchInfo'){
                     	$("#researchInfo").click();
