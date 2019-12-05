@@ -390,7 +390,7 @@ function fnSelectEvaluationDetail() {
 
                         for ( var i = 0; i < valArr.length; i++ ) {
                             // max값과 같은 경우 텍스트 추가
-                            if ( valArr[i] == minVal ) {
+                            if ( valArr[i] == maxVal ) {
                                 /* 
                             	if ( i != 0 ) {
                                     crVal += ", ";
@@ -542,7 +542,7 @@ function fnSelectLastSttus(obj) {
 	                        for ( var i = 0; i < valArr.length; i++ ) {
 
 	                            // max값과 같은 경우 텍스트 추가
-	                            if ( valArr[i] == minVal ) {
+	                            if ( valArr[i] == maxVal ) {
 	                            	/* 
 	                                if ( i != 0 ) {
 	                                    crVal += ", ";
