@@ -259,4 +259,26 @@ public class SrvyDtaDAO extends BaseDAO {
 	public int selectSrvyDtaUploadFileCount(SrvyDtaVO srvyDtaVO) {
 		return (Integer) select("srvyDtaDAO.selectSrvyDtaUploadFileCount", srvyDtaVO);
 	}
+	
+	/**
+	 * AI_자료(TMP_AI_DTA)를 등록한다.
+	 * @param srvyDtaVO - 등록할 정보가 담긴 srvyDtaVO
+	 * @return 등록 결과
+	 * @exception Exception
+	 */
+	public String insertAiDta(SrvyDtaVO srvyDtaVO) throws Exception {
+		return (String) insert("srvyDtaDAO.insertAiDta", srvyDtaVO);
+	}
+	
+	/**
+	 * AI_자료(TMP_AI_DTA)를 조회한다.
+	 * @param 
+	 * @return 조회한 TMP_AI_DTA
+	 * @exception Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<SrvyDtaVO> selectAiDtaList() throws Exception {
+		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectAiDtaList");
+	}
+	
 }

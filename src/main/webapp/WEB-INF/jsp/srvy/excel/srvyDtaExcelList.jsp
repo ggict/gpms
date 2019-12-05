@@ -35,7 +35,7 @@ $( document ).ready(function() {
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
 		//,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
-		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","등록일자","등록자","분석자료","등록번호","조사번호"]
+		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","조사일자","등록자","분석자료","등록번호","조사번호"]
 	   	,colModel:[
 			 {name:'route_CODE',index:'route_CODE', align:'center', width:70}
 			,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
@@ -43,14 +43,14 @@ $( document ).ready(function() {
 			,{name:'track',index:'TRACK', align:'center', width:70}
 			,{name:'success_KND',index:'success_KND', align:'center', width:70, formatter:fn_btn_formatter_fail}
 			,{name:'data_CO',index:'data_CO', align:'center', width:70}
-			,{name:'CREAT_DT',index:'CREAT_DT', align:'center', width:70}
+			,{name:'srvy_DE',index:'srvy_DE', align:'center', width:70}
 			,{name:'crtr_NM',index:'crtr_NM', align:'center', width:50}
 			,{name:'분석자료',index:'분석자료', align:'center', width:50, formatter:fn_btn_anal_data}
 			,{name:'CRTR_NO',index:'CRTR_NO', hidden: true}
 			,{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
 	   	]
 		,async : false
-	   	,sortname: 'CREAT_DT'
+	   	,sortname: 'srvy_DE'
 	    ,sortorder: "desc"
 	   	,rowNum: 50
 	   	,rowList: [10,50,100,500]
@@ -105,7 +105,7 @@ function fn_file_upload(){
     	formData.append("files", files[i]);
     	len ++;
     }
-
+/* 
     if($('#SRVY_DE').val() == '' ) {
     	alert("조사일자를 선택하세요");
     	$('#SRVY_DE').focus();
@@ -126,7 +126,7 @@ function fn_file_upload(){
     	$('#TRACK').focus();
     	return;
     }
-    
+     */
     formData.append("SRVY_DE", $('#SRVY_DE').val());
     formData.append("ROAD_NO", $('#ROAD_NO').val());
     formData.append("ROAD_NAME", $('#ROAD_NAME').val());
@@ -155,7 +155,7 @@ function fn_file_upload(){
 	   		COMMON_FILE.clearMultiFile('#file_list', '#addFile');
 	   		parent.$("#dvProgress").dialog("close");
 	   		
-	   		alert(data.resultCode);
+	   		//alert(data.resultCode);
    			alert(data.resultMsg);
 		   	if(!data.result) {
 		   		return;

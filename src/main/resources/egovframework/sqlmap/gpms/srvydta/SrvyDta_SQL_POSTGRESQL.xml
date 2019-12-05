@@ -77,7 +77,7 @@
 			, #USE_AT# /* 조사_자료_엑셀.사용_여부 */
 			, #CRTR_NO#::int /* 조사_자료_엑셀.생성자_번호 */
 			, NOW() /* 조사_자료_엑셀.생성_일시 */
-			, #UPDUSR_NO# /* 조사_자료_엑셀.수정자_번호 */
+			, #UPDUSR_NO#::int /* 조사_자료_엑셀.수정자_번호 */
 			, NOW() /* 조사_자료_엑셀.수정_일시 */
 		)
 	]]>
@@ -330,13 +330,15 @@
 	     		 , tnsrvydta.CRTR_NO
 	     		 , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydta.CRTR_NO and tnsysuser.USE_AT = 'Y' and tnsysuser.DELETE_AT = 'N') CRTR_NM
 	     		 , tnsrvydta.SRVY_NO
+	     		 , TO_CHAR(DATE(tnsrvydta.SRVY_DE), 'YYYY-MM-DD') AS SRVY_DE
 			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
 		   WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
 		   	 AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
 		   	 AND tnsrvydta.USE_AT = 'Y'
 		   	 AND tnsrvydta.DELETE_AT = 'N'
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
-             ORDER BY tnsrvydta.CREAT_DT DESC
+		     AND tnsrvydta.SRVY_DE IS NOT NULL
+             ORDER BY tnsrvydta.SRVY_DE DESC nulls last
 		) tb) resultlist  WHERE 1=1
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
@@ -362,12 +364,14 @@
                  , TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') AS CREAT_DT
 	     		 , tnsrvydta.CRTR_NO
 	     		 , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydta.CRTR_NO and tnsysuser.USE_AT = 'Y' and tnsysuser.DELETE_AT = 'N') CRTR_NM
+	     		 , TO_CHAR(DATE(tnsrvydta.SRVY_DE), 'YYYY-MM-DD') AS SRVY_DE
 			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
 		   WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
 		   	 AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO
 		   	 AND tnsrvydta.USE_AT = 'Y'
 		   	 AND tnsrvydta.DELETE_AT = 'N'
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
+		     AND tnsrvydta.SRVY_DE IS NOT NULL
 		)as sub_SrvyDtaExcel
 ]]>
 	</select>
@@ -630,6 +634,48 @@
 ]]>
 	</select>
 	
+	<insert id="srvyDtaDAO.insertAiDta">
+		<selectKey resultClass="String" keyProperty="AI_NO">
+  <![CDATA[
+  select COALESCE(MAX(ai_no),0)+1 AS AI_NO from tmp_ai_dta;
+  ]]>
+		</selectKey>
+	<![CDATA[
+		/* srvyDtaDAO.insertAiDta */
+		/* AI_자료 등록 */
+		INSERT INTO TMP_AI_DTA (
+			  AI_NO /* AI_번호 */
+			, REGION_TYPE /* 균열_종류 */
+			, AREA /* 면적 */
+			, LEN /* 길이 */
+			, SEVERITY /* 심각도 */
+			, RESULT_IMAGE /* 결과_이미지 */
+		) VALUES (
+			  #AI_NO#::numeric 
+			, #REGION_TYPE# 
+			, COALESCE(#AREA#::numeric,0) 
+			, COALESCE(#LEN#::numeric,0)
+			, #SEVERITY#
+			, #RESULT_IMAGE#
+		)
+]]>
+	</insert>
 	
+	<select id="srvyDtaDAO.selectAiDtaList" resultClass="srvyDtaVO">
+<![CDATA[
+		/* srvyDtaDAO.selectAiDtaList */
+		
+	SELECT 
+		  REGION_TYPE
+		, SEVERITY
+		, CASE
+		    WHEN REGION_TYPE = 'lc' or REGION_TYPE = 'tc' THEN SUM(COALESCE(LEN,0)) 
+		    WHEN REGION_TYPE = 'ac' or REGION_TYPE = 'patch' or REGION_TYPE = 'phothole' THEN SUM(COALESCE(AREA,0)) 
+		  END AS AI_SUM_VALUE
+		FROM TMP_AI_DTA
+	GROUP BY REGION_TYPE, SEVERITY
+		
+]]>
+	</select>
 
 </sqlMap>

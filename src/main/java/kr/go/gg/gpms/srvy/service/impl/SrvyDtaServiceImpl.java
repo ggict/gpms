@@ -127,7 +127,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 * @exception Exception
 	 */
 	public void convertExcel(String csvFileNm, String excelFileNm, SrvyDtaVO srvyDtaVO) throws Exception {
-		
+		System.out.println("excelFileNm: " + excelFileNm);
 		XSSFWorkbook wb = new XSSFWorkbook();
 		FileOutputStream fos = null;
         try {
@@ -264,19 +264,15 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        
 	        fos = new FileOutputStream(excelFileNm);
 	        wb.write(fos);
-	        fos.flush();
+	        
 	        fos.close();
 		} catch (Exception e) {
-			//e.printStackTrace();
-			fos.flush();
+			System.out.println("error111111");
+			e.printStackTrace();
+			
 			fos.close();
 			//e.printStackTrace();
-		} finally {
-			fos.flush();
-			fos.close();
-		}
-        
-        
+		} 
 	}
 	
 	/**
@@ -542,6 +538,27 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 */
 	public int selectSrvyDtaUploadFileCount(SrvyDtaVO srvyDtaVO) {
 		return srvyDtaDAO.selectSrvyDtaUploadFileCount(srvyDtaVO);
+	}
+	
+	/**
+	 * AI_자료(TMP_AI_DTA)를 등록한다.
+	 * @param srvyDtaVO - 등록할 정보가 담긴 srvyDtaVO
+	 * @return 등록 결과
+	 * @exception Exception
+	 */
+	public String insertAiDta(SrvyDtaVO srvyDtaVO) throws Exception {
+
+		return srvyDtaDAO.insertAiDta(srvyDtaVO);
+	}
+	
+	/**
+	 * AI_자료(TMP_AI_DTA)를 조회한다.
+	 * @param 
+	 * @return 조회한 TMP_AI_DTA
+	 * @exception Exception
+	 */
+	public List<SrvyDtaVO> selectAiDtaList() throws Exception {
+		return srvyDtaDAO.selectAiDtaList();
 	}
 	
 }

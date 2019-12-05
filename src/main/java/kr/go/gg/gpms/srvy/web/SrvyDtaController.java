@@ -28,18 +28,27 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -170,7 +179,7 @@ public class SrvyDtaController extends BaseController {
 	@RequestMapping(value = "/srvyDtaFileUpload.do")
 	public String fileUpload(@ModelAttribute SrvyDtaVO srvyDtaVO, SrvyDtaLogVO srvyDtaLogVO, PavFrmulaVO pavFrmulaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 		
-		TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
+		//TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
 		boolean isResult = false;
 		String resultCode = "";
 		String resultMsg = "";
@@ -301,18 +310,6 @@ public class SrvyDtaController extends BaseController {
 			        				model.addAttribute("resultMsg", "이미지 파일이 없습니다.");
 			            			return "jsonView"; 
 		            			}
-		            			/* 적용위치 변경 가능_sdh
-		            			else {
-		            				for (int i=0; i<imageList.size(); i++) {
-		            					//디렉토리 이미지명과 엑셀파일의 이미지명 비교
-		            					if(seFileNm.equals(imageList.get(i).getRDSRFC_IMG_FILE_NM_1())) {
-		            						isImg = true;
-		            						if(!isImg) break;
-		            					}
-		            				}
-		            			}
-		            			if(!isImg) break;
-		            			*/
 		            		}//표면결함 폴더 내 jpg 파일
 		            	}//표면결함 폴더
 		            }//디렉토리 확인
@@ -483,6 +480,7 @@ public class SrvyDtaController extends BaseController {
 						return "jsonView";
 					}
 					
+					//엑셀파일
 					fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
 					
 					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
@@ -493,11 +491,109 @@ public class SrvyDtaController extends BaseController {
 					
 					//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
 					if("N".equals(srvyDtaVO.getSE_CD())) {
-						/*	
-							ai 로직태우고 TMP_MUMM_SCTN_SRVY_DTA 업데이트
-							파라미터 이미지명으로 추정
-						*/
-						srvyDtaService.updateTmpExcelData(srvyDtaVO);
+						System.out.println("aiaiaiaiaiai: " + srvyDtaVO.getSE_CD());
+						List<AttachFileVO> imgList = attachFileService.selectAttachDetailFileImgList(attachFileParam);
+						//srvyDtaOne.getFILE_NO();
+						
+						for(int k=0; k<imgList.size(); k++) {
+							String imgFilePath = imgList.get(k).getFILE_COURS() + File.separator + imgList.get(k).getORGINL_FILE_NM();
+							String imgFileNm = imgList.get(k).getORGINL_FILE_NM();
+							
+						    File aiFileNm = new File(imgFilePath);
+
+						    HttpClient client = new DefaultHttpClient();
+						    HttpPost post = new HttpPost("http://test.muhanit.kr:21542/analyzer/");
+
+						    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+						    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+						    builder.addBinaryBody("image", aiFileNm);
+						    builder.addTextBody("modules", "crack");
+						    HttpEntity entity = builder.build();
+						    //
+						    post.setEntity(entity);
+						    HttpResponse responseTmp = client.execute(post);
+
+						    HttpEntity entity2 = responseTmp.getEntity();
+						    String responseString = EntityUtils.toString(entity2, "UTF-8");
+
+							JSONParser paser = new JSONParser();
+
+							JSONObject obj = (JSONObject) paser.parse(responseString);
+
+							JSONArray parse_results_list = (JSONArray) obj.get("results");
+							for (int i = 0; i < parse_results_list.size(); i++) {
+								JSONObject result_i = (JSONObject) parse_results_list.get(i);
+								JSONArray region_result_list = (JSONArray)result_i.get("region_result");
+								String result_image = (String)result_i.get("result_image");
+								for (int j = 0; j < region_result_list.size(); j++) {
+									JSONObject imsi = (JSONObject) region_result_list.get(j); 
+									srvyDtaVO.setREGION_TYPE((String) imsi.get("region_type"));
+									if(imsi.get("area") != null && !"".equals(imsi.get("area"))) {
+										srvyDtaVO.setAREA(String.valueOf(imsi.get("area")));	
+									}
+									if(imsi.get("length") != null && !"".equals(imsi.get("length"))) {
+										srvyDtaVO.setLEN(String.valueOf(imsi.get("length")));	
+									} 
+									srvyDtaVO.setSEVERITY((String) imsi.get("severity"));
+									srvyDtaVO.setRESULT_IMAGE(result_image);
+									//srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(testFileNm);
+									srvyDtaService.insertAiDta(srvyDtaVO);
+								}
+							}
+							
+							//select
+							List<SrvyDtaVO> aiDtaList = srvyDtaService.selectAiDtaList();
+							
+							String regionType = "";
+							String severity = "";
+							String val = ""; 
+							srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(imgFileNm);
+							for(int i=0; i<aiDtaList.size(); i++) {
+								regionType = aiDtaList.get(i).getREGION_TYPE();
+								severity = aiDtaList.get(i).getSEVERITY();
+								val = aiDtaList.get(i).getAI_SUM_VALUE();
+							
+								if("tc".equals(regionType) && "low".equals(severity)) {
+									srvyDtaVO.setTC_LOW(val);
+								}
+								if("tc".equals(regionType) && "medium".equals(severity)) {
+									srvyDtaVO.setTC_MED(val);
+								}
+								if("tc".equals(regionType) && "hi".equals(severity)) {
+									srvyDtaVO.setTC_HI(val);
+								}
+								
+								if("lc".equals(regionType) && "low".equals(severity)) {
+									srvyDtaVO.setLC_LOW(val);
+								}
+								if("lc".equals(regionType) && "medium".equals(severity)) {
+									srvyDtaVO.setLC_MED(val);
+								}
+								if("lc".equals(regionType) && "hi".equals(severity)) {
+									srvyDtaVO.setLC_HI(val);
+								}
+								
+								if("ac".equals(regionType) && "low".equals(severity)) {
+									srvyDtaVO.setAC_LOW(val);
+								}
+								if("ac".equals(regionType) && "med".equals(severity)) {
+									srvyDtaVO.setAC_MED(val);
+								}
+								if("ac".equals(regionType) && "hi".equals(severity)) {
+									srvyDtaVO.setAC_HI(val);
+								}
+								
+								if("patch".equals(regionType)) {
+									srvyDtaVO.setPTCHG_CR(val);
+								}
+								
+								if("phothole".equals(regionType)) {
+									srvyDtaVO.setPOTHOLE_CR(val);
+								}
+								
+								srvyDtaService.updateTmpExcelData(srvyDtaVO);
+							}
+						}
 					}
 
 					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
@@ -536,10 +632,12 @@ public class SrvyDtaController extends BaseController {
 				
 			}
 				isResult = true;
-				this.transactionManager.commit(status);// 트랜잭션 커밋
+				//this.transactionManager.commit(status);// 트랜잭션 커밋
 			} catch (Exception e) {
 				isResult = false;
-				this.transactionManager.rollback(status);// 트랜잭션 롤백
+				e.printStackTrace();
+				
+				//this.transactionManager.rollback(status);// 트랜잭션 롤백
 			}
 		}
 		
