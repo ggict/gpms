@@ -4,8 +4,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.scheduling.annotation.Async;
+
+import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
-import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 
 /**
  * 조사_자료
@@ -196,6 +198,9 @@ public interface SrvyDtaService {
 	 * @exception Exception
 	 */
 	List<SrvyDtaVO> selectAiDtaList() throws Exception;
+	
+	@Async
+	void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO) throws Exception;
 	
 }
 

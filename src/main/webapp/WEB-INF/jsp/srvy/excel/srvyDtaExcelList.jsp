@@ -105,7 +105,7 @@ function fn_file_upload(){
     	formData.append("files", files[i]);
     	len ++;
     }
-/* 
+ 
     if($('#SRVY_DE').val() == '' ) {
     	alert("조사일자를 선택하세요");
     	$('#SRVY_DE').focus();
@@ -126,7 +126,7 @@ function fn_file_upload(){
     	$('#TRACK').focus();
     	return;
     }
-     */
+     
     formData.append("SRVY_DE", $('#SRVY_DE').val());
     formData.append("ROAD_NO", $('#ROAD_NO').val());
     formData.append("ROAD_NAME", $('#ROAD_NAME').val());

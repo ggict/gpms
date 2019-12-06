@@ -5,29 +5,46 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import egovframework.cmmn.util.EgovProperties;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import kr.go.gg.gpms.attachfile.service.impl.AttachFileDAO;
+import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
+import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
-import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 import net.sf.jazzlib.ZipEntry;
 import net.sf.jazzlib.ZipInputStream;
 
@@ -45,15 +62,21 @@ import net.sf.jazzlib.ZipInputStream;
  *  
  *  Copyright (C)  All right reserved.
  */
-
+@EnableAsync
 @Service("srvyDtaService")
 public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaService {
 
 	@Resource(name = "srvyDtaDAO")
 	private SrvyDtaDAO srvyDtaDAO;
 	
+	@Resource(name = "attachFileDAO")
+	private AttachFileDAO attachFileDAO;
+	
 	@Autowired
 	private DataSourceTransactionManager transactionManager;
+	
+	@Autowired
+    DataSource dataSource;
 	
 	/**
 	 * 압축풀기
@@ -104,13 +127,11 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                         }
                     } catch (Exception e) {
                     	fos.close();
-                        e.printStackTrace();
                     }
                 }
             }
 		} catch (Exception e) {
 			e.getMessage();
-			//e.printStackTrace();
 		} finally {
 			if (zis != null)
                 zis.close();
@@ -127,7 +148,6 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 * @exception Exception
 	 */
 	public void convertExcel(String csvFileNm, String excelFileNm, SrvyDtaVO srvyDtaVO) throws Exception {
-		System.out.println("excelFileNm: " + excelFileNm);
 		XSSFWorkbook wb = new XSSFWorkbook();
 		FileOutputStream fos = null;
         try {
@@ -267,11 +287,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        
 	        fos.close();
 		} catch (Exception e) {
-			System.out.println("error111111");
-			e.printStackTrace();
-			
 			fos.close();
-			//e.printStackTrace();
 		} 
 	}
 	
@@ -293,7 +309,6 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		try {
 			// 엑셀데이터 row, cell 건수 확인
 			int rowNum = sheet.getPhysicalNumberOfRows();
-			//int cellNum = sheet.getRow(0).getLastCellNum();
 
 			// 엑셀 식(formula)으로 된 데이터 읽기
 			FormulaEvaluator formulaEval = wb.getCreationHelper().createFormulaEvaluator();
@@ -412,6 +427,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 						val = val.split("[.]")[0];
 					}
 					val = val.replace("\"", "").trim();
+					val = val.replace("#NUM!", "0").trim();
 					params.put(colName, val);
 				}
 				srvyDtaDAO.insertTmpExcelData(params);
@@ -559,6 +575,127 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 */
 	public List<SrvyDtaVO> selectAiDtaList() throws Exception {
 		return srvyDtaDAO.selectAiDtaList();
+	}
+	
+	@Async
+    public void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO) throws Exception {
+        // Connection 오브젝트 생성, 저장소 바인딩, 참조변수 값 리턴
+        Connection conn = DataSourceUtils.getConnection(dataSource);
+        conn.setAutoCommit(false); // 트랜잭션 시작
+        
+        List<AttachFileVO> imgList = attachFileDAO.selectAttachDetailFileImgList(attachFileParam);
+		
+		for(int k=0; k<imgList.size(); k++) {
+			String imgFilePath = imgList.get(k).getFILE_COURS() + File.separator + imgList.get(k).getORGINL_FILE_NM();
+			String imgFileNm = imgList.get(k).getORGINL_FILE_NM();
+			
+		    File aiFileNm = new File(imgFilePath);
+
+		    HttpClient client = new DefaultHttpClient();
+		    HttpPost post = new HttpPost("http://test.muhanit.kr:21542/analyzer");
+
+		    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+		    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+		    builder.addBinaryBody("image", aiFileNm);
+		    builder.addTextBody("modules", "crack");
+		    HttpEntity entity = builder.build();
+		    //
+		    post.setEntity(entity);
+		    HttpResponse responseTmp = client.execute(post);
+
+		    HttpEntity entity2 = responseTmp.getEntity();
+		    String responseString = EntityUtils.toString(entity2, "UTF-8");
+		    
+		    //=======================================================================================
+		    
+			JSONParser paser = new JSONParser();
+
+			JSONObject obj = (JSONObject) paser.parse(responseString);
+
+			JSONArray parse_results_list = (JSONArray) obj.get("results");
+			for (int i = 0; i < parse_results_list.size(); i++) {
+				JSONObject result_i = (JSONObject) parse_results_list.get(i);
+				JSONArray region_result_list = (JSONArray)result_i.get("region_result");
+				String result_image = (String)result_i.get("result_image");
+				for (int j = 0; j < region_result_list.size(); j++) {
+					JSONObject imsi = (JSONObject) region_result_list.get(j); 
+					srvyDtaVO.setREGION_TYPE((String) imsi.get("region_type"));
+					if(imsi.get("area") != null && !"".equals(imsi.get("area"))) {
+						srvyDtaVO.setAREA(String.valueOf(imsi.get("area")));	
+					}
+					if(imsi.get("length") != null && !"".equals(imsi.get("length"))) {
+						srvyDtaVO.setLEN(String.valueOf(imsi.get("length")));	
+					} 
+					srvyDtaVO.setSEVERITY((String) imsi.get("severity"));
+					srvyDtaVO.setRESULT_IMAGE(result_image);
+					//srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(testFileNm);
+					//srvyDtaService.insertAiDta(srvyDtaVO);
+					srvyDtaDAO.insertAiDta(srvyDtaVO);
+				}
+			}
+			
+			//select
+			List<SrvyDtaVO> aiDtaList = srvyDtaDAO.selectAiDtaList();
+			
+			String regionType = "";
+			String severity = "";
+			String val = ""; 
+			srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(imgFileNm);
+			for(int i=0; i<aiDtaList.size(); i++) {
+				regionType = aiDtaList.get(i).getREGION_TYPE();
+				severity = aiDtaList.get(i).getSEVERITY();
+				val = aiDtaList.get(i).getAI_SUM_VALUE();
+			
+				if("tc".equals(regionType) && "low".equals(severity)) {
+					srvyDtaVO.setTC_LOW(val);
+				}
+				if("tc".equals(regionType) && "medium".equals(severity)) {
+					srvyDtaVO.setTC_MED(val);
+				}
+				if("tc".equals(regionType) && "hi".equals(severity)) {
+					srvyDtaVO.setTC_HI(val);
+				}
+				
+				if("lc".equals(regionType) && "low".equals(severity)) {
+					srvyDtaVO.setLC_LOW(val);
+				}
+				if("lc".equals(regionType) && "medium".equals(severity)) {
+					srvyDtaVO.setLC_MED(val);
+				}
+				if("lc".equals(regionType) && "hi".equals(severity)) {
+					srvyDtaVO.setLC_HI(val);
+				}
+				
+				if("ac".equals(regionType) && "low".equals(severity)) {
+					srvyDtaVO.setAC_LOW(val);
+				}
+				if("ac".equals(regionType) && "med".equals(severity)) {
+					srvyDtaVO.setAC_MED(val);
+				}
+				if("ac".equals(regionType) && "hi".equals(severity)) {
+					srvyDtaVO.setAC_HI(val);
+				}
+				
+				if("patch".equals(regionType)) {
+					srvyDtaVO.setPTCHG_CR(val);
+				}
+				
+				if("phothole".equals(regionType)) {
+					srvyDtaVO.setPOTHOLE_CR(val);
+				}
+				
+				srvyDtaDAO.updateTmpExcelData(srvyDtaVO);
+				conn.commit();
+			}
+			
+				srvyDtaDAO.deleteAiDta();
+		}
+	   
+	    DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
+
+        // 동기화 작업을 종료하고 저장소를 비운다
+        TransactionSynchronizationManager.unbindResource(this.dataSource);
+        TransactionSynchronizationManager.clearSynchronization();
 	}
 	
 }

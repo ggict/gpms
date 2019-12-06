@@ -62,6 +62,7 @@ import org.springframework.web.servlet.View;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import egovframework.cmmn.util.EgovProperties;
 import egovframework.cmmn.util.ExcelView;
 import egovframework.cmmn.util.FileUploadUtils;
 import egovframework.cmmn.web.SessionManager;
@@ -252,8 +253,6 @@ public class SrvyDtaController extends BaseController {
 				String seFileNm = "";
 				int csvCount = 0;
 				String csvFileNm = "";
-				
-				//boolean isImg = false;
 				List<SrvyDtaVO> imageList = null;
 		        
 				//하위의 모든 디렉토리
@@ -439,10 +438,8 @@ public class SrvyDtaController extends BaseController {
 			srvyDtaVO.setUSE_AT("Y");
 			srvyDtaVO.setDELETE_AT("N");
 		
-			// 선택 엑셀 데이터 조회
 			List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
 			
-			// 엑셀 데이터가 없으면 종료
 			if (excelList == null || excelList.size() == 0) {
 				model.addAttribute("resultCode", "noData");
 				model.addAttribute("resultMsg", "엑셀 데이터가 없습니다.");
@@ -489,119 +486,16 @@ public class SrvyDtaController extends BaseController {
 					//TMP_MUMM_SCTN_SRVY_DTA 조회
 					srvyDtaVO = srvyDtaService.selectTmpExcelData();
 					
+					//srvyDtaVO.setSE_CD("N");
 					//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
 					if("N".equals(srvyDtaVO.getSE_CD())) {
-						System.out.println("aiaiaiaiaiai: " + srvyDtaVO.getSE_CD());
-						List<AttachFileVO> imgList = attachFileService.selectAttachDetailFileImgList(attachFileParam);
-						//srvyDtaOne.getFILE_NO();
-						
-						for(int k=0; k<imgList.size(); k++) {
-							String imgFilePath = imgList.get(k).getFILE_COURS() + File.separator + imgList.get(k).getORGINL_FILE_NM();
-							String imgFileNm = imgList.get(k).getORGINL_FILE_NM();
-							
-						    File aiFileNm = new File(imgFilePath);
-
-						    HttpClient client = new DefaultHttpClient();
-						    HttpPost post = new HttpPost("http://test.muhanit.kr:21542/analyzer/");
-
-						    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-						    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-						    builder.addBinaryBody("image", aiFileNm);
-						    builder.addTextBody("modules", "crack");
-						    HttpEntity entity = builder.build();
-						    //
-						    post.setEntity(entity);
-						    HttpResponse responseTmp = client.execute(post);
-
-						    HttpEntity entity2 = responseTmp.getEntity();
-						    String responseString = EntityUtils.toString(entity2, "UTF-8");
-
-							JSONParser paser = new JSONParser();
-
-							JSONObject obj = (JSONObject) paser.parse(responseString);
-
-							JSONArray parse_results_list = (JSONArray) obj.get("results");
-							for (int i = 0; i < parse_results_list.size(); i++) {
-								JSONObject result_i = (JSONObject) parse_results_list.get(i);
-								JSONArray region_result_list = (JSONArray)result_i.get("region_result");
-								String result_image = (String)result_i.get("result_image");
-								for (int j = 0; j < region_result_list.size(); j++) {
-									JSONObject imsi = (JSONObject) region_result_list.get(j); 
-									srvyDtaVO.setREGION_TYPE((String) imsi.get("region_type"));
-									if(imsi.get("area") != null && !"".equals(imsi.get("area"))) {
-										srvyDtaVO.setAREA(String.valueOf(imsi.get("area")));	
-									}
-									if(imsi.get("length") != null && !"".equals(imsi.get("length"))) {
-										srvyDtaVO.setLEN(String.valueOf(imsi.get("length")));	
-									} 
-									srvyDtaVO.setSEVERITY((String) imsi.get("severity"));
-									srvyDtaVO.setRESULT_IMAGE(result_image);
-									//srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(testFileNm);
-									srvyDtaService.insertAiDta(srvyDtaVO);
-								}
-							}
-							
-							//select
-							List<SrvyDtaVO> aiDtaList = srvyDtaService.selectAiDtaList();
-							
-							String regionType = "";
-							String severity = "";
-							String val = ""; 
-							srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(imgFileNm);
-							for(int i=0; i<aiDtaList.size(); i++) {
-								regionType = aiDtaList.get(i).getREGION_TYPE();
-								severity = aiDtaList.get(i).getSEVERITY();
-								val = aiDtaList.get(i).getAI_SUM_VALUE();
-							
-								if("tc".equals(regionType) && "low".equals(severity)) {
-									srvyDtaVO.setTC_LOW(val);
-								}
-								if("tc".equals(regionType) && "medium".equals(severity)) {
-									srvyDtaVO.setTC_MED(val);
-								}
-								if("tc".equals(regionType) && "hi".equals(severity)) {
-									srvyDtaVO.setTC_HI(val);
-								}
-								
-								if("lc".equals(regionType) && "low".equals(severity)) {
-									srvyDtaVO.setLC_LOW(val);
-								}
-								if("lc".equals(regionType) && "medium".equals(severity)) {
-									srvyDtaVO.setLC_MED(val);
-								}
-								if("lc".equals(regionType) && "hi".equals(severity)) {
-									srvyDtaVO.setLC_HI(val);
-								}
-								
-								if("ac".equals(regionType) && "low".equals(severity)) {
-									srvyDtaVO.setAC_LOW(val);
-								}
-								if("ac".equals(regionType) && "med".equals(severity)) {
-									srvyDtaVO.setAC_MED(val);
-								}
-								if("ac".equals(regionType) && "hi".equals(severity)) {
-									srvyDtaVO.setAC_HI(val);
-								}
-								
-								if("patch".equals(regionType)) {
-									srvyDtaVO.setPTCHG_CR(val);
-								}
-								
-								if("phothole".equals(regionType)) {
-									srvyDtaVO.setPOTHOLE_CR(val);
-								}
-								
-								srvyDtaService.updateTmpExcelData(srvyDtaVO);
-							}
-						}
+						srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO);
 					}
-
+					
 					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
 
 					resultCode = prc_result.get("o_proccode").toString();
 					resultMsg = prc_result.get("o_procmsg").toString();
-					System.out.println("resultCode: " + resultCode);
-					System.out.println("resultMsg: " + resultMsg);
 					
 					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
 					BindBeansToActiveUser(srvyDtaOne);
@@ -635,8 +529,6 @@ public class SrvyDtaController extends BaseController {
 				//this.transactionManager.commit(status);// 트랜잭션 커밋
 			} catch (Exception e) {
 				isResult = false;
-				e.printStackTrace();
-				
 				//this.transactionManager.rollback(status);// 트랜잭션 롤백
 			}
 		}

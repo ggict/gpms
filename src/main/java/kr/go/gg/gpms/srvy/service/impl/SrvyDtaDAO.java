@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import egovframework.example.cmmn.impl.BaseDAO;
+import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 import kr.go.gg.gpms.cmmn.service.impl.CmmnDAO;
 import kr.go.gg.gpms.mummsctnsrvydta.service.model.MummSctnSrvyDtaVO;
 import kr.go.gg.gpms.pavfrmula.service.model.PavFrmulaVO;
@@ -142,8 +143,6 @@ public class SrvyDtaDAO extends BaseDAO {
     	param.put("p_ENDPT", srvyDtaOne.getENDPT());
     	param.put("p_FRMULA_NM", "GPCI");
     	param.put("p_MODE", "NONE");
-    	
-    	System.out.println("srvyDtaOneDao: " + srvyDtaOne.toString());
     	
     	HashMap resultVO = (HashMap) select("srvyDtaDAO.PRC_AGGREGATE_GENERAL", param);
     	logger.info("procAggregateGeneralVO: " + resultVO.toString());
@@ -281,4 +280,13 @@ public class SrvyDtaDAO extends BaseDAO {
 		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectAiDtaList");
 	}
 	
+	/**
+	 * AI_자료(TMP_AI_DTA)을 삭제한다.
+	 * @param 
+	 * @return 삭제 결과 
+	 * @exception Exception
+	 */
+	public int deleteAiDta() throws Exception {
+		return delete("srvyDtaDAO.deleteAiDta");
+	}
 }

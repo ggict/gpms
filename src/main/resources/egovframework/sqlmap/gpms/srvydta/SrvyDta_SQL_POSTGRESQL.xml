@@ -459,17 +459,11 @@
 		    , RD_LOW       = COALESCE(#RD_LOW#::numeric,0)                                        
 		    , RD_MED       = COALESCE(#RD_MED#::numeric,0)                                        
 		    , RD_HI        = COALESCE(#RD_HI#::numeric,0)                                         
-		    , STRTPT_TEST  = COALESCE(#STRTPT_TEST#::numeric,0)                                   
-		    , ENDPT_TEST   = COALESCE(#ENDPT_TEST#::numeric,0)                                    
 		    , BLOCK_CR_LOW = COALESCE(#BLOCK_CR_LOW#::numeric,0)                                  
 		    , BLOCK_CR_MED = COALESCE(#BLOCK_CR_MED#::numeric,0)                                  
 		    , BLOCK_CR_HI  = COALESCE(#BLOCK_CR_HI#::numeric,0)                                   
 		    , POTHOLE_IDX  = COALESCE(#POTHOLE_IDX#::numeric,0)                                   
-		    , DMG_CUZ_CLMT = COALESCE(#DMG_CUZ_CLMT#::numeric,0)                                  
-		    , DMG_CUZ_VMTC = COALESCE(#DMG_CUZ_VMTC#::numeric,0)                                  
-		    , DMG_CUZ_ETC  = COALESCE(#DMG_CUZ_ETC#::numeric,0)                                   
 		    , BC_IDX       = COALESCE(#BC_IDX#::numeric,0)                                        
-			, PC_GRAD      = COALESCE(#PC_GRAD#::numeric,0) 
 			, GPCI         = COALESCE(#GPCI#::numeric,0) 
 		WHERE 1 = 1
 		AND RDSRFC_IMG_FILE_NM_1 = #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
@@ -677,5 +671,12 @@
 		
 ]]>
 	</select>
+	
+	<delete id="srvyDtaDAO.deleteAiDta">
+	<![CDATA[ 
+		/* srvyDtaDAO.deleteAiDta */
+		DELETE FROM TMP_AI_DTA 
+]]>
+	</delete>
 
 </sqlMap>
