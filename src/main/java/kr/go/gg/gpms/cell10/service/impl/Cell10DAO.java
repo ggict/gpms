@@ -377,6 +377,17 @@ public class Cell10DAO extends BaseDAO {
 		return (List<Cell10VO>)list("cell10DAO.selectAdmStatsPageList", cell10VO);
 	}
 	
+	/**
+	 * 통계 > 노선현황 > 시군구별 차트 통계를 조회한다.
+	 * @param cell10VO - 조회할 정보가 담긴 Cell10VO
+	 * @return CELL_10 목록
+	 * @exception Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Cell10VO> selectAdmStatsPageChart(Cell10VO cell10VO) throws Exception {
+		return (List<Cell10VO>)list("cell10DAO.selectAdmStatsPageChart", cell10VO);
+	}
+	
 	//통계 연도를 조회한다.
 	@SuppressWarnings("unchecked")
 	public List<Cell10VO> selectStatsYearList(Cell10VO cell10VO) throws Exception {

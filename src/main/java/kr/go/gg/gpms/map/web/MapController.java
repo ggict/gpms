@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import egovframework.cmmn.util.DateUtil;
 import egovframework.cmmn.util.SaveMapUtils;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.security.service.impl.CustomAuthenticationProvider;
@@ -118,8 +119,7 @@ public class MapController extends BaseController {
 		List<RpairMthdVO> rpairMthdList = rpairMthdService.selectRpairMthdList(rpairMthdVO);
 
 		// 통계연도
-		Cell10VO cell10vo = new Cell10VO();
-		List<Cell10VO> statsYear = cell10Service.selectStatsYearList(cell10vo);
+		List<String> statsYear = DateUtil.getSlctnYearList();
 		
 		// 행정구역(시군구)
 		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());

@@ -238,7 +238,6 @@ function wWindowOpen(div_title, call_url, width, height, modal, opener_id, posit
 
 							}
 
-							$(".selecttool").parent("li").removeClass("active");
 							$("#mCtrlPan").parent().addClass("active");
 
 							// YYK. sttemnt 포트홀신고관리 의 edit 페이지에서만 bottomOpen()
@@ -295,8 +294,6 @@ function wWindowOpen(div_title, call_url, width, height, modal, opener_id, posit
 
 							if (rshInfoCnt == 0) {
 
-								$(".selecttool").parent("li").removeClass(
-										"active");
 								$("#mCtrlPan").parent().addClass("active");
 								gMap.cleanMap();
 								gMap.activeControls("drag");
@@ -320,7 +317,6 @@ function wWindowOpen(div_title, call_url, width, height, modal, opener_id, posit
 								.hasClass("right-tool")) {
 
 							// 우측 메뉴
-							$(".selecttool").parent("li").removeClass("active");
 							$("#mCtrlPan").parent().addClass("active");
 							gMap.cleanMap();
 							gMap.activeControls("drag");

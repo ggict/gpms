@@ -832,6 +832,9 @@ public class CntrwkDtlController extends BaseController {
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkRoutLenStats.do" })
 	public String selectCntrwkRoutLenStats(CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpServletRequest request) throws Exception {
 		
+		// 선정년도 (2017 ~ 현재연도)
+		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
+		
 		model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
 
 		return "/stats/cntrwk/cntrwkRoutLenStats";
@@ -885,6 +888,9 @@ public class CntrwkDtlController extends BaseController {
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDeptLenStats.do" })
 	public String selectCntrwkDeptLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model, HttpServletRequest request) throws Exception {
+		
+		// 선정년도 (2017 ~ 현재연도)
+		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
 		
 		model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
 

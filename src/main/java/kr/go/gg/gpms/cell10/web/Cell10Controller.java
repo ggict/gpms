@@ -1595,6 +1595,29 @@ public class Cell10Controller extends BaseController {
 
 		return map;
 	}
+	
+	/**
+	 * 통계 > 노선현황 > 시군구별 통계 - 차트를 조회한다.
+	 * @return "/stats/route/selectAdmStats"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/api/stats/selectAdmStatsPageChart.do" }, method = RequestMethod.POST,consumes = {MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody Map<String, Object> selectAdmStatsPageChart(@RequestBody Cell10VO cell10VO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+
+		cell10VO.setUsePage(true);
+		List<Cell10VO> items = cell10Service.selectAdmStatsPageChart(cell10VO);
+
+		int total_page = 0;
+
+		// 결과 JSON 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("page", cell10VO.getPage());
+		map.put("total", total_page);
+		map.put("rows", items);
+
+		return map;
+	}
 
 	/**
 	 * 통계 > 노선현황 > 시군구별 통계(GPMS)를 조회한다.

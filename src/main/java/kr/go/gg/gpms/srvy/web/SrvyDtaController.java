@@ -28,18 +28,27 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -53,6 +62,7 @@ import org.springframework.web.servlet.View;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import egovframework.cmmn.util.EgovProperties;
 import egovframework.cmmn.util.ExcelView;
 import egovframework.cmmn.util.FileUploadUtils;
 import egovframework.cmmn.web.SessionManager;
@@ -170,7 +180,7 @@ public class SrvyDtaController extends BaseController {
 	@RequestMapping(value = "/srvyDtaFileUpload.do")
 	public String fileUpload(@ModelAttribute SrvyDtaVO srvyDtaVO, SrvyDtaLogVO srvyDtaLogVO, PavFrmulaVO pavFrmulaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 		
-		TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
+		//TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
 		boolean isResult = false;
 		String resultCode = "";
 		String resultMsg = "";
@@ -243,8 +253,6 @@ public class SrvyDtaController extends BaseController {
 				String seFileNm = "";
 				int csvCount = 0;
 				String csvFileNm = "";
-				
-				//boolean isImg = false;
 				List<SrvyDtaVO> imageList = null;
 		        
 				//하위의 모든 디렉토리
@@ -301,18 +309,6 @@ public class SrvyDtaController extends BaseController {
 			        				model.addAttribute("resultMsg", "이미지 파일이 없습니다.");
 			            			return "jsonView"; 
 		            			}
-		            			/* 적용위치 변경 가능_sdh
-		            			else {
-		            				for (int i=0; i<imageList.size(); i++) {
-		            					//디렉토리 이미지명과 엑셀파일의 이미지명 비교
-		            					if(seFileNm.equals(imageList.get(i).getRDSRFC_IMG_FILE_NM_1())) {
-		            						isImg = true;
-		            						if(!isImg) break;
-		            					}
-		            				}
-		            			}
-		            			if(!isImg) break;
-		            			*/
 		            		}//표면결함 폴더 내 jpg 파일
 		            	}//표면결함 폴더
 		            }//디렉토리 확인
@@ -442,10 +438,8 @@ public class SrvyDtaController extends BaseController {
 			srvyDtaVO.setUSE_AT("Y");
 			srvyDtaVO.setDELETE_AT("N");
 		
-			// 선택 엑셀 데이터 조회
 			List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
 			
-			// 엑셀 데이터가 없으면 종료
 			if (excelList == null || excelList.size() == 0) {
 				model.addAttribute("resultCode", "noData");
 				model.addAttribute("resultMsg", "엑셀 데이터가 없습니다.");
@@ -483,6 +477,7 @@ public class SrvyDtaController extends BaseController {
 						return "jsonView";
 					}
 					
+					//엑셀파일
 					fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
 					
 					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
@@ -491,21 +486,16 @@ public class SrvyDtaController extends BaseController {
 					//TMP_MUMM_SCTN_SRVY_DTA 조회
 					srvyDtaVO = srvyDtaService.selectTmpExcelData();
 					
+					//srvyDtaVO.setSE_CD("N");
 					//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
 					if("N".equals(srvyDtaVO.getSE_CD())) {
-						/*	
-							ai 로직태우고 TMP_MUMM_SCTN_SRVY_DTA 업데이트
-							파라미터 이미지명으로 추정
-						*/
-						srvyDtaService.updateTmpExcelData(srvyDtaVO);
+						srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO);
 					}
-
+					
 					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
 
 					resultCode = prc_result.get("o_proccode").toString();
 					resultMsg = prc_result.get("o_procmsg").toString();
-					System.out.println("resultCode: " + resultCode);
-					System.out.println("resultMsg: " + resultMsg);
 					
 					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
 					BindBeansToActiveUser(srvyDtaOne);
@@ -536,10 +526,10 @@ public class SrvyDtaController extends BaseController {
 				
 			}
 				isResult = true;
-				this.transactionManager.commit(status);// 트랜잭션 커밋
+				//this.transactionManager.commit(status);// 트랜잭션 커밋
 			} catch (Exception e) {
 				isResult = false;
-				this.transactionManager.rollback(status);// 트랜잭션 롤백
+				//this.transactionManager.rollback(status);// 트랜잭션 롤백
 			}
 		}
 		
