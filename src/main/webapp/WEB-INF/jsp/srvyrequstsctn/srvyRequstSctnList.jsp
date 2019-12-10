@@ -210,6 +210,11 @@ function fnSearch() {
         ,mtype: "POST"
         ,loadComplete: function(data) {
             COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
+            
+            // label태그 이벤트 버블링 제어.
+            document.querySelectorAll('#gridArea label').forEach(function(elem) {
+            	elem.addEventListener('click', function(e) { e.preventDefault(); })
+            });
         }
     }).trigger("reloadGrid");
 }
