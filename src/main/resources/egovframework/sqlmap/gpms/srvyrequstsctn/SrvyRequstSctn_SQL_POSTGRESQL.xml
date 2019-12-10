@@ -107,7 +107,9 @@
             <isNotEmpty property="SRVY_REQUST_SCTN_NO">
             	<![CDATA[ AND SRVY_REQUST_SCTN_NO = #SRVY_REQUST_SCTN_NO#::numeric ]]>
             </isNotEmpty>
-
+			<![CDATA[
+			ORDER BY SRVY_REQUST_DE DESC
+ 			]]>
             <isEqual prepend=" " property="usePage" compareValue="true">
                 <![CDATA[ LIMIT #recordCountPerPage# OFFSET #firstIndex# ]]>
             </isEqual>

@@ -366,6 +366,16 @@ public class Cell10ServiceImpl extends AbstractServiceImpl implements Cell10Serv
 	}
 	
 	/**
+	 * 통계 > 노선현황 > 시군구별 차트 통계를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 cell10VO
+	 * @return CELL_10 목록
+	 * @exception Exception
+	 */
+	public List<Cell10VO> selectAdmStatsPageChart(Cell10VO cell10VO) throws Exception {
+		return cell10DAO.selectAdmStatsPageChart( cell10VO);
+	}
+	
+	/**
 	 * 통계 > 노선현황 > 시군구별 통계(GPMS)를 조회한다.
 	 * @param cell10VO - 조회할 정보가 담긴 Cell10VO
 	 * @exception Exception

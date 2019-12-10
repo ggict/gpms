@@ -232,15 +232,10 @@
 
     <select id="rpairTrgetSlctnDAO.selectRpairTrgetSlctnRouteCodeList" resultClass="rpairTrgetSlctnVO">
         SELECT
-            A.ROUTE_CODE                                                  /* 노선_코드 */
-        FROM TN_MUMM_SCTN_SRVY_DTA A                                      /*** 최소_구간_조사_자료 테이블 ***/
-        WHERE
-            1 = 1
-            AND A.DELETE_AT              = 'N'                            /* 삭제_여부 */
-            AND A.USE_AT                 = 'Y'                            /* 사용_여부 */
-            AND A.LAST_DTA_AT            = 'Y'                            /* 최종_자료_여부 */
-        GROUP BY
-            A.ROUTE_CODE                                                  /* 노선_코드 */
+            A.ROAD_NO            ROUTE_CODE                               /* 노선_코드 */
+        FROM TN_ROUTE_INFO A                                              /*** 노선_대장_마스터 테이블 ***/
+        ORDER BY
+            A.ROAD_NO
     </select>
 
     <!-- 보수대상선정 선정년도 존재여부 -->
@@ -275,7 +270,13 @@
         SELECT O_PROCCODE, O_PROCMSG FROM PRC_REPAIR_TARGET_RANGE_STRING(?::numeric, ?::numeric, ?, ?, ?, ?)
     </select>
 
-
+    <!-- 보수대상선정 진행_률 수정 -->
+    <update id="rpairTrgetSlctnDAO.updateRpairTrgetSlctnProgrsRt">
+        UPDATE TN_RPAIR_TRGET_SLCTN SET
+            PROGRS_RT = #PROGRS_RT#
+        WHERE
+            TRGET_SLCTN_NO = #TRGET_SLCTN_NO#
+    </update>
 
 
 
@@ -401,6 +402,7 @@ AND TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정
 			, tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */
 			, tnrpairtrgetslctn.SLCTN_BUDGET_4    /* 보수_대상_선정.선정_예산_4 */
 			, tnrpairtrgetslctn.SLCTN_BUDGET_5    /* 보수_대상_선정.선정_예산_5 */
+			, tnrpairtrgetslctn.PROGRS_RT         /* 보수_대상_선정.진행_률 */
 		FROM TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
 		WHERE 1 = 1
 		AND tnrpairtrgetslctn.TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::int /* 보수_대상_선정.대상_선정_번호 */

@@ -8,8 +8,8 @@
             <li class="wid100"><label>국토부</br>  통계연도</label></li>
             <li class="wid100">
                 <select name="SCH_STATS_YEAR" id="SCH_STATS_YEAR" style="width: 120px;">
-                    <c:forEach var="selectData" items="${statsYear}">
-                        <option value="${selectData.STATS_YEAR}">${selectData.STATS_YEAR}</option>
+                    <c:forEach items="${statsYear}" var="selectData">
+                        <option value="${selectData}">${selectData}</option>
                     </c:forEach>
                 </select>
             </li>
@@ -315,8 +315,8 @@
             <li class="wid100"><label>선정년도</label></li>
             <li class="wid100">
                 <select name="SCH_STATS_YEAR" id="SCH_STATS_YEAR" style="width: 120px;">
-                    <c:forEach var="selectData" items="${statsYear}">
-                        <option value="${selectData.STATS_YEAR}">${selectData.STATS_YEAR}</option>
+                    <c:forEach items="${statsYear}" var="selectData">
+                        <option value="${selectData}">${selectData}</option>
                     </c:forEach>
                 </select>
             </li>
@@ -340,8 +340,8 @@
             <li class="wid100"><label>선정년도</label></li>
             <li class="wid100">
                 <select name="SCH_STATS_YEAR" id="SCH_STATS_YEAR" style="width: 120px;">
-                    <c:forEach var="selectData" items="${statsYear}">
-                        <option value="${selectData.STATS_YEAR}">${selectData.STATS_YEAR}</option>
+                    <c:forEach items="${statsYear}" var="selectData">
+                        <option value="${selectData}">${selectData}</option>
                     </c:forEach>
                 </select>
             </li>

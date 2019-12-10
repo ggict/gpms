@@ -286,6 +286,14 @@ public interface Cell10Service {
 	 */
 	List<Cell10VO> selectAdmStatsPageList(Cell10VO cell10VO) throws Exception;
 	
+	/**
+	 * 통계 > 노선현황 > 시군구별 차트 통계를 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 cell10VO
+	 * @return CELL_10 목록
+	 * @exception Exception
+	 */
+	List<Cell10VO> selectAdmStatsPageChart(Cell10VO cell10VO) throws Exception;
+	
 	//통계 연도를 조회한다.
 	List<Cell10VO> selectStatsYearList(Cell10VO cell10VO) throws Exception;
 	

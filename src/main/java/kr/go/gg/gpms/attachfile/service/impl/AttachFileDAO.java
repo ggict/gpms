@@ -108,5 +108,16 @@ public class AttachFileDAO extends BaseDAO {
 	public int selectAttachFileListTotalCount(AttachFileVO attachFileVO) {
 		return (Integer) select("attachFileDAO.selectAttachFileListTotalCount", attachFileVO);
 	}
+	
+	/**
+	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE) 목록을 조회한다.
+	 * @param searchVO - 조회할 정보가 담긴 attachFileVO
+	 * @return TN_ATTACH_DETAIL_FILE 목록
+	 * @exception Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<AttachFileVO> selectAttachDetailFileImgList(AttachFileVO attachFileVO) throws Exception {
+		return (List<AttachFileVO>)list("attachFileDAO.selectAttachDetailFileImgList", attachFileVO);
+	}
 
 }

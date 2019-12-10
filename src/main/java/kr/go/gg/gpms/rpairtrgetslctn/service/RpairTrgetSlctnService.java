@@ -3,6 +3,38 @@ package kr.go.gg.gpms.rpairtrgetslctn.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
+import org.springframework.scheduling.annotation.Async;
+
 import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 
 /**
@@ -45,6 +77,7 @@ public interface RpairTrgetSlctnService {
 	/**
 	 * 보수대상선정시작 처리(보수_대상_항목_그룹 등록)
 	 */
+	@Async
 	void procRepairTarget(RpairTrgetSlctnVO rpairTrgetSlctnVO) throws Exception;
 
 	/**

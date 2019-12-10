@@ -727,6 +727,9 @@ public class MummSctnSrvyDtaController extends BaseController {
 	@RequestMapping(value = "/mumm/mummRoutCntStats.do")
 	public String selectRoutCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
 
+		// 선정년도 (2017 ~ 현재연도)
+		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
+		
 		// 도로 등급
 		List<CodeVO> roadGradList = getCodeList("RDGD");
 		model.addAttribute("roadGradList", roadGradList);
@@ -839,6 +842,9 @@ public class MummSctnSrvyDtaController extends BaseController {
 	@RequestMapping(value = "/mumm/mummDeptCntStats.do")
 	public String selectDeptCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
 		
+		// 선정년도 (2017 ~ 현재연도)
+		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
+		
 		// 도로 등급
 		List<CodeVO> roadGradList = getCodeList("RDGD");
 		model.addAttribute("roadGradList", roadGradList);
@@ -948,6 +954,9 @@ public class MummSctnSrvyDtaController extends BaseController {
 	 */
 	@RequestMapping(value = "/mumm/mummAdmCntStats.do")
 	public String selectAdmCntStats(@ModelAttribute MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model) throws Exception {
+		
+		// 선정년도 (2017 ~ 현재연도)
+		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
 		
 		// 도로 등급
 		List<CodeVO> roadGradList = getCodeList("RDGD");

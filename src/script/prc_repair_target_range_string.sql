@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION gpms.prc_repair_target_range_string(p_user_no numeric, p_trget_slctn_no numeric, P_ROUTE_CODE TEXT, p_anals_unit_code text, p_mode text, OUT o_proccode text, OUT o_procmsg text)
+CREATE OR REPLACE FUNCTION gpms.prc_repair_target_range_string(p_user_no numeric, p_trget_slctn_no numeric, P_ROUTE_CODE TEXT, p_anals_unit_code text, P_START_END_CODE TEXT, p_mode text, OUT o_proccode text, OUT o_procmsg text)
  RETURNS record
  LANGUAGE plpgsql
 AS $function$
@@ -150,7 +150,7 @@ BEGIN
                     , NULL               ACCMLT_CALC         /* 누적_산정                  */
                     , 'Y'                SLCTN_AT            /* 선정_여부                  */
                     , NOW()              SLCTN_DT            /* 선정_일시                  */
-                    , 'N'                TMPR_SLCTN_AT       /* 임시_선정_여부             */
+                    , 'Y'                TMPR_SLCTN_AT       /* 임시_선정_여부             */
                     , V_LEN/10               NODE_CO             /* 노드 개수                  */
                     , 'N'                                    /* 삭제_여부                  */
                     , 'Y'                                    /* 사용_여부                  */
@@ -227,7 +227,7 @@ BEGIN
     O_PROCMSG := '보수대상선정 집계 연속 구간 GPIC 재개산 및 공법 결정 완료';
 
 
-    -- 포트홀_량 저장
+    -- 포트홀_량/교통량 저장
     UPDATE TN_RPAIR_TRGET_GROUP SET
         POTHOLE_QY = (
             SELECT
@@ -302,17 +302,20 @@ BEGIN
     WHERE
         1 = 1
         AND TRGET_SLCTN_NO = P_TRGET_SLCTN_NO::NUMERIC /* 보수_대상_선정.대상_선정_번호 */
-        AND A.ROUTE_CODE = P_ROUTE_CODE
+        AND ROUTE_CODE = P_ROUTE_CODE
     ;
 
-    UPDATE TN_RPAIR_TRGET_SLCTN SET
-        SLCTN_STTUS = 'RTSS0010' /* 완료 */
-        , UPDUSR_NO = P_USER_NO::NUMERIC /* 보수_대상_선정.수정자_번호 */
-        , UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
-    WHERE
-        1 = 1
-        AND TRGET_SLCTN_NO = P_TRGET_SLCTN_NO::NUMERIC /* 보수_대상_선정.대상_선정_번호 */
-    ;
+    IF P_START_END_CODE = 'E' THEN
+	    UPDATE TN_RPAIR_TRGET_SLCTN SET
+	        SLCTN_STTUS = 'RTSS0010' /* 완료 */
+	        , UPDUSR_NO = P_USER_NO::NUMERIC /* 보수_대상_선정.수정자_번호 */
+	        , UPDT_DT = NOW() /* 보수_대상_선정.수정_일시 */
+	    WHERE
+	        1 = 1
+	        AND TRGET_SLCTN_NO = P_TRGET_SLCTN_NO::NUMERIC /* 보수_대상_선정.대상_선정_번호 */
+	    ;
+    END IF;
+
 
 EXCEPTION
     WHEN OTHERS

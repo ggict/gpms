@@ -6,6 +6,8 @@ import java.util.*;
 
 public class DateUtil {
 	
+	private static final int LAST_SLCTN_YEAR = 2017;
+	
 	/**
      * 그 달에 해당되는 분기가 반환되는 메서드
      *
@@ -197,5 +199,16 @@ public class DateUtil {
 		String secString = dateData.substring(12, 14);
 		String makeStr =	yearString	+ monthString + dayString + hourString + minString	+ secString;
 		return makeStr;
+	}
+	
+	public static List<String> getSlctnYearList() throws Exception{
+		// 선정년도 (2017 ~ 현재연도)
+		List<String> slctnYearList = new ArrayList<String>();
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		for (int i=currentYear; i>=LAST_SLCTN_YEAR; i--) {
+			slctnYearList.add(String.valueOf(i));
+		}
+		
+		return slctnYearList;
 	}
 }

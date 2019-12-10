@@ -14,14 +14,12 @@ BEGIN
         RAISE NOTICE '보수대상선정 집계(PRC_REPAIR_TARGET_RANGE_SELECT) 메시지: %', O_PROCMSG;
     END IF;
 
-    IF P_START_END_CODE = 'S' THEN
-        DELETE FROM TN_RPAIR_TRGET
-	    WHERE
-	       TRGET_SLCTN_NO = P_TRGET_SLCTN_NO
-	       AND ROUTE_CODE = P_ROUTE_CODE;
+    DELETE FROM TN_RPAIR_TRGET
+    WHERE
+       TRGET_SLCTN_NO = P_TRGET_SLCTN_NO
+       AND ROUTE_CODE = P_ROUTE_CODE;
 
-	    O_PROCMSG := '보수대상선정 집계 초기화(삭제)완료';
-    END IF;
+    O_PROCMSG := CONCAT('보수대상선정 집계 초기화(삭제)완료 : ', P_ROUTE_CODE);
 
 
 
@@ -142,7 +140,7 @@ BEGIN
             , NOW()                                  UPDT_DT                          /* 수정_일시 */
             , A.DMG_VAL                              DMG_VAL                          /* 파손도_값 */
             , A.DEPT_CODE                            DEPT_CODE                        /* 부서코드 */
-            , NULL                                   TMPR_SLCTN_AT                    /* 임시_선정_여부 TMPR_SLCTN_AT */
+            , 'Y'                                    TMPR_SLCTN_AT                    /* 임시_선정_여부 TMPR_SLCTN_AT */
             , A.MSR_DM_CODE                          MSR_DM_CODE                      /* 공법선정비율_결정방식_코드 */
             , A.THRHLD                               THRHLD                           /* 임계값 */
             , A.VMTC_GRAD                            VMTC_GRAD                        /* 교통량등급 */

@@ -314,6 +314,26 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	@XmlElement
 	private String SE_CD;
 	
+	@XmlElement
+	private String AI_NO;
+	
+	@XmlElement
+	private String REGION_TYPE;
+	
+	@XmlElement
+	private String AREA;
+	
+	@XmlElement
+	private String LEN;
+	
+	@XmlElement
+	private String SEVERITY;
+	
+	@XmlElement
+	private String RESULT_IMAGE;
+	
+	@XmlElement
+	private String AI_SUM_VALUE;
 
 	public String getSRVY_YEAR() {
 		return SRVY_YEAR;
@@ -1059,6 +1079,61 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public void setSE_CD(String sE_CD) {
 		SE_CD = sE_CD;
 	}
-	
+
+	public String getREGION_TYPE() {
+		return REGION_TYPE;
+	}
+
+	public void setREGION_TYPE(String rEGION_TYPE) {
+		REGION_TYPE = rEGION_TYPE;
+	}
+
+	public String getAREA() {
+		return AREA;
+	}
+
+	public void setAREA(String aREA) {
+		AREA = aREA;
+	}
+
+	public String getLEN() {
+		return LEN;
+	}
+
+	public void setLEN(String lEN) {
+		LEN = lEN;
+	}
+
+	public String getSEVERITY() {
+		return SEVERITY;
+	}
+
+	public void setSEVERITY(String sEVERITY) {
+		SEVERITY = sEVERITY;
+	}
+
+	public String getRESULT_IMAGE() {
+		return RESULT_IMAGE;
+	}
+
+	public void setRESULT_IMAGE(String rESULT_IMAGE) {
+		RESULT_IMAGE = rESULT_IMAGE;
+	}
+
+	public String getAI_NO() {
+		return AI_NO;
+	}
+
+	public void setAI_NO(String aI_NO) {
+		AI_NO = aI_NO;
+	}
+
+	public String getAI_SUM_VALUE() {
+		return AI_SUM_VALUE;
+	}
+
+	public void setAI_SUM_VALUE(String aI_SUM_VALUE) {
+		AI_SUM_VALUE = aI_SUM_VALUE;
+	}
 
 }
