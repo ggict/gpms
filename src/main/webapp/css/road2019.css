@@ -1,4 +1,32 @@
 @charset "UTF-8";
+::-webkit-scrollbar { width: 10px; /* 세로축 스크롤바 길이 */ height: 10px; /* 가로축 스크롤바 길이 */ }
+
+::-webkit-scrollbar-track { background-color: #e4e4e4; }
+
+::-webkit-scrollbar-track-piece { background-color: #e4e4e4; }
+
+::-webkit-scrollbar-thumb { border-radius: 8px; background-color: #999; }
+
+::-webkit-scrollbar-button { background-color: darkblue; width: 20px; height: 10px; }
+
+::-webkit-scrollbar-button:start { background-color: #e4e4e4; /* Top, Left 방향의 이동버튼 */ }
+
+::-webkit-scrollbar-button:end { background-color: #e4e4e4; /* Bottom, Right 방향의 이동버튼 */ }
+
+::-webkit-scrollbar-corner { background-color: #e4e4e4; /* 우측 하단의 코너 부분 */ }
+
+::-webkit-resizer { background-color: progressPercent; }
+
+/* 상하 방향 스크롤바의 화살표 바꾸기 */
+::-webkit-scrollbar-button:vertical:increment { background: #cdcdcd url(arrow_down.png) no-repeat center 50%; }
+
+::-webkit-scrollbar-button:vertical:decrement { background: #cdcdcd url(arrow_up.png) no-repeat center 50%; }
+
+/* 좌우 방향 스크롤바의 화살표 바꾸기 */
+::-webkit-scrollbar-button:horizontal:increment { background: #cdcdcd url(arrow_down.png) no-repeat center 50%; }
+
+::-webkit-scrollbar-button:horizontal:decrement { background: #cdcdcd url(arrow_up.png) no-repeat center 50%; }
+
 /* login */
 .login { display: table; height: 100%; text-align: center; width: 100%; }
 
@@ -250,6 +278,8 @@ td input[type="checkbox"].cbox + label.hiddenLabel:before { margin: -3px 0 0 -18
 .h3 { font-weight: 600; font-size: 16px; padding: 20px 0 10px 0; }
 
 .h3 + .coSpan { float: right; margin-top: -26px; }
+
+.div9 .h3 + .btnArea { margin-top: -32px; padding: 0 0 4px 0; }
 
 #bottom_cont .h3.borderNone { border: none; }
 
@@ -610,6 +640,10 @@ a.btnJsDivClose:hover, a.btnJsDivClose:focus { opacity: 1; background-color: #ed
 #repairtargets { z-index: 101; }
 
 #bottom_cont { margin: 0; z-index: 120; }
+
+td span.small { font-size: 14px; color: #999; float: right; }
+
+#cellFrm2 #div_grid2 .ui-widget-content { border: none; }
 
 /* sideDiv */
 article.sideDiv, article.sideDiv.up { display: none; position: absolute; left: 45px; top: 0; z-index: 1000; padding: 10px; background: #fff; border: solid 1px rgba(0, 0, 0, 0.2); border-radius: 2px; box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); width: 300px; }

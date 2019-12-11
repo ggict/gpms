@@ -61,9 +61,10 @@
     
     <div class="contents container">
     
-    	<article class="div5" style="height:300px; overflow-y: auto">
+    	<article class="div5" style="max-height:300px; overflow-y: auto">
+    		<h3 class="h3"><c:out value="${cntrwkVO.FULL_CNTRWK_NM}"/></h3>
     		<form:form commandName="cntrwkVO" id="cntrwk_Regist-form">
-    		<div class="table">
+    		<div class="table" style="width:98%;">
 		        <table class="tbview" summary="포장공사 기본정보를 조회합니다.">
 		            <caption>포장공사 기본정보</caption>
 		            <colgroup>
@@ -120,24 +121,23 @@
 								</select>
 							</td>
 						</tr>
+						<%-- 
 						<tr> 
 							<th scope="row">공사명</th>
 							<td colspan="3">
 								<label for="FULL_CNTRWK_NM"></label>
 								<c:out value="${cntrwkVO.FULL_CNTRWK_NM}"/>
-							</td>								
+							</td> --%>							
 								<c:out value="${cntrwkVO.DETAIL_CNTRWK_NM}"/>
 								<input type="hidden" name="DETAIL_CNTRWK_NM" id="DETAIL_CNTRWK_NM" value="<c:out value="${cntrwkVO.FULL_CNTRWK_NM}"/>" class="MX_50 CS_50 input" style="display: none;" />	<!-- placeholder="예) 2016년 노후포장도로 정비공사" -->
 							
 						</tr>
 						<tr>
-							<th scope="row">착공일 ~ 준공일</th>
+							<th scope="row">착공 ~ 준공</th>
 							<td>
 								<label for="STRWRK_DE"></label>
 								<fmt:parseDate var="STRWRK_DE" value="${cntrwkVO.STRWRK_DE}" pattern="yyyyMMdd" />
-								<fmt:formatDate value="${STRWRK_DE}" pattern="yyyy-MM-dd" />
-								~
-								<label for="COMPET_DE"></label>
+								<fmt:formatDate value="${STRWRK_DE}" pattern="yyyy-MM-dd" />~<label for="COMPET_DE"></label>
 								<fmt:parseDate var="COMPET_DE" value="${cntrwkVO.COMPET_DE}" pattern="yyyyMMdd" />
 								<fmt:formatDate value="${COMPET_DE}" pattern="yyyy-MM-dd" />
 							</td>
@@ -195,25 +195,28 @@
 							</td>
 						</tr> --%>
 						<tr>
-							<th scope="row">총 공사연장 (자동계산)</th>
+							<th scope="row">총 공사연장</th>
 							<td>
 								<c:if test="${!empty cntrwkVO.TRACK_LEN}">
 								<fmt:formatNumber value="${cntrwkVO.TRACK_LEN}" type="number"/> km
 								</c:if>
+								<span class="small">(자동계산)</span>
 							</td>
-							<th scope="row">총 공사금액 (자동계산)</th>
+							<th scope="row">총 공사금액</th>
 							<td>
 								<c:if test="${!empty cntrwkVO.TOT_AMOUNT}">
 								<fmt:formatNumber value="${cntrwkVO.TOT_AMOUNT}" type="number"/> 천원
 								</c:if>
+								<span class="small">(자동계산)</span>
 							</td>
 						</tr>
 						<tr>
-							<th scope="row">총 공사면적 (자동계산)</th>
+							<th scope="row">총 공사면적</th>
 							<td>
 								<c:if test="${!empty cntrwkVO.RPAIR_AR}">
 								<fmt:formatNumber value="${cntrwkVO.RPAIR_AR}" type="number"/> ㎡
 								</c:if>
+								<span class="small">(자동계산)</span>
 							</td>
 							<th scope="row">포장두께</th>
 							<td>
@@ -238,7 +241,7 @@
 		    </form:form>
     	</article>
     	
-    	<article class="div7" style="height:300px; overflow-y: auto">
+    	<article class="div7" style="max-height:300px; overflow-y:auto; overflow-x: hidden">
     		<h3 class="h3">이전 공사이력</h3>
     		<form id="cellFrm2">
 	    		<div id="div_grid2" class="table">
