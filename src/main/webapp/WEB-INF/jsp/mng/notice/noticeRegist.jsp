@@ -61,7 +61,7 @@
 							<textarea id="CN" name="CN" maxLength="1000"  style="resize:none; width:96.5%; height: 95%;" ></textarea>
 						</td>
 					</tr>
-					<tr> 
+					<tr>
 			     	  	<th scope="row" class="tx_center">첨부파일</th>
 			     	  	<td colspan="3">
 			     	  		<c:import url="/attachfile/getfileForm.do" >
@@ -82,7 +82,7 @@
 					</tr>
 				</tbody>
 			</table>
-			
+
 			<div class="mt10 tc">
 				<div class="fr">
 					<a href="#" onclick="javascript: fn_check_from();" class="schbtn" >등록</a>
@@ -90,7 +90,7 @@
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
 	<!-- // Content -->
 </div>
@@ -103,7 +103,29 @@
 <script type="text/javaScript" language="javascript" defer="defer">
 //화면 초기 설정
 $(document).ready(function() {
-    
+	// 파일첨부 시 이미지 로드
+    $(":file").change(function() {
+        // YYK. 파일첨부시 제한
+        if ( this.files[0].type != 'application/pdf'
+             && this.files[0].type != 'application/haansoftdoc'
+             && this.files[0].type != 'application/haansoftppt'
+             && this.files[0].type != 'application/haansoftpptx'
+             && this.files[0].type != 'application/haansoftxls'
+             && this.files[0].type != 'application/haansoftxlsx'
+             && this.files[0].type != 'application/haansofthwp'
+             && this.files[0].type != 'image/jpg'
+             && this.files[0].type != 'image/jpeg'
+             && this.files[0].type != 'image/bmp'
+             && this.files[0].type != 'image/png'
+             && this.files[0].type != 'image/gif'
+        ) {
+            alert('문서파일(pdf/doc/ppt/xls/hwp 타입) 및 \n이미지파일(jpg/jpeg/bmp/png/gif 타입)만 첨부가 가능합니다.');
+//             $("#" + this.id).replaceWith( $("#" + this.id).clone(true) );
+            $("#" + this.id).val("");
+            return
+        }
+//         readURL(this);
+    });
 });
 
 //글 등록
@@ -111,9 +133,9 @@ function fn_save() {
     if( confirm('<spring:message code="warn.insert.msg" />') ) {
         COMMON_UTIL.cmFileFormSubmit("frm", "proc_frm", contextPath + "api/notice/addNotice.do", "fn_file_upload_callback");
     }
-    
+
     /* var action = '<c:url value="/api/notice/addNotice.do" />';
-    
+
     $.ajax({
         url: action,
         contentType: 'application/json',
@@ -151,7 +173,7 @@ function fn_check_from(){
 }
 //파일 전송 callback
 function fn_file_upload_callback(){
-    
+
     window.parent.fnSearch();
     var wnd_id = $("#wnd_id").val();
     COMMON_UTIL.cmWindowClose(wnd_id);
