@@ -34,10 +34,11 @@ $(document).ready(function() {
 	         && this.files[0].type != 'image/gif'
 	    ) {
 	        alert('문서파일(pdf/doc/ppt/xls/hwp 타입) 및 \n이미지파일(jpg/jpeg/bmp/png/gif 타입)만 첨부가 가능합니다.');
-	        $("#" + this.id).replaceWith( $("#" + this.id).clone(true) );
+// 	        $("#" + this.id).replaceWith( $("#" + this.id).clone(true) );
+	        $("#" + this.id).val("");
 	        return
 	    }
-	    readURL(this);
+// 	    readURL(this);
 	});
 
 });

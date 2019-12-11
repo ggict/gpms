@@ -97,8 +97,12 @@
     	<article class="div9">
     		<h3 class="h3">포장공사 이력조회</h3>
     		<div id="div_grid" class="table">
-				<table id="gridArea"></table>				
-			</div>
+				<table id="gridArea"></table>	
+				<div class="btnArea">
+	        	<a href="#" onclick="fn_cntrwkExcel();" class="btn pri">엑셀저장</a>
+	        	<a href="#" onclick="fnWrite();" class="btn pri">포장공사 신규등록</a>
+	        </div>			
+			</div>	        
 			<div id="gridPager"></div>
         </div>
     	</article>

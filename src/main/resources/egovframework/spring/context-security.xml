@@ -122,7 +122,11 @@
         WHERE 1 = 1
         AND tnauthority.USE_AT ='Y' /* 권한그룹.사용_여부 */
         AND tnauthority.DELETE_AT ='N' /* 권한그룹.삭제_여부 */
-        ORDER BY tnmenu.URL ASC
+        UNION ALL
+        SELECT
+            'ROLE_ADMIN' AUTHORITY
+            , '/manage/**' URL
+        ORDER BY URL ASC
     	" />
 	</beans:bean>
 	<beans:bean id="requestMap" class="egovframework.security.service.impl.UrlResourcesMapFactoryBean" init-method="init">
