@@ -645,6 +645,10 @@ td span.small { font-size: 14px; color: #999; float: right; }
 
 #cellFrm2 #div_grid2 .ui-widget-content { border: none; }
 
+input.btnBack { width: 42px; height: 42px; border: none; border-left: solid 1px #ddd; border-right: solid 1px #ddd; background: #fff url(../images/btnBack.png) no-repeat center; font-size: 0; }
+
+input.btnBack:hover, input.btnBack:focus { background-color: #f3f3f3; }
+
 /* sideDiv */
 article.sideDiv, article.sideDiv.up { display: none; position: absolute; left: 45px; top: 0; z-index: 1000; padding: 10px; background: #fff; border: solid 1px rgba(0, 0, 0, 0.2); border-radius: 2px; box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); width: 300px; }
 

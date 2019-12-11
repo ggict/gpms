@@ -170,7 +170,7 @@
 							</td>
 						</tr> --%>
 						<tr>
-							<th scope="row">시공사 대표자</th>
+							<th scope="row">시공사대표</th>
 							<td>
 								<label for="CNSTRCT_CO_RPRSNTV_NM"></label>
 								<c:out value="${cntrwkVO.CNSTRCT_CO_RPRSNTV_NM}"/>
@@ -180,7 +180,7 @@
 								<label for="SPRVISN_CO_RPRSNTV_NM"></label>
 								<c:out value="${cntrwkVO.SPRVISN_CO_RPRSNTV_NM}"/>
 							</td> --%>
-							<th scope="row">시공사 대표번호</th>
+							<th scope="row">시공사연락처</th>
 							<td>
 								<label for="CNSTRCT_CO_TELNO"></label>
 								<c:out value="${cntrwkVO.CNSTRCT_CO_TELNO}"/>
@@ -241,7 +241,7 @@
 		    </form:form>
     	</article>
     	
-    	<article class="div7" style="max-height:300px; overflow-y:auto; overflow-x: hidden">
+    	<article class="div7" style="max-height:300px; overflow-y:auto;">
     		<h3 class="h3">이전 공사이력</h3>
     		<form id="cellFrm2">
 	    		<div id="div_grid2" class="table">

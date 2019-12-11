@@ -22,43 +22,46 @@
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" id="CNTRWK_ID" name="CNTRWK_ID" value="${param.CNTRWK_ID }" />
 <input type="hidden" id="CNTRWK_SE" name="CNTRWK_SE" value="${CNTRWK_SE}"/>
-<div>
-	<div class="posiR">
-       	<ul class="ctab_menu">
-            <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('cntrwk/selectCntrwkView.do?CNTRWK_ID=${param.CNTRWK_ID}')">기본정보</a></li>
-			<li class="sel"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('cntrwkdtl/selectCntrwkDtlList.do?CNTRWK_ID=${param.CNTRWK_ID}')">세부공사</a></li>
-			<%-- <li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('flaw/selectFlaw.do?CNTRWK_ID=${cntrwkDtlVO.CNTRWK_ID}')">하자기본정보</a></li>
-			<li><a href="#" onclick="COMMON_UTIL.cmMoveUrl('flawcntrwk/selectFlawCntrwkList.do?CNTRWK_ID=${cntrwkDtlVO.CNTRWK_ID}')">하자보수공사</a></li> --%>
-       	</ul>
-       	<h5 class="info" style="left: 310px;">
-			<a href="#" class="whitebtn dpib ml10 vm" onclick="COMMON_UTIL.cmMoveUrl('cntrwk/selectCntrwkList.do')"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기" /></a>
-		</h5>
-		<p class="location">
-	        <span>포장공사 이력관리</span>
-	        <span>포장공사 이력관리</span>
-	        <span>포장공사 이력조회</span>
-	        <strong>포장공사 세부공사 목록</strong>
-	    </p>
-   </div>
-	<!-- Content -->
-	<div class="ctab_wrap">
-		<div class="tabcont">
-			<div class="mt10 ml10 mr10">
-				<div id="div_grid" style="width:100%; height:240px;">
-					<table id="gridArea"></table>
-					<div id="gridPager"></div>
-				</div>
-				<div class="mt10 tc">
-		            <div class="fr">
-		           		<a href="#" onclick="fnFileSave();" class="schbtn">엑셀업로드</a>
-		            	<a href="#" onclick="fn_cntrwkExcel();" class="schbtn">엑셀저장</a>
-		            	<a href="#" onclick="fnWrite();" class="schbtn" >등록</a>
-		            </div>
-		        </div>
-			</div>
-		</div>
-	</div>
+
+
+
+<div class="tabcont">
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">포장공사이력관리</option>
+                </select>
+                <select name="">
+                    <option value="">포장공사이력관리</option>
+                </select>
+                <h2 class="h2">포장공사이력 조회</h2>
+                <h2 class="h2">세부공사</h2>
+                <input type="button" value="뒤로가기" onclick="COMMON_UTIL.cmMoveUrl('cntrwk/selectCntrwkList.do')" class="btnBack">
+            </span>
+        </div>
+    </header>
+
+    <div class="contents container">
+    	<article class="div12" style="margin-top: 5px;" >
+
+    		<div id="div_grid">
+    			<table id="gridArea"></table>
+    			<div id="gridPager"></div>
+    		</div>
+
+    		 <div class="btnArea">
+    			<a href="#" onclick="fnFileSave();" class="schbtn">엑셀업로드</a>
+    		 	<a href="#" onclick="fn_cntrwkExcel();" class="schbtn">엑셀저장</a>
+    		 	<a href="#" onclick="fnWrite();" class="schbtn" >등록</a>
+    		 </div>
+
+
+    	</article>
+    </div>
+
 </div>
+
 </form>
 <!-- 공통 (START)-->
 <%@ include file="/include/common.jsp" %>
