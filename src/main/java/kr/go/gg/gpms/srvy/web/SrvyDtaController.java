@@ -1562,21 +1562,25 @@ public class SrvyDtaController extends BaseController {
 	public String srvyDtaEvlInfoDetail(@ModelAttribute SmDtaGnlSttusVO smDtaGnlSttusVO, MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 
 		smDtaGnlSttusVO = smDtaGnlSttusService.selectSmDtaGnlSttus(smDtaGnlSttusVO);
+		
+		if(null != smDtaGnlSttusVO) {
+			SmDtaGnlSttusVO param = new SmDtaGnlSttusVO();
+			param.setROUTE_CODE(smDtaGnlSttusVO.getROUTE_CODE());
+			param.setDIRECT_CODE(smDtaGnlSttusVO.getDIRECT_CODE());
+			param.setTRACK(smDtaGnlSttusVO.getTRACK());
+			param.setSTRTPT(smDtaGnlSttusVO.getSTRTPT());
+			param.setENDPT(smDtaGnlSttusVO.getENDPT());
 
-		SmDtaGnlSttusVO param = new SmDtaGnlSttusVO();
-		param.setROUTE_CODE(smDtaGnlSttusVO.getROUTE_CODE());
-		param.setDIRECT_CODE(smDtaGnlSttusVO.getDIRECT_CODE());
-		param.setTRACK(smDtaGnlSttusVO.getTRACK());
-		param.setSTRTPT(smDtaGnlSttusVO.getSTRTPT());
-		param.setENDPT(smDtaGnlSttusVO.getENDPT());
-
-		mummSctnSrvyDtaVO.setSRVY_YEAR(mummSctnSrvyDtaVO.getSCH_SRVY_YEAR());
-
-		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
-		model.addAttribute("smDtaGnlSttusVO", smDtaGnlSttusVO);
-		model.addAttribute("srvyYearList", smDtaGnlSttusService.selectSmDtaGnlSttusYearList(param));
-
-		return "/srvy/srvyDtaEvlInfoDetail";
+			mummSctnSrvyDtaVO.setSRVY_YEAR(mummSctnSrvyDtaVO.getSCH_SRVY_YEAR());
+		
+			model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
+			model.addAttribute("smDtaGnlSttusVO", smDtaGnlSttusVO);
+			model.addAttribute("srvyYearList", smDtaGnlSttusService.selectSmDtaGnlSttusYearList(param));
+			return "/srvy/srvyDtaEvlInfoDetail";
+		}else {
+			model.addAttribute("smDtaGnlSttusVO", smDtaGnlSttusVO);
+			return "/srvy/srvyDtaEvlInfoDetail";
+		}
 	}
 
 	/**
