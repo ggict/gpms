@@ -723,6 +723,7 @@ $(document).ready(function(){
             //fn_view(rowId); // 대장 조회
         }
         ,onSelectRow: function(rowId, status, e) {     // 클릭 처리
+        	e.preventDefault();
             fnCalDetailInfo();
         }
         ,onSelectAll: function(aRowIds, status) {
