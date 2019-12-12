@@ -270,6 +270,10 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 ]]>
 	</delete>
 
+	<select id="cntrwkDAO.selectCntrwkExcel" parameterClass="cntrwkVO" resultClass="cntrwkVO">
+		select * from tn_cntrwk where FULL_CNTRWK_NM = #FULL_CNTRWK_NM#
+	</select>
+
 	<select id="cntrwkDAO.selectCntrwk" resultClass="cntrwkVO">
 	<![CDATA[
 		/* cntrwkDAO.selectCntrwk */

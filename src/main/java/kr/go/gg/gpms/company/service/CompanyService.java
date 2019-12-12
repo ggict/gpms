@@ -56,6 +56,15 @@ public interface CompanyService {
 	 */
 	CompanyVO selectCompany(CompanyVO companyVO) throws Exception;
 
+	
+	/**
+	 * 업체정보(TN_COMPANY)을 조회한다.
+	 * @param companyVO - 조회할 정보가 담긴 CompanyVO
+	 * @return 조회한 TN_COMPANY
+	 * @exception Exception
+	 */
+	CompanyVO selectCompanyExcel(CompanyVO companyVO) throws Exception;
+	
 	/**
 	 * 업체정보(TN_COMPANY) 목록을 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 companyVO
@@ -71,6 +80,7 @@ public interface CompanyService {
 	 * @exception
 	 */
 	int selectCompanyListTotalCount(CompanyVO companyVO);
+
 
 }
 

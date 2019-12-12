@@ -499,14 +499,12 @@ public class CntrwkDtlController extends BaseController {
 	public String excelUploadForm(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, ModelMap model,
 			BindingResult bindingResult) throws Exception {
 
-		model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
-
 		return "/cntrwkdtl/cntrwkdtlExcelUpload";
 	}
 
 	// 포장공사 이력 엑셀 업로드
 	@RequestMapping(value = "/cntrwkdtl/cntrwkDtlExcelUpload.do", method = RequestMethod.POST)
-	public String excelUpload(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, BindingResult bindingResult,
+	public String excelUpload(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, CntrwkVO cntrwkVO, BindingResult bindingResult,
 			HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
 		String resultMsg = "";
 		String filePathNm = "";
@@ -522,7 +520,7 @@ public class CntrwkDtlController extends BaseController {
 		Assert.state(files.size() > 0, "0 files exist");
 
 		String filePath = pathInfoProperties.getProperty("file.upload.path");
-		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwkDtl", files);
+		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwk", files);
 
 		try {
 			
@@ -532,11 +530,11 @@ public class CntrwkDtlController extends BaseController {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 				String date = sdf.format(currentDate);
 
-				filePathNm = checkFilePath(filePath, "path") + File.separator + "cntrwkDtl" + File.separator + date
+				filePathNm = checkFilePath(filePath, "path") + File.separator + "cntrwk" + File.separator + date
 						+ File.separator + checkFilePath(file.getFILE_NM(), "name");
 
 				// db insert
-				resultMsg = cntrwkDtlService.excelDBUpload(cntrwkDtlVO, filePathNm, userNo);
+				resultMsg = cntrwkDtlService.excelDBUpload(filePathNm, userNo);
 			}
 		
 		} catch (Exception e) {

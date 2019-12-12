@@ -67,6 +67,16 @@ public class CompanyDAO extends BaseDAO {
 	public CompanyVO selectCompany(CompanyVO companyVO) throws Exception {
 		return (CompanyVO) select("companyDAO.selectCompany", companyVO);
 	}
+	
+	/**
+	 * 업체정보(TN_COMPANY)을 조회한다.
+	 * @param value - 조회할 정보
+	 * @return 조회한 TN_COMPANY
+	 * @exception Exception
+	 */
+	public CompanyVO selectCompanyExcel(CompanyVO companyVO) throws Exception {
+		return (CompanyVO) select("companyDAO.selectCompanyExcel", companyVO);
+	}
 
 	/**
 	 * 업체정보(TN_COMPANY) 목록을 조회한다.

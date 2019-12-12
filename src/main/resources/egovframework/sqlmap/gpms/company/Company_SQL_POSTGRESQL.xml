@@ -192,6 +192,12 @@ WHERE CO_NO = #CO_NO#::int
 		<isNotEmpty property="DELETE_AT"><![CDATA[ /* 업체정보.삭제_여부 */ AND tncompany.DELETE_AT = #DELETE_AT# ]]></isNotEmpty>
 </sql>
 
+	<select id="companyDAO.selectCompanyExcel"
+		parameterClass="companyVO"
+		resultClass="companyVO">
+		select * from tn_company where CO_NM = #CO_NM#
+	</select>
+
 	<select id="companyDAO.selectCompanyListPage"
 		parameterClass="companyVO"
 		resultClass="companyVO">

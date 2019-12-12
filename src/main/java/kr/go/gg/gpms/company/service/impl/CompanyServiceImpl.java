@@ -101,4 +101,12 @@ public class CompanyServiceImpl extends AbstractServiceImpl implements CompanySe
 		return companyDAO.selectCompanyListTotalCount( companyVO);
 	}
 
+	@Override
+	public CompanyVO selectCompanyExcel(CompanyVO companyVO) throws Exception {
+		CompanyVO resultVO = companyDAO.selectCompanyExcel( companyVO);
+		if (resultVO == null)
+			throw processException("info.nodata.msg");
+		return resultVO;
+	}
+
 }

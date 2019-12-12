@@ -2,7 +2,9 @@ package kr.go.gg.gpms.cntrwkdtl.service;
 
 import java.util.List;
 
+import kr.go.gg.gpms.cntrwk.service.model.CntrwkVO;
 import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
+import kr.go.gg.gpms.company.service.model.CompanyVO;
 
 /**
  * 공사상세정보
@@ -180,6 +182,16 @@ public interface CntrwkDtlService {
 	 * @param cntrwkDtlVO - 저장할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
 	 */
-	 String excelDBUpload(CntrwkDtlVO cntrwkDtlVO, String filePathNm, String userNo) throws Exception;
+	String excelDBUpload(String filePathNm, String userNo) throws Exception;
+	 
+	 /**
+	  * 업체정보(TN_COMPANY)을 조회한다.
+	  * @param companyVO - 조회할 정보가 담긴 CompanyVO
+      * @return 조회한 TN_COMPANY
+	  * @exception Exception
+	 */
+	CompanyVO selectCompanyExcel(CompanyVO companyVO) throws Exception;
+	
+	CntrwkVO selectCntrwk(CntrwkVO cntrwkVO) throws Exception;
 }
 

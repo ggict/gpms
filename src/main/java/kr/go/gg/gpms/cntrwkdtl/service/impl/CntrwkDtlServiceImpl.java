@@ -1,22 +1,12 @@
 package kr.go.gg.gpms.cntrwkdtl.service.impl;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import kr.go.gg.gpms.cntrwkdtl.service.CntrwkDtlService;
-import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
-import kr.go.gg.gpms.pavmatrl.service.PavMatrlService;
-import kr.go.gg.gpms.pavmatrl.service.model.PavMatrlVO;
-import kr.go.gg.gpms.rpairmthd.service.RpairMthdService;
-import kr.go.gg.gpms.rpairmthd.service.model.RpairMthdVO;
-
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -25,10 +15,19 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
 import egovframework.cmmn.web.SessionManager;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import kr.go.gg.gpms.cntrwk.service.impl.CntrwkDAO;
+import kr.go.gg.gpms.cntrwk.service.model.CntrwkVO;
+import kr.go.gg.gpms.cntrwkdtl.service.CntrwkDtlService;
+import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
+import kr.go.gg.gpms.company.service.impl.CompanyDAO;
+import kr.go.gg.gpms.company.service.model.CompanyVO;
+import kr.go.gg.gpms.pavmatrl.service.PavMatrlService;
+import kr.go.gg.gpms.pavmatrl.service.model.PavMatrlVO;
+import kr.go.gg.gpms.rpairmthd.service.RpairMthdService;
+import kr.go.gg.gpms.rpairmthd.service.model.RpairMthdVO;
 
 /**
  * 공사상세정보
@@ -51,6 +50,12 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 	@Resource(name = "cntrwkDtlDAO")
 	private CntrwkDtlDAO cntrwkDtlDAO;
 
+	@Resource(name = "cntrwkDAO")
+	private CntrwkDAO cntrwkDAO;
+	
+	@Resource(name = "companyDAO")
+	private CompanyDAO companyDAO;
+	
 	@Resource(name = "rpairMthdService")
 	private RpairMthdService rpairMthdService;
 
@@ -271,7 +276,33 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 	public List<CntrwkDtlVO> cntrwkDeptLenNewStatsExcel(CntrwkDtlVO cntrwkDtlVO) throws Exception {
 		return cntrwkDtlDAO.cntrwkDeptLenNewStatsExcel(cntrwkDtlVO);
 	}
+	
+	/**
+	 * 업체정보(TN_COMPANY)을 조회한다.
+	 * @param value - 조회할 정보가 담긴 CompanyVO
+	 * @return 조회한 TN_COMPANY
+	 * @exception Exception
+	 */
+	public CompanyVO selectCompanyExcel(CompanyVO companyVO) throws Exception {
+		CompanyVO resultVO = companyDAO.selectCompanyExcel(companyVO);
+		if (resultVO == null)
+			throw processException("info.nodata.msg");
+		return resultVO;
+	}
 
+	/**
+	 * 공사정보(TN_CNTRWK)을 등록한다.
+	 * @param cntrwkVO - 등록할 정보가 담긴 CntrwkVO
+	 * @return 등록 결과
+	 * @exception Exception
+	 */
+	public String insertCntrwk(CntrwkVO cntrwkVO) throws Exception {
+		//String id = egovIdGnrService.getNextStringId();
+		//cntrwkVO.setId(id);
+
+		return cntrwkDAO.insertCntrwk( cntrwkVO);
+	}
+	
 	/**
 	 * 공사정보(TN_CNTRWK_DTL)엑셀을 DB에 저장한다.
 	 * 
@@ -279,14 +310,71 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 	 *            - 저장할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
 	 */
-	public String excelDBUpload(CntrwkDtlVO _cntrwkDtlVO, String filePathNm, String userNo) throws Exception {
+	public String excelDBUpload(String filePathNm, String userNo) throws Exception {
+		String resultMsg = "";
+		CntrwkVO _cntrwkVO = new CntrwkVO();	
+		
+		// 파일경로
+		FileInputStream fis = new FileInputStream(filePathNm);
+		XSSFWorkbook workbook = new XSSFWorkbook(fis);
+		XSSFSheet sheet = workbook.getSheetAt(0);
+		
+		Map<String, Object> map = new HashMap<>();
+		Map<String, String> cntrwkMap = new HashMap<>();
+		
+		// 파일의 row의 갯수
+		int rowindex = sheet.getPhysicalNumberOfRows();
+			
+		// row의 0 헤더 제외
+		for (int i = 1; i < rowindex; i++) {
+			CntrwkVO cntrwkVO = new CntrwkVO();
+			BeanUtils.copyProperties(_cntrwkVO, cntrwkVO);
+			XSSFRow rows = sheet.getRow(i);
+
+			for (int j = 0; j < rows.getLastCellNum(); j++) {
+				// column은 고정
+				String column = sheet.getRow(0).getCell(j).getStringCellValue();
+
+				// value는 column 다음 row부터
+				XSSFCell cell = sheet.getRow(i).getCell(j);
+
+				map = validationCheck(i, cell, column, cntrwkVO);
+				cntrwkVO = (CntrwkVO) map.get("cntrwkVO");
+				resultMsg = (String) map.get("resultMsg");
+						
+				if(!"".equals(resultMsg)){
+					throw new Exception(resultMsg);
+				}
+			}
+
+			cntrwkVO.setCRTR_NO(userNo);
+			cntrwkVO.setUSE_AT("Y");
+			cntrwkVO.setDELETE_AT("N");
+
+			// insert query
+			insertCntrwk(cntrwkVO);
+			cntrwkMap.put(cntrwkVO.getFULL_CNTRWK_NM(), cntrwkVO.getCNTRWK_ID());
+			
+		}
+		CntrwkDtlVO cntrwkDtlVO = new CntrwkDtlVO();
+		String detail = excelDetailDBUpload(cntrwkDtlVO,cntrwkMap, filePathNm, userNo);
+		if(!"Success".equals(detail)) {
+			throw new Exception(detail);
+		}
+
+		workbook.close();
+		resultMsg = "Success";
+		return resultMsg;
+		
+	}
+	public String excelDetailDBUpload(CntrwkDtlVO cntrwkDtlVO,Map<String, String> cntrwkMap, String filePathNm, String userNo) throws Exception {
 		String resultMsg = "";
 
 		// 파일경로
 		FileInputStream fis = new FileInputStream(filePathNm);
 		XSSFWorkbook workbook = new XSSFWorkbook(fis);
 
-		XSSFSheet sheet = workbook.getSheetAt(0);
+		XSSFSheet sheet = workbook.getSheetAt(1);
 
 		Map<String, Object> map = new HashMap<>();
 		// 파일의 row의 갯수
@@ -294,8 +382,8 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 	
 		// row의 0 헤더 제외
 		for (int i = 1; i < rowindex; i++) {
-			CntrwkDtlVO cntrwkDtlVO = new CntrwkDtlVO();
-			BeanUtils.copyProperties(_cntrwkDtlVO, cntrwkDtlVO);
+			CntrwkDtlVO _cntrwkDtlVO = new CntrwkDtlVO();
+			BeanUtils.copyProperties(cntrwkDtlVO, _cntrwkDtlVO);
 
 			XSSFRow rows = sheet.getRow(i);
 
@@ -306,8 +394,7 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 
 				// value는 column 다음 row부터
 				XSSFCell cell = sheet.getRow(i).getCell(j);
-
-				map = validationCheck(i, cell, column, cntrwkDtlVO);
+				map = validationCheckDetail(i,cntrwkMap, cell, column, cntrwkDtlVO);
 				cntrwkDtlVO = (CntrwkDtlVO) map.get("cntrwkDtlVO");
 				resultMsg = (String) map.get("resultMsg");
 				
@@ -322,20 +409,21 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 
 			// insert query
 			insertCntrwkDtl(cntrwkDtlVO);
+			
 		}
 
 		workbook.close();
 		resultMsg = "Success";
 		return resultMsg;
 	}
-
-	public Map<String, Object> validationCheck(int i, XSSFCell cell, String column, CntrwkDtlVO cntrwkDtlVO)
-			throws Exception {
+	
+	public Map<String, Object> validationCheck(int i, XSSFCell cell, String column, CntrwkVO cntrwkVO)throws Exception {
 		String value = "";
 		String resultMsg = "";
 		int CNTRWK_AMOUNT = 0;
+		CompanyVO companyVO = new CompanyVO();
 		Map<String, Object> map = new HashMap<>();
-
+		
 		try {
 			// Validation Check - Cell Type
 			if (cell == null) {
@@ -364,11 +452,11 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 			// Validation Check - Cell Value Check
 
 			switch (column) {
-			case "도급비":
-				if (value != "") {
+			case "사업소코드":
+				if(value != "") {
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					value = cell.getStringCellValue();
-					cntrwkDtlVO.setOUTSRCCT(value);
+					cntrwkVO.setDEPT_CODE(value);
 					break;
 
 				} else {
@@ -376,20 +464,161 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 					break;
 				}
 
-			case "관급비":
-
-				if (value != "") {
+			case "공사년도" :
+				if(value != "") {
 					cell.setCellType(Cell.CELL_TYPE_STRING);
 					value = cell.getStringCellValue();
-					cntrwkDtlVO.setGVSLCT(value);
-					CNTRWK_AMOUNT = Integer.valueOf(cntrwkDtlVO.getOUTSRCCT()) + Integer.valueOf(value);
-					cntrwkDtlVO.setCNTRWK_AMOUNT(String.valueOf(CNTRWK_AMOUNT));
+					cntrwkVO.setCNTRWK_YEAR(value);
 					break;
-				} else {
+				}else {
 					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
 					break;
 				}
+			case "반기코드" :
+				if(value != "") {
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					value = cell.getStringCellValue();
+					cntrwkVO.setHT_SE(value);
+					break;
+				}else {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				}
+			case "공사구분코드" :
+				if(value != "") {
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					value = cell.getStringCellValue();
+					cntrwkVO.setCNTRWK_SE(value);
+					break;
+				}else {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				}
+			case "공사분류코드" :
+				if(value != "") {
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					value = cell.getStringCellValue();
+					cntrwkVO.setCNTRWK_CL(value);
+					break;
+				}else {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				}
+			case "공사명" :
+				if(value != "") {
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					value = cell.getStringCellValue();
+					cntrwkVO.setFULL_CNTRWK_NM(value);
+					break;
+				}else {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				}
+			case "착공일" :
+				if(value != "") {
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					value = cell.getStringCellValue();
+					cntrwkVO.setSTRWRK_DE(value);
+					break;
+				}else {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				}
+			case "준공일" :
+				if(value != "") {
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					value = cell.getStringCellValue();
+					cntrwkVO.setCOMPET_DE(value);
+					break;
+				}else {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				}
+			case "시공사" :
+				if(value != "") {
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					value = cell.getStringCellValue();
+					CompanyVO _companyVO = new CompanyVO();
+					companyVO.setCO_NM(value);
+					_companyVO = selectCompanyExcel(companyVO);
+					cntrwkVO.setCNSTRCT_CO_NO(_companyVO.getCO_NO());
+					cntrwkVO.setCNSTRCT_CO_RPRSNTV_NM(_companyVO.getRPRSNTV_NM());
+					cntrwkVO.setCNSTRCT_CO_TELNO(_companyVO.getRPRSNT_TEL_NO());
+					break;
+				}else {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				}
+			case "포장두께" :
+				if(value != "") {
+					cell.setCellType(Cell.CELL_TYPE_STRING);
+					value = cell.getStringCellValue();
+					cntrwkVO.setRPAIR_THICK_DC(value);
+					break;
+				}else {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				}
+			}
+		} catch (Exception e) {
+			resultMsg += "기본정보에서 문제발생";
+			map.put("resultMsg", resultMsg);
+			return map;
+		}
 
+		map.put("resultMsg", resultMsg);
+		map.put("cntrwkVO", cntrwkVO);
+		return map;
+	}
+
+	public Map<String, Object> validationCheckDetail(int i,Map<String, String> cntrwkMap, XSSFCell cell, String column, CntrwkDtlVO cntrwkDtlVO)throws Exception {
+		String value = "";
+		String resultMsg = "";
+		int CNTRWK_AMOUNT = 0;
+		Map<String, Object> map = new HashMap<>();
+		CntrwkVO _cntrwkVO = new CntrwkVO();
+		
+		try {
+			// Validation Check - Cell Type
+			if (cell == null) {
+				value = "";
+			} else {
+				switch (cell.getCellType()) {
+				case Cell.CELL_TYPE_STRING:
+					value = cell.getStringCellValue();
+					break;
+
+				case Cell.CELL_TYPE_NUMERIC:
+					value = String.valueOf(cell.getNumericCellValue());
+					break;
+
+				case Cell.CELL_TYPE_BLANK:
+					value = "";
+					break;
+
+				case Cell.CELL_TYPE_ERROR:
+
+					resultMsg = "오류가 발생하였습니다." + value;
+					break;
+				}
+			}
+
+			// Validation Check - Cell Value Check
+
+			switch (column) {
+
+			case "공사명":
+				if (value == "") {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				} else {
+					if(!cntrwkMap.isEmpty()) {
+						cntrwkDtlVO.setCNTRWK_ID(cntrwkMap.get(value));
+						break;
+					}
+					break;
+				}
+				
 			case "세부위치":
 				if (value == "") {
 					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
@@ -398,92 +627,100 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 					cntrwkDtlVO.setDETAIL_CNTRWK_NM(value);
 					break;
 				}
-
-			case "도로명":
+						
+			case "작업시작일":
 				if (value == "") {
 					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
 					break;
 				} else {
-					cntrwkDtlVO.setROAD_NM(value);
+					cntrwkDtlVO.setRPAIR_BEGIN_DE(value);
 					break;
 				}
-
-			case "포장공법":
-				if (value == "" || value == null) {
+				
+			case "작업완료일":
+				if (value == "") {
 					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
 					break;
 				} else {
-					// 포장공법코드를 가져오는 쿼리문
-					RpairMthdVO rpairMthdVO = new RpairMthdVO();
-					rpairMthdVO.setMSRC_CL_NM(value);
-					rpairMthdVO = rpairMthdService.selectRpairMthdCode(rpairMthdVO);
-					cntrwkDtlVO.setRPAIR_MTHD_CODE(rpairMthdVO.getRPAIR_MTHD_CODE());
+					cntrwkDtlVO.setRPAIR_END_DE(value);
+					break;
+				}	
+
+			case "공사비(천원)":
+				if (value == "") {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				} else {
+					cntrwkDtlVO.setCNTRWK_AMOUNT(value);
 					break;
 				}
-
-			case "포장두께(표층)":
-				if (value == "" || value == null) {
+				
+			case "포장공법코드":
+				if (value == "") {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				} else {
+					cntrwkDtlVO.setPAV_STLE_CODE(value);
+					break;
+				}	
+				
+			case "보수표층두께(cm)":
+				if (value == "") {
 					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
 					break;
 				} else {
 					cntrwkDtlVO.setRPAIR_THICK_ASCON(value);
 					break;
 				}
-
-			case "포장두께(중간층)":
+				
+			case "보수중간층두께(cm)":
 				if (value == "") {
 					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
 					break;
 				} else {
 					cntrwkDtlVO.setRPAIR_THICK_CNTR(value);
 					break;
-				}
-
-			case "포장두께(기층)":
+				}	
+				
+			case "보수기층두께(cm)":
 				if (value == "") {
 					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
 					break;
 				} else {
 					cntrwkDtlVO.setRPAIR_THICK_BASE(value);
 					break;
-				}
-
-			case "포장재료(표층)":
-				if (value != "") {
-					// 포장재료코드를 가져오는 쿼리문
-					PavMatrlVO pavMatrlVO = new PavMatrlVO();
-					pavMatrlVO.setPAV_MATRL_NM(value);
-					pavMatrlVO = pavMatrlService.selectPavMatrlCode(pavMatrlVO);
-					cntrwkDtlVO.setPAV_MATRL_ASCON_CODE(pavMatrlVO.getPAV_MATRL_CODE());
-					break;
-				} else {
-					resultMsg = i + "줄의 " + column + " 칼럼은 필수항목입니다.";
-					break;
-				}
-
-			case "포장재료(중간층)":
-				cntrwkDtlVO.setPAV_MATRL_CNTR_NM(value);
-				break;
-
-			case "포장재료(기층)":
-				cntrwkDtlVO.setPAV_MATRL_BASE_NM(value);
-				break;
-
-			case "공사시간":
+				}	
+			
+			case "표층포장재료코드":
 				if (value == "") {
 					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
 					break;
 				} else {
-					cntrwkDtlVO.setCNTRWK_TIME(value);
+					cntrwkDtlVO.setPAV_MATRL_ASCON_CODE(value);
 					break;
-				}
-
-			case "비고":
-				cntrwkDtlVO.setRM(value);
-				break;
+				}	
+			
+			case "중간층포장재료코드":
+				if (value == "") {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				} else {
+					cntrwkDtlVO.setPAV_MATRL_CNTR_CODE(value);
+					break;
+				}	
+				
+			case "기층포장재료코드":
+				if (value == "") {
+					resultMsg = i + " 줄의 " + column + " 칼럼은 필수항목입니다.";
+					break;
+				} else {
+					cntrwkDtlVO.setPAV_MATRL_BASE_CODE(value);
+					break;
+				}	
 			}
 			
 		} catch (Exception e) {
+			resultMsg += "세부공사 등록에서 오류발생.";
 			map.put("resultMsg", resultMsg);
 			return map;
 		}
@@ -492,5 +729,12 @@ public class CntrwkDtlServiceImpl extends AbstractServiceImpl implements CntrwkD
 		map.put("cntrwkDtlVO", cntrwkDtlVO);
 		return map;
 	}
+
+	@Override
+	public CntrwkVO selectCntrwk(CntrwkVO cntrwkVO) throws Exception {
+		CntrwkVO resultVO = cntrwkDAO.selectCntrwkExcel(cntrwkVO);
+		return resultVO;
+	}
+
 
 }

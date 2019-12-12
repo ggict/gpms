@@ -69,6 +69,16 @@ public class CntrwkDAO extends BaseDAO {
 	public CntrwkVO selectCntrwk(CntrwkVO cntrwkVO) throws Exception {
 		return (CntrwkVO) select("cntrwkDAO.selectCntrwk", cntrwkVO);
 	}
+	
+	/**
+	 * 공사정보(TN_CNTRWK)을 조회한다.
+	 * @param cntrwkVO - 조회할 정보가 담긴 CntrwkVO
+	 * @return 조회한 TN_CNTRWK
+	 * @exception Exception
+	 */
+	public CntrwkVO selectCntrwkExcel(CntrwkVO cntrwkVO) throws Exception {
+		return (CntrwkVO) select("cntrwkDAO.selectCntrwkExcel", cntrwkVO);
+	}
 
 	/**
 	 * 공사정보(TN_CNTRWK) 목록을 조회한다.
@@ -199,7 +209,6 @@ public class CntrwkDAO extends BaseDAO {
 	 */
 	public HashMap prc_SaveData(HashMap resultMap) {
 		HashMap resultVO = (HashMap) select("cntrwkDAO.prc_SaveData",resultMap);
-		System.out.println("resultVO : " + resultVO.toString());
 		return resultVO;
 	}
 }
