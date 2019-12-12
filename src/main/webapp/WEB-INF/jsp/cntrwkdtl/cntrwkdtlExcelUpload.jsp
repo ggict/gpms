@@ -66,8 +66,6 @@
 <script type="text/javaScript" language="javascript" defer="defer">
 $( document ).ready(function() {
 	
-	var postDatas =  {CNTRWK_ID : $('#CNTRWK_ID').val()};
-
     $.ajax({
         url: "<c:url value='/api/cntrwk/selectCntrwk.do' />",
         contentType: 'application/json',
@@ -130,14 +128,6 @@ function fn_file_upload(){
     	if(files[i] == i){continue;}
     	formData.append("files", files[i]);
     	len ++;
-    }
-    
-    var params = new Array ("CNTRWK_ID","RPAIR_BEGIN_DE","RPAIR_END_DE","SPRVISOR_NM","SPRVISOR_TELNO","SPRVISN_CO_NO","SPRVISN_CO_NM","SPRVISN_CO_RPRSNT_NO","SPRVISN_CO_RPRSNTV_NM","CNSTRCT_CO_NO","CNSTRCT_CO_NM","CNSTRCT_CO_RPRSNTV_NM","CNSTRCT_CO_TELNO","SPT_AGENT_NM","SPT_AGENT_TELNO");
-    
-    for(var j in params){
-    	if ($('#'+ params[j]).val() != "" ) {
-    		formData.append(params[j], $('#' + params[j]).val());
-    	}
     }
     
 	if(len < 1){

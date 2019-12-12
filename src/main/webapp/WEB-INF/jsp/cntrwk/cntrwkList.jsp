@@ -97,6 +97,7 @@
     	<article class="div9">
     		<h3 class="h3">포장공사 이력조회</h3>
     		<div class="btnArea">
+    			<a href="#" onclick="fnFileSave();" class="btn pri">엑셀업로드</a>
 	        	<a href="#" onclick="fn_cntrwkExcel();" class="btn pri">엑셀저장</a>
 	        	<a href="#" onclick="fnWrite();" class="btn pri">포장공사 신규등록</a>
 	        </div>
@@ -261,6 +262,11 @@ function fnSearch() {
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
 	   	}
 	}).trigger("reloadGrid");
+}
+
+//엑셀업로드
+function fnFileSave() {
+	COMMON_UTIL.cmWindowOpen('포장공사 이력 엑셀 업로드', "<c:url value='/cntrwkdtl/cntrwkDtlExcelUploadForm.do'/>", 290, 380, true, $("#wnd_id").val(), 'center');	
 }
 
 //상세 조회

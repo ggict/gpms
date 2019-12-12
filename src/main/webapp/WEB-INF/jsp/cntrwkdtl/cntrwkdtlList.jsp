@@ -51,7 +51,6 @@
     		</div>
 
     		 <div class="btnArea">
-    			<a href="#" onclick="fnFileSave();" class="schbtn">엑셀업로드</a>
     		 	<a href="#" onclick="fn_cntrwkExcel();" class="schbtn">엑셀저장</a>
     		 	<a href="#" onclick="fnWrite();" class="schbtn" >등록</a>
     		 </div>
@@ -226,12 +225,6 @@ function fnView(rowId) {
 		alert('<spring:message code="warn.checkplz.msg" />');
 }
 
-//엑셀업로드
-function fnFileSave() {
-	var cntrwk_id = $("#CNTRWK_ID").val();
-	COMMON_UTIL.cmWindowOpen('포장공사 이력 엑셀 업로드', "<c:url value='/cntrwkdtl/cntrwkDtlExcelUploadForm.do'/>?CNTRWK_ID="+cntrwk_id, 460, 420, true, $("#wnd_id").val(), 'center');	
-
-} 
 //신규 등록 화면 이동 [수정:선택] 키가 복수개 이거나 명칭이 다른 경우
 function fnWrite() {
 	$.ajax({
