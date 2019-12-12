@@ -18,7 +18,7 @@
 
 // 페이지 로딩 초기 설정
 $( document ).ready(function() {
-    /* 
+    /*
     var directFlag = "${mummSctnSrvyDtaVO.DIRECT_FLAG}";
     if ( directFlag == "NY" ) {
         $("#btnShowImg").show();
@@ -27,17 +27,17 @@ $( document ).ready(function() {
 	    fnGotoEvaluation(param);
 	});
 	*/
-	
+
     // 상세보기로 넘어온 경우 파라미터 받기
     var cellId = "${smDtaGnlSttusVO.CELL_ID}";
-    
+
     //포장상태 기본정보, 조사정보 상세내용
     fnSelectSrvyDetail();
-    
+
     //포장상태 평가정보 상세내용
     fnSelectEvaluationDetail();
-    
- 	//소성변형, 종단평탄성 데이터,궤적정보    
+
+ 	//소성변형, 종단평탄성 데이터,궤적정보
  	chartInfoObj.getData();
 	geoInfoObj.clickevt();
 });
@@ -46,7 +46,7 @@ $( document ).ready(function() {
 var geoInfoObj = {
 	clickevt: function(){
 		$('#geoinfo').click(geoInfoObj.getData);
-	}	
+	}
 	,getData : function(){
 	    var cell_id = $("#CELL_ID").val();
 	    var srvy_year = $("#SRVY_YEAR").val();
@@ -66,7 +66,7 @@ var geoInfoObj = {
 	        	geoInfoObj.grid(geojson);
 	        }
 	        ,error: function(a,b,msg){
-				console.log(a);        
+				console.log(a);
 	        }
 	    });
 	}
@@ -81,7 +81,7 @@ var geoInfoObj = {
 	        	var features = [];
 	        	for(var i=0; i< geoms.length; i++){
 	        		var geojson = geoms[i];
-		        	var feature = format.read(geojson)[0]; 
+		        	var feature = format.read(geojson)[0];
 		        	feature.attributes = {
 		        		fillColor : '#ff0000',
 		        		strokeColor : '#ff0000',
@@ -111,9 +111,9 @@ var geoInfoObj = {
 		,{"type":"Point","coordinates":[200262.2937,498752.20715]}
 		,{"type":"Point","coordinates":[200252.8121,498755.38505]}
 		,{"type":"Point","coordinates":[202097.207715085,485988.470075922]}
-	]	
+	]
 };
-	
+
 //소성변형, 종단평탄성 차트
 var chartInfoObj = {
 	getData : function(){
@@ -131,7 +131,7 @@ var chartInfoObj = {
 	        	obj.drawIRIChart(data);
 	        }
 	        ,error: function(a,b,msg){
-				console.log(a);        
+				console.log(a);
 	        }
 	    });
 	}
@@ -144,7 +144,7 @@ var chartInfoObj = {
 	 	}
 	 	if(xAxisData.length == 0) xAxisData = [0.00];
 	 	if(lineData.length == 0) lineData = [0.00];
-	 	
+
 		var myChart = echarts.init(document.getElementById('rdChart'));
 		myChart.setOption({
 			color : [ '#003366', '#4cabce' ],
@@ -193,7 +193,7 @@ var chartInfoObj = {
 	 	}
 	 	if(xAxisData.length == 0) xAxisData = [0.00];
 	 	if(lineData.length == 0) lineData = [0.00];
-	 	
+
 		var myChart = echarts.init(document.getElementById('iriChart'));
 		myChart.setOption({
 			color : [ '#003366', '#4cabce' ],
@@ -391,7 +391,7 @@ function fnSelectEvaluationDetail() {
                         for ( var i = 0; i < valArr.length; i++ ) {
                             // max값과 같은 경우 텍스트 추가
                             if ( valArr[i] == maxVal ) {
-                                /* 
+                                /*
                             	if ( i != 0 ) {
                                     crVal += ", ";
 
@@ -543,7 +543,7 @@ function fnSelectLastSttus(obj) {
 
 	                            // max값과 같은 경우 텍스트 추가
 	                            if ( valArr[i] == maxVal ) {
-	                            	/* 
+	                            	/*
 	                                if ( i != 0 ) {
 	                                    crVal += ", ";
 	                                }
@@ -553,7 +553,7 @@ function fnSelectLastSttus(obj) {
 
 	                            }
 	                        }
-	                        
+
 	                        crVal += codeNames.join(',');
 	                        crVal += ")";
 	                        $("#crVal").css({"line-height": "11px", "font-size": "14px"});
@@ -769,12 +769,12 @@ function fnFloat(val) {
 	        </ul>
         </div>
         <p class="location">
-            <!-- 
+            <!--
             <span>조사정보조회</span>
             <span>포장상태 조사정보 조회</span>
             <strong>포장상태 조사정보 상세조회</strong>
              -->
-	        <input type="button" value="궤적정보" id="geoinfo" />	
+            <input type="button" class="btn pri" id="geoinfo" value="궤적정보"/>
         </p>
         <div class="mt10 ml10 mr10">
 
@@ -877,7 +877,7 @@ function fnFloat(val) {
             <!-- 포장상태 평가자료 START -->
             <div id="mummAvg" style="width:30%; float: left; height: 210px; ">
                 <!-- <h3 style="width: 100%; line-height: 30px; font-size: 15px; float: left;">포장상태 평가정보</h3> -->
-                <%-- 
+                <%--
                 <h3 style="width: 100%; line-height: 30px; font-size: 15px; float: left; padding-right: 0px;"><span>포장상태 평가정보</span><a href="#" style="float:right; line-height: 11px; margin-top: 5px;" class="titbtn" onclick="fnSelectLastSttus($(this));">수시평가정보조회</a></h3>
                 <ul class="tblst mt15" style="padding-top: 35px;">
                     <li style="width:33%;border-left:0px" class="brl tc">
@@ -930,9 +930,9 @@ function fnFloat(val) {
                 <span style="font-size: 11px; margin-top: 5px; float: right;">* 포장파손형태 별 포장상태지수 감소값 (10점 만점)</span>
                  --%>
                 <!-- <a href="#" id="btnGotoEvaluation" style="padding: 5px; border-radius: 50px; width: 150px; text-align: center; color: rgb(255, 255, 255); font-size: 11px; font-weight: bolder; margin-top: 5px; float: right; background-color: rgba(69, 135, 255, 1);">평가정보 상세보기</a> -->
-                
-                
-                
+
+
+
 				<div id="rdChart" class="cont_ConBx2" style="height: 150px;"></div>
 				<div id="iriChart" class="cont_ConBx2" style="height: 150px;"></div>
             </div>

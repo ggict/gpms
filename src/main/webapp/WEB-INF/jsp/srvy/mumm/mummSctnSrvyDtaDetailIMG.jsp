@@ -22,12 +22,12 @@ $( document ).ready(function() {
     parent.rshInfoCnt++;
 
     // 상세보기로 넘어온 경우 파라미터 받기
-    var imgNm = "${mummSctnSrvyDtaVO.RDSRFC_IMG_FILE_NM_1}";
-    var imgYear = "${mummSctnSrvyDtaVO.SRVY_YEAR}";
-    var imgRoadno = "${mummSctnSrvyDtaVO.ROUTE_CODE}";
+//     var imgNm = "${mummSctnSrvyDtaVO.RDSRFC_IMG_FILE_NM_1}";
+//     var imgYear = "${mummSctnSrvyDtaVO.SRVY_YEAR}";
+//     var imgRoadno = "${mummSctnSrvyDtaVO.ROUTE_CODE}";
 
     // 균열분석 이미지
-    fnShowImage(imgNm, imgYear, imgRoadno);
+//     fnShowImage(imgNm, imgYear, imgRoadno);
 
 });
 
