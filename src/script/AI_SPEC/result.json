@@ -1,0 +1,6941 @@
+{
+  "image": "http://test.muhanit.kr:21542/media/20191205/022356674362.jpg",
+  "modules": "crack",
+  "token": 2413,
+  "uploaded_date": "2019-12-05T11:23:56.683724+09:00",
+  "updated_date": "2019-12-05T11:24:28.656555+09:00",
+  "image_width": 3704,
+  "image_height": 10000,
+  "patch_size": 256,
+  "results": [
+    {
+      "cls_result": [
+        {
+          "label": [
+            {
+              "score": 0.99733007,
+              "description": "crack"
+            },
+            {
+              "score": 0.0026691726,
+              "description": "normal"
+            },
+            {
+              "score": 5.733965e-7,
+              "description": "patch"
+            },
+            {
+              "score": 3.6603197e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 8.735848e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.0000033084257,
+              "description": "ac"
+            },
+            {
+              "score": 0.00002480134,
+              "description": "lc"
+            },
+            {
+              "score": 0.99997187,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 0,
+            "y": 4352
+          },
+          "severity": {
+            "maxx": 100,
+            "maxy": 255,
+            "minx": 3,
+            "miny": 248,
+            "max_width_x": 42,
+            "max_width_y": 248,
+            "total_max_width": 10,
+            "total_average_width": 7.96
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.999569,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000992127,
+              "description": "normal"
+            },
+            {
+              "score": 0.00014982084,
+              "description": "patch"
+            },
+            {
+              "score": 0.00004057505,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00014132269,
+              "description": "line"
+            },
+            {
+              "score": 0.002883869,
+              "description": "ac"
+            },
+            {
+              "score": 0.0006172458,
+              "description": "lc"
+            },
+            {
+              "score": 0.9964988,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 0,
+            "y": 4608
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 45,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 103,
+            "max_width_y": 12,
+            "total_max_width": 16.97,
+            "total_average_width": 10.27
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.0010241932,
+              "description": "crack"
+            },
+            {
+              "score": 0.000015558133,
+              "description": "normal"
+            },
+            {
+              "score": 0.9930393,
+              "description": "patch"
+            },
+            {
+              "score": 0.004149453,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0017715589,
+              "description": "line"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 0,
+            "y": 5120
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.8219961,
+              "description": "crack"
+            },
+            {
+              "score": 0.17786168,
+              "description": "normal"
+            },
+            {
+              "score": 0.00010150992,
+              "description": "patch"
+            },
+            {
+              "score": 0.000021232352,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00001953626,
+              "description": "line"
+            },
+            {
+              "score": 7.534064e-10,
+              "description": "ac"
+            },
+            {
+              "score": 1.863274e-8,
+              "description": "lc"
+            },
+            {
+              "score": 1,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 1024,
+            "y": 4608
+          },
+          "severity": {
+            "maxx": 130,
+            "maxy": 196,
+            "minx": 18,
+            "miny": 105,
+            "max_width_x": 82,
+            "max_width_y": 191,
+            "total_max_width": 11,
+            "total_average_width": 8.33
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.038738273,
+              "description": "crack"
+            },
+            {
+              "score": 0.45639062,
+              "description": "normal"
+            },
+            {
+              "score": 0.021328235,
+              "description": "patch"
+            },
+            {
+              "score": 0.0014139663,
+              "description": "pothole"
+            },
+            {
+              "score": 0.48212895,
+              "description": "line"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 1536,
+            "y": 4096
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.5108085,
+              "description": "crack"
+            },
+            {
+              "score": 0.48897848,
+              "description": "normal"
+            },
+            {
+              "score": 0.00015025942,
+              "description": "patch"
+            },
+            {
+              "score": 0.000030051513,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000032703465,
+              "description": "line"
+            },
+            {
+              "score": 0.0002091154,
+              "description": "ac"
+            },
+            {
+              "score": 0.0010312854,
+              "description": "lc"
+            },
+            {
+              "score": 0.9987596,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 1536,
+            "y": 4352
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.8721471,
+              "description": "crack"
+            },
+            {
+              "score": 0.123227134,
+              "description": "normal"
+            },
+            {
+              "score": 0.0027309742,
+              "description": "patch"
+            },
+            {
+              "score": 0.0009225894,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000972218,
+              "description": "line"
+            },
+            {
+              "score": 0.08091587,
+              "description": "ac"
+            },
+            {
+              "score": 0.05856013,
+              "description": "lc"
+            },
+            {
+              "score": 0.860524,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 256,
+            "y": 4352
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99986863,
+              "description": "crack"
+            },
+            {
+              "score": 0.00011390773,
+              "description": "normal"
+            },
+            {
+              "score": 0.000011236341,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000011266487,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000050556446,
+              "description": "line"
+            },
+            {
+              "score": 7.461431e-8,
+              "description": "ac"
+            },
+            {
+              "score": 9.2150316e-7,
+              "description": "lc"
+            },
+            {
+              "score": 0.99999905,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 256,
+            "y": 4608
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 74,
+            "minx": 0,
+            "miny": 15,
+            "max_width_x": 158,
+            "max_width_y": 34,
+            "total_max_width": 11.31,
+            "total_average_width": 9.01
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9753283,
+              "description": "crack"
+            },
+            {
+              "score": 0.024643334,
+              "description": "normal"
+            },
+            {
+              "score": 0.000021031788,
+              "description": "patch"
+            },
+            {
+              "score": 0.000002839673,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000004589694,
+              "description": "line"
+            },
+            {
+              "score": 0.51105833,
+              "description": "ac"
+            },
+            {
+              "score": 0.12840524,
+              "description": "lc"
+            },
+            {
+              "score": 0.3605364,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 1536
+          },
+          "severity": {
+            "maxx": 220,
+            "maxy": 237,
+            "minx": 220,
+            "miny": 237,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 6
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9997937,
+              "description": "crack"
+            },
+            {
+              "score": 0.00020490713,
+              "description": "normal"
+            },
+            {
+              "score": 0.000001061482,
+              "description": "patch"
+            },
+            {
+              "score": 7.1550105e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 2.3473713e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.034864046,
+              "description": "ac"
+            },
+            {
+              "score": 0.062277395,
+              "description": "lc"
+            },
+            {
+              "score": 0.90285856,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 1792
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 92,
+            "minx": 253,
+            "miny": 85,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 4.72
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9827786,
+              "description": "crack"
+            },
+            {
+              "score": 0.017210247,
+              "description": "normal"
+            },
+            {
+              "score": 0.000008330394,
+              "description": "patch"
+            },
+            {
+              "score": 9.5072994e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000001870495,
+              "description": "line"
+            },
+            {
+              "score": 0.013875912,
+              "description": "ac"
+            },
+            {
+              "score": 0.9856617,
+              "description": "lc"
+            },
+            {
+              "score": 0.0004623443,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 2560
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99836606,
+              "description": "crack"
+            },
+            {
+              "score": 0.0016291132,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000037454736,
+              "description": "patch"
+            },
+            {
+              "score": 3.2906823e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 8.716527e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.00062135304,
+              "description": "ac"
+            },
+            {
+              "score": 0.9993781,
+              "description": "lc"
+            },
+            {
+              "score": 4.3667413e-7,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 2816
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 194,
+            "minx": 249,
+            "miny": 150,
+            "max_width_x": 251,
+            "max_width_y": 169,
+            "total_max_width": 8,
+            "total_average_width": 7.4
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9476725,
+              "description": "crack"
+            },
+            {
+              "score": 0.052225966,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000721136,
+              "description": "patch"
+            },
+            {
+              "score": 0.000012619626,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00001684893,
+              "description": "line"
+            },
+            {
+              "score": 0.31787097,
+              "description": "ac"
+            },
+            {
+              "score": 0.5770382,
+              "description": "lc"
+            },
+            {
+              "score": 0.10509087,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 4608
+          },
+          "severity": {
+            "maxx": 240,
+            "maxy": 179,
+            "minx": 205,
+            "miny": 86,
+            "max_width_x": 218,
+            "max_width_y": 164,
+            "total_max_width": 9.9,
+            "total_average_width": 8.05
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9977608,
+              "description": "crack"
+            },
+            {
+              "score": 0.002219674,
+              "description": "normal"
+            },
+            {
+              "score": 0.000013999359,
+              "description": "patch"
+            },
+            {
+              "score": 0.000001613933,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00000396267,
+              "description": "line"
+            },
+            {
+              "score": 0.0058222287,
+              "description": "ac"
+            },
+            {
+              "score": 0.9941538,
+              "description": "lc"
+            },
+            {
+              "score": 0.000023909572,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 4864
+          },
+          "severity": {
+            "maxx": 207,
+            "maxy": 255,
+            "minx": 203,
+            "miny": 150,
+            "max_width_x": 205,
+            "max_width_y": 241,
+            "total_max_width": 8.49,
+            "total_average_width": 6.84
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9992143,
+              "description": "crack"
+            },
+            {
+              "score": 0.0006511244,
+              "description": "normal"
+            },
+            {
+              "score": 0.000084983556,
+              "description": "patch"
+            },
+            {
+              "score": 0.000012617928,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00003702357,
+              "description": "line"
+            },
+            {
+              "score": 0.99765056,
+              "description": "ac"
+            },
+            {
+              "score": 0.0017684046,
+              "description": "lc"
+            },
+            {
+              "score": 0.00058105704,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 5120
+          },
+          "severity": {
+            "maxx": 206,
+            "maxy": 28,
+            "minx": 204,
+            "miny": 19,
+            "max_width_x": 205,
+            "max_width_y": 24,
+            "total_max_width": 7,
+            "total_average_width": 6.7
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99947065,
+              "description": "crack"
+            },
+            {
+              "score": 0.0005121681,
+              "description": "normal"
+            },
+            {
+              "score": 0.00001154183,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000013020717,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000004275338,
+              "description": "line"
+            },
+            {
+              "score": 0.00006446981,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999355,
+              "description": "lc"
+            },
+            {
+              "score": 4.3950874e-9,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 5376
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 240,
+            "minx": 238,
+            "miny": 130,
+            "max_width_x": 243,
+            "max_width_y": 150,
+            "total_max_width": 11,
+            "total_average_width": 7.29
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.994197,
+              "description": "crack"
+            },
+            {
+              "score": 0.005795854,
+              "description": "normal"
+            },
+            {
+              "score": 0.000005392367,
+              "description": "patch"
+            },
+            {
+              "score": 5.160177e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000012254573,
+              "description": "line"
+            },
+            {
+              "score": 0.008258586,
+              "description": "ac"
+            },
+            {
+              "score": 0.9917177,
+              "description": "lc"
+            },
+            {
+              "score": 0.000023654722,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 5632
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 114,
+            "minx": 246,
+            "miny": 63,
+            "max_width_x": 247,
+            "max_width_y": 75,
+            "total_max_width": 11,
+            "total_average_width": 7.97
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.86513084,
+              "description": "crack"
+            },
+            {
+              "score": 0.13314581,
+              "description": "normal"
+            },
+            {
+              "score": 0.00106204,
+              "description": "patch"
+            },
+            {
+              "score": 0.00031180563,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0003495066,
+              "description": "line"
+            },
+            {
+              "score": 0.00003622414,
+              "description": "ac"
+            },
+            {
+              "score": 0.00011782748,
+              "description": "lc"
+            },
+            {
+              "score": 0.999846,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 5888
+          },
+          "severity": {
+            "maxx": 233,
+            "maxy": 62,
+            "minx": 156,
+            "miny": 17,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 8.05
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.96984667,
+              "description": "crack"
+            },
+            {
+              "score": 0.0062839226,
+              "description": "normal"
+            },
+            {
+              "score": 0.010563669,
+              "description": "patch"
+            },
+            {
+              "score": 0.0046045003,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0087013,
+              "description": "line"
+            },
+            {
+              "score": 0.5497816,
+              "description": "ac"
+            },
+            {
+              "score": 0.28811115,
+              "description": "lc"
+            },
+            {
+              "score": 0.16210721,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 6144
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99988997,
+              "description": "crack"
+            },
+            {
+              "score": 0.00010719603,
+              "description": "normal"
+            },
+            {
+              "score": 0.000001888424,
+              "description": "patch"
+            },
+            {
+              "score": 1.7056234e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 7.7876246e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.000003338517,
+              "description": "ac"
+            },
+            {
+              "score": 0.99999666,
+              "description": "lc"
+            },
+            {
+              "score": 9.325014e-12,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 6400
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 255,
+            "minx": 164,
+            "miny": 16,
+            "max_width_x": 206,
+            "max_width_y": 117,
+            "total_max_width": 10,
+            "total_average_width": 7.92
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99999094,
+              "description": "crack"
+            },
+            {
+              "score": 0.00000905449,
+              "description": "normal"
+            },
+            {
+              "score": 2.5003569e-8,
+              "description": "patch"
+            },
+            {
+              "score": 9.747185e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 5.9589063e-9,
+              "description": "line"
+            },
+            {
+              "score": 1.1751627e-13,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 3.4976726e-23,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 6656
+          },
+          "severity": {
+            "maxx": 198,
+            "maxy": 255,
+            "minx": 167,
+            "miny": 0,
+            "max_width_x": 169,
+            "max_width_y": 3,
+            "total_max_width": 10,
+            "total_average_width": 8.18
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9982753,
+              "description": "crack"
+            },
+            {
+              "score": 0.0016648952,
+              "description": "normal"
+            },
+            {
+              "score": 0.000041324533,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000055749606,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000012989731,
+              "description": "line"
+            },
+            {
+              "score": 0.000022508793,
+              "description": "ac"
+            },
+            {
+              "score": 0.99997747,
+              "description": "lc"
+            },
+            {
+              "score": 6.372505e-10,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 6912
+          },
+          "severity": {
+            "maxx": 247,
+            "maxy": 252,
+            "minx": 188,
+            "miny": 0,
+            "max_width_x": 200,
+            "max_width_y": 10,
+            "total_max_width": 9.9,
+            "total_average_width": 7.89
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.97957164,
+              "description": "crack"
+            },
+            {
+              "score": 0.020298298,
+              "description": "normal"
+            },
+            {
+              "score": 0.000088128865,
+              "description": "patch"
+            },
+            {
+              "score": 0.000014928159,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000026997575,
+              "description": "line"
+            },
+            {
+              "score": 0.6974323,
+              "description": "ac"
+            },
+            {
+              "score": 0.024069421,
+              "description": "lc"
+            },
+            {
+              "score": 0.27849838,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 7168
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9986098,
+              "description": "crack"
+            },
+            {
+              "score": 0.0013879675,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000017657927,
+              "description": "patch"
+            },
+            {
+              "score": 1.4474907e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 3.9066717e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.050024666,
+              "description": "ac"
+            },
+            {
+              "score": 0.948796,
+              "description": "lc"
+            },
+            {
+              "score": 0.0011793128,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 2816,
+            "y": 7936
+          },
+          "severity": {
+            "maxx": 117,
+            "maxy": 192,
+            "minx": 117,
+            "miny": 192,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 7
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.573812,
+              "description": "crack"
+            },
+            {
+              "score": 0.4261112,
+              "description": "normal"
+            },
+            {
+              "score": 0.00005800877,
+              "description": "patch"
+            },
+            {
+              "score": 0.000009431142,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000009400855,
+              "description": "line"
+            },
+            {
+              "score": 0.54771966,
+              "description": "ac"
+            },
+            {
+              "score": 0.34091362,
+              "description": "lc"
+            },
+            {
+              "score": 0.11136671,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 0
+          },
+          "severity": {
+            "maxx": 171,
+            "maxy": 255,
+            "minx": 165,
+            "miny": 241,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 6.36
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99993396,
+              "description": "crack"
+            },
+            {
+              "score": 0.00006598113,
+              "description": "normal"
+            },
+            {
+              "score": 1.4183652e-8,
+              "description": "patch"
+            },
+            {
+              "score": 4.3759818e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 2.0171447e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.09614167,
+              "description": "ac"
+            },
+            {
+              "score": 0.08292306,
+              "description": "lc"
+            },
+            {
+              "score": 0.82093525,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 1280
+          },
+          "severity": {
+            "maxx": 42,
+            "maxy": 120,
+            "minx": 18,
+            "miny": 82,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 8.08
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9961205,
+              "description": "crack"
+            },
+            {
+              "score": 0.003878984,
+              "description": "normal"
+            },
+            {
+              "score": 3.7202847e-7,
+              "description": "patch"
+            },
+            {
+              "score": 2.2987136e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 6.0348675e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.08628333,
+              "description": "ac"
+            },
+            {
+              "score": 0.9094804,
+              "description": "lc"
+            },
+            {
+              "score": 0.0042362823,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 1536
+          },
+          "severity": {
+            "maxx": 48,
+            "maxy": 133,
+            "minx": 10,
+            "miny": 16,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 6.72
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9992429,
+              "description": "crack"
+            },
+            {
+              "score": 0.00075706455,
+              "description": "normal"
+            },
+            {
+              "score": 1.2898767e-8,
+              "description": "patch"
+            },
+            {
+              "score": 4.161681e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 1.418861e-9,
+              "description": "line"
+            },
+            {
+              "score": 6.6410115e-7,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999993,
+              "description": "lc"
+            },
+            {
+              "score": 1.0500813e-11,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 1792
+          },
+          "severity": {
+            "maxx": 58,
+            "maxy": 246,
+            "minx": 34,
+            "miny": 199,
+            "max_width_x": 54,
+            "max_width_y": 243,
+            "total_max_width": 8.49,
+            "total_average_width": 7.83
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999914,
+              "description": "crack"
+            },
+            {
+              "score": 0.000008538753,
+              "description": "normal"
+            },
+            {
+              "score": 1.3945632e-8,
+              "description": "patch"
+            },
+            {
+              "score": 4.3209689e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 2.4035884e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.0002089542,
+              "description": "ac"
+            },
+            {
+              "score": 0.9997911,
+              "description": "lc"
+            },
+            {
+              "score": 3.9052672e-8,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 2048
+          },
+          "severity": {
+            "maxx": 115,
+            "maxy": 255,
+            "minx": 50,
+            "miny": 19,
+            "max_width_x": 111,
+            "max_width_y": 76,
+            "total_max_width": 9.9,
+            "total_average_width": 7.62
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9998815,
+              "description": "crack"
+            },
+            {
+              "score": 0.00011848818,
+              "description": "normal"
+            },
+            {
+              "score": 2.623195e-8,
+              "description": "patch"
+            },
+            {
+              "score": 9.24139e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 3.9050603e-9,
+              "description": "line"
+            },
+            {
+              "score": 7.431295e-13,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 1.5579979e-22,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 2304
+          },
+          "severity": {
+            "maxx": 62,
+            "maxy": 255,
+            "minx": 26,
+            "miny": 4,
+            "max_width_x": 54,
+            "max_width_y": 12,
+            "total_max_width": 10,
+            "total_average_width": 8.3
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.997244,
+              "description": "crack"
+            },
+            {
+              "score": 0.0027553856,
+              "description": "normal"
+            },
+            {
+              "score": 4.7545518e-7,
+              "description": "patch"
+            },
+            {
+              "score": 3.0054274e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 8.5621735e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.000006296378,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999937,
+              "description": "lc"
+            },
+            {
+              "score": 3.763708e-11,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 256
+          },
+          "severity": {
+            "maxx": 195,
+            "maxy": 120,
+            "minx": 171,
+            "miny": 0,
+            "max_width_x": 192,
+            "max_width_y": 114,
+            "total_max_width": 9.9,
+            "total_average_width": 7.67
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999497,
+              "description": "crack"
+            },
+            {
+              "score": 0.00005033637,
+              "description": "normal"
+            },
+            {
+              "score": 1.28128415e-8,
+              "description": "patch"
+            },
+            {
+              "score": 4.1232792e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 2.0153959e-9,
+              "description": "line"
+            },
+            {
+              "score": 2.7906029e-9,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 1.7219485e-16,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 2560
+          },
+          "severity": {
+            "maxx": 38,
+            "maxy": 244,
+            "minx": 6,
+            "miny": 0,
+            "max_width_x": 19,
+            "max_width_y": 88,
+            "total_max_width": 10,
+            "total_average_width": 7.91
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99541074,
+              "description": "crack"
+            },
+            {
+              "score": 0.0045886086,
+              "description": "normal"
+            },
+            {
+              "score": 4.0003317e-7,
+              "description": "patch"
+            },
+            {
+              "score": 2.5016218e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 5.93748e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.0003370768,
+              "description": "ac"
+            },
+            {
+              "score": 0.9996624,
+              "description": "lc"
+            },
+            {
+              "score": 4.5092736e-7,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 2816
+          },
+          "severity": {
+            "maxx": 23,
+            "maxy": 111,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 5,
+            "max_width_y": 56,
+            "total_max_width": 11.31,
+            "total_average_width": 8.37
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.58173823,
+              "description": "crack"
+            },
+            {
+              "score": 0.41806826,
+              "description": "normal"
+            },
+            {
+              "score": 0.00013900382,
+              "description": "patch"
+            },
+            {
+              "score": 0.000027311373,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000027169168,
+              "description": "line"
+            },
+            {
+              "score": 0.08682333,
+              "description": "ac"
+            },
+            {
+              "score": 0.06865725,
+              "description": "lc"
+            },
+            {
+              "score": 0.84451944,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 3072
+          },
+          "severity": {
+            "maxx": 242,
+            "maxy": 251,
+            "minx": 236,
+            "miny": 246,
+            "max_width_x": 237,
+            "max_width_y": 249,
+            "total_max_width": 11.31,
+            "total_average_width": 10.4
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9995704,
+              "description": "crack"
+            },
+            {
+              "score": 0.0004295023,
+              "description": "normal"
+            },
+            {
+              "score": 6.602627e-8,
+              "description": "patch"
+            },
+            {
+              "score": 2.8103115e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 1.0975116e-8,
+              "description": "line"
+            },
+            {
+              "score": 2.068321e-9,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 5.883251e-16,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 3328
+          },
+          "severity": {
+            "maxx": 67,
+            "maxy": 255,
+            "minx": 30,
+            "miny": 8,
+            "max_width_x": 36,
+            "max_width_y": 116,
+            "total_max_width": 10,
+            "total_average_width": 8.01
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9993412,
+              "description": "crack"
+            },
+            {
+              "score": 0.0006588064,
+              "description": "normal"
+            },
+            {
+              "score": 4.9785065e-8,
+              "description": "patch"
+            },
+            {
+              "score": 2.0956954e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 7.874377e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.0000011458766,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999988,
+              "description": "lc"
+            },
+            {
+              "score": 4.2572196e-12,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 3584
+          },
+          "severity": {
+            "maxx": 149,
+            "maxy": 226,
+            "minx": 149,
+            "miny": 225,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 7
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.57100934,
+              "description": "crack"
+            },
+            {
+              "score": 0.4288217,
+              "description": "normal"
+            },
+            {
+              "score": 0.00012222386,
+              "description": "patch"
+            },
+            {
+              "score": 0.000023069626,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000236916,
+              "description": "line"
+            },
+            {
+              "score": 0.37567294,
+              "description": "ac"
+            },
+            {
+              "score": 0.55422413,
+              "description": "lc"
+            },
+            {
+              "score": 0.07010292,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 3840
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9951257,
+              "description": "crack"
+            },
+            {
+              "score": 0.0048723184,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000015222232,
+              "description": "patch"
+            },
+            {
+              "score": 1.2418367e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 2.9794776e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.0034007032,
+              "description": "ac"
+            },
+            {
+              "score": 0.99659306,
+              "description": "lc"
+            },
+            {
+              "score": 0.0000062229283,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 4096
+          },
+          "severity": {
+            "maxx": 83,
+            "maxy": 160,
+            "minx": 74,
+            "miny": 136,
+            "max_width_x": 78,
+            "max_width_y": 158,
+            "total_max_width": 11.31,
+            "total_average_width": 8.06
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999814,
+              "description": "crack"
+            },
+            {
+              "score": 0.000016057129,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000017000474,
+              "description": "patch"
+            },
+            {
+              "score": 1.2424266e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 7.0638424e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.013503425,
+              "description": "ac"
+            },
+            {
+              "score": 0.9864542,
+              "description": "lc"
+            },
+            {
+              "score": 0.00004243657,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 4352
+          },
+          "severity": {
+            "maxx": 119,
+            "maxy": 246,
+            "minx": 17,
+            "miny": 7,
+            "max_width_x": 116,
+            "max_width_y": 74,
+            "total_max_width": 11,
+            "total_average_width": 7.57
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99987257,
+              "description": "crack"
+            },
+            {
+              "score": 0.0001273426,
+              "description": "normal"
+            },
+            {
+              "score": 7.822715e-8,
+              "description": "patch"
+            },
+            {
+              "score": 3.3240593e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 1.2754677e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.0000044740323,
+              "description": "ac"
+            },
+            {
+              "score": 0.99999547,
+              "description": "lc"
+            },
+            {
+              "score": 1.2082351e-11,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 4608
+          },
+          "severity": {
+            "maxx": 75,
+            "maxy": 182,
+            "minx": 67,
+            "miny": 26,
+            "max_width_x": 70,
+            "max_width_y": 27,
+            "total_max_width": 9.9,
+            "total_average_width": 7.65
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9930269,
+              "description": "crack"
+            },
+            {
+              "score": 0.0069722026,
+              "description": "normal"
+            },
+            {
+              "score": 6.873151e-7,
+              "description": "patch"
+            },
+            {
+              "score": 5.0291547e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 1.1680139e-7,
+              "description": "line"
+            },
+            {
+              "score": 6.0031226e-8,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999999,
+              "description": "lc"
+            },
+            {
+              "score": 1.1788459e-14,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 4864
+          },
+          "severity": {
+            "maxx": 56,
+            "maxy": 255,
+            "minx": 25,
+            "miny": 20,
+            "max_width_x": 38,
+            "max_width_y": 137,
+            "total_max_width": 9.9,
+            "total_average_width": 7.65
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.92248094,
+              "description": "crack"
+            },
+            {
+              "score": 0.077487424,
+              "description": "normal"
+            },
+            {
+              "score": 0.000023968885,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000036912463,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000003932708,
+              "description": "line"
+            },
+            {
+              "score": 0.8012854,
+              "description": "ac"
+            },
+            {
+              "score": 0.18364923,
+              "description": "lc"
+            },
+            {
+              "score": 0.015065333,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 512
+          },
+          "severity": {
+            "maxx": 243,
+            "maxy": 171,
+            "minx": 235,
+            "miny": 142,
+            "max_width_x": 242,
+            "max_width_y": 170,
+            "total_max_width": 8,
+            "total_average_width": 6.55
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.999458,
+              "description": "crack"
+            },
+            {
+              "score": 0.0005410918,
+              "description": "normal"
+            },
+            {
+              "score": 7.427226e-7,
+              "description": "patch"
+            },
+            {
+              "score": 5.1063598e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 1.6938112e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.000003506264,
+              "description": "ac"
+            },
+            {
+              "score": 0.99999654,
+              "description": "lc"
+            },
+            {
+              "score": 1.33399715e-11,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 5120
+          },
+          "severity": {
+            "maxx": 36,
+            "maxy": 255,
+            "minx": 14,
+            "miny": 52,
+            "max_width_x": 18,
+            "max_width_y": 252,
+            "total_max_width": 10,
+            "total_average_width": 7.77
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9958073,
+              "description": "crack"
+            },
+            {
+              "score": 0.0041762954,
+              "description": "normal"
+            },
+            {
+              "score": 0.00001188789,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000013305853,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000003160262,
+              "description": "line"
+            },
+            {
+              "score": 0.00012997394,
+              "description": "ac"
+            },
+            {
+              "score": 0.99987006,
+              "description": "lc"
+            },
+            {
+              "score": 1.2568307e-8,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 5376
+          },
+          "severity": {
+            "maxx": 16,
+            "maxy": 255,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 3,
+            "max_width_y": 120,
+            "total_max_width": 12,
+            "total_average_width": 8.12
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99997413,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000258324,
+              "description": "normal"
+            },
+            {
+              "score": 2.8832663e-9,
+              "description": "patch"
+            },
+            {
+              "score": 7.256962e-11,
+              "description": "pothole"
+            },
+            {
+              "score": 3.799179e-10,
+              "description": "line"
+            },
+            {
+              "score": 1.1502157e-8,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 6.517064e-15,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 5632
+          },
+          "severity": {
+            "maxx": 38,
+            "maxy": 247,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 10,
+            "max_width_y": 35,
+            "total_max_width": 13,
+            "total_average_width": 8.63
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9997633,
+              "description": "crack"
+            },
+            {
+              "score": 0.00023663591,
+              "description": "normal"
+            },
+            {
+              "score": 3.4361168e-8,
+              "description": "patch"
+            },
+            {
+              "score": 1.300625e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 4.921079e-9,
+              "description": "line"
+            },
+            {
+              "score": 2.543434e-12,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 2.1135006e-20,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 5888
+          },
+          "severity": {
+            "maxx": 85,
+            "maxy": 255,
+            "minx": 17,
+            "miny": 10,
+            "max_width_x": 19,
+            "max_width_y": 52,
+            "total_max_width": 13,
+            "total_average_width": 9.1
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999974,
+              "description": "crack"
+            },
+            {
+              "score": 0.000002583513,
+              "description": "normal"
+            },
+            {
+              "score": 3.1824246e-8,
+              "description": "patch"
+            },
+            {
+              "score": 1.0492515e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 7.3376145e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.5348026,
+              "description": "ac"
+            },
+            {
+              "score": 0.4173224,
+              "description": "lc"
+            },
+            {
+              "score": 0.04787502,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 6144
+          },
+          "severity": {
+            "maxx": 97,
+            "maxy": 219,
+            "minx": 0,
+            "miny": 42,
+            "max_width_x": 38,
+            "max_width_y": 172,
+            "total_max_width": 11.31,
+            "total_average_width": 8.19
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.5234312,
+              "description": "crack"
+            },
+            {
+              "score": 0.47634393,
+              "description": "normal"
+            },
+            {
+              "score": 0.00015733566,
+              "description": "patch"
+            },
+            {
+              "score": 0.000033607364,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000033941637,
+              "description": "line"
+            },
+            {
+              "score": 0.1134598,
+              "description": "ac"
+            },
+            {
+              "score": 0.41546303,
+              "description": "lc"
+            },
+            {
+              "score": 0.47107723,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 6400
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 14,
+            "minx": 0,
+            "miny": 11,
+            "max_width_x": 0,
+            "max_width_y": 12,
+            "total_max_width": 7,
+            "total_average_width": 5.42
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9998536,
+              "description": "crack"
+            },
+            {
+              "score": 0.00014421788,
+              "description": "normal"
+            },
+            {
+              "score": 0.00000165942,
+              "description": "patch"
+            },
+            {
+              "score": 1.2042071e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 3.8960496e-7,
+              "description": "line"
+            },
+            {
+              "score": 5.636406e-7,
+              "description": "ac"
+            },
+            {
+              "score": 0.00001924978,
+              "description": "lc"
+            },
+            {
+              "score": 0.9999802,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 6912
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9995499,
+              "description": "crack"
+            },
+            {
+              "score": 0.00044426662,
+              "description": "normal"
+            },
+            {
+              "score": 0.000004261353,
+              "description": "patch"
+            },
+            {
+              "score": 3.9560433e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000011584115,
+              "description": "line"
+            },
+            {
+              "score": 0.00034339502,
+              "description": "ac"
+            },
+            {
+              "score": 0.99965644,
+              "description": "lc"
+            },
+            {
+              "score": 9.3791265e-8,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 7168
+          },
+          "severity": {
+            "maxx": 40,
+            "maxy": 184,
+            "minx": 0,
+            "miny": 14,
+            "max_width_x": 38,
+            "max_width_y": 184,
+            "total_max_width": 9,
+            "total_average_width": 7.2
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999901,
+              "description": "crack"
+            },
+            {
+              "score": 0.000009315382,
+              "description": "normal"
+            },
+            {
+              "score": 3.984629e-7,
+              "description": "patch"
+            },
+            {
+              "score": 2.2824079e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 1.4651546e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.00000380883,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999962,
+              "description": "lc"
+            },
+            {
+              "score": 8.2620283e-10,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 7424
+          },
+          "severity": {
+            "maxx": 50,
+            "maxy": 240,
+            "minx": 9,
+            "miny": 12,
+            "max_width_x": 11,
+            "max_width_y": 15,
+            "total_max_width": 12,
+            "total_average_width": 7.97
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.76322246,
+              "description": "crack"
+            },
+            {
+              "score": 0.23661496,
+              "description": "normal"
+            },
+            {
+              "score": 0.000116052324,
+              "description": "patch"
+            },
+            {
+              "score": 0.000024772204,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00002173056,
+              "description": "line"
+            },
+            {
+              "score": 0.032478467,
+              "description": "ac"
+            },
+            {
+              "score": 0.8162567,
+              "description": "lc"
+            },
+            {
+              "score": 0.15126485,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 7680
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99583495,
+              "description": "crack"
+            },
+            {
+              "score": 0.0041608037,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000033225278,
+              "description": "patch"
+            },
+            {
+              "score": 2.97179e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 7.2663437e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.00040409065,
+              "description": "ac"
+            },
+            {
+              "score": 0.00178982,
+              "description": "lc"
+            },
+            {
+              "score": 0.99780613,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 8448
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.5664414,
+              "description": "crack"
+            },
+            {
+              "score": 0.43342364,
+              "description": "normal"
+            },
+            {
+              "score": 0.00009889951,
+              "description": "patch"
+            },
+            {
+              "score": 0.000018182936,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000017916424,
+              "description": "line"
+            },
+            {
+              "score": 0.0015130831,
+              "description": "ac"
+            },
+            {
+              "score": 0.0016118087,
+              "description": "lc"
+            },
+            {
+              "score": 0.99687505,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3072,
+            "y": 9216
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99999356,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000059042472,
+              "description": "normal"
+            },
+            {
+              "score": 3.599969e-7,
+              "description": "patch"
+            },
+            {
+              "score": 1.9038605e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 1.4206992e-7,
+              "description": "line"
+            },
+            {
+              "score": 1,
+              "description": "ac"
+            },
+            {
+              "score": 4.1015667e-8,
+              "description": "lc"
+            },
+            {
+              "score": 1.8560584e-9,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 0
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 240,
+            "minx": 17,
+            "miny": 67,
+            "max_width_x": 46,
+            "max_width_y": 91,
+            "total_max_width": 14,
+            "total_average_width": 9.84
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999994,
+              "description": "crack"
+            },
+            {
+              "score": 5.5660615e-7,
+              "description": "normal"
+            },
+            {
+              "score": 5.756362e-9,
+              "description": "patch"
+            },
+            {
+              "score": 1.621146e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 2.19181e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.04711932,
+              "description": "ac"
+            },
+            {
+              "score": 0.95181423,
+              "description": "lc"
+            },
+            {
+              "score": 0.001066514,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 1024
+          },
+          "severity": {
+            "maxx": 141,
+            "maxy": 243,
+            "minx": 126,
+            "miny": 214,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 7.69
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999999,
+              "description": "crack"
+            },
+            {
+              "score": 1.6814818e-7,
+              "description": "normal"
+            },
+            {
+              "score": 4.4107558e-9,
+              "description": "patch"
+            },
+            {
+              "score": 1.16313376e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 1.9218036e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.0076141055,
+              "description": "ac"
+            },
+            {
+              "score": 0.9923769,
+              "description": "lc"
+            },
+            {
+              "score": 0.000008962826,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 1280
+          },
+          "severity": {
+            "maxx": 141,
+            "maxy": 245,
+            "minx": 99,
+            "miny": 0,
+            "max_width_x": 99,
+            "max_width_y": 117,
+            "total_max_width": 10,
+            "total_average_width": 7.79
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99993825,
+              "description": "crack"
+            },
+            {
+              "score": 0.00006138612,
+              "description": "normal"
+            },
+            {
+              "score": 2.4926032e-7,
+              "description": "patch"
+            },
+            {
+              "score": 1.3893572e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 7.22849e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.9999951,
+              "description": "ac"
+            },
+            {
+              "score": 0.000004786144,
+              "description": "lc"
+            },
+            {
+              "score": 1.138757e-7,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 1536
+          },
+          "severity": {
+            "maxx": 127,
+            "maxy": 77,
+            "minx": 124,
+            "miny": 8,
+            "max_width_x": 125,
+            "max_width_y": 32,
+            "total_max_width": 8,
+            "total_average_width": 7.12
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99996316,
+              "description": "crack"
+            },
+            {
+              "score": 0.000007774633,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000083242685,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000020730504,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00001867891,
+              "description": "line"
+            },
+            {
+              "score": 0.0319183,
+              "description": "ac"
+            },
+            {
+              "score": 0.967843,
+              "description": "lc"
+            },
+            {
+              "score": 0.0002386712,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 1792
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 185,
+            "minx": 18,
+            "miny": 85,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 5.53
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99999785,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000010270484,
+              "description": "normal"
+            },
+            {
+              "score": 5.139453e-7,
+              "description": "patch"
+            },
+            {
+              "score": 3.5380644e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 4.7041843e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.9999893,
+              "description": "ac"
+            },
+            {
+              "score": 0.000010743976,
+              "description": "lc"
+            },
+            {
+              "score": 2.6536839e-8,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 2048
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 182,
+            "minx": 26,
+            "miny": 10,
+            "max_width_x": 45,
+            "max_width_y": 161,
+            "total_max_width": 8.49,
+            "total_average_width": 6.88
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999988,
+              "description": "crack"
+            },
+            {
+              "score": 2.1053948e-7,
+              "description": "normal"
+            },
+            {
+              "score": 1.9658435e-7,
+              "description": "patch"
+            },
+            {
+              "score": 3.0251616e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 6.5771604e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.000001024378,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999989,
+              "description": "lc"
+            },
+            {
+              "score": 1.0284882e-12,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 2304
+          },
+          "severity": {
+            "maxx": 141,
+            "maxy": 255,
+            "minx": 100,
+            "miny": 0,
+            "max_width_x": 128,
+            "max_width_y": 106,
+            "total_max_width": 9,
+            "total_average_width": 7.53
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9997588,
+              "description": "crack"
+            },
+            {
+              "score": 0.00024059386,
+              "description": "normal"
+            },
+            {
+              "score": 4.336531e-7,
+              "description": "patch"
+            },
+            {
+              "score": 2.6594254e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 1.01018074e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.66665393,
+              "description": "ac"
+            },
+            {
+              "score": 0.29192507,
+              "description": "lc"
+            },
+            {
+              "score": 0.041420955,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 256
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 61,
+            "minx": 254,
+            "miny": 45,
+            "max_width_x": 255,
+            "max_width_y": 46,
+            "total_max_width": 4,
+            "total_average_width": 3.89
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99989974,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000985789,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000012091208,
+              "description": "patch"
+            },
+            {
+              "score": 8.4463814e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 3.2976112e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.9999999,
+              "description": "ac"
+            },
+            {
+              "score": 1.5560776e-7,
+              "description": "lc"
+            },
+            {
+              "score": 1.4255069e-9,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 2560
+          },
+          "severity": {
+            "maxx": 126,
+            "maxy": 194,
+            "minx": 121,
+            "miny": 49,
+            "max_width_x": 122,
+            "max_width_y": 49,
+            "total_max_width": 8.49,
+            "total_average_width": 6.9
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99998474,
+              "description": "crack"
+            },
+            {
+              "score": 0.000015149157,
+              "description": "normal"
+            },
+            {
+              "score": 1.3331778e-7,
+              "description": "patch"
+            },
+            {
+              "score": 6.2087846e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 3.3662204e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.8801576,
+              "description": "ac"
+            },
+            {
+              "score": 0.11685425,
+              "description": "lc"
+            },
+            {
+              "score": 0.002988061,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 2816
+          },
+          "severity": {
+            "maxx": 123,
+            "maxy": 151,
+            "minx": 118,
+            "miny": 135,
+            "max_width_x": 119,
+            "max_width_y": 146,
+            "total_max_width": 9,
+            "total_average_width": 7.82
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999994,
+              "description": "crack"
+            },
+            {
+              "score": 2.8621074e-7,
+              "description": "normal"
+            },
+            {
+              "score": 1.455957e-7,
+              "description": "patch"
+            },
+            {
+              "score": 9.751067e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 2.905128e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.0012722717,
+              "description": "ac"
+            },
+            {
+              "score": 0.9987276,
+              "description": "lc"
+            },
+            {
+              "score": 1.758134e-7,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 3072
+          },
+          "severity": {
+            "maxx": 144,
+            "maxy": 255,
+            "minx": 125,
+            "miny": 44,
+            "max_width_x": 129,
+            "max_width_y": 171,
+            "total_max_width": 9.9,
+            "total_average_width": 7.57
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999888,
+              "description": "crack"
+            },
+            {
+              "score": 6.275494e-7,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000019347624,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000011910307,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000007548335,
+              "description": "line"
+            },
+            {
+              "score": 1.8850082e-7,
+              "description": "ac"
+            },
+            {
+              "score": 0.99999976,
+              "description": "lc"
+            },
+            {
+              "score": 2.0737745e-14,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 3328
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 255,
+            "minx": 40,
+            "miny": 0,
+            "max_width_x": 249,
+            "max_width_y": 228,
+            "total_max_width": 10,
+            "total_average_width": 7.68
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999995,
+              "description": "crack"
+            },
+            {
+              "score": 2.0010192e-7,
+              "description": "normal"
+            },
+            {
+              "score": 1.3675808e-7,
+              "description": "patch"
+            },
+            {
+              "score": 7.002911e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 1.340209e-7,
+              "description": "line"
+            },
+            {
+              "score": 5.321959e-7,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999995,
+              "description": "lc"
+            },
+            {
+              "score": 6.091663e-14,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 3584
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 234,
+            "minx": 17,
+            "miny": 5,
+            "max_width_x": 241,
+            "max_width_y": 76,
+            "total_max_width": 11,
+            "total_average_width": 8.29
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99999905,
+              "description": "crack"
+            },
+            {
+              "score": 1.2298935e-7,
+              "description": "normal"
+            },
+            {
+              "score": 1.9899123e-7,
+              "description": "patch"
+            },
+            {
+              "score": 3.883089e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 5.627666e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.738589,
+              "description": "ac"
+            },
+            {
+              "score": 0.25969386,
+              "description": "lc"
+            },
+            {
+              "score": 0.0017171897,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 3840
+          },
+          "severity": {
+            "maxx": 143,
+            "maxy": 255,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 135,
+            "max_width_y": 159,
+            "total_max_width": 11.31,
+            "total_average_width": 8.48
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99999464,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000010942799,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000012410819,
+              "description": "patch"
+            },
+            {
+              "score": 2.322642e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000028896006,
+              "description": "line"
+            },
+            {
+              "score": 0.9999229,
+              "description": "ac"
+            },
+            {
+              "score": 0.000077107274,
+              "description": "lc"
+            },
+            {
+              "score": 3.1076286e-9,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 4096
+          },
+          "severity": {
+            "maxx": 233,
+            "maxy": 158,
+            "minx": 35,
+            "miny": 0,
+            "max_width_x": 225,
+            "max_width_y": 131,
+            "total_max_width": 13,
+            "total_average_width": 10.05
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99999607,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000027933975,
+              "description": "normal"
+            },
+            {
+              "score": 7.01876e-7,
+              "description": "patch"
+            },
+            {
+              "score": 4.2712635e-8,
+              "description": "pothole"
+            },
+            {
+              "score": 4.6904768e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.38930744,
+              "description": "ac"
+            },
+            {
+              "score": 0.5679472,
+              "description": "lc"
+            },
+            {
+              "score": 0.042745363,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 4352
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 99,
+            "minx": 6,
+            "miny": 28,
+            "max_width_x": 251,
+            "max_width_y": 90,
+            "total_max_width": 11,
+            "total_average_width": 8.31
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9989378,
+              "description": "crack"
+            },
+            {
+              "score": 0.0010620902,
+              "description": "normal"
+            },
+            {
+              "score": 7.702193e-8,
+              "description": "patch"
+            },
+            {
+              "score": 3.3872396e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 1.1395003e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.79263556,
+              "description": "ac"
+            },
+            {
+              "score": 0.19384164,
+              "description": "lc"
+            },
+            {
+              "score": 0.013522782,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 4608
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 123,
+            "minx": 133,
+            "miny": 9,
+            "max_width_x": 248,
+            "max_width_y": 21,
+            "total_max_width": 11,
+            "total_average_width": 8.09
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999571,
+              "description": "crack"
+            },
+            {
+              "score": 0.000013025333,
+              "description": "normal"
+            },
+            {
+              "score": 0.000008677339,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000015439663,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000196787,
+              "description": "line"
+            },
+            {
+              "score": 0.6399059,
+              "description": "ac"
+            },
+            {
+              "score": 0.33856186,
+              "description": "lc"
+            },
+            {
+              "score": 0.02153225,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 4864
+          },
+          "severity": {
+            "maxx": 156,
+            "maxy": 215,
+            "minx": 156,
+            "miny": 207,
+            "max_width_x": 156,
+            "max_width_y": 210,
+            "total_max_width": 8,
+            "total_average_width": 6.89
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999951,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000048073603,
+              "description": "normal"
+            },
+            {
+              "score": 1.5403282e-7,
+              "description": "patch"
+            },
+            {
+              "score": 7.204424e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 5.200152e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.0024404756,
+              "description": "ac"
+            },
+            {
+              "score": 0.9975552,
+              "description": "lc"
+            },
+            {
+              "score": 0.000004447516,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 512
+          },
+          "severity": {
+            "maxx": 15,
+            "maxy": 88,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 3,
+            "max_width_y": 78,
+            "total_max_width": 9.9,
+            "total_average_width": 7.28
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99949026,
+              "description": "crack"
+            },
+            {
+              "score": 0.0005095653,
+              "description": "normal"
+            },
+            {
+              "score": 1.4877601e-7,
+              "description": "patch"
+            },
+            {
+              "score": 7.299688e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 2.5122958e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.9875066,
+              "description": "ac"
+            },
+            {
+              "score": 0.007695687,
+              "description": "lc"
+            },
+            {
+              "score": 0.0047977306,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 5120
+          },
+          "severity": {
+            "maxx": 0,
+            "maxy": 0,
+            "minx": 0,
+            "miny": 0,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 0
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99986446,
+              "description": "crack"
+            },
+            {
+              "score": 0.00012242279,
+              "description": "normal"
+            },
+            {
+              "score": 0.000008714606,
+              "description": "patch"
+            },
+            {
+              "score": 8.966059e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000034593902,
+              "description": "line"
+            },
+            {
+              "score": 0.9122929,
+              "description": "ac"
+            },
+            {
+              "score": 0.08654263,
+              "description": "lc"
+            },
+            {
+              "score": 0.0011644502,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 5376
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 161,
+            "minx": 254,
+            "miny": 139,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 4.25
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9991173,
+              "description": "crack"
+            },
+            {
+              "score": 0.00058517465,
+              "description": "normal"
+            },
+            {
+              "score": 0.00017667223,
+              "description": "patch"
+            },
+            {
+              "score": 0.000030054836,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00009079566,
+              "description": "line"
+            },
+            {
+              "score": 6.4953944e-8,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999999,
+              "description": "lc"
+            },
+            {
+              "score": 1.1606315e-14,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 5632
+          },
+          "severity": {
+            "maxx": 173,
+            "maxy": 124,
+            "minx": 166,
+            "miny": 9,
+            "max_width_x": 168,
+            "max_width_y": 15,
+            "total_max_width": 9.9,
+            "total_average_width": 8.31
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999893,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000036126703,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000030386013,
+              "description": "patch"
+            },
+            {
+              "score": 3.1797123e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000037799023,
+              "description": "line"
+            },
+            {
+              "score": 0.0008273755,
+              "description": "ac"
+            },
+            {
+              "score": 0.9991725,
+              "description": "lc"
+            },
+            {
+              "score": 1.474658e-7,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 5888
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 187,
+            "minx": 153,
+            "miny": 80,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 6.84
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9985018,
+              "description": "crack"
+            },
+            {
+              "score": 0.00051342096,
+              "description": "normal"
+            },
+            {
+              "score": 0.00034967205,
+              "description": "patch"
+            },
+            {
+              "score": 0.00009319226,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0005418947,
+              "description": "line"
+            },
+            {
+              "score": 1,
+              "description": "ac"
+            },
+            {
+              "score": 4.299579e-11,
+              "description": "lc"
+            },
+            {
+              "score": 1.840452e-13,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 6144
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 21,
+            "minx": 101,
+            "miny": 0,
+            "max_width_x": 101,
+            "max_width_y": 17,
+            "total_max_width": 7,
+            "total_average_width": 4.87
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99987113,
+              "description": "crack"
+            },
+            {
+              "score": 0.00006593283,
+              "description": "normal"
+            },
+            {
+              "score": 0.00003187349,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000046767623,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000026387686,
+              "description": "line"
+            },
+            {
+              "score": 2.7705233e-13,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 7.482769e-24,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 6400
+          },
+          "severity": {
+            "maxx": 171,
+            "maxy": 255,
+            "minx": 142,
+            "miny": 5,
+            "max_width_x": 168,
+            "max_width_y": 14,
+            "total_max_width": 10,
+            "total_average_width": 8.07
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99999404,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000035554876,
+              "description": "normal"
+            },
+            {
+              "score": 0.000001193971,
+              "description": "patch"
+            },
+            {
+              "score": 1.05086734e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000001036634,
+              "description": "line"
+            },
+            {
+              "score": 6.1861373e-16,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 2.2422182e-28,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 6656
+          },
+          "severity": {
+            "maxx": 162,
+            "maxy": 212,
+            "minx": 149,
+            "miny": 12,
+            "max_width_x": 150,
+            "max_width_y": 56,
+            "total_max_width": 11,
+            "total_average_width": 8.58
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.989446,
+              "description": "crack"
+            },
+            {
+              "score": 0.010552545,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000012359183,
+              "description": "patch"
+            },
+            {
+              "score": 1.01159344e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 1.9099049e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.64141786,
+              "description": "ac"
+            },
+            {
+              "score": 0.33183068,
+              "description": "lc"
+            },
+            {
+              "score": 0.02675151,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 6912
+          },
+          "severity": {
+            "maxx": 240,
+            "maxy": 85,
+            "minx": 151,
+            "miny": 10,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 6
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99803764,
+              "description": "crack"
+            },
+            {
+              "score": 0.0019605474,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000013829036,
+              "description": "patch"
+            },
+            {
+              "score": 1.0629773e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 2.5794472e-7,
+              "description": "line"
+            },
+            {
+              "score": 0.024837198,
+              "description": "ac"
+            },
+            {
+              "score": 0.97506624,
+              "description": "lc"
+            },
+            {
+              "score": 0.00009655535,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 7168
+          },
+          "severity": {
+            "maxx": 204,
+            "maxy": 229,
+            "minx": 0,
+            "miny": 13,
+            "max_width_x": 0,
+            "max_width_y": 0,
+            "total_max_width": 0,
+            "total_average_width": 6.22
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999957,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000042546503,
+              "description": "normal"
+            },
+            {
+              "score": 3.9080714e-8,
+              "description": "patch"
+            },
+            {
+              "score": 1.4934023e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 9.735458e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.00081963505,
+              "description": "ac"
+            },
+            {
+              "score": 0.99918014,
+              "description": "lc"
+            },
+            {
+              "score": 2.493121e-7,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 7424
+          },
+          "severity": {
+            "maxx": 200,
+            "maxy": 221,
+            "minx": 8,
+            "miny": 16,
+            "max_width_x": 59,
+            "max_width_y": 209,
+            "total_max_width": 11,
+            "total_average_width": 8.47
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99996865,
+              "description": "crack"
+            },
+            {
+              "score": 0.000031320087,
+              "description": "normal"
+            },
+            {
+              "score": 4.5944795e-8,
+              "description": "patch"
+            },
+            {
+              "score": 1.8004108e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 9.530306e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.0024471143,
+              "description": "ac"
+            },
+            {
+              "score": 0.9975509,
+              "description": "lc"
+            },
+            {
+              "score": 0.000002044572,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 768
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 208,
+            "minx": 9,
+            "miny": 8,
+            "max_width_x": 251,
+            "max_width_y": 8,
+            "total_max_width": 9,
+            "total_average_width": 6.15
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9998331,
+              "description": "crack"
+            },
+            {
+              "score": 0.00016670693,
+              "description": "normal"
+            },
+            {
+              "score": 1.4808744e-7,
+              "description": "patch"
+            },
+            {
+              "score": 7.4269817e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 3.0439093e-8,
+              "description": "line"
+            },
+            {
+              "score": 0.9999927,
+              "description": "ac"
+            },
+            {
+              "score": 0.000007237265,
+              "description": "lc"
+            },
+            {
+              "score": 2.2640894e-9,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 7680
+          },
+          "severity": {
+            "maxx": 119,
+            "maxy": 117,
+            "minx": 85,
+            "miny": 0,
+            "max_width_x": 88,
+            "max_width_y": 7,
+            "total_max_width": 10,
+            "total_average_width": 7.91
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99980384,
+              "description": "crack"
+            },
+            {
+              "score": 0.00019610782,
+              "description": "normal"
+            },
+            {
+              "score": 7.469699e-8,
+              "description": "patch"
+            },
+            {
+              "score": 3.4200454e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 1.4072032e-8,
+              "description": "line"
+            },
+            {
+              "score": 1.4338631e-8,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 3.4182128e-16,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 7936
+          },
+          "severity": {
+            "maxx": 220,
+            "maxy": 249,
+            "minx": 108,
+            "miny": 50,
+            "max_width_x": 117,
+            "max_width_y": 230,
+            "total_max_width": 9.9,
+            "total_average_width": 8.15
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99994636,
+              "description": "crack"
+            },
+            {
+              "score": 0.000035192217,
+              "description": "normal"
+            },
+            {
+              "score": 0.000009263893,
+              "description": "patch"
+            },
+            {
+              "score": 0.0000012527611,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000007986812,
+              "description": "line"
+            },
+            {
+              "score": 1.702567e-7,
+              "description": "ac"
+            },
+            {
+              "score": 0.9999999,
+              "description": "lc"
+            },
+            {
+              "score": 2.449103e-14,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 8192
+          },
+          "severity": {
+            "maxx": 252,
+            "maxy": 255,
+            "minx": 131,
+            "miny": 4,
+            "max_width_x": 151,
+            "max_width_y": 73,
+            "total_max_width": 10,
+            "total_average_width": 8
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99984396,
+              "description": "crack"
+            },
+            {
+              "score": 0.00015601241,
+              "description": "normal"
+            },
+            {
+              "score": 4.5171152e-8,
+              "description": "patch"
+            },
+            {
+              "score": 1.8236763e-9,
+              "description": "pothole"
+            },
+            {
+              "score": 8.292522e-9,
+              "description": "line"
+            },
+            {
+              "score": 0.00004803022,
+              "description": "ac"
+            },
+            {
+              "score": 0.99995196,
+              "description": "lc"
+            },
+            {
+              "score": 1.1582503e-9,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 8448
+          },
+          "severity": {
+            "maxx": 238,
+            "maxy": 223,
+            "minx": 212,
+            "miny": 20,
+            "max_width_x": 216,
+            "max_width_y": 148,
+            "total_max_width": 9.9,
+            "total_average_width": 8.06
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99993825,
+              "description": "crack"
+            },
+            {
+              "score": 0.000059784183,
+              "description": "normal"
+            },
+            {
+              "score": 0.0000013548619,
+              "description": "patch"
+            },
+            {
+              "score": 1.0045551e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 4.499738e-7,
+              "description": "line"
+            },
+            {
+              "score": 1.1826409e-10,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 7.3024784e-20,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 8704
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 255,
+            "minx": 221,
+            "miny": 0,
+            "max_width_x": 241,
+            "max_width_y": 7,
+            "total_max_width": 11,
+            "total_average_width": 7.6
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.98610955,
+              "description": "crack"
+            },
+            {
+              "score": 0.013826301,
+              "description": "normal"
+            },
+            {
+              "score": 0.000044632885,
+              "description": "patch"
+            },
+            {
+              "score": 0.000006776167,
+              "description": "pothole"
+            },
+            {
+              "score": 0.000012833631,
+              "description": "line"
+            },
+            {
+              "score": 9.935452e-9,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 3.8807373e-16,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 8960
+          },
+          "severity": {
+            "maxx": 245,
+            "maxy": 241,
+            "minx": 105,
+            "miny": 6,
+            "max_width_x": 223,
+            "max_width_y": 118,
+            "total_max_width": 9.9,
+            "total_average_width": 8.05
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9984464,
+              "description": "crack"
+            },
+            {
+              "score": 0.0015440579,
+              "description": "normal"
+            },
+            {
+              "score": 0.000006702608,
+              "description": "patch"
+            },
+            {
+              "score": 6.95462e-7,
+              "description": "pothole"
+            },
+            {
+              "score": 0.0000021024182,
+              "description": "line"
+            },
+            {
+              "score": 0.9464668,
+              "description": "ac"
+            },
+            {
+              "score": 0.053440563,
+              "description": "lc"
+            },
+            {
+              "score": 0.00009263757,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 9216
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 255,
+            "minx": 144,
+            "miny": 0,
+            "max_width_x": 246,
+            "max_width_y": 5,
+            "total_max_width": 11.31,
+            "total_average_width": 8.11
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99999475,
+              "description": "crack"
+            },
+            {
+              "score": 0.0000052014652,
+              "description": "normal"
+            },
+            {
+              "score": 1.7796593e-8,
+              "description": "patch"
+            },
+            {
+              "score": 5.8546706e-10,
+              "description": "pothole"
+            },
+            {
+              "score": 4.789011e-9,
+              "description": "line"
+            },
+            {
+              "score": 1.1623044e-10,
+              "description": "ac"
+            },
+            {
+              "score": 1,
+              "description": "lc"
+            },
+            {
+              "score": 1.6424914e-18,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 3328,
+            "y": 9472
+          },
+          "severity": {
+            "maxx": 145,
+            "maxy": 173,
+            "minx": 127,
+            "miny": 0,
+            "max_width_x": 130,
+            "max_width_y": 133,
+            "total_max_width": 9,
+            "total_average_width": 7.59
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.99985635,
+              "description": "crack"
+            },
+            {
+              "score": 0.000031761174,
+              "description": "normal"
+            },
+            {
+              "score": 0.000053958778,
+              "description": "patch"
+            },
+            {
+              "score": 0.000012008032,
+              "description": "pothole"
+            },
+            {
+              "score": 0.00004603347,
+              "description": "line"
+            },
+            {
+              "score": 4.1710826e-10,
+              "description": "ac"
+            },
+            {
+              "score": 8.9175725e-9,
+              "description": "lc"
+            },
+            {
+              "score": 1,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 512,
+            "y": 4608
+          },
+          "severity": {
+            "maxx": 249,
+            "maxy": 116,
+            "minx": 27,
+            "miny": 76,
+            "max_width_x": 65,
+            "max_width_y": 80,
+            "total_max_width": 11,
+            "total_average_width": 8.62
+          }
+        },
+        {
+          "label": [
+            {
+              "score": 0.9999999,
+              "description": "crack"
+            },
+            {
+              "score": 8.401914e-8,
+              "description": "normal"
+            },
+            {
+              "score": 1.1146793e-10,
+              "description": "patch"
+            },
+            {
+              "score": 1.3913388e-12,
+              "description": "pothole"
+            },
+            {
+              "score": 1.6218388e-11,
+              "description": "line"
+            },
+            {
+              "score": 1.8361329e-16,
+              "description": "ac"
+            },
+            {
+              "score": 6.7075584e-14,
+              "description": "lc"
+            },
+            {
+              "score": 1,
+              "description": "tc"
+            }
+          ],
+          "position": {
+            "h": 256,
+            "w": 256,
+            "x": 768,
+            "y": 4608
+          },
+          "severity": {
+            "maxx": 255,
+            "maxy": 163,
+            "minx": 7,
+            "miny": 118,
+            "max_width_x": 52,
+            "max_width_y": 134,
+            "total_max_width": 10,
+            "total_average_width": 8.31
+          }
+        }
+      ],
+      "region_result": [
+        {
+          "area": 0,
+          "maxx": 1154,
+          "maxy": 4804,
+          "minx": 0,
+          "miny": 4352,
+          "length": 1154,
+          "region": 0,
+          "severity": "medium",
+          "max_width_x": 103,
+          "max_width_y": 4620,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 0,
+              "y": 4352,
+              "severity": {
+                "maxx": 100,
+                "maxy": 255,
+                "minx": 3,
+                "miny": 248,
+                "max_width_x": 42,
+                "max_width_y": 248,
+                "total_max_width": 10,
+                "total_average_width": 7.96
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 0,
+              "y": 4608,
+              "severity": {
+                "maxx": 255,
+                "maxy": 45,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 103,
+                "max_width_y": 12,
+                "total_max_width": 16.97,
+                "total_average_width": 10.27
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 1024,
+              "y": 4608,
+              "severity": {
+                "maxx": 130,
+                "maxy": 196,
+                "minx": 18,
+                "miny": 105,
+                "max_width_x": 82,
+                "max_width_y": 191,
+                "total_max_width": 11,
+                "total_average_width": 8.33
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 256,
+              "y": 4352,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 256,
+              "y": 4608,
+              "severity": {
+                "maxx": 255,
+                "maxy": 74,
+                "minx": 0,
+                "miny": 15,
+                "max_width_x": 158,
+                "max_width_y": 34,
+                "total_max_width": 11.31,
+                "total_average_width": 9.01
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 512,
+              "y": 4608,
+              "severity": {
+                "maxx": 249,
+                "maxy": 116,
+                "minx": 27,
+                "miny": 76,
+                "max_width_x": 65,
+                "max_width_y": 80,
+                "total_max_width": 11,
+                "total_average_width": 8.62
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 768,
+              "y": 4608,
+              "severity": {
+                "maxx": 255,
+                "maxy": 163,
+                "minx": 7,
+                "miny": 118,
+                "max_width_x": 52,
+                "max_width_y": 134,
+                "total_max_width": 10,
+                "total_average_width": 8.31
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 16.97,
+          "total_average_width": 7.5
+        },
+        {
+          "area": 42661.5,
+          "region": 1,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 0,
+              "y": 5120
+            }
+          ],
+          "region_type": "patch",
+          "patching_bbox_maxx": 261,
+          "patching_bbox_maxy": 5381,
+          "patching_bbox_minx": 4,
+          "patching_bbox_miny": 5124,
+          "patching_seg_image": "iVBORw0KGgoAAAANSUhEUgAAAQoAAAEKCAAAAADPoEQVAAADh0lEQVR4nO3c0W4aMQBE0aXK//9y+0B7LUUBlgQ84/rex6aqyNHYSxqJy+/Drv1Kv4CepCApSAr6OPn3Lm99FRV3t6sgKUgKkoKkoAqKigfIWYr3Pks7qlhFR1LQOYodzoerGElBpyi2OB+uYnSGYo9RuIrRCYpNRnGCYheJxxTbSHhXjB5R7DOKRxRTJDr+u+IBxUabuP97kK0g7q5iM4k7FLtJ3Dwg20HcotgQ4muKLSG+opgOUfK24hPFpnu4dqXYmuBf/jhGUpAUlKdoeYAUUNQkBUlBcYqaqyJP0ZMUJAWlKXquijhFUVKQFBSmKLoq0hRNSUFZiqbz4SpGUlCUoup8uIqRFJSk6DofrmIkBQUpys6HqxhJQTmKtvPhKkYxirpRuIqRFJSi6DsfrmIkBYUoCs+HqxhJQRmKxvPhKkZSUISi8ny4ipEUJAUlKDqvClcxkoKkICkoQFF6a7qKkRQkBUlBUpAUJAVJQVKQFCQFSUFSkBQkBUlBAYrWT55yFSQFSUEJitLLwlWQFBSh6DwhroKkoAxF5QlxFRSiaJyFq6AUReEsYqvos/CAUI6ibhbBVbRZeEAoSVE2i+gquiyyB6TKInxXNFl4bVKaomgWaYoiizhFj0WeosaigKLFooGixKKCosOig+K4FGCUUDQMo4Yib9FDEbcookhbNFGELaoosg+SLoroMNooghZ1FDmLPoqYRSFF6vJspAgNo5MiYlFKkbBopQhcGLUU84dRTDHbopliskU1xdwLo5ti6jDaKSZa1FPMs+inmHZhLEAxaxhLUMyxWINiyiFZhGLGMJaheL/FOhRvt/h487//yi7v+XzKy9/PvVyJ4jguL7X4NLO1KF42jK8O22IULxnGjUtnOYqfDuP25bvQE4R+8Ci591ZtvVUc3x7GA8IlKb6F8XBLi1I8i3HmTC1L8QzGuctlYYqTGKcv2aUpxpvmO18/3eIUxx2NZ5+561Mc12/69+c/eLr/guI4XvEj/IrvNt+UFCQFSUFSkBQkBUlBUpAUJAVJQVKQFCQFSUFSkBQkBUlBUpAUJAVJQVKQFCQFSUFSkBQkBUlBUpAUJAVJQVKQFCQFSUFSkBQkBUlBUpAUJAVJQVKQFCQFSUFSkBQkBUlBUpAUJAVJQVKQFCQFSUFSkBQkBUlBUpAUJAVJQVKQFCQFSUGv/bz0pXMVJAVJQVLQH+d5Joatc7pCAAAAAElFTkSuQmCC",
+          "patching_region_maxx": 256,
+          "patching_region_maxy": 5376,
+          "patching_region_minx": 0,
+          "patching_region_miny": 5120
+        },
+        {
+          "area": 0,
+          "maxx": 1536,
+          "maxy": 4352,
+          "minx": 1536,
+          "miny": 4352,
+          "length": 0,
+          "region": 2,
+          "severity": "low",
+          "max_width_x": 1536,
+          "max_width_y": 4352,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 1536,
+              "y": 4352,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 0,
+          "total_average_width": 0
+        },
+        {
+          "area": 0,
+          "maxx": 3036,
+          "maxy": 1773,
+          "minx": 3036,
+          "miny": 1773,
+          "length": 0,
+          "region": 3,
+          "severity": "low",
+          "max_width_x": 2816,
+          "max_width_y": 1536,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 1536,
+              "severity": {
+                "maxx": 220,
+                "maxy": 237,
+                "minx": 220,
+                "miny": 237,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 6
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 0,
+          "total_average_width": 6
+        },
+        {
+          "area": 0,
+          "maxx": 3071,
+          "maxy": 1884,
+          "minx": 3069,
+          "miny": 1877,
+          "length": 2,
+          "region": 4,
+          "severity": "low",
+          "max_width_x": 2816,
+          "max_width_y": 1792,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 1792,
+              "severity": {
+                "maxx": 255,
+                "maxy": 92,
+                "minx": 253,
+                "miny": 85,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 4.72
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 0,
+          "total_average_width": 4.72
+        },
+        {
+          "area": 0,
+          "maxx": 3583,
+          "maxy": 3010,
+          "minx": 2816,
+          "miny": 1552,
+          "length": 1458,
+          "region": 5,
+          "severity": "medium",
+          "max_width_x": 3077,
+          "max_width_y": 2872,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 2560,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 2816,
+              "severity": {
+                "maxx": 255,
+                "maxy": 194,
+                "minx": 249,
+                "miny": 150,
+                "max_width_x": 251,
+                "max_width_y": 169,
+                "total_max_width": 8,
+                "total_average_width": 7.4
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 1536,
+              "severity": {
+                "maxx": 48,
+                "maxy": 133,
+                "minx": 10,
+                "miny": 16,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 6.72
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 1792,
+              "severity": {
+                "maxx": 58,
+                "maxy": 246,
+                "minx": 34,
+                "miny": 199,
+                "max_width_x": 54,
+                "max_width_y": 243,
+                "total_max_width": 8.49,
+                "total_average_width": 7.83
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 2048,
+              "severity": {
+                "maxx": 115,
+                "maxy": 255,
+                "minx": 50,
+                "miny": 19,
+                "max_width_x": 111,
+                "max_width_y": 76,
+                "total_max_width": 9.9,
+                "total_average_width": 7.62
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 2304,
+              "severity": {
+                "maxx": 62,
+                "maxy": 255,
+                "minx": 26,
+                "miny": 4,
+                "max_width_x": 54,
+                "max_width_y": 12,
+                "total_max_width": 10,
+                "total_average_width": 8.3
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 2560,
+              "severity": {
+                "maxx": 38,
+                "maxy": 244,
+                "minx": 6,
+                "miny": 0,
+                "max_width_x": 19,
+                "max_width_y": 88,
+                "total_max_width": 10,
+                "total_average_width": 7.91
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 2816,
+              "severity": {
+                "maxx": 23,
+                "maxy": 111,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 5,
+                "max_width_y": 56,
+                "total_max_width": 11.31,
+                "total_average_width": 8.37
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 1792,
+              "severity": {
+                "maxx": 255,
+                "maxy": 185,
+                "minx": 18,
+                "miny": 85,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 5.53
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 2304,
+              "severity": {
+                "maxx": 141,
+                "maxy": 255,
+                "minx": 100,
+                "miny": 0,
+                "max_width_x": 128,
+                "max_width_y": 106,
+                "total_max_width": 9,
+                "total_average_width": 7.53
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 11.31,
+          "total_average_width": 6.720999999999999
+        },
+        {
+          "area": 0,
+          "maxx": 3583,
+          "maxy": 6143,
+          "minx": 3019,
+          "miny": 3116,
+          "length": 3027,
+          "region": 6,
+          "severity": "medium",
+          "max_width_x": 3082,
+          "max_width_y": 5667,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 4608,
+              "severity": {
+                "maxx": 240,
+                "maxy": 179,
+                "minx": 205,
+                "miny": 86,
+                "max_width_x": 218,
+                "max_width_y": 164,
+                "total_max_width": 9.9,
+                "total_average_width": 8.05
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 4864,
+              "severity": {
+                "maxx": 207,
+                "maxy": 255,
+                "minx": 203,
+                "miny": 150,
+                "max_width_x": 205,
+                "max_width_y": 241,
+                "total_max_width": 8.49,
+                "total_average_width": 6.84
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 5376,
+              "severity": {
+                "maxx": 255,
+                "maxy": 240,
+                "minx": 238,
+                "miny": 130,
+                "max_width_x": 243,
+                "max_width_y": 150,
+                "total_max_width": 11,
+                "total_average_width": 7.29
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 5632,
+              "severity": {
+                "maxx": 255,
+                "maxy": 114,
+                "minx": 246,
+                "miny": 63,
+                "max_width_x": 247,
+                "max_width_y": 75,
+                "total_max_width": 11,
+                "total_average_width": 7.97
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 3328,
+              "severity": {
+                "maxx": 67,
+                "maxy": 255,
+                "minx": 30,
+                "miny": 8,
+                "max_width_x": 36,
+                "max_width_y": 116,
+                "total_max_width": 10,
+                "total_average_width": 8.01
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 3584,
+              "severity": {
+                "maxx": 149,
+                "maxy": 226,
+                "minx": 149,
+                "miny": 225,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 7
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 3840,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 4096,
+              "severity": {
+                "maxx": 83,
+                "maxy": 160,
+                "minx": 74,
+                "miny": 136,
+                "max_width_x": 78,
+                "max_width_y": 158,
+                "total_max_width": 11.31,
+                "total_average_width": 8.06
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 4352,
+              "severity": {
+                "maxx": 119,
+                "maxy": 246,
+                "minx": 17,
+                "miny": 7,
+                "max_width_x": 116,
+                "max_width_y": 74,
+                "total_max_width": 11,
+                "total_average_width": 7.57
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 4608,
+              "severity": {
+                "maxx": 75,
+                "maxy": 182,
+                "minx": 67,
+                "miny": 26,
+                "max_width_x": 70,
+                "max_width_y": 27,
+                "total_max_width": 9.9,
+                "total_average_width": 7.65
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 4864,
+              "severity": {
+                "maxx": 56,
+                "maxy": 255,
+                "minx": 25,
+                "miny": 20,
+                "max_width_x": 38,
+                "max_width_y": 137,
+                "total_max_width": 9.9,
+                "total_average_width": 7.65
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 5120,
+              "severity": {
+                "maxx": 36,
+                "maxy": 255,
+                "minx": 14,
+                "miny": 52,
+                "max_width_x": 18,
+                "max_width_y": 252,
+                "total_max_width": 10,
+                "total_average_width": 7.77
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 5376,
+              "severity": {
+                "maxx": 16,
+                "maxy": 255,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 3,
+                "max_width_y": 120,
+                "total_max_width": 12,
+                "total_average_width": 8.12
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 5632,
+              "severity": {
+                "maxx": 38,
+                "maxy": 247,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 10,
+                "max_width_y": 35,
+                "total_max_width": 13,
+                "total_average_width": 8.63
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 5888,
+              "severity": {
+                "maxx": 85,
+                "maxy": 255,
+                "minx": 17,
+                "miny": 10,
+                "max_width_x": 19,
+                "max_width_y": 52,
+                "total_max_width": 13,
+                "total_average_width": 9.1
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 3072,
+              "severity": {
+                "maxx": 144,
+                "maxy": 255,
+                "minx": 125,
+                "miny": 44,
+                "max_width_x": 129,
+                "max_width_y": 171,
+                "total_max_width": 9.9,
+                "total_average_width": 7.57
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 3328,
+              "severity": {
+                "maxx": 255,
+                "maxy": 255,
+                "minx": 40,
+                "miny": 0,
+                "max_width_x": 249,
+                "max_width_y": 228,
+                "total_max_width": 10,
+                "total_average_width": 7.68
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 3584,
+              "severity": {
+                "maxx": 255,
+                "maxy": 234,
+                "minx": 17,
+                "miny": 5,
+                "max_width_x": 241,
+                "max_width_y": 76,
+                "total_max_width": 11,
+                "total_average_width": 8.29
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 4352,
+              "severity": {
+                "maxx": 255,
+                "maxy": 99,
+                "minx": 6,
+                "miny": 28,
+                "max_width_x": 251,
+                "max_width_y": 90,
+                "total_max_width": 11,
+                "total_average_width": 8.31
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 5632,
+              "severity": {
+                "maxx": 173,
+                "maxy": 124,
+                "minx": 166,
+                "miny": 9,
+                "max_width_x": 168,
+                "max_width_y": 15,
+                "total_max_width": 9.9,
+                "total_average_width": 8.31
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 5888,
+              "severity": {
+                "maxx": 255,
+                "maxy": 187,
+                "minx": 153,
+                "miny": 80,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 6.84
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 13,
+          "total_average_width": 7.462380952380952
+        },
+        {
+          "area": 18,
+          "maxx": 3022,
+          "maxy": 5148,
+          "minx": 3020,
+          "miny": 5139,
+          "length": 0,
+          "region": 7,
+          "severity": "medium",
+          "max_width_x": 3021,
+          "max_width_y": 5144,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 5120,
+              "severity": {
+                "maxx": 206,
+                "maxy": 28,
+                "minx": 204,
+                "miny": 19,
+                "max_width_x": 205,
+                "max_width_y": 24,
+                "total_max_width": 7,
+                "total_average_width": 6.7
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 7,
+          "total_average_width": 6.7
+        },
+        {
+          "area": 0,
+          "maxx": 3049,
+          "maxy": 5950,
+          "minx": 2972,
+          "miny": 5905,
+          "length": 77,
+          "region": 8,
+          "severity": "low",
+          "max_width_x": 2816,
+          "max_width_y": 5888,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 5888,
+              "severity": {
+                "maxx": 233,
+                "maxy": 62,
+                "minx": 156,
+                "miny": 17,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 8.05
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 0,
+          "total_average_width": 8.05
+        },
+        {
+          "area": 167973,
+          "maxx": 3583,
+          "maxy": 6363,
+          "minx": 2816,
+          "miny": 6144,
+          "length": 0,
+          "region": 9,
+          "severity": "medium",
+          "max_width_x": 3110,
+          "max_width_y": 6316,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 6144,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 6144,
+              "severity": {
+                "maxx": 97,
+                "maxy": 219,
+                "minx": 0,
+                "miny": 42,
+                "max_width_x": 38,
+                "max_width_y": 172,
+                "total_max_width": 11.31,
+                "total_average_width": 8.19
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 6144,
+              "severity": {
+                "maxx": 255,
+                "maxy": 21,
+                "minx": 101,
+                "miny": 0,
+                "max_width_x": 101,
+                "max_width_y": 17,
+                "total_max_width": 7,
+                "total_average_width": 4.87
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 11.31,
+          "total_average_width": 4.353333333333333
+        },
+        {
+          "area": 0,
+          "maxx": 3071,
+          "maxy": 7164,
+          "minx": 2980,
+          "miny": 6416,
+          "length": 748,
+          "region": 10,
+          "severity": "medium",
+          "max_width_x": 3022,
+          "max_width_y": 6517,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 6400,
+              "severity": {
+                "maxx": 255,
+                "maxy": 255,
+                "minx": 164,
+                "miny": 16,
+                "max_width_x": 206,
+                "max_width_y": 117,
+                "total_max_width": 10,
+                "total_average_width": 7.92
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 6656,
+              "severity": {
+                "maxx": 198,
+                "maxy": 255,
+                "minx": 167,
+                "miny": 0,
+                "max_width_x": 169,
+                "max_width_y": 3,
+                "total_max_width": 10,
+                "total_average_width": 8.18
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 6912,
+              "severity": {
+                "maxx": 247,
+                "maxy": 252,
+                "minx": 188,
+                "miny": 0,
+                "max_width_x": 200,
+                "max_width_y": 10,
+                "total_max_width": 9.9,
+                "total_average_width": 7.89
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 10,
+          "total_average_width": 7.996666666666667
+        },
+        {
+          "area": 0,
+          "maxx": 2816,
+          "maxy": 7168,
+          "minx": 2816,
+          "miny": 7168,
+          "length": 0,
+          "region": 11,
+          "severity": "low",
+          "max_width_x": 2816,
+          "max_width_y": 7168,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 7168,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 0,
+          "total_average_width": 0
+        },
+        {
+          "area": 0,
+          "maxx": 2933,
+          "maxy": 8128,
+          "minx": 2933,
+          "miny": 8128,
+          "length": 0,
+          "region": 12,
+          "severity": "low",
+          "max_width_x": 2816,
+          "max_width_y": 7936,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 2816,
+              "y": 7936,
+              "severity": {
+                "maxx": 117,
+                "maxy": 192,
+                "minx": 117,
+                "miny": 192,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 7
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 0,
+          "total_average_width": 7
+        },
+        {
+          "area": 86500,
+          "maxx": 3583,
+          "maxy": 317,
+          "minx": 3237,
+          "miny": 67,
+          "length": 0,
+          "region": 13,
+          "severity": "medium",
+          "max_width_x": 3374,
+          "max_width_y": 91,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 0,
+              "severity": {
+                "maxx": 171,
+                "maxy": 255,
+                "minx": 165,
+                "miny": 241,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 6.36
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 0,
+              "severity": {
+                "maxx": 255,
+                "maxy": 240,
+                "minx": 17,
+                "miny": 67,
+                "max_width_x": 46,
+                "max_width_y": 91,
+                "total_max_width": 14,
+                "total_average_width": 9.84
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 256,
+              "severity": {
+                "maxx": 255,
+                "maxy": 61,
+                "minx": 254,
+                "miny": 45,
+                "max_width_x": 255,
+                "max_width_y": 46,
+                "total_max_width": 4,
+                "total_average_width": 3.89
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 14,
+          "total_average_width": 6.696666666666666
+        },
+        {
+          "area": 0,
+          "maxx": 3114,
+          "maxy": 1400,
+          "minx": 3090,
+          "miny": 1362,
+          "length": 24,
+          "region": 14,
+          "severity": "low",
+          "max_width_x": 3072,
+          "max_width_y": 1280,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 1280,
+              "severity": {
+                "maxx": 42,
+                "maxy": 120,
+                "minx": 18,
+                "miny": 82,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 8.08
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 0,
+          "total_average_width": 8.08
+        },
+        {
+          "area": 0,
+          "maxx": 3267,
+          "maxy": 376,
+          "minx": 3243,
+          "miny": 256,
+          "length": 120,
+          "region": 15,
+          "severity": "medium",
+          "max_width_x": 3264,
+          "max_width_y": 370,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 256,
+              "severity": {
+                "maxx": 195,
+                "maxy": 120,
+                "minx": 171,
+                "miny": 0,
+                "max_width_x": 192,
+                "max_width_y": 114,
+                "total_max_width": 9.9,
+                "total_average_width": 7.67
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 9.9,
+          "total_average_width": 7.67
+        },
+        {
+          "area": 0,
+          "maxx": 3314,
+          "maxy": 3323,
+          "minx": 3308,
+          "miny": 3318,
+          "length": 6,
+          "region": 16,
+          "severity": "medium",
+          "max_width_x": 3309,
+          "max_width_y": 3321,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 3072,
+              "severity": {
+                "maxx": 242,
+                "maxy": 251,
+                "minx": 236,
+                "miny": 246,
+                "max_width_x": 237,
+                "max_width_y": 249,
+                "total_max_width": 11.31,
+                "total_average_width": 10.4
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 11.31,
+          "total_average_width": 10.4
+        },
+        {
+          "area": 232,
+          "maxx": 3315,
+          "maxy": 683,
+          "minx": 3307,
+          "miny": 654,
+          "length": 0,
+          "region": 17,
+          "severity": "medium",
+          "max_width_x": 3314,
+          "max_width_y": 682,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 512,
+              "severity": {
+                "maxx": 243,
+                "maxy": 171,
+                "minx": 235,
+                "miny": 142,
+                "max_width_x": 242,
+                "max_width_y": 170,
+                "total_max_width": 8,
+                "total_average_width": 6.55
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 8,
+          "total_average_width": 6.55
+        },
+        {
+          "area": 0,
+          "maxx": 3072,
+          "maxy": 6414,
+          "minx": 3072,
+          "miny": 6411,
+          "length": 0,
+          "region": 18,
+          "severity": "medium",
+          "max_width_x": 3072,
+          "max_width_y": 6412,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 6400,
+              "severity": {
+                "maxx": 0,
+                "maxy": 14,
+                "minx": 0,
+                "miny": 11,
+                "max_width_x": 0,
+                "max_width_y": 12,
+                "total_max_width": 7,
+                "total_average_width": 5.42
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 7,
+          "total_average_width": 5.42
+        },
+        {
+          "area": 0,
+          "maxx": 3072,
+          "maxy": 6912,
+          "minx": 3072,
+          "miny": 6912,
+          "length": 0,
+          "region": 19,
+          "severity": "low",
+          "max_width_x": 3072,
+          "max_width_y": 6912,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 6912,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 0,
+          "total_average_width": 0
+        },
+        {
+          "area": 0,
+          "maxx": 3532,
+          "maxy": 7680,
+          "minx": 3072,
+          "miny": 7181,
+          "length": 499,
+          "region": 20,
+          "severity": "medium",
+          "max_width_x": 3083,
+          "max_width_y": 7439,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 7168,
+              "severity": {
+                "maxx": 40,
+                "maxy": 184,
+                "minx": 0,
+                "miny": 14,
+                "max_width_x": 38,
+                "max_width_y": 184,
+                "total_max_width": 9,
+                "total_average_width": 7.2
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 7424,
+              "severity": {
+                "maxx": 50,
+                "maxy": 240,
+                "minx": 9,
+                "miny": 12,
+                "max_width_x": 11,
+                "max_width_y": 15,
+                "total_max_width": 12,
+                "total_average_width": 7.97
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 7680,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 7168,
+              "severity": {
+                "maxx": 204,
+                "maxy": 229,
+                "minx": 0,
+                "miny": 13,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 6.22
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 7424,
+              "severity": {
+                "maxx": 200,
+                "maxy": 221,
+                "minx": 8,
+                "miny": 16,
+                "max_width_x": 59,
+                "max_width_y": 209,
+                "total_max_width": 11,
+                "total_average_width": 8.47
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 12,
+          "total_average_width": 5.9719999999999995
+        },
+        {
+          "area": 0,
+          "maxx": 3072,
+          "maxy": 8448,
+          "minx": 3072,
+          "miny": 8448,
+          "length": 0,
+          "region": 21,
+          "severity": "low",
+          "max_width_x": 3072,
+          "max_width_y": 8448,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 8448,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 0,
+          "total_average_width": 0
+        },
+        {
+          "area": 0,
+          "maxx": 3072,
+          "maxy": 9216,
+          "minx": 3072,
+          "miny": 9216,
+          "length": 0,
+          "region": 22,
+          "severity": "low",
+          "max_width_x": 3072,
+          "max_width_y": 9216,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3072,
+              "y": 9216,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            }
+          ],
+          "region_type": "tc",
+          "total_max_width": 0,
+          "total_average_width": 0
+        },
+        {
+          "area": 0,
+          "maxx": 3583,
+          "maxy": 1525,
+          "minx": 3328,
+          "miny": 512,
+          "length": 1013,
+          "region": 23,
+          "severity": "medium",
+          "max_width_x": 3427,
+          "max_width_y": 1397,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 1024,
+              "severity": {
+                "maxx": 141,
+                "maxy": 243,
+                "minx": 126,
+                "miny": 214,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 7.69
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 1280,
+              "severity": {
+                "maxx": 141,
+                "maxy": 245,
+                "minx": 99,
+                "miny": 0,
+                "max_width_x": 99,
+                "max_width_y": 117,
+                "total_max_width": 10,
+                "total_average_width": 7.79
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 512,
+              "severity": {
+                "maxx": 15,
+                "maxy": 88,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 3,
+                "max_width_y": 78,
+                "total_max_width": 9.9,
+                "total_average_width": 7.28
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 768,
+              "severity": {
+                "maxx": 255,
+                "maxy": 208,
+                "minx": 9,
+                "miny": 8,
+                "max_width_x": 251,
+                "max_width_y": 8,
+                "total_max_width": 9,
+                "total_average_width": 6.15
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 10,
+          "total_average_width": 7.227500000000001
+        },
+        {
+          "area": 207,
+          "maxx": 3455,
+          "maxy": 1613,
+          "minx": 3452,
+          "miny": 1544,
+          "length": 0,
+          "region": 24,
+          "severity": "medium",
+          "max_width_x": 3453,
+          "max_width_y": 1568,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 1536,
+              "severity": {
+                "maxx": 127,
+                "maxy": 77,
+                "minx": 124,
+                "miny": 8,
+                "max_width_x": 125,
+                "max_width_y": 32,
+                "total_max_width": 8,
+                "total_average_width": 7.12
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 8,
+          "total_average_width": 7.12
+        },
+        {
+          "area": 39388,
+          "maxx": 3583,
+          "maxy": 2230,
+          "minx": 3354,
+          "miny": 2058,
+          "length": 0,
+          "region": 25,
+          "severity": "medium",
+          "max_width_x": 3373,
+          "max_width_y": 2209,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 2048,
+              "severity": {
+                "maxx": 255,
+                "maxy": 182,
+                "minx": 26,
+                "miny": 10,
+                "max_width_x": 45,
+                "max_width_y": 161,
+                "total_max_width": 8.49,
+                "total_average_width": 6.88
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 8.49,
+          "total_average_width": 6.88
+        },
+        {
+          "area": 2864,
+          "maxx": 3454,
+          "maxy": 2967,
+          "minx": 3446,
+          "miny": 2609,
+          "length": 0,
+          "region": 26,
+          "severity": "medium",
+          "max_width_x": 3447,
+          "max_width_y": 2962,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 2560,
+              "severity": {
+                "maxx": 126,
+                "maxy": 194,
+                "minx": 121,
+                "miny": 49,
+                "max_width_x": 122,
+                "max_width_y": 49,
+                "total_max_width": 8.49,
+                "total_average_width": 6.9
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 2816,
+              "severity": {
+                "maxx": 123,
+                "maxy": 151,
+                "minx": 118,
+                "miny": 135,
+                "max_width_x": 119,
+                "max_width_y": 146,
+                "total_max_width": 9,
+                "total_average_width": 7.82
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 9,
+          "total_average_width": 7.36
+        },
+        {
+          "area": 96462,
+          "maxx": 3561,
+          "maxy": 4254,
+          "minx": 3328,
+          "miny": 3840,
+          "length": 0,
+          "region": 27,
+          "severity": "medium",
+          "max_width_x": 3553,
+          "max_width_y": 4227,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 3840,
+              "severity": {
+                "maxx": 143,
+                "maxy": 255,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 135,
+                "max_width_y": 159,
+                "total_max_width": 11.31,
+                "total_average_width": 8.48
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 4096,
+              "severity": {
+                "maxx": 233,
+                "maxy": 158,
+                "minx": 35,
+                "miny": 0,
+                "max_width_x": 225,
+                "max_width_y": 131,
+                "total_max_width": 13,
+                "total_average_width": 10.05
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 13,
+          "total_average_width": 9.265
+        },
+        {
+          "area": 234600,
+          "maxx": 3583,
+          "maxy": 5537,
+          "minx": 3328,
+          "miny": 4617,
+          "length": 0,
+          "region": 28,
+          "severity": "medium",
+          "max_width_x": 3576,
+          "max_width_y": 4629,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 4608,
+              "severity": {
+                "maxx": 255,
+                "maxy": 123,
+                "minx": 133,
+                "miny": 9,
+                "max_width_x": 248,
+                "max_width_y": 21,
+                "total_max_width": 11,
+                "total_average_width": 8.09
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 4864,
+              "severity": {
+                "maxx": 156,
+                "maxy": 215,
+                "minx": 156,
+                "miny": 207,
+                "max_width_x": 156,
+                "max_width_y": 210,
+                "total_max_width": 8,
+                "total_average_width": 6.89
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 5120,
+              "severity": {
+                "maxx": 0,
+                "maxy": 0,
+                "minx": 0,
+                "miny": 0,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 0
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 5376,
+              "severity": {
+                "maxx": 255,
+                "maxy": 161,
+                "minx": 254,
+                "miny": 139,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 4.25
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 11,
+          "total_average_width": 4.8075
+        },
+        {
+          "area": 0,
+          "maxx": 3499,
+          "maxy": 6868,
+          "minx": 3470,
+          "miny": 6405,
+          "length": 463,
+          "region": 29,
+          "severity": "medium",
+          "max_width_x": 3478,
+          "max_width_y": 6712,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 6400,
+              "severity": {
+                "maxx": 171,
+                "maxy": 255,
+                "minx": 142,
+                "miny": 5,
+                "max_width_x": 168,
+                "max_width_y": 14,
+                "total_max_width": 10,
+                "total_average_width": 8.07
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 6656,
+              "severity": {
+                "maxx": 162,
+                "maxy": 212,
+                "minx": 149,
+                "miny": 12,
+                "max_width_x": 150,
+                "max_width_y": 56,
+                "total_max_width": 11,
+                "total_average_width": 8.58
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 11,
+          "total_average_width": 8.325
+        },
+        {
+          "area": 6675,
+          "maxx": 3568,
+          "maxy": 6997,
+          "minx": 3479,
+          "miny": 6922,
+          "length": 0,
+          "region": 30,
+          "severity": "low",
+          "max_width_x": 3328,
+          "max_width_y": 6912,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 6912,
+              "severity": {
+                "maxx": 240,
+                "maxy": 85,
+                "minx": 151,
+                "miny": 10,
+                "max_width_x": 0,
+                "max_width_y": 0,
+                "total_max_width": 0,
+                "total_average_width": 6
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 0,
+          "total_average_width": 6
+        },
+        {
+          "area": 3978,
+          "maxx": 3447,
+          "maxy": 7797,
+          "minx": 3413,
+          "miny": 7680,
+          "length": 0,
+          "region": 31,
+          "severity": "medium",
+          "max_width_x": 3416,
+          "max_width_y": 7687,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 7680,
+              "severity": {
+                "maxx": 119,
+                "maxy": 117,
+                "minx": 85,
+                "miny": 0,
+                "max_width_x": 88,
+                "max_width_y": 7,
+                "total_max_width": 10,
+                "total_average_width": 7.91
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 10,
+          "total_average_width": 7.91
+        },
+        {
+          "area": 0,
+          "maxx": 3583,
+          "maxy": 9201,
+          "minx": 3433,
+          "miny": 7986,
+          "length": 1215,
+          "region": 32,
+          "severity": "medium",
+          "max_width_x": 3569,
+          "max_width_y": 8711,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 7936,
+              "severity": {
+                "maxx": 220,
+                "maxy": 249,
+                "minx": 108,
+                "miny": 50,
+                "max_width_x": 117,
+                "max_width_y": 230,
+                "total_max_width": 9.9,
+                "total_average_width": 8.15
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 8192,
+              "severity": {
+                "maxx": 252,
+                "maxy": 255,
+                "minx": 131,
+                "miny": 4,
+                "max_width_x": 151,
+                "max_width_y": 73,
+                "total_max_width": 10,
+                "total_average_width": 8
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 8448,
+              "severity": {
+                "maxx": 238,
+                "maxy": 223,
+                "minx": 212,
+                "miny": 20,
+                "max_width_x": 216,
+                "max_width_y": 148,
+                "total_max_width": 9.9,
+                "total_average_width": 8.06
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 8704,
+              "severity": {
+                "maxx": 255,
+                "maxy": 255,
+                "minx": 221,
+                "miny": 0,
+                "max_width_x": 241,
+                "max_width_y": 7,
+                "total_max_width": 11,
+                "total_average_width": 7.6
+              }
+            },
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 8960,
+              "severity": {
+                "maxx": 245,
+                "maxy": 241,
+                "minx": 105,
+                "miny": 6,
+                "max_width_x": 223,
+                "max_width_y": 118,
+                "total_max_width": 9.9,
+                "total_average_width": 8.05
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 11,
+          "total_average_width": 7.9719999999999995
+        },
+        {
+          "area": 28305,
+          "maxx": 3583,
+          "maxy": 9471,
+          "minx": 3472,
+          "miny": 9216,
+          "length": 0,
+          "region": 33,
+          "severity": "medium",
+          "max_width_x": 3574,
+          "max_width_y": 9221,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 9216,
+              "severity": {
+                "maxx": 255,
+                "maxy": 255,
+                "minx": 144,
+                "miny": 0,
+                "max_width_x": 246,
+                "max_width_y": 5,
+                "total_max_width": 11.31,
+                "total_average_width": 8.11
+              }
+            }
+          ],
+          "region_type": "ac",
+          "total_max_width": 11.31,
+          "total_average_width": 8.11
+        },
+        {
+          "area": 0,
+          "maxx": 3473,
+          "maxy": 9645,
+          "minx": 3455,
+          "miny": 9472,
+          "length": 173,
+          "region": 34,
+          "severity": "medium",
+          "max_width_x": 3458,
+          "max_width_y": 9605,
+          "region_area": [
+            {
+              "h": 256,
+              "w": 256,
+              "x": 3328,
+              "y": 9472,
+              "severity": {
+                "maxx": 145,
+                "maxy": 173,
+                "minx": 127,
+                "miny": 0,
+                "max_width_x": 130,
+                "max_width_y": 133,
+                "total_max_width": 9,
+                "total_average_width": 7.59
+              }
+            }
+          ],
+          "region_type": "lc",
+          "total_max_width": 9,
+          "total_average_width": 7.59
+        }
+      ],
+      "seg_image": "iVBO==",
+      "seg_image_th": "iVBO==",
+      "result_image": "iVBO==_BASE64_ENCODED_PNG_RESULT_FILE"
+    }
+  ],
+  "region_threshold": 0,
+  "region_connectivity": 0,
+  "region_noise_filter": 0,
+  "severity_threshold": 239
+}
