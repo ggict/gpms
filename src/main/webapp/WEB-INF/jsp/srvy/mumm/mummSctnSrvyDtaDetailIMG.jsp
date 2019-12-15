@@ -114,8 +114,10 @@ function fnShowImage(imgNm, imgYear, imgRoadno) {
 </head>
 
 <body class="research">
-<img class="srvyImageB"  src='/gpms/images/b.jpg' />
-<img id="srvyImage" src='/gpms/images/a.png' />
+<!-- <img class="srvyImageB"  src='/gpms/images/b.jpg' />
+<img id="srvyImage" src='/gpms/images/a.png' /> -->
+<img class="srvyImageB"  src='${file_path}${mummSctnSrvyDtaVO.FRNT_IMG_FILE_COURS}${mummSctnSrvyDtaVO.FRNT_IMG_FILE_NM}' />
+<img class="srvyImage"  src='${file_path}${mummSctnSrvyDtaVO.CR_IMG_FILE_COURS}${mummSctnSrvyDtaVO.CR_IMG_FILE_NM}' />
 
 <!-- 필수 파라메터(START) -->
 <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>

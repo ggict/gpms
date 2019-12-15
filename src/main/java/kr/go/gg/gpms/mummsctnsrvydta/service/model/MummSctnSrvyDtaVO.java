@@ -280,6 +280,15 @@ public class MummSctnSrvyDtaVO extends BaseVO {
 	 */
 	@XmlElement
 	private java.lang.String FRNT_IMG_FILE_NM;
+	
+	@XmlElement
+	private java.lang.String FRNT_IMG_FILE_COURS;
+	
+	@XmlElement
+	private java.lang.String CR_IMG_FILE_NM;
+	
+	@XmlElement
+	private java.lang.String CR_IMG_FILE_COURS;
 
 	/** 
 	 * TN_MUMM_SCTN_SRVY_DTA.RDSRFC_IMG_FILE_NM_1, 
@@ -2213,6 +2222,30 @@ public class MummSctnSrvyDtaVO extends BaseVO {
 
 	public void setUNOPN_AT(java.lang.String uNOPN_AT) {
 		UNOPN_AT = uNOPN_AT;
+	}
+
+	public java.lang.String getFRNT_IMG_FILE_COURS() {
+		return FRNT_IMG_FILE_COURS;
+	}
+
+	public void setFRNT_IMG_FILE_COURS(java.lang.String fRNT_IMG_FILE_COURS) {
+		FRNT_IMG_FILE_COURS = fRNT_IMG_FILE_COURS;
+	}
+
+	public java.lang.String getCR_IMG_FILE_NM() {
+		return CR_IMG_FILE_NM;
+	}
+
+	public void setCR_IMG_FILE_NM(java.lang.String cR_IMG_FILE_NM) {
+		CR_IMG_FILE_NM = cR_IMG_FILE_NM;
+	}
+
+	public java.lang.String getCR_IMG_FILE_COURS() {
+		return CR_IMG_FILE_COURS;
+	}
+
+	public void setCR_IMG_FILE_COURS(java.lang.String cR_IMG_FILE_COURS) {
+		CR_IMG_FILE_COURS = cR_IMG_FILE_COURS;
 	}
     
 }

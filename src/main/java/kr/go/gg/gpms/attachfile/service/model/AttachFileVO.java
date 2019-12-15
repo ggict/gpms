@@ -118,6 +118,9 @@ public class AttachFileVO extends BaseVO {
 	@XmlElement
 	private String FILE_SE_CODE;
 	
+	@XmlElement
+	private String ROOT_FILE_COURS;
+	
 	/**
 	 * TN_ATTACH_FILE.FILE_NO, 
 	 * 공통첨부파일.파일_번호 값읽기
@@ -352,6 +355,14 @@ public class AttachFileVO extends BaseVO {
 
 	public void setFILE_SE_CODE(String fILE_SE_CODE) {
 		FILE_SE_CODE = fILE_SE_CODE;
+	}
+
+	public String getROOT_FILE_COURS() {
+		return ROOT_FILE_COURS;
+	}
+
+	public void setROOT_FILE_COURS(String rOOT_FILE_COURS) {
+		ROOT_FILE_COURS = rOOT_FILE_COURS;
 	}
 	
 	

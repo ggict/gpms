@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -39,9 +42,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import egovframework.cmmn.util.EgovProperties;
+import egovframework.cmmn.util.FileUploadUtils;
+import egovframework.cmmn.util.ZipUtils;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.attachfile.service.impl.AttachFileDAO;
 import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
+import kr.go.gg.gpms.mummsctnsrvydta.service.impl.MummSctnSrvyDtaDAO;
 import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
@@ -71,6 +77,9 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	
 	@Resource(name = "attachFileDAO")
 	private AttachFileDAO attachFileDAO;
+	
+	@Resource(name = "mummSctnSrvyDtaDAO")
+	private MummSctnSrvyDtaDAO mummSctnSrvyDtaDAO;
 	
 	@Autowired
 	private DataSourceTransactionManager transactionManager;
@@ -400,7 +409,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 * @return void
 	 * @exception Exception
 	 */
-	public void insertTmpExcelData(String fileName) throws Exception {
+	public void insertTmpExcelData(String fileName, String rootFileCours) throws Exception {
 		
 		FileInputStream fis = new FileInputStream(fileName);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -409,6 +418,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		int rowNum = sheet.getPhysicalNumberOfRows();
 		int cellNum = sheet.getRow(0).getLastCellNum();
 		Map<String, Object> params = new HashMap<String, Object>();
+		// 도면이미지 파일명
+		String jpgFileName = "";
 
 		// 엑셀 식(formula)으로 된 데이터 읽기
 		FormulaEvaluator formulaEval = wb.getCreationHelper().createFormulaEvaluator();
@@ -429,7 +440,24 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 					val = val.replace("\"", "").trim();
 					val = val.replace("#NUM!", "0").trim();
 					params.put(colName, val);
+
+					// 노면이미지파일명 ex> "지371호-상행-2차로-3_3구간-(지중)_s000010000.jpg"
+					if ("RDSRFC_IMG_FILE_NM_1".equals(colName)) {
+						jpgFileName = val;
+					}
 				}
+				
+				/* 노면이미지파일명을 균열이미지파일명 컬럼에 별도로 넣음
+				   frnt_img_file_nm,frnt_img_file_cours,cr_img_file_nm,cr_img_file_cours
+				 */
+				//String imageFileCours = fileCoursParam.replace("_분석결과","_표면결함");
+				String pngFileName = jpgFileName.replace(".jpg", ".png");
+				params.put("RDSRFC_IMG_FILE_NM_2", pngFileName);
+				params.put("frnt_img_file_nm", jpgFileName);
+				params.put("frnt_img_file_cours", rootFileCours + File.separator + "JPG");
+				params.put("cr_img_file_nm", pngFileName);
+				params.put("cr_img_file_cours", rootFileCours + File.separator + "PNG");
+				
 				srvyDtaDAO.insertTmpExcelData(params);
 			}
 		}
@@ -611,28 +639,72 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 			JSONParser paser = new JSONParser();
 
 			JSONObject obj = (JSONObject) paser.parse(responseString);
-
+			
+			// [results]
 			JSONArray parse_results_list = (JSONArray) obj.get("results");
 			for (int i = 0; i < parse_results_list.size(); i++) {
 				JSONObject result_i = (JSONObject) parse_results_list.get(i);
-				JSONArray region_result_list = (JSONArray)result_i.get("region_result");
+
+				// [results.ARRAYS.result_image] - Base64 encoded PNG image 
 				String result_image = (String)result_i.get("result_image");
+				
+				// Base64 PNG image -> decode -> save
+				String jpgFileName = imgList.get(k).getORGINL_FILE_NM();
+				String jpgFileFullPath = imgList.get(k).getROOT_FILE_COURS() + File.separator + "JPG" + File.separator + jpgFileName;
+				String pngFileName = imgList.get(k).getORGINL_FILE_NM().replace(".jpg", ".png");
+				String pngFileFullPath = imgList.get(k).getROOT_FILE_COURS() + File.separator + "PNG" + File.separator + pngFileName;
+				
+				// jpg file move
+				try (FileInputStream fis = new FileInputStream(imgList.get(k).getFILE_COURS() + File.separator + imgList.get(k).getORGINL_FILE_NM());
+					FileOutputStream fos = new FileOutputStream(jpgFileFullPath);) {
+					
+		            int fileByte = 0; 
+		            // fis.read()가 -1 이면 파일을 다 읽은것
+		            while((fileByte = fis.read()) != -1) {
+		                fos.write(fileByte);
+		            }
+				}
+				
+				// png file download
+			    byte[] data = Base64.decodeBase64(result_image);
+			    try (OutputStream stream = new FileOutputStream(pngFileFullPath)) {
+			        stream.write(data);
+			    }
+				
+				// [results.ARRAYS[0].region_result] - 균열이 확인된 CELL에 대하여 정보를 가진 CELL배열 
+				JSONArray region_result_list = (JSONArray)result_i.get("region_result");
+				
 				for (int j = 0; j < region_result_list.size(); j++) {
-					JSONObject imsi = (JSONObject) region_result_list.get(j); 
+					JSONObject imsi = (JSONObject) region_result_list.get(j);
+					
+					// [results.ARRAYS[0].region_result.ARRAYS.region_type] 해당 CELL의 균열 종류 - {"ac","tc",....}
 					srvyDtaVO.setREGION_TYPE((String) imsi.get("region_type"));
+					
+					// [results.ARRAYS[0].region_result.ARRAYS.area] 해당 균열CELL의 면적
 					if(imsi.get("area") != null && !"".equals(imsi.get("area"))) {
 						srvyDtaVO.setAREA(String.valueOf(imsi.get("area")));	
 					}
+					
+					// [results.ARRAYS[0].region_result.ARRAYS.length] 해당 균열CELL의 길이
 					if(imsi.get("length") != null && !"".equals(imsi.get("length"))) {
 						srvyDtaVO.setLEN(String.valueOf(imsi.get("length")));	
 					} 
+					
+					// [results.ARRAYS[0].region_result.ARRAYS.severity] 해당 균열CELL의 심각도 - {"medium","low",...}
 					srvyDtaVO.setSEVERITY((String) imsi.get("severity"));
+					
 					srvyDtaVO.setRESULT_IMAGE(result_image);
+					
 					//srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(testFileNm);
 					//srvyDtaService.insertAiDta(srvyDtaVO);
 					srvyDtaDAO.insertAiDta(srvyDtaVO);
+					
+					// tn_mumm_sctn_srvy_dta : source(jpg)이미지 / result(png)이미지 경로 저장
+					//mummSctnSrvyDtaDAO.updateMummSctnSrvyDta()
 				}
 			}
+			
+
 			
 			//select
 			List<SrvyDtaVO> aiDtaList = srvyDtaDAO.selectAiDtaList();

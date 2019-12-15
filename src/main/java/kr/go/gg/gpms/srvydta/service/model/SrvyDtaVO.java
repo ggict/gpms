@@ -334,6 +334,9 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	
 	@XmlElement
 	private String AI_SUM_VALUE;
+	
+	@XmlElement
+	private java.lang.String FILE_COURS;
 
 	public String getSRVY_YEAR() {
 		return SRVY_YEAR;
@@ -1135,5 +1138,14 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public void setAI_SUM_VALUE(String aI_SUM_VALUE) {
 		AI_SUM_VALUE = aI_SUM_VALUE;
 	}
+
+	public java.lang.String getFILE_COURS() {
+		return FILE_COURS;
+	}
+
+	public void setFILE_COURS(java.lang.String fILE_COURS) {
+		FILE_COURS = fILE_COURS;
+	}
+	
 
 }

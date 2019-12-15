@@ -686,6 +686,10 @@ public class MummSctnSrvyDtaController extends BaseController {
 	@RequestMapping(value = { "/mng/mummsctnsrvydta/mummSctnSrvyDtaDetailIMG.do" })
 	public String mummSctnSrvyDtaDetailIMG(MummSctnSrvyDtaVO mummSctnSrvyDtaVO,
 			ModelMap model) throws Exception {
+		
+    	String filePath = pathInfoProperties.getProperty("file.upload.webpath");
+    	model.addAttribute("file_path", filePath);
+		
 		model.addAttribute("mummSctnSrvyDtaVO",
 				mummSctnSrvyDtaService.selectMummSctnSrvyDta(mummSctnSrvyDtaVO));
 

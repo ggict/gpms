@@ -293,6 +293,12 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 
 , FRNT_IMG_FILE_NM = #FRNT_IMG_FILE_NM# /* 최소_구간_조사_자료.전방_이미지_파일_명 */
 
+, FRNT_IMG_FILE_COURS = #FRNT_IMG_FILE_COURS# /* 최소_구간_조사_자료.전방_이미지_파일_경로 */
+
+, CR_IMG_FILE_NM = #CR_IMG_FILE_NM# /* 최소_구간_조사_자료.균열_이미지_파일_명 */
+
+, CR_IMG_FILE_COURS = #CR_IMG_FILE_COURS# /* 최소_구간_조사_자료.균열_이미지_파일_경로 */
+
 
 , RDSRFC_IMG_FILE_NM_1 = #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
 
@@ -386,6 +392,10 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			, tnmummsctnsrvydta.SCTN_ENDPT_DC /* 최소_구간_조사_자료.구간_종점_설명 */
 			, tnmummsctnsrvydta.ROAD_NM /* 최소_구간_조사_자료.도로_명 */
 			, tnmummsctnsrvydta.FRNT_IMG_FILE_NM /* 최소_구간_조사_자료.전방_이미지_파일_명 */
+			, tnmummsctnsrvydta.FRNT_IMG_FILE_COURS /* 전방_이미지_파일_경로 */
+			, tnmummsctnsrvydta.CR_IMG_FILE_COURS /* 균열_이미지_파일_경로 */
+			, tnmummsctnsrvydta.CR_IMG_FILE_NM /* 균열_이미지_파일_명 */
+			
 			, tnmummsctnsrvydta.RDSRFC_IMG_FILE_NM_1 /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
 			, tnmummsctnsrvydta.RDSRFC_IMG_FILE_NM_2 /* 최소_구간_조사_자료.노면_이미지_파일_명_2 */
 			, tnmummsctnsrvydta.EXCEL_DTA_SEQ /* 최소_구간_조사_자료.엑셀_자료_SEQ */
@@ -1323,6 +1333,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
             SELECT
 			    tnmummsctnsrvydta.CELL_ID
 			    , tnmummsctnsrvydta.RDSRFC_IMG_FILE_NM_1
+			    , tnmummsctnsrvydta.RDSRFC_IMG_FILE_NM_2
 			    , tnmummsctnsrvydta.DTA_NO
 			    , sect.CELL_ID SECT_CELL_ID
 			    , sect.ROUTE_CODE
@@ -1339,6 +1350,7 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 			        , tnmummsctnsrvydta.STRTPT
 			        , tnmummsctnsrvydta.ENDPT
 			        , tnmummsctnsrvydta.RDSRFC_IMG_FILE_NM_1
+			        , tnmummsctnsrvydta.RDSRFC_IMG_FILE_NM_2
 			        , tnmummsctnsrvydta.DTA_NO
 			        , ROW_NUMBER() OVER() as rnum
 			    FROM (

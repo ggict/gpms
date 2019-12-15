@@ -481,7 +481,7 @@ public class SrvyDtaController extends BaseController {
 					fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
 					
 					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
-					srvyDtaService.insertTmpExcelData(fileName);
+					srvyDtaService.insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS());
 					
 					//TMP_MUMM_SCTN_SRVY_DTA 조회
 					srvyDtaVO = srvyDtaService.selectTmpExcelData();
