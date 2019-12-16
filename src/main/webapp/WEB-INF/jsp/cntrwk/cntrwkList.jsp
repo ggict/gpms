@@ -9,7 +9,6 @@
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/egovframework/egovCvpl.css'/>"/>
  -->
 <%@ include file="/include/common_head.jsp" %>
-
 </head>
 
 <body id="wrap">
@@ -97,6 +96,7 @@
     	<article class="div9">
     		<h3 class="h3">포장공사 이력조회</h3>
     		<div class="btnArea">
+    			<a href=<c:url value="/doc/cntrwk/포장공사이력기본정보_양식.xlsx"/> class="btn pri">엑셀양식</a>
     			<a href="#" onclick="fnFileSave();" class="btn pri">엑셀업로드</a>
 	        	<a href="#" onclick="fn_cntrwkExcel();" class="btn pri">엑셀저장</a>
 	        	<a href="#" onclick="fnWrite();" class="btn pri">포장공사 신규등록</a>
