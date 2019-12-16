@@ -60,7 +60,7 @@ var geoInfoObj = {
 	        	var geojson = null;
 	        	if(data.succ){
 	        		if(data.res){
-	        			geojson = data.res.GEOJSON;
+	        			geojson = data.res;
 	        		}
 	        	}
 	        	geoInfoObj.grid(geojson);
@@ -80,7 +80,7 @@ var geoInfoObj = {
 	        	var format = new OpenLayers.Format.GeoJSON();
 	        	var features = [];
 	        	for(var i=0; i< geoms.length; i++){
-	        		var geojson = geoms[i];
+	        		var geojson = geoms[i].GEOJSON;
 		        	var feature = format.read(geojson)[0];
 		        	feature.attributes = {
 		        		fillColor : '#ff0000',
@@ -135,7 +135,8 @@ var chartInfoObj = {
 	        }
 	    });
 	}
-	,drawRdChart: function(dataList){
+	,drawRdChart: function(data){
+		var dataList = data.res;
 		var xAxisData =[];
 	 	var lineData = [];
 	 	for(var i=0; i<dataList.length; i++){
@@ -184,7 +185,8 @@ var chartInfoObj = {
 			}]
 		});
 	}
-	,drawIRIChart: function(dataList){
+	,drawIRIChart: function(data){
+		var dataList = data.res;
 	 	var xAxisData =[];
 	 	var lineData = [];
 	 	for(var i=0; i<dataList.length; i++){
