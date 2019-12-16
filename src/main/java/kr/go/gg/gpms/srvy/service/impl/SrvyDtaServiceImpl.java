@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -81,6 +82,9 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	@Resource(name = "mummSctnSrvyDtaDAO")
 	private MummSctnSrvyDtaDAO mummSctnSrvyDtaDAO;
 	
+	@Resource(name = "pathInfoProperties")
+	protected Properties pathInfoProperties;
+	
 	@Autowired
 	private DataSourceTransactionManager transactionManager;
 	
@@ -102,6 +106,10 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
         String fileNm = "";
         
         try {
+            // 균열분석이미지 png폴더 생성
+            File pngFolder = new File(uploadFolder + File.separator + "균열분석이미지");
+            pngFolder.mkdirs();
+        	
         	//파일 스트림
             fis = new FileInputStream(zipFile);
             
@@ -453,10 +461,10 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 				//String imageFileCours = fileCoursParam.replace("_분석결과","_표면결함");
 				String pngFileName = jpgFileName.replace(".jpg", ".png");
 				params.put("RDSRFC_IMG_FILE_NM_2", pngFileName);
-				params.put("frnt_img_file_nm", jpgFileName);
-				params.put("frnt_img_file_cours", rootFileCours + File.separator + "JPG");
-				params.put("cr_img_file_nm", pngFileName);
-				params.put("cr_img_file_cours", rootFileCours + File.separator + "PNG");
+				params.put("FRNT_IMG_FILE_NM", jpgFileName);
+				params.put("FRNT_IMG_FILE_COURS", rootFileCours + File.separator + "JPG");
+				params.put("CR_IMG_FILE_NM", pngFileName);
+				params.put("CR_IMG_FILE_COURS", rootFileCours + File.separator + "균열분석이미지");
 				
 				srvyDtaDAO.insertTmpExcelData(params);
 			}
@@ -620,7 +628,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		    File aiFileNm = new File(imgFilePath);
 
 		    HttpClient client = new DefaultHttpClient();
-		    HttpPost post = new HttpPost("http://test.muhanit.kr:21542/analyzer");
+		    HttpPost post = new HttpPost("http://test.muhanit.kr:21542/analyzer/");
 
 		    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 		    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
@@ -649,22 +657,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 				String result_image = (String)result_i.get("result_image");
 				
 				// Base64 PNG image -> decode -> save
-				String jpgFileName = imgList.get(k).getORGINL_FILE_NM();
-				String jpgFileFullPath = imgList.get(k).getROOT_FILE_COURS() + File.separator + "JPG" + File.separator + jpgFileName;
 				String pngFileName = imgList.get(k).getORGINL_FILE_NM().replace(".jpg", ".png");
-				String pngFileFullPath = imgList.get(k).getROOT_FILE_COURS() + File.separator + "PNG" + File.separator + pngFileName;
-				
-				// jpg file move
-				try (FileInputStream fis = new FileInputStream(imgList.get(k).getFILE_COURS() + File.separator + imgList.get(k).getORGINL_FILE_NM());
-					FileOutputStream fos = new FileOutputStream(jpgFileFullPath);) {
-					
-		            int fileByte = 0; 
-		            // fis.read()가 -1 이면 파일을 다 읽은것
-		            while((fileByte = fis.read()) != -1) {
-		                fos.write(fileByte);
-		            }
-				}
-				
+				String pngFileFullPath = pathInfoProperties.getProperty("file.upload.path") + imgList.get(k).getROOT_FILE_COURS() + File.separator + "균열분석이미지" + File.separator + pngFileName;
 				// png file download
 			    byte[] data = Base64.decodeBase64(result_image);
 			    try (OutputStream stream = new FileOutputStream(pngFileFullPath)) {
