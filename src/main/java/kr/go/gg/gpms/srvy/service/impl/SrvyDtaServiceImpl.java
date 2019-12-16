@@ -44,7 +44,6 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import egovframework.cmmn.util.EgovProperties;
 import egovframework.cmmn.util.FileUploadUtils;
-import egovframework.cmmn.util.ZipUtils;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.attachfile.service.impl.AttachFileDAO;
 import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
