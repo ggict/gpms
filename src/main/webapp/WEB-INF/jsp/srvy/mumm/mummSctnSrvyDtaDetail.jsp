@@ -135,7 +135,7 @@ var chartInfoObj = {
 	        }
 	    });
 	}
-	,drawRdChart: function(data){
+	,drawRdChart: function(data){ 
 		var dataList = data.res || [];
 		var xAxisData =[];
 	 	var lineData = [];
