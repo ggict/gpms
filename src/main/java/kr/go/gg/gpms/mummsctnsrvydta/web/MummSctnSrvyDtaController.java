@@ -240,24 +240,26 @@ public class MummSctnSrvyDtaController extends BaseController {
 
 		// 데이터 조회
 		MummSctnSrvyDtaVO data = mummSctnSrvyDtaService.mummSctnSrvyDtaSctnByCell(mummSctnSrvyDtaVO);
-		if(data != null){
-			String sectCellId = data.getSECT_CELL_ID();
-			SmDtaGnlSttusVO smDtaGnlSttusVO = new SmDtaGnlSttusVO();
-			smDtaGnlSttusVO.setCELL_ID(sectCellId);
-			
-			//조사자료가 있는지 확인하고 상세페이지를 띄울수 있도록 플래그 값을 설정한다.
-			smDtaGnlSttusVO = smDtaGnlSttusService.selectSmDtaGnlSttusByCellId(smDtaGnlSttusVO);
-			if(smDtaGnlSttusVO == null || "".equals(smDtaGnlSttusVO.getSRVY_NO())){
-				data.setRstFlag("0");
-			}else{
-				data.setRstFlag("1");
-			}
+		if(data != null && data != new MummSctnSrvyDtaVO() ){
+			data.setRstFlag("1");
+//			String sectCellId = data.getSECT_CELL_ID();
+//			SmDtaGnlSttusVO smDtaGnlSttusVO = new SmDtaGnlSttusVO();
+//			smDtaGnlSttusVO.setCELL_ID(sectCellId);
+//			
+//			//조사자료가 있는지 확인하고 상세페이지를 띄울수 있도록 플래그 값을 설정한다.
+//			smDtaGnlSttusVO = smDtaGnlSttusService.selectSmDtaGnlSttusByCellId(smDtaGnlSttusVO);
+//			if(smDtaGnlSttusVO == null || "".equals(smDtaGnlSttusVO.getSRVY_NO())){
+//				data.setRstFlag("0");
+//			}else{
+//				data.setRstFlag("1");
+//			}
 			return data;
 		}else{
 			MummSctnSrvyDtaVO tmp = new MummSctnSrvyDtaVO();
 			tmp.setRstFlag("0");
 			return tmp;
 		}
+		
 	}
 	
 	/**
