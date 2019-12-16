@@ -416,7 +416,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 * @return void
 	 * @exception Exception
 	 */
-	public void insertTmpExcelData(String fileName, String rootFileCours) throws Exception {
+	public void insertTmpExcelData(String fileName, String rootFileCours, SrvyDtaVO srvyDtaOne) throws Exception {
 		
 		FileInputStream fis = new FileInputStream(fileName);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
@@ -461,13 +461,16 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 				String pngFileName = jpgFileName.replace(".jpg", ".png");
 				params.put("RDSRFC_IMG_FILE_NM_2", pngFileName);
 				params.put("FRNT_IMG_FILE_NM", jpgFileName);
-				params.put("FRNT_IMG_FILE_COURS", rootFileCours + File.separator + "JPG");
+				params.put("FRNT_IMG_FILE_COURS", "");
 				params.put("CR_IMG_FILE_NM", pngFileName);
 				params.put("CR_IMG_FILE_COURS", rootFileCours + File.separator + "균열분석이미지");
 				
 				srvyDtaDAO.insertTmpExcelData(params);
 			}
 		}
+		
+		//TMP_MUMM_SCTN_SRVY_DTA 테이블에 jpg이미지파일 경로 업데이트
+		srvyDtaDAO.updateImgInfoOfTmpExcelData(srvyDtaOne);
 	}
 	
 	/**

@@ -87,7 +87,7 @@ public interface SrvyDtaService {
 	 * @return void
 	 * @exception Exception
 	 */
-	void insertTmpExcelData(String fileName, String rootFileCours) throws Exception;
+	void insertTmpExcelData(String fileName, String rootFileCours, SrvyDtaVO srvyDtaVO) throws Exception;
 	
 	/**
 	 * 조사_자료(TN_SRVY_DTA)을 조회한다.

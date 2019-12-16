@@ -481,16 +481,19 @@ public class SrvyDtaController extends BaseController {
 					fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
 					
 					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
-					srvyDtaService.insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS());
-					
-					//TMP_MUMM_SCTN_SRVY_DTA 테이블에 jpg이미지파일 경로 업데이트
-					srvyDtaService.updateImgInfoOfTmpExcelData(srvyDtaOne);
+					srvyDtaService.insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS(), srvyDtaOne);
 					
 					//TMP_MUMM_SCTN_SRVY_DTA 조회
 					srvyDtaVO = srvyDtaService.selectTmpExcelData();
 					
 					//srvyDtaVO.setSE_CD("N");
 					//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
+					/*
+					 * [2019-12-16 yslee]
+					 * 전임 개발자가 요구사항 및 기획 대로 개발한 상태에서는
+					 * SE_CD값은 항상 Y가 나오도록 로직이 작성되어 AI를 타지 않음
+					 * 개발서버에서 균열분석이미지 폴더에 png 파일 디코딩 다운로드는 if조건을 임시 삭제 후 돌린 것임.
+					 */
 					if("N".equals(srvyDtaVO.getSE_CD())) {
 						srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO);
 					}
@@ -529,6 +532,15 @@ public class SrvyDtaController extends BaseController {
 				
 			}
 				isResult = true;
+				/*
+				 * [2019-12-16 yslee]
+				 * 트랜잭션 처리가 되어있지 않은 상태
+				 * 개발서버에서 확인 결과 Controller에서는 트랜잭션이 안걸려있기때문에
+				 * 첫 AI API 통신 결과를 기다리는(약1분) 동안 
+				 * 최종 프로시저(prc_aggregate_general) 까지 다 돌아버림.
+				 * 그 후에 API가 차례대로 돌아간다.
+				 * PNG파일은 차례대로 정상적으로 "균열분석이미지" 폴더에 다운로드 됨
+				 */
 				//this.transactionManager.commit(status);// 트랜잭션 커밋
 			} catch (Exception e) {
 				isResult = false;
