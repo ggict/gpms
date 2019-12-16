@@ -275,7 +275,7 @@
         UPDATE TN_RPAIR_TRGET_SLCTN SET
             PROGRS_RT = #PROGRS_RT#
         WHERE
-            TRGET_SLCTN_NO = #TRGET_SLCTN_NO#
+            TRGET_SLCTN_NO = #TRGET_SLCTN_NO#::NUMERIC
     </update>
 
 

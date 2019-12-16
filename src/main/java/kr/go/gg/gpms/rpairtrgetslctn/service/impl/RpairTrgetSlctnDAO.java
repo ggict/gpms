@@ -102,7 +102,7 @@ public class RpairTrgetSlctnDAO extends BaseDAO {
      * @return
      */
     public int selectRpairTrgetSlctnSlctnYearListCnt(RpairTrgetSlctnVO rpairTrgetSlctnVO) {
-        return (int)select("rpairTrgetSlctnDAO.selectRpairTrgetSlctnSlctnYearListCnt", rpairTrgetSlctnVO);
+        return (Integer)select("rpairTrgetSlctnDAO.selectRpairTrgetSlctnSlctnYearListCnt", rpairTrgetSlctnVO);
     }
 
     /**
