@@ -12,7 +12,16 @@
 <%@ include file="/include/common_head.jsp" %>
 <script src="<c:url value='/js/common.js'/>" charset="utf-8"></script>
 </head>
-
+<style>
+.checks input[type="checkbox"] + label {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+</style>
 <body id="wrap">
 <!-- 필수 파라메터(START) -->
 <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
@@ -144,10 +153,16 @@
                         </td>
     				</tr>
     				<tr>
-    					<td class="th"><label for="CNTRWK_AT">공사구간</label></td>
-    					<td><input type="checkbox" name="CNTRWK_AT" id="CNTRWK_AT" value=""/></td>
-    					<td class="th"><label for="UNOPN_AT">미개통구간</label></td>
-    					<td><input type="checkbox" name="UNOPN_AT" id="UNOPN_AT" value=""/></td>
+    					<div class="checks">
+    						<td colspan="2">
+  								<input type="checkbox" id="CNTRWK_AT" value=""> 
+ 						 		<label for="CNTRWK_AT">공사구간</label> 
+ 						 	</td>
+ 						 	<td colspan="2">
+ 						 		<input type="checkbox" id="UNOPN_AT" value=""> 
+ 						 		<label for="UNOPN_AT">미개통구간</label>
+ 						 	</td>
+					 	</div>
     				</tr>
     				<tr>
     					<td class="th" colspan="4"><label for="GPCI"></label>

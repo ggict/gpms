@@ -216,7 +216,7 @@
                    			<th align="left" scope="row"><font color="red">*</font> 사용자 그룹</th>
                    			<td>
                    				<c:forEach items="${groupList }" var="group">
-                   				    <span class="authUser" id="${group.AUTHOR_ID}" <c:if test="${group.AUTHOR_ID == 'ROLE_USER_SGG' }">style="display: none;"</c:if>><input type="radio" name="REQ_USER_GRP" id="REQ_USER_GRP" style="margin-right:5px; " value="${group.AUTHOR_ID }" class="input notnull" <c:if test="${group.AUTHOR_ID == 'ROLE_ADMIN' }">checked="checked"</c:if>/><c:out value="${group.AUTHOR_NM }" /><span style="margin-right:5px;"></span></span>
+                   				    <span class="authUser" id="${group.AUTHOR_ID}" <c:if test="${group.AUTHOR_ID == 'ROLE_USER_SGG' }">style="display: none;"</c:if>><input type="radio" name="REQ_USER_GRP" id="REQ_USER_GRP<c:out value="${group.AUTHOR_ID }" />" value="${group.AUTHOR_ID }" class="input notnull" <c:if test="${group.AUTHOR_ID == 'ROLE_ADMIN' }">checked="checked"</c:if>/><label for="REQ_USER_GRP<c:out value="${group.AUTHOR_ID }" />"><c:out value="${group.AUTHOR_NM }" /></label></span>
                    				</c:forEach>
                    			</td>
                    		</tr>
@@ -225,7 +225,7 @@
                    			<td class="authCheck">
                    				<input type="hidden" name="REQ_MENUACC_ROLE" id="REQ_MENUACC_ROLE" value=""/>
                    				<c:forEach items="${menuAuthList }" var="menu">
-                   					<span class="authArea <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">pothole</c:if>" id="${menu.AUTHOR_ID}" <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">style="display: none;"</c:if> ><input type="checkbox" id= "MENUACC" value="${menu.AUTHOR_ID }" style="margin-right:5px;" /><c:out value="${menu.AUTHOR_NM }" /><br/></span>
+                   					<span class="authArea <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">pothole</c:if>" id="${menu.AUTHOR_ID}" <c:if test="${menu.AUTHOR_ID == 'ROLE_USER_POTHOLE' }">style="display: none;"</c:if> ><input type="checkbox" id= "MENUACC<c:out value="${menu.AUTHOR_ID }" />" value="${menu.AUTHOR_ID }" style="margin-right:5px;" /><label for="MENUACC<c:out value="${menu.AUTHOR_ID }" />"><c:out value="${menu.AUTHOR_NM }" /></label><br/></span>
                    				</c:forEach>
                    			</td>
                    		</tr>
@@ -245,7 +245,7 @@
 
 			<div style="text-align: left; line-height:1.2em; font-family: '돋움'; font-size: 12px;">
 				<div style="margin: 7px 5px; color: black; line-height:20px">
-					<input type="checkbox" id="STPLAT_AGRE_AT" name="STPLAT_AGRE_AT" value="Y" onclick=""/> <span id="allowPage" style="cursor: pointer; text-decoration:underline;" onclick="fn_popup_agree();">개인정보 수집 및 이용에 동의합니다.</span><font color="red"> (필수)</font><br/>
+					<input type="checkbox" id="STPLAT_AGRE_AT" name="STPLAT_AGRE_AT" value="Y" onclick=""/><label for="STPLAT_AGRE_AT"><span id="allowPage" style="cursor: pointer; text-decoration:underline;" onclick="fn_popup_agree();">개인정보 수집 및 이용에 동의합니다.</span><font color="red"> (필수)</font></label><br/>
 				</div>
 			</div>
 
