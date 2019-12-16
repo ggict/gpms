@@ -1,3 +1,17 @@
+-- [2019-12-16] 운영DB 데이터 요청사항
+-- 조사자료 분석 관련 TN_SRVY_DTA_FRMULA 추가 INSERT 스크립트
+
+INSERT INTO tn_srvy_dta_frmula ( frmula_no,frmula_nm,arith_frmla,dc,frmula_se_code )
+VALUES ( 63, 'FRNT_IMG_FILE_COURS', '', '전방이미지파일경로', null );
+
+INSERT INTO tn_srvy_dta_frmula ( frmula_no,frmula_nm,arith_frmla,dc,frmula_se_code )
+VALUES ( 64, 'CR_IMG_FILE_NM', '', '균열이미지파일명', null );
+
+INSERT INTO tn_srvy_dta_frmula ( frmula_no,frmula_nm,arith_frmla,dc,frmula_se_code )
+VALUES ( 65, 'CR_IMG_FILE_COURS', '', '균열이미지파일경로', null );
+
+
+
 ------------------------------------------------------------------
 -- 조사자료 분석 1단계 프로시저 (prc_savesurveydata) 변경 스크립트
 -- TMP_TN_MUMM_SCTN_SRVY_DTA, TN_MUMM_SCTN_SRVY_DTA 테이블 컬럼 추가
