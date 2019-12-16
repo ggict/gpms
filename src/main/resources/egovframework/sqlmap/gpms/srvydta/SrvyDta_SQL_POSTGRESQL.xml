@@ -111,7 +111,7 @@
 				,dta.CREAT_DT /* 조사_자료_엑셀.생성_일시 */
 				,dta.UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
 				,dta.UPDT_DT /* 조사_자료_엑셀.수정_일시 */
-				,dta.FILE_COURS /* 첨부_파일.파일_경로 */
+				,file.FILE_COURS /* 첨부_파일.파일_경로 */
 			FROM TN_SRVY_DTA dta
 			JOIN TN_ATTACH_FILE file
 			ON dta.FILE_NO = file.FILE_NO
