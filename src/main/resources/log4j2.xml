@@ -47,6 +47,9 @@
         <Logger name="org.springframework" level="INFO" additivity="false">
             <AppenderRef ref="console" />
         </Logger>
+        
+	    <Logger name="org.apache.http.wire" level="ERROR" />
+        
         <Root level="DEBUG">
             <AppenderRef ref="console" />
             <AppenderRef ref="RollingRandomAccessFile"  />
