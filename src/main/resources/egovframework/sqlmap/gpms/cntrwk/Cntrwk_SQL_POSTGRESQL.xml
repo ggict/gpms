@@ -828,8 +828,8 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 	<isNotEmpty property="SCH_CNTRWK_SE"><![CDATA[ /* 공사정보.공사구분*/ ]]> AND tncntrwk.CNTRWK_SE = #SCH_CNTRWK_SE# </isNotEmpty>
 	<isNotEmpty property="SCH_CNTRWK_NM"><![CDATA[ /* 공사정보.전체_공사_명 */ ]]> AND tncntrwk.FULL_CNTRWK_NM LIKE '%' || #SCH_CNTRWK_NM# || '%'</isNotEmpty>
 	<isNotEmpty property="SCH_CO_NM"><![CDATA[ /* 공사정보.시공_업체_명 */]]> AND tncntrwk.CNSTRCT_CO_NM LIKE '%' || #SCH_CO_NM# || '%'</isNotEmpty>
-	<isNotEmpty property="SCH_STRWRK_DE"><![CDATA[ /* 공사정보.착공_일자 */ AND tncntrwk.STRWRK_DE >= #SCH_STRWRK_DE# ]]></isNotEmpty>
-	<isNotEmpty property="SCH_COMPET_DE"><![CDATA[ /* 공사정보.준공_일자 */ AND tncntrwk.COMPET_DE <= #SCH_COMPET_DE# ]]></isNotEmpty>
+	<isNotEmpty property="SCH_STRWRK_DE"><![CDATA[ /* 공사정보.착공_일자 */ AND tncntrwk.STRWRK_DE::numeric >= #SCH_STRWRK_DE#::numeric ]]></isNotEmpty>
+	<isNotEmpty property="SCH_COMPET_DE"><![CDATA[ /* 공사정보.준공_일자 */ AND tncntrwk.COMPET_DE::numeric <= #SCH_COMPET_DE#::numeric ]]></isNotEmpty>
 			<isNotEmpty property="orderByColumn">
 				ORDER BY $orderByColumn$ $orderByType$
 			</isNotEmpty>
@@ -901,14 +901,47 @@ FULL_CNTRWK_NM = #FULL_CNTRWK_NM# /* 공사정보.전체_공사_명 */
 		parameterClass="cntrwkVO"
 		resultClass="int">
 	<![CDATA[
-			/* cntrwkDAO.selectCntrwkListTotalCount */
-			/* 공사정보 목록 개수 조회  */
-			SELECT COUNT(*) AS totCnt
-			FROM TN_CNTRWK tncntrwk
+	SELECT count(*) FROM (SELECT ROW_NUMBER() OVER() AS rn, tb.* FROM (
+			SELECT
+				tncntrwk.CNTRWK_ID/* 공사정보.공사_ID */
+				,(SELECT code_nm FROM TC_CODE tccode WHERE tccode.code_val = tncntrwk.CNTRWK_SE) AS CNTRWK_SE/* 공사정보.공사_구분 */
+				,tncntrwk.FULL_CNTRWK_NM/* 공사정보.전체_공사_명 */
+				,tncntrwk.STRWRK_DE/* 공사정보.착공_일자 */
+				,tncntrwk.COMPET_DE /* 공사정보.준공_일자 */
+				,tncntrwk.FLAW_BEGIN_DE/* 공사정보.하자_시작_일자 */
+				,tncntrwk.FLAW_END_DE/* 공사정보.하자_종료_일자 */
+				,COALESCE((SELECT CO_NM  FROM TN_COMPANY tncompany WHERE tncompany.CO_NO = tncntrwk.CNSTRCT_CO_NO), tncntrwk.CNSTRCT_CO_NM) AS CNSTRCT_CO_NM/* 공사정보.시공_업체_명 */
+				,COALESCE(dtl.TRACK_LEN,0) AS TRACK_LEN/* 총 연장 */
+				,COALESCE(dtl.TOT_AMOUNT,0) AS TOT_AMOUNT/*총 공사금액 */
+				,COALESCE(dtl.RPAIR_AR,0) AS RPAIR_AR/* 총 보수면적 */
+				/*,dtl.route_code *//*노선번호*/
+			 FROM TN_CNTRWK tncntrwk
+	 LEFT OUTER JOIN ( SELECT tncntrwkdtl.CNTRWK_ID
+	 						 /*,tncntrwkdtl.ROUTE_CODE*/
+			                 ,SUM(tncntrwkdtl.TRACK_LEN)/1000 AS TRACK_LEN/* 공사상세정보.1차로_연장 */
+			                 ,SUM(tncntrwkdtl.CNTRWK_AMOUNT) AS TOT_AMOUNT /* 공사상세정보.공사_금액 */
+			                 ,SUM(tncntrwkdtl.RPAIR_AR) AS RPAIR_AR/* 공사상세정보.보수_면적 */
+			            FROM
+			                TN_CNTRWK_DTL tncntrwkdtl
+			            WHERE
+			                    1 = 1             /* 공사상세정보.공사_ID */
+			                AND tncntrwkdtl.USE_AT ='Y'     /* 공사상세정보.사용_여부 */
+			                AND tncntrwkdtl.delete_at ='N'   /* 공사상세정보.삭제_여부 */
+			        GROUP BY   tncntrwkdtl.cntrwk_id /*,tncntrwkdtl.route_code */) dtl
+			ON tncntrwk.CNTRWK_ID =  dtl.CNTRWK_ID
+			 WHERE 1 = 1
+                AND tncntrwk.USE_AT ='Y'
+                AND tncntrwk.DELETE_AT ='N'
 	]]>
-			<include refid="cntrwkDAO.selectCntrwkList.where" />
-	<![CDATA[
-	]]>
+	<isNotEmpty property="SCH_CNTRWK_SE"><![CDATA[ /* 공사정보.공사구분*/ ]]> AND tncntrwk.CNTRWK_SE = #SCH_CNTRWK_SE# </isNotEmpty>
+	<isNotEmpty property="SCH_CNTRWK_NM"><![CDATA[ /* 공사정보.전체_공사_명 */ ]]> AND tncntrwk.FULL_CNTRWK_NM LIKE '%' || #SCH_CNTRWK_NM# || '%'</isNotEmpty>
+	<isNotEmpty property="SCH_CO_NM"><![CDATA[ /* 공사정보.시공_업체_명 */]]> AND tncntrwk.CNSTRCT_CO_NM LIKE '%' || #SCH_CO_NM# || '%'</isNotEmpty>
+	<isNotEmpty property="SCH_STRWRK_DE"><![CDATA[ /* 공사정보.착공_일자 */ AND tncntrwk.STRWRK_DE::numeric >= #SCH_STRWRK_DE#::numeric ]]></isNotEmpty>
+	<isNotEmpty property="SCH_COMPET_DE"><![CDATA[ /* 공사정보.준공_일자 */ AND tncntrwk.COMPET_DE::numeric <= #SCH_COMPET_DE#::numeric]]></isNotEmpty>
+			<isNotEmpty property="orderByColumn">
+				ORDER BY $orderByColumn$ $orderByType$
+			</isNotEmpty>
+			) tb) tncntrwk  WHERE 1=1
 	</select>
 
 

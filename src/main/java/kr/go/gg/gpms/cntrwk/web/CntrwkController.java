@@ -141,6 +141,13 @@ public class CntrwkController  extends BaseController {
 		cntrwkVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		cntrwkVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 
+		System.out.println("cntrwkVO.getSCH_STRWRK_DE()"+cntrwkVO.getSCH_STRWRK_DE());
+		String SCH_STRWRK_DE = cntrwkVO.getSCH_STRWRK_DE();
+		String SCH_COMPET_DE = cntrwkVO.getSCH_COMPET_DE();
+		
+		cntrwkVO.setSCH_STRWRK_DE(SCH_STRWRK_DE.replace("-",""));
+		cntrwkVO.setSCH_COMPET_DE(SCH_COMPET_DE.replace("-",""));
+		System.out.println("SCH_COMPET_DE"+cntrwkVO.getSCH_COMPET_DE());
 		List<CntrwkVO> items = cntrwkService.selectCntrwkList(cntrwkVO);
 		int total_count = cntrwkService.selectCntrwkListTotalCount(cntrwkVO);
 		int total_page = 0;
