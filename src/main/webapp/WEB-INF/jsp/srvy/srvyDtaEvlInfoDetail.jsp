@@ -23,7 +23,7 @@
 <!-- 필수 파라메터(END) -->
 <div class="tabcont">
 	<div class="">
-	    <h3>포장상태 평가정보 상세조회</h3>
+	    <h3>포장상태 평가정보 상세조회1</h3>
 	    <h5 class="info" style="left: 230px;">
 	       <a href='#' class='whitebtn dpib ml10 vm' id="back"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기" /></a>
 	    </h5>
@@ -176,14 +176,14 @@
             <!-- 포장상태 조사자료 END -->
 
             <!-- 포장상태 평가자료 START -->
-            <div id="mummAvg" style="width:25%; float: left; height: 210px; padding-right: 10px; border-radius: 5px;">
-                <h3 style="line-height: 30px; font-size: 15px; padding-right: 0px; border-bottom: 0px;"><span>포장상태 평가정보 <span style="line-height: 30px; font-size: 13px;">(평가단위:section셀)</span></span></h3>
-		        <div class="ytabbx" style="height: 27px;">
-		            <ul class="ytab fl" style="margin-top: 0px;">
-	                    <li class="on"><a href="javascript:;" onclick="fnSelectLastSttus($(this), 1);" style="font-size: 13px;" >조사평가정보조회</a></li>
-	                    <li><a href="javascript:;" onclick="fnSelectLastSttus($(this), 2);" style="font-size: 13px;">수시평가정보조회</a></li>
+            <div id="mummAvg" style="width:25%; float: left; height: 210px; padding-right: 10px;">
+                <h3>포장상태 평가정보 <span>(평가단위:section셀)</span></h3>
+		        <!-- <div class="ytabbx"> -->
+		            <ul class="ytab">
+	                    <li class="on"><a href="javascript:;" onclick="fnSelectLastSttus($(this), 1);" >조사평가정보조회</a></li>
+	                    <li><a href="javascript:;" onclick="fnSelectLastSttus($(this), 2);">수시평가정보조회</a></li>
 		            </ul>
-		        </div>
+		        <!-- </div> -->
                 <!-- <a href="#" style="float:right; line-height: 11px; margin-top: 5px;" class="titbtn" onclick="">수시평가정보조회</a> -->
                 <ul class="tblst mt15" style="clear: both">
                     <li style="width:21%;border-left:0px" class="brl tc">

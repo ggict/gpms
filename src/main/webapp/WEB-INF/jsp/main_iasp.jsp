@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div id="detail_integrated" style="display: none;">
-                    	<%-- 왼쪽 세부 메뉴 --%>
+                    	<%-- 왼쪽 세부 메뉴
 						<div style="width: 140px; float: left;">
 					       <h2>포장상태 평가(종합)</h2>
 					       <ul class="btab_menu">
@@ -56,11 +56,10 @@
 					           <!-- <li style="height:145px"><a href="#" class="tab2">평가자료<br>다운로드</a></li> -->
 					       </ul>
 					    </div>
-                        <div>
+					     --%>
                          	<div class="tab_wrap">
                         		<iframe id="integrated_area" name="integrated_area" style="padding: 0px 0px 0px 0px; margin: 0px 0px 0px 0px; border:0; width:100%; height:560px; overflow: hidden; z-index:9999;" scrolling=no></iframe>
                         	</div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -175,19 +175,39 @@
                             <div class="result" id="divStatusEvaluation" style="display: none;">
                                 <form id="frm2" name="frm2" method="post" action="">
                                     <div id="statusArea">
-                                        <h5>
-                                            검색결과
-                                            <a href="#" onclick="fnSaveExcel();" class="schbtn" style="float: right;">엑셀저장</a>
+                                        <p class="note2">
+                                        	* 최근 조사자료(2017년) 기준 평가정보
+                                        	<input type="button" onclick="fnSaveExcel();" class="btn" value="엑셀저장" />
                                             <form id="frm2" name="frm2" method="post" action="">
                                                 <input type="hidden" id="CELL_ID" name="CELL_ID" />
                                             </form>
-                                            <span style="float: right; font-size: 10.5px; margin-top: 4px; margin-right: 4px; color: gray;"><span style="color: red;">*</span> 최근 조사자료(2017년) 기준 평가정보</span>
-                                        </h5>
+                                         </p>
                                         <div id="div_grid2" style="width:100%; float: block; padding-top: 5px;">
                                             <table id="gridArea2"></table>
                                             <div id="gridPager2" style='width: 100%;'></div>
                                         </div>
-                                        <h5 class="mt15">포장상태 평가 (평가단위:10m셀)</h5>
+
+                                        <div class="resultTable">
+                                        	<table class="table20">
+                                        		<caption>포장상태 평가 (평가단위:10m셀)</caption>                                        		
+                                        		<tbody>
+                                        			<tr>
+                                        				<td><span id="gpci">0</span></td>
+                                        				<td><span id="crVal">없음</span></td>
+                                        				<td><span id="dmgCuz">없음</span></td>
+                                        			</tr>
+                                        			<tr>
+                                        				<td>GPCI</td>
+                                        				<td>주 파손</td>
+                                        				<td>파손원인</td>
+                                        			</tr>
+
+                                        		</tbody>
+                                        	</table>
+                                        </div>
+
+                                        <!-- 
+                                        <h5 class="mt15"></h5>
                                         <ul class="tblst mt15">
                                             <li style="width:33%;border-left:0px" class="brl tc">
                                                 <span class="circle bc6" id="gpci" style="width: 150px; height: 55px; line-height: 55px;">0</span>
@@ -202,6 +222,9 @@
                                                 <span>파손원인</span>
                                             </li>
                                         </ul>
+                                         -->
+                                        
+                                        
                                         <a href="#" class="selmore" id="selmore" onclick="fnSelectMore();"><img src="<c:url value='/images/btn_more.png' />" alt="더보기" title="더보기"/></a>
                                     </div>
                                 </form>

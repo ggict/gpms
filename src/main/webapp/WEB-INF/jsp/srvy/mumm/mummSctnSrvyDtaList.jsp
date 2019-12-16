@@ -589,47 +589,49 @@ function fnShowData() {
 <!-- 필수 파라메터(END) -->
 <%-- <form id="frm" name="frm" method="post" action=""> --%>
 <div class="tabcont">
-	<div class="">
-	    <h3>
-	       포장상태 평가정보 상세조회
-	       <!-- <a href="#" id="btnGotoResearchInfo" style="display: none; margin: 0px 5px; padding: 5px 10px; border-radius: 50px; width: 150px; text-align: center; color: rgb(255, 255, 255); font-size: 11px; font-weight: bolder; background-color: rgba(69, 135, 255, 1);">조사정보 상세보기</a>
-	       <a href="#" id="btnShowImg" onclick="fnShowImg();" style="display: none; padding: 5px 10px; border-radius: 50px; width: 150px; text-align: center; color: rgb(255, 255, 255); font-size: 11px; font-weight: bolder; background-color: gray;">균열분석 이미지</a> -->
-        </h3>
-        <div class="ytabbx" style="left: 360px; position:absolute; top:0px;">
-            <ul class="ytab fl" style="margin-top: 21px;">
-                <li class="on">
-                    <a href="#" onclick="" style="font-size: 14px;">평균평가정보</a>
-                </li>
-                <li>
-                    <a href="#" onclick="fnShowData();" style="font-size: 14px;">개별평가정보</a>
-                </li>
-            </ul>
-        </div>
-	    <p class="location">
-	        <span>통합 정보 조회</span>
-	        <span>포장상태 평가정보 조회</span>
-	        <strong>포장상태 평가정보 상세조회</strong>
-	    </p>
-	    <div class="mt10 ml10 mr10">
-	    	<div id="mummAvg" style="width:25%; float: left; padding: 0px 30px;">
-	    		<h3 style="line-height: 30px; font-size: 15px;">포장상태 평가정보 (평가단위:10m셀)</h3>
-
-                <ul class="tblst mt15">
-                    <li style="width:21%;border-left:0px" class="brl tc">
-                        <span class="circle bc6" id="gpci" style="width: 90%; font-size: 17px;">0</span>
-                        <span>GPCI</span>
-                    </li>
-                    <li style="width:37%" class="brl tc">
-                        <span class="circle bc5" id="crVal" style="width: 90%; font-size: 17px;">없음</span>
-                        <span>주 파손</span>
-                    </li>
-                    <li style="width:40%" class="tc">
-                        <span class="circle bc7" id="dmgCuz" style="width: 90%; font-size: 17px;">없음</span>
-                        <span>파손원인</span>
-                    </li>
-                </ul>
-
-                <table class="tbview" style="width: 100%; margin-top: 20px; height: 118px;" id="avgTable">
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">포장상태평가</option>
+                </select>
+                <select name="">
+                    <option value="">평가정보조회</option>
+                </select>
+                <h2 class="h2">포장상태 평가정보[상세정보]-평균평가정보</h2>
+            </span>
+        </div>        
+        
+        <span class="headerTab">
+        	<a href="#" class="on" onclick="">평균평가정보</a>
+        	<a href="#" onclick="fnShowData();">개별평가정보</a>
+        </span>
+    </header>
+    
+    <div class="contents container">
+    	
+    	<article class="div3">
+    		<!-- <div id="mummAvg" style="width:25%; float: left; padding: 0px 30px;"> -->
+    			<div class="resultTable">
+    				<table class="table20">
+    					<caption>포장상태 평가 (평가단위:10m셀)</caption>
+    					<tbody>
+    						<tr>
+    							<td><span id="gpci">0</span></td>
+    							<td><span id="crVal">없음</span></td>
+    							<td><span id="dmgCuz">없음</span></td>
+    						</tr>
+    						<tr>
+    							<td>GPCI</td>
+    							<td>주 파손</td>
+    							<td>파손원인</td>
+    						</tr>
+    					</tbody>
+    				</table>
+    			</div>
+				
+				<div class="table">
+                <table id="avgTable">
 	                <caption>포장상태 평가정보</caption>
 	                <colgroup>
 	                    <col width="30%" />
@@ -637,7 +639,7 @@ function fnShowData() {
 	                    <col width="30%" />
 	                    <col width="20%" />
 	                </colgroup>
-	                <tbody style="text-align: center;">
+	                <tbody>
 		    			<tr>
 		    				<th scope="row">거북등균열</th>
 		    				<td>0</td>
@@ -663,15 +665,19 @@ function fnShowData() {
 	    			</tbody>
 
 	    		</table>
+	    		</div>
 
-	    		<span style="font-size: 11px; margin-top: 5px; float: right;">* 포장파손형태 별 포장상태지수 감소값 (10점 만점)</span>
-	    	</div>
-
-            <div id="mummPredctList" style="width:33%; float: left;">
-            	<div id="predctChart" class="cont_ConBx2" style="width:100%; height:267px; float: left;">
+	    		<p class="note">* 포장파손형태 별 포장상태지수 감소값 (10점 만점)</p>
+	    		<!-- </div> -->
+    	</article>
+    	
+    	
+    	<article class="div4">
+    		<div id="mummPredctList">
+            	<div id="predctChart" class="cont_ConBx2" style="width:100%; height:267px;">
 				</div>
 				<div class="cont_ListBx" style="display: none;">
-					<table class="tblist" border="1" id="diagram">
+					<table class="tblist" id="diagram">
 						<colgroup>
 							<col style="width:30%;"	/>
 							<col style="width:35%;"	/>
@@ -680,7 +686,7 @@ function fnShowData() {
 							<col style="width:15%;"	/> --%>
 							<col style="width:35%;"	/>
 						</colgroup>
-						<thead style="text-align: center;">
+						<thead>
 							<tr>
 								<th scope="col">구분</th>
 								<th scope="col">예측년도</th>
@@ -695,19 +701,22 @@ function fnShowData() {
 					</table>
 				</div>
 			</div>
-
-			<div id="mummCntrwkList" style="width:33%; padding-left: 30px; float: left">
+    	</article>
+    	
+    	
+    	<article class="div5">
+    		<div id="mummCntrwkList">
 				<form id="frm2" name="frm2" method="post" action="">
-					<div style="float: left;">
-		    			<h3 style="line-height: 30px; font-size: 15px;">포장공사 이력</h3>
-						<div id="div_grid2" style="width:100%; float: block; padding-top: 5px;">
+
+		    			<h3 class="h3">포장공사 이력</h3>
+						<div id="div_grid2" >
 							<table id="gridArea2"></table>
-							<div id="gridPager2" style='width: 100%;'></div>
+							<div id="gridPager2"></div>
 						</div>
-					</div>
 				</form>
 			</div>
-        </div>
+    	</article>
+
     </div>
 </div>
 

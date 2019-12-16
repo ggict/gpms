@@ -275,7 +275,7 @@ td input[type="checkbox"].cbox + label.hiddenLabel:before { margin: -3px 0 0 -18
 
 .maxHeight.max200 { max-height: 200px; }
 
-.h3 { font-weight: 600; font-size: 16px; padding: 20px 0 10px 0; }
+.h3 { font-weight: 600; font-size: 16px; padding: 20px 0 10px 0; letter-spacing: -1px; }
 
 .h3 + .coSpan { float: right; margin-top: -26px; }
 
@@ -536,15 +536,61 @@ input.mapPosition_X, input.mapPosition_Y { width: 100px; }
 
 table td select { width: inherit; }
 
+.selmore { bottom: 30px; }
+
 .arrange1 .table td, .arrange1 .table th { padding: 3px; }
 
 .arrange1 select, .arrange1 input { width: 100px; height: 28px; }
 
 .arrange1 button { height: 28px; margin: 1px; }
 
+.stepbx:after { display: block; content: ""; clear: both; }
+
+#step1_sel, #step2_sel { border: solid 1px #ddd; }
+
+#step1_sel .tc, #step2_sel .tc { border-top: none; }
+
+#step1_sel a span, #step2_sel a span { font-size: 14px; line-height: 1.2em; }
+
+#step1_sel li, #step2_sel li { padding: 8px 0 5px 0; }
+
+#gview_gridArea2 { border-top: solid 1px #555; }
+
+.headerTab { position: absolute; right: 42px; top: 0; font-size: 0; }
+
+.headerTab a { display: inline-block; width: 140px; text-align: center; padding: 12px 0 0 0; height: 30px; color: #888; border-left: #ddd solid 1px; border-right: #ddd solid 1px; margin-left: -1px; font-size: 15px; }
+
+.headerTab a:hover { color: #4587ff; }
+
+.headerTab a.on { background: #4587ff; color: #fff; }
+
+.resultTable + .table { margin-top: 5px; }
+
+.resultTable caption { font-size: 15px; position: relative; left: 0; padding: 12px 0 5px 0; text-align: left; }
+
+.resultTable tbody { border: 1px solid #ddd; }
+
+.resultTable tbody tr:first-child td { padding-top: 10px; padding-bottom: 2px; }
+
+.resultTable tbody tr:last-child td { padding-top: 2px; padding-bottom: 8px; }
+
+.resultTable .thead td { padding-top: 0; }
+
+.resultTable td { border-left: solid 1px #ddd; text-align: center; padding: 5px; }
+
+.resultTable td span { display: table-cell; width: 186px; border-radius: 30px; background: #777; color: #fff; height: 50px; vertical-align: middle; }
+
+span#gpci, span#GPCI { background: #4587ff; }
+
+span#crVal { background: #eb5739; }
+
+span#dmgCuz { background: #818894; }
+
+.togglebtn { top: 3px; right: 0; }
+
 .window_panel { background: #fff; }
 
-.window_panel .window_header_normal { background: #fff; color: #333; border-bottom: solid 1px #ddd; padding: 0; margin: 0 10px; }
+.window_panel .window_header_normal { background: #fff; color: #333; border-bottom: solid 1px #ddd; padding: 4px 0 6px 0; margin: 0 10px; }
 
 .window_panel .window_header .window_title_text { color: #333; font-weight: 500; }
 
@@ -557,6 +603,8 @@ table td select { width: inherit; }
 .window_panel .window_header .closeImg:hover, .window_panel .window_header .closeImg:focus, .window_panel .window_header .minimizeImg:hover, .window_panel .window_header .minimizeImg:focus { background-position-y: -21px; }
 
 .window_panel .window_header_minimize .window_title_text { color: #fff; background: url(../images/window_header_maximize.gif) no-repeat 93% -1px; }
+
+.window_panel .window_header .window_function_bar { top: 10px; }
 
 a.btnRefresh { padding: 6px 6px 4px 6px; display: inline-block; margin-top: 4px; border: solid 1px #ddd; border-radius: 3px; vertical-align: baseline; }
 
@@ -810,13 +858,23 @@ a.btnSideDivClose:hover, a.btnSideDivClose:focus { opacity: 1; }
 
 .stbx h4 .step { color: #000000; line-height: 1; height: 22px; }
 
-.stbx div { padding: 0; border-radius: 0; }
+.stbx div { padding: 0; border-radius: 0; border: none; }
 
-.stbx #result { width: 100%; position: static; }
+.stbx #result { position: static; }
+
+#step3 .stbx h4 { padding-top: 5px; }
 
 input#pointArea { width: 40px; height: 28px; padding: 0 4px; }
 
 .stepbx li.wid100 { width: 100%; }
+
+.ytabbx { height: 30px; font-size: 0; }
+
+.ytab { margin: 0; border: none; }
+
+#mummAvg h3 { font-size: 18px; padding-left: 0; }
+
+#mummAvg h3 span { font-weight: normal; font-size: 13px; }
 
 #step2_sel li { height: 87px; }
 
@@ -890,6 +948,8 @@ body.research #srvyImage { position: absolute; left: 0; top: 0; width: 100%; }
 .xlsUp .delbtn { display: inline-block; padding: 5px; position: absolute; right: 0; top: 5px; border: solid 1px #ddd; border-radius: 2px; }
 
 .note { color: #1c6f9a; font-size: 14px; padding: 10px 0; }
+
+#statusArea .note2 { text-align: right; font-size: 13px; color: #999; margin: -29px 30px 0 0; position: relative; z-index: 100; }
 
 .stmenuarea { display: none; }
 

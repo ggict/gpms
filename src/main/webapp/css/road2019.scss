@@ -232,7 +232,7 @@ td input[type="checkbox"].cbox + label.hiddenLabel:before {margin: -3px 0 0 -18p
     &.max200 {max-height: 200px}
 }
 
-.h3 {font-weight:600; font-size: 16px; padding: 20px 0 10px 0;}
+.h3 {font-weight:600; font-size: 16px; padding: 20px 0 10px 0;letter-spacing: -1px;}
 .h3 + .coSpan { float: right; margin-top: -26px;}
 .div9 .h3 + .btnArea {margin-top: -32px;padding:0 0 4px 0;}
 #bottom_cont .h3.borderNone {border:none}
@@ -439,14 +439,49 @@ input.mapPosition_Y { width: 100px;}
 }
 table td select { width: inherit;}
 
+.selmore {bottom: 30px;}
 .arrange1 {
     .table td, .table th { padding: 3px;}
     select, input {width: 100px; height: 28px;}
     button{height: 28px;margin: 1px;}
 }
+.stepbx:after { display: block; content:""; clear: both;}
+#step1_sel, #step2_sel { border:solid 1px #ddd;
+    .tc {border-top:none}
+     a span {font-size: 14px; line-height: 1.2em;}
+     li {padding: 8px 0 5px 0;}
+}
 
+#gview_gridArea2 {border-top:solid 1px #555}
+
+.headerTab { position: absolute;right: 42px;top: 0;font-size: 0;
+    a{display: inline-block; width: 140px; text-align: center; padding: 12px 0 0 0; height: 30px; color: #888; border-left:#ddd solid 1px; border-right:#ddd solid 1px;margin-left: -1px; font-size: 15px;
+        &:hover {color: #4587ff}
+        &.on {background: #4587ff; color: #fff;}
+    }
+}
+
+
+
+.resultTable {
+    + .table {margin-top: 5px;}
+    caption { font-size: 15px; position: relative; left: 0;padding:12px 0 5px 0;text-align: left;}
+    tbody {border: 1px solid #ddd;
+        tr:first-child td{padding-top: 10px; padding-bottom: 2px;}
+        tr:last-child td{padding-top: 2px; padding-bottom: 8px;}
+    }
+    .thead td {padding-top:0}
+    td {border-left:solid 1px #ddd; text-align: center; padding:5px;
+        span {display: table-cell; width: 186px; border-radius:30px; background: #777; color: #fff;height:50px;vertical-align: middle}
+    }
+ }
+ span#gpci,  span#GPCI{background: #4587ff};
+ span#crVal{background: #eb5739};
+ span#dmgCuz{background: #818894};
+
+.togglebtn { top: 3px;right: 0;}
 .window_panel { background: #fff;
-    .window_header_normal { background: #fff; color: #333; border-bottom:solid 1px #ddd; padding: 0;margin: 0 10px;}
+    .window_header_normal { background: #fff; color: #333; border-bottom:solid 1px #ddd; padding:4px 0 6px 0;margin: 0 10px}
     .window_header {
         .window_title_text {color: #333; font-weight: 500;}
         .closeImg { background: url(../images/pop_close.gif) no-repeat -21px 0; margin-right: 10px; }
@@ -461,6 +496,7 @@ table td select { width: inherit;}
         .window_title_text {color: #fff; background: url(../images/window_header_maximize.gif) no-repeat 93% -1px;}
     }
 }
+.window_panel .window_header .window_function_bar {top: 10px;}
 a.btnRefresh { padding:6px 6px 4px 6px ; display: inline-block; margin-top: 4px; border: solid 1px #ddd; border-radius:3px; vertical-align:baseline}
 
 .btfilebx { border:none; padding: 5px 0;
@@ -702,16 +738,28 @@ font-weight:normal !important;
 .tc {text-align: center; border-top: solid 1px #ededed; padding-top: 10px;}
 .mt20 {margin-top: 20px;}
 .stbx {
+
     h4 { background: none; color: #333; padding: 0;
         .step {color: #000000; line-height: 1; height: 22px;}
     }
-    div { padding: 0;border-radius:0}
-    #result {width: 100%; position: static;}
+    div { padding: 0;border-radius:0; border:none}
+    #result {position: static;}
 
 }
+#step3 .stbx h4 {padding-top: 5px;}
 input#pointArea {width:40px; height: 28px;padding: 0 4px;}
 .stepbx {
     li.wid100 {width: 100%;}
+}
+
+.ytabbx {height: 30px; font-size: 0;}
+.ytab {margin: 0;border:none}
+
+
+#mummAvg {
+    h3 {font-size: 18px; padding-left: 0;
+        span{font-weight: normal; font-size: 13px;};
+    }
 }
 
 #step2_sel {
@@ -773,6 +821,8 @@ body.research {
 }
 
 .note {color:#1c6f9a; font-size: 14px; padding: 10px 0;}
+
+#statusArea .note2 {text-align: right; font-size: 13px; color: #999; margin: -29px 30px 0 0; position: relative; z-index: 100;}
 
 .stmenuarea { display: none;}
 @media ( max-width: 1460px ) {

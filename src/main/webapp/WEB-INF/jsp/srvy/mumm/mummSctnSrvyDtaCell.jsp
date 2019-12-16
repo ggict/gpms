@@ -614,99 +614,114 @@ function fnSearchInfo(obj) {
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 <!-- 필수 파라메터(END) -->
 <%-- <form id="frm" name="frm" method="post" action=""> --%>
-<div class="tabcont">
-	<div class="">
-	    <h3>
-	       포장상태 평가정보 상세조회
-        </h3>
-        <div class="ytabbx" style="left: 240px; position:absolute; top:0px;">
-		    <ul class="ytab fl" style="margin-top: 21px;">
-	    		<li>
-	    			<a href="#" onclick="fnShowData();" style="font-size: 14px;">평균평가정보</a>
-	    		</li>
-	    		<li class="on">
-	    			<a href="#" onclick="" style="font-size: 14px;">개별평가정보</a>
-	    		</li>
-	        </ul>
-        </div>
-	    <p class="location">
-	        <span>통합 정보 조회</span>
-	        <span>포장상태 평가정보 조회</span>
-	        <strong>포장상태 평가정보 상세조회</strong>
-	    </p>
-	    <div class="mt10 ml10 mr10">
 
-	    	<div id="mummCellList" style="width:24%; padding-right: 5px; float: left">
-    			<h3 style="line-height: 30px; font-size: 15px;">선택 셀 목록</h3>
+
+<div class="tabcont">
+
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">포장상태평가</option>
+                </select>
+                <select name="">
+                    <option value="">평가정보조회</option>
+                </select>
+                <h2 class="h2">포장상태 평가정보 [상세정보]-개별평가정보</h3>
+            </span>
+        </div>        
+        
+        <span class="headerTab">
+        	<a href="#" onclick="fnShowData();">평균평가정보</a>
+        	<a href="#" class="on" onclick="">개별평가정보</a>
+        </span>
+    </header>
+
+	<div class="contents container">
+		
+		<article class="div3">
+	    	<div id="mummCellList">
+    			<h3 class="h3">선택 셀 목록</h3>
 				<div id="div_grid">
 					<table id="gridArea"></table>
 					<div id="gridPager" style='width: 100%;'></div>
 				</div>
-			</div>
+			</div>			
+		</article>
 
-	    	<div id="mummAvgSrvyData" style="width:24%; float: left; padding: 0px 5px;">
-                <h3 style="line-height: 30px; font-size: 15px;">조사자료</h3>
-                <table class="tbview" style="width: 100%; margin-top: 20px; height: 118px;">
-                    <caption>포장상태 조사자료</caption>
-                    <colgroup>
-                        <col width="25%" />
-                        <col width="25%" />
-                        <col width="25%" />
-                        <col width="25%" />
-                    </colgroup>
-                    <tbody>
-                        <tr style="height: auto;">
-                            <th scope="row">거북등균열<br/>(㎡)</th>
-                            <td class="center">0</td>
-                            <th scope="row">종방향균열<br/>(m)</th>
-                            <td class="center">0</td>
-                        </tr>
-                        <tr style="height: auto;">
-                            <th scope="row">블럭균열<br/>(㎡)</th>
-                            <td class="center">0</td>
-                            <th scope="row">횡방향균열<br/>(m)</th>
-                            <td class="center">0</td>
-                        </tr>
-                        <tr style="height: auto;">
-                            <th scope="row">패칭(㎡)</th>
-                            <td class="center">0</td>
-                            <th scope="row">포트홀(㎡)</th>
-                            <td class="center">0</td>
-                        </tr>
-                        <tr style="height: 20%;">
-                            <th scope="row">소성변형<br/>(mm)</th>
-                            <td class="center">0</td>
-                            <th scope="row">종단평탄성<br/>(m/km)</th>
-                            <td class="center">0</td>
-                        </tr>
-                        <tr style="height: auto;">
-                            <th scope="row">교통량</th>
-                            <td class="center" colspan="3">-</td>
-                        </tr>
-                    </tbody>
+		<article class="div3">
+			<div id="mummAvgSrvyData">
+                <h3 class="h3">조사자료</h3>
+                <div class="table">
+	                <table class="tbview">
+	                    <caption>포장상태 조사자료</caption>
+	                    <colgroup>
+	                        <col width="25%" />
+	                        <col width="25%" />
+	                        <col width="25%" />
+	                        <col width="25%" />
+	                    </colgroup>
+	                    <tbody>
+	                        <tr>
+	                            <th scope="row">거북등균열<br/>(㎡)</th>
+	                            <td >0</td>
+	                            <th scope="row">종방향균열<br/>(m)</th>
+	                            <td >0</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">블럭균열<br/>(㎡)</th>
+	                            <td >0</td>
+	                            <th scope="row">횡방향균열<br/>(m)</th>
+	                            <td >0</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">패칭(㎡)</th>
+	                            <td >0</td>
+	                            <th scope="row">포트홀(㎡)</th>
+	                            <td >0</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">소성변형<br/>(mm)</th>
+	                            <td >0</td>
+	                            <th scope="row">종단평탄성<br/>(m/km)</th>
+	                            <td >0</td>
+	                        </tr>
+	                        <tr>
+	                            <th scope="row">교통량</th>
+	                            <td  colspan="3">-</td>
+	                        </tr>
+	                    </tbody>
 
-                </table>
+	                </table>
+                </div>
+
             </div>
+		</article>
 
-	    	<div id="mummAvg" style="width:24%; float: left; padding: 0px 5px;">
-	    		<h3 style="line-height: 30px; font-size: 15px;">포장상태 평가 구간 평균</h3>
+		<article class="div3">
 
-                <ul class="tblst mt15">
-                    <li style="width:21%;border-left:0px" class="brl tc">
-                        <span class="circle bc6" id="GPCI" style="width: 90%; font-size: 17px;">0</span>
-                        <span>GPCI</span>
-                    </li>
-                    <li style="width:37%" class="brl tc">
-                        <span class="circle bc5" id="crVal" style="width: 90%; font-size: 17px;">없음</span>
-                        <span>주 파손</span>
-                    </li>
-                    <li style="width:40%" class="tc">
-                        <span class="circle bc7" id="dmgCuz" style="width: 90%; font-size: 17px;">없음</span>
-                        <span>파손원인</span>
-                    </li>
-                </ul>
-
-                <table class="tbview" style="width: 100%; margin-top: 20px; height: 118px;" id="avgTable">
+			<div id="mummAvg">
+	    		<h3 class="h3">포장상태 평가 구간 평균</h3>
+				
+				<div class="resultTable">
+    				<table class="table20">
+    					<tbody>
+    						<tr>
+    							<td><span id="GPCI">0</span></td>
+    							<td><span id="crVal">없음</span></td>
+    							<td><span id="dmgCuz">없음</span></td>
+    						</tr>
+    						<tr>
+    							<td>GPCI</td>
+    							<td>주 파손</td>
+    							<td>파손원인</td>
+    						</tr>
+    					</tbody>
+    				</table>
+    			</div>
+				
+				<div class="table">
+                <table class="tbview" id="avgTable">
 	                <caption>포장상태 평가 구간 평균</caption>
 	                <colgroup>
 	                    <col width="30%" />
@@ -714,7 +729,7 @@ function fnSearchInfo(obj) {
 	                    <col width="30%" />
 	                    <col width="20%" />
 	                </colgroup>
-	                <tbody style="text-align: center;">
+	                <tbody>
 		    			<tr>
 		    				<th scope="row">거북등균열</th>
 		    				<td>0</td>
@@ -742,23 +757,31 @@ function fnSearchInfo(obj) {
 	    			</tbody>
 
 	    		</table>
+	    		</div>
 
-	    		<span style="font-size: 11px; margin-top: 5px; float: right;">* 포장파손형태 별 포장상태지수 감소값 (10점 만점)</span>
+	    		<span class="note">* 포장파손형태 별 포장상태지수 감소값 (10점 만점)</span>
 	    	</div>
 
-			<div id="mummCntrwkList" style="width:24%; padding-left: 5px; float: left">
-				<form id="frm2" name="frm2" method="post" action="">
-					<div style="float: left;">
-		    			<h3 style="line-height: 30px; font-size: 15px;">포장공사 이력</h3>
-						<div id="div_grid2">
-							<table id="gridArea2"></table>
-							<div id="gridPager2" style='width: 100%;'></div>
-						</div>
+
+		</article>
+
+		<article class="div3">
+			<div id="mummCntrwkList">
+				<form id="frm2" name="frm2" method="post" action="">					
+	    			<h3 class="h3">포장공사 이력</h3>
+					<div id="div_grid2">
+						<table id="gridArea2"></table>
+						<div id="gridPager2"></div>
 					</div>
 				</form>
 			</div>
-        </div>
-    </div>
+		</article>
+
+
+
+	</div>
+
+	
 </div>
 
 <%-- </form> --%>
