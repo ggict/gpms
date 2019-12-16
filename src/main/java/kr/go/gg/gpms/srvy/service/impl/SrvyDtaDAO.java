@@ -289,4 +289,14 @@ public class SrvyDtaDAO extends BaseDAO {
 	public int deleteAiDta() throws Exception {
 		return delete("srvyDtaDAO.deleteAiDta");
 	}
+	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return int형
+	 * @exception Exception
+	 */
+	public int updateImgInfoOfTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception {
+		return update("srvyDtaDAO.updateImgInfoOfTmpExcelData", srvyDtaVO);
+	}
 }

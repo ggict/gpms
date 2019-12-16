@@ -483,6 +483,9 @@ public class SrvyDtaController extends BaseController {
 					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
 					srvyDtaService.insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS());
 					
+					//TMP_MUMM_SCTN_SRVY_DTA 테이블에 jpg이미지파일 경로 업데이트
+					srvyDtaService.updateImgInfoOfTmpExcelData(srvyDtaOne);
+					
 					//TMP_MUMM_SCTN_SRVY_DTA 조회
 					srvyDtaVO = srvyDtaService.selectTmpExcelData();
 					

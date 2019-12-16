@@ -613,6 +613,16 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		return srvyDtaDAO.selectAiDtaList();
 	}
 	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return int형
+	 * @exception Exception
+	 */
+	public int updateImgInfoOfTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception {
+		return srvyDtaDAO.updateImgInfoOfTmpExcelData(srvyDtaVO);
+	}
+	
 	@Async
     public void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO) throws Exception {
         // Connection 오브젝트 생성, 저장소 바인딩, 참조변수 값 리턴

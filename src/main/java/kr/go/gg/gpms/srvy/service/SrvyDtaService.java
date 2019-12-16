@@ -199,6 +199,14 @@ public interface SrvyDtaService {
 	 */
 	List<SrvyDtaVO> selectAiDtaList() throws Exception;
 	
+	/**
+	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
+	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+	 * @return int형
+	 * @exception Exception
+	 */
+	int updateImgInfoOfTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception;
+	
 	@Async
 	void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO) throws Exception;
 	

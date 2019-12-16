@@ -687,5 +687,22 @@
 		DELETE FROM TMP_AI_DTA 
 ]]>
 	</delete>
+	
+	<update id="srvyDtaDAO.updateImgInfoOfTmpExcelData">
+<![CDATA[
+		/* srvyDtaDAO.updateImgInfoOfTmpExcelData */
+		/* TMP_MUMM_SCTN_SRVY_DTA 테이블에 jpg이미지파일 경로 업데이트 */
+		
+		UPDATE TMP_MUMM_SCTN_SRVY_DTA AS mumm 
+			SET FRNT_IMG_FILE_COURS = attach.FILE_COURS
+		FROM TN_ATTACH_DETAIL_FILE AS attach
+		WHERE mumm.FRNT_IMG_FILE_NM = attach.ORGINL_FILE_NM
+			AND attach.FILE_SE_CODE = 'FLSE0006' 
+			AND attach.USE_AT = 'Y' 
+			AND attach.DELETE_AT = 'N'
+			AND attach.FILE_NO = #FILE_NO#::numeric
+]]>
+	</update>
+	
 
 </sqlMap>
