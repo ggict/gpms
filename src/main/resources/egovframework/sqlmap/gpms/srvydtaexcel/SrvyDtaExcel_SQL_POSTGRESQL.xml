@@ -1275,8 +1275,8 @@ FROM   (SELECT Row_number()
 		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND tnsmdtagnlsttus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
-		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI# ]]></isNotEmpty>
-		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI# ]]></isNotEmpty>
+		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI#::numeric ]]></isNotEmpty>
+		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI#::numeric ]]></isNotEmpty>
 		<![CDATA[         
 			) tb
 			ORDER BY $orderByColumn$ $orderByType$
@@ -1414,8 +1414,8 @@ FROM   (SELECT Row_number()
 		<isNotEmpty property="STRTPT"><![CDATA[ AND tnsmdtagnlsttus.STRTPT >= #STRTPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="ENDPT"><![CDATA[ AND tnsmdtagnlsttus.ENDPT <= #ENDPT#::int ]]></isNotEmpty>
 		<isNotEmpty property="CNTL_DFECT"><![CDATA[ AND tnsmdtagnlsttus.CNTL_DFECT = #CNTL_DFECT# ]]></isNotEmpty>
-		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI# ]]></isNotEmpty>
-		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI# ]]></isNotEmpty>
+		<isNotEmpty property="MINGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI >= #MINGPCI#::numeric ]]></isNotEmpty>
+		<isNotEmpty property="MAXGPCI"><![CDATA[ AND tnsmdtagnlsttus.GPCI <= #MAXGPCI#::numeric ]]></isNotEmpty>
 		<![CDATA[         
 			) tb
 			ORDER BY $orderByColumn$ $orderByType$
