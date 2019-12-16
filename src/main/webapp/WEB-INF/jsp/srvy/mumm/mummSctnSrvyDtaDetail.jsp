@@ -136,7 +136,7 @@ var chartInfoObj = {
 	    });
 	}
 	,drawRdChart: function(data){
-		var dataList = data.res;
+		var dataList = data.res || [];
 		var xAxisData =[];
 	 	var lineData = [];
 	 	for(var i=0; i<dataList.length; i++){
@@ -186,7 +186,7 @@ var chartInfoObj = {
 		});
 	}
 	,drawIRIChart: function(data){
-		var dataList = data.res;
+		var dataList = data.res || [];
 	 	var xAxisData =[];
 	 	var lineData = [];
 	 	for(var i=0; i<dataList.length; i++){
