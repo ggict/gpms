@@ -291,7 +291,6 @@ function fnSelectSrvyDetail() {
                 var BLOCK_CR_MED = "${smDtaGnlSttusVO.BLOCK_CR_MED}";
                 var BLOCK_CR_HI = "${smDtaGnlSttusVO.BLOCK_CR_HI}";
                 
-                
                 var PTCHG_CR = "${smDtaGnlSttusVO.PTCHG_CR}";
                 var POTHOLE_CR = "${smDtaGnlSttusVO.POTHOLE_CR}";
                 var RD_VAL = "${smDtaGnlSttusVO.RD_VAL}";
@@ -300,8 +299,9 @@ function fnSelectSrvyDetail() {
 
              	// 조사정보
                 //tb2.eq(0).html( fnFloat(AC_MED) );        // 거북등균열
-                //tb2.eq(1).html( fnFloat(LC_MED) );        // 선형균열
                 tb2.eq(0).html( fnFloat(AC_LOW+AC_MED+AC_HI) );        // 거북등균열
+                
+                //tb2.eq(1).html( fnFloat(LC_MED) );        // 선형균열
                 tb2.eq(1).html( fnFloat(LC_LOW+LC_MED+LC_HI+TC_LOW+TC_MED+TC_HI) );        // 선형균열
                 
                 //tb2.eq(2).html( fnFloat(BLOCK_CR_MED) );  // 블럭균열
