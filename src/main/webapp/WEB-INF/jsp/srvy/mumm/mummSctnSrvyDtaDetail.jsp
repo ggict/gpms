@@ -273,18 +273,40 @@ function fnSelectSrvyDetail() {
                 tb1.eq(9).html(jdata[0].VMTC_GRAD);
                 tb1.eq(10).html(jdata[0].ADM_CODE); */
 
+                var AC_LOW = "${smDtaGnlSttusVO.AC_LOW}";
                 var AC_MED = "${smDtaGnlSttusVO.AC_MED}";
+                var AC_HI = "${smDtaGnlSttusVO.AC_HI}";
+                var TRTS_BAC_CR = "${smDtaGnlSttusVO.TRTS_BAC_CR}";
+                
+                var LC_LOW = "${smDtaGnlSttusVO.LC_LOW}";
                 var LC_MED = "${smDtaGnlSttusVO.LC_MED}";
+                var LC_HI = "${smDtaGnlSttusVO.LC_HI}";
+                var TC_LOW = "${smDtaGnlSttusVO.TC_LOW}";
+                var TC_MED = "${smDtaGnlSttusVO.TC_MED}";
+                var TC_HI = "${smDtaGnlSttusVO.TC_HI}";
+                var VRTCAL_CR = "${smDtaGnlSttusVO.VRTCAL_CR}";
+                var HRZNTAL_CR = "${smDtaGnlSttusVO.HRZNTAL_CR}";
+                
+                var BLOCK_CR_LOW = "${smDtaGnlSttusVO.BLOCK_CR_LOW}";
                 var BLOCK_CR_MED = "${smDtaGnlSttusVO.BLOCK_CR_MED}";
+                var BLOCK_CR_HI = "${smDtaGnlSttusVO.BLOCK_CR_HI}";
+                
+                
                 var PTCHG_CR = "${smDtaGnlSttusVO.PTCHG_CR}";
                 var POTHOLE_CR = "${smDtaGnlSttusVO.POTHOLE_CR}";
                 var RD_VAL = "${smDtaGnlSttusVO.RD_VAL}";
                 var IRI_VAL = "${smDtaGnlSttusVO.IRI_VAL}";
+                
 
              	// 조사정보
-                tb2.eq(0).html( fnFloat(AC_MED) );        // 거북등균열
-                tb2.eq(1).html( fnFloat(LC_MED) );        // 선형균열
-                tb2.eq(2).html( fnFloat(BLOCK_CR_MED) );  // 블럭균열
+                //tb2.eq(0).html( fnFloat(AC_MED) );        // 거북등균열
+                //tb2.eq(1).html( fnFloat(LC_MED) );        // 선형균열
+                tb2.eq(0).html( fnFloat(AC_LOW+AC_MED+AC_HI) );        // 거북등균열
+                tb2.eq(1).html( fnFloat(LC_LOW+LC_MED+LC_HI+TC_LOW+TC_MED+TC_HI) );        // 선형균열
+                
+                //tb2.eq(2).html( fnFloat(BLOCK_CR_MED) );  // 블럭균열
+                tb2.eq(2).html( fnFloat(BLOCK_CR_LOW+BLOCK_CR_MED+BLOCK_CR_HI) );  // 블럭균열
+                
                 tb2.eq(3).html( fnFloat(PTCHG_CR) );      // 패칭
                 tb2.eq(4).html( fnFloat(POTHOLE_CR) );    // 포트홀
                 tb2.eq(5).html( fnFloat(RD_VAL) );        // 소성변형
