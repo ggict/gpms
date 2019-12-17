@@ -2295,7 +2295,8 @@ SRVY_NO = #SRVY_NO# /* 최소_구간_조사_자료.조사_번호 */
 	select 
 		IRI_VAL
 		,RD_VAL 
-		,ST_AsGeoJSON(st_centroid(geom)) geojson
+		/* ,ST_AsGeoJSON(st_centroid(geom)) geojson */
+		,ST_AsGeoJSON(fn_get_point(trace1_lo, trace1_la)) geojson
  	from cell_10
 	right outer join tn_mumm_sctn_srvy_dta
 	on (

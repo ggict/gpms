@@ -273,28 +273,28 @@ function fnSelectSrvyDetail() {
                 tb1.eq(9).html(jdata[0].VMTC_GRAD);
                 tb1.eq(10).html(jdata[0].ADM_CODE); */
 
-                var AC_LOW = "${smDtaGnlSttusVO.AC_LOW}";
-                var AC_MED = "${smDtaGnlSttusVO.AC_MED}";
-                var AC_HI = "${smDtaGnlSttusVO.AC_HI}";
-                var TRTS_BAC_CR = "${smDtaGnlSttusVO.TRTS_BAC_CR}";
+                var AC_LOW = "${smDtaGnlSttusVO.AC_LOW}" || 0;
+                var AC_MED = "${smDtaGnlSttusVO.AC_MED}" || 0;
+                var AC_HI = "${smDtaGnlSttusVO.AC_HI}" || 0;
+                var TRTS_BAC_CR = "${smDtaGnlSttusVO.TRTS_BAC_CR}" || 0;
                 
-                var LC_LOW = "${smDtaGnlSttusVO.LC_LOW}";
-                var LC_MED = "${smDtaGnlSttusVO.LC_MED}";
-                var LC_HI = "${smDtaGnlSttusVO.LC_HI}";
-                var TC_LOW = "${smDtaGnlSttusVO.TC_LOW}";
-                var TC_MED = "${smDtaGnlSttusVO.TC_MED}";
-                var TC_HI = "${smDtaGnlSttusVO.TC_HI}";
-                var VRTCAL_CR = "${smDtaGnlSttusVO.VRTCAL_CR}";
-                var HRZNTAL_CR = "${smDtaGnlSttusVO.HRZNTAL_CR}";
+                var LC_LOW = "${smDtaGnlSttusVO.LC_LOW}" || 0;
+                var LC_MED = "${smDtaGnlSttusVO.LC_MED}" || 0;
+                var LC_HI = "${smDtaGnlSttusVO.LC_HI}" || 0;
+                var TC_LOW = "${smDtaGnlSttusVO.TC_LOW}" || 0;
+                var TC_MED = "${smDtaGnlSttusVO.TC_MED}" || 0;
+                var TC_HI = "${smDtaGnlSttusVO.TC_HI}" || 0;
+                var VRTCAL_CR = "${smDtaGnlSttusVO.VRTCAL_CR}" || 0;
+                var HRZNTAL_CR = "${smDtaGnlSttusVO.HRZNTAL_CR}" || 0;
                 
-                var BLOCK_CR_LOW = "${smDtaGnlSttusVO.BLOCK_CR_LOW}";
-                var BLOCK_CR_MED = "${smDtaGnlSttusVO.BLOCK_CR_MED}";
-                var BLOCK_CR_HI = "${smDtaGnlSttusVO.BLOCK_CR_HI}";
+                var BLOCK_CR_LOW = "${smDtaGnlSttusVO.BLOCK_CR_LOW}" || 0;
+                var BLOCK_CR_MED = "${smDtaGnlSttusVO.BLOCK_CR_MED}" || 0;
+                var BLOCK_CR_HI = "${smDtaGnlSttusVO.BLOCK_CR_HI}" || 0;
                 
-                var PTCHG_CR = "${smDtaGnlSttusVO.PTCHG_CR}";
-                var POTHOLE_CR = "${smDtaGnlSttusVO.POTHOLE_CR}";
-                var RD_VAL = "${smDtaGnlSttusVO.RD_VAL}";
-                var IRI_VAL = "${smDtaGnlSttusVO.IRI_VAL}";
+                var PTCHG_CR = "${smDtaGnlSttusVO.PTCHG_CR}" || 0;
+                var POTHOLE_CR = "${smDtaGnlSttusVO.POTHOLE_CR}" || 0;
+                var RD_VAL = "${smDtaGnlSttusVO.RD_VAL}" || 0;
+                var IRI_VAL = "${smDtaGnlSttusVO.IRI_VAL}" || 0;
                 
 
              	// 조사정보
@@ -358,18 +358,18 @@ function fnSelectEvaluationDetail() {
                 }
                  */
                 // 평가정보 값
-                var CNTL_DFECT = "${smDtaGnlSttusVO.CNTL_DFECT}";
-                var CODE_NM = "${smDtaGnlSttusVO.CNTL_DFECT_NM}";
-                var AC_IDX = "${smDtaGnlSttusVO.AC_IDX}";
-                var LC_IDX = "${smDtaGnlSttusVO.LC_IDX}";
-                var BC_IDX = "${smDtaGnlSttusVO.BC_IDX}";
-                var PTCHG_IDX = "${smDtaGnlSttusVO.PTCHG_IDX}";
-                var POTHOLE_IDX = "${smDtaGnlSttusVO.POTHOLE_IDX}";
-                var RD_IDX = "${smDtaGnlSttusVO.RD_IDX}";
-                var RCI = "${smDtaGnlSttusVO.RCI}";
-                var DMG_CUZ_CLMT = "${smDtaGnlSttusVO.DMG_CUZ_CLMT}";
-                var DMG_CUZ_VMTC = "${smDtaGnlSttusVO.DMG_CUZ_VMTC}";
-                var DMG_CUZ_ETC = "${smDtaGnlSttusVO.DMG_CUZ_ETC}";
+                var CNTL_DFECT = "${smDtaGnlSttusVO.CNTL_DFECT}" || 0;
+                var CODE_NM = "${smDtaGnlSttusVO.CNTL_DFECT_NM}" || 0;
+                var AC_IDX = "${smDtaGnlSttusVO.AC_IDX}" || 0;
+                var LC_IDX = "${smDtaGnlSttusVO.LC_IDX}" || 0;
+                var BC_IDX = "${smDtaGnlSttusVO.BC_IDX}" || 0;
+                var PTCHG_IDX = "${smDtaGnlSttusVO.PTCHG_IDX}" || 0;
+                var POTHOLE_IDX = "${smDtaGnlSttusVO.POTHOLE_IDX}" || 0;
+                var RD_IDX = "${smDtaGnlSttusVO.RD_IDX}" || 0;
+                var RCI = "${smDtaGnlSttusVO.RCI}" || 0;
+                var DMG_CUZ_CLMT = "${smDtaGnlSttusVO.DMG_CUZ_CLMT}" || 0;
+                var DMG_CUZ_VMTC = "${smDtaGnlSttusVO.DMG_CUZ_VMTC}" || 0;
+                var DMG_CUZ_ETC = "${smDtaGnlSttusVO.DMG_CUZ_ETC}" || 0;
 
                 // 주 파손
                 var crVal = "";
