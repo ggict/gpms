@@ -93,7 +93,7 @@ input[type=number]{ color:#333333; padding:0 3px; line-height:20px; height:20px;
 #gnb > ul > li .submenu > ul {height:38px;padding:0 5px;}
 #gnb > ul > li .submenu > ul > li {text-align:center;float:left;padding:0 30px;line-height:22px;}
 #gnb > ul > li .submenu > ul > li:last-child{background:none}
-#gnb > ul > li .submenu > ul > li a {display:block; font-size:13px; color:#666666; font-family: NanumGothicBold;line-height:38px; padding-left:25px; }
+#gnb > ul > li .submenu > ul > li a {display:block; font-size:13px; color:#666666; line-height:38px; padding-left:25px; }
 #gnb > ul > li .submenu > ul > li a:hover,
 #gnb > ul > li .submenu > ul > li a:focus,
 #gnb > ul > li .submenu > ul > li.active > a.sub {color:#f22901;}
