@@ -173,6 +173,7 @@ body{
     .container{ border-right: solid 1px #d6d6d6; margin:0 1.5%;
         .locationHeader { float: left;
             select, h2, h3 {border:none; border-left: solid 1px #d6d6d6; height: 42px; border-radius:0;margin: 0; font-size: 16px;padding: 0 50px  0 20px; float: left;}
+
             h2,h3 {padding-top: 11px; padding-left: 20px; padding-right: 20px; height: 31px; font-weight: 600; background: none; line-height: 1;color: #333; text-align: inherit;}
             h3 {color: #555; background: url(../images/arrow14.gif) no-repeat 0 -45px; border-left:none}
             select { background: url(../images/selecetArrow2.gif) no-repeat 92% 19px;
@@ -187,6 +188,8 @@ body{
 
     }
 }
+
+_:-ms-input-placeholder, :root select {padding-right: 0 !important; background-image: none !important;}
 .btnDetailView {border: solid 1px #ddd; background: #fff;color: #1e4c7f; vertical:middle; font-size: 14px; margin: 7px 0 0 0; padding: 3px 16px;border-radius:2px}
 .contentsWrap { border-top: 1px solid #69707e; position: fixed; width: 100%;bottom: 0;left: 0;height: 0;background: #fff; transition:all 0.2s ease 0s; z-index: 200;
     &.on {height: 295px;

@@ -179,7 +179,7 @@ input[type="text"], input[type="password"],input[type="number"], select, .input 
 textarea {overflow:auto; padding:10px; line-height: 1.3em;font-family:'Noto', 'Malgun Gothic',sans-serif; font-size: 15px}
 .js-elasticArea {transition: all 0.3s ease 0.0s}
 
-select {padding: 0 24px 0 5px;  background:#fff url("../images/selecetArrow.png") no-repeat right 0 }
+select {padding: 0 5px; padding-right:calc( 20px ); background:#fff url("../images/selecetArrow.png") no-repeat right 0 }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
 	select {padding: 0  0 0 5px;}
 }
