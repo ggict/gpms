@@ -564,6 +564,20 @@ table td select { width: inherit; }
 
 .headerTab a.on { background: #4587ff; color: #fff; }
 
+.resultTab { font-size: 0; padding-top: 6px; border-bottom: solid 1px #515151; }
+
+.resultTab li { display: inline-block; width: 33%; text-align: center; }
+
+.resultTab a { display: block; padding: 5px 0 0 0; height: 24px; color: #888; border: #ddd solid 1px; border-bottom: #515151 solid 1px; margin: 0 0 -1px 0; font-size: 15px; }
+
+.resultTab a:hover { color: #4587ff; }
+
+.resultTab li.on a { background: #fff; color: #333; border: solid 1px #515151; border-bottom: solid 1px #fff; }
+
+.resultTab + .resultTable caption { padding: 5px 0 3px; }
+
+.resultTab + .resultTable + .table + .note { padding: 2px 0; }
+
 .resultTable + .table { margin-top: 5px; }
 
 .resultTable caption { font-size: 15px; position: relative; left: 0; padding: 12px 0 5px 0; text-align: left; }
@@ -578,7 +592,7 @@ table td select { width: inherit; }
 
 .resultTable td { border-left: solid 1px #ddd; text-align: center; padding: 5px; }
 
-.resultTable td span { display: table-cell; width: 186px; border-radius: 30px; background: #777; color: #fff; height: 50px; vertical-align: middle; }
+.resultTable td span { display: table-cell; width: 186px; border-radius: 30px; background: #777; color: #fff; height: 50px; vertical-align: middle; line-height: 1.1em; }
 
 span#gpci, span#GPCI { background: #4587ff; }
 

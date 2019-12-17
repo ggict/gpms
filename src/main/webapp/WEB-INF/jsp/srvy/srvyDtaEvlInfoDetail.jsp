@@ -22,31 +22,38 @@
 <input type="hidden" id="SM_NO" name="SM_NO" value="${smDtaGnlSttusVO.SM_NO }"/>
 <!-- 필수 파라메터(END) -->
 <div class="tabcont">
-	<div class="">
-	    <h3>포장상태 평가정보 상세조회1</h3>
-	    <h5 class="info" style="left: 230px;">
-	       <a href='#' class='whitebtn dpib ml10 vm' id="back"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기" /></a>
-	    </h5>
-	    <div class="ytabbx" style="left: 280px; position:absolute; top:0px;">
-		    <ul class="ytab fl">
-		    	<c:forEach items="${srvyYearList }" var="srvyYear">
-		    		<li <c:if test="${srvyYear.SRVY_YEAR eq smDtaGnlSttusVO.SRVY_YEAR }">class="on"</c:if>>
-		    			<a href="#" onclick="COMMON_UTIL.cmMoveUrl('srvy/selectSrvyDtaEvlInfoDetail.do'+param.replace('SRVY_YEAR', 'SCH_SRVY_YEAR')+'&SM_NO=${smDtaGnlSttusVO.SM_NO }&SRVY_YEAR=${srvyYear.SRVY_YEAR }')">${srvyYear.SRVY_YEAR }</a>
-		    		</li>
-		    	</c:forEach>
-	        </ul>
-        </div>
-	    <p class="location">
-	        <span>포장상태 평가</span>
-	        <span>포장상태 평가정보 조회</span>
-	        <strong>포장상태 평가정보 상세조회</strong>
-	    </p>
 
-	    <div class="mt10 ml10">
+	<header class="loc">
+        <div class="container">
+            <span class="locationHeader">
+                <select name="">
+                    <option value="">포장상태평가</option>
+                </select>
+                <select name="">
+                    <option value="">평가정보조회</option>
+                </select>
+                <h2 class="h2">포장상태 평가정보[상세정보]</h2>
+                <input type="button" value="뒤로가기" onclick="COMMON_UTIL.cmMoveUrl('cntrwk/selectCntrwkList.do')" class="btnBack" id="back">
+<!-- 
+                <a href='#' class='whitebtn dpib ml10 vm' id="back"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기" /></a> -->
+            </span>
+        </div>        
+        
+        <span class="headerTab">
+        	<c:forEach items="${srvyYearList }" var="srvyYear">
+    			<a  href="#" onclick="COMMON_UTIL.cmMoveUrl('srvy/selectSrvyDtaEvlInfoDetail.do'+param.replace('SRVY_YEAR', 'SCH_SRVY_YEAR')+'&SM_NO=${smDtaGnlSttusVO.SM_NO }&SRVY_YEAR=${srvyYear.SRVY_YEAR }')"
+    				<c:if test="${srvyYear.SRVY_YEAR eq smDtaGnlSttusVO.SRVY_YEAR }">class="on"</c:if>
+    			>${srvyYear.SRVY_YEAR }</a>
+	    	</c:forEach>
+        </span>
+    </header>
 
-            <!-- 섹션 기본정보 START -->
-            <div id="baseInfo" style="width:24%; height: 210px; float: left; padding-right: 10px;">
-                <h3 class="h3">기본정보 </h3>
+    <div class="contents container">
+
+    	<article class="div3">
+    		<!-- 섹션 기본정보 START -->
+            <div id="baseInfo">
+                <h3 class="h3">기본정보</h3>
                 <div class="table">
 	                <table class="table20">
 	                    <caption class="hidden">포장상태 기본정보</caption>
@@ -107,9 +114,11 @@
                 </div>
             </div>
             <!-- 섹션 기본정보 END -->
+    	</article>
 
-            <!-- 포장상태 조사자료 START -->
-            <div id="srvyData" style="width:24%; height: 210px; float: left; padding-right: 10px; border-radius: 5px;">
+    	<article class="div3">
+    		<!-- 포장상태 조사자료 START -->
+            <div id="srvyData">
                 <h3 class="h3">조사자료</h3>
                 <div class="table">
 	                <table class="table20">
@@ -174,88 +183,97 @@
 	              </div>
             </div>
             <!-- 포장상태 조사자료 END -->
+    	</article>
 
-            <!-- 포장상태 평가자료 START -->
-            <div id="mummAvg" style="width:25%; float: left; height: 210px; padding-right: 10px;">
-                <h3>포장상태 평가정보 <span>(평가단위:section셀)</span></h3>
-		        <!-- <div class="ytabbx"> -->
-		            <ul class="ytab">
+    	<article class="div3">
+    		<!-- 포장상태 평가자료 START --> 
+					
+
+		            <ul class="resultTab">
 	                    <li class="on"><a href="javascript:;" onclick="fnSelectLastSttus($(this), 1);" >조사평가정보조회</a></li>
 	                    <li><a href="javascript:;" onclick="fnSelectLastSttus($(this), 2);">수시평가정보조회</a></li>
 		            </ul>
-		        <!-- </div> -->
-                <!-- <a href="#" style="float:right; line-height: 11px; margin-top: 5px;" class="titbtn" onclick="">수시평가정보조회</a> -->
-                <ul class="tblst mt15" style="clear: both">
-                    <li style="width:21%;border-left:0px" class="brl tc">
-                        <span class="circle bc6" id="gpci" style="width: 85%; height: 40px; line-height: 40px; font-size: 16px;">0</span>
-                        <span>GPCI</span>
-                    </li>
-                    <li style="width:37%" class="brl tc">
-                        <span class="circle bc5" id="crVal" style="width: 85%; line-height: 40px; font-size: 16px;">없음</span>
-                        <span>주 파손</span>
-                    </li>
-                    <li style="width:40%" class="tc">
-                        <span class="circle bc7" id="dmgCuz" style="width: 85%; height: 40px; line-height: 40px; font-size: 15px;">없음</span>
-                        <span>파손원인</span>
-                    </li>
-                </ul>
 
-                <table class="tbview" style="width: 100%; height: 121px; margin-top: 7px;">
-                    <caption class="hidden">포장상태 평가정보</caption>
-                    <colgroup>
-                        <col width="30%" />
-                        <col width="20%" />
-                        <col width="30%" />
-                        <col width="20%" />
-                    </colgroup>
-                    <tbody style="text-align: center;">
-                        <tr>
-                            <th scope="row">거북등균열</th>
-                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.AC_RDUCT_RATE }" type="number" var="AC_RDUCT_RATE" />
-                                <fmt:formatNumber value="${AC_RDUCT_RATE }" minFractionDigits="2" /></td>
-                            <th scope="row">선형균열</th>
-                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.LC_RDUCT_RATE }" type="number" var="LC_RDUCT_RATE" />
-                                <fmt:formatNumber value="${LC_RDUCT_RATE }" minFractionDigits="2" /></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">블럭균열</th>
-                            <td colspan="3"><fmt:parseNumber value="${smDtaGnlSttusVO.BC_RDUCT_RATE }" type="number" var="BC_RDUCT_RATE" />
-                                <fmt:formatNumber value="${BC_RDUCT_RATE }" minFractionDigits="2" /></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">패칭</th>
-                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.PTCHG_RDUCT_RATE }" type="number" var="PTCHG_RDUCT_RATE" />
-                                <fmt:formatNumber value="${PTCHG_RDUCT_RATE }" minFractionDigits="2" /></td>
-                            <th scope="row">포트홀</th>
-                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.POT_RDUCT_RATE }" type="number" var="POT_RDUCT_RATE" />
-                                <fmt:formatNumber value="${POT_RDUCT_RATE }" minFractionDigits="2" /></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">소성변형</th>
-                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.RD_RDUCT_RATE }" type="number" var="RD_RDUCT_RATE" />
-                                <fmt:formatNumber value="${RD_RDUCT_RATE }" minFractionDigits="2" /></td>
-                            <th scope="row">종단평탄성</th>
-                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.RCI_RDUCT_RATE }" type="number" var="RCI_RDUCT_RATE" />
-                                <fmt:formatNumber value="${RCI_RDUCT_RATE }" minFractionDigits="2" /></td>
-                        </tr>
-                    </tbody>
-                </table>
+		            <div class="resultTable">
+		            	<table class="table20">
+		            		<caption>포장상태 평가정보 (평가단위:section셀)</caption>
+		            		<tbody>
+		            			<tr>
+		            				<td><span id="gpci">0</span></td>
+		            				<td><span id="crVal">없음</span></td>
+		            				<td><span id="dmgCuz">없음</span></td>
+		            			</tr>
+		            			<tr>
+		            				<td>GPCI</td>
+		            				<td>주 파손</td>
+		            				<td>파손원인</td>
+		            			</tr>
+		            		</tbody>
+		            	</table>
+		            </div>
 
-                <span style="font-size: 11px; margin-top: 5px; float: right;">* 포장파손형태 별 포장상태지수 감소값 (10점 만점)</span>
-            </div>
+		            <div class="table">
+		                <table class="table20">
+		                    <caption class="hidden">포장상태 평가정보</caption>
+		                    <colgroup>
+		                        <col width="30%" />
+		                        <col width="20%" />
+		                        <col width="30%" />
+		                        <col width="20%" />
+		                    </colgroup>
+		                    <tbody>
+		                        <tr>
+		                            <th scope="row">거북등균열</th>
+		                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.AC_RDUCT_RATE }" type="number" var="AC_RDUCT_RATE" />
+		                                <fmt:formatNumber value="${AC_RDUCT_RATE }" minFractionDigits="2" /></td>
+		                            <th scope="row">선형균열</th>
+		                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.LC_RDUCT_RATE }" type="number" var="LC_RDUCT_RATE" />
+		                                <fmt:formatNumber value="${LC_RDUCT_RATE }" minFractionDigits="2" /></td>
+		                        </tr>
+		                        <tr>
+		                            <th scope="row">블럭균열</th>
+		                            <td colspan="3"><fmt:parseNumber value="${smDtaGnlSttusVO.BC_RDUCT_RATE }" type="number" var="BC_RDUCT_RATE" />
+		                                <fmt:formatNumber value="${BC_RDUCT_RATE }" minFractionDigits="2" /></td>
+		                        </tr>
+		                        <tr>
+		                            <th scope="row">패칭</th>
+		                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.PTCHG_RDUCT_RATE }" type="number" var="PTCHG_RDUCT_RATE" />
+		                                <fmt:formatNumber value="${PTCHG_RDUCT_RATE }" minFractionDigits="2" /></td>
+		                            <th scope="row">포트홀</th>
+		                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.POT_RDUCT_RATE }" type="number" var="POT_RDUCT_RATE" />
+		                                <fmt:formatNumber value="${POT_RDUCT_RATE }" minFractionDigits="2" /></td>
+		                        </tr>
+		                        <tr>
+		                            <th scope="row">소성변형</th>
+		                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.RD_RDUCT_RATE }" type="number" var="RD_RDUCT_RATE" />
+		                                <fmt:formatNumber value="${RD_RDUCT_RATE }" minFractionDigits="2" /></td>
+		                            <th scope="row">종단평탄성</th>
+		                            <td><fmt:parseNumber value="${smDtaGnlSttusVO.RCI_RDUCT_RATE }" type="number" var="RCI_RDUCT_RATE" />
+		                                <fmt:formatNumber value="${RCI_RDUCT_RATE }" minFractionDigits="2" /></td>
+		                        </tr>
+		                    </tbody>
+		                </table>
+                	</div>
+
+                <p class="note">* 포장파손형태 별 포장상태지수 감소값 (10점 만점)</p>
             <!-- 포장상태 평가자료 END -->
 
-            <!-- 포장공사 이력 START -->
-            <div id="mummCntrwkList" style="width:24%; float: left; height: 210px; ">
-	            <h3 style="line-height: 30px; font-size: 15px;">포장공사 이력</h3>
+    	</article>
+
+    	<article class="div3">
+    		 <!-- 포장공사 이력 START -->
+            <div id="mummCntrwkList">
+	            <h3 class="h3">포장공사 이력</h3>
 	            <div id="div_grid">
 					<table id="gridArea"></table>
 					<div id="gridPager" style="width: 100%;"></div>
 				</div>
 			</div>
 			<!-- 포장공사 이력 END -->
-        </div>
+    	</article>
+
     </div>
+
 </div>
 </form>
 
@@ -391,7 +409,7 @@ function fnSelectData() {
                         crVal += "파손없음";
 
                     } else {
-                        crVal += "<br />복합파손 <br /> (";
+                        crVal += "복합파손 <br /> (";
                         var codeNames = [];
                         for ( var i = 0; i < valArr.length; i++ ) {
                             // max값과 같은 경우 텍스트 추가
@@ -409,7 +427,7 @@ function fnSelectData() {
                             
                         crVal += codeNames.join(',');
                         crVal += ")";
-                        $("#crVal").css({"line-height": "11px", "font-size": "14px"});
+                        $("#crVal").css({"font-size": "14px"});
                     }
                 }
 

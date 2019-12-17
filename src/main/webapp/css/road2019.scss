@@ -461,7 +461,16 @@ table td select { width: inherit;}
     }
 }
 
+.resultTab { font-size: 0; padding-top: 6px; border-bottom:solid 1px #515151;
+    li {display: inline-block; width: 33%; text-align: center;}
+    a{ display: block; padding: 5px 0 0 0; height:24px; color: #888; border:#ddd solid 1px; border-bottom:#515151 solid 1px; margin:0 0 -1px 0; font-size: 15px;
+        &:hover {color: #4587ff}
+    }
+    li.on a{background: #fff; color: #333; border:solid 1px #515151; border-bottom:solid 1px #fff}
+}
 
+.resultTab + .resultTable caption { padding: 5px 0 3px;}
+.resultTab + .resultTable + .table + .note { padding: 2px 0;}
 
 .resultTable {
     + .table {margin-top: 5px;}
@@ -472,9 +481,10 @@ table td select { width: inherit;}
     }
     .thead td {padding-top:0}
     td {border-left:solid 1px #ddd; text-align: center; padding:5px;
-        span {display: table-cell; width: 186px; border-radius:30px; background: #777; color: #fff;height:50px;vertical-align: middle}
+        span {display: table-cell; width: 186px; border-radius:30px; background: #777; color: #fff;height:50px;vertical-align: middle; line-height: 1.1em;}
     }
  }
+
  span#gpci,  span#GPCI{background: #4587ff};
  span#crVal{background: #eb5739};
  span#dmgCuz{background: #818894};
