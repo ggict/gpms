@@ -250,8 +250,8 @@
 			</div>
 
 			<div class="tr">
-		        <a href="#"><input type="button" class="schbtn" onclick="check = false; fn_regist()" value="등록" style="font-size: 13px;" /></a>
-		        <a href="#"><input type="button" class="schbtn" onclick="check = false; fn_close_dialog()" value="닫기" style="font-size: 13px;" /></a>
+		        <a href="#"><input type="button" class="btn pri" onclick="check = false; fn_regist()" value="등록" style="font-size: 13px;" /></a>
+		        <a href="#"><input type="button" class="btn pri" onclick="check = false; fn_close_dialog()" value="닫기" style="font-size: 13px;" /></a>
 		    </div>
 		</div>
 	</div>

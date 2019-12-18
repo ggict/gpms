@@ -51,8 +51,8 @@
     		</div>
 
     		 <div class="btnArea">
-    		 	<a href="#" onclick="fn_cntrwkExcel();" class="schbtn">엑셀저장</a>
-    		 	<a href="#" onclick="fnWrite();" class="schbtn" >등록</a>
+    		 	<a href="#" onclick="fn_cntrwkExcel();" class="btn pri">엑셀저장</a>
+    		 	<a href="#" onclick="fnWrite();" class="btn pri" >등록</a>
     		 </div>
 
 
