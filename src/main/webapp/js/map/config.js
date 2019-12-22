@@ -7,23 +7,27 @@ var CONFIG = (function($, undefined){
 	var sPostProxyUrl = "/gpms/proxyPost.do";
 	var sGetProxyUrl = "/gpms/proxyGet.do";
 	var geoProxyUrl = 'geoProxyPost.do?';
-	
-	
+
+
 	//공간서버, DataHouse(=> wfs prefix로 사용될) 이름
 	//var sDataHouse = "dh_gpms";
 	var sDataHouse = "gpms";
-	
-	
+
+
 	//지도서비스 URL Local server
 	//var sServiceUrl = "http://192.168.0.205:8079/G2DataService/GService?";
 	//var sServiceUrl   = "http://www.muhanit.kr:18079/G2DataService/GService?";
+	// 개발 IP
 	var sServiceUrl   = "http://1.221.39.242:21525/geoserver/wms?";
 	var wfsServiceUrl   = "http://1.221.39.242:21525/geoserver/wfs?";
-	
+	// 운영 IP
+//	var sServiceUrl   = "http://105.0.111.9:9900/geoserver/wms?";
+//	var wfsServiceUrl   = "http://105.0.111.9:9900/geoserver/wfs?";
+
 	//지도서비스 URL  Real server
 	//var sServiceUrl   = "http://105.0.111.9:8089/G2DataService/GService?";
 
-	
+
 	//지도서비스 구축데이터 좌표계
 	var sDataHouseCRS = "EPSG:5181";
 	//요청 좌표계
@@ -31,27 +35,27 @@ var CONFIG = (function($, undefined){
 	//좌표스케일
 	var sPrecision = 3;
 
-	
+
 	//편집모드일 경우 deactivate처리할 기본 컨트롤 id 목록
 	//편집간 'SelectFeature' 컨트롤 활성화 유지를 위한 처리 - 지도기본 기능이용 시 모든컨트롤을  deactivate할 경우 feature 선택이 유지되지 않는 문제...
 	var aSelectiveControls = ["drag", "zoomOut", "zoomIn", "naivgationHistory", "measurePath", "measurePolygon"];
 
-	
+
 	//2018.03.08. YYK. cleanMap() 의 exceptLayer 파라미터 값을 전송하는 용도
 	//cleanMap() 시 지워지지 않을 레이어를 등록 후 파라미터로 전송함
 	var exceptLayerList = ['GAttrLayerBase','GAttrLayer','GStatusLayerBase' ,'GStatusLayer','GTypeLayer', 'SttemntLayer', 'DmgtLayer', 'GOverlapLayer' ];
 
-	
+
 	//베이스 레이어
 	var aLayerList = ['CELL_SECT','CELL_10'];
 	//var aLayerList = ['CELL_10','CELL_SECT','M_CALS_T'];
 
 	//테마지도 _ 레이어 목록
     var tLayerList = ['MV_SRVYDTA_10', 'MV_GNLSTTUS_SECT', 'MV_THM_YEAR_10', 'MV_CELL_SECT_TYPE'];
-	
+
 	// 2018.02.07 YYK 관할구역관리 레이어 추가
 	var cLayerList = ['CMPTNC_ZONE'];
-	
+
 	// 2018.02.07 YYK 신고관리(파손유형) 레이어 추가
 	//var mLayerList = ['MV_POTHOLE_STTEMNT', 'DORO_A001'];
 	//var mLayerList = ['MV_POTHOLE_STTEMNT', 'DORO_A001', 'LSMD_CONT_LDREG', 'N3A_B0010000', 'SIGUNGU' ];
@@ -68,8 +72,8 @@ var CONFIG = (function($, undefined){
 		//"version" : "1.3.0" //지도서비스 GetMap Version
 		"version" : "1.1.0"
 	};
-	
-	
+
+
 	//레이어 목록
 	var serviceLayerInfo = {
 	     "CELL_10" : {
@@ -282,7 +286,7 @@ var CONFIG = (function($, undefined){
 	    	 'show' : '0',
 	    	 'layerType' : '3'
 	     }
-	     
+
 	     /*
 	     "CMPTNC_ZONE" : {
 	         'tmapid' : '870',
@@ -305,9 +309,9 @@ var CONFIG = (function($, undefined){
 	         'layerType' : '3'
 	     }
 	      */
-	};	
+	};
 
-	
+
 	//편집모드 컨트롤
 	var fn_get_deactiveControls = function(){
 		return aSelectiveControls;
@@ -319,7 +323,7 @@ var CONFIG = (function($, undefined){
 		return sPrecision;
 	};
 
-	
+
 	//프록시 POST 서비스URL 리턴
 	var fn_get_postProxyUrl = function (){
 		return sPostProxyUrl;
@@ -328,22 +332,22 @@ var CONFIG = (function($, undefined){
 	var fn_get_getProxyUrl = function (){
 		return sGetProxyUrl;
 	};
-	
+
 	var fn_get_geoProxyUrl = function (){
 		return contextPath + geoProxyUrl;
 	};
 
-	
+
 	//지도 서비스URL 리턴
 	var fn_get_serviceUrl = function (){
 		return sServiceUrl;
 	};
-	
+
 	var fn_get_wfsServiceUrl = function (){
 		return wfsServiceUrl;
 	};
 
-	
+
 	//DataHouse(wfs prefix) 이름 리턴
 	var fn_get_dataHouseName = function (){
 		return sDataHouse;
@@ -355,7 +359,7 @@ var CONFIG = (function($, undefined){
 		return oGetMapInfo;
 	};
 
-	
+
 	//지도서비스 GetMap 기본 좌표계(CRS) 리턴
 	var fn_get_dataHouseCrs = function (){
 		return sDataHouseCRS;
@@ -379,7 +383,7 @@ var CONFIG = (function($, undefined){
 		return cLayerList;
 	}
 
-	
+
 	//지도서비스 GetMap 지도 레이어
 	var fn_get_mlayerList = function (){
 		return mLayerList;
@@ -392,23 +396,23 @@ var CONFIG = (function($, undefined){
     var fn_get_tlayerList = function (){
         return tLayerList;
     }
-    
+
     var fn_get_tlayerList = function (){
     	return tLayerList;
     }
-    
+
     var fn_get_serviceLayerInfo = function (){
     	return serviceLayerInfo;
     }
 
-    
+
     //네임스페이스에 레이어 명칭을 합친다
     var fn_prefixAppandName = function(name){
     	if(!name) return '';
 		return sDataHouse + ':' + name;
 	};
 
-	
+
 	//레이어의 네임스페이스 url 생성
 	var fn_getNamespace = function(prefix){
 		var _prefix = (prefix) ? prefix :sDataHouse;
@@ -416,7 +420,7 @@ var CONFIG = (function($, undefined){
 		return namespace;
 	}
 
-	
+
 	return{
 		fn_get_serviceUrl 	: fn_get_serviceUrl,
 		fn_get_wfsServiceUrl : fn_get_wfsServiceUrl,

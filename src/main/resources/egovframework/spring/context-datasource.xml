@@ -25,7 +25,7 @@
         <property name ="username" value="${Globals.smsUserName}" />
         <property name ="password" value="${Globals.smsPassword}" />
     </bean>
-  
+
   	<!-- [2019-08-28] postgresql 연결 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 	    <property name="driverClassName" value="${Globals.DriverClassName}" />
@@ -50,5 +50,5 @@
 	    <property name="logAbandoned" value="true" />
 	    <property name="defaultAutoCommit" value="true" /> -->
 	</bean>
-   
+
 </beans>
