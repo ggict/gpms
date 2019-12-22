@@ -23,7 +23,7 @@
 			order by frmula_no
 		]]>
 	</select>
-	
+
 	<insert id="srvyDtaDAO.insertSrvyDta">
 		<selectKey resultClass="String" keyProperty="SRVY_NO">
   <![CDATA[
@@ -82,7 +82,7 @@
 		)
 	]]>
 	</insert>
-	
+
 	<select id="srvyDtaDAO.selectSrvyDtaList"
 		parameterClass="srvyDtaVO" resultClass="srvyDtaVO">
 <![CDATA[
@@ -111,15 +111,23 @@
 				,dta.CREAT_DT /* 조사_자료_엑셀.생성_일시 */
 				,dta.UPDUSR_NO /* 조사_자료_엑셀.수정자_번호 */
 				,dta.UPDT_DT /* 조사_자료_엑셀.수정_일시 */
-				,file.FILE_COURS /* 첨부_파일.파일_경로 */
+                , (
+                    SELECT
+                        BB.FILE_COURS
+                    FROM TN_ATTACH_FILE AA
+                    INNER JOIN TN_ATTACH_DETAIL_FILE BB
+                        ON BB.FILE_NO = AA.FILE_NO
+                        AND BB.FILE_SE_CODE = 'FLSE0006'
+                    WHERE
+                        AA.FILE_NO = dta.FILE_NO
+                    LIMIT 1
+                ) FILE_COURS /* 첨부_파일.파일_경로 */
 			FROM TN_SRVY_DTA dta
-			JOIN TN_ATTACH_FILE file
-			ON dta.FILE_NO = file.FILE_NO
 		WHERE 1=1
 			AND  SRVY_NO = #SRVY_NO#::int
 ]]>
 	</select>
-	
+
 	<insert id="srvyDtaDAO.insertTmpExcelData">
 		<selectKey resultClass="String" keyProperty="DTA_NO">
   <![CDATA[
@@ -171,40 +179,40 @@
 			, FRMULA_NO /* 최소_구간_조사_자료.수식_번호 */
 			, POTHOLE_CR /* 최소_구간_조사_자료.포트홀_균열 */
 			, RI_IDX /* 최소_구간_조사_자료.평탄성_지수 */
-			, BLOCK_CR 
-		    , CR_LT 
-		    , CR_WID 
-		    , NHPCI 
-		    , SPI 
-		    , XCR 
-		    , RCI 
-		    , SCR 
-		    , AC_LOW 
-		    , AC_MED 
-		    , AC_HI 
-		    , LC_LOW 
-		    , LC_MED 
-		    , LC_HI 
-		    , TC_LOW 
-		    , TC_MED 
-		    , TC_HI 
-		    , AC_IDX 
-		    , LC_IDX 
-		    , TC_IDX 
-		    , PTCHG_IDX 
-		    , RD_LOW 
-		    , RD_MED 
-		    , RD_HI 
+			, BLOCK_CR
+		    , CR_LT
+		    , CR_WID
+		    , NHPCI
+		    , SPI
+		    , XCR
+		    , RCI
+		    , SCR
+		    , AC_LOW
+		    , AC_MED
+		    , AC_HI
+		    , LC_LOW
+		    , LC_MED
+		    , LC_HI
+		    , TC_LOW
+		    , TC_MED
+		    , TC_HI
+		    , AC_IDX
+		    , LC_IDX
+		    , TC_IDX
+		    , PTCHG_IDX
+		    , RD_LOW
+		    , RD_MED
+		    , RD_HI
 		    , STRTPT_TEST
 		    , ENDPT_TEST
-		    , BLOCK_CR_LOW 
-		    , BLOCK_CR_MED 
-		    , BLOCK_CR_HI 
-		    , POTHOLE_IDX 
-		    , DMG_CUZ_CLMT 
-		    , DMG_CUZ_VMTC 
-		    , DMG_CUZ_ETC 
-		    , BC_IDX 
+		    , BLOCK_CR_LOW
+		    , BLOCK_CR_MED
+		    , BLOCK_CR_HI
+		    , POTHOLE_IDX
+		    , DMG_CUZ_CLMT
+		    , DMG_CUZ_VMTC
+		    , DMG_CUZ_ETC
+		    , BC_IDX
 			, PC_GRAD /* 최소_구간_조사_자료.포장상태등급 */
 			, GPCI /* 최소_구간_조사_자료.포장상태지수 */
 		) VALUES (
@@ -288,7 +296,7 @@
 		)
 ]]>
 	</insert>
-	
+
 	<!-- 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다. -->
 	<parameterMap id="prc_savesurveydata_map" class="java.util.Map">
 		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -300,7 +308,7 @@
     <select id="srvyDtaDAO.PRC_SAVESURVEYDATA" parameterMap="prc_savesurveydata_map" resultClass="hashMap">
         SELECT * FROM PRC_SAVESURVEYDATA(?::text, ?::text, ?::text, ?::text, ?::text)
     </select>
-    
+
     <!-- 입력한 조사자료 엑셀 데이터를 시스템에 반영한다. -->
 	<parameterMap id="prc_srvy_dta_sys_reflct_map" class="java.util.Map">
 		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -310,19 +318,19 @@
 	/* srvyDtaDAO.PRC_SRVY_DTA_SYS_REFLCT */
 		SELECT * FROM PRC_SRVY_DTA_SYS_REFLCT(?::text, ?::text)
 	</select>
-	
+
 	<update id="srvyDtaDAO.updateSrvyDta">
 <![CDATA[
 		/* srvyDtaDAO.updateSrvyDta */
 		/* 조사_자료_엑셀 수정 */
 		UPDATE TN_SRVY_DTA SET
-		  UPDT_DT = NOW() 
+		  UPDT_DT = NOW()
 		, VAL_EVL_AT = #VAL_EVL_AT#
 		WHERE 1 = 1
 		AND SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
 ]]>
 	</update>
-	
+
 	<select id="srvyDtaDAO.selectSrvyDtaUploadResultList"
 		parameterClass="srvyDtaVO" resultClass="srvyDtaVO">
 <![CDATA[
@@ -363,7 +371,7 @@
 		/* srvyDtaDAO.selectSrvyDtaUploadResultCount */
 		/* 조사_자료_엑셀  파일 업로드 결과 개수 조회  */
 		SELECT COUNT(*) FROM (
-			SELECT 
+			SELECT
                   tnsrvydta.ROUTE_CODE
                  , (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnsrvydta.ROUTE_CODE) AS ROAD_NAME
                  , CASE WHEN tnsrvydta.DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END DIRECT_CODE
@@ -384,20 +392,14 @@
 		)as sub_SrvyDtaExcel
 ]]>
 	</select>
-	
+
 	<select id="srvyDtaDAO.selectTmpExcelData" resultClass="srvyDtaVO">
 <![CDATA[
 		/* srvyDtaDAO.selectTmpExcelData */
-		
+
 	SELECT CASE WHEN sumChk > 0 THEN 'Y' ELSE 'N' END as SE_CD
 	    FROM (
 	        SELECT
-	            SUM(COALESCE(RD_IDX,0))+
-	            SUM(COALESCE(NHPCI,0))+
-	            SUM(COALESCE(SPI,0))+
-	            SUM(COALESCE(XCR,0))+
-	            SUM(COALESCE(RCI,0))+
-	            SUM(COALESCE(SCR,0))+
 	            SUM(COALESCE(AC_LOW,0))+
 	            SUM(COALESCE(AC_MED,0))+
 	            SUM(COALESCE(AC_HI,0))+
@@ -407,25 +409,17 @@
 	            SUM(COALESCE(TC_LOW,0))+
 	            SUM(COALESCE(TC_MED,0))+
 	            SUM(COALESCE(TC_HI,0))+
-	            SUM(COALESCE(AC_IDX,0))+
-	            SUM(COALESCE(LC_IDX,0))+
-	            SUM(COALESCE(TC_IDX,0))+
-	            SUM(COALESCE(PTCHG_IDX,0))+
-	            SUM(COALESCE(RD_LOW,0))+
-	            SUM(COALESCE(RD_MED,0))+
-	            SUM(COALESCE(RD_HI,0))+
 	            SUM(COALESCE(BLOCK_CR_LOW,0))+
 	            SUM(COALESCE(BLOCK_CR_MED,0))+
 	            SUM(COALESCE(BLOCK_CR_HI,0))+
-	            SUM(COALESCE(POTHOLE_IDX,0))+
-	            SUM(COALESCE(BC_IDX,0))+
-	            SUM(COALESCE(GPCI,0)) as sumChk
+                SUM(COALESCE(PTCHG_CR,0))+
+                SUM(COALESCE(POTHOLE_CR,0))
+             as sumChk
 	        FROM TMP_MUMM_SCTN_SRVY_DTA
 	    ) as tb
-		
 ]]>
 	</select>
-	
+
 	<!-- 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다. -->
 	<parameterMap id="prc_aggregate_general_map" class="java.util.Map">
 		<parameter property="p_USER_NO" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -441,44 +435,28 @@
 	<select id="srvyDtaDAO.PRC_AGGREGATE_GENERAL" parameterMap="prc_aggregate_general_map" resultClass="hashMap">
 		SELECT * FROM PRC_AGGREGATE_GENERAL(?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text, ?::text)
 	</select>
-	
+
 	<update id="srvyDtaDAO.updateTmpExcelData">
 <![CDATA[
 		/* srvyDtaDAO.updateTmpExcelData */
 		/* 임시_최소_구간_조사_자료 수정 */
 		UPDATE TMP_MUMM_SCTN_SRVY_DTA SET
-		 	  NHPCI		   = COALESCE(#NHPCI#::numeric,0)                                               
-		    , SPI          = COALESCE(#SPI#::numeric,0)                                           
-		    , XCR          = COALESCE(#XCR#::numeric,0)                                           
-		    , RCI          = COALESCE(#RCI#::numeric,0)                                           
-		    , SCR          = COALESCE(#SCR#::numeric,0)                                           
-		    , AC_LOW       = COALESCE(#AC_LOW#::numeric,0)                                        
-		    , AC_MED       = COALESCE(#AC_MED#::numeric,0)                                        
-		    , AC_HI        = COALESCE(#AC_HI#::numeric,0)                                         
-		    , LC_LOW       = COALESCE(#LC_LOW#::numeric,0)                                        
-		    , LC_MED       = COALESCE(#LC_MED#::numeric,0)                                        
-		    , LC_HI        = COALESCE(#LC_HI#::numeric,0)                                         
-		    , TC_LOW       = COALESCE(#TC_LOW#::numeric,0)                                        
-		    , TC_MED       = COALESCE(#TC_MED#::numeric,0)                                        
-		    , TC_HI        = COALESCE(#TC_HI#::numeric,0)                                         
-		    , AC_IDX       = COALESCE(#AC_IDX#::numeric,0)                                        
-		    , LC_IDX       = COALESCE(#LC_IDX#::numeric,0)                                        
-		    , TC_IDX       = COALESCE(#TC_IDX#::numeric,0)                                        
-		    , PTCHG_IDX    = COALESCE(#PTCHG_IDX#::numeric,0)                                     
-		    , RD_LOW       = COALESCE(#RD_LOW#::numeric,0)                                        
-		    , RD_MED       = COALESCE(#RD_MED#::numeric,0)                                        
-		    , RD_HI        = COALESCE(#RD_HI#::numeric,0)                                         
-		    , BLOCK_CR_LOW = COALESCE(#BLOCK_CR_LOW#::numeric,0)                                  
-		    , BLOCK_CR_MED = COALESCE(#BLOCK_CR_MED#::numeric,0)                                  
-		    , BLOCK_CR_HI  = COALESCE(#BLOCK_CR_HI#::numeric,0)                                   
-		    , POTHOLE_IDX  = COALESCE(#POTHOLE_IDX#::numeric,0)                                   
-		    , BC_IDX       = COALESCE(#BC_IDX#::numeric,0)                                        
-			, GPCI         = COALESCE(#GPCI#::numeric,0) 
+		    AC_LOW         = COALESCE(#AC_LOW#::numeric/1000000,0)
+		    , AC_MED       = COALESCE(#AC_MED#::numeric/1000000,0)
+		    , AC_HI        = COALESCE(#AC_HI#::numeric/1000000,0)
+		    , LC_LOW       = COALESCE(#LC_LOW#::numeric/1000,0)
+		    , LC_MED       = COALESCE(#LC_MED#::numeric/1000,0)
+		    , LC_HI        = COALESCE(#LC_HI#::numeric/1000,0)
+		    , TC_LOW       = COALESCE(#TC_LOW#::numeric/1000,0)
+		    , TC_MED       = COALESCE(#TC_MED#::numeric/1000,0)
+		    , TC_HI        = COALESCE(#TC_HI#::numeric/1000,0)
+            , PTCHG_CR     = COALESCE(#PTCHG_CR#::numeric/1000000,0)
+            , POTHOLE_CR   = COALESCE(#POTHOLE_CR#::numeric/1000000,0)
 		WHERE 1 = 1
 		AND RDSRFC_IMG_FILE_NM_1 = #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
 ]]>
 	</update>
-	
+
 	<select id="srvyDtaDAO.selectSrvyDtaUploadFileList"
 		parameterClass="srvyDtaVO" resultClass="srvyDtaVO">
 <![CDATA[
@@ -489,7 +467,7 @@
 				, LTRIM(tnsrvydta.route_code,'0') route_code
 				, (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnsrvydta.ROUTE_CODE) AS ROAD_NAME
      			, CASE WHEN tnsrvydta.DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END DIRECT_CODE
-     			, tnsrvydta.TRACK	
+     			, tnsrvydta.TRACK
 			 	, (SELECT tnattachfile.ORGINL_FILE_NM FROM TN_ATTACH_FILE tnattachfile WHERE tnattachfile.FILE_NO = tnsrvydta.FILE_NO) FILE_NM
 			 	, tlsrvydtalog.LOG_MSSAGE
 			    , TO_CHAR(tnsrvydta.CREAT_DT, 'YYYY-MM-DD') AS CREAT_DT
@@ -528,12 +506,12 @@
 			 	AND tnsrvydta.SRVY_NO = #SRVY_NO#::int
 ]]>
 	</select>
-	
+
 	<select id="srvyDtaDAO.selectAnalDataPopupResultList"
 		parameterClass="srvyDtaVO" resultClass="srvyDtaVO">
 <![CDATA[
 		/* srvyDtaDAO.selectAnalDataPopupResultList */
-		
+
 		SELECT * FROM (SELECT ROW_NUMBER() OVER( ORDER BY $sidx$ $sord$  ) rn, tb.* FROM (
 			SELECT  LTRIM(tnmummsctnsrvydta.ROUTE_CODE,'0') AS ROUTE_CODE
                  , (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnmummsctnsrvydta.ROUTE_CODE) AS ROAD_NAME
@@ -572,49 +550,52 @@
 				 , FRMULA_NO /* 최소_구간_조사_자료.수식_번호 */
 				 , POTHOLE_CR /* 최소_구간_조사_자료.포트홀_균열 */
 				 , RI_IDX /* 최소_구간_조사_자료.평탄성_지수 */
-				 , BLOCK_CR 
-			     , CR_LT 
-			     , CR_WID 
-			     , NHPCI 
-			     , SPI 
-			     , XCR 
-			     , RCI 
-			     , SCR 
-			     , AC_LOW 
-			     , AC_MED 
-			     , AC_HI 
-			     , LC_LOW 
-			     , LC_MED 
-			     , LC_HI 
-			     , TC_LOW 
-			     , TC_MED 
-			     , TC_HI 
-			     , AC_IDX 
-			     , LC_IDX 
-			     , TC_IDX 
-			     , PTCHG_IDX 
-			     , RD_LOW 
-			     , RD_MED 
-			     , RD_HI 
+				 , BLOCK_CR
+			     , CR_LT
+			     , CR_WID
+			     , NHPCI
+			     , SPI
+			     , XCR
+			     , RCI
+			     , SCR
+			     , AC_LOW
+			     , AC_MED
+			     , AC_HI
+			     , LC_LOW
+			     , LC_MED
+			     , LC_HI
+			     , TC_LOW
+			     , TC_MED
+			     , TC_HI
+			     , AC_IDX
+			     , LC_IDX
+			     , TC_IDX
+			     , PTCHG_IDX
+			     , RD_LOW
+			     , RD_MED
+			     , RD_HI
 			     , STRTPT_TEST
 			     , ENDPT_TEST
-			     , BLOCK_CR_LOW 
-			     , BLOCK_CR_MED 
-			     , BLOCK_CR_HI 
-			     , POTHOLE_IDX 
-			     , DMG_CUZ_CLMT 
-			     , DMG_CUZ_VMTC 
-			     , DMG_CUZ_ETC 
-			     , BC_IDX 
+			     , BLOCK_CR_LOW
+			     , BLOCK_CR_MED
+			     , BLOCK_CR_HI
+			     , POTHOLE_IDX
+			     , DMG_CUZ_CLMT
+			     , DMG_CUZ_VMTC
+			     , DMG_CUZ_ETC
+			     , BC_IDX
 				 , PC_GRAD /* 최소_구간_조사_자료.포장상태등급 */
 				 , GPCI /* 최소_구간_조사_자료.포장상태지수 */
 	     		 , SRVY_NO
+                 , (AC_LOW + AC_MED + AC_HI) AC_TOT
+                 , (LC_LOW + LC_MED + LC_HI) LC_TOT
+                 , (TC_LOW + TC_MED + TC_HI) TC_TOT
 			FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
-		   WHERE 1=1 
+		   WHERE 1=1
 			 AND SRVY_NO = #SRVY_NO#::int
 		   	 AND USE_AT = 'Y'
 		   	 AND DELETE_AT = 'N'
-             ORDER BY STRTPT 
+             ORDER BY STRTPT
 		) tb) resultlist  WHERE 1=1
 ]]>
 		<isEqual prepend=" " property="usePage" compareValue="true">
@@ -623,20 +604,20 @@
 ]]>
 		</isEqual>
 	</select>
-	
+
 	<select id="srvyDtaDAO.selectAnalDataPopupResultCount"
 		parameterClass="srvyDtaVO" resultClass="int">
 <![CDATA[
 		/* srvyDtaDAO.selectAnalDataPopupResultCount */
 		SELECT COUNT(*)
-			FROM TN_MUMM_SCTN_SRVY_DTA 
+			FROM TN_MUMM_SCTN_SRVY_DTA
 		   WHERE 1=1
 		   	 AND SRVY_NO = #SRVY_NO#::int
 		   	 AND USE_AT = 'Y'
 		   	 AND DELETE_AT = 'N'
 ]]>
 	</select>
-	
+
 	<insert id="srvyDtaDAO.insertAiDta">
 		<selectKey resultClass="String" keyProperty="AI_NO">
   <![CDATA[
@@ -654,55 +635,63 @@
 			, SEVERITY /* 심각도 */
 			, RESULT_IMAGE /* 결과_이미지 */
 		) VALUES (
-			  #AI_NO#::numeric 
-			, #REGION_TYPE# 
-			, COALESCE(#AREA#::numeric,0) 
+			  #AI_NO#::numeric
+			, #REGION_TYPE#
+			, COALESCE(#AREA#::numeric,0)
 			, COALESCE(#LEN#::numeric,0)
 			, #SEVERITY#
 			, #RESULT_IMAGE#
 		)
 ]]>
 	</insert>
-	
+
 	<select id="srvyDtaDAO.selectAiDtaList" resultClass="srvyDtaVO">
 <![CDATA[
 		/* srvyDtaDAO.selectAiDtaList */
-		
-	SELECT 
+
+	SELECT
 		  REGION_TYPE
 		, SEVERITY
 		, CASE
-		    WHEN REGION_TYPE = 'lc' or REGION_TYPE = 'tc' THEN SUM(COALESCE(LEN,0)) 
-		    WHEN REGION_TYPE = 'ac' or REGION_TYPE = 'patch' or REGION_TYPE = 'phothole' THEN SUM(COALESCE(AREA,0)) 
+		    WHEN REGION_TYPE = 'lc' or REGION_TYPE = 'tc' THEN SUM(COALESCE(LEN,0))
+		    WHEN REGION_TYPE = 'ac' or REGION_TYPE = 'patch' or REGION_TYPE = 'phothole' THEN SUM(COALESCE(AREA,0))
 		  END AS AI_SUM_VALUE
+        , RESULT_IMAGE
 		FROM TMP_AI_DTA
-	GROUP BY REGION_TYPE, SEVERITY
-		
+	GROUP BY REGION_TYPE, SEVERITY, RESULT_IMAGE
+
 ]]>
 	</select>
-	
+
 	<delete id="srvyDtaDAO.deleteAiDta">
-	<![CDATA[ 
+	<![CDATA[
 		/* srvyDtaDAO.deleteAiDta */
-		DELETE FROM TMP_AI_DTA 
+		DELETE FROM TMP_AI_DTA
 ]]>
 	</delete>
-	
+
+	<delete id="srvyDtaDAO.deleteTmpMummSctnSrvyDta">
+	<![CDATA[
+		/* srvyDtaDAO.deleteTmpMummSctnSrvyDta */
+		DELETE FROM TMP_MUMM_SCTN_SRVY_DTA
+]]>
+	</delete>
+
 	<update id="srvyDtaDAO.updateImgInfoOfTmpExcelData">
 <![CDATA[
 		/* srvyDtaDAO.updateImgInfoOfTmpExcelData */
 		/* TMP_MUMM_SCTN_SRVY_DTA 테이블에 jpg이미지파일 경로 업데이트 */
-		
-		UPDATE TMP_MUMM_SCTN_SRVY_DTA AS mumm 
+
+		UPDATE TMP_MUMM_SCTN_SRVY_DTA AS mumm
 			SET FRNT_IMG_FILE_COURS = attach.FILE_COURS
 		FROM TN_ATTACH_DETAIL_FILE AS attach
 		WHERE mumm.FRNT_IMG_FILE_NM = attach.ORGINL_FILE_NM
-			AND attach.FILE_SE_CODE = 'FLSE0006' 
-			AND attach.USE_AT = 'Y' 
+			AND attach.FILE_SE_CODE = 'FLSE0006'
+			AND attach.USE_AT = 'Y'
 			AND attach.DELETE_AT = 'N'
 			AND attach.FILE_NO = #FILE_NO#::numeric
 ]]>
 	</update>
-	
+
 
 </sqlMap>

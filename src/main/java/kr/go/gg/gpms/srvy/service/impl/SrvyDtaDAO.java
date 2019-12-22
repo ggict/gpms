@@ -43,7 +43,7 @@ public class SrvyDtaDAO extends BaseDAO {
 
 	/**
 	 * 조사_자료_수식(TN_SRVY_DTA_FRMULA) 목록을 조회한다.
-	 * @param 
+	 * @param
 	 * @return TN_SRVY_DTA_FRMULA 목록
 	 * @exception Exception
 	 */
@@ -61,7 +61,7 @@ public class SrvyDtaDAO extends BaseDAO {
 	public String insertSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
 		return (String) insert("srvyDtaDAO.insertSrvyDta", srvyDtaVO);
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA) 목록을 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -72,7 +72,7 @@ public class SrvyDtaDAO extends BaseDAO {
 	public List<SrvyDtaVO> selectSrvyDtaList(SrvyDtaVO srvyDtaVO) throws Exception {
 		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectSrvyDtaList", srvyDtaVO);
 	}
-	
+
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)를 등록한다.
 	 * @param @param String fileName, String srvyNo
@@ -82,13 +82,13 @@ public class SrvyDtaDAO extends BaseDAO {
 	public void insertTmpExcelData(Map<String, Object> params) throws Exception {
 		insert("srvyDtaDAO.insertTmpExcelData", params);
 	}
-	
+
 	/**
 	 * 조사자료 엑셀 데이터를 최소구간 조사 자료에 입력한다.
 	 */
 	public HashMap procSaveSurveyData(SrvyDtaVO srvyDtaOne) {
 		logger.info("[SrvyDtaVO result] " + srvyDtaOne.toString());
-		
+
 		HashMap param = new HashMap();
     	param.put("p_USER_NO", srvyDtaOne.getCRTR_NO());
     	param.put("p_SRVY_NO", srvyDtaOne.getSRVY_NO());
@@ -96,11 +96,11 @@ public class SrvyDtaDAO extends BaseDAO {
     	param.put("P_ROW_COUNT", srvyDtaOne.getDATA_CO());
     	//param.put("p_RECORDSET", srvyDtaOne.getRECORDSET());
     	param.put("p_MODE", "NONE");
-    	
+
    		HashMap  resultVO = (HashMap) select("srvyDtaDAO.PRC_SAVESURVEYDATA", param);
     	return resultVO;
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA)을 조회한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
@@ -116,16 +116,16 @@ public class SrvyDtaDAO extends BaseDAO {
 	 */
 	public HashMap procSrvyDtaSysReflct(SrvyDtaVO srvyDtalOne) {
 		logger.info("[procSrvyDtaSysReflctResultVO params] " + srvyDtalOne.toString());
-		
+
 		HashMap param = new HashMap();
     	param.put("p_USER_NO", srvyDtalOne.getCRTR_NO());
     	param.put("p_SRVY_NO", srvyDtalOne.getSRVY_NO());
-    	
+
     	HashMap resultVO = (HashMap) select("srvyDtaDAO.PRC_SRVY_DTA_SYS_REFLCT", param);
     	logger.info("procSrvyDtaSysReflctResultVO: " + resultVO.toString());
     	return resultVO;
 	}
-	
+
 	/**
 	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
 	 * @param srvyDtaSttusVO
@@ -143,16 +143,16 @@ public class SrvyDtaDAO extends BaseDAO {
     	param.put("p_ENDPT", srvyDtaOne.getENDPT());
     	param.put("p_FRMULA_NM", "GPCI");
     	param.put("p_MODE", "NONE");
-    	
+
     	HashMap resultVO = (HashMap) select("srvyDtaDAO.PRC_AGGREGATE_GENERAL", param);
     	logger.info("procAggregateGeneralVO: " + resultVO.toString());
     	return resultVO;
 	}
-	
+
 	public int updateSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
 		return update("srvyDtaDAO.updateSrvyDta", srvyDtaVO);
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA) 파일 업로드 결과 목록을 조회.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -173,7 +173,7 @@ public class SrvyDtaDAO extends BaseDAO {
 	public int selectSrvyDtaUploadResultCount(SrvyDtaVO srvyDtaVO) {
 		return (Integer) select("srvyDtaDAO.selectSrvyDtaUploadResultCount", srvyDtaVO);
 	}
-	
+
 	/**
 	 * 분석결과 목록을 조회.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -184,7 +184,7 @@ public class SrvyDtaDAO extends BaseDAO {
 	public List<SrvyDtaVO> selectAnalDataPopupResultList(SrvyDtaVO srvyDtaVO) throws Exception {
 		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectAnalDataPopupResultList", srvyDtaVO);
 	}
-	
+
 	/**
 	 * 분석결과 갯수를 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -194,7 +194,7 @@ public class SrvyDtaDAO extends BaseDAO {
 	public int selectAnalDataPopupResultCount(SrvyDtaVO srvyDtaVO) {
 		return (Integer) select("srvyDtaDAO.selectAnalDataPopupResultCount", srvyDtaVO);
 	}
-	
+
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
@@ -204,7 +204,7 @@ public class SrvyDtaDAO extends BaseDAO {
 	public SrvyDtaVO selectTmpExcelData() throws Exception {
 		return (SrvyDtaVO) select("srvyDtaDAO.selectTmpExcelData");
 	}
-	
+
 	/**
 	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
 	 * @param srvyDtaSttusVO
@@ -227,7 +227,7 @@ public class SrvyDtaDAO extends BaseDAO {
     	logger.info("procAggregateGeneralVO: " + resultVO.toString());
     	return resultVO;
 	}
-	
+
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
@@ -248,7 +248,7 @@ public class SrvyDtaDAO extends BaseDAO {
 	public List<SrvyDtaVO> selectSrvyDtaUploadFileList(SrvyDtaVO srvyDtaVO) throws Exception {
 		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectSrvyDtaUploadFileList", srvyDtaVO);
 	}
-	
+
 	/**
 	 * 조사_자료_엑셀(TN_SRVY_DTA) 파일 업로드 결과 상세 목록 갯수를 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -258,7 +258,7 @@ public class SrvyDtaDAO extends BaseDAO {
 	public int selectSrvyDtaUploadFileCount(SrvyDtaVO srvyDtaVO) {
 		return (Integer) select("srvyDtaDAO.selectSrvyDtaUploadFileCount", srvyDtaVO);
 	}
-	
+
 	/**
 	 * AI_자료(TMP_AI_DTA)를 등록한다.
 	 * @param srvyDtaVO - 등록할 정보가 담긴 srvyDtaVO
@@ -268,10 +268,10 @@ public class SrvyDtaDAO extends BaseDAO {
 	public String insertAiDta(SrvyDtaVO srvyDtaVO) throws Exception {
 		return (String) insert("srvyDtaDAO.insertAiDta", srvyDtaVO);
 	}
-	
+
 	/**
 	 * AI_자료(TMP_AI_DTA)를 조회한다.
-	 * @param 
+	 * @param
 	 * @return 조회한 TMP_AI_DTA
 	 * @exception Exception
 	 */
@@ -279,17 +279,27 @@ public class SrvyDtaDAO extends BaseDAO {
 	public List<SrvyDtaVO> selectAiDtaList() throws Exception {
 		return (List<SrvyDtaVO>)list("srvyDtaDAO.selectAiDtaList");
 	}
-	
+
 	/**
 	 * AI_자료(TMP_AI_DTA)을 삭제한다.
-	 * @param 
-	 * @return 삭제 결과 
+	 * @param
+	 * @return 삭제 결과
 	 * @exception Exception
 	 */
 	public int deleteAiDta() throws Exception {
 		return delete("srvyDtaDAO.deleteAiDta");
 	}
-	
+
+	/**
+	 * 임시_최소_구간_조사_자료 (TMP_MUMM_SCTN_SRVY_DTA)을 삭제한다.
+	 * @param
+	 * @return 삭제 결과
+	 * @exception Exception
+	 */
+	public int deleteTmpMummSctnSrvyDta() throws Exception {
+	    return delete("srvyDtaDAO.deleteTmpMummSctnSrvyDta");
+	}
+
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO

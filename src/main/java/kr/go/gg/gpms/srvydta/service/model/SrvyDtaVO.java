@@ -19,7 +19,7 @@ import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelDefaultVO;
  * @since 2019-10-11
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 /**
@@ -34,309 +34,318 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public SrvyDtaVO() {
 		super();
 	}
-	
+
 	@XmlElement
 	private java.lang.String SRVY_NO;
-	
+
 	@XmlElement
 	private java.lang.String FILE_NO;
-	
+
 	@XmlElement
 	private java.lang.String DATA_CO;
-	
+
 	@XmlElement
 	private java.lang.String EVL_PROCESS_AT;
-	
+
 	@XmlElement
 	private java.lang.String GPS_CORTN_PROCESS_AT;
-	
+
 	@XmlElement
 	private java.lang.String SM_PROCESS_AT;
-	
+
 	@XmlElement
 	private java.lang.String VAL_EVL_AT;
-	
+
 	@XmlElement
 	private java.lang.String DELETE_AT;
-	
+
 	@XmlElement
 	private java.lang.String USE_AT;
-	
+
 	@XmlElement
 	private java.lang.String CRTR_NO;
-	
+
 	@XmlElement
 	private java.sql.Date CREAT_DT;
-	
+
 	@XmlElement
 	private java.lang.String UPDUSR_NO;
-	
+
 	@XmlElement
 	private java.sql.Date UPDT_DT;
-	
+
 	@XmlElement
 	private java.lang.String PRDTMDL_PROCESS_AT;
-	
+
 	@XmlElement
 	private java.lang.String PROCESS_STTUS;
-	
+
 	@XmlElement
 	private java.lang.String CRTR_NM;
-	
+
 	@XmlElement
 	private java.lang.String SCH_SRVY_DE1;
-	
+
 	@XmlElement
 	private java.lang.String SCH_SRVY_DE2;
-	
+
 	@XmlElement
 	private java.lang.String EVL_PROCESS;
-	
+
 	@XmlElement
 	private java.lang.String GPS_CORTN_PROCESS;
-	
+
 	@XmlElement
 	private java.lang.String SM_PROCESS;
-	
+
 	@XmlElement
 	private java.lang.String EVL_YEAR;
-	
+
 	@XmlElement
 	private java.lang.String FILE_NM;
-	
+
 	@XmlElement
 	private java.lang.String CALC_DE;
-	
+
 	@XmlElement
 	private java.lang.String PREDCT_DE;
-	
+
 	@XmlElement
 	private java.lang.String PRDTMDL_PROCESS;
-	
+
 	@XmlElement
 	private String SRVY_YEAR;
-	
+
 	@XmlElement
 	private String SRVY_MT;
-	
+
 	@XmlElement
 	private String ROAD_NO;
-	
+
 	@XmlElement
 	private String ROAD_NAME;
-	
+
 	@XmlElement
 	private String ROUTE_CODE;
-	
+
 	@XmlElement
 	private String DIRECT_CODE;
-	
+
 	@XmlElement
 	private String TRACK;
-	
+
 	@XmlElement
 	private String STRTPT;
-	
+
 	@XmlElement
 	private String ENDPT;
-	
+
 	@XmlElement
 	private String IRI_VAL;
-	
+
 	@XmlElement
 	private String RD_VAL;
-	
+
 	@XmlElement
 	private String VRTCAL_CR;
-	
+
 	@XmlElement
 	private String HRZNTAL_CR;
-	
+
 	@XmlElement
 	private String CNSTRCT_JOINT_CR;
-	
+
 	@XmlElement
 	private String TRTS_BAC_CR;
-	
+
 	@XmlElement
 	private String PTCHG_CR;
-	
+
 	@XmlElement
 	private String POTHOLE_CR;
-	
+
 	@XmlElement
 	private String CR_VAL;
-	
+
 	@XmlElement
 	private String RDSRFC_IMG_FILE_NM_1;
-	
+
 	@XmlElement
 	private String RDSRFC_IMG_FILE_NM_2;
-	
+
 	@XmlElement
 	private String FRNT_IMG_FILE_NM;
-	
+
 	@XmlElement
 	private String MEMO;
-	
+
 	@XmlElement
 	private String SRVY_DE;
-	
+
 	@XmlElement
 	private String SRVY_KND;
-	
+
 	@XmlElement
 	private String TRACE1_LA;
-	
+
 	@XmlElement
 	private String TRACE1_LO;
-	
+
 	@XmlElement
 	private String TRACE2_LA;
-	
+
 	@XmlElement
 	private String TRACE2_LO;
-	
+
 	@XmlElement
 	private String SRVY_NM;
-	
+
 	@XmlElement
 	private String EXMNR_NM;
-	
+
 	@XmlElement
 	private String SCTN_STRTPT_DC;
-	
+
 	@XmlElement
 	private String SCTN_ENDPT_DC;
-	
+
 	@XmlElement
 	private String ROAD_NM;
-	
+
 	@XmlElement
 	private String BLOCK_CR;
-	
+
 	@XmlElement
 	private String CR_LT;
-	
+
 	@XmlElement
 	private String CR_WID;
-	
+
 	@XmlElement
 	private String AC_LOW;
-	
+
 	@XmlElement
 	private String AC_MED;
-	
+
 	@XmlElement
 	private String AC_HI;
-	
+
 	@XmlElement
 	private String BLOCK_CR_LOW;
-	
+
 	@XmlElement
 	private String BLOCK_CR_MED;
-	
+
 	@XmlElement
 	private String BLOCK_CR_HI;
-	
+
 	@XmlElement
 	private String LC_LOW;
-	
+
 	@XmlElement
 	private String LC_MED;
-	
+
 	@XmlElement
 	private String LC_HI;
-	
+
 	@XmlElement
 	private String TC_LOW;
-	
+
 	@XmlElement
 	private String TC_MED;
-	
+
 	@XmlElement
 	private String TC_HI;
-	
+
 	@XmlElement
 	private String RD_LOW;
-	
+
 	@XmlElement
 	private String RD_MED;
-	
+
 	@XmlElement
 	private String RD_HI;
-	
+
 	@XmlElement
 	private String AC_IDX;
-	
+
 	@XmlElement
 	private String BC_IDX;
-	
+
 	@XmlElement
 	private String LC_IDX;
-	
+
 	@XmlElement
 	private String TC_IDX;
-	
+
 	@XmlElement
 	private String PTCHG_IDX;
-	
+
 	@XmlElement
 	private String POTHOLE_IDX;
-	
+
 	@XmlElement
 	private String RD_IDX;
-	
+
 	@XmlElement
 	private String RCI;
-	
+
 	@XmlElement
 	private String SCR;
-	
+
 	@XmlElement
 	private String GPCI;
-	
+
 	@XmlElement
 	private String NHPCI;
-	
+
 	@XmlElement
 	private String SPI;
-	
+
 	@XmlElement
 	private String XCR;
-	
+
 	@XmlElement
 	private String EXCEL_FILE_COURS;
 
 	@XmlElement
 	private String SUCCESS_KND;
-	
+
 	@XmlElement
 	private String SE_CD;
-	
+
 	@XmlElement
 	private String AI_NO;
-	
+
 	@XmlElement
 	private String REGION_TYPE;
-	
+
 	@XmlElement
 	private String AREA;
-	
+
 	@XmlElement
 	private String LEN;
-	
+
 	@XmlElement
 	private String SEVERITY;
-	
+
 	@XmlElement
 	private String RESULT_IMAGE;
-	
+
 	@XmlElement
 	private String AI_SUM_VALUE;
-	
+
 	@XmlElement
 	private java.lang.String FILE_COURS;
+
+	@XmlElement
+	private String AC_TOT;
+
+	@XmlElement
+	private String LC_TOT;
+
+	@XmlElement
+	private String TC_TOT;
 
 	public String getSRVY_YEAR() {
 		return SRVY_YEAR;
@@ -1049,7 +1058,7 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public void setPRDTMDL_PROCESS(java.lang.String pRDTMDL_PROCESS) {
 		PRDTMDL_PROCESS = pRDTMDL_PROCESS;
 	}
-	
+
 	@JsonProperty(value="SRVY_NO")
 	public java.lang.String getSRVY_NO() {
 		return SRVY_NO;
@@ -1146,6 +1155,30 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	public void setFILE_COURS(java.lang.String fILE_COURS) {
 		FILE_COURS = fILE_COURS;
 	}
-	
+
+    public String getAC_TOT() {
+        return AC_TOT;
+    }
+
+    public void setAC_TOT(String aC_TOT) {
+        AC_TOT = aC_TOT;
+    }
+
+    public String getLC_TOT() {
+        return LC_TOT;
+    }
+
+    public void setLC_TOT(String lC_TOT) {
+        LC_TOT = lC_TOT;
+    }
+
+    public String getTC_TOT() {
+        return TC_TOT;
+    }
+
+    public void setTC_TOT(String tC_TOT) {
+        TC_TOT = tC_TOT;
+    }
+
 
 }

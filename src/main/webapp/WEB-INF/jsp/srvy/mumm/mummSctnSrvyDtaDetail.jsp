@@ -135,7 +135,7 @@ var chartInfoObj = {
 	        }
 	    });
 	}
-	,drawRdChart: function(data){ 
+	,drawRdChart: function(data){
 		var dataList = data.res || [];
 		var xAxisData =[];
 	 	var lineData = [];
@@ -273,40 +273,40 @@ function fnSelectSrvyDetail() {
                 tb1.eq(9).html(jdata[0].VMTC_GRAD);
                 tb1.eq(10).html(jdata[0].ADM_CODE); */
 
-                var AC_LOW = "${smDtaGnlSttusVO.AC_LOW}" || 0;
-                var AC_MED = "${smDtaGnlSttusVO.AC_MED}" || 0;
-                var AC_HI = "${smDtaGnlSttusVO.AC_HI}" || 0;
-                var TRTS_BAC_CR = "${smDtaGnlSttusVO.TRTS_BAC_CR}" || 0;
-                
-                var LC_LOW = "${smDtaGnlSttusVO.LC_LOW}" || 0;
-                var LC_MED = "${smDtaGnlSttusVO.LC_MED}" || 0;
-                var LC_HI = "${smDtaGnlSttusVO.LC_HI}" || 0;
-                var TC_LOW = "${smDtaGnlSttusVO.TC_LOW}" || 0;
-                var TC_MED = "${smDtaGnlSttusVO.TC_MED}" || 0;
-                var TC_HI = "${smDtaGnlSttusVO.TC_HI}" || 0;
-                var VRTCAL_CR = "${smDtaGnlSttusVO.VRTCAL_CR}" || 0;
-                var HRZNTAL_CR = "${smDtaGnlSttusVO.HRZNTAL_CR}" || 0;
-                
-                var BLOCK_CR_LOW = "${smDtaGnlSttusVO.BLOCK_CR_LOW}" || 0;
-                var BLOCK_CR_MED = "${smDtaGnlSttusVO.BLOCK_CR_MED}" || 0;
-                var BLOCK_CR_HI = "${smDtaGnlSttusVO.BLOCK_CR_HI}" || 0;
-                
-                var PTCHG_CR = "${smDtaGnlSttusVO.PTCHG_CR}" || 0;
-                var POTHOLE_CR = "${smDtaGnlSttusVO.POTHOLE_CR}" || 0;
-                var RD_VAL = "${smDtaGnlSttusVO.RD_VAL}" || 0;
-                var IRI_VAL = "${smDtaGnlSttusVO.IRI_VAL}" || 0;
-                
+                var AC_LOW = ${smDtaGnlSttusVO.AC_LOW} || 0;
+                var AC_MED = ${smDtaGnlSttusVO.AC_MED} || 0;
+                var AC_HI = ${smDtaGnlSttusVO.AC_HI} || 0;
+                var TRTS_BAC_CR = ${smDtaGnlSttusVO.TRTS_BAC_CR} || 0;
+
+                var LC_LOW = ${smDtaGnlSttusVO.LC_LOW} || 0;
+                var LC_MED = ${smDtaGnlSttusVO.LC_MED} || 0;
+                var LC_HI = ${smDtaGnlSttusVO.LC_HI} || 0;
+                var TC_LOW = ${smDtaGnlSttusVO.TC_LOW} || 0;
+                var TC_MED = ${smDtaGnlSttusVO.TC_MED} || 0;
+                var TC_HI = ${smDtaGnlSttusVO.TC_HI} || 0;
+                var VRTCAL_CR = ${smDtaGnlSttusVO.VRTCAL_CR} || 0;
+                var HRZNTAL_CR = ${smDtaGnlSttusVO.HRZNTAL_CR} || 0;
+
+                var BLOCK_CR_LOW = ${smDtaGnlSttusVO.BLOCK_CR_LOW} || 0;
+                var BLOCK_CR_MED = ${smDtaGnlSttusVO.BLOCK_CR_MED} || 0;
+                var BLOCK_CR_HI = ${smDtaGnlSttusVO.BLOCK_CR_HI} || 0;
+
+                var PTCHG_CR = ${smDtaGnlSttusVO.PTCHG_CR} || 0;
+                var POTHOLE_CR = ${smDtaGnlSttusVO.POTHOLE_CR} || 0;
+                var RD_VAL = ${smDtaGnlSttusVO.RD_VAL} || 0;
+                var IRI_VAL = ${smDtaGnlSttusVO.IRI_VAL} || 0;
+
 
              	// 조사정보
                 //tb2.eq(0).html( fnFloat(AC_MED) );        // 거북등균열
                 tb2.eq(0).html( fnFloat(AC_LOW+AC_MED+AC_HI) );        // 거북등균열
-                
+
                 //tb2.eq(1).html( fnFloat(LC_MED) );        // 선형균열
                 tb2.eq(1).html( fnFloat(LC_LOW+LC_MED+LC_HI+TC_LOW+TC_MED+TC_HI) );        // 선형균열
-                
+
                 //tb2.eq(2).html( fnFloat(BLOCK_CR_MED) );  // 블럭균열
                 tb2.eq(2).html( fnFloat(BLOCK_CR_LOW+BLOCK_CR_MED+BLOCK_CR_HI) );  // 블럭균열
-                
+
                 tb2.eq(3).html( fnFloat(PTCHG_CR) );      // 패칭
                 tb2.eq(4).html( fnFloat(POTHOLE_CR) );    // 포트홀
                 tb2.eq(5).html( fnFloat(RD_VAL) );        // 소성변형
@@ -868,25 +868,25 @@ function fnFloat(val) {
                     <tbody>
                         <tr style="height: 20%;">
                             <th scope="row">거북등균열(㎡)</th>
-                            <td>${smDtaGnlSttusVO.AC_MED }</td>
+                            <td></td>
                             <th scope="row">선형균열(m)</th>
-                            <td>${smDtaGnlSttusVO.LC_MED }</td>
+                            <td></td>
                         </tr>
                         <tr style="height: 20%;">
                             <th scope="row">블럭균열(㎡)</th>
-                            <td colspan="3">${smDtaGnlSttusVO.BLOCK_CR_MED }</td>
+                            <td colspan="3"></td>
                         </tr>
                         <tr style="height: 20%;">
                             <th scope="row">패칭(㎡)</th>
-                            <td>${smDtaGnlSttusVO.PTCHG_CR }</td>
+                            <td></td>
                             <th scope="row">포트홀(㎡)</th>
-                            <td>${smDtaGnlSttusVO.POTHOLE_CR }</td>
+                            <td></td>
                         </tr>
                         <tr style="height: 20%;">
                             <th scope="row">소성변형(mm)</th>
-                            <td>${smDtaGnlSttusVO.RD_VAL }</td>
+                            <td></td>
                             <th scope="row">종단평탄성(m/km)</th>
-                            <td>${smDtaGnlSttusVO.IRI_VAL }</td>
+                            <td></td>
                         </tr>
                         <tr style="height: 20%;">
                             <th scope="row">교통량</th>

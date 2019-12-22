@@ -29,13 +29,13 @@ $( document ).ready(function() {
 	   	,colModel:[
 			 {name:'strtpt',index:'strtpt', align:'center', width:50}
 			,{name:'endpt',index:'endpt', align:'center', width:50}
-			,{name:'ac_idx',index:'ac_idx', align:'center', width:50, formatter: 'integer'}
-			,{name:'lc_IDX',index:'lc_IDX', align:'center', width:50, formatter: 'integer'}
-			,{name:'tc_IDX',index:'tc_IDX', align:'center', width:50, formatter: 'integer'}
-			,{name:'ptchg_IDX',index:'ptchg_IDX', align:'center', width:50, formatter: 'integer'}
-			,{name:'rd_IDX',index:'rd_IDX', align:'center', width:50, formatter: 'integer'}
-			,{name:'ri_IDX',index:'ri_IDX', align:'center', width:50, formatter: 'integer'}
-			,{name:'bc_IDX',index:'bc_IDX', align:'center', width:50, formatter: 'integer'}
+			,{name:'ac_TOT',index:'ac_TOT', align:'center', width:50, formatter: 'integer'}
+			,{name:'lc_TOT',index:'lc_TOT', align:'center', width:50, formatter: 'integer'}
+			,{name:'tc_TOT',index:'tc_TOT', align:'center', width:50, formatter: 'integer'}
+			,{name:'pothole_CR',index:'pothole_CR', align:'center', width:50, formatter: 'integer'}
+			,{name:'rd_VAL',index:'rd_VAL', align:'center', width:50, formatter: 'integer'}
+			,{name:'iri_VAL',index:'iri_VAL', align:'center', width:50, formatter: 'integer'}
+			,{name:'block_CR',index:'block_CR', align:'center', width:50, formatter: 'integer'}
 			,{name:'route_CODE',index:'route_CODE', hidden: true}
 	   	]
 		,async : false
@@ -75,7 +75,7 @@ $( document ).ready(function() {
 
 	// 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
 	COMMON_UTIL.cmInitGridSize('gridArea', 'div_grid', 200);
-	
+
 	fn_search();
 });
 
@@ -108,7 +108,7 @@ function fn_search() {
 
 	<div style="margin:0 2%">
 		<div class="table" style="margin:0 0 20px 0">
-			<table class="table20">			
+			<table class="table20">
 				<thead>
 					<tr>
 						<th scope="col">노선번호</th>
@@ -122,7 +122,7 @@ function fn_search() {
 				</tbody>
 			</table>
 		</div>
-	    		
+
 
 
    		<form id="frm" name="frm" method="post" action="">
@@ -133,7 +133,7 @@ function fn_search() {
             </div>
         </form>
 
-      	
+
 	</div>
 </body>
 </html>

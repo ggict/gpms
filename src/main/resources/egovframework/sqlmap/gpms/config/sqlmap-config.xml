@@ -129,4 +129,6 @@
 <!--                            주소변환 -->
 <sqlMap resource="egovframework/sqlmap/gpms/pothole/Address_SQL_POSTGRESQL.xml"/>
 
+<!--    조사자료 이미지    -->
+<sqlMap resource="egovframework/sqlmap/cmmn/EgovFile_SQL_POSTGRESQL.xml"/>
 </sqlMapConfig>

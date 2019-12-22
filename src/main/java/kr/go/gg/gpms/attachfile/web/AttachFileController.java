@@ -293,7 +293,7 @@ public class AttachFileController extends BaseController{
 				}
 			}
 
-			String filePath = pathInfoProperties.getProperty("file.upload.path") + checkFilePath(subPath, "path");
+			String filePath = checkFilePath(subPath, "path");
 
 			File uFile = new File(filePath, checkFilePath(fileName, "name"));
 			int fSize = (int) uFile.length();

@@ -6,7 +6,10 @@ import java.io.StringWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,21 +31,10 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +54,6 @@ import org.springframework.web.servlet.View;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import egovframework.cmmn.util.EgovProperties;
 import egovframework.cmmn.util.ExcelView;
 import egovframework.cmmn.util.FileUploadUtils;
 import egovframework.cmmn.web.SessionManager;
@@ -149,13 +140,13 @@ public class SrvyDtaController extends BaseController {
 
 	@Resource(name = "codeService")
 	private CodeService codeService;
-	
+
 	@Resource(name = "srvyDtaService")
 	private SrvyDtaService srvyDtaService;
 
 	@Autowired
 	SessionManager sessionManager;
-	
+
 	@Autowired
 	private DataSourceTransactionManager transactionManager;
 
@@ -179,7 +170,7 @@ public class SrvyDtaController extends BaseController {
 	 */
 	@RequestMapping(value = "/srvyDtaFileUpload.do")
 	public String fileUpload(@ModelAttribute SrvyDtaVO srvyDtaVO, SrvyDtaLogVO srvyDtaLogVO, PavFrmulaVO pavFrmulaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
-		
+
 		//TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
 		boolean isResult = false;
 		String resultCode = "";
@@ -187,14 +178,17 @@ public class SrvyDtaController extends BaseController {
 		String srvyNo = "";
 		String excelFileNm = "";
 		int totCount = 0;
-		
+
 		String userNo = sessionManager.getUserNo();
 		String funCallback = srvyDtaVO.getCallBackFunction() == null ? "" : srvyDtaVO.getCallBackFunction();
 
 		/** validate request type */
 		Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
 		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-		
+
+		// ###################################################
+		// ## 1. zip 파일 저장
+		// ###################################################
 		/** extract files */
 		final List<MultipartFile> files = multiRequest.getFiles("files");
 		Assert.notNull(files, "files is null");
@@ -203,14 +197,18 @@ public class SrvyDtaController extends BaseController {
 		String filePath = pathInfoProperties.getProperty("file.upload.path");
 
 		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "srvy", files);
+		// ###################################################
 
 		if (fileList.size() < 1 || userNo == null || userNo.equals("")) {
 			resultCode = "ERROR";
 			resultMsg = "등록오류발생";
 		} else {
-			
+
 		try {
 			for (AttachFileVO file : fileList) {
+			    // ###################################################
+		        // ## 2. zip 파일 정보 DB 저장
+		        // ###################################################
 				String logCode = "PCST0001"; // 진행
 				Date currentTime = new Date();
 				srvyDtaLogVO.setBEGIN_DT(new java.sql.Date(currentTime.getTime()));
@@ -222,45 +220,83 @@ public class SrvyDtaController extends BaseController {
 
 				// 파일 정보 DB 저장
 				String fileNo = attachFileService.insertAttachFile(file);
+				// ###################################################
 
-				String filePathName = filePath + file.getFILE_COURS() + File.separator + file.getFILE_NM();
+				// ###################################################
+                // ## 3. zip 파일 압축 풀기
+                // ###################################################
+				String filePathName = file.getFILE_COURS() + File.separator + file.getFILE_NM();
 				//String bakFilePath = filePath + File.separator + "srvy" + File.separator + "bak" + File.separator + file.getFILE_NM();
-				
+
 				//파일경로+파일명
 				String fileName = checkFilePath(filePathName, "path");
-				
+
 		        Date currentDate = new Date();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 				String date = sdf.format(currentDate);
 				filePath += File.separator + "srvy" + File.separator + date;
-				
+
 				//업로드 폴더 경로
 				File uploadFolder =  new File(checkFilePath(filePath,"path"));
-				
+
 				//압축풀기(파일경로+파일명, 업로드폴더)
 				srvyDtaService.decmprsFile(fileName, uploadFolder);
-				
+				// ###################################################
+
 				//원본파일
 				//File orgnFile = new File(fileName);
-				
+
 				//이동되는 파일
 				//File moveFile = new File(bakFilePath);
-				
+
 				//zip 파일이동
 				//FileUtils.moveFile(orgnFile, moveFile);
-				
+
 				String seDirNm = "";
 				String seFileNm = "";
 				int csvCount = 0;
 				String csvFileNm = "";
 				List<SrvyDtaVO> imageList = null;
-		        
+
+				// ###########################################
+				// ## 디렉토리 이름으로 정렬
+				// ###########################################
+				Collection<File> subDirList = FileUtils.listFilesAndDirs(new File(filePath), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+				File[] subDirArr = new File[subDirList.size()];
+				int idx = 0;
+ 				for ( File subDir : subDirList ) {
+ 				   subDirArr[idx++] = subDir;
+				}
+
+                Comparator comp = new Comparator() {
+                    public int compare(Object o1, Object o2) {
+                        File f1 = (File) o1;
+                        File f2 = (File) o2;
+                        if (f1.isDirectory() && !f2.isDirectory()) {
+                            // Directory before non-directory
+                            return -1;
+                        } else if (!f1.isDirectory() && f2.isDirectory()) {
+                            // Non-directory after directory
+                            return 1;
+                        } else {
+                            // Alphabetic order otherwise
+                            return f1.compareTo(f2);
+                        }
+                    }
+                };
+                Arrays.sort(subDirArr, comp);
+                // ###########################################
+
 				//하위의 모든 디렉토리
-		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
-		        				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+//		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
+//		        				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	            for (File seDirs : subDirArr) {
 		        	seDirNm = seDirs.getName();
-		        	
+
 		        	if(seDirs.isDirectory()) {
+		        	    // ###################################################
+		                // ## 4. 분석결과 폴더에서 분석_보고서(CSV 파일) 파일을 찾아 엑셀파일로 변환(DBLoading Sheet 생성)
+		                // ###################################################
 		            	if("분석결과".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
 		            		//하위의 모든 파일
 		            		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
@@ -268,7 +304,7 @@ public class SrvyDtaController extends BaseController {
 		            			seFileNm = seFiles.getName();
 		            			//csv파일 갯수 체크
 		            			if("csv".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
-		            				csvCount++; 
+		            				csvCount++;
 	                    		}
 		            		}
 		            		if(csvCount > 1 ) {
@@ -276,7 +312,7 @@ public class SrvyDtaController extends BaseController {
 		        				model.addAttribute("resultMsg", "csv파일이 여러개 존재합니다.");
 		            			return "jsonView";
 		            		}
-		            		
+
 		            		//_분석결과 폴더 하위 모든 파일
 		                    for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
 		                    					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
@@ -287,18 +323,22 @@ public class SrvyDtaController extends BaseController {
 		                    			csvFileNm = filePath + File.separator + seDirNm + File.separator + seFileNm;
 		                    			String _csvFileNm = seFileNm.substring(0,seFileNm.lastIndexOf("."));
 		                    			excelFileNm = filePath + File.separator + seDirNm + File.separator + _csvFileNm + ".xlsx";
-		                    			
+
 		                    			//csv파일 -> xlsx 파일로 변환
 		                    			srvyDtaService.convertExcel(csvFileNm, excelFileNm, srvyDtaVO);
 		                    		}
 		                    	}
 		                    }
 		            	}//분석결과 폴더
-		            	
+		            	// ###################################################
+
+		            	// ###################################################
+                        // ## 5. 분석결과 폴더에서 분석_보고서(CSV 파일) 파일을 찾아 엑셀파일로 변환
+                        // ###################################################
 		            	if("표면결함".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
 		            		//엑셀파일 RDSRFC_IMG_FILE_NM_1 이미지 파일명 조회
 		            		imageList = srvyDtaService.selectImageList(excelFileNm);
-		            		
+
 		            		//하위의 모든 파일
 		            		for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
                 					TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
@@ -307,16 +347,21 @@ public class SrvyDtaController extends BaseController {
 		            			if(!"jpg".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
 			        				model.addAttribute("resultCode", "noJpg");
 			        				model.addAttribute("resultMsg", "이미지 파일이 없습니다.");
-			            			return "jsonView"; 
+			            			return "jsonView";
 		            			}
 		            		}//표면결함 폴더 내 jpg 파일
 		            	}//표면결함 폴더
+		            	// ###################################################
+
 		            }//디렉토리 확인
 		        }//하위의 모든 디렉토리
-		       
+
 		        //파일상세정보 등록
 		        String seCode = "";
-		       
+
+		        // ###################################################
+                // ## 6. 압축파일 해제된 데이터 DB저장
+                // ###################################################
 		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
      				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
 		     	seDirNm = seDirs.getName();
@@ -361,13 +406,18 @@ public class SrvyDtaController extends BaseController {
 			         	}
 			     	}
 		        }
+		        // ###################################################
 
 				resultMsg = "파일전송이 성공하였습니다.";
 				logCode = "PCST0002";
-				
-				//엑셀파일 데이터 조회하여 srvyDtaVO set 
+
+				// ###################################################
+                // ## 7. 파일에서 엑셀정보 조사정보 가져오기
+                // ###################################################
+				//엑셀파일 데이터 조회하여 srvyDtaVO set
 				srvyDtaVO = srvyDtaService.readExcel(srvyDtaVO, excelFileNm);
-				
+				// ###################################################
+
 				// 조사자료 엑셀 파일 저장
 				srvyDtaVO.setFILE_NO(fileNo);
 				srvyDtaVO.setEVL_PROCESS_AT("N");
@@ -379,9 +429,16 @@ public class SrvyDtaController extends BaseController {
 				srvyDtaVO.setVAL_EVL_AT("N");
 				srvyDtaVO.setUSE_AT("Y");
 				srvyDtaVO.setDELETE_AT("N");
-				
-				srvyNo = srvyDtaService.insertSrvyDta(srvyDtaVO);
 
+				// ###################################################
+                // ## 8. 조사자료 등록
+                // ###################################################
+				srvyNo = srvyDtaService.insertSrvyDta(srvyDtaVO);
+				// ###################################################
+
+				// ###################################################
+                // ## 9. 조사자료 로그 등록
+                // ###################################################
 				// 조사자료 엑셀 파일 업로드 로그 저장
 				srvyDtaLogVO.setSRVY_NO(srvyNo);
 				srvyDtaLogVO.setLOG_MSSAGE(resultMsg);
@@ -389,12 +446,16 @@ public class SrvyDtaController extends BaseController {
 				srvyDtaLogVO.setPROCESS_STTUS(logCode);
 				srvyDtaLogVO.setEND_DT(new java.sql.Date(currentTime.getTime()));
 				srvyDtaLogVO.setCRTR_NO(userNo);
-				
+
 				srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
-				
+				// ###################################################
+
+				// ###################################################
+                // ## 10. 유효성 검사
+                // ###################################################
 				String upLogCode = "PCST0001";
 				resultMsg = "자료조사 validation check를 진행중 입니다.";
-				
+
 				// validation check
 				Map<String, Object> validChkInfo = validReadXLData(excelFileNm);
 				boolean validChk = (Boolean) validChkInfo.get("result");
@@ -423,32 +484,37 @@ public class SrvyDtaController extends BaseController {
 
 					srvyDtaVO.setVAL_EVL_AT("N");
 					srvyDtaVO.setSRVY_NO(srvyNo);
-					
+
 					srvyDtaService.updateSrvyDta(srvyDtaVO);
 				}
+				// ###################################################
 
+				// ###################################################
+                // ## 11. 조사자료 로그 등록
+                // ###################################################
 				srvyDtaLogVO.setPROCESS_SE("PCSE0002");
 				srvyDtaLogVO.setPROCESS_STTUS(upLogCode);
 				srvyDtaLogVO.setLOG_MSSAGE(resultMsg);
-				
+
 				srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
+				// ###################################################
 			}
-			
+
 			srvyDtaVO.setSRVY_NO(srvyNo);
 			srvyDtaVO.setUSE_AT("Y");
 			srvyDtaVO.setDELETE_AT("N");
-		
+
 			List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
-			
+
 			if (excelList == null || excelList.size() == 0) {
 				model.addAttribute("resultCode", "noData");
 				model.addAttribute("resultMsg", "엑셀 데이터가 없습니다.");
-    			return "jsonView"; 
+    			return "jsonView";
 			}
-			
+
 			//frmula_nm = GPCI
 			String frmula_nm = egovPropertyService.getString("FRMULA_NM", "NHPCI");
-			
+
 			if (StringUtils.isEmpty(pavFrmulaVO.getFRMULA_NM())) {
 				pavFrmulaVO.setFRMULA_NM(frmula_nm);
 			}
@@ -476,78 +542,81 @@ public class SrvyDtaController extends BaseController {
 						model.addAttribute("resultMsg", "엑셀 파일이 없습니다.");
 						return "jsonView";
 					}
-					
+
 					//엑셀파일
 					fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
-					
-					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
-					srvyDtaService.insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS(), srvyDtaOne);
-					
-					//TMP_MUMM_SCTN_SRVY_DTA 조회
-					srvyDtaVO = srvyDtaService.selectTmpExcelData();
-					
-					//srvyDtaVO.setSE_CD("N");
-					//seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
-					/*
-					 * [2019-12-16 yslee]
-					 * 전임 개발자가 요구사항 및 기획 대로 개발한 상태에서는
-					 * SE_CD값은 항상 Y가 나오도록 로직이 작성되어 AI를 타지 않음
-					 * 개발서버에서 균열분석이미지 폴더에 png 파일 디코딩 다운로드는 if조건을 임시 삭제 후 돌린 것임.
-					 */
-					if("N".equals(srvyDtaVO.getSE_CD())) {
-						srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO);
-					}
-					
-					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
 
-					resultCode = prc_result.get("o_proccode").toString();
-					resultMsg = prc_result.get("o_procmsg").toString();
-					
-					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
-					BindBeansToActiveUser(srvyDtaOne);
+//					// ###################################################
+//					// ## 12. 임시 테이블에 엑셀 조사자료 삭제
+//					// ###################################################
+//					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
+//					srvyDtaService.deleteTmpMummSctnSrvyDta();
+//					// ###################################################
+//
+//					// ###################################################
+//	                // ## 13. 임시 테이블에 엑셀 조사자료 등록
+//	                // ###################################################
+//					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
+//					srvyDtaService.insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS(), srvyDtaOne);
+//					// ###################################################
+//
+//					//TMP_MUMM_SCTN_SRVY_DTA 조회
+//					srvyDtaVO = srvyDtaService.selectTmpExcelData();
+
+					// AI분석
+					srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO, srvyDtaOne, fileName);
+
+//					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
+//
+//					resultCode = prc_result.get("o_proccode").toString();
+//					resultMsg = prc_result.get("o_procmsg").toString();
+//
+//					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
+//					BindBeansToActiveUser(srvyDtaOne);
 				}
-				
-				// 공간 보정
-				if (srvyDtaOne.getGPS_CORTN_PROCESS_AT().equals("N")) {
 
-					HashMap prc_result = srvyDtaService.procSrvyDtaSysReflct(srvyDtaOne);
+//				// 공간 보정
+//				if (srvyDtaOne.getGPS_CORTN_PROCESS_AT().equals("N")) {
+//
+//					HashMap prc_result = srvyDtaService.procSrvyDtaSysReflct(srvyDtaOne);
+//
+//					resultCode = prc_result.get("o_proccode").toString();
+//					resultMsg = prc_result.get("o_procmsg").toString();
+//
+//					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
+//					BindBeansToActiveUser(srvyDtaOne);
+//				}
+//
+//				// 집계 처리
+//				if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
+//					srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
+//					srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
+//
+//					HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
+//
+//					resultCode = (String) prc_result.get("o_proccode");
+//					resultMsg = (String) prc_result.get("o_procmsg");
+//				}
 
-					resultCode = prc_result.get("o_proccode").toString();
-					resultMsg = prc_result.get("o_procmsg").toString();
-
-					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
-					BindBeansToActiveUser(srvyDtaOne);
-				}
-			
-				// 집계 처리
-				if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
-					srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
-					srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
-					
-					HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
-					
-					resultCode = (String) prc_result.get("o_proccode");
-					resultMsg = (String) prc_result.get("o_procmsg");
-				}
-				
 			}
 				isResult = true;
 				/*
 				 * [2019-12-16 yslee]
 				 * 트랜잭션 처리가 되어있지 않은 상태
 				 * 개발서버에서 확인 결과 Controller에서는 트랜잭션이 안걸려있기때문에
-				 * 첫 AI API 통신 결과를 기다리는(약1분) 동안 
+				 * 첫 AI API 통신 결과를 기다리는(약1분) 동안
 				 * 최종 프로시저(prc_aggregate_general) 까지 다 돌아버림.
 				 * 그 후에 API가 차례대로 돌아간다.
 				 * PNG파일은 차례대로 정상적으로 "균열분석이미지" 폴더에 다운로드 됨
 				 */
 				//this.transactionManager.commit(status);// 트랜잭션 커밋
 			} catch (Exception e) {
+			    e.printStackTrace();
 				isResult = false;
 				//this.transactionManager.rollback(status);// 트랜잭션 롤백
 			}
 		}
-		
+
 		model.addAttribute("result", isResult);
 		model.addAttribute("resultCode", resultCode);
 		model.addAttribute("resultMsg", resultMsg);
@@ -559,7 +628,7 @@ public class SrvyDtaController extends BaseController {
 
 	@RequestMapping(value = "/srvyDtaUploadResultList.do")
 	public String srvyDtaUploadResultList(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
-		
+
 		return "/srvy/srvyDtaUploadResultList";
 	}
 
@@ -585,7 +654,7 @@ public class SrvyDtaController extends BaseController {
 
 		List<SrvyDtaVO> items = srvyDtaService.selectSrvyDtaUploadResultList(srvyDtaVO);
 		int totCnt = srvyDtaService.selectSrvyDtaUploadResultCount(srvyDtaVO);
-		
+
 		int total_page = 0;
 		if (totCnt > 0)
 			total_page = (int) Math.ceil((float) totCnt / (float) paginationInfo.getPageSize());
@@ -597,13 +666,13 @@ public class SrvyDtaController extends BaseController {
 		map.put("total", total_page);
 		map.put("records", totCnt);
 		map.put("rows", items);
-		
+
 
 		return map;
 	}
 
-	
-	
+
+
 
 	/**
 	 * 조사자료엑셀(TN_SRVY_DTA_EXCEL) 업로드 결과 상세 목록을 조회한다. (paging)
@@ -615,7 +684,7 @@ public class SrvyDtaController extends BaseController {
 	 */
 	@RequestMapping(value = { "/api/srvyDtaUploadFileList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody Map<String, Object> srvyDtaUploadFileListRest(@RequestBody SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
-		
+
 		PaginationInfo paginationInfo = new PaginationInfo();
 		paginationInfo.setCurrentPageNo(srvyDtaVO.getPage());
 		paginationInfo.setRecordCountPerPage(srvyDtaVO.getPageUnit());
@@ -872,7 +941,7 @@ public class SrvyDtaController extends BaseController {
 	 *
 	 * }
 	 */
-	
+
 	private void attachDataSet(String fileNo, String seCode, File seFiles, String userNo) throws Exception {
 		String fileNm = seFiles.getName();
 		AttachFileVO attachFileVO = new AttachFileVO();
@@ -889,7 +958,7 @@ public class SrvyDtaController extends BaseController {
 		//TN_ATTACH_DETAIL_FILE 등록
 		attachFileService.insertAttachDetailFile(attachFileVO);
 	}
-	
+
 	private String getReadXLData(String fileName, String sheetName) throws Exception {
 
 		// 엑셀파일 실행
@@ -904,7 +973,7 @@ public class SrvyDtaController extends BaseController {
 		// XFFS : .xlsx
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sheet = wb.getSheet(sheetName);
-		
+
 		XSSFCell cur;
 
 		String result = "";
@@ -999,7 +1068,7 @@ public class SrvyDtaController extends BaseController {
 
 		return result;
 	}
-	
+
 	//엑셀자료 DB INSERT
 	private String getReadDbData(String fileName, String sheetName) throws Exception {
 
@@ -1013,7 +1082,7 @@ public class SrvyDtaController extends BaseController {
 		String colName = "";
 
 		try {
-			
+
 			// 엑셀데이터 row, cell 건수 확인
 			int rowNum = sheet.getPhysicalNumberOfRows();
 			int cellNum = sheet.getRow(0).getLastCellNum();
@@ -1030,7 +1099,7 @@ public class SrvyDtaController extends BaseController {
 					// j => 엑셀 cell의 수
 					for (int j = 0; j < cellNum; j++) {
 						colName = sheet.getRow(0).getCell(j).getStringCellValue();
-						
+
 						//셀 열 vo
 						String val = formulaEval.evaluate(sheet.getRow(i).getCell(j)) == null ? "" : formulaEval.evaluate(sheet.getRow(i).getCell(j)).formatAsString();
 						if (val.contains(".") && val.split("[.]")[1].equals("0")) {
@@ -1127,7 +1196,7 @@ public class SrvyDtaController extends BaseController {
 
 			if(sSrvyYear != null && !sSrvyYear.equals("")) nSrvyYear = (int)Float.parseFloat(sSrvyYear);
 			if(sSrvyMt != null && !sSrvyMt.equals("")) nSrvyMt = (int)Float.parseFloat(sSrvyMt);
-			
+
 			Calendar today = Calendar.getInstance();
 			Calendar c = (Calendar) today.clone();
 
@@ -1231,6 +1300,7 @@ public class SrvyDtaController extends BaseController {
 			result = true;
 		} catch (Exception e) {
 			fis.close();
+			e.printStackTrace();
 			LOGGER.debug("예외발생내역:" + e);
 			map.put("result", result);
 			map.put("errorCol", "");
@@ -1328,7 +1398,7 @@ public class SrvyDtaController extends BaseController {
 		model.addAttribute("routeInfoVO", routeInfoVO);
 		model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
 		model.addAttribute("srvyYearList", srvyYearList);
-		
+
 		//관리 도로
 	    addCodeToModel("MNRD", "mngRdList", model);
 
@@ -1577,7 +1647,7 @@ public class SrvyDtaController extends BaseController {
 	public String srvyDtaEvlInfoDetail(@ModelAttribute SmDtaGnlSttusVO smDtaGnlSttusVO, MummSctnSrvyDtaVO mummSctnSrvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 
 		smDtaGnlSttusVO = smDtaGnlSttusService.selectSmDtaGnlSttus(smDtaGnlSttusVO);
-		
+
 		if(null != smDtaGnlSttusVO) {
 			SmDtaGnlSttusVO param = new SmDtaGnlSttusVO();
 			param.setROUTE_CODE(smDtaGnlSttusVO.getROUTE_CODE());
@@ -1587,7 +1657,7 @@ public class SrvyDtaController extends BaseController {
 			param.setENDPT(smDtaGnlSttusVO.getENDPT());
 
 			mummSctnSrvyDtaVO.setSRVY_YEAR(mummSctnSrvyDtaVO.getSCH_SRVY_YEAR());
-		
+
 			model.addAttribute("mummSctnSrvyDtaVO", mummSctnSrvyDtaVO);
 			model.addAttribute("smDtaGnlSttusVO", smDtaGnlSttusVO);
 			model.addAttribute("srvyYearList", smDtaGnlSttusService.selectSmDtaGnlSttusYearList(param));
@@ -1788,7 +1858,7 @@ public class SrvyDtaController extends BaseController {
 
 		return result;
 	}
-	
+
 	/**
 	 * 분석자료 팝업 목록을 조회한다. (paging)
 	 *
@@ -1811,7 +1881,7 @@ public class SrvyDtaController extends BaseController {
 
 		List<SrvyDtaVO> items = srvyDtaService.selectAnalDataPopupResultList(srvyDtaVO);
 		int totCnt = srvyDtaService.selectAnalDataPopupResultCount(srvyDtaVO);
-		
+
 		int total_page = 0;
 		if (totCnt > 0)
 			total_page = (int) Math.ceil((float) totCnt / (float) paginationInfo.getPageSize());
@@ -1819,7 +1889,7 @@ public class SrvyDtaController extends BaseController {
 		String roadName = items.get(0).getROAD_NAME();
 		String directCode = items.get(0).getDIRECT_CODE();
 		String track = items.get(0).getTRACK();
-		
+
 		// 결과 JSON 저장
 		Map<String, Object> map = new HashMap<String, Object>();
 
@@ -1831,7 +1901,7 @@ public class SrvyDtaController extends BaseController {
 		map.put("total", total_page);
 		map.put("records", totCnt);
 		map.put("rows", items);
-		
+
 		return map;
 	}
 

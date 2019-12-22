@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.sql.Connection;
@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -34,25 +36,22 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import egovframework.cmmn.util.EgovProperties;
-import egovframework.cmmn.util.FileUploadUtils;
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
 import kr.go.gg.gpms.attachfile.service.impl.AttachFileDAO;
 import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 import kr.go.gg.gpms.mummsctnsrvydta.service.impl.MummSctnSrvyDtaDAO;
-import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
 import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
-import net.sf.jazzlib.ZipEntry;
-import net.sf.jazzlib.ZipInputStream;
 
 /**
  * 조사_자료_수식
@@ -65,7 +64,7 @@ import net.sf.jazzlib.ZipInputStream;
  * @since 2019-10-23
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 @EnableAsync
@@ -74,22 +73,24 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 
 	@Resource(name = "srvyDtaDAO")
 	private SrvyDtaDAO srvyDtaDAO;
-	
+
 	@Resource(name = "attachFileDAO")
 	private AttachFileDAO attachFileDAO;
-	
+
 	@Resource(name = "mummSctnSrvyDtaDAO")
 	private MummSctnSrvyDtaDAO mummSctnSrvyDtaDAO;
-	
+
 	@Resource(name = "pathInfoProperties")
 	protected Properties pathInfoProperties;
-	
+
 	@Autowired
 	private DataSourceTransactionManager transactionManager;
-	
+
 	@Autowired
     DataSource dataSource;
-	
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(SrvyDtaServiceImpl.class);
+
 	/**
 	 * 압축풀기
 	 * @param String fileName, File uploadFolder
@@ -97,24 +98,24 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 * @exception Exception
 	 */
 	public void decmprsFile(String fileName, File uploadFolder) throws Exception {
-		
+
         File zipFile = new File(fileName);
         FileInputStream fis = null;
         ZipInputStream zis = null;
         ZipEntry zipentry = null;
         String fileNm = "";
-        
+
         try {
             // 균열분석이미지 png폴더 생성
             File pngFolder = new File(uploadFolder + File.separator + "균열분석이미지");
             pngFolder.mkdirs();
-        	
+
         	//파일 스트림
             fis = new FileInputStream(zipFile);
-            
+
             //Zip 파일 스트림
-            zis = new ZipInputStream(fis);
-            
+            zis = new ZipInputStream(fis, Charset.forName("EUC-KR"));
+
             //entry가 없을때까지 뽑기
             while ((zipentry = zis.getNextEntry()) != null) {
                 fileNm = zipentry.getName();
@@ -133,7 +134,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                     //파일 스트림
                     FileOutputStream fos = null;
                     try {
-                    	fos = new FileOutputStream(file); 
+                    	fos = new FileOutputStream(file);
                         byte[] buffer = new byte[256];
                         int size = 0;
                         //Zip스트림으로부터 byte 뽑아내기
@@ -156,7 +157,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                 fis.close();
 		}
 	}
-	
+
 	/**
 	 * cvs -> excel 파일변환
 	 * @param String csvFileNm, String excelFileNm
@@ -171,7 +172,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        XSSFSheet sheet = wb.createSheet("분석자료");
 	        String currentLine=null;
 	        int RowNum=-1;
-	        BufferedReader br = new BufferedReader(new FileReader(csvFileNm));
+//	        BufferedReader br = new BufferedReader(new FileReader(csvFileNm));
+	        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(csvFileNm),"EUC-KR"));
 	        while ((currentLine = br.readLine()) != null) {
 	            String str[] = currentLine.split(",");
 	            RowNum++;
@@ -180,24 +182,24 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	                currentRow.createCell(i).setCellValue(str[i]);
 	            }
 	        }
-	        
+
 	        //조사일자 변환
 	        String srvy_year = srvyDtaVO.getSRVY_DE().substring(0,4);
 	        String srvy_mt = srvyDtaVO.getSRVY_DE().substring(5,7);
 	        String srvy_de = srvyDtaVO.getSRVY_DE().replace("-", "");
-	        
+
 	        //노선코드 4자리수 채우기
 	        String route_code = String.format("%04d", Integer.parseInt(srvyDtaVO.getROAD_NO()));
-	        
+
 	        //설정 시트 추가
 	        XSSFSheet OptSheet = wb.createSheet("설정");
 	        XSSFRow optRow = null;
-	        
+
 	        for(int i=1; i<8; i++ ) {
 	        	optRow = OptSheet.createRow(i);
         		if(i==1) {
         			optRow.createCell(1).setCellValue("노선번호");
-	    	        optRow.createCell(2).setCellValue(srvyDtaVO.getROAD_NO());	
+	    	        optRow.createCell(2).setCellValue(srvyDtaVO.getROAD_NO());
         		} else if(i==2) {
         			optRow.createCell(1).setCellValue("도로명");
 	    	        optRow.createCell(2).setCellValue(srvyDtaVO.getROAD_NAME());
@@ -221,7 +223,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 
 	        //조사_자료_수식(TN_SRVY_DTA_FRMULA) 목록을 조회
 	        List<SrvyDtaVO> frmulaList = srvyDtaDAO.selectSrvyDtaFrmulaList();
-	        
+
 	        //DBLoading 시트 추가
 	        XSSFSheet dbSheet = wb.createSheet("DBLoading");
 	        //DBLoading 첫행
@@ -230,14 +232,14 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        for(int i=0; i<frmulaList.size(); i++) {
 	        	dbFirstRow.createCell(i).setCellValue(frmulaList.get(i).getFRMULA_NM());
 	        }
-	        
+
 	        //첫행 컬럼명이므로 1부터 시작
 	        int rowNum = sheet.getPhysicalNumberOfRows()-13;
 	        String _arithFrmula = "";
 	        String newSeCode = "";
 	        String frmulaSeCode = "";
 	        String arithFrmla = "";
-	        
+
 	        //row 반복
 	        for(int i=1; i<=rowNum; i++) {
 	        	XSSFRow dbRow = dbSheet.createRow(i);
@@ -259,7 +261,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        					String arrayCode = "";
 	        					String[] arrayFrmulaSeCode = frmulaSeCode.split(",");
 	        					int arrayLength = arrayFrmulaSeCode.length;
-        					
+
 	        					for(int k=0; k<arrayLength; k++) {
 	        						arrayKey = arrayFrmulaSeCode[k].charAt(1);
 	        						arrayCode = arrayFrmulaSeCode[k];
@@ -275,9 +277,9 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        						}
 	        					}
 	        				}
-	        				
+
 		        			dbRow.createCell(j).setCellFormula(_arithFrmula);
-	        			}//if frmulaSeCode null 
+	        			}//if frmulaSeCode null
 	        			else if("0".equals(arithFrmla)) {
 	        				dbRow.createCell(j).setCellValue("0");
 	        			}
@@ -297,16 +299,16 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	        	dbRow.createCell(20).setCellValue(srvy_de);			//조사일자
 	        	}//for j
 	        }//for i
-	        
+
 	        fos = new FileOutputStream(excelFileNm);
 	        wb.write(fos);
-	        
+
 	        fos.close();
 		} catch (Exception e) {
 			fos.close();
-		} 
+		}
 	}
-	
+
 	/**
 	 * 엑셀파일 이미지명 조회
 	 * @param String excelFileNm
@@ -321,7 +323,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		XSSFSheet sheet = wb.getSheet("DBLoading");
 		List<SrvyDtaVO> list = new ArrayList<SrvyDtaVO>();
 		String img = "";
-		
+
 		try {
 			// 엑셀데이터 row, cell 건수 확인
 			int rowNum = sheet.getPhysicalNumberOfRows();
@@ -332,12 +334,12 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 			// i => 엑셀 row의 수
 			for (int i = 1; i < rowNum; i++) { // 헤더제외. 1부터 시작
 				img = formulaEval.evaluate(sheet.getRow(i).getCell(16)).formatAsString();
-				
+
 				SrvyDtaVO vo = new SrvyDtaVO();
 				vo.setRDSRFC_IMG_FILE_NM_1(img);
 				list.add(vo);
 			}
-			
+
 		} catch (Exception e) {
 			fis.close();
 		} finally {
@@ -345,7 +347,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		}
 		return list;
 	}
-	
+
 	/**
 	 * 엑셀파일을 조회한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
@@ -353,11 +355,11 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 * @exception Exception
 	 */
 	public SrvyDtaVO readExcel(SrvyDtaVO srvyDtaVO, String excelFileNm) throws Exception {
-		
+
 		FileInputStream fis = new FileInputStream(excelFileNm);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sheet = wb.getSheet("DBLoading");
-		
+
 		FormulaEvaluator formulaEval = wb.getCreationHelper().createFormulaEvaluator();
 		int rowNum = sheet.getPhysicalNumberOfRows();	//총 row수
 		int dataCo = rowNum-1;	//헤더 제거
@@ -365,14 +367,14 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		String directCode = sheet.getRow(1).getCell(3).getStringCellValue();
 		String track = sheet.getRow(1).getCell(4).getStringCellValue();
 		Double _strtpt = Double.parseDouble(formulaEval.evaluate(sheet.getRow(1).getCell(5)).formatAsString());
-		int strtpt = (int) Math.floor(_strtpt); 
+		int strtpt = (int) Math.floor(_strtpt);
 		Double _endpt = Double.parseDouble(formulaEval.evaluate(sheet.getRow(dataCo).getCell(6)).formatAsString());
 		int endpt = (int) Math.floor(_endpt);
 		String srvyDe = sheet.getRow(1).getCell(20).getStringCellValue();
 		String _srvyNm = formulaEval.evaluate(sheet.getRow(1).getCell(26)).formatAsString();
 		String srvyNm = _srvyNm.replace("\"", "");
-		
-		srvyDtaVO.setDATA_CO(Integer.toString(dataCo));	
+
+		srvyDtaVO.setDATA_CO(Integer.toString(dataCo));
 		srvyDtaVO.setROUTE_CODE(routeCode);
 		srvyDtaVO.setDIRECT_CODE(directCode);
 		srvyDtaVO.setTRACK(track);
@@ -380,10 +382,10 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		srvyDtaVO.setENDPT(String.valueOf(endpt));
 		srvyDtaVO.setSRVY_DE(srvyDe);
 		srvyDtaVO.setSRVY_NM(srvyNm);
-		 
+
 		return srvyDtaVO;
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA)를 등록한다.
 	 * @param srvyDtaVO - 등록할 정보가 담긴 srvyDtaVO
@@ -394,7 +396,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 
 		return srvyDtaDAO.insertSrvyDta(srvyDtaVO);
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA) 목록을 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -404,12 +406,12 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public List<SrvyDtaVO> selectSrvyDtaList(SrvyDtaVO srvyDtaVO) throws Exception {
 		return srvyDtaDAO.selectSrvyDtaList(srvyDtaVO);
 	}
-	
+
 	@Override
 	public HashMap procSaveSurveyData(SrvyDtaVO srvyDtaOne) {
 		return srvyDtaDAO.procSaveSurveyData(srvyDtaOne);
 	}
-	
+
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)를 등록한다.
 	 * @param @param String fileName, String srvyNo
@@ -417,7 +419,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 * @exception Exception
 	 */
 	public void insertTmpExcelData(String fileName, String rootFileCours, SrvyDtaVO srvyDtaOne) throws Exception {
-		
+
 		FileInputStream fis = new FileInputStream(fileName);
 		XSSFWorkbook wb = new XSSFWorkbook(fis);
 		XSSFSheet sheet = wb.getSheet("DBLoading");
@@ -438,7 +440,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 				// j => 엑셀 cell의 수
 				for (int j = 0; j < cellNum; j++) {
 					colName = sheet.getRow(0).getCell(j).getStringCellValue();
-					
+
 					//셀 열 vo
 					String val = formulaEval.evaluate(sheet.getRow(i).getCell(j)) == null ? "" : formulaEval.evaluate(sheet.getRow(i).getCell(j)).formatAsString();
 					if (val.contains(".") && val.split("[.]")[1].equals("0")) {
@@ -453,7 +455,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 						jpgFileName = val;
 					}
 				}
-				
+
 				/* 노면이미지파일명을 균열이미지파일명 컬럼에 별도로 넣음
 				   frnt_img_file_nm,frnt_img_file_cours,cr_img_file_nm,cr_img_file_cours
 				 */
@@ -461,18 +463,18 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 				String pngFileName = jpgFileName.replace(".jpg", ".png");
 				params.put("RDSRFC_IMG_FILE_NM_2", pngFileName);
 				params.put("FRNT_IMG_FILE_NM", jpgFileName);
-				params.put("FRNT_IMG_FILE_COURS", "");
+				params.put("FRNT_IMG_FILE_COURS", rootFileCours);
 				params.put("CR_IMG_FILE_NM", pngFileName);
-				params.put("CR_IMG_FILE_COURS", rootFileCours + File.separator + "균열분석이미지");
-				
+				params.put("CR_IMG_FILE_COURS", rootFileCours.substring(0, rootFileCours.lastIndexOf(File.separator, rootFileCours.lastIndexOf(File.separator)-1)) + File.separator + "균열분석이미지");
+
 				srvyDtaDAO.insertTmpExcelData(params);
 			}
 		}
-		
+
 		//TMP_MUMM_SCTN_SRVY_DTA 테이블에 jpg이미지파일 경로 업데이트
-		srvyDtaDAO.updateImgInfoOfTmpExcelData(srvyDtaOne);
+//		srvyDtaDAO.updateImgInfoOfTmpExcelData(srvyDtaOne);
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA)을 조회한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
@@ -481,10 +483,10 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	 */
 	public SrvyDtaVO selectSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
 		SrvyDtaVO resultVO = srvyDtaDAO.selectSrvyDta(srvyDtaVO);
-		 
+
 		return resultVO;
 	}
-	
+
 	/**
 	 * 입력한 조사자료 엑셀 데이터를 시스템에 반영한다.
 	 */
@@ -492,7 +494,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public HashMap procSrvyDtaSysReflct(SrvyDtaVO srvyDtaOne) {
 		return srvyDtaDAO.procSrvyDtaSysReflct(srvyDtaOne);
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA)를 수정한다.
 	 * @param srvyDtaVO - 수정할 정보가 담긴 srvyDtaVO
@@ -502,7 +504,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public int updateSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception {
 		return srvyDtaDAO.updateSrvyDta(srvyDtaVO);
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA) 파일 업로드 결과 목록을 조회.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -512,7 +514,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public List<SrvyDtaVO> selectSrvyDtaUploadResultList(SrvyDtaVO srvyDtaVO) throws Exception {
 		return srvyDtaDAO.selectSrvyDtaUploadResultList(srvyDtaVO);
 	}
-	
+
 	/**
 	 * 조사_자료(TN_SRVY_DTA) 파일 업로드 결과 갯수를 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -522,7 +524,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public int selectSrvyDtaUploadResultCount(SrvyDtaVO srvyDtaVO) {
 		return srvyDtaDAO.selectSrvyDtaUploadResultCount(srvyDtaVO);
 	}
-	
+
 	/**
 	 * 분석결과 목록을 조회.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -532,7 +534,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public List<SrvyDtaVO> selectAnalDataPopupResultList(SrvyDtaVO srvyDtaVO) throws Exception {
 		return srvyDtaDAO.selectAnalDataPopupResultList(srvyDtaVO);
 	}
-	
+
 	/**
 	 * 분석결과 갯수를 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -542,10 +544,10 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public int selectAnalDataPopupResultCount(SrvyDtaVO srvyDtaVO) {
 		return srvyDtaDAO.selectAnalDataPopupResultCount(srvyDtaVO);
 	}
-	
+
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
-	 * @param 
+	 * @param
 	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
 	 * @exception Exception
 	 */
@@ -553,7 +555,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		SrvyDtaVO resultVO = srvyDtaDAO.selectTmpExcelData();
 		return resultVO;
 	}
-	
+
 	/**
 	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
 	 * @param srvyDtaSttusVO
@@ -563,7 +565,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public HashMap procAggregateGeneral(SrvyDtaVO srvyDtaVO) {
 		return srvyDtaDAO.procAggregateGeneral(srvyDtaVO);
 	}
-	
+
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
@@ -573,7 +575,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public int updateTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception {
 		return srvyDtaDAO.updateTmpExcelData(srvyDtaVO);
 	}
-	
+
 	/**
 	 * 조사_자료_엑셀(TN_SRVY_DTA) 파일 업로드 결과 상세 목록을 조회.
 	 * @param searchVO - 조회할 정보가 담긴 srvyDtaVO
@@ -593,7 +595,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public int selectSrvyDtaUploadFileCount(SrvyDtaVO srvyDtaVO) {
 		return srvyDtaDAO.selectSrvyDtaUploadFileCount(srvyDtaVO);
 	}
-	
+
 	/**
 	 * AI_자료(TMP_AI_DTA)를 등록한다.
 	 * @param srvyDtaVO - 등록할 정보가 담긴 srvyDtaVO
@@ -604,17 +606,17 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 
 		return srvyDtaDAO.insertAiDta(srvyDtaVO);
 	}
-	
+
 	/**
 	 * AI_자료(TMP_AI_DTA)를 조회한다.
-	 * @param 
+	 * @param
 	 * @return 조회한 TMP_AI_DTA
 	 * @exception Exception
 	 */
 	public List<SrvyDtaVO> selectAiDtaList() throws Exception {
 		return srvyDtaDAO.selectAiDtaList();
 	}
-	
+
 	/**
 	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 수정한다.
 	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
@@ -624,156 +626,213 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 	public int updateImgInfoOfTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception {
 		return srvyDtaDAO.updateImgInfoOfTmpExcelData(srvyDtaVO);
 	}
-	
+
 	@Async
-    public void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO) throws Exception {
+    public void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO, SrvyDtaVO srvyDtaOne, String fileName) throws Exception {
         // Connection 오브젝트 생성, 저장소 바인딩, 참조변수 값 리턴
         Connection conn = DataSourceUtils.getConnection(dataSource);
         conn.setAutoCommit(false); // 트랜잭션 시작
-        
-        List<AttachFileVO> imgList = attachFileDAO.selectAttachDetailFileImgList(attachFileParam);
-		
-		for(int k=0; k<imgList.size(); k++) {
-			String imgFilePath = imgList.get(k).getFILE_COURS() + File.separator + imgList.get(k).getORGINL_FILE_NM();
-			String imgFileNm = imgList.get(k).getORGINL_FILE_NM();
-			
-		    File aiFileNm = new File(imgFilePath);
 
-		    HttpClient client = new DefaultHttpClient();
-		    HttpPost post = new HttpPost("http://test.muhanit.kr:21542/analyzer/");
+        synchronized (this) {
+            // ###################################################
+            // ## 12. 임시 테이블에 엑셀 조사자료 삭제
+            // ###################################################
+            //TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
+            srvyDtaDAO.deleteTmpMummSctnSrvyDta();
+            // ###################################################
 
-		    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-		    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-		    builder.addBinaryBody("image", aiFileNm);
-		    builder.addTextBody("modules", "crack");
-		    HttpEntity entity = builder.build();
-		    //
-		    post.setEntity(entity);
-		    HttpResponse responseTmp = client.execute(post);
+            // ###################################################
+            // ## 13. 임시 테이블에 엑셀 조사자료 등록
+            // ###################################################
+            //TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
+            insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS(), srvyDtaOne);
+            // ###################################################
 
-		    HttpEntity entity2 = responseTmp.getEntity();
-		    String responseString = EntityUtils.toString(entity2, "UTF-8");
-		    
-		    //=======================================================================================
-		    
-			JSONParser paser = new JSONParser();
+            //TMP_MUMM_SCTN_SRVY_DTA 조회
+            srvyDtaVO = srvyDtaDAO.selectTmpExcelData();
 
-			JSONObject obj = (JSONObject) paser.parse(responseString);
-			
-			// [results]
-			JSONArray parse_results_list = (JSONArray) obj.get("results");
-			for (int i = 0; i < parse_results_list.size(); i++) {
-				JSONObject result_i = (JSONObject) parse_results_list.get(i);
+            //srvyDtaVO.setSE_CD("N");
+            //seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
+            /*
+             * [2019-12-16 yslee]
+             * 전임 개발자가 요구사항 및 기획 대로 개발한 상태에서는
+             * SE_CD값은 항상 Y가 나오도록 로직이 작성되어 AI를 타지 않음
+             * 개발서버에서 균열분석이미지 폴더에 png 파일 디코딩 다운로드는 if조건을 임시 삭제 후 돌린 것임.
+             */
+            if("N".equals(srvyDtaVO.getSE_CD())) {
+                List<AttachFileVO> imgList = attachFileDAO.selectAttachDetailFileImgList(attachFileParam);
 
-				// [results.ARRAYS.result_image] - Base64 encoded PNG image 
-				String result_image = (String)result_i.get("result_image");
-				
-				// Base64 PNG image -> decode -> save
-				String pngFileName = imgList.get(k).getORGINL_FILE_NM().replace(".jpg", ".png");
-				String pngFileFullPath = pathInfoProperties.getProperty("file.upload.path") + imgList.get(k).getROOT_FILE_COURS() + File.separator + "균열분석이미지" + File.separator + pngFileName;
-				// png file download
-			    byte[] data = Base64.decodeBase64(result_image);
-			    try (OutputStream stream = new FileOutputStream(pngFileFullPath)) {
-			        stream.write(data);
-			    }
-				
-				// [results.ARRAYS[0].region_result] - 균열이 확인된 CELL에 대하여 정보를 가진 CELL배열 
-				JSONArray region_result_list = (JSONArray)result_i.get("region_result");
-				
-				for (int j = 0; j < region_result_list.size(); j++) {
-					JSONObject imsi = (JSONObject) region_result_list.get(j);
-					
-					// [results.ARRAYS[0].region_result.ARRAYS.region_type] 해당 CELL의 균열 종류 - {"ac","tc",....}
-					srvyDtaVO.setREGION_TYPE((String) imsi.get("region_type"));
-					
-					// [results.ARRAYS[0].region_result.ARRAYS.area] 해당 균열CELL의 면적
-					if(imsi.get("area") != null && !"".equals(imsi.get("area"))) {
-						srvyDtaVO.setAREA(String.valueOf(imsi.get("area")));	
-					}
-					
-					// [results.ARRAYS[0].region_result.ARRAYS.length] 해당 균열CELL의 길이
-					if(imsi.get("length") != null && !"".equals(imsi.get("length"))) {
-						srvyDtaVO.setLEN(String.valueOf(imsi.get("length")));	
-					} 
-					
-					// [results.ARRAYS[0].region_result.ARRAYS.severity] 해당 균열CELL의 심각도 - {"medium","low",...}
-					srvyDtaVO.setSEVERITY((String) imsi.get("severity"));
-					
-					srvyDtaVO.setRESULT_IMAGE(result_image);
-					
-					//srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(testFileNm);
-					//srvyDtaService.insertAiDta(srvyDtaVO);
-					srvyDtaDAO.insertAiDta(srvyDtaVO);
-					
-					// tn_mumm_sctn_srvy_dta : source(jpg)이미지 / result(png)이미지 경로 저장
-					//mummSctnSrvyDtaDAO.updateMummSctnSrvyDta()
-				}
-			}
-			
+        		for(int k=0; k<imgList.size(); k++) {
+        		    LOGGER.debug("순서 : " + srvyDtaVO.getSRVY_NO() + "_" + k);
+        			String imgFilePath = imgList.get(k).getFILE_COURS() + File.separator + imgList.get(k).getORGINL_FILE_NM();
+        			String imgFileNm = imgList.get(k).getORGINL_FILE_NM();
 
-			
-			//select
-			List<SrvyDtaVO> aiDtaList = srvyDtaDAO.selectAiDtaList();
-			
-			String regionType = "";
-			String severity = "";
-			String val = ""; 
-			srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(imgFileNm);
-			for(int i=0; i<aiDtaList.size(); i++) {
-				regionType = aiDtaList.get(i).getREGION_TYPE();
-				severity = aiDtaList.get(i).getSEVERITY();
-				val = aiDtaList.get(i).getAI_SUM_VALUE();
-			
-				if("tc".equals(regionType) && "low".equals(severity)) {
-					srvyDtaVO.setTC_LOW(val);
-				}
-				if("tc".equals(regionType) && "medium".equals(severity)) {
-					srvyDtaVO.setTC_MED(val);
-				}
-				if("tc".equals(regionType) && "hi".equals(severity)) {
-					srvyDtaVO.setTC_HI(val);
-				}
-				
-				if("lc".equals(regionType) && "low".equals(severity)) {
-					srvyDtaVO.setLC_LOW(val);
-				}
-				if("lc".equals(regionType) && "medium".equals(severity)) {
-					srvyDtaVO.setLC_MED(val);
-				}
-				if("lc".equals(regionType) && "hi".equals(severity)) {
-					srvyDtaVO.setLC_HI(val);
-				}
-				
-				if("ac".equals(regionType) && "low".equals(severity)) {
-					srvyDtaVO.setAC_LOW(val);
-				}
-				if("ac".equals(regionType) && "med".equals(severity)) {
-					srvyDtaVO.setAC_MED(val);
-				}
-				if("ac".equals(regionType) && "hi".equals(severity)) {
-					srvyDtaVO.setAC_HI(val);
-				}
-				
-				if("patch".equals(regionType)) {
-					srvyDtaVO.setPTCHG_CR(val);
-				}
-				
-				if("phothole".equals(regionType)) {
-					srvyDtaVO.setPOTHOLE_CR(val);
-				}
-				
-				srvyDtaDAO.updateTmpExcelData(srvyDtaVO);
-				conn.commit();
-			}
-			
-				srvyDtaDAO.deleteAiDta();
-		}
-	   
+        		    File aiFileNm = new File(imgFilePath);
+
+        		    HttpClient client = new DefaultHttpClient();
+        		    HttpPost post = new HttpPost(EgovProperties.getProperty("Globals.AI.URL"));
+
+        		    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        		    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        		    builder.addBinaryBody("image", aiFileNm);
+        		    builder.addTextBody("modules", "crack");
+        		    HttpEntity entity = builder.build();
+        		    //
+        		    post.setEntity(entity);
+        		    HttpResponse responseTmp = client.execute(post);
+
+        		    HttpEntity entity2 = responseTmp.getEntity();
+        		    String responseString = EntityUtils.toString(entity2, "UTF-8");
+
+        		    //=======================================================================================
+
+        			JSONParser paser = new JSONParser();
+
+        			JSONObject obj = (JSONObject) paser.parse(responseString);
+
+        			// [results]
+        			JSONArray parse_results_list = (JSONArray) obj.get("results");
+        			for (int i = 0; i < parse_results_list.size(); i++) {
+        				JSONObject result_i = (JSONObject) parse_results_list.get(i);
+
+        				// [results.ARRAYS.result_image] - Base64 encoded PNG image
+        				String result_image = (String)result_i.get("result_image");
+
+        				// Base64 PNG image -> decode -> save
+        				String pngFileName = imgList.get(k).getORGINL_FILE_NM().replace(".jpg", ".png");
+        				String pngFileFullPath = imgList.get(k).getROOT_FILE_COURS() + File.separator + "균열분석이미지" + File.separator + pngFileName;
+        				// png file download
+        			    byte[] data = Base64.decodeBase64(result_image);
+        			    try (OutputStream stream = new FileOutputStream(pngFileFullPath)) {
+        			        stream.write(data);
+        			    }
+
+        				// [results.ARRAYS[0].region_result] - 균열이 확인된 CELL에 대하여 정보를 가진 CELL배열
+        				JSONArray region_result_list = (JSONArray)result_i.get("region_result");
+
+        				for (int j = 0; j < region_result_list.size(); j++) {
+        					JSONObject imsi = (JSONObject) region_result_list.get(j);
+
+        					// [results.ARRAYS[0].region_result.ARRAYS.region_type] 해당 CELL의 균열 종류 - {"ac","tc",....}
+        					srvyDtaVO.setREGION_TYPE((String) imsi.get("region_type"));
+
+        					// [results.ARRAYS[0].region_result.ARRAYS.area] 해당 균열CELL의 면적
+        					if(imsi.get("area") != null && !"".equals(imsi.get("area"))) {
+        						srvyDtaVO.setAREA(String.valueOf(imsi.get("area")));
+        					}
+
+        					// [results.ARRAYS[0].region_result.ARRAYS.length] 해당 균열CELL의 길이
+        					if(imsi.get("length") != null && !"".equals(imsi.get("length"))) {
+        						srvyDtaVO.setLEN(String.valueOf(imsi.get("length")));
+        					}
+
+        					// [results.ARRAYS[0].region_result.ARRAYS.severity] 해당 균열CELL의 심각도 - {"medium","low",...}
+        					srvyDtaVO.setSEVERITY((String) imsi.get("severity"));
+
+        					srvyDtaVO.setRESULT_IMAGE(result_image);
+
+        					//srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(testFileNm);
+        					//srvyDtaService.insertAiDta(srvyDtaVO);
+        					srvyDtaDAO.insertAiDta(srvyDtaVO);
+
+        					// tn_mumm_sctn_srvy_dta : source(jpg)이미지 / result(png)이미지 경로 저장
+        					//mummSctnSrvyDtaDAO.updateMummSctnSrvyDta()
+        				}
+        			}
+
+
+
+        			//select
+        			List<SrvyDtaVO> aiDtaList = srvyDtaDAO.selectAiDtaList();
+
+        			String regionType = "";
+        			String severity = "";
+        			String val = "";
+        			srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(imgFileNm);
+        			for(int i=0; i<aiDtaList.size(); i++) {
+        				regionType = aiDtaList.get(i).getREGION_TYPE();
+        				severity = aiDtaList.get(i).getSEVERITY();
+        				val = aiDtaList.get(i).getAI_SUM_VALUE();
+
+        				if("tc".equals(regionType) && "low".equals(severity)) {
+        					srvyDtaVO.setTC_LOW(val);
+        				}
+        				if("tc".equals(regionType) && "medium".equals(severity)) {
+        					srvyDtaVO.setTC_MED(val);
+        				}
+        				if("tc".equals(regionType) && "hi".equals(severity)) {
+        					srvyDtaVO.setTC_HI(val);
+        				}
+
+        				if("lc".equals(regionType) && "low".equals(severity)) {
+        					srvyDtaVO.setLC_LOW(val);
+        				}
+        				if("lc".equals(regionType) && "medium".equals(severity)) {
+        					srvyDtaVO.setLC_MED(val);
+        				}
+        				if("lc".equals(regionType) && "hi".equals(severity)) {
+        					srvyDtaVO.setLC_HI(val);
+        				}
+
+        				if("ac".equals(regionType) && "low".equals(severity)) {
+        					srvyDtaVO.setAC_LOW(val);
+        				}
+        				if("ac".equals(regionType) && "med".equals(severity)) {
+        					srvyDtaVO.setAC_MED(val);
+        				}
+        				if("ac".equals(regionType) && "hi".equals(severity)) {
+        					srvyDtaVO.setAC_HI(val);
+        				}
+
+        				if("patch".equals(regionType)) {
+        					srvyDtaVO.setPTCHG_CR(val);
+        				}
+
+        				if("phothole".equals(regionType)) {
+        					srvyDtaVO.setPOTHOLE_CR(val);
+        				}
+
+        				srvyDtaDAO.updateTmpExcelData(srvyDtaVO);
+        				conn.commit();
+        			}
+
+        				srvyDtaDAO.deleteAiDta();
+        		}
+            }
+
+            // 집계
+            srvyDtaDAO.procSaveSurveyData(srvyDtaOne);
+
+    		SrvyDtaVO srvyDtaOne2 = srvyDtaDAO.selectSrvyDta(srvyDtaOne);
+    		srvyDtaOne2.setCRTR_NO(srvyDtaOne.getCRTR_NO());
+    		srvyDtaOne2.setUPDUSR_NO(srvyDtaOne.getUPDUSR_NO());
+
+    		// 공간 보정
+    		SrvyDtaVO srvyDtaOne3 = new SrvyDtaVO();
+            if (srvyDtaOne2.getGPS_CORTN_PROCESS_AT().equals("N")) {
+
+                srvyDtaDAO.procSrvyDtaSysReflct(srvyDtaOne2);
+
+                srvyDtaOne3 = srvyDtaDAO.selectSrvyDta(srvyDtaOne2);
+                srvyDtaOne3.setCRTR_NO(srvyDtaOne2.getCRTR_NO());
+                srvyDtaOne3.setUPDUSR_NO(srvyDtaOne2.getUPDUSR_NO());
+            }
+
+            // 집계 처리
+            if (srvyDtaOne3.getSM_PROCESS_AT().equals("N")) {
+                srvyDtaDAO.procAggregateGeneral(srvyDtaOne3);
+            }
+        }
+
 	    DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
 
-        // 동기화 작업을 종료하고 저장소를 비운다
-        TransactionSynchronizationManager.unbindResource(this.dataSource);
-        TransactionSynchronizationManager.clearSynchronization();
+//        // 동기화 작업을 종료하고 저장소를 비운다
+//        TransactionSynchronizationManager.unbindResource(this.dataSource);
+//        TransactionSynchronizationManager.clearSynchronization();
 	}
-	
+
+	public void deleteTmpMummSctnSrvyDta() throws Exception {
+	    srvyDtaDAO.deleteTmpMummSctnSrvyDta();
+	}
+
 }
