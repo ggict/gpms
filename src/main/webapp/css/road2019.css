@@ -7,7 +7,7 @@
 
 ::-webkit-scrollbar-thumb { border-radius: 8px; background-color: #999; }
 
-::-webkit-scrollbar-button { background-color: darkblue; width: 20px; height: 10px; }
+::-webkit-scrollbar-button { background-color: darkblue; width: 0; height: 0; }
 
 ::-webkit-scrollbar-button:start { background-color: #e4e4e4; /* Top, Left 방향의 이동버튼 */ }
 
@@ -17,16 +17,14 @@
 
 ::-webkit-resizer { background-color: progressPercent; }
 
-/* 상하 방향 스크롤바의 화살표 바꾸기 */
-::-webkit-scrollbar-button:vertical:increment { background: #cdcdcd url(arrow_down.png) no-repeat center 50%; }
-
-::-webkit-scrollbar-button:vertical:decrement { background: #cdcdcd url(arrow_up.png) no-repeat center 50%; }
-
-/* 좌우 방향 스크롤바의 화살표 바꾸기 */
-::-webkit-scrollbar-button:horizontal:increment { background: #cdcdcd url(arrow_down.png) no-repeat center 50%; }
-
-::-webkit-scrollbar-button:horizontal:decrement { background: #cdcdcd url(arrow_up.png) no-repeat center 50%; }
-
+/* 상하 방향 스크롤바의 화살표 바꾸기
+::-webkit-scrollbar-button:vertical:increment {background:#cdcdcd url(arrow_down.png) no-repeat center 50%;}
+::-webkit-scrollbar-button:vertical:decrement {background:#cdcdcd url(arrow_up.png) no-repeat center 50%;}
+*/
+/* 좌우 방향 스크롤바의 화살표 바꾸기
+::-webkit-scrollbar-button:horizontal:increment {background:#cdcdcd url(arrow_down.png) no-repeat center 50%;}
+::-webkit-scrollbar-button:horizontal:decrement {background:#cdcdcd url(arrow_up.png) no-repeat center 50%;}
+*/
 /* login */
 .login { display: table; height: 100%; text-align: center; width: 100%; }
 
