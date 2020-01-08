@@ -22,14 +22,11 @@ public class FileUploadUtils {
 
 	// 공통 파일 업로드
 	public static List<AttachFileVO> saveFileList(String uploadPath, String kind
-			, List<MultipartFile> files) throws Exception {
+			, List<MultipartFile> files, String date) throws Exception {
 
 		// 파일 리스트
 		List<AttachFileVO> fileList = new ArrayList<AttachFileVO>();
 
-		Date currentDate = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		String date = sdf.format(currentDate);
 		uploadPath += kind + File.separator + date;
 
 		// 폴더 경로

@@ -322,284 +322,269 @@
         parameterClass="smDtaGnlSttusVO"
         resultClass="smDtaGnlSttusVO">
     <![CDATA[
-        /* smDtaGnlSttusDAO.selectSmDtaGnlSttus */ /* 집계_자료_일반_현황 조회 */ 
-WITH lastlist 
-     AS (SELECT tnsmdtagnlsttus.sm_no 
-                /* 집계_자료_일반_현황.집계_번호 */, 
-                tnsmdtagnlsttus.srvy_no 
-                /* 집계_자료_일반_현황.조사_번호 */, 
-                tnsmdtagnlsttus.srvy_year 
-                   /* 집계_자료_일반_현황.조사_년도 */, 
-                tnsmdtagnlsttus.route_code 
-                   /* 집계_자료_일반_현황.노선_코드 */, 
-                tnsmdtagnlsttus.direct_code 
-                   /* 집계_자료_일반_현황.행선_코드 */, 
-                tnsmdtagnlsttus.track /* 집계_자료_일반_현황.차로 */, 
-                tnsmdtagnlsttus.strtpt /* 집계_자료_일반_현황.시점 */, 
-                tnsmdtagnlsttus.endpt /* 집계_자료_일반_현황.종점 */, 
-                tnsmdtagnlsttus.iri_val 
-                   /* 집계_자료_일반_현황.종단평탄성_값 */, 
-                tnsmdtagnlsttus.pothole_cr 
-                   /* 집계_자료_일반_현황.포트홀_균열 */, 
-                tnsmdtagnlsttus.rd_val 
-                   /* 집계_자료_일반_현황.소성변형_값 */, 
-                tnsmdtagnlsttus.vrtcal_cr 
-                   /* 집계_자료_일반_현황.종방향_균열 */, 
-                tnsmdtagnlsttus.hrzntal_cr 
-                   /* 집계_자료_일반_현황.횡방향_균열 */, 
-                tnsmdtagnlsttus.cnstrct_joint_cr 
-                   /* 집계_자료_일반_현황.시공_줄눈_균열 */, 
-                tnsmdtagnlsttus.trts_bac_cr 
-                   /* 집계_자료_일반_현황.거북등_균열 */, 
-                tnsmdtagnlsttus.ptchg_cr 
-                /* 집계_자료_일반_현황.패칭_균열 */ 
-                   , 
-                tnsmdtagnlsttus.cr_val 
-                   /* 집계_자료_일반_현황.표면손상값 */, 
-                tnsmdtagnlsttus.cr_idx 
-                   /* 집계_자료_일반_현황.표면손상지수 */, 
-                tnsmdtagnlsttus.rd_idx                                AS RD_IDX 
-                   /* 집계_자료_일반_현황.소성변형지수 */, 
-                tnsmdtagnlsttus.ri_idx 
-                   /* 집계_자료_일반_현황.평탄성_지수 */, 
-                tnsmdtagnlsttus.cntl_dfect 
-                   /* 집계_자료_일반_현황.지배_결함 */, 
-                tnsmdtagnlsttus.srvy_knd 
-                /* 집계_자료_일반_현황.조사_종류 */ 
-                   , 
-                tnsmdtagnlsttus.srvy_mt 
-                   /* 집계_자료_일반_현황.조사_월 */, 
-                tnsmdtagnlsttus.frmula_no 
-                   /* 집계_자료_일반_현황.수식_번호 */, 
-                tnsmdtagnlsttus.trnsport_qy 
-                /* 집계_자료_일반_현황.교통_량 */ 
-                   , 
-                tnsmdtagnlsttus.cr_grad 
-                   /* 집계_자료_일반_현황.표면손상_등급 */, 
-                tnsmdtagnlsttus.rd_grad 
-                   /* 집계_자료_일반_현황.소성변형_등급 */, 
-                tnsmdtagnlsttus.iri_grad 
-                   /* 집계_자료_일반_현황.종단평탄성_등급 */, 
-                tnsmdtagnlsttus.delete_at 
-                   /* 집계_자료_일반_현황.삭제_여부 */, 
-                tnsmdtagnlsttus.use_at 
-                /* 집계_자료_일반_현황.사용_여부 */, 
-                tnsmdtagnlsttus.crtr_no 
-                   /* 집계_자료_일반_현황.생성자_번호 */, 
-                tnsmdtagnlsttus.creat_dt 
-                /* 집계_자료_일반_현황.생성_일시 */ 
-                   , 
-                tnsmdtagnlsttus.updusr_no 
-                   /* 집계_자료_일반_현황.수정자_번호 */, 
-                tnsmdtagnlsttus.updt_dt 
-                /* 집계_자료_일반_현황.수정_일시 */, 
-                tnsmdtagnlsttus.block_cr 
-                /* 집계_자료_일반_현황.블럭_균열 */ 
-                   , 
-                tnsmdtagnlsttus.cr_lt 
-                   /* 집계_자료_일반_현황.균열_길이 */, 
-                tnsmdtagnlsttus.cr_wid 
-                /* 집계_자료_일반_현황.균열_폭 */, 
-                tnsmdtagnlsttus.nhpci /* 집계_자료_일반_현황.NHPCI */, 
-                tnsmdtagnlsttus.spi /* 집계_자료_일반_현황.SPI */, 
-                tnsmdtagnlsttus.xcr 
-                /* 집계_자료_일반_현황.NHPCI_균열 */, 
-                tnsmdtagnlsttus.rci                                   AS RCI 
-                   /* 집계_자료_일반_현황.표면_조도_지수 */, 
-                tnsmdtagnlsttus.scr 
-                   /* 집계_자료_일반_현황.표면_상태_지수 */, 
-                tnsmdtagnlsttus.ac_low 
-                   /* 집계_자료_일반_현황.거북등균열_LOW */, 
-                tnsmdtagnlsttus.ac_med 
-                   /* 집계_자료_일반_현황.거북등균열_MED */, 
-                tnsmdtagnlsttus.ac_hi 
-                   /* 집계_자료_일반_현황.거북등균열_HI */, 
-                tnsmdtagnlsttus.lc_low 
-                   /* 집계_자료_일반_현황.종방향균열_LOW */, 
-                tnsmdtagnlsttus.lc_med 
-                   /* 집계_자료_일반_현황.종방향균열_MED */, 
-                tnsmdtagnlsttus.lc_hi 
-                   /* 집계_자료_일반_현황.종방향균열_HI */, 
-                tnsmdtagnlsttus.tc_low 
-                   /* 집계_자료_일반_현황.횡방향균열_LOW */, 
-                tnsmdtagnlsttus.tc_med 
-                   /* 집계_자료_일반_현황.횡방향균열_MED */, 
-                tnsmdtagnlsttus.tc_hi 
-                   /* 집계_자료_일반_현황.횡방향균열_HI */, 
-                tnsmdtagnlsttus.ac_idx                                AS AC_IDX 
-                   /* 집계_자료_일반_현황.거북등균열_지수 */, 
-                tnsmdtagnlsttus.lc_idx                                AS LC_IDX 
-                   /* 집계_자료_일반_현황.종방향균열_지수 */, 
-                tnsmdtagnlsttus.tc_idx 
-                   /* 집계_자료_일반_현황.횡방향균열_지수 */, 
-                tnsmdtagnlsttus.ptchg_idx                             AS 
-                PTCHG_IDX 
-                   /* 집계_자료_일반_현황.패칭_지수 */, 
-                tnsmdtagnlsttus.rd_low 
-                   /* 집계_자료_일반_현황.소성변형_LOW */, 
-                tnsmdtagnlsttus.rd_med 
-                   /* 집계_자료_일반_현황.소성변형_MED */, 
-                tnsmdtagnlsttus.rd_hi 
-                /* 집계_자료_일반_현황.소성변형_HI */, 
-                tnsmdtagnlsttus.block_cr_low 
-                   /* 집계_자료_일반_현황.블럭_균열_LOW */, 
-                tnsmdtagnlsttus.block_cr_med 
-                   /* 집계_자료_일반_현황.블럭_균열_MED */, 
-                tnsmdtagnlsttus.block_cr_hi 
-                   /* 집계_자료_일반_현황.블럭_균열_HI */, 
-                tnsmdtagnlsttus.pothole_idx                           AS 
-                POTHOLE_IDX 
-                   /* 집계_자료_일반_현황.포트홀_지수 */, 
-                tnsmdtagnlsttus.dmg_cuz_clmt 
-                   /* 집계_자료_일반_현황.파손_원인_기후 */, 
-                tnsmdtagnlsttus.dmg_cuz_vmtc 
-                   /* 집계_자료_일반_현황.파손_원인_교통량 */, 
-                tnsmdtagnlsttus.dmg_cuz_etc 
-                   /* 집계_자료_일반_현황.파손_원인_기타 */, 
-                tnsmdtagnlsttus.gpci                                  AS GPCI 
-                   /* 집계_자료_일반_현황.GPCI */, 
-                tnsmdtagnlsttus.pc_grad 
-                   /* 집계_자료_일반_현황.포장상태등급 */, 
-                tnsmdtagnlsttus.bc_idx                                AS BC_IDX 
-                   /* 집계_자료_일반_현황.블럭균열_지수 */, 
-                tnsmdtagnlsttus.route_code :: INT                     AS 
-                ROAD_NO_VAL, 
-                road.road_name                                        AS ROAD_NM 
-                , 
-                (SELECT tccode.code_nm 
-                 FROM   tc_code tccode 
-                 WHERE  tccode.code_val = tnsmdtagnlsttus.cntl_dfect) AS 
-                CNTL_DFECT_NM, 
-                (SELECT code.code_nm 
-                 FROM   tc_code code 
-                 WHERE  code.code_val = road.road_grad)               AS 
-                ROAD_GRAD, 
-                (SELECT tcdept.lowest_dept_nm 
-                 FROM   tc_dept tcdept 
-                 WHERE  tcdept.dept_code = sect.dept_code :: text)    AS 
-                DEPT_CODE, 
-                (SELECT tccode.code_nm 
-                 FROM   tc_code tccode 
-                 WHERE  tccode.code_val = sect.cell_type)             AS 
-                CELL_TYPE, 
-                (SELECT tccode.code_nm 
-                 FROM   tc_code tccode 
-                 WHERE  tccode.code_val = sect.vmtc_grad)             AS 
-                VMTC_GRAD, 
-                (SELECT n3a.name 
-                 FROM   n3a_g0100000 n3a 
-                 WHERE  Substr(n3a.bjcd, 1, 5) = sect.adm_code)       AS 
-                ADM_CODE, 
-                sect.cell_id, 
-                Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.ac_idx, '0', '0', 
-                sect.cell_type, 
-                'SCR', 
-                0)                                                    AC_RATE, 
-                Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.bc_idx, '0', '0', 
-                sect.cell_type, 
-                'SCR', 
-                0)                                                    BC_RATE, 
-                Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.lc_idx, '0', '0', 
-                sect.cell_type, 
-                'SCR', 
-                0)                                                    LC_RATE, 
-                Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.ptchg_idx, '0', '0', 
-                sect.cell_type, 
-                'SCR', 0)                                             PTCHG_RATE 
-                , 
-Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.pothole_idx, '0', '0', 
-sect.cell_type, 
-'SCR', 0)                                             POT_RATE, 
-Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.rd_idx, '0', '0', 
-sect.cell_type, 
-'SCR', 
-0)                                                    RD_RATE, 
-Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.rci, '0', '0', sect.cell_type, 
-'RCI', 0) 
-                                                      RCI_RATE, 
-(SELECT cntrwk_at 
- FROM   cell_10 cell10 , tn_sm_dta_gnl_sttus tnsmdtagnlsttus
- WHERE  cell10.route_code = tnsmdtagnlsttus.route_code 
-        AND tnsmdtagnlsttus.track = cell10.track 
-        AND tnsmdtagnlsttus.route_code = cell10.route_code 
-        AND tnsmdtagnlsttus.strtpt = cell10.strtpt 
-        AND tnsmdtagnlsttus.endpt = cell10.endpt)     AS CNTRWK_AT, 
-(SELECT unopn_at 
- FROM   cell_10 cell10 , tn_sm_dta_gnl_sttus tnsmdtagnlsttus
- WHERE  cell10.route_code = tnsmdtagnlsttus.route_code 
-        AND tnsmdtagnlsttus.track = cell10.track 
-        AND tnsmdtagnlsttus.route_code = cell10.route_code 
-        AND tnsmdtagnlsttus.strtpt = cell10.strtpt 
-        AND tnsmdtagnlsttus.endpt = cell10.endpt)     AS UNOPN_AT, 
-(SELECT code_nm 
- FROM   tc_code code, 
-        tn_rpair_trget_group tnrpairtrgetgroup 
- WHERE  code.code_val = tnrpairtrgetgroup.mng_rd_cd
- 	AND code.code_val = tnrpairtrgetgroup.road_grad
-        AND code.cl_code = 'MNRD' 
-        AND code.use_at = 'Y' 
-        AND code.delete_at = 'N')                     AS MRG_RD_NM 
-FROM   tn_sm_dta_gnl_sttus tnsmdtagnlsttus 
-inner join cell_sect sect 
-        ON tnsmdtagnlsttus.direct_code = sect.direct_code 
-           AND tnsmdtagnlsttus.track = sect.track 
-           AND tnsmdtagnlsttus.route_code = sect.route_code 
-           AND tnsmdtagnlsttus.strtpt = sect.strtpt 
-           AND tnsmdtagnlsttus.endpt = sect.endpt 
-left outer join tn_route_info road 
-             ON road.road_no = tnsmdtagnlsttus.route_code 
-WHERE  1 = 1 
+        /* smDtaGnlSttusDAO.selectSmDtaGnlSttus */ /* 집계_자료_일반_현황 조회 */
+WITH lastlist
+     AS (SELECT tnsmdtagnlsttus.sm_no
+                /* 집계_자료_일반_현황.집계_번호 */,
+                tnsmdtagnlsttus.srvy_no
+                /* 집계_자료_일반_현황.조사_번호 */,
+                tnsmdtagnlsttus.srvy_year
+                   /* 집계_자료_일반_현황.조사_년도 */,
+                tnsmdtagnlsttus.route_code
+                   /* 집계_자료_일반_현황.노선_코드 */,
+                tnsmdtagnlsttus.direct_code
+                   /* 집계_자료_일반_현황.행선_코드 */,
+                tnsmdtagnlsttus.track /* 집계_자료_일반_현황.차로 */,
+                tnsmdtagnlsttus.strtpt /* 집계_자료_일반_현황.시점 */,
+                tnsmdtagnlsttus.endpt /* 집계_자료_일반_현황.종점 */,
+                tnsmdtagnlsttus.iri_val
+                   /* 집계_자료_일반_현황.종단평탄성_값 */,
+                tnsmdtagnlsttus.pothole_cr
+                   /* 집계_자료_일반_현황.포트홀_균열 */,
+                tnsmdtagnlsttus.rd_val
+                   /* 집계_자료_일반_현황.소성변형_값 */,
+                tnsmdtagnlsttus.vrtcal_cr
+                   /* 집계_자료_일반_현황.종방향_균열 */,
+                tnsmdtagnlsttus.hrzntal_cr
+                   /* 집계_자료_일반_현황.횡방향_균열 */,
+                tnsmdtagnlsttus.cnstrct_joint_cr
+                   /* 집계_자료_일반_현황.시공_줄눈_균열 */,
+                tnsmdtagnlsttus.trts_bac_cr
+                   /* 집계_자료_일반_현황.거북등_균열 */,
+                tnsmdtagnlsttus.ptchg_cr
+                /* 집계_자료_일반_현황.패칭_균열 */
+                   ,
+                tnsmdtagnlsttus.cr_val
+                   /* 집계_자료_일반_현황.표면손상값 */,
+                tnsmdtagnlsttus.cr_idx
+                   /* 집계_자료_일반_현황.표면손상지수 */,
+                tnsmdtagnlsttus.rd_idx                                AS RD_IDX
+                   /* 집계_자료_일반_현황.소성변형지수 */,
+                tnsmdtagnlsttus.ri_idx
+                   /* 집계_자료_일반_현황.평탄성_지수 */,
+                tnsmdtagnlsttus.cntl_dfect
+                   /* 집계_자료_일반_현황.지배_결함 */,
+                tnsmdtagnlsttus.srvy_knd
+                /* 집계_자료_일반_현황.조사_종류 */
+                   ,
+                tnsmdtagnlsttus.srvy_mt
+                   /* 집계_자료_일반_현황.조사_월 */,
+                tnsmdtagnlsttus.frmula_no
+                   /* 집계_자료_일반_현황.수식_번호 */,
+                tnsmdtagnlsttus.trnsport_qy
+                /* 집계_자료_일반_현황.교통_량 */
+                   ,
+                tnsmdtagnlsttus.cr_grad
+                   /* 집계_자료_일반_현황.표면손상_등급 */,
+                tnsmdtagnlsttus.rd_grad
+                   /* 집계_자료_일반_현황.소성변형_등급 */,
+                tnsmdtagnlsttus.iri_grad
+                   /* 집계_자료_일반_현황.종단평탄성_등급 */,
+                tnsmdtagnlsttus.delete_at
+                   /* 집계_자료_일반_현황.삭제_여부 */,
+                tnsmdtagnlsttus.use_at
+                /* 집계_자료_일반_현황.사용_여부 */,
+                tnsmdtagnlsttus.crtr_no
+                   /* 집계_자료_일반_현황.생성자_번호 */,
+                tnsmdtagnlsttus.creat_dt
+                /* 집계_자료_일반_현황.생성_일시 */
+                   ,
+                tnsmdtagnlsttus.updusr_no
+                   /* 집계_자료_일반_현황.수정자_번호 */,
+                tnsmdtagnlsttus.updt_dt
+                /* 집계_자료_일반_현황.수정_일시 */,
+                tnsmdtagnlsttus.block_cr
+                /* 집계_자료_일반_현황.블럭_균열 */
+                   ,
+                tnsmdtagnlsttus.cr_lt
+                   /* 집계_자료_일반_현황.균열_길이 */,
+                tnsmdtagnlsttus.cr_wid
+                /* 집계_자료_일반_현황.균열_폭 */,
+                tnsmdtagnlsttus.nhpci /* 집계_자료_일반_현황.NHPCI */,
+                tnsmdtagnlsttus.spi /* 집계_자료_일반_현황.SPI */,
+                tnsmdtagnlsttus.xcr
+                /* 집계_자료_일반_현황.NHPCI_균열 */,
+                tnsmdtagnlsttus.rci                                   AS RCI
+                   /* 집계_자료_일반_현황.표면_조도_지수 */,
+                tnsmdtagnlsttus.scr
+                   /* 집계_자료_일반_현황.표면_상태_지수 */,
+                tnsmdtagnlsttus.ac_low
+                   /* 집계_자료_일반_현황.거북등균열_LOW */,
+                tnsmdtagnlsttus.ac_med
+                   /* 집계_자료_일반_현황.거북등균열_MED */,
+                tnsmdtagnlsttus.ac_hi
+                   /* 집계_자료_일반_현황.거북등균열_HI */,
+                tnsmdtagnlsttus.lc_low
+                   /* 집계_자료_일반_현황.종방향균열_LOW */,
+                tnsmdtagnlsttus.lc_med
+                   /* 집계_자료_일반_현황.종방향균열_MED */,
+                tnsmdtagnlsttus.lc_hi
+                   /* 집계_자료_일반_현황.종방향균열_HI */,
+                tnsmdtagnlsttus.tc_low
+                   /* 집계_자료_일반_현황.횡방향균열_LOW */,
+                tnsmdtagnlsttus.tc_med
+                   /* 집계_자료_일반_현황.횡방향균열_MED */,
+                tnsmdtagnlsttus.tc_hi
+                   /* 집계_자료_일반_현황.횡방향균열_HI */,
+                tnsmdtagnlsttus.ac_idx                                AS AC_IDX
+                   /* 집계_자료_일반_현황.거북등균열_지수 */,
+                tnsmdtagnlsttus.lc_idx                                AS LC_IDX
+                   /* 집계_자료_일반_현황.종방향균열_지수 */,
+                tnsmdtagnlsttus.tc_idx
+                   /* 집계_자료_일반_현황.횡방향균열_지수 */,
+                tnsmdtagnlsttus.ptchg_idx                             AS
+                PTCHG_IDX
+                   /* 집계_자료_일반_현황.패칭_지수 */,
+                tnsmdtagnlsttus.rd_low
+                   /* 집계_자료_일반_현황.소성변형_LOW */,
+                tnsmdtagnlsttus.rd_med
+                   /* 집계_자료_일반_현황.소성변형_MED */,
+                tnsmdtagnlsttus.rd_hi
+                /* 집계_자료_일반_현황.소성변형_HI */,
+                tnsmdtagnlsttus.block_cr_low
+                   /* 집계_자료_일반_현황.블럭_균열_LOW */,
+                tnsmdtagnlsttus.block_cr_med
+                   /* 집계_자료_일반_현황.블럭_균열_MED */,
+                tnsmdtagnlsttus.block_cr_hi
+                   /* 집계_자료_일반_현황.블럭_균열_HI */,
+                tnsmdtagnlsttus.pothole_idx                           AS
+                POTHOLE_IDX
+                   /* 집계_자료_일반_현황.포트홀_지수 */,
+                tnsmdtagnlsttus.dmg_cuz_clmt
+                   /* 집계_자료_일반_현황.파손_원인_기후 */,
+                tnsmdtagnlsttus.dmg_cuz_vmtc
+                   /* 집계_자료_일반_현황.파손_원인_교통량 */,
+                tnsmdtagnlsttus.dmg_cuz_etc
+                   /* 집계_자료_일반_현황.파손_원인_기타 */,
+                tnsmdtagnlsttus.gpci                                  AS GPCI
+                   /* 집계_자료_일반_현황.GPCI */,
+                tnsmdtagnlsttus.pc_grad
+                   /* 집계_자료_일반_현황.포장상태등급 */,
+                tnsmdtagnlsttus.bc_idx                                AS BC_IDX
+                   /* 집계_자료_일반_현황.블럭균열_지수 */,
+                tnsmdtagnlsttus.route_code :: INT                     AS
+                ROAD_NO_VAL,
+                road.road_name                                        AS ROAD_NM
+                ,
+                (SELECT tccode.code_nm
+                 FROM   tc_code tccode
+                 WHERE  tccode.code_val = tnsmdtagnlsttus.cntl_dfect) AS
+                CNTL_DFECT_NM,
+                (SELECT code.code_nm
+                 FROM   tc_code code
+                 WHERE  code.code_val = road.road_grad)               AS
+                ROAD_GRAD,
+                (SELECT tcdept.lowest_dept_nm
+                 FROM   tc_dept tcdept
+                 WHERE  tcdept.dept_code = sect.dept_code :: text)    AS
+                DEPT_CODE,
+                (SELECT tccode.code_nm
+                 FROM   tc_code tccode
+                 WHERE  tccode.code_val = sect.cell_type)             AS
+                CELL_TYPE,
+                (SELECT tccode.code_nm
+                 FROM   tc_code tccode
+                 WHERE  tccode.code_val = sect.vmtc_grad)             AS
+                VMTC_GRAD,
+                (SELECT n3a.name
+                 FROM   n3a_g0100000 n3a
+                 WHERE  Substr(n3a.bjcd, 1, 5) = sect.adm_code)       AS
+                ADM_CODE,
+                sect.cell_id,
+                Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.ac_idx, '0', '0',
+                sect.cell_type,
+                'SCR',
+                0)                                                    AC_RATE,
+                Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.bc_idx, '0', '0',
+                sect.cell_type,
+                'SCR',
+                0)                                                    BC_RATE,
+                Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.lc_idx, '0', '0',
+                sect.cell_type,
+                'SCR',
+                0)                                                    LC_RATE,
+                Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.ptchg_idx, '0', '0',
+                sect.cell_type,
+                'SCR', 0)                                             PTCHG_RATE
+                ,
+Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.pothole_idx, '0', '0',
+sect.cell_type,
+'SCR', 0)                                             POT_RATE,
+Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.rd_idx, '0', '0',
+sect.cell_type,
+'SCR',
+0)                                                    RD_RATE,
+Fn_get_gpci_rduct_rate(tnsmdtagnlsttus.rci, '0', '0', sect.cell_type,
+'RCI', 0)
+                                                      RCI_RATE,
+(SELECT code_nm
+ FROM   tc_code code
+ WHERE
+    code.code_val = sect.mng_rd_cd
+        AND code.cl_code = 'MNRD'
+        AND code.use_at = 'Y'
+        AND code.delete_at = 'N')                     AS MRG_RD_NM
+FROM   tn_sm_dta_gnl_sttus tnsmdtagnlsttus
+inner join cell_sect sect
+        ON tnsmdtagnlsttus.direct_code = sect.direct_code
+           AND tnsmdtagnlsttus.track = sect.track
+           AND tnsmdtagnlsttus.route_code = sect.route_code
+           AND tnsmdtagnlsttus.strtpt = sect.strtpt
+           AND tnsmdtagnlsttus.endpt = sect.endpt
+left outer join tn_route_info road
+             ON road.road_no = tnsmdtagnlsttus.route_code
+WHERE  1 = 1
 AND tnsmdtagnlsttus.srvy_year = #SRVY_YEAR#
-/* 집계_자료_일반_현황.집계_번호 */ 
-AND tnsmdtagnlsttus.delete_at = 'N' 
-/* 집계_자료_일반_현황.삭제_여부 */ 
-AND tnsmdtagnlsttus.use_at = 'Y' 
-/* 집계_자료_일반_현황.사용_여부 */ 
-AND EXISTS (SELECT 't' 
-            FROM   tn_sm_dta_gnl_sttus sub 
+/* 집계_자료_일반_현황.집계_번호 */
+AND tnsmdtagnlsttus.delete_at = 'N'
+/* 집계_자료_일반_현황.삭제_여부 */
+AND tnsmdtagnlsttus.use_at = 'Y'
+/* 집계_자료_일반_현황.사용_여부 */
+AND EXISTS (SELECT 't'
+            FROM   tn_sm_dta_gnl_sttus sub
             WHERE  sub.sm_no = #SM_NO#::int
-                   AND sub.use_at = 'Y' 
-                   AND sub.delete_at = 'N' 
-                   AND sub.route_code = tnsmdtagnlsttus.route_code 
-                   AND sub.direct_code = tnsmdtagnlsttus.direct_code 
-                   AND sub.track = tnsmdtagnlsttus.track 
-                   AND sub.strtpt = tnsmdtagnlsttus.strtpt 
-                   AND sub.endpt = tnsmdtagnlsttus.endpt)), 
-     resultlist 
-     AS (SELECT tb.*, 
-                CASE 
-                  WHEN tb.scr = 0 THEN ( tb.ac_rate + tb.bc_rate + tb.lc_rate 
-                                         + tb.ptchg_rate + tb.pot_rate + 
-                                         tb.rd_rate ) 
-                  ELSE 0 
-                END SUM_RATE 
-         FROM   lastlist tb) 
-SELECT tb.*, 
-       Fn_get_gpci_rduct_rate(tb.ac_idx, '0', '0', tb.cell_type, 'SCR', 
-       tb.sum_rate) 
-                    AC_RDUCT_RATE, 
-       Fn_get_gpci_rduct_rate(tb.bc_idx, '0', '0', tb.cell_type, 'SCR', 
-       tb.sum_rate) 
-                    BC_RDUCT_RATE, 
-       Fn_get_gpci_rduct_rate(tb.lc_idx, '0', '0', tb.cell_type, 'SCR', 
-       tb.sum_rate) 
-                    LC_RDUCT_RATE, 
-       Fn_get_gpci_rduct_rate(tb.ptchg_idx, '0', '0', tb.cell_type, 'SCR', 
-       tb.sum_rate) 
-                    PTCHG_RDUCT_RATE, 
-       Fn_get_gpci_rduct_rate(tb.pothole_idx, '0', '0', tb.cell_type, 'SCR', 
-       tb.sum_rate) POT_RDUCT_RATE, 
-       Fn_get_gpci_rduct_rate(tb.rd_idx, '0', '0', tb.cell_type, 'SCR', 
-       tb.sum_rate) 
-                    RD_RDUCT_RATE, 
-       Fn_get_gpci_rduct_rate(tb.rci, '0', '0', tb.cell_type, 'RCI', 
-       tb.sum_rate) 
-                    RCI_RDUCT_RATE, 
-       rci_rate     RCI_RDUCT_RATE 
-FROM   resultlist tb 
-       inner join cell_sect sect 
-               ON sect.cell_id = tb.cell_id  
-			 
+                   AND sub.use_at = 'Y'
+                   AND sub.delete_at = 'N'
+                   AND sub.route_code = tnsmdtagnlsttus.route_code
+                   AND sub.direct_code = tnsmdtagnlsttus.direct_code
+                   AND sub.track = tnsmdtagnlsttus.track
+                   AND sub.strtpt = tnsmdtagnlsttus.strtpt
+                   AND sub.endpt = tnsmdtagnlsttus.endpt)),
+     resultlist
+     AS (SELECT tb.*,
+                CASE
+                  WHEN tb.scr = 0 THEN ( tb.ac_rate + tb.bc_rate + tb.lc_rate
+                                         + tb.ptchg_rate + tb.pot_rate +
+                                         tb.rd_rate )
+                  ELSE 0
+                END SUM_RATE
+         FROM   lastlist tb)
+SELECT tb.*,
+       Fn_get_gpci_rduct_rate(tb.ac_idx, '0', '0', tb.cell_type, 'SCR',
+       tb.sum_rate)
+                    AC_RDUCT_RATE,
+       Fn_get_gpci_rduct_rate(tb.bc_idx, '0', '0', tb.cell_type, 'SCR',
+       tb.sum_rate)
+                    BC_RDUCT_RATE,
+       Fn_get_gpci_rduct_rate(tb.lc_idx, '0', '0', tb.cell_type, 'SCR',
+       tb.sum_rate)
+                    LC_RDUCT_RATE,
+       Fn_get_gpci_rduct_rate(tb.ptchg_idx, '0', '0', tb.cell_type, 'SCR',
+       tb.sum_rate)
+                    PTCHG_RDUCT_RATE,
+       Fn_get_gpci_rduct_rate(tb.pothole_idx, '0', '0', tb.cell_type, 'SCR',
+       tb.sum_rate) POT_RDUCT_RATE,
+       Fn_get_gpci_rduct_rate(tb.rd_idx, '0', '0', tb.cell_type, 'SCR',
+       tb.sum_rate)
+                    RD_RDUCT_RATE,
+       Fn_get_gpci_rduct_rate(tb.rci, '0', '0', tb.cell_type, 'RCI',
+       tb.sum_rate)
+                    RCI_RDUCT_RATE,
+       rci_rate     RCI_RDUCT_RATE
+FROM   resultlist tb
+       inner join cell_sect sect
+               ON sect.cell_id = tb.cell_id
+
 ]]>
     </select>
 

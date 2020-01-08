@@ -10,225 +10,282 @@
 <html lang="ko">
 <head>
 <%@ include file="/include/common_head.jsp" %>
+<style type="text/css">
+    .progress { position:relative; width:100%; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+    .bar { background-color: #b4c8f5; width:0%; height:20px; border-radius: 3px; }
+    .percent { position:absolute; display:inline-block; top:3px; left:48%; }
+</style>
 <script type="text/javaScript" language="javascript" defer="defer">
 // 페이지 로딩 초기 설정/*
 $( document ).ready(function() {
-	
-	cmCreateDatepicker('SRVY_DE', 15, "/images/btn_calendar.gif", "+0D");
 
-	COMMON_FILE.clearMultiFile('#file_list', '#addFile');
-	
-	$("#addFile").change(function(){
-		var extn = ["zip"];
-		COMMON_FILE.setMultiFiles('#file_list', this, extn, 'N', 1);
-	});
+    cmCreateDatepicker('SRVY_DE', 15, "/images/btn_calendar.gif", "+0D");
 
-	// 검색 목록 그리드 구성
-	$("#gridArea").jqGrid({
-		url: contextPath + 'srvy/api/srvyDtaUploadResultList.do'
-		,autoencode: true
-		,contentType : 'application/json'
-		,datatype: "local"
-		,mtype: "POST"
-		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
-		//,postData: JSON.stringify( $("#frm").cmSerializeObject())
-		,postData: $("#frm").cmSerializeObject()
-		,ignoreCase: true
-		//,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
-		,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","조사일자","등록자","분석자료","등록번호","조사번호"]
-	   	,colModel:[
-			 {name:'route_CODE',index:'route_CODE', align:'center', width:70}
-			,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
-			,{name:'direct_CODE',index:'direct_CODE', align:'center', width:70}
-			,{name:'track',index:'TRACK', align:'center', width:70}
-			,{name:'success_KND',index:'success_KND', align:'center', width:70, formatter:fn_btn_formatter_fail}
-			,{name:'data_CO',index:'data_CO', align:'center', width:70}
-			,{name:'srvy_DE',index:'srvy_DE', align:'center', width:70}
-			,{name:'crtr_NM',index:'crtr_NM', align:'center', width:50}
-			,{name:'분석자료',index:'분석자료', align:'center', width:50, formatter:fn_btn_anal_data}
-			,{name:'CRTR_NO',index:'CRTR_NO', hidden: true}
-			,{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
-	   	]
-		,async : false
-	   	,sortname: 'srvy_DE'
-	    ,sortorder: "desc"
-	   	,rowNum: 50
-	   	,rowList: [10,50,100,500]
-	    ,viewrecords: true
-	   	,pager: '#gridPager'
-	    ,rownumbers: true
-	    ,loadtext: "검색 중입니다."
-		,emptyrecords: "검색된 데이터가 없습니다."
-		,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
-		,ondblClickRow: function(rowId) {		// 더블클릭 처리
-		}
-	   	,onSelectRow: function(rowId) {		// 클릭 처리
-			if( rowId != null ) {
-				var rowData =$( "#gridArea" ).getRowData(rowId);
-			}
-		}
-	   	,loadBeforeSend:function(tsObj, ajaxParam, settings){
-	   		if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){
-	   			delete this.p.postData.nd;
-	   			delete this.p.postData._search;
-	   			this.p.postData.sidx = this.p.sortname;
-	   			this.p.postData.sord = this.p.sortorder;
-	   			if(this.p.postData.pageUnit != this.p.postData.rows){
-	   				this.p.postData.pageUnit = this.p.postData.rows;
-	   			}
-	   			ajaxParam.data = JSON.stringify(this.p.postData);
-	   		}
-	   	}
-		,multiselect: false
-		,multiboxonly: false
-		//,scroll: true
-	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
+    COMMON_FILE.clearMultiFile('#file_list', '#files');
 
-	// 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
-	COMMON_UTIL.cmInitGridSize('gridArea', 'div_grid', 200);
+    $("#files").change(function(){
+        var extn = ["zip"];
+        COMMON_FILE.setMultiFiles('#file_list', this, extn, 'N', 1);
+    });
 
-	fn_search();
+    // 검색 목록 그리드 구성
+    $("#gridArea").jqGrid({
+        url: contextPath + 'srvy/api/srvyDtaUploadResultList.do'
+        ,autoencode: true
+        ,contentType : 'application/json'
+        ,datatype: "local"
+        ,mtype: "POST"
+        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
+        //,postData: JSON.stringify( $("#frm").cmSerializeObject())
+        ,postData: $("#frm").cmSerializeObject()
+        ,ignoreCase: true
+        //,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
+        ,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","조사일자","등록자","분석자료","등록번호","조사번호"]
+        ,colModel:[
+             {name:'route_CODE',index:'route_CODE', align:'center', width:70}
+            ,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
+            ,{name:'direct_CODE',index:'direct_CODE', align:'center', width:70}
+            ,{name:'track',index:'TRACK', align:'center', width:70}
+            ,{name:'success_KND',index:'success_KND', align:'center', width:70, formatter:fn_btn_formatter_fail}
+            ,{name:'data_CO',index:'data_CO', align:'center', width:70, formatter:fn_data_progrs_cnt}
+            ,{name:'srvy_DE',index:'srvy_DE', align:'center', width:70}
+            ,{name:'crtr_NM',index:'crtr_NM', align:'center', width:50}
+            ,{name:'분석자료',index:'분석자료', align:'center', width:50, formatter:fn_btn_anal_data}
+            ,{name:'CRTR_NO',index:'CRTR_NO', hidden: true}
+            ,{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
+        ]
+        ,async : false
+        ,sortname: 'srvy_DE'
+        ,sortorder: "desc"
+        ,rowNum: 50
+        ,rowList: [10,50,100,500]
+        ,viewrecords: true
+        ,pager: '#gridPager'
+        ,rownumbers: true
+        ,loadtext: "검색 중입니다."
+        ,emptyrecords: "검색된 데이터가 없습니다."
+        ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
+        ,ondblClickRow: function(rowId) {       // 더블클릭 처리
+        }
+        ,onSelectRow: function(rowId) {     // 클릭 처리
+            if( rowId != null ) {
+                var rowData =$( "#gridArea" ).getRowData(rowId);
+            }
+        }
+        ,loadBeforeSend:function(tsObj, ajaxParam, settings){
+            if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){
+                delete this.p.postData.nd;
+                delete this.p.postData._search;
+                this.p.postData.sidx = this.p.sortname;
+                this.p.postData.sord = this.p.sortorder;
+                if(this.p.postData.pageUnit != this.p.postData.rows){
+                    this.p.postData.pageUnit = this.p.postData.rows;
+                }
+                ajaxParam.data = JSON.stringify(this.p.postData);
+            }
+        }
+        ,multiselect: false
+        ,multiboxonly: false
+        //,scroll: true
+    }).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
 
-	//fn_change_roadNm();
+    // 그리드 초기 설정 함수 [그리드아이디, 상단 여유공간 크기] (필수)
+    COMMON_UTIL.cmInitGridSize('gridArea', 'div_grid', 200);
+
+    fn_search();
+
+    //fn_change_roadNm();
+
+    // #####################################
+    // ## 파일업로드 초기화
+    // #####################################
+    var bar = $('.bar');
+    var percent = $('.percent');
+    var status = $('#status');
+
+    $('#searchForm').ajaxForm({
+        beforeSend: function() {
+            status.empty();
+            var percentVal = '0%';
+            bar.width(percentVal)
+            percent.html(percentVal);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal)
+            percent.html(percentVal);
+        },
+        success: function(data) {
+            var percentVal = '100%';
+            bar.width(percentVal)
+            percent.html(percentVal);
+
+            $('#filefrm')[0].reset(); //폼 초기화(리셋);
+            $('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
+            COMMON_FILE.clearMultiFile('#file_list', '#files');
+            parent.$("#dvProgress").dialog("close");
+
+            //alert(data.resultCode);
+            alert(data.resultMsg);
+            if(!data.result) {
+                return;
+            } else {
+                fn_search();
+            }
+        },
+        complete: function(data) {
+//             status.html(xhr.responseText);
+        }
+    });
+    // #####################################
 });
 
 //파일 전송
 function fn_file_upload(){
-	var files = COMMON_FILE.getMultiFileIns();
+    var files = COMMON_FILE.getMultiFileIns();
 
-	var form = $('#filefrm')[0];
+    var form = $('#filefrm')[0];
     var formData = new FormData(form);
 
     var len = 0;
     for(var i in files){
-    	if(files[i] == i){continue;}
-    	formData.append("files", files[i]);
-    	len ++;
+        if(files[i] == i){continue;}
+        formData.append("files", files[i]);
+        len ++;
     }
- 
+
     if($('#SRVY_DE').val() == '' ) {
-    	alert("조사일자를 선택하세요");
-    	$('#SRVY_DE').focus();
-    	return;
+        alert("조사일자를 선택하세요");
+        $('#SRVY_DE').focus();
+        return;
     }
     if($('#ROAD_NO').val() == '' ) {
-    	alert("노선번호를 선택하세요");
-    	$('#ROAD_NO').focus();
-    	return;
+        alert("노선번호를 선택하세요");
+        $('#ROAD_NO').focus();
+        return;
     }
     if($('#DIRECT_CODE').val() == '' ) {
-    	alert("행선을 선택하세요");
-    	$('#DIRECT_CODE').focus();
-    	return;
+        alert("행선을 선택하세요");
+        $('#DIRECT_CODE').focus();
+        return;
     }
     if($('#TRACK').val() == '' ) {
-    	alert("차로를 입력하세요");
-    	$('#TRACK').focus();
-    	return;
+        alert("차로를 입력하세요");
+        $('#TRACK').focus();
+        return;
     }
-     
+
     formData.append("SRVY_DE", $('#SRVY_DE').val());
     formData.append("ROAD_NO", $('#ROAD_NO').val());
     formData.append("ROAD_NAME", $('#ROAD_NAME').val());
     formData.append("DIRECT_CODE", $('#DIRECT_CODE').val());
     formData.append("TRACK", $('#TRACK').val());
 
-	if(len < 1){
-		alert("조사자료 파일을 선택해주세요.");
-		return;
-	}
-	
-
-	parent.$("#dvProgress").dialog("open");
-	parent.$("#t_progress").text("파일 전송 중 입니다.");
+    if(len < 1){
+        alert("조사자료 파일을 선택해주세요.");
+        return;
+    }
 
 
-    $.ajax({
-       url: contextPath + "srvy/srvyDtaFileUpload.do",
-       processData: false,
-       contentType: false,
-       data: formData,
-       type: 'POST',
-       success: function(data){
-	   	    $('#filefrm')[0].reset(); //폼 초기화(리셋);
-	   		$('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
-	   		COMMON_FILE.clearMultiFile('#file_list', '#addFile');
-	   		parent.$("#dvProgress").dialog("close");
-	   		
-	   		//alert(data.resultCode);
-   			alert(data.resultMsg);
-		   	if(!data.result) {
-		   		return;
-		   	} else {
-	   	        fn_search();
-		   	}
-   			
-       }
-       	,error: function(a,b,msg){
+    parent.$("#dvProgress").dialog("open");
+    parent.$("#t_progress").text("파일 전송 중 입니다.");
 
-    	}
-   });
+
+//     $.ajax({
+//        url: contextPath + "srvy/srvyDtaFileUpload.do",
+//        processData: false,
+//        contentType: false,
+//        data: formData,
+//        type: 'POST',
+//        success: function(data){
+//          $('#filefrm')[0].reset(); //폼 초기화(리셋);
+//          $('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
+//          COMMON_FILE.clearMultiFile('#file_list', '#addFile');
+//          parent.$("#dvProgress").dialog("close");
+
+//          //alert(data.resultCode);
+//              alert(data.resultMsg);
+//          if(!data.result) {
+//              return;
+//          } else {
+//              fn_search();
+//          }
+
+//        }
+//          ,error: function(a,b,msg){
+
+//      }
+//    });
+
+
+    $("#searchForm").submit();
 
 }
 
 /* //파일 전송 callback
 function fn_file_upload_callback(){
-	$('#filefrm')[0].reset(); //폼 초기화(리셋);
-	fn_search();
-	$('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
-	COMMON_FILE.clearMultiFile('#file_list', '#addFile');
-	$("#dvProgress").dialog("close");
+    $('#filefrm')[0].reset(); //폼 초기화(리셋);
+    fn_search();
+    $('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
+    COMMON_FILE.clearMultiFile('#file_list', '#addFile');
+    $("#dvProgress").dialog("close");
 
 }
  */
 //검색 처리
 function fn_search() {
-	$("#gridArea").jqGrid("setGridParam",{
-		datatype: "json"
-		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
-		,contentType: "application/json"
-		,page: 1
-		,postData:   $("#frm").cmSerializeObject()
-		,mtype: "POST"
-	   	,loadComplete: function(data) {
-	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
-	   	}
-	}).trigger("reloadGrid");
+    $("#gridArea").jqGrid("setGridParam",{
+        datatype: "json"
+        ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
+        ,contentType: "application/json"
+        ,page: 1
+        ,postData:   $("#frm").cmSerializeObject()
+        ,mtype: "POST"
+        ,loadComplete: function(data) {
+            COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
+        }
+    }).trigger("reloadGrid");
 }
 
 
+function fn_data_progrs_cnt(cellValue, options, rowObject){
+    var str ="";
+    str += rowObject.data_PROGRS_CNT + " / " + rowObject.data_CO;
+    return str;
+}
+
 function fn_btn_anal_data(cellValue, options, rowObject){
-	var btn ="";
-	if(rowObject.success_KND == 'S') {
-		btn += "<a href='#' class='schbtn' onclick=\"fn_anal_data_popup('" + rowObject.SRVY_NO + "');\"><font color=white>분석자료</font></a>";
-	}
-	return btn;
+    var btn ="";
+    if(rowObject.success_KND == 'S') {
+        btn += "<a href='#' class='schbtn' onclick=\"fn_anal_data_popup('" + rowObject.SRVY_NO + "');\"><font color=white>분석자료</font></a>";
+    }
+    return btn;
 }
 
 function fn_anal_data_popup(srvyNo){
-	$("#SRVY_NO").val(srvyNo);
-	COMMON_UTIL.cmWindowOpen('분석자료 조회', "<c:url value='/analDataPopupList.do'/>?SRVY_NO="+srvyNo, 1500, 1200, false, null, 'center');
+    $("#SRVY_NO").val(srvyNo);
+    COMMON_UTIL.cmWindowOpen('분석자료 조회', "<c:url value='/analDataPopupList.do'/>?SRVY_NO="+srvyNo, 1500, 1200, false, null, 'center');
 }
- 
+
 //버튼생성
 function fn_btn_formatter_fail(cellValue, options, rowObject){
-	var btn ="", knd="";
-	
-	if(rowObject.success_KND == 'F') knd="실패";
-	else knd="성공";
-	btn  = "<span style='width:50px;display:inline-block;'><font>" + knd + "</font></span>";
-	if(rowObject.success_KND == 'F') {
-		btn += "<a href='#' class='schbtn' onclick=\"fn_upd_res_log('" + rowObject.SRVY_NO + "' , '" + rowObject.CRTR_NO + "');\"><font color=white>상세조회</font></a>";
-	}
-	
-	return btn;
+    var btn ="", knd="";
+
+    if(rowObject.success_KND == 'F') knd="실패";
+    else knd="성공";
+    btn  = "<span style='width:50px;display:inline-block;'><font>" + knd + "</font></span>";
+    if(rowObject.success_KND == 'F') {
+        btn += "<a href='#' class='schbtn' onclick=\"fn_upd_res_log('" + rowObject.SRVY_NO + "' , '" + rowObject.CRTR_NO + "');\"><font color=white>상세조회</font></a>";
+    }
+
+    return btn;
 }
 
 // 상세조회
 function fn_upd_res_log(srvyNo,crtrNo){
-	$("#SRVY_NO").val(srvyNo);
-	$("#CRTR_NO").val(crtrNo);						  
-	COMMON_UTIL.cmMovePage("viewForm", contextPath + "srvydtaexcel/selectSrvyDtaExcelFailList.do");
+    $("#SRVY_NO").val(srvyNo);
+    $("#CRTR_NO").val(crtrNo);
+    COMMON_UTIL.cmMovePage("viewForm", contextPath + "srvydtaexcel/selectSrvyDtaExcelFailList.do");
 }
 
 //노선 번호 변경 시 노선명 자동 조회
@@ -298,93 +355,102 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 
 
 <div class="tabcont">
-	<header class="loc">
-	        <div class="container">
-	            <span class="locationHeader">
-	                <select name="">
-	                    <option value="">조사자료관리</option>
-	                </select>
-	                <select name="">
-	                    <option value="">조사자료등록</option>
-	                </select>
-	                <h2 class="h2">조사자료 등록 대상목록</h2>
-	            </span>
-	            <a href="#" class="btnRefresh" onclick="fn_search();"><img src="/gpms/images/ic_reset.png" alt="새로고침"></a>
-	
-	        </div>
-	    </header>
-	    
-		<div class="contents container">
-		  <article class="div3">
-			<h3 class="h3">파일첨부</h3>
-			<span class="haderBtn">
-				<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 1);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
-				<!-- <input type="button" class="btn pri btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 1);"  value="파일선택"> -->
-				<input multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" id="addFile" style="width:80px;"/>
-			</span>
-			
-			<div class="table">
-    			<table>
-    				<tbody>
-	    				<tr>
-	    					<td class="th"><label for="SRVY_DE">조사일자</labed></td>
-	    					<td>
-	                            <span class="calendar btn_calendar">
-	                                <input type="text" id="SRVY_DE" name="SRVY_DE" />
-	                            </span>           
-	                        </td>
-	    					<td class="th"><label for="ROAD_NO">노선번호</label></td>
-	    					<td>
-	    						<select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input">
-	    						    <option value="">전체</option>
-	    						    <c:forEach items="${ roadNoList }" var="roadNo">
-	    						        <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
-	    						    </c:forEach>
-	    						</select>        
-	                        </td>
-	    				</tr>
-	    				<tr>
-	    					<td class="th"><label for="ROAD_NAME">노선명</label></td>
-	    					<td colspan="3">
-	                            <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
-	                        </td>
-	    				</tr>
-	    				<tr>
-	    					<td class="th"><label>행선</label></td>
-	    					<td>
-	    						<select id="DIRECT_CODE" name="DIRECT_CODE">
-	    						    <option value="">전체</option>
-	    						    <option value="S">상행</option>
-	    						    <option value="E">하행</option>
-	    						</select>	    						
-	    					</td>
-	    					<td class="th"><label>차로</label></td>
-	    					<td>
-	    						<input type="number" name="TRACK" id="TRACK" value="" style="width:57px;" onkeydown="fnCheckNumber(this);" maxLength="1" class="MX_80 CS_50 DT_INT input" />
-	    					</td>
-	    				</tr>         
-    				</tbody>	
-    			</table>
-    			<div class="btfilebx" id="file_list">
-	            	<ul name="fileSet"></ul>
-	            	<input type="button" class="btn pri" onclick="fn_file_upload()" value="전송" />
-	            </div>	            
+    <header class="loc">
+            <div class="container">
+                <span class="locationHeader">
+                    <select name="">
+                        <option value="">조사자료관리</option>
+                    </select>
+                    <select name="">
+                        <option value="">조사자료등록</option>
+                    </select>
+                    <h2 class="h2">조사자료 등록 대상목록</h2>
+                </span>
+                <a href="#" class="btnRefresh" onclick="fn_search();"><img src="/gpms/images/ic_reset.png" alt="새로고침"></a>
 
-	            <p>※ 첨부 파일은 압축(zip) 파일만 업로드 가능합니다.</p>
+            </div>
+        </header>
 
-    		</div>
-    	</article>
-    	
-    	<article class="div9">
-    		<h3 class="h3">조사자료 등록 대상목록</h3>
-    		<form id="frm" name="frm" method="post" action="">
-			    <div id="div_grid" class="table">
-			        <table id="gridArea"></table>					
-	            </div>
-	            <div id="gridPager"></div>
+        <div class="contents container">
+          <article class="div3">
+            <form id="searchForm" name="searchForm" action="<c:url value="/srvy/srvyDtaFileUpload.do" />" method="post" enctype="multipart/form-data">
+                <h3 class="h3">파일첨부</h3>
+                <span class="haderBtn">
+                    <a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#files', 1);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
+                    <!-- <input type="button" class="btn pri btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 1);"  value="파일선택"> -->
+                    <input id="files" name="files" multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" style="width:80px;"/>
+                </span>
+
+                <div class="table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="th"><label for="SRVY_DE">조사일자</labed></td>
+                                <td>
+                                    <span class="calendar btn_calendar">
+                                        <input type="text" id="SRVY_DE" name="SRVY_DE" />
+                                    </span>
+                                </td>
+                                <td class="th"><label for="ROAD_NO">노선번호</label></td>
+                                <td>
+                                    <select id="ROAD_NO" name="ROAD_NO" alt="노선번호" onchange="fn_change_roadNm();" class="input">
+                                        <option value="">전체</option>
+                                        <c:forEach items="${ roadNoList }" var="roadNo">
+                                            <option value="${ roadNo.ROAD_NO }">${ roadNo.ROAD_NO_VAL }</option>
+                                        </c:forEach>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th"><label for="ROAD_NAME">노선명</label></td>
+                                <td colspan="3">
+                                    <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="th"><label>행선</label></td>
+                                <td>
+                                    <select id="DIRECT_CODE" name="DIRECT_CODE">
+                                        <option value="">전체</option>
+                                        <option value="S">상행</option>
+                                        <option value="E">하행</option>
+                                    </select>
+                                </td>
+                                <td class="th"><label>차로</label></td>
+                                <td>
+                                    <input type="number" name="TRACK" id="TRACK" value="" style="width:57px;" onkeydown="fnCheckNumber(this);" maxLength="1" class="MX_80 CS_50 DT_INT input" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="btfilebx" id="file_list">
+                        <ul name="fileSet"></ul>
+                        <input type="button" class="btn pri" onclick="fn_file_upload()" value="전송" />
+                    </div>
+
+                    <p>※ 첨부 파일은 압축(zip) 파일만 업로드 가능합니다.</p>
+
+                    <div class="progress">
+                        <div class="bar"></div >
+                        <div class="percent">0%</div >
+                    </div>
+
+                    <div id="status"></div>
+
+                </div>
             </form>
-    	</article>
-	</div>
+        </article>
+
+        <article class="div9">
+            <h3 class="h3">조사자료 등록 대상목록</h3>
+            <form id="frm" name="frm" method="post" action="">
+                <div id="div_grid" class="table">
+                    <table id="gridArea"></table>
+                </div>
+                <div id="gridPager"></div>
+            </form>
+        </article>
+    </div>
 </div>
 
 <!-- 공통 (START)-->

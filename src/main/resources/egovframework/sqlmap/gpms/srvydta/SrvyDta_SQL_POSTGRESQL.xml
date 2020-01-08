@@ -348,6 +348,22 @@
 	     		 , (SELECT tnsysuser.USER_NM FROM TN_SYS_USER tnsysuser WHERE tnsysuser.USER_NO = tnsrvydta.CRTR_NO and tnsysuser.USE_AT = 'Y' and tnsysuser.DELETE_AT = 'N') CRTR_NM
 	     		 , tnsrvydta.SRVY_NO
 	     		 , TO_CHAR(DATE(tnsrvydta.SRVY_DE), 'YYYY-MM-DD') AS SRVY_DE
+                 , (
+                    SELECT
+                        CASE COUNT(*) WHEN 0 THEN
+                            (SELECT
+                                COUNT(*)
+                            FROM TMP_MUMM_SCTN_SRVY_DTA AAA
+                            WHERE
+                                AAA.SRVY_NO = tnsrvydta.SRVY_NO
+                                AND (AC_LOW + AC_MED + AC_HI + LC_LOW + LC_MED + LC_HI + TC_LOW + TC_MED + TC_HI + PTCHG_CR + POTHOLE_CR) > 0)
+                        ELSE COUNT(*)
+                        END CNT
+                    FROM TN_MUMM_SCTN_SRVY_DTA AA
+                    WHERE
+                        AA.SRVY_NO = tnsrvydta.SRVY_NO
+                        AND AA.MSG_CODE != 'I'
+                ) DATA_PROGRS_CNT
 			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
 		   WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
 		   	 AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO

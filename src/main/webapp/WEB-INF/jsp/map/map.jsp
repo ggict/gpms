@@ -53,7 +53,7 @@
 					       </ul>
 					    </div>
 					     --%>
-                        
+
                          	<div class="tab_wrap">
                         		<iframe id="integrated_area" name="integrated_area" style="padding: 0; margin: 0; border:0; width:100%; height:560px; overflow: hidden; z-index:9999;" scrolling=no></iframe>
                         	</div>
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div id="repairtargets" style="display:none;">
-            
+
             <header class="loc">
 		        <div class="container">
 		            <span class="locationHeader">
@@ -89,7 +89,7 @@
 		                    <option value="">보수대상선정</option>
 		                </select>
 		                <!-- <h2 class="h2">조사자료 등록 대상목록</h2> -->
-		            </span>		
+		            </span>
 		        </div>
 		    </header>
 
@@ -169,7 +169,6 @@
 	                <div class="group">
 	                    <article>
 	                        <a href="#totalSearch" id="integrated" class="mt2Btn sideDiv totalSearch" onclick="COMMON_UTIL.cmWindowOpen('통합 정보 조회', contextPath + 'topmenu/selectIntegratedView.do', 623, 215, false, null, 'integrated');">통합조회</a>
-	                    </article>
 	                    </article>
 	                    <article>
 	                        <button class="mt2Btn searchInfo" id="researchInfo">조사정보</button>
@@ -281,7 +280,7 @@ var MAIN = (function(_mod_map, $, undefined) {
 		},
 		userStyle : ''
 	});
-	
+
 	var fn_get_layerInfoList = function (_oLayer){
 		return oLayerInfoList[_oLayer];
 	}

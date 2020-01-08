@@ -347,6 +347,9 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	@XmlElement
 	private String TC_TOT;
 
+	@XmlElement
+	private String DATA_PROGRS_CNT;
+
 	public String getSRVY_YEAR() {
 		return SRVY_YEAR;
 	}
@@ -1178,6 +1181,14 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 
     public void setTC_TOT(String tC_TOT) {
         TC_TOT = tC_TOT;
+    }
+
+    public String getDATA_PROGRS_CNT() {
+        return DATA_PROGRS_CNT;
+    }
+
+    public void setDATA_PROGRS_CNT(String dATA_PROGRS_CNT) {
+        DATA_PROGRS_CNT = dATA_PROGRS_CNT;
     }
 
 

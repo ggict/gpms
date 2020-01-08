@@ -196,7 +196,11 @@ public class SrvyDtaController extends BaseController {
 
 		String filePath = pathInfoProperties.getProperty("file.upload.path");
 
-		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "srvy", files);
+		Date currentDate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String date = sdf.format(currentDate);
+
+		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "srvy", files, date);
 		// ###################################################
 
 		if (fileList.size() < 1 || userNo == null || userNo.equals("")) {
@@ -231,9 +235,6 @@ public class SrvyDtaController extends BaseController {
 				//파일경로+파일명
 				String fileName = checkFilePath(filePathName, "path");
 
-		        Date currentDate = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				String date = sdf.format(currentDate);
 				filePath += File.separator + "srvy" + File.separator + date;
 
 				//업로드 폴더 경로

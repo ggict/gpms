@@ -200,7 +200,7 @@ var chartInfoObj = {
 		myChart.setOption({
 			color : [ '#003366', '#4cabce' ],
 			title : {
-				text : '중단평탄성'
+				text : '종단평탄성'
 				,textStyle: {
 					fontSize: 12
 				}
@@ -215,7 +215,7 @@ var chartInfoObj = {
 				}
 			},
 			legend : {
-				data : ['중단평탄성']
+				data : ['종단평탄성']
 			},
 			grid : {
 				top : 5
@@ -229,7 +229,7 @@ var chartInfoObj = {
 				type : 'value'
 			}],
 			series : [ {
-				name : '중단평탄성',
+				name : '종단평탄성',
 				type : 'line',
 				data : lineData
 			}]

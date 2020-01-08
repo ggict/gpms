@@ -2,11 +2,7 @@
 package kr.go.gg.gpms.cntrwkdtl.web;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,18 +10,10 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Resource;
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.ss.formula.eval.ErrorEval;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +33,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.View;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import egovframework.cmmn.util.DateUtil;
 import egovframework.cmmn.util.ExcelView;
 import egovframework.cmmn.util.FileUploadUtils;
@@ -58,14 +43,12 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import kr.go.gg.gpms.attachfile.service.AttachFileService;
 import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.cntrcomp.service.model.CntrCompVO;
 import kr.go.gg.gpms.cntrwk.service.CntrwkService;
 import kr.go.gg.gpms.cntrwk.service.model.CntrwkVO;
 import kr.go.gg.gpms.cntrwkcellinfo.service.CntrwkCellInfoService;
 import kr.go.gg.gpms.cntrwkcellinfo.service.model.CntrwkCellInfoVO;
 import kr.go.gg.gpms.cntrwkdtl.service.CntrwkDtlService;
 import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
-import kr.go.gg.gpms.company.service.model.CompanyVO;
 import kr.go.gg.gpms.dept.service.DeptService;
 import kr.go.gg.gpms.dept.service.model.DeptVO;
 import kr.go.gg.gpms.flawcntrwk.service.FlawCntrwkService;
@@ -114,7 +97,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlList"
@@ -123,14 +106,14 @@ public class CntrwkDtlController extends BaseController {
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDtlList.do" })
 	public String selectCntrwkDtlList(@ModelAttribute("searchVO") CntrwkDtlVO cntrwkDtlVO, CntrwkVO cntrwkVO,  ModelMap model, HttpServletRequest request)
 			throws Exception {
-		
+
 		model.addAttribute("CNTRWK_SE",cntrwkVO.getCNTRWK_SE());
 		return "/cntrwkdtl/cntrwkdtlList";
 	}
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlList"
@@ -158,7 +141,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlList"
@@ -199,7 +182,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 목록을 조회한다. (pageing)
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlList"
@@ -227,7 +210,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 상세를 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlView"
@@ -341,7 +324,7 @@ public class CntrwkDtlController extends BaseController {
 				resultMap.put("ROUTE_CODE", cntrwkDtlVO.getROUTE_CODE());
 				resultMap.put("USER_NO", userNo);
 				resultMap.put("p_MODE", "NONE");
-				
+
 				HashMap result = cntrwkService.prc_SaveData(resultMap);
 			}
 			// 위치 정보 등록
@@ -391,7 +374,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사상세정보(TN_CNTRWK_DTL) 상세를 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/cntrwkdtl/CntrwkDtlView"
@@ -509,7 +492,7 @@ public class CntrwkDtlController extends BaseController {
 		String resultMsg = "";
 		String filePathNm = "";
 		String userNo = sessionManager.getUserNo();
-		
+
 		/** validate request type */
 		Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
 		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
@@ -520,15 +503,16 @@ public class CntrwkDtlController extends BaseController {
 		Assert.state(files.size() > 0, "0 files exist");
 
 		String filePath = pathInfoProperties.getProperty("file.upload.path");
-		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwk", files);
+
+		Date currentDate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String date = sdf.format(currentDate);
+
+		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "cntrwk", files, date);
 
 		try {
-			
-			for (AttachFileVO file : fileList) {
 
-				Date currentDate = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-				String date = sdf.format(currentDate);
+			for (AttachFileVO file : fileList) {
 
 				filePathNm = checkFilePath(filePath, "path") + File.separator + "cntrwk" + File.separator + date
 						+ File.separator + checkFilePath(file.getFILE_NM(), "name");
@@ -536,14 +520,14 @@ public class CntrwkDtlController extends BaseController {
 				// db insert
 				resultMsg = cntrwkDtlService.excelDBUpload(filePathNm, userNo);
 			}
-		
+
 		} catch (Exception e) {
 			resultMsg = e.getMessage() + " 등록에 실패하였습니다.";
 			model.addAttribute("resultMsg", resultMsg);
 
 			return "jsonView";
 		}
-		
+
 		if(resultMsg.equals("Success")) {
 			resultMsg = "정상적으로 등록되었습니다.";
 			model.addAttribute("resultMsg", resultMsg);
@@ -577,7 +561,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 건수 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
@@ -594,7 +578,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 예산 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
@@ -611,7 +595,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
@@ -627,7 +611,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 건수 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
@@ -644,7 +628,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 예산 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
@@ -661,7 +645,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
@@ -678,7 +662,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 건수 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
@@ -695,7 +679,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 연장 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
@@ -712,7 +696,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 예산 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
@@ -729,7 +713,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
@@ -746,7 +730,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 노선별 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
@@ -771,7 +755,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 관리기관별 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
@@ -796,7 +780,7 @@ public class CntrwkDtlController extends BaseController {
 
 	/**
 	 * 공사정보(TN_CNTRWK, TN_CNTRWK_DTL) 공법별 통계 엑셀목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO
 	 *            - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @exception Exception
@@ -818,26 +802,26 @@ public class CntrwkDtlController extends BaseController {
 
 		return new ExcelView();
 	}
-	
+
 	// 2019 신규 통계 지표
 	/**
 	 * 통계 > 포장공사 이력 > 노선별 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkRoutLenStats.do" })
 	public String selectCntrwkRoutLenStats(CntrwkDtlVO cntrwkDtlVO, ModelMap model, HttpServletRequest request) throws Exception {
-		
+
 		// 선정년도 (2017 ~ 현재연도)
 		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
-		
+
 		model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
 
 		return "/stats/cntrwk/cntrwkRoutLenStats";
 	}
-	
+
 	/**
 	 * 통계 > 포장공사 이력 > 노선별통계 > 데이터조회
 	 */
@@ -846,7 +830,7 @@ public class CntrwkDtlController extends BaseController {
 
 		// 데이터 조회
 		List<CntrwkDtlVO> result = cntrwkDtlService.selectCntrwkRoutLenNewStats(cntrwkDtlVO);
-		
+
 		int total_page = 0;
 
 		// 결과 JSON 저장
@@ -858,7 +842,7 @@ public class CntrwkDtlController extends BaseController {
 
 		return map;
 	}
-	
+
 	/**
 	 * 통계 > 포장공사 이력 > 노선별통계 > 엑셀
 	 */
@@ -876,25 +860,25 @@ public class CntrwkDtlController extends BaseController {
 
 		return new ExcelView();
 	}
-	
+
 	/**
 	 * 통계 > 포장공사 이력 > 관리기관별 통계 목록을 조회한다.
-	 * 
+	 *
 	 * @param cntrwkDtlVO - 조회할 정보가 담긴 CntrwkDtlVO
 	 * @return "/stats/cntrwk/cntrwkRoutCntStats"
 	 * @exception Exception
 	 */
 	@RequestMapping(value = { "/cntrwkdtl/selectCntrwkDeptLenStats.do" })
 	public String selectCntrwkDeptLenStats(CntrwkDtlVO cntrwkDtlVO, DeptVO deptVO, ModelMap model, HttpServletRequest request) throws Exception {
-		
+
 		// 선정년도 (2017 ~ 현재연도)
 		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
-		
+
 		model.addAttribute("cntrwkDtlVO", cntrwkDtlVO);
 
 		return "/stats/cntrwk/cntrwkDeptLenStats";
 	}
-	
+
 	/**
 	 * 통계 > 포장공사 이력 > 관리기관별통계 > 데이터조회
 	 */
@@ -903,7 +887,7 @@ public class CntrwkDtlController extends BaseController {
 
 		// 데이터 조회
 		List<CntrwkDtlVO> result = cntrwkDtlService.selectCntrwkDeptLenNewStats(cntrwkDtlVO);
-		
+
 		int total_page = 0;
 
 		// 결과 JSON 저장
@@ -915,7 +899,7 @@ public class CntrwkDtlController extends BaseController {
 
 		return map;
 	}
-	
+
 	/**
 	 * 통계 > 포장공사 이력 > 관리기관별통계 > 엑셀
 	 */
@@ -933,7 +917,7 @@ public class CntrwkDtlController extends BaseController {
 
 		return new ExcelView();
 	}
-	
+
 
 
 }

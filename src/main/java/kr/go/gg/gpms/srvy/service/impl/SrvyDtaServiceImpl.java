@@ -463,9 +463,12 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 				String pngFileName = jpgFileName.replace(".jpg", ".png");
 				params.put("RDSRFC_IMG_FILE_NM_2", pngFileName);
 				params.put("FRNT_IMG_FILE_NM", jpgFileName);
-				params.put("FRNT_IMG_FILE_COURS", rootFileCours);
+				// 파일 경로 프로시저에서 일괄 업데이트
+//				params.put("FRNT_IMG_FILE_COURS", rootFileCours);
 				params.put("CR_IMG_FILE_NM", pngFileName);
 				params.put("CR_IMG_FILE_COURS", rootFileCours.substring(0, rootFileCours.lastIndexOf(File.separator, rootFileCours.lastIndexOf(File.separator)-1)) + File.separator + "균열분석이미지");
+
+				params.put("SRVY_NO", srvyDtaOne.getSRVY_NO());
 
 				srvyDtaDAO.insertTmpExcelData(params);
 			}
@@ -675,7 +678,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
         		    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         		    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         		    builder.addBinaryBody("image", aiFileNm);
-        		    builder.addTextBody("modules", "crack");
+        		    builder.addTextBody("modules", EgovProperties.getProperty("Globals.AI.MODULES"));
         		    HttpEntity entity = builder.build();
         		    //
         		    post.setEntity(entity);
@@ -684,6 +687,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
         		    HttpEntity entity2 = responseTmp.getEntity();
         		    String responseString = EntityUtils.toString(entity2, "UTF-8");
 
+        		    LOGGER.debug("responseString : " + responseString);
         		    //=======================================================================================
 
         			JSONParser paser = new JSONParser();

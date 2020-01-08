@@ -9,13 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.sysuser.service.SysUserService;
-import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
-import kr.go.gg.gpms.sysuser.service.model.SysUserVO;
-import kr.go.gg.gpms.userconnect.service.UserConnectService;
-import kr.go.gg.gpms.userconnect.service.model.UserConnectVO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +23,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import egovframework.cmmn.web.LoginManager;
 import egovframework.cmmn.web.SessionManager;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.security.service.impl.CustomAuthenticationProvider;
+import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.sysuser.service.SysUserService;
+import kr.go.gg.gpms.sysuser.service.model.MemberInfo;
+import kr.go.gg.gpms.sysuser.service.model.SysUserVO;
+import kr.go.gg.gpms.userconnect.service.UserConnectService;
+import kr.go.gg.gpms.userconnect.service.model.UserConnectVO;
 
 @Controller("loginController")
 public class LoginController extends BaseController {
@@ -106,7 +104,7 @@ public class LoginController extends BaseController {
 
 					// id and password match ok
 					session = request.getSession();
-					SessionManager.setMaxInactiveInterval(3600);
+					SessionManager.setMaxInactiveInterval(3600 * 10);
 					sessionManager.setSession(session);
 					sessionManager.setLoginManagerConfig(session, sysUserMember.getUSER_NO());
 					sessionManager.setUser(sysUserMember.getUSER_ID());
@@ -205,7 +203,7 @@ public class LoginController extends BaseController {
 
                     // id and password match ok
                     session = request.getSession();
-                    SessionManager.setMaxInactiveInterval(3600);
+                    SessionManager.setMaxInactiveInterval(3600 * 10);
                     sessionManager.setSession(session);
                     sessionManager.setLoginManagerConfig(session, sysUserMember.getUSER_NO());
                     sessionManager.setUser(sysUserMember.getUSER_ID());

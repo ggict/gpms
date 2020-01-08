@@ -13,21 +13,21 @@
 $( document ).ready(function() {
 	// input, select 항목 init
 	COMMON_UTIL.cmFormObjectInit("frm");
-	
+
 	// 달력 생성
 	//COMMON_UTIL.cmCreateDatepickerLinked('SCH_STRWRK_DE','SCH_COMPET_DE', 10);
-	
-	//창 조절시 차트 width 
+
+	//창 조절시 차트 width
 	var rw = $(window).width()/3;
-	
-	
-}); 
+
+
+});
 
 //창 조절시 차트 resize
 $(window).on('resize', function(){
- 
+
 });
- 
+
 
 </script>
 </head>
@@ -42,12 +42,12 @@ $(window).on('resize', function(){
 <input type="hidden" id="SCH_COMPET_DE" name="SCH_COMPET_DE" value=""/>
 <form id="frm" name="frm" method="post" action="">
 
-		<div id="sch_cnt01" class="tabcont">
-			<h3>보수대상 선정 전체 PROCESS 설명 화면</h3>
-			<div class="img_rpair">
-				<img src="<c:url value='/images/img_rpair.png' />" />
-			</div>
-		</div>
+<!-- 		<div id="sch_cnt01" class="tabcont"> -->
+<!-- 			<h3>보수대상 선정 전체 PROCESS 설명 화면</h3> -->
+<!-- 			<div class="img_rpair"> -->
+<%-- 				<img src="<c:url value='/images/img_rpair.png' />" /> --%>
+<!-- 			</div> -->
+<!-- 		</div> -->
 
 </form>
 <!-- 공통 (START)-->

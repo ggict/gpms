@@ -19,7 +19,7 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
  * @since 2017-03-29
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 public interface AttachFileService {
@@ -31,7 +31,7 @@ public interface AttachFileService {
 	 * @exception Exception
 	 */
 	String insertAttachFile(AttachFileVO attachFileVO) throws Exception;
-	
+
 	/**
 	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 등록한다.
 	 * @param attachFileVO - 등록할 정보가 담긴 AttachFileVO
@@ -51,7 +51,7 @@ public interface AttachFileService {
 	/**
 	 * 공통첨부파일(TN_ATTACH_FILE)을 삭제한다.
 	 * @param attachFileVO - 삭제할 정보가 담긴 AttachFileVO
-	 * @return int형 
+	 * @return int형
 	 * @exception Exception
 	 */
 	int deleteAttachFile(AttachFileVO attachFileVO) throws Exception;
@@ -63,7 +63,7 @@ public interface AttachFileService {
 	 * @exception Exception
 	 */
 	AttachFileVO selectAttachFile(AttachFileVO attachFileVO) throws Exception;
-	
+
 	/**
 	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 조회한다.
 	 * @param attachFileVO - 조회할 정보가 담긴 AttachFileVO
@@ -87,7 +87,7 @@ public interface AttachFileService {
 	 * @exception
 	 */
 	int selectAttachFileListTotalCount(AttachFileVO attachFileVO);
-	
+
 	/**
 	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE) 목록을 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 attachFileVO

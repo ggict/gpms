@@ -22,7 +22,7 @@ import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
  * @since 2017-03-29
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 
@@ -32,7 +32,7 @@ public class AttachFileServiceImpl extends AbstractServiceImpl implements Attach
 	@Resource(name = "attachFileDAO")
 	private AttachFileDAO attachFileDAO;
 
-	//@Resource(name="AttachFileIdGnrService")	
+	//@Resource(name="AttachFileIdGnrService")
 	//private EgovIdGnrService egovIdGnrService;
 
 	/**
@@ -47,7 +47,7 @@ public class AttachFileServiceImpl extends AbstractServiceImpl implements Attach
 
 		return attachFileDAO.insertAttachFile( attachFileVO);
 	}
-	
+
 	/**
 	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 등록한다.
 	 * @param attachFileVO - 등록할 정보가 담긴 AttachFileVO
@@ -71,7 +71,7 @@ public class AttachFileServiceImpl extends AbstractServiceImpl implements Attach
 	/**
 	 * 공통첨부파일(TN_ATTACH_FILE)을 삭제한다.
 	 * @param attachFileVO - 삭제할 정보가 담긴 AttachFileVO
-	 * @return int형 
+	 * @return int형
 	 * @exception Exception
 	 */
 	public int deleteAttachFile(AttachFileVO attachFileVO) throws Exception {
@@ -86,10 +86,10 @@ public class AttachFileServiceImpl extends AbstractServiceImpl implements Attach
 	 */
 	public AttachFileVO selectAttachFile(AttachFileVO attachFileVO) throws Exception {
 		AttachFileVO resultVO = attachFileDAO.selectAttachFile( attachFileVO);
-		
+
 		return resultVO;
 	}
-	
+
 	/**
 	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 조회한다.
 	 * @param attachFileVO - 조회할 정보가 담긴 AttachFileVO
@@ -98,7 +98,7 @@ public class AttachFileServiceImpl extends AbstractServiceImpl implements Attach
 	 */
 	public AttachFileVO selectAttachDetailFile(AttachFileVO attachFileVO) throws Exception {
 		AttachFileVO resultVO = attachFileDAO.selectAttachDetailFile(attachFileVO);
-		
+
 		return resultVO;
 	}
 
@@ -131,5 +131,5 @@ public class AttachFileServiceImpl extends AbstractServiceImpl implements Attach
 	public List<AttachFileVO> selectAttachDetailFileImgList(AttachFileVO attachFileVO) throws Exception {
 		return attachFileDAO.selectAttachDetailFileImgList( attachFileVO);
 	}
-	
+
 }

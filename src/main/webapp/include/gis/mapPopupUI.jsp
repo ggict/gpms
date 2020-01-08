@@ -179,7 +179,7 @@
         </div>
 		<div id="dv_cellSelectionHelp" class="mt10 ml10 mr10" style="display:none;">
 			<span style="color:#f00;">* <b>Ctrl</b>키 + 도형그리기로 <b>선택제외</b>할 수 있습니다.</span>
-			<!-- 
+			<!--
 			<span style="display: none; color: red;">* <b>클릭</b>으로 도형 <b>추가</b><br />* <b>Ctrl + 클릭</b>으로 선택 <b>제외</b></span>
 			<span style="display: none; color: red;">* <b>다각형 그리기</b>로 선택 영역의 Cell <b>추가</b><br /> * <b>Ctrl + 다각형 그리기</b>로 선택 영역 <b>제외</b></span>
 			<span style="display: none; color: red;">* <b>시점을 다각형으로 선택 후 이정 입력<br />* 상하행을 구분하여 선택</b></span>
@@ -221,7 +221,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-  
+
     // 확인버튼 다이얼로그 액션
     $("#dvComplete > div > a").click(function() {
 

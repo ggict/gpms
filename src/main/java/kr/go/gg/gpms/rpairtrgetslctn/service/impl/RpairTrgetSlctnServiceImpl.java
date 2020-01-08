@@ -119,8 +119,8 @@ public class RpairTrgetSlctnServiceImpl extends AbstractServiceImpl implements R
 	    DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
 
         // 동기화 작업을 종료하고 저장소를 비운다
-        TransactionSynchronizationManager.unbindResource(this.dataSource);
-        TransactionSynchronizationManager.clearSynchronization();
+//        TransactionSynchronizationManager.unbindResource(this.dataSource);
+//        TransactionSynchronizationManager.clearSynchronization();
 	}
 
 	/**

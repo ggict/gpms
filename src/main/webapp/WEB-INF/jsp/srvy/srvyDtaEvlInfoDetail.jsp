@@ -34,11 +34,11 @@
                 </select>
                 <h2 class="h2">포장상태 평가정보[상세정보]</h2>
                 <input type="button" value="뒤로가기" onclick="COMMON_UTIL.cmMoveUrl('cntrwk/selectCntrwkList.do')" class="btnBack" id="back">
-<!-- 
+<!--
                 <a href='#' class='whitebtn dpib ml10 vm' id="back"><img src="<c:url value='/images/ic_back.png'/>" alt="뒤로가기" title="뒤로가기" /></a> -->
             </span>
-        </div>        
-        
+        </div>
+
         <span class="headerTab">
         	<c:forEach items="${srvyYearList }" var="srvyYear">
     			<a  href="#" onclick="COMMON_UTIL.cmMoveUrl('srvy/selectSrvyDtaEvlInfoDetail.do'+param.replace('SRVY_YEAR', 'SCH_SRVY_YEAR')+'&SM_NO=${smDtaGnlSttusVO.SM_NO }&SRVY_YEAR=${srvyYear.SRVY_YEAR }')"
@@ -102,14 +102,14 @@
 	                        	<th scope="row">관리도로</th>
 	                        	<td colspan="3">${smDtaGnlSttusVO.MRG_RD_NM }</td>
 	                        </tr>
-	                        <tr>
-	                        	<th scope="row">공사구간</th>
-	                        	<td>${smDtaGnlSttusVO.CNTRWK_AT }</td>
-	                        	<th scope="row">미개통구간</th>
-	                        	<td>${smDtaGnlSttusVO.UNOPN_AT }</td>
-	                        </tr>
+<!-- 	                        <tr> -->
+<!-- 	                        	<th scope="row">공사구간</th> -->
+<%-- 	                        	<td>${smDtaGnlSttusVO.CNTRWK_AT }</td> --%>
+<!-- 	                        	<th scope="row">미개통구간</th> -->
+<%-- 	                        	<td>${smDtaGnlSttusVO.UNOPN_AT }</td> --%>
+<!-- 	                        </tr> -->
 	                    </tbody>
-	
+
 	                </table>
                 </div>
             </div>
@@ -178,7 +178,7 @@
 	                            <td colspan="3">-</td>
 	                        </tr>
 	                    </tbody>
-	
+
 	                </table>
 	              </div>
             </div>
@@ -186,8 +186,8 @@
     	</article>
 
     	<article class="div3">
-    		<!-- 포장상태 평가자료 START --> 
-					
+    		<!-- 포장상태 평가자료 START -->
+
 
 		            <ul class="resultTab">
 	                    <li class="on"><a href="javascript:;" onclick="fnSelectLastSttus($(this), 1);" >조사평가정보조회</a></li>
@@ -415,7 +415,7 @@ function fnSelectData() {
                             // max값과 같은 경우 텍스트 추가
                             //if ( valArr[i] == minVal ) {
                             if ( valArr[i] == maxVal ) {
-                                /* 
+                                /*
                             	if ( i != 0 ) {
                                     crVal += ", ";
                                 }
@@ -424,7 +424,7 @@ function fnSelectData() {
                                 codeNames.push(nameArr[i]);
                             }
                         }
-                            
+
                         crVal += codeNames.join(',');
                         crVal += ")";
                         $("#crVal").css({"font-size": "14px"});
@@ -655,7 +655,7 @@ function fnSelectLastSttus(obj, idx) {
         obj.closest('ul').find('li').removeClass('on');
         obj.closest('li').addClass("on");
     }
-	
+
 	if ( idx === 2 ) {
 
 	    var postDatas = { "CELL_ID" : cellId };
@@ -719,7 +719,7 @@ function fnSelectLastSttus(obj, idx) {
 	                        for ( var i = 0; i < valArr.length; i++ ) {
 
 	                            // max값과 같은 경우 텍스트 추가
-	                            /* 	
+	                            /*
 	                            //if ( valArr[i] == minVal ) {
 	                            if ( valArr[i] == maxVal ) {
 	                                if ( i != 0 ) {
@@ -731,7 +731,7 @@ function fnSelectLastSttus(obj, idx) {
  								*/
  								codeNames.push(nameArr[i]);
 	                        }
-	                            
+
 	                        crVal += codeNames.join(',');
 	                        crVal += ")";
 	                        $("#crVal").css({"line-height": "11px", "font-size": "14px"});
@@ -862,7 +862,7 @@ function fnFormatter(cellValue, options, rowObject) {
     var nm = options.colModel.name;
 
     if ( nm == "btn_loc" ) {
-        html = "<a href='#' onclick=\"fnSelectLoc('" + rowObject.OBJECT_ID + ", cntrwk');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+        html = "<a href='#' onclick=\"fnSelectLoc('" + rowObject.CELL_ID + "', 'cntrwk');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
     }
     return html;
 }
@@ -874,7 +874,7 @@ function fnSelectLoc(cellId, flag) {
     var sColor = '#ff0000' ;
 
     // 선택한 셀을 보여줌
-    var tables = ["CELL_SECT"];
+    var tables = ["CELL_10"];
     var fields = ["CELL_ID"];
     var values = [cellId];
 
