@@ -139,6 +139,7 @@
 		/* 임시_최소_구간_조사_자료 등록 */
 		INSERT INTO TMP_MUMM_SCTN_SRVY_DTA (
 			DTA_NO /* 최소_구간_조사_자료.자료_번호 */
+            , SRVY_NO /* 최소_구간_조사_자료.조사_번호 */
 			, SRVY_YEAR /* 최소_구간_조사_자료.조사_년도 */
 			, ROUTE_CODE /* 최소_구간_조사_자료.노선_코드 */
 			, DIRECT_CODE /* 최소_구간_조사_자료.행선_코드 */
@@ -217,6 +218,7 @@
 			, GPCI /* 최소_구간_조사_자료.포장상태지수 */
 		) VALUES (
 			#DTA_NO#::numeric /* 최소_구간_조사_자료.자료_번호 */
+			, #SRVY_NO#::numeric /* 최소_구간_조사_자료.조사_번호 */
 			, #SRVY_YEAR# /* 최소_구간_조사_자료.조사_년도 */
 			, #ROUTE_CODE# /* 최소_구간_조사_자료.노선_코드 */
 			, #DIRECT_CODE# /* 최소_구간_조사_자료.행선_코드 */
@@ -672,9 +674,8 @@
 		    WHEN REGION_TYPE = 'lc' or REGION_TYPE = 'tc' THEN SUM(COALESCE(LEN,0))
 		    WHEN REGION_TYPE = 'ac' or REGION_TYPE = 'patch' or REGION_TYPE = 'phothole' THEN SUM(COALESCE(AREA,0))
 		  END AS AI_SUM_VALUE
-        , RESULT_IMAGE
 		FROM TMP_AI_DTA
-	GROUP BY REGION_TYPE, SEVERITY, RESULT_IMAGE
+	GROUP BY REGION_TYPE, SEVERITY
 
 ]]>
 	</select>

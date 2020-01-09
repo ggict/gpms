@@ -733,7 +733,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
         					// [results.ARRAYS[0].region_result.ARRAYS.severity] 해당 균열CELL의 심각도 - {"medium","low",...}
         					srvyDtaVO.setSEVERITY((String) imsi.get("severity"));
 
-        					srvyDtaVO.setRESULT_IMAGE(result_image);
+        					// 이미지 저장시 시간이 오래 걸려고 이미지 저장하는 의미가 없음.
+//    					    srvyDtaVO.setRESULT_IMAGE(result_image);
 
         					//srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(testFileNm);
         					//srvyDtaService.insertAiDta(srvyDtaVO);
