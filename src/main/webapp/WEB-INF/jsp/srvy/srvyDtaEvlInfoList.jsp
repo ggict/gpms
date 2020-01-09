@@ -155,11 +155,11 @@
     				<tr>
     					<div class="checks">
     						<td colspan="2">
-  								<input type="checkbox" id="CNTRWK_AT" value=""> 
- 						 		<label for="CNTRWK_AT">공사구간</label> 
+  								<input type="checkbox" id="CNTRWK_AT" value="">
+ 						 		<label for="CNTRWK_AT">공사구간</label>
  						 	</td>
  						 	<td colspan="2">
- 						 		<input type="checkbox" id="UNOPN_AT" value=""> 
+ 						 		<input type="checkbox" id="UNOPN_AT" value="">
  						 		<label for="UNOPN_AT">미개통구간</label>
  						 	</td>
 					 	</div>
@@ -271,7 +271,7 @@ $( document ).ready(function() {
 			,{name:'UNOPN_AT',index:'UNOPN_AT', align:'center', width:40, sortable: true}
 			,{name:'STRTPT',index:'STRTPT', align:'center', width:60, sortable:false, formatter: fnConvertKm}
 			,{name:'ENDPT',index:'ENDPT', align:'center', width:60, sortable: true, formatter: fnConvertKm}
-			,{name:'TRNSPORT_QY',index:'TRNSPORT_QY', align:'center', width:60, sortable: true, formatter: fnConvertKm}
+			,{name:'TRNSPORT_QY',index:'TRNSPORT_QY', align:'center', width:60, sortable: true, formatter: 'number', formatoptions: {decimalPlaces: 0, defaultValue: '0'}}
 			,{name:'GPCI',index:'GPCI', align:'center', width:50, sortable: true, formatter: fnFloat}
 			,{name:'CR',index:'CR', align:'center', width:70, sortable: false, formatter: fnFormatter}
 			,{name:'CUZ',index:'CUZ', align:'center', width:100, sortable: false, formatter: fnFormatter}
