@@ -3,16 +3,16 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
-						
+
 
 	<aop:config>
-		<aop:pointcut id="serviceMethod" expression="execution(* egovframework.example..impl.*Impl.*(..)) OR execution(* kr.go.gg.gpms..impl.*Impl.*(..)) " />
+		<aop:pointcut id="serviceMethod" expression="execution(* egovframework.example..impl.*Impl.*(..)) or execution(* kr.go.gg.gpms..impl.*Impl.*(..)) " />
 
 		<aop:aspect ref="exceptionTransfer">
 			<aop:after-throwing throwing="exception" pointcut-ref="serviceMethod" method="transfer" />
 		</aop:aspect>
 	</aop:config>
-	
+
 	<bean id="exceptionTransfer" class="egovframework.rte.fdl.cmmn.aspect.ExceptionTransfer">
 		<property name="exceptionHandlerService">
 			<list>
@@ -55,6 +55,6 @@
 	</bean>
 
 	<bean id="egovHandler" class="egovframework.example.cmmn.EgovSampleExcepHndlr" />
-	<bean id="otherHandler" class="egovframework.example.cmmn.EgovSampleOthersExcepHndlr" />	
-	
+	<bean id="otherHandler" class="egovframework.example.cmmn.EgovSampleOthersExcepHndlr" />
+
 </beans>
