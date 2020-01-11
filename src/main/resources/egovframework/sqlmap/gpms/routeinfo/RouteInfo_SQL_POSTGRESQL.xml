@@ -226,6 +226,7 @@
 				, tnrouteinfo.ROAD_TOT_LEN_JYG_N::numeric /* 노선_대장_마스터.도로_총_연장_중용비포함 */
 				, tnrouteinfo.do_manage_sctn_len /* 노선_대장_마스터.도_관리_구간_연장 */
 				, tnrouteinfo.ROAD_GRAD /* 노선_대장_마스터.도로등급 */
+				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y::numeric - tnrouteinfo.do_manage_sctn_len::numeric AS SIDO_SCTN_LEN /* 노선_대장_마스터.시도구간 */
 			FROM ( SELECT ROAD_NO FROM DORO_TOT_GRS80_50 GROUP BY ROAD_NO ORDER BY ROAD_NO ) doro
 			LEFT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
 			ON doro.ROAD_NO = tnrouteinfo.ROAD_NO
@@ -236,7 +237,7 @@
 
 <![CDATA[
 
-		) tb) as sub_all 
+		) tb) as sub_all
 		WHERE 1=1
 ]]>
 		<isEqual prepend="  " property="usePage" compareValue="true">
@@ -289,16 +290,16 @@
 
 <![CDATA[
 
-		) tb) as sub_all 
+		) tb) as sub_all
 		WHERE 1=1
 ]]>
 
 	</select>
-	
+
 	<update id="routeInfoDAO.updateRouteInfoView">
-		UPDATE TN_ROUTE_INFO SET ROAD_NAME = #ROAD_NAME# 
-							 , ST_POINT = #ST_POINT# 
-							 , ED_POINT = #ED_POINT# 
+		UPDATE TN_ROUTE_INFO SET ROAD_NAME = #ROAD_NAME#
+							 , ST_POINT = #ST_POINT#
+							 , ED_POINT = #ED_POINT#
 							 , ROAD_TOT_LEN_JYG_Y = #ROAD_TOT_LEN_JYG_Y#::float
 							 , DO_MANAGE_SCTN_LEN = #DO_MANAGE_SCTN_LEN#::float
 							 WHERE ROAD_NO = #ROAD_NO#

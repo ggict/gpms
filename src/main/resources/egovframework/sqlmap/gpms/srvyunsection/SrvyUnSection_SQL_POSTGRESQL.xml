@@ -8,40 +8,42 @@
 
 
 	<select id="srvyUnSectionDAO.list" parameterClass="srvyUnSectionVO" resultClass="srvyUnSectionVO">
-		<![CDATA[ 
-			/* srvyUnSectionDAO.list */ 
+		<![CDATA[
+			/* srvyUnSectionDAO.list */
 		]]>
-		
-		select 
-			* 
+ with w as (
+		select
+			*
 		from(
-			select 
-				ROW_NUMBER() OVER() rn	
+			select
+				ROW_NUMBER() OVER() rn
 				,count(*) OVER() AS total_count
-				,* 
+				,*
 			from (
-				select 
+				select
 					t1.road_no
 					,t1.road_name
 					,t1.st_point
 					,t1.ed_point
 					,t2.srvy_year
-					,ROAD_TOT_LEN_JYG_Y as total_road_l
+					,t2.total_road_l
 					,t2.road_l
-					,DO_MANAGE_SCTN_LEN 
-					,case 
-						when ROAD_TOT_LEN_JYG_Y = 0 
+					,t3.DO_MANAGE_SCTN_LEN
+					,case
+						when ROAD_TOT_LEN_JYG_Y = 0
 						then 0
-						else (t2.road_l / DO_MANAGE_SCTN_LEN) * 100
+						else (t2.road_l / t3.DO_MANAGE_SCTN_LEN) * 100
 						end persent
 				from tn_route_info t1
-				left outer join 
-				(	
+
+				left outer join
+				(
 					SELECT
 						srvy_year
 						, cell_10.route_code route_code
 						, coalesce(sum(ROAD_L), 0) / 1000 ROAD_L
-					FROM cell_10 
+						, count(*)*10 AS total_road_l
+					FROM cell_10
 					right outer join tn_mumm_sctn_srvy_dta
 					on (
 						cell_10.route_code = tn_mumm_sctn_srvy_dta.route_code
@@ -53,42 +55,82 @@
 						AND tn_mumm_sctn_srvy_dta.delete_at = 'N'
 					)
 					where 1=1
-					group by cell_10.route_code, srvy_year					
+					group by cell_10.route_code, srvy_year
 				) t2
 				on (t1.road_no = t2.route_code)
-				WHERE  1 = 1 
+
+				left outer join
+				(
+					SELECT
+						srvy_year
+						, cell_10.route_code route_code
+						, coalesce(sum(ROAD_L), 0) / 1000 ROAD_L
+						, count(*)*10 AS DO_MANAGE_SCTN_LEN
+					FROM cell_10
+					right outer join tn_mumm_sctn_srvy_dta
+					on (
+						cell_10.route_code = tn_mumm_sctn_srvy_dta.route_code
+						AND cell_10.direct_code = tn_mumm_sctn_srvy_dta.direct_code
+						AND cell_10.track = tn_mumm_sctn_srvy_dta.track
+						AND cell_10.strtpt = tn_mumm_sctn_srvy_dta.strtpt
+						AND cell_10.endpt = tn_mumm_sctn_srvy_dta.endpt
+						AND tn_mumm_sctn_srvy_dta.use_at = 'Y'
+						AND tn_mumm_sctn_srvy_dta.delete_at = 'N'
+					)
+					where 1=1
+					and (mng_rd_cd = 'MNRD0003' or mng_rd_cd = 'MNRD0004' or mng_rd_cd = 'MNRD0007' or mng_rd_cd = 'MNRD0008')
+					group by cell_10.route_code, srvy_year
+				) t3
+				on (t1.road_no = t3.route_code)
+
+				WHERE  1 = 1
 				<isNotEmpty property="SRVY_YEAR">
-					AND SRVY_YEAR = #SRVY_YEAR#
+					AND t2.SRVY_YEAR = #SRVY_YEAR#
+					AND t3.SRVY_YEAR = #SRVY_YEAR#
 				</isNotEmpty>
 				<isNotEmpty property="ROAD_NO">
 					AND road_no = #ROAD_NO#
 				</isNotEmpty>
 				order by t1.road_no asc, t2.srvy_year asc
 			) as sub_t
-			
-		) as res	
+		) as res
 		where 1=1
 		<isEqual prepend="  " property="usePage" compareValue="true">
 		<![CDATA[
 			AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
 		]]>
 		</isEqual>
-		
+)
+select NULL                    	AS rn,
+  COUNT(*)                    	AS total_count,
+  NULL                    		AS ROAD_NO,
+  NULL                    		AS ROAD_NAME,
+  NULL                    		AS ST_POINT,
+  NULL                    		AS ED_POINT,
+  NULL                    		AS SRVY_YEAR,
+  SUM(total_road_l)		    	AS TOTAL_ROAD_L,
+  SUM(road_l)		          	AS ROAD_L,
+  SUM(do_manage_sctn_len)		AS DO_MANAGE_SCTN_LEN,
+  NULL                    		AS PERSENT
+from w
+union all
+select * from w
+
 	</select>
-	
+
 	<select id="srvyUnSectionDAO.chartList" parameterClass="srvyUnSectionVO" resultClass="srvyUnSectionVO">
-		<![CDATA[ 
-			/* srvyUnSectionDAO.chartList */ 
+		<![CDATA[
+			/* srvyUnSectionDAO.chartList */
 		]]>
 
-		select 
+		select
 			t1.dept_code
 			,dept_name
 			,ROAD_TOT_LEN_JYG_Y as total_road_l
 			,DO_MANAGE_SCTN_LEN
 			,ROAD_L
 		from (
-			select 
+			select
 				t1.dept_code
 				,LOWEST_DEPT_NM as dept_name
 				,sum(ROAD_TOT_LEN_JYG_Y) as ROAD_TOT_LEN_JYG_Y
@@ -98,21 +140,21 @@
 					t2.dept_code
 					,ROAD_TOT_LEN_JYG_Y
 					,DO_MANAGE_SCTN_LEN
-				from tn_route_info t1 
+				from tn_route_info t1
 				left outer join cell_10 t2
 				on(t1.road_no = t2.route_code)
-				group by dept_code, ROAD_TOT_LEN_JYG_Y, DO_MANAGE_SCTN_LEN	
-			) t1	
+				group by dept_code, ROAD_TOT_LEN_JYG_Y, DO_MANAGE_SCTN_LEN
+			) t1
 			left outer join TC_DEPT t3
 			on(t1.dept_code = t3.dept_code::int)
 			group by t1.dept_code, lowest_dept_nm
 		) t1
-		left outer join 
-		(	
+		left outer join
+		(
 			SELECT
 				dept_code
 				,coalesce(sum(ROAD_L), 0) / 1000 ROAD_L
-			FROM cell_10 
+			FROM cell_10
 			right outer join tn_mumm_sctn_srvy_dta
 			on (
 				cell_10.route_code = tn_mumm_sctn_srvy_dta.route_code
@@ -134,30 +176,30 @@
 		) t2
 		on(t1.dept_code = t2.dept_code)
 		where t1.dept_code in (6411799, 6411399)
-		order by t1.dept_code desc	
+		order by t1.dept_code desc
 	</select>
-	
+
 	<select id="srvyUnSectionDAO.sectionlocation" parameterClass="srvyUnSectionVO" resultClass="srvyUnSectionVO">
 	<![CDATA[
 		/* srvyUnSectionDAO.unsectionlocation */
 	]]>
-	
+
 		select
 			route_code
-			,ST_AsGeoJSON(ST_Union(t1.geom)) geojson 
+			,ST_AsGeoJSON(ST_Union(t1.geom)) geojson
 			/*
-			ST_Collect(t1.geom) geom 
+			ST_Collect(t1.geom) geom
 			count(t1.cell_id)
 			*/
 		from cell_10 t1
-		where 1=1 
+		where 1=1
 		<isNotEmpty property="ROUTE_CODE">
 		AND t1.route_code = #ROUTE_CODE#
 		</isNotEmpty>
 		and cell_id in (
 				SELECT
 					cell_id
-				FROM cell_10 
+				FROM cell_10
 				right outer join tn_mumm_sctn_srvy_dta
 				on (
 					cell_10.route_code = tn_mumm_sctn_srvy_dta.route_code
@@ -176,30 +218,30 @@
 				AND cell_10.route_code = #ROUTE_CODE#
 				</isNotEmpty>
 			)
-		group by route_code	
+		group by route_code
 	</select>
-	
+
 	<select id="srvyUnSectionDAO.unsectionlocation" parameterClass="srvyUnSectionVO" resultClass="srvyUnSectionVO">
 	<![CDATA[
 		/* srvyUnSectionDAO.unsectionlocation */
 	]]>
-	
+
 		select
 			route_code
-			,ST_AsGeoJSON(ST_Union(t1.geom)) geojson 
+			,ST_AsGeoJSON(ST_Union(t1.geom)) geojson
 			/*
-			ST_Collect(t1.geom) geom 
+			ST_Collect(t1.geom) geom
 			count(t1.cell_id)
 			*/
 		from cell_10 t1
-		where 1=1 
+		where 1=1
 		<isNotEmpty property="ROUTE_CODE">
 		AND t1.route_code = #ROUTE_CODE#
 		</isNotEmpty>
 		and cell_id not in (
 				SELECT
 					cell_id
-				FROM cell_10 
+				FROM cell_10
 				right outer join tn_mumm_sctn_srvy_dta
 				on (
 					cell_10.route_code = tn_mumm_sctn_srvy_dta.route_code
@@ -218,11 +260,11 @@
 				AND cell_10.route_code = #ROUTE_CODE#
 				</isNotEmpty>
 			)
-		group by route_code	
+		group by route_code
 	</select>
-	
+
 	<select id="srvyUnSectionDAO.srvyYearList" parameterClass="srvyUnSectionVO" resultClass="srvyUnSectionVO">
-		SELECT 
+		SELECT
 			SRVY_YEAR
 		FROM tn_mumm_sctn_srvy_dta
 		GROUP BY SRVY_YEAR

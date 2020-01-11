@@ -185,6 +185,9 @@
    <Column ss:StyleID="s62" ss:Width="135"/>
    <Column ss:StyleID="s62" ss:Width="57.75"/>
    <Column ss:StyleID="s62" ss:Width="53.25"/>
+   <Column ss:StyleID="s62" ss:Width="53.25"/>
+   <Column ss:StyleID="s62" ss:Width="57.25"/>
+   <Column ss:StyleID="s62" ss:Width="53.25"/>
    <Row ss:AutoFitHeight="0" ss:StyleID="s64">
     <Cell><Data ss:Type="String">순번</Data></Cell>
     <Cell><Data ss:Type="String">관리기관</Data></Cell>
@@ -205,6 +208,9 @@
     <Cell><Data ss:Type="String">단가(원/㎡)</Data></Cell>
     <Cell><Data ss:Type="String">금액산정 (원)</Data></Cell>
     <Cell><Data ss:Type="String">예산금액산정 (원)</Data></Cell>
+    <Cell><Data ss:Type="String">균열율(%)</Data></Cell>
+    <Cell><Data ss:Type="String">소성변형(mm)</Data></Cell>
+    <Cell><Data ss:Type="String">IRI(m/km)</Data></Cell>
     <Cell><Data ss:Type="String">GPCI</Data></Cell>
     <Cell><Data ss:Type="String">DMG_VAL</Data></Cell>
    </Row>
@@ -228,6 +234,9 @@
     <Cell><Data ss:Type="String">RPAIR_FEE</Data></Cell>
     <Cell><Data ss:Type="String">AMOUNT_CALC</Data></Cell>
     <Cell><Data ss:Type="String">BUDGET_ASIGN</Data></Cell>
+    <Cell><Data ss:Type="String">CR_RT_AVRG</Data></Cell>
+    <Cell><Data ss:Type="String">RD_VAL_SM</Data></Cell>
+    <Cell><Data ss:Type="String">IRI_VAL_SM</Data></Cell>
     <Cell><Data ss:Type="String">CALC_GPCI</Data></Cell>
     <Cell><Data ss:Type="String">DMG_VAL</Data></Cell>
    </Row>
@@ -253,6 +262,9 @@
 <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.RPAIR_FEE}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.AMOUNT_CALC}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.BUDGET_ASIGN}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.CR_RT_AVRG}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.RD_VAL_SM}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.IRI_VAL_SM}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.CALC_GPCI}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.DMG_VAL}" type="number"/></Data></Cell>
 </c:if>
@@ -276,10 +288,13 @@
 <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.RPAIR_FEE}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.AMOUNT_CALC}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.BUDGET_ASIGN}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.CR_RT_AVRG}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.RD_VAL_SM}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.IRI_VAL_SM}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s113"><Data ss:Type="Number"><fmt:formatNumber value="${item.CALC_GPCI}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s113"><Data ss:Type="Number"><fmt:formatNumber value="${item.DMG_VAL}" type="number"/></Data></Cell>
 </c:if>
-   </Row> 
+   </Row>
 </c:forEach>
  <Row ss:AutoFitHeight="0">
     <Cell ss:StyleID="s114"/>

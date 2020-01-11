@@ -30,9 +30,9 @@
             </span>
         </div>
     </header>
-    
+
     <div class="contents container">
-    
+
     	<article class="div3">
     		<h3 class="h3">검색조건</h3>
     		<div class="table">
@@ -46,7 +46,7 @@
                                 <c:forEach items="${roadGradList }" var="roadGrad">
                                     <option value="${roadGrad.CODE_VAL }">${roadGrad.CODE_NM }</option>
                                 </c:forEach>
-                             </select>               
+                             </select>
                         </td>
     				</tr>
     				<tr>
@@ -57,7 +57,7 @@
                                 <c:forEach items="${roadNoList }" var="roadNo">
                                     <option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
                                 </c:forEach>
-                             </select>               
+                             </select>
                         </td>
     				</tr>
     				<tr>
@@ -66,23 +66,23 @@
                             <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="">
                         </td>
     				</tr>
-    				</tbody>	
+    				</tbody>
     			</table>
                 <div class="btnArea">
                     <button type="button" class="btn pri" onclick="javascript:fn_search();">검색</button>
                 </div>
     		</div>
     	</article>
-    	
+
     	<article class="div9">
     		<h3 class="h3">노선데이터로 검색</h3>
     		<div id="div_grid" class="table">
-				<table id="gridArea"></table>				
+				<table id="gridArea"></table>
 			</div>
 			<div id="gridPager"></div>
         </div>
     	</article>
-    	
+
     </div>
 </form>
 <!-- 공통 (START)-->
@@ -123,7 +123,7 @@ $( document ).ready(function() {
         //,postData: JSON.stringify( $("#frm").cmSerializeObject())
         ,postData: postData
         ,ignoreCase: true
-        ,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)","도</br>관리구간(km)","위치보기"]
+        ,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)","도</br>관리구간(km)","시도구간","위치보기"]
         ,colModel:[
             {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
             ,{name:'ROAD_NO_VAL',index:'ROAD_NO_VAL', align:'center', width:50, sortable:true}
@@ -132,6 +132,7 @@ $( document ).ready(function() {
             ,{name:'ED_POINT',index:'ED_POINT', align:'left', width:120, sortable:true}
             ,{name:'ROAD_TOT_LEN_JYG_Y',index:'ROAD_TOT_LEN_JYG_Y', align:'center', width:80, sortable:true}
             ,{name:'DO_MANAGE_SCTN_LEN',index:'DO_MANAGE_SCTN_LEN', align:'center', width:80, sortable:true}
+            ,{name:'SIDO_SCTN_LEN',index:'SIDO_SCTN_LEN', align:'center', width:80, sortable:true}
             /* ,{name:'btn_down',index:'btn_down', align:'center', width:50, sortable:false, formatter: fn_create_btn} */
             ,{name:'btn_loc',index:'btn_loc', align:'center', width:50, sortable:false, formatter: fn_create_btn}
         ]
@@ -147,7 +148,7 @@ $( document ).ready(function() {
         ,emptyrecords: "검색된 데이터가 없습니다."
         ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
         ,ondblClickRow: function(rowId) {       // 더블클릭 처리
-        	fnUpdate(rowId);  
+        	fnUpdate(rowId);
         }
         ,onSelectRow: function(rowId) {     // 클릭 처리
             if( rowId != null ) {
@@ -200,30 +201,30 @@ function fn_search() {
             }
 
             COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
-            
+
             // 2018. 09. 19.
             var ids = $("#gridArea").getDataIDs();
-            
+
             for ( var i = 0; i < ids.length; i++ ) {
-                
+
                 var rowData = $("#gridArea").getRowData(ids[i]);
                 var roadName = rowData.ROAD_NAME;
-                
+
                 if ( roadName == "" || roadName == undefined || roadName == null ) {
-                    
+
                     var colData = $("#gridArea").find("#" + ids[i]);
-                    
+
                     colData.find("td:eq(3)").attr("colspan", "6");
                     colData.find("td:eq(4)").hide();
                     colData.find("td:eq(5)").hide();
                     colData.find("td:eq(6)").hide();
                     colData.find("td:eq(7)").hide();
                     colData.find("td:eq(8)").hide();
-                    
+
                     colData.find("td:eq(3)").html("속성정보가 없습니다.");
-                    
+
                 }
-                
+
             }
 
         }

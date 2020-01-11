@@ -13,7 +13,7 @@ import kr.go.gg.gpms.rpairtrgetslctn.service.model.RpairTrgetSlctnVO;
  * 보수_대상_항목
  *
  * @Class Name : RpairTrgetVO.java
- * @Description : RpairTrget VO class 
+ * @Description : RpairTrget VO class
  * @Modification Information
  *
  * @author leehb1592@gmail.com
@@ -31,421 +31,433 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public RpairTrgetVO() {
 		super();
 	}
-	
-	/** 
-	 * TN_RPAIR_TRGET.TRGET_ITEM_NO, 
+
+	/**
+	 * TN_RPAIR_TRGET.TRGET_ITEM_NO,
 	 * 보수_대상_항목.대상_항목_번호
 	 */
 	@XmlElement
 	private String TRGET_ITEM_NO;
-	
-	
 
-	/** 
-	 * TN_RPAIR_TRGET_GROUP.SLCTN_ORDR, 
+
+
+	/**
+	 * TN_RPAIR_TRGET_GROUP.SLCTN_ORDR,
 	 * 보수_대상_항목_그룹.선정_순서
 	 */
 	@XmlElement
 	private String SLCTN_ORDR;
-	
-	
-	/** 
-	 * TN_RPAIR_TRGET.TRGET_SLCTN_NO, 
+
+
+	/**
+	 * TN_RPAIR_TRGET.TRGET_SLCTN_NO,
 	 * 보수_대상_항목.대상_선정_번호
 	 */
 	@XmlElement
 	private String TRGET_SLCTN_NO;
 
-	/** 
-	 * TN_RPAIR_TRGET.SLCTN_STEP, 
+	/**
+	 * TN_RPAIR_TRGET.SLCTN_STEP,
 	 * 보수_대상_항목.선정_단계
 	 */
 	@XmlElement
 	private String SLCTN_STEP;
 
-	/** 
-	 * TN_RPAIR_TRGET.ITEM_SLCTN_STTUS, 
+	/**
+	 * TN_RPAIR_TRGET.ITEM_SLCTN_STTUS,
 	 * 보수_대상_항목.항목_선정_상태
 	 */
 	@XmlElement
 	private java.lang.String ITEM_SLCTN_STTUS;
-	/** 
-	 * TN_RPAIR_TRGET.ITEM_SLCTN_STTUS, 
+	/**
+	 * TN_RPAIR_TRGET.ITEM_SLCTN_STTUS,
 	 * 보수_대상_항목.항목_선정_상태_명
 	 */
 	@XmlElement
 	private java.lang.String ITEM_SLCTN_STTUS_NM;
-	
+
 	@XmlElement
 	private java.lang.String CELL_TYPE_NM;
-	
+
 	@XmlElement
 	private java.lang.String MSRC_NM;
-	
+
 	@XmlElement
 	private java.lang.String MSRC_CL_NM;
-	/** 
-	 * TN_RPAIR_TRGET.ROUTE_CODE, 
+	/**
+	 * TN_RPAIR_TRGET.ROUTE_CODE,
 	 * 보수_대상_항목.노선_코드
 	 */
 	@XmlElement
 	private java.lang.String ROUTE_CODE;
 
-	/** 
-	 * TN_RPAIR_TRGET.DIRECT_CODE, 
+	/**
+	 * TN_RPAIR_TRGET.DIRECT_CODE,
 	 * 보수_대상_항목.행선_코드
 	 */
 	@XmlElement
 	private java.lang.String DIRECT_CODE;
 
-	/** 
-	 * TN_RPAIR_TRGET.TRACK, 
+	/**
+	 * TN_RPAIR_TRGET.TRACK,
 	 * 보수_대상_항목.차로
 	 */
 	@XmlElement
 	private java.lang.String TRACK;
 
-	/** 
-	 * TN_RPAIR_TRGET.STRTPT, 
+	/**
+	 * TN_RPAIR_TRGET.STRTPT,
 	 * 보수_대상_항목.시점
 	 */
 	@XmlElement
 	private String STRTPT;
 
-	/** 
-	 * TN_RPAIR_TRGET.ENDPT, 
+	/**
+	 * TN_RPAIR_TRGET.ENDPT,
 	 * 보수_대상_항목.종점
 	 */
 	@XmlElement
 	private String ENDPT;
 
-	/** 
-	 * TN_RPAIR_TRGET.CELL_TYPE, 
+	/**
+	 * TN_RPAIR_TRGET.CELL_TYPE,
 	 * 보수_대상_항목.섹션_구분
 	 */
 	@XmlElement
 	private java.lang.String CELL_TYPE;
 
-	/** 
-	 * TN_RPAIR_TRGET.DEPT_CODE, 
+	/**
+	 * TN_RPAIR_TRGET.DEPT_CODE,
 	 * 보수_대상_항목.부서코드
 	 */
 	@XmlElement
 	private java.lang.String DEPT_CODE;
- 
-	
-	
-	/** 
-	 * TN_RPAIR_TRGET.DEPT_CODE, 
+
+
+
+	/**
+	 * TN_RPAIR_TRGET.DEPT_CODE,
 	 * 보수_대상_항목.부서코드
 	 */
 	@XmlElement
 	private java.lang.String DEPT_NM;
-	
-	/** 
-	 * TN_RPAIR_TRGET.SRVY_MT, 
+
+	/**
+	 * TN_RPAIR_TRGET.SRVY_MT,
 	 * 보수_대상_항목.조사_월
 	 */
 	@XmlElement
 	private java.lang.String SRVY_MT;
 
-	/** 
-	 * TN_RPAIR_TRGET.SRVY_YEAR, 
+	/**
+	 * TN_RPAIR_TRGET.SRVY_YEAR,
 	 * 보수_대상_항목.조사_년도
 	 */
 	@XmlElement
 	private java.lang.String SRVY_YEAR;
 
-	/** 
-	 * TN_RPAIR_TRGET.GPCI, 
+	/**
+	 * TN_RPAIR_TRGET.GPCI,
 	 * 보수_대상_항목.GPCI
 	 */
 	@XmlElement
 	private Double GPCI;
 
-	/** 
-	 * TN_RPAIR_TRGET.PC_GRAD, 
+	/**
+	 * TN_RPAIR_TRGET.PC_GRAD,
 	 * 보수_대상_항목.포장상태등급
 	 */
 	@XmlElement
 	private String PC_GRAD;
-	/** 
-	 * TN_RPAIR_TRGET_GROUP.DMG_VAL, 
+	/**
+	 * TN_RPAIR_TRGET_GROUP.DMG_VAL,
 	 * 보수_대상_항목.파손도_값
 	 */
 	@XmlElement
 	private Double DMG_VAL;
-	/** 
-	 * TN_RPAIR_TRGET.CALC_YEAR, 
+	/**
+	 * TN_RPAIR_TRGET.CALC_YEAR,
 	 * 보수_대상_항목.산정_년도
 	 */
 	@XmlElement
 	private java.lang.String CALC_YEAR;
 
-	/** 
-	 * TN_RPAIR_TRGET.CALC_MT, 
+	/**
+	 * TN_RPAIR_TRGET.CALC_MT,
 	 * 보수_대상_항목.산정_월
 	 */
 	@XmlElement
 	private java.lang.String CALC_MT;
 
-	/** 
-	 * TN_RPAIR_TRGET.CALC_GPCI, 
+	/**
+	 * TN_RPAIR_TRGET.CALC_GPCI,
 	 * 보수_대상_항목.산정_GPCI
 	 */
 	@XmlElement
 	private Double CALC_GPCI;
 
-	/** 
-	 * TN_RPAIR_TRGET.CALC_PC_GRAD, 
+	/**
+	 * TN_RPAIR_TRGET.CALC_PC_GRAD,
 	 * 보수_대상_항목.산정_포장상태등급
 	 */
 	@XmlElement
 	private String CALC_PC_GRAD;
 
-	/** 
-	 * TN_RPAIR_TRGET.CNTRWK_YEAR, 
+	/**
+	 * TN_RPAIR_TRGET.CNTRWK_YEAR,
 	 * 보수_대상_항목.공사_년도
 	 */
 	@XmlElement
 	private java.lang.String CNTRWK_YEAR;
 
-	/** 
-	 * TN_RPAIR_TRGET.TRNSPORT_QY, 
+	/**
+	 * TN_RPAIR_TRGET.TRNSPORT_QY,
 	 * 보수_대상_항목.교통량
 	 */
 	@XmlElement
 	private String TRNSPORT_QY;
-	
-	/** 
-	 * TN_RPAIR_TRGET.VMTC_GRAD, 
+
+	/**
+	 * TN_RPAIR_TRGET.VMTC_GRAD,
 	 * 보수_대상_항목.교통량등급
 	 */
 	@XmlElement
 	private String VMTC_GRAD;
-	
-	/** 
-	 * TN_RPAIR_TRGET.VMTC_GRAD_NM, 
+
+	/**
+	 * TN_RPAIR_TRGET.VMTC_GRAD_NM,
 	 * 보수_대상_항목.교통량등급 명
 	 */
 	@XmlElement
 	private String VMTC_GRAD_NM;
-	
-	/** 
-	 * TN_RPAIR_TRGET.ROAD_GRAD, 
+
+	/**
+	 * TN_RPAIR_TRGET.ROAD_GRAD,
 	 * 보수_대상_항목.도로등급
 	 */
 	@XmlElement
 	private String ROAD_GRAD;
-	
-	/** 
-	 * TN_RPAIR_TRGET.ROAD_GRAD_NM, 
+
+	/**
+	 * TN_RPAIR_TRGET.ROAD_GRAD_NM,
 	 * 보수_대상_항목.도로등급 명
 	 */
 	@XmlElement
 	private String ROAD_GRAD_NM;
-	
-	
-	/** 
-	 * TN_RPAIR_TRGET.ADM_CODE, 
+
+
+	/**
+	 * TN_RPAIR_TRGET.ADM_CODE,
 	 * 보수_대상_항목.행정구역코드
 	 */
 	@XmlElement
 	private String ADM_CODE;
-	
-	/** 
-	 * TN_RPAIR_TRGET.ADM_NM, 
+
+	/**
+	 * TN_RPAIR_TRGET.ADM_NM,
 	 * 보수_대상_항목.행정구역코드 명
 	 */
 	@XmlElement
 	private String ADM_NM;
 
-	/** 
-	 * TN_RPAIR_TRGET.LEN, 
+	/**
+	 * TN_RPAIR_TRGET.LEN,
 	 * 보수_대상_항목.연장
 	 */
 	@XmlElement
 	private String LEN;
-	
+
 	@XmlElement
 	private String KILLO_LEN;
 
-	/** 
-	 * TN_RPAIR_TRGET.AR, 
+	/**
+	 * TN_RPAIR_TRGET.AR,
 	 * 보수_대상_항목.면적
 	 */
 	@XmlElement
 	private String AR;
 
-	/** 
-	 * TN_RPAIR_TRGET.RPAIR_MTHD_CODE, 
+	/**
+	 * TN_RPAIR_TRGET.RPAIR_MTHD_CODE,
 	 * 보수_대상_항목.보수_공법_코드
 	 */
 	@XmlElement
 	private java.lang.String RPAIR_MTHD_CODE;
 
-	/** 
-	 * TN_RPAIR_TRGET.MSR_DM_CODE, 
+	/**
+	 * TN_RPAIR_TRGET.MSR_DM_CODE,
 	 * 보수_대상_항목.공법선정비율_결정방식_코드
 	 */
 	@XmlElement
 	private java.lang.String MSR_DM_CODE;
-	
-	/** 
-	 * TN_RPAIR_TRGET.THRHLD, 
+
+	/**
+	 * TN_RPAIR_TRGET.THRHLD,
 	 * 보수_대상_항목.임계값
 	 */
 	@XmlElement
 	private java.lang.String THRHLD;
-	
+
 	/**
 	 * 공법 비용
 	 */
 	@XmlElement
 	private String RPAIR_FEE;
-	
-	/** 
-	 * TN_RPAIR_TRGET.AMOUNT_CALC, 
+
+	/**
+	 * TN_RPAIR_TRGET.AMOUNT_CALC,
 	 * 보수_대상_항목.금액_산정
 	 */
 	@XmlElement
 	private Long AMOUNT_CALC;
-	
-	/** 
-	 * TN_RPAIR_TRGET.BUDGET_ASIGN, 
+
+	/**
+	 * TN_RPAIR_TRGET.BUDGET_ASIGN,
 	 * 보수_대상_항목.예산_배정
 	 */
 	@XmlElement
 	private String BUDGET_ASIGN;
-	
-	
-	
+
+
+
 	@XmlElement
 	private String FIX_AMOUNT_CALC;
-	
+
 	@XmlElement
-	private Long TOTAL_AMOUNT_CALC;	
-	
+	private Long TOTAL_AMOUNT_CALC;
+
 	@XmlElement
 	private String TOTAL_FIX_AMOUNT_CALC;
-	
+
 	@XmlElement
 	private String FIX_BUDGET_ASIGN;
-	
-	/** 
-	 * TN_RPAIR_TRGET.TOTAL_BUDGET_ASIGN, 
+
+	/**
+	 * TN_RPAIR_TRGET.TOTAL_BUDGET_ASIGN,
 	 * 보수_대상_항목.전체_예산_배정
 	 */
 	@XmlElement
 	private String TOTAL_BUDGET_ASIGN;
-	
+
 	@XmlElement
 	private String TOTAL_FIX_BUDGET_ASIGN;
-	
-	
+
+
 	@XmlElement
 	private String TOTAL_TMPR_BUDGET_ASIGN;
-	
+
 	@XmlElement
 	private String TOTAL_TMPR_FIX_BUDGET_ASIGN;
-	
+
 	@XmlElement
 	private String TMPR_FIX_BUDGET_ASIGN;
+
 	@XmlElement
 	private String CELL_IDS;
-	/** 
-	 * TN_RPAIR_TRGET.FIXING_AT, 
+	/**
+	 * TN_RPAIR_TRGET.FIXING_AT,
 	 * 보수_대상_항목.고정_여부
 	 */
 	@XmlElement
 	private java.lang.String FIXING_AT;
 
-	/** 
-	 * TN_RPAIR_TRGET.BUDGET_CECK, 
+	/**
+	 * TN_RPAIR_TRGET.BUDGET_CECK,
 	 * 보수_대상_항목.예산_체크
 	 */
 	@XmlElement
 	private java.lang.String BUDGET_CECK;
 
-	/** 
-	 * TN_RPAIR_TRGET.ACCMLT_CALC, 
+	/**
+	 * TN_RPAIR_TRGET.ACCMLT_CALC,
 	 * 보수_대상_항목.누적_산정
 	 */
 	@XmlElement
 	private String ACCMLT_CALC;
 
-	/** 
-	 * TN_RPAIR_TRGET.SLCTN_AT, 
+	/**
+	 * TN_RPAIR_TRGET.SLCTN_AT,
 	 * 보수_대상_항목.선정_여부
 	 */
 	@XmlElement
 	private java.lang.String SLCTN_AT;
-	
+
 	@XmlElement
 	private java.lang.String TMPR_SLCTN_AT;
-	
-	
-	/** 
-	 * TN_RPAIR_TRGET.SLCTN_DT, 
+
+
+	/**
+	 * TN_RPAIR_TRGET.SLCTN_DT,
 	 * 보수_대상_항목.선정_일시
 	 */
 	@XmlElement
 	private java.util.Date SLCTN_DT;
 
-	/** 
-	 * TN_RPAIR_TRGET.DELETE_AT, 
+	/**
+	 * TN_RPAIR_TRGET.DELETE_AT,
 	 * 보수_대상_항목.삭제_여부
 	 */
 	@XmlElement
 	private java.lang.String DELETE_AT;
 
-	/** 
-	 * TN_RPAIR_TRGET.USE_AT, 
+	/**
+	 * TN_RPAIR_TRGET.USE_AT,
 	 * 보수_대상_항목.사용_여부
 	 */
 	@XmlElement
 	private java.lang.String USE_AT;
 
-	/** 
-	 * TN_RPAIR_TRGET.CRTR_NO, 
+	/**
+	 * TN_RPAIR_TRGET.CRTR_NO,
 	 * 보수_대상_항목.생성자_번호
 	 */
 	@XmlElement
 	private String CRTR_NO;
 
-	/** 
-	 * TN_RPAIR_TRGET.CREAT_DT, 
+	/**
+	 * TN_RPAIR_TRGET.CREAT_DT,
 	 * 보수_대상_항목.생성_일시
 	 */
 	@XmlElement
 	private java.util.Date CREAT_DT;
 
-	/** 
-	 * TN_RPAIR_TRGET.UPDUSR_NO, 
+	/**
+	 * TN_RPAIR_TRGET.UPDUSR_NO,
 	 * 보수_대상_항목.수정자_번호
 	 */
 	@XmlElement
 	private String UPDUSR_NO;
 
-	/** 
-	 * TN_RPAIR_TRGET.UPDT_DT, 
+	/**
+	 * TN_RPAIR_TRGET.UPDT_DT,
 	 * 보수_대상_항목.수정_일시
 	 */
 	@XmlElement
 	private java.util.Date UPDT_DT;
 
+	@XmlElement
+	private String CR_RT_AVRG;
+
+	@XmlElement
+	private String RD_VAL_SM;
+
+	@XmlElement
+	private String IRI_VAL_SM;
+
+
+
 	/**
-	 * TN_RPAIR_TRGET.TRGET_ITEM_NO, 
+	 * TN_RPAIR_TRGET.TRGET_ITEM_NO,
 	 * 보수_대상_항목.대상_항목_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="TRGET_ITEM_NO") 
+	@JsonProperty(value="TRGET_ITEM_NO")
 	public String getTRGET_ITEM_NO() {
 		return this.TRGET_ITEM_NO;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.TRGET_ITEM_NO, 
+	 * TN_RPAIR_TRGET.TRGET_ITEM_NO,
 	 * 보수_대상_항목.대상_항목_번호 값설정
 	 * @param trgetItemNo
 	 */
@@ -454,17 +466,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.TRGET_SLCTN_NO, 
+	 * TN_RPAIR_TRGET.TRGET_SLCTN_NO,
 	 * 보수_대상_항목.대상_선정_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="TRGET_SLCTN_NO") 
+	@JsonProperty(value="TRGET_SLCTN_NO")
 	public String getTRGET_SLCTN_NO() {
 		return this.TRGET_SLCTN_NO;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.TRGET_SLCTN_NO, 
+	 * TN_RPAIR_TRGET.TRGET_SLCTN_NO,
 	 * 보수_대상_항목.대상_선정_번호 값설정
 	 * @param trgetSlctnNo
 	 */
@@ -473,17 +485,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.SLCTN_STEP, 
+	 * TN_RPAIR_TRGET.SLCTN_STEP,
 	 * 보수_대상_항목.선정_단계 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_STEP") 
+	@JsonProperty(value="SLCTN_STEP")
 	public String getSLCTN_STEP() {
 		return this.SLCTN_STEP;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.SLCTN_STEP, 
+	 * TN_RPAIR_TRGET.SLCTN_STEP,
 	 * 보수_대상_항목.선정_단계 값설정
 	 * @param slctnStep
 	 */
@@ -492,17 +504,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.ITEM_SLCTN_STTUS, 
+	 * TN_RPAIR_TRGET.ITEM_SLCTN_STTUS,
 	 * 보수_대상_항목.항목_선정_상태 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="ITEM_SLCTN_STTUS") 
+	@JsonProperty(value="ITEM_SLCTN_STTUS")
 	public java.lang.String getITEM_SLCTN_STTUS() {
 		return this.ITEM_SLCTN_STTUS;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.ITEM_SLCTN_STTUS, 
+	 * TN_RPAIR_TRGET.ITEM_SLCTN_STTUS,
 	 * 보수_대상_항목.항목_선정_상태 값설정
 	 * @param itemSlctnSttus
 	 */
@@ -511,17 +523,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.ROUTE_CODE, 
+	 * TN_RPAIR_TRGET.ROUTE_CODE,
 	 * 보수_대상_항목.노선_코드 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="ROUTE_CODE") 
+	@JsonProperty(value="ROUTE_CODE")
 	public java.lang.String getROUTE_CODE() {
 		return this.ROUTE_CODE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.ROUTE_CODE, 
+	 * TN_RPAIR_TRGET.ROUTE_CODE,
 	 * 보수_대상_항목.노선_코드 값설정
 	 * @param routeCode
 	 */
@@ -530,17 +542,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.DIRECT_CODE, 
+	 * TN_RPAIR_TRGET.DIRECT_CODE,
 	 * 보수_대상_항목.행선_코드 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DIRECT_CODE") 
+	@JsonProperty(value="DIRECT_CODE")
 	public java.lang.String getDIRECT_CODE() {
 		return this.DIRECT_CODE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.DIRECT_CODE, 
+	 * TN_RPAIR_TRGET.DIRECT_CODE,
 	 * 보수_대상_항목.행선_코드 값설정
 	 * @param directCode
 	 */
@@ -549,17 +561,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.TRACK, 
+	 * TN_RPAIR_TRGET.TRACK,
 	 * 보수_대상_항목.차로 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="TRACK") 
+	@JsonProperty(value="TRACK")
 	public java.lang.String getTRACK() {
 		return this.TRACK;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.TRACK, 
+	 * TN_RPAIR_TRGET.TRACK,
 	 * 보수_대상_항목.차로 값설정
 	 * @param track
 	 */
@@ -568,17 +580,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.STRTPT, 
+	 * TN_RPAIR_TRGET.STRTPT,
 	 * 보수_대상_항목.시점 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="STRTPT") 
+	@JsonProperty(value="STRTPT")
 	public String getSTRTPT() {
 		return this.STRTPT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.STRTPT, 
+	 * TN_RPAIR_TRGET.STRTPT,
 	 * 보수_대상_항목.시점 값설정
 	 * @param strtpt
 	 */
@@ -587,17 +599,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.ENDPT, 
+	 * TN_RPAIR_TRGET.ENDPT,
 	 * 보수_대상_항목.종점 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="ENDPT") 
+	@JsonProperty(value="ENDPT")
 	public String getENDPT() {
 		return this.ENDPT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.ENDPT, 
+	 * TN_RPAIR_TRGET.ENDPT,
 	 * 보수_대상_항목.종점 값설정
 	 * @param endpt
 	 */
@@ -606,17 +618,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.CELL_TYPE, 
+	 * TN_RPAIR_TRGET.CELL_TYPE,
 	 * 보수_대상_항목.섹션_구분 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CELL_TYPE") 
+	@JsonProperty(value="CELL_TYPE")
 	public java.lang.String getCELL_TYPE() {
 		return this.CELL_TYPE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.CELL_TYPE, 
+	 * TN_RPAIR_TRGET.CELL_TYPE,
 	 * 보수_대상_항목.섹션_구분 값설정
 	 * @param cellType
 	 */
@@ -625,17 +637,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.SRVY_MT, 
+	 * TN_RPAIR_TRGET.SRVY_MT,
 	 * 보수_대상_항목.조사_월 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SRVY_MT") 
+	@JsonProperty(value="SRVY_MT")
 	public java.lang.String getSRVY_MT() {
 		return this.SRVY_MT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.SRVY_MT, 
+	 * TN_RPAIR_TRGET.SRVY_MT,
 	 * 보수_대상_항목.조사_월 값설정
 	 * @param srvyMt
 	 */
@@ -644,17 +656,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.SRVY_YEAR, 
+	 * TN_RPAIR_TRGET.SRVY_YEAR,
 	 * 보수_대상_항목.조사_년도 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SRVY_YEAR") 
+	@JsonProperty(value="SRVY_YEAR")
 	public java.lang.String getSRVY_YEAR() {
 		return this.SRVY_YEAR;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.SRVY_YEAR, 
+	 * TN_RPAIR_TRGET.SRVY_YEAR,
 	 * 보수_대상_항목.조사_년도 값설정
 	 * @param srvyYear
 	 */
@@ -663,17 +675,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.GPCI, 
+	 * TN_RPAIR_TRGET.GPCI,
 	 * 보수_대상_항목.GPCI 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="GPCI") 
+	@JsonProperty(value="GPCI")
 	public Double getGPCI() {
 		return this.GPCI;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.GPCI, 
+	 * TN_RPAIR_TRGET.GPCI,
 	 * 보수_대상_항목.GPCI 값설정
 	 * @param GPCI
 	 */
@@ -682,17 +694,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.PC_GRAD, 
+	 * TN_RPAIR_TRGET.PC_GRAD,
 	 * 보수_대상_항목.포장상태등급 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="PC_GRAD") 
+	@JsonProperty(value="PC_GRAD")
 	public String getPC_GRAD() {
 		return this.PC_GRAD;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.PC_GRAD, 
+	 * TN_RPAIR_TRGET.PC_GRAD,
 	 * 보수_대상_항목.포장상태등급 값설정
 	 * @param pcGrad
 	 */
@@ -701,17 +713,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.CALC_YEAR, 
+	 * TN_RPAIR_TRGET.CALC_YEAR,
 	 * 보수_대상_항목.산정_년도 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CALC_YEAR") 
+	@JsonProperty(value="CALC_YEAR")
 	public java.lang.String getCALC_YEAR() {
 		return this.CALC_YEAR;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.CALC_YEAR, 
+	 * TN_RPAIR_TRGET.CALC_YEAR,
 	 * 보수_대상_항목.산정_년도 값설정
 	 * @param calcYear
 	 */
@@ -720,17 +732,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.CALC_MT, 
+	 * TN_RPAIR_TRGET.CALC_MT,
 	 * 보수_대상_항목.산정_월 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CALC_MT") 
+	@JsonProperty(value="CALC_MT")
 	public java.lang.String getCALC_MT() {
 		return this.CALC_MT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.CALC_MT, 
+	 * TN_RPAIR_TRGET.CALC_MT,
 	 * 보수_대상_항목.산정_월 값설정
 	 * @param calcMt
 	 */
@@ -739,17 +751,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.CALC_GPCI, 
+	 * TN_RPAIR_TRGET.CALC_GPCI,
 	 * 보수_대상_항목.산정_GPCI 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CALC_GPCI") 
+	@JsonProperty(value="CALC_GPCI")
 	public Double getCALC_GPCI() {
 		return this.CALC_GPCI;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.CALC_GPCI, 
+	 * TN_RPAIR_TRGET.CALC_GPCI,
 	 * 보수_대상_항목.산정_GPCI 값설정
 	 * @param calcGPCI
 	 */
@@ -758,17 +770,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.CALC_PC_GRAD, 
+	 * TN_RPAIR_TRGET.CALC_PC_GRAD,
 	 * 보수_대상_항목.산정_포장상태등급 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CALC_PC_GRAD") 
+	@JsonProperty(value="CALC_PC_GRAD")
 	public String getCALC_PC_GRAD() {
 		return this.CALC_PC_GRAD;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.CALC_PC_GRAD, 
+	 * TN_RPAIR_TRGET.CALC_PC_GRAD,
 	 * 보수_대상_항목.산정_포장상태등급 값설정
 	 * @param calcPcGrad
 	 */
@@ -777,17 +789,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.CNTRWK_YEAR, 
+	 * TN_RPAIR_TRGET.CNTRWK_YEAR,
 	 * 보수_대상_항목.공사_년도 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CNTRWK_YEAR") 
+	@JsonProperty(value="CNTRWK_YEAR")
 	public java.lang.String getCNTRWK_YEAR() {
 		return this.CNTRWK_YEAR;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.CNTRWK_YEAR, 
+	 * TN_RPAIR_TRGET.CNTRWK_YEAR,
 	 * 보수_대상_항목.공사_년도 값설정
 	 * @param cntrwkYear
 	 */
@@ -796,17 +808,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.TRNSPORT_QY, 
+	 * TN_RPAIR_TRGET.TRNSPORT_QY,
 	 * 보수_대상_항목.교통량 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="TRNSPORT_QY") 
+	@JsonProperty(value="TRNSPORT_QY")
 	public String getTRNSPORT_QY() {
 		return this.TRNSPORT_QY;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.TRNSPORT_QY, 
+	 * TN_RPAIR_TRGET.TRNSPORT_QY,
 	 * 보수_대상_항목.교통량 값설정
 	 * @param vmtc
 	 */
@@ -815,17 +827,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.LEN, 
+	 * TN_RPAIR_TRGET.LEN,
 	 * 보수_대상_항목.연장 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="LEN") 
+	@JsonProperty(value="LEN")
 	public String getLEN() {
 		return this.LEN;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.LEN, 
+	 * TN_RPAIR_TRGET.LEN,
 	 * 보수_대상_항목.연장 값설정
 	 * @param len
 	 */
@@ -834,17 +846,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.AR, 
+	 * TN_RPAIR_TRGET.AR,
 	 * 보수_대상_항목.면적 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="AR") 
+	@JsonProperty(value="AR")
 	public String getAR() {
 		return this.AR;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.AR, 
+	 * TN_RPAIR_TRGET.AR,
 	 * 보수_대상_항목.면적 값설정
 	 * @param ar
 	 */
@@ -853,17 +865,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.RPAIR_MTHD_CODE, 
+	 * TN_RPAIR_TRGET.RPAIR_MTHD_CODE,
 	 * 보수_대상_항목.보수_공법_코드 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="RPAIR_MTHD_CODE") 
+	@JsonProperty(value="RPAIR_MTHD_CODE")
 	public java.lang.String getRPAIR_MTHD_CODE() {
 		return this.RPAIR_MTHD_CODE;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.RPAIR_MTHD_CODE, 
+	 * TN_RPAIR_TRGET.RPAIR_MTHD_CODE,
 	 * 보수_대상_항목.보수_공법_코드 값설정
 	 * @param rpairMthdCode
 	 */
@@ -872,17 +884,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.AMOUNT_CALC, 
+	 * TN_RPAIR_TRGET.AMOUNT_CALC,
 	 * 보수_대상_항목.금액_산정 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="AMOUNT_CALC") 
+	@JsonProperty(value="AMOUNT_CALC")
 	public Long getAMOUNT_CALC() {
 		return this.AMOUNT_CALC;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.AMOUNT_CALC, 
+	 * TN_RPAIR_TRGET.AMOUNT_CALC,
 	 * 보수_대상_항목.금액_산정 값설정
 	 * @param amountCalc
 	 */
@@ -891,17 +903,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.BUDGET_ASIGN, 
+	 * TN_RPAIR_TRGET.BUDGET_ASIGN,
 	 * 보수_대상_항목.예산_배정 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="BUDGET_ASIGN") 
+	@JsonProperty(value="BUDGET_ASIGN")
 	public String getBUDGET_ASIGN() {
 		return this.BUDGET_ASIGN;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.BUDGET_ASIGN, 
+	 * TN_RPAIR_TRGET.BUDGET_ASIGN,
 	 * 보수_대상_항목.예산_배정 값설정
 	 * @param budgetAsign
 	 */
@@ -910,17 +922,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.FIXING_AT, 
+	 * TN_RPAIR_TRGET.FIXING_AT,
 	 * 보수_대상_항목.고정_여부 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="FIXING_AT") 
+	@JsonProperty(value="FIXING_AT")
 	public java.lang.String getFIXING_AT() {
 		return this.FIXING_AT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.FIXING_AT, 
+	 * TN_RPAIR_TRGET.FIXING_AT,
 	 * 보수_대상_항목.고정_여부 값설정
 	 * @param fixingAt
 	 */
@@ -929,17 +941,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.BUDGET_CECK, 
+	 * TN_RPAIR_TRGET.BUDGET_CECK,
 	 * 보수_대상_항목.예산_체크 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="BUDGET_CECK") 
+	@JsonProperty(value="BUDGET_CECK")
 	public java.lang.String getBUDGET_CECK() {
 		return this.BUDGET_CECK;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.BUDGET_CECK, 
+	 * TN_RPAIR_TRGET.BUDGET_CECK,
 	 * 보수_대상_항목.예산_체크 값설정
 	 * @param budgetCeck
 	 */
@@ -948,17 +960,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.ACCMLT_CALC, 
+	 * TN_RPAIR_TRGET.ACCMLT_CALC,
 	 * 보수_대상_항목.누적_산정 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="ACCMLT_CALC") 
+	@JsonProperty(value="ACCMLT_CALC")
 	public String getACCMLT_CALC() {
 		return this.ACCMLT_CALC;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.ACCMLT_CALC, 
+	 * TN_RPAIR_TRGET.ACCMLT_CALC,
 	 * 보수_대상_항목.누적_산정 값설정
 	 * @param accmltCalc
 	 */
@@ -967,17 +979,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.SLCTN_AT, 
+	 * TN_RPAIR_TRGET.SLCTN_AT,
 	 * 보수_대상_항목.선정_여부 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_AT") 
+	@JsonProperty(value="SLCTN_AT")
 	public java.lang.String getSLCTN_AT() {
 		return this.SLCTN_AT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.SLCTN_AT, 
+	 * TN_RPAIR_TRGET.SLCTN_AT,
 	 * 보수_대상_항목.선정_여부 값설정
 	 * @param slctnAt
 	 */
@@ -986,18 +998,18 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.SLCTN_DT, 
+	 * TN_RPAIR_TRGET.SLCTN_DT,
 	 * 보수_대상_항목.선정_일시 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="SLCTN_DT") 
+	@JsonProperty(value="SLCTN_DT")
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+9")
 	public java.util.Date getSLCTN_DT() {
 		return this.SLCTN_DT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.SLCTN_DT, 
+	 * TN_RPAIR_TRGET.SLCTN_DT,
 	 * 보수_대상_항목.선정_일시 값설정
 	 * @param slctnDt
 	 */
@@ -1006,17 +1018,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.DELETE_AT, 
+	 * TN_RPAIR_TRGET.DELETE_AT,
 	 * 보수_대상_항목.삭제_여부 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DELETE_AT") 
+	@JsonProperty(value="DELETE_AT")
 	public java.lang.String getDELETE_AT() {
 		return this.DELETE_AT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.DELETE_AT, 
+	 * TN_RPAIR_TRGET.DELETE_AT,
 	 * 보수_대상_항목.삭제_여부 값설정
 	 * @param deleteAt
 	 */
@@ -1025,17 +1037,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.USE_AT, 
+	 * TN_RPAIR_TRGET.USE_AT,
 	 * 보수_대상_항목.사용_여부 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="USE_AT") 
+	@JsonProperty(value="USE_AT")
 	public java.lang.String getUSE_AT() {
 		return this.USE_AT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.USE_AT, 
+	 * TN_RPAIR_TRGET.USE_AT,
 	 * 보수_대상_항목.사용_여부 값설정
 	 * @param useAt
 	 */
@@ -1044,17 +1056,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.CRTR_NO, 
+	 * TN_RPAIR_TRGET.CRTR_NO,
 	 * 보수_대상_항목.생성자_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CRTR_NO") 
+	@JsonProperty(value="CRTR_NO")
 	public String getCRTR_NO() {
 		return this.CRTR_NO;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.CRTR_NO, 
+	 * TN_RPAIR_TRGET.CRTR_NO,
 	 * 보수_대상_항목.생성자_번호 값설정
 	 * @param crtrNo
 	 */
@@ -1063,18 +1075,18 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.CREAT_DT, 
+	 * TN_RPAIR_TRGET.CREAT_DT,
 	 * 보수_대상_항목.생성_일시 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CREAT_DT") 
+	@JsonProperty(value="CREAT_DT")
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+9")
 	public java.util.Date getCREAT_DT() {
 		return this.CREAT_DT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.CREAT_DT, 
+	 * TN_RPAIR_TRGET.CREAT_DT,
 	 * 보수_대상_항목.생성_일시 값설정
 	 * @param creatDt
 	 */
@@ -1083,17 +1095,17 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.UPDUSR_NO, 
+	 * TN_RPAIR_TRGET.UPDUSR_NO,
 	 * 보수_대상_항목.수정자_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="UPDUSR_NO") 
+	@JsonProperty(value="UPDUSR_NO")
 	public String getUPDUSR_NO() {
 		return this.UPDUSR_NO;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.UPDUSR_NO, 
+	 * TN_RPAIR_TRGET.UPDUSR_NO,
 	 * 보수_대상_항목.수정자_번호 값설정
 	 * @param updusrNo
 	 */
@@ -1102,25 +1114,25 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	}
 
 	/**
-	 * TN_RPAIR_TRGET.UPDT_DT, 
+	 * TN_RPAIR_TRGET.UPDT_DT,
 	 * 보수_대상_항목.수정_일시 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="UPDT_DT") 
+	@JsonProperty(value="UPDT_DT")
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+9")
 	public java.util.Date getUPDT_DT() {
 		return this.UPDT_DT;
 	}
- 
+
 	 /**
-	 * TN_RPAIR_TRGET.UPDT_DT, 
+	 * TN_RPAIR_TRGET.UPDT_DT,
 	 * 보수_대상_항목.수정_일시 값설정
 	 * @param updtDt
 	 */
 	public void setUPDT_DT(java.util.Date updtDt) {
 		this.UPDT_DT = updtDt;
 	}
-	@JsonProperty(value="ITEM_SLCTN_STTUS_NM") 
+	@JsonProperty(value="ITEM_SLCTN_STTUS_NM")
 	public java.lang.String getITEM_SLCTN_STTUS_NM() {
 		return ITEM_SLCTN_STTUS_NM;
 	}
@@ -1128,7 +1140,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setITEM_SLCTN_STTUS_NM(java.lang.String iTEM_SLCTN_STTUS_NM) {
 		ITEM_SLCTN_STTUS_NM = iTEM_SLCTN_STTUS_NM;
 	}
-	@JsonProperty(value="CELL_TYPE_NM") 
+	@JsonProperty(value="CELL_TYPE_NM")
 	public java.lang.String getCELL_TYPE_NM() {
 		return CELL_TYPE_NM;
 	}
@@ -1136,7 +1148,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setCELL_TYPE_NM(java.lang.String cELL_TYPE_NM) {
 		CELL_TYPE_NM = cELL_TYPE_NM;
 	}
-	@JsonProperty(value="MSRC_NM") 
+	@JsonProperty(value="MSRC_NM")
 	public java.lang.String getMSRC_NM() {
 		return MSRC_NM;
 	}
@@ -1144,7 +1156,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setMSRC_NM(java.lang.String mSRC_NM) {
 		MSRC_NM = mSRC_NM;
 	}
-	@JsonProperty(value="DEPT_CODE") 
+	@JsonProperty(value="DEPT_CODE")
 	public java.lang.String getDEPT_CODE() {
 		return DEPT_CODE;
 	}
@@ -1152,7 +1164,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setDEPT_CODE(java.lang.String dEPT_CODE) {
 		DEPT_CODE = dEPT_CODE;
 	}
-	@JsonProperty(value="DEPT_NM") 
+	@JsonProperty(value="DEPT_NM")
 	public java.lang.String getDEPT_NM() {
 		return DEPT_NM;
 	}
@@ -1160,7 +1172,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setDEPT_NM(java.lang.String dEPT_NM) {
 		DEPT_NM = dEPT_NM;
 	}
-	@JsonProperty(value="DMG_VAL") 
+	@JsonProperty(value="DMG_VAL")
 	public Double getDMG_VAL() {
 		return DMG_VAL;
 	}
@@ -1168,7 +1180,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setDMG_VAL(Double dMG_VAL) {
 		DMG_VAL = dMG_VAL;
 	}
-	@JsonProperty(value="TMPR_SLCTN_AT") 
+	@JsonProperty(value="TMPR_SLCTN_AT")
 	public java.lang.String getTMPR_SLCTN_AT() {
 		return TMPR_SLCTN_AT;
 	}
@@ -1216,7 +1228,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setADM_CODE(String aDM_CODE) {
 		ADM_CODE = aDM_CODE;
 	}
-	@JsonProperty(value="SLCTN_ORDR") 
+	@JsonProperty(value="SLCTN_ORDR")
 	public String getSLCTN_ORDR() {
 		return SLCTN_ORDR;
 	}
@@ -1224,7 +1236,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setSLCTN_ORDR(String sLCTN_ORDR) {
 		SLCTN_ORDR = sLCTN_ORDR;
 	}
-	@JsonProperty(value="ROAD_GRAD_NM") 
+	@JsonProperty(value="ROAD_GRAD_NM")
 	public String getROAD_GRAD_NM() {
 		return ROAD_GRAD_NM;
 	}
@@ -1232,7 +1244,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setROAD_GRAD_NM(String rOAD_GRAD_NM) {
 		ROAD_GRAD_NM = rOAD_GRAD_NM;
 	}
-	@JsonProperty(value="ADM_NM") 
+	@JsonProperty(value="ADM_NM")
 	public String getADM_NM() {
 		return ADM_NM;
 	}
@@ -1240,7 +1252,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setADM_NM(String aDM_NM) {
 		ADM_NM = aDM_NM;
 	}
-	@JsonProperty(value="RPAIR_FEE") 
+	@JsonProperty(value="RPAIR_FEE")
 	public String getRPAIR_FEE() {
 		return RPAIR_FEE;
 	}
@@ -1248,7 +1260,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setRPAIR_FEE(String rPAIR_FEE) {
 		RPAIR_FEE = rPAIR_FEE;
 	}
-	@JsonProperty(value="VMTC_GRAD_NM") 
+	@JsonProperty(value="VMTC_GRAD_NM")
 	public String getVMTC_GRAD_NM() {
 		return VMTC_GRAD_NM;
 	}
@@ -1256,7 +1268,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setVMTC_GRAD_NM(String vMTC_GRAD_NM) {
 		VMTC_GRAD_NM = vMTC_GRAD_NM;
 	}
-	@JsonProperty(value="TOTAL_BUDGET_ASIGN") 
+	@JsonProperty(value="TOTAL_BUDGET_ASIGN")
 	public String getTOTAL_BUDGET_ASIGN() {
 		return this.TOTAL_BUDGET_ASIGN;
 	}
@@ -1264,7 +1276,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setTOTAL_BUDGET_ASIGN(String tOTAL_BUDGET_ASIGN) {
 		this.TOTAL_BUDGET_ASIGN = tOTAL_BUDGET_ASIGN;
 	}
-	@JsonProperty(value="KILLO_LEN") 
+	@JsonProperty(value="KILLO_LEN")
 	public String getKILLO_LEN() {
 		return KILLO_LEN;
 	}
@@ -1272,7 +1284,7 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setKILLO_LEN(String kILLO_LEN) {
 		KILLO_LEN = kILLO_LEN;
 	}
-	@JsonProperty(value="FIX_BUDGET_ASIGN") 
+	@JsonProperty(value="FIX_BUDGET_ASIGN")
 	public String getFIX_BUDGET_ASIGN() {
 		return FIX_BUDGET_ASIGN;
 	}
@@ -1360,6 +1372,33 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	public void setMSRC_CL_NM(java.lang.String mSRC_CL_NM) {
 		MSRC_CL_NM = mSRC_CL_NM;
 	}
-	
-	
+
+	@JsonProperty(value="CR_RT_AVRG")
+	public java.lang.String getCR_RT_AVRG() {
+		return CR_RT_AVRG;
+	}
+
+	public void setCR_RT_AVRG(java.lang.String cR_RT_AVRG) {
+		CR_RT_AVRG = cR_RT_AVRG;
+	}
+
+	@JsonProperty(value="RD_VAL_SM")
+	public java.lang.String getRD_VAL_SM() {
+		return RD_VAL_SM;
+	}
+
+	public void setRD_VAL_SM(java.lang.String rD_VAL_SM) {
+		RD_VAL_SM = rD_VAL_SM;
+	}
+
+	@JsonProperty(value="IRI_VAL_SM")
+	public java.lang.String getIRI_VAL_SM() {
+		return IRI_VAL_SM;
+	}
+
+	public void setIRI_VAL_SM(java.lang.String iRI_VAL_SM) {
+		IRI_VAL_SM = iRI_VAL_SM;
+	}
+
+
 }

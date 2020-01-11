@@ -29,12 +29,12 @@
                 </select>
                 <h2 class="h2">미조사구간 조회</h2>
             </span>
-           
+
         </div>
     </header>
-    
+
     <div class="contents container">
-    
+
         <article class="div3">
             <h3 class="h3">검색조건</h3>
             <div class="table">
@@ -46,10 +46,10 @@
                             <select id="SRVY_YEAR" name="SRVY_YEAR" alt="조사연도">
                                 <!-- <option value="">== 전체 ==</option> -->
                                 <c:forEach items="${srvyYearList }" var="srvyYear" varStatus="status">
-                                    
+
                                     <option value="${srvyYear.SRVY_YEAR }" <c:if test="${status.last}"> selected</c:if>>${srvyYear.SRVY_YEAR } </option>
                                 </c:forEach>
-                            </select>         
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@
                                 <c:forEach items="${roadNoList }" var="roadNo">
                                     <option value="${roadNo.ROAD_NO }">${roadNo.ROAD_NO_VAL }</option>
                                 </c:forEach>
-                            </select>              
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -69,26 +69,26 @@
                             <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="" />
                         </td>
                     </tr>
-                    </tbody>    
+                    </tbody>
                 </table>
                 <div class="btnArea">
                     <input type="button" class="btn pri" onclick="javascript:fn_search();" value="검색"/>
                 </div>
             </div>
         </article>
-        
+
         <article class="div9">
             <h3 class="h3">미조사구간 조회</h3>
             <div id="div_grid" class="table">
-                <table id="gridArea"></table>               
+                <table id="gridArea"></table>
             </div>
             <a href="#" onclick="fn_chart();" class="btn pri">차트</a>
 
             <div id="gridPager"></div>
-             
+
         </div>
         </article>
-        
+
     </div>
 </form>
 
@@ -157,10 +157,10 @@ $( document ).ready(function() {
         ,emptyrecords: "검색된 데이터가 없습니다."
         ,recordtext: "총 <font color='#f42200'>{2}</font> 건 데이터 ({0}-{1})"
         ,ondblClickRow: function(rowId) {
-        	
+
         }
         ,onSelectRow: function(rowId) {
-        	
+
         }
         ,loadBeforeSend:function(tsObj, ajaxParam, settings){
             if(this.p.mtype==="POST"&& $.type(this.p.postData)!=="string" ){
@@ -208,17 +208,19 @@ function fn_search() {
 function fn_create_btn(cellValue, options, rowObject) {
     var btn = "";
     var nm = options.colModel.name;
-    switch(nm) {
-    case "btn_loc" :
-            btn = "<a href='#' onclick=\"fn_select_route('" + rowObject.ROAD_NO +"','"+ rowObject.SRVY_YEAR + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
-        break;
-    case "btn_unloc" :
-            btn = "<a href='#' onclick=\"fn_unselect_route('" + rowObject.ROAD_NO +"','"+ rowObject.SRVY_YEAR + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
-        break;
-    default :     
-        break;
+    var index = options.rowId;
+    if(index != "1"){
+	    switch(nm) {
+	    case "btn_loc" :
+	            btn = "<a href='#' onclick=\"fn_select_route('" + rowObject.ROAD_NO +"','"+ rowObject.SRVY_YEAR + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+	        break;
+	    case "btn_unloc" :
+	            btn = "<a href='#' onclick=\"fn_unselect_route('" + rowObject.ROAD_NO +"','"+ rowObject.SRVY_YEAR + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+	        break;
+	    default :
+	        break;
+	    }
     }
-
     return btn;
 }
 
@@ -286,17 +288,17 @@ function fn_change_roadNm() {
 
 //조사구간 위치이동
 function fn_select_route(route_no, srvy_year){
-	
-	
+
+
 	if(!srvy_year || srvy_year == 'null'){
 		alert('조사구간 위치가 없습니다');
 		return ;
 	}
-	
+
 	var dvMapLoading = parent.dvMapLoading;
 	$(dvMapLoading).show();
 	parent.bottomClose();
-	
+
 	var params = {"ROUTE_CODE" : route_no, "SRVY_YEAR": srvy_year};
     $.ajax({
         url: contextPath + '/api/srvyunsection/sectionlocation.do'
@@ -312,15 +314,15 @@ function fn_select_route(route_no, srvy_year){
         			try{
 			        	var gMap = parent.gMap;
 			        	var layer = gMap.getLayerByName('GAttrLayer');
-			        	
+
 		        		var geojson = item.GEOJSON;
 			        	var format = new OpenLayers.Format.GeoJSON();
-			        	var feature = format.read(geojson)[0]; 
+			        	var feature = format.read(geojson)[0];
 			        	feature.attributes = {
 			        		fillColor : '#FF0000',
 			        		strokeColor : '#FF0000'
 			        	};
-			        	
+
 			        	gMap.cleanMap();
 			        	layer.addFeatures(feature);
 			        	gMap.zoomToExtent(layer.getDataExtent());
@@ -340,16 +342,16 @@ function fn_select_route(route_no, srvy_year){
 
 //미조사구간 위치이동
 function fn_unselect_route(route_no, srvy_year){
-	
+
 	if(!srvy_year || srvy_year == 'null'){
 		fn_routeLocation_move(route_no);
 		return ;
 	}
-	
+
 	var dvMapLoading = parent.dvMapLoading;
 	$(dvMapLoading).show();
 	parent.bottomClose();
-	
+
 	var params = {"ROUTE_CODE" : route_no, "SRVY_YEAR": srvy_year};
     $.ajax({
         url: contextPath + 'api/srvyunsection/unsectionlocation.do'
@@ -365,15 +367,15 @@ function fn_unselect_route(route_no, srvy_year){
         			try{
 			        	var gMap = parent.gMap;
 			        	var layer = gMap.getLayerByName('GAttrLayer');
-			        	
+
 		        		var geojson = item.GEOJSON;
 			        	var format = new OpenLayers.Format.GeoJSON();
-			        	var feature = format.read(geojson)[0]; 
+			        	var feature = format.read(geojson)[0];
 			        	feature.attributes = {
 			        		fillColor : '#0033ff',
 			        		strokeColor : '#0033ff'
 			        	};
-			        	
+
 			        	gMap.cleanMap();
 			        	layer.addFeatures(feature);
 			        	gMap.zoomToExtent(layer.getDataExtent());
@@ -387,7 +389,7 @@ function fn_unselect_route(route_no, srvy_year){
         	}
         }
         ,error: function(a,b,msg){
-        	
+
         }
     });
 }
@@ -395,7 +397,7 @@ function fn_unselect_route(route_no, srvy_year){
 //노선 위치이동
 function fn_routeLocation_move(route_no){
     parent.bottomClose();
-    
+
     var tables = ["DORO_TOT_GRS80_50"];
     var fields = ["ROAD_NO"];
     var values = [route_no];
@@ -413,7 +415,7 @@ function fn_chart(){
 	var srvyYear = $('#SRVY_YEAR').val();
 	var roadNo = $('#ROAD_NO').val();
 	var params = "SRVY_YEAR=" + srvyYear + "&ROAD_NO=" + roadNo;
-	
+
 	var title = "조사구간현황";
 	var url = "<c:url value='/srvy/selectsrvyunsectionchart.do'/>?"+params;
 	var width = 700;

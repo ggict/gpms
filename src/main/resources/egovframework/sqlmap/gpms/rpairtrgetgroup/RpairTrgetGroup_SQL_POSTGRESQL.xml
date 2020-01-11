@@ -226,6 +226,9 @@
                          , mngrdcode.CODE_NM MNG_RD_NM    /* 보수_대상_항목_그룹.관리_도로_명 */
                          , tnrpairtrgetgroup.POTHOLE_QY   /* 보수_대상_항목_그룹.포트홀_량 */
                          , tnrpairtrgetgroup.PRIORT   /* 보수_대상_항목_그룹.우선순위 */
+                         , tnrpairtrgetgroup.CR_RT_AVRG   /* 보수_대상_항목_그룹.균열율 */
+                         , tnrpairtrgetgroup.RD_VAL_SM   /* 보수_대상_항목_그룹.소성변형 */
+                         , tnrpairtrgetgroup.IRI_VAL_SM   /* 보수_대상_항목_그룹.IRI */
                         FROM TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
                         INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
                         ON tnrpairtrgetslctn.TRGET_SLCTN_NO = tnrpairtrgetgroup.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */
@@ -341,7 +344,7 @@
             /* 보수_대상_항목_그룹 대비 포장공사진행 조회 */
             WITH rpairgroup as
             (
-                SELECT 
+                SELECT
                     tb.ROUTE_CODE::int ROAD_NO_VAL
                     , ( SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = tb.ROUTE_CODE ) as ROAD_NM
                     , SUM( tb.FIX_BUDGET_ASIGN) OVER() TOTAL_FIX_BUDGET_ASIGN
@@ -363,11 +366,11 @@
                          , tnrpairtrgetgroup.STRTPT    /* 보수_대상_항목_그룹.시점 */
                          , tnrpairtrgetgroup.ENDPT    /* 보수_대상_항목_그룹.종점 */
                          , tnrpairtrgetgroup.CELL_TYPE    /* 보수_대상_항목_그룹.셀_타입 */
-                         , ( SELECT celtcode.CODE_NM FROM TC_CODE celtcode 
+                         , ( SELECT celtcode.CODE_NM FROM TC_CODE celtcode
                              WHERE tnrpairtrgetgroup.CELL_TYPE = celtcode.CODE_VAL AND celtcode.CL_CODE = 'CELT' AND celtcode.USE_AT = 'Y' AND celtcode.DELETE_AT = 'N' )
                            as CELL_TYPE_NM
                          , tnrpairtrgetgroup.DEPT_CODE    /* 보수_대상_항목_그룹.부서코드 */
-                         , ( SELECT tcdept.LOWEST_DEPT_NM AS DEPT_NM FROM GPMS.TC_DEPT  tcdept 
+                         , ( SELECT tcdept.LOWEST_DEPT_NM AS DEPT_NM FROM GPMS.TC_DEPT  tcdept
                              WHERE tcdept.DEPT_CODE = tnrpairtrgetgroup.DEPT_CODE    AND tcdept.USE_AT = 'Y'  AND tcdept.DELETE_AT = 'N' )
                            as DEPT_NM
                          , tnrpairtrgetgroup.SRVY_MT    /* 보수_대상_항목_그룹.조사_월 */
@@ -399,7 +402,7 @@
                          , tnrpairtrgetgroup.SLCTN_DT    /* 보수_대상_항목_그룹.선정_일시 */
                          , tnrpairtrgetgroup.TMPR_SLCTN_AT    /* 보수_대상_항목_그룹.임시_선정_여부 */
                          , tnrpairtrgetgroup.NODE_CO    /* 보수_대상_항목_그룹.노드_개수 */
-                         , ( SELECT vntccode.CODE_NM FROM TC_CODE vntccode 
+                         , ( SELECT vntccode.CODE_NM FROM TC_CODE vntccode
                              WHERE tnrpairtrgetgroup.VMTC_GRAD = vntccode.CODE_VAL AND vntccode.CL_CODE = 'VNTC' AND vntccode.USE_AT = 'Y' AND vntccode.DELETE_AT = 'N' )
                            as VMTC_GRAD_NM                /* 보수_대상_항목_그룹.교통량등급 */
                          , tnrpairtrgetgroup.VMTC_GRAD    /* 보수_대상_항목_그룹.교통량등급 */
@@ -416,7 +419,7 @@
                          , tnrpairtrgetgroup.UPDT_DT    /* 보수_대상_항목_그룹.수정_일시 */
                          , tnrpairtrgetgroup.CELL_IDS    /* 보수_대상_항목_그룹.섹션목록 */
                          , tnrpairtrgetgroup.MNG_RD_CD    /* 보수_대상_항목_그룹.관리_도로_코드 */
-                         , ( SELECT mngrdcode.CODE_NM FROM TC_CODE mngrdcode 
+                         , ( SELECT mngrdcode.CODE_NM FROM TC_CODE mngrdcode
                              WHERE tnrpairtrgetgroup.MNG_RD_CD = mngrdcode.CODE_VAL AND mngrdcode.CL_CODE = 'MNRD' AND mngrdcode.USE_AT = 'Y' AND mngrdcode.DELETE_AT = 'N' )
                            as MNG_RD_NM                /* 보수_대상_항목_그룹.관리_도로_명 */
                          , tnrpairtrgetgroup.POTHOLE_QY   /* 보수_대상_항목_그룹.포트홀_량 */
@@ -1348,7 +1351,7 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     DEPT_NM,
                     SUM(GROUP_LEN) as GROUP_LEN,
                     COUNT(GROUP_CNT) as GROUP_CNT
-                FROM 
+                FROM
                 (
                     SELECT
                         dept.DEPT_CODE as DEPT_CODE,
@@ -1409,7 +1412,7 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     DEPT_NM,
                     SUM(GROUP_LEN) as GROUP_LEN,
                     COUNT(GROUP_CNT) as GROUP_CNT
-                FROM 
+                FROM
                 (
                     SELECT
                         dept.DEPT_CODE as DEPT_CODE,
