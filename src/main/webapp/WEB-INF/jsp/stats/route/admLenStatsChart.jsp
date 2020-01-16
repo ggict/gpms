@@ -14,22 +14,22 @@ var myChart;
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	
+
     $("#divStatChart").height($(parent.window).height() - 220);
-    
+
     var selectedAdm = $('#selectAdm option:selected').val();
     fnAdmStatsSearch(selectedAdm);
-    
+
     $('#selectAdm').change(function() {
         var selectedAdm = this.value;
         fnAdmStatsSearch(selectedAdm);
     })
     $('#btnSearch').click(function() {
         var selectedAdm = $('#selectAdm option:selected').val();
-        fnAdmStatsSearch(selectedAdm);    
+        fnAdmStatsSearch(selectedAdm);
     })
-	
-}); 
+
+});
 
 //창 조절시 차트 resize
 $(window).resize(function(){
@@ -47,9 +47,9 @@ $(window).on("resizeEnd", function(){
 
 //검색 처리
 function fnAdmStatsSearch(selectedAdm) {
-	
+
     var data = { 'ADM_CODE': selectedAdm };
-    
+
     $.ajax({
        url: '<c:url value="/"/>'+'api/stats/selectAdmStatsPageChart.do',
        //data: JSON.stringify( $("#frm").cmSerializeObject()),
@@ -83,20 +83,22 @@ require.config({
 	});
 function drawLenChart(dataList){
 	var degree = (dataList.length > 10) ? 40 : 0;
-	
-    var admList = dataList.map(function(elem) { return elem.adm_nm }).reduce(function(a,b) { if(a.indexOf(b)<0) a.push(b); return a; }, []);
-    var roadGradLlist = dataList.map(function(elem) { return elem.road_grad });
-    var routeCodeList = dataList.map(function(elem) { return elem.route_code });
+
+    var admList = dataList.map(function(elem) { return elem.adm_name });
+    var roadGradLlist = dataList.map(function(elem) { return elem.road_grad_nm });
+    var routeCodeList = dataList.map(function(elem) { return elem.route_nm });
     var track2Data = dataList.map(function(elem) { return elem.track2_len });
     var track4Data = dataList.map(function(elem) { return elem.track4_len });
+    var track6Data = dataList.map(function(elem) { return elem.track6_len });
     var cntrwkData = dataList.map(function(elem) { return elem.cntrwk_len });
     var unopnData = dataList.map(function(elem) { return elem.unopn_len });
-    
+    var sidoData = dataList.map(function(elem) { return elem.sido_len });
+
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
         myChart = ec.init(document.getElementById('lenBarChart'));
         myChart.setOption({
-            //color: ['#003366', '#4cabce'], 
+            //color: ['#003366', '#4cabce'],
             //title  : { text: '차로 연장', x:'left' },
             title    : { text: admList[0], x:'left' },
             tooltip : { trigger: 'axis'             },
@@ -105,22 +107,22 @@ function drawLenChart(dataList){
                        //dataView : {show: true, readOnly: false},     // 상세조회
                        //saveAsExcel : {show: true},                   // 엑셀저장
                        saveAsImage: {show: true}                   // 이미지저장
-                   }   
+                   }
             },
             legend: {
-                data: ['2차로', '4차로', '공사구간', '미개통구간'],
+                data: ['2차로', '4차로', '6차로', '공사구간', '미개통구간', '시도구간'],
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'bottom',
                 borderWidth: 0
             },
             grid :{
-                 width : '50%',
+//                  width : '50%',
                 y2 : 100,
                 align: 'center'
             },
             xAxis : [
-            	{ 
+            	{
                     type : 'category',
                     position: 'bottom',
                     offset: 0,
@@ -150,6 +152,13 @@ function drawLenChart(dataList){
                     data: track4Data
                 },
                 {
+                    name: '6차로',
+                    type: 'bar',
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: track6Data
+                },
+                {
                     name: '공사구간',
                     type: 'bar',
                     stack: '합계',
@@ -158,14 +167,21 @@ function drawLenChart(dataList){
                 },
                 {
                     name: '미개통구간',
-                    type: 'bar',    
+                    type: 'bar',
                     stack: '합계',
                     itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
                     data: unopnData
+                },
+                {
+                    name: '시도구간',
+                    type: 'bar',
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: sidoData
                 }
             ]
         });
-        
+
    });
 }
 
@@ -179,7 +195,7 @@ function drawLenChart(dataList){
 <!-- 필수 파라메터(END) -->
 <form id="frm" name="frm" method="post" action="">
 <input type="hidden" id="ADM_CODE" name="ADM_CODE" value=""/>
-	
+
 	<header class="loc">
 	        <div class="container">
 	            <span class="locationHeader">
@@ -195,9 +211,9 @@ function drawLenChart(dataList){
 	            </span>
 	        </div>
 	</header>
-	
+
 	<div class="container2">
-	
+
         <div class="table searchBox top">
             <table>
                 <tbody>
@@ -220,17 +236,17 @@ function drawLenChart(dataList){
                 </tbody>
             </table>
         </div>
-	    
+
 		<div class="tab">
 				<a href="#div_grid" onclick="location.replace('<c:url value="viewAdmLenStats.do"/>');">상세보기</a>
-				<a class="on" href="#divStatChart" onclick="location.replace('<c:url value="viewAdmLenStatsChart.do"/>');">그래프보기</a>	
+				<a class="on" href="#divStatChart" onclick="location.replace('<c:url value="viewAdmLenStatsChart.do"/>');">그래프보기</a>
 		</div>
-		
+
         <div style="text-align: center;">
           <div id="lenBarChart" class="cont_ConBx2" style="height: 500px;margin:30px 0 auto;"></div>
         </div>
-		
-		<!-- 
+
+		<!--
 		<div id="divStatChart" style="overflow-y:auto;">
 			<ul class="statsbx">
 				<li>
@@ -256,7 +272,7 @@ function drawLenChart(dataList){
 					</div>
 				</li>
 			</ul>
-		</div>	
+		</div>
 		 -->
 
 	</div>

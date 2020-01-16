@@ -13,9 +13,9 @@ var chkcell={cellId:undefined, chkval:undefined};
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	
+
 	var postData = {"USE_AT":"Y"};
-	
+
 	// 검색 목록 그리드 구성
 	$("#gridArea").jqGrid({
 		url: '<c:url value="/"/>'+'api/stats/selectTrakStatsPageList.do'
@@ -26,14 +26,18 @@ $( document ).ready(function() {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["시군구","차로","총연장(km)","포장구간","공사구간","미개통현황"]
+		,colNames:["시군구","총연장(km)","계","소계","2차로","4차로","6차로","공사구간","미개통구간","시도구간"]
 	   	,colModel:[
 			{name:'adm_name',index:'adm_name', align:'center', width:50, sortable:false,cellattr:jsFormatterCell}
-			,{name:'track',index:'track', align:'center', width:50, sortable:false}
 			,{name:'total_l',index:'total_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'sum_l',index:'sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'cntrwk_len',index:'cntrwk_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
-			,{name:'unopn_len',index:'unopn_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+            ,{name:'sum_l',index:'sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+            ,{name:'sub_sum_l',index:'sub_sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+            ,{name:'track2_len',index:'track2_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+            ,{name:'track4_len',index:'track4_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+            ,{name:'track6_len',index:'track6_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+            ,{name:'cntrwk_len',index:'cntrwk_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+            ,{name:'unopn_len',index:'unopn_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+            ,{name:'sido_len',index:'sido_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 	   	]
 		,async : false
 	   	,sortname: 'adm_name'
@@ -69,18 +73,12 @@ $( document ).ready(function() {
 		,multiboxonly: false
 		//,scroll: true
 	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
-	
+
 	var height = $(parent.window).height() - 250;
 	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-	
+
 	fnSearch();
-	
-	$("#gridArea").jqGrid('setGroupHeaders', {
-		useColSpanStyle: true, 
-		groupHeaders:[
-			{startColumnName: 'sum_l', numberOfColumns: 3, titleText: '도 관리구간(km)'}
-		]	
-	});
+
 });
 
 //창 조절시 차트 resize
@@ -94,21 +92,27 @@ $(window).resize(function(){
 })
 $(window).on("resizeEnd", function(){
     //테이블 크기 조정
-    var height = $(parent.window).height() - 250;       
+    var height = $(parent.window).height() - 250;
     COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-    
+
     $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
     $("#gridArea").jqGrid('setGroupHeaders', {
-        useColSpanStyle: true, 
-        groupHeaders:[
-            {startColumnName: 'sum_l', numberOfColumns: 3, titleText: '도 관리구간(km)'}
-        ]   
-    });
+        useColSpanStyle: true,
+                groupHeaders:[
+                	{startColumnName: 'adm_name', numberOfColumns: 2, titleText: ''},
+                    {startColumnName: 'sum_l', numberOfColumns: 7, titleText: '도 관리구간(km)'}
+                ]
+            }).jqGrid('setGroupHeaders', {
+        useColSpanStyle: true,
+                groupHeaders:[
+                    {startColumnName: 'sub_sum_l', numberOfColumns: 4, titleText: '포장구간'}
+                ]
+            });
 })
 
 //검색 처리
 function fnSearch() {
-	
+
 	var postData = {"USE_AT":"Y"};
 	$("#gridArea").jqGrid("setGridParam",{
 		datatype: "json"
@@ -119,15 +123,17 @@ function fnSearch() {
 		,mtype: "POST"
 	   	,loadComplete: function(data) {
 			var grid = this;
-            
+
             $('td[name="cellRowspan"]', grid).each(function() {
                 var spans = $('td[rowspanid="'+this.id+'"]',grid).length+1;
                 if(spans>1){
                  $(this).attr('rowspan',spans);
                 }
-            });  
-            
+            });
+
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
+
+	   		$(window).trigger('resize');
 	   	}
 	}).trigger("reloadGrid");
 }
@@ -135,7 +141,7 @@ function fnSearch() {
 //관리기관 병합
 function jsFormatterCell(rowid, val, rowObject, cm, rdata){
   var result = "";
-   
+
   if(chkcell.chkval != val){ //check 값이랑 비교값이 다른 경우
       var cellId = this.id + '_row_'+rowid+'-'+cm.name;
       result = ' rowspan="1" id ="'+cellId+'" + name="cellRowspan"';
@@ -186,9 +192,9 @@ function fnExcel() {
 				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="viewTrackLenStats.do"/>');">상세보기</a>
 				<a href="#divStatChart" onclick="location.replace('<c:url value="viewTrackLenStatsChart.do"/>');">그래프보기</a>
 		</div>
-		<div class="btnArea_top tabR">	          	
+		<div class="btnArea_top tabR">
 				<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
-		</div>		
+		</div>
 		<div id="div_grid" >
 			<table class="adminlist" id="gridArea"></table>
 		</div>
