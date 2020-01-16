@@ -232,6 +232,10 @@ function fn_search() {
 }
 // 수정
 function fnUpdate(rowId) {
+	if(rowId == '1'){
+		return;
+	}
+
 	if( $.type(rowId) === "undefined" || rowId=="" )
 		 rowId = $("#gridArea").getGridParam( "selrow" );
 
