@@ -226,9 +226,11 @@
                          , mngrdcode.CODE_NM MNG_RD_NM    /* 보수_대상_항목_그룹.관리_도로_명 */
                          , tnrpairtrgetgroup.POTHOLE_QY   /* 보수_대상_항목_그룹.포트홀_량 */
                          , tnrpairtrgetgroup.PRIORT   /* 보수_대상_항목_그룹.우선순위 */
-                         , tnrpairtrgetgroup.CR_RT_AVRG   /* 보수_대상_항목_그룹.균열율 */
-                         , tnrpairtrgetgroup.RD_VAL_SM   /* 보수_대상_항목_그룹.소성변형 */
-                         , tnrpairtrgetgroup.IRI_VAL_SM   /* 보수_대상_항목_그룹.IRI */
+                         , tnrpairtrgetgroup.IRI_VAL_AVRG   /* 보수_대상_항목_그룹.종단평탄성_값_합계 */
+                         , tnrpairtrgetgroup.RD_VAL_AVRG   /* 보수_대상_항목_그룹.소성변형_값_합계 */
+                         , tnrpairtrgetgroup.VRTCAL_CR_AVRG + tnrpairtrgetgroup.HRZNTAL_CR_AVRG AS VRHR_CR   /* 보수_대상_항목_그룹.선형_균열양*/
+                         , tnrpairtrgetgroup.TRTS_BAC_CR_AVRG   /* 보수_대상_항목_그룹.면형_균열양 */
+                         , tnrpairtrgetgroup.PTCHG_CR_AVRG + tnrpairtrgetgroup.POTHOLE_CR_AVRG AS PTPO_CR   /* 보수_대상_항목_그룹.패칭/포트홀_균열양 */
                         FROM TN_RPAIR_TRGET_GROUP tnrpairtrgetgroup
                         INNER JOIN TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
                         ON tnrpairtrgetslctn.TRGET_SLCTN_NO = tnrpairtrgetgroup.TRGET_SLCTN_NO /* 보수_대상_선정.대상_선정_번호 */

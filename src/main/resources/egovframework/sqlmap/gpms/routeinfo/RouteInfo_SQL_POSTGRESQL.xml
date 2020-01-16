@@ -202,6 +202,7 @@
 <![CDATA[
 		/* routeInfoDAO.selectRouteInfoList */
 		/* 노선_대장_마스터 조회 */
+		WITH w AS (
 		SELECT * FROM (SELECT ROW_NUMBER() OVER(ORDER BY $sidx$ $sord$) RN, tb.* FROM (
             SELECT * FROM (
 			SELECT
@@ -222,11 +223,11 @@
 				, tnrouteinfo.IMPOPASS /* 노선_대장_마스터.IMPOPASS */
 				, tnrouteinfo.REM /* 노선_대장_마스터.REM */
 				, tnrouteinfo.JUN /* 노선_대장_마스터.JUN */
-				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y::numeric /* 노선_대장_마스터.도로_총_연장_중용포함 */
-				, tnrouteinfo.ROAD_TOT_LEN_JYG_N::numeric /* 노선_대장_마스터.도로_총_연장_중용비포함 */
-				, tnrouteinfo.do_manage_sctn_len /* 노선_대장_마스터.도_관리_구간_연장 */
+				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y::numeric(10,2) /* 노선_대장_마스터.도로_총_연장_중용포함 */
+				, tnrouteinfo.ROAD_TOT_LEN_JYG_N::numeric(10,2) /* 노선_대장_마스터.도로_총_연장_중용비포함 */
+				, tnrouteinfo.do_manage_sctn_len::numeric(10,2) /* 노선_대장_마스터.도_관리_구간_연장 */
 				, tnrouteinfo.ROAD_GRAD /* 노선_대장_마스터.도로등급 */
-				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y::numeric - tnrouteinfo.do_manage_sctn_len::numeric AS SIDO_SCTN_LEN /* 노선_대장_마스터.시도구간 */
+				, tnrouteinfo.ROAD_TOT_LEN_JYG_Y::numeric(10,2) - tnrouteinfo.do_manage_sctn_len::numeric(10,2) AS SIDO_SCTN_LEN /* 노선_대장_마스터.시도구간 */
 			FROM ( SELECT ROAD_NO FROM DORO_TOT_GRS80_50 GROUP BY ROAD_NO ORDER BY ROAD_NO ) doro
 			LEFT OUTER JOIN TN_ROUTE_INFO tnrouteinfo
 			ON doro.ROAD_NO = tnrouteinfo.ROAD_NO
@@ -246,6 +247,33 @@
 		]]>
 		</isEqual>
 <![CDATA[
+)
+SELECT NULL               AS RN,
+  NULL                    AS ROAD_NO,
+  NULL                    AS ROAD_NO_VAL,
+  NULL                    AS INPUT_DATE,
+  NULL                    AS ROAD_NAME,
+  NULL                    AS ROAD_TYPE,
+  NULL                    AS MCO,
+  NULL                    AS DSGDATE,
+  NULL                    AS D_DATE,
+  NULL                    AS J_DATE,
+  NULL                    AS JJ_DATE,
+  NULL                    AS ST_POINT,
+  NULL                    AS ST_PIC_FILE,
+  NULL                    AS ED_POINT,
+  NULL                    AS ED_PIC_FILE,
+  NULL                    AS IMPOPASS,
+  NULL                    AS REM,
+  NULL                    AS JUN,
+  SUM(ROAD_TOT_LEN_JYG_Y) AS ROAD_TOT_LEN_JYG_Y,
+  NULL                    AS ROAD_TOT_LEN_JYG_N,
+  SUM(do_manage_sctn_len) AS do_manage_sctn_len,
+  NULL                    AS ROAD_GRAD,
+  SUM(SIDO_SCTN_LEN)      AS SIDO_SCTN_LEN
+FROM w
+UNION ALL
+SELECT * FROM w
 ]]>
 	</select>
 

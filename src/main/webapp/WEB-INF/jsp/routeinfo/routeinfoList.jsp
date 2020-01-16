@@ -123,7 +123,7 @@ $( document ).ready(function() {
         //,postData: JSON.stringify( $("#frm").cmSerializeObject())
         ,postData: postData
         ,ignoreCase: true
-        ,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)","도</br>관리구간(km)","시도구간","위치보기"]
+        ,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)</br>(구간 전체차로수)","도</br>관리구간(km)","시도구간","위치보기"]
         ,colModel:[
             {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
             ,{name:'ROAD_NO_VAL',index:'ROAD_NO_VAL', align:'center', width:50, sortable:true}
@@ -212,7 +212,7 @@ function fn_search() {
 
                 if ( roadName == "" || roadName == undefined || roadName == null ) {
 
-                    var colData = $("#gridArea").find("#" + ids[i]);
+                    /*var colData = $("#gridArea").find("#" + ids[i]);
 
                     colData.find("td:eq(3)").attr("colspan", "6");
                     colData.find("td:eq(4)").hide();
@@ -221,7 +221,7 @@ function fn_search() {
                     colData.find("td:eq(7)").hide();
                     colData.find("td:eq(8)").hide();
 
-                    colData.find("td:eq(3)").html("속성정보가 없습니다.");
+                    colData.find("td:eq(3)").html("속성정보가 없습니다."); */
 
                 }
 
@@ -248,24 +248,27 @@ function fnUpdate(rowId) {
 function fn_create_btn(cellValue, options, rowObject) {
     var btn = "";
     var nm = options.colModel.name;
+    var index = options.rowId;
 
-    switch(nm) {
-    case "btn_down" :
-        // 클릭시 파일 다운로드
-        btn = "<a href='#' onclick=\"fn_select_dwg('" + rowObject.ROAD_NO + "')\"><img src='" + contextPath +"/images/ic_download.png' alt='다운로드' title='다운로드' /></a>";
-        break;
-    case "btn_loc" :
+    if(index != "1"){
+	    switch(nm) {
+	    case "btn_down" :
+	        // 클릭시 파일 다운로드
+	        btn = "<a href='#' onclick=\"fn_select_dwg('" + rowObject.ROAD_NO + "')\"><img src='" + contextPath +"/images/ic_download.png' alt='다운로드' title='다운로드' /></a>";
+	        break;
+	    case "btn_loc" :
 
-        //if ( directFlag != "N" ) {
+	        //if ( directFlag != "N" ) {
 
-            btn = "<a href='#' onclick=\"fn_select_route('" + rowObject.ROAD_NO + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+	            btn = "<a href='#' onclick=\"fn_select_route('" + rowObject.ROAD_NO + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
 
-        /* } else {
+	        /* } else {
 
-            btn = "<a href='#' onclick=\"fn_select_route_nDirect('" + rowObject.ROAD_NO + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
+	            btn = "<a href='#' onclick=\"fn_select_route_nDirect('" + rowObject.ROAD_NO + "');\"><img src='" + contextPath +"/images/ic_location.png' alt='위치이동' title='위치이동' /></a>";
 
-        } */
-        break;
+	        } */
+	        break;
+	    }
     }
 
     return btn;

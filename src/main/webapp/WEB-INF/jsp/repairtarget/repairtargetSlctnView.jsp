@@ -236,7 +236,7 @@ width:100% !important;
                     <a href="#" class="schbtn" onclick="javascript:fn_showChart_RepairTarget();">차트 조회</a>
 <%--                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}"><a href="#" class="graybtn"  disabled >엑셀 저장</a></c:if> --%>
 <%--                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS eq 'RTSS0010'}"><a href="#" class="schbtn"  onclick="javascript:fndownload_RepairTarget();"  >엑셀 저장</a></c:if> --%>
-                    <a href="#" class="schbtn"  onclick="javascript:fndownload_RepairTarget();"  >엑셀 저장</a>
+                    <a href="#" class="schbtn"  onclick="dofndownloadAll();"  >엑셀 저장</a>
                 </div>
                 <div class="fr">
                     <a href="#" class="schbtn" onclick="javascript:fnPriortSave();" >우선순위 저장</a>

@@ -1475,14 +1475,14 @@ FROM   (SELECT Row_number()
 		SET
 	]]>
 		<isNotEmpty property="VAR"><![CDATA[ IDX_VAL = #VAR# ]]></isNotEmpty>
-		<isNotEmpty property="UPDUSR_NO"><![CDATA[ , UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
+		<isNotEmpty property="UPDUSR_NO"><![CDATA[ , UPDUSR_NO = $UPDUSR_NO$ ]]></isNotEmpty>
         <![CDATA[
         ,UPDT_DT = NOW()
 		WHERE 1=1
     	]]>
 		<isNotEmpty property="VAR">
 		<![CDATA[
-            AND FRMULA_NO = #FRMULA_NO#
+            AND FRMULA_NO = $FRMULA_NO$
         ]]>
 	        <isNotEqual property="FRMULA_NM" compareValue="TRUE">
 	        <![CDATA[

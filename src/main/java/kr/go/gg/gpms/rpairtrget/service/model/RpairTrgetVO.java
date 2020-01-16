@@ -435,14 +435,42 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 	@XmlElement
 	private java.util.Date UPDT_DT;
 
+	/**
+	 * TN_RPAIR_TRGET.IRI_VAL_IRI_VAL_AVRG,
+	 * 보수_대상_항목.종단평탄성_값_합계
+	 */
 	@XmlElement
-	private String CR_RT_AVRG;
+	private String IRI_VAL_AVRG;
 
+	/**
+	 * TN_RPAIR_TRGET.RD_VAL_IRI_VAL_AVRG,
+	 * 보수_대상_항목.소성변형_값_합계
+	 */
 	@XmlElement
-	private String RD_VAL_SM;
+	private String RD_VAL_AVRG;
 
+	/**
+	 * TN_RPAIR_TRGET.VRHR_CR,
+	 * 보수_대상_항목.선형_균열양
+	 */
 	@XmlElement
-	private String IRI_VAL_SM;
+	private String VRHR_CR;
+
+	/**
+	 * TN_RPAIR_TRGET.TRTS_BAC_CR_AVRG,
+	 * 보수_대상_항목.면형_균열양
+	 */
+	@XmlElement
+	private String TRTS_BAC_CR_AVRG;
+
+	/**
+	 * TN_RPAIR_TRGET.PTPO_CR,
+	 * 보수_대상_항목.패칭/포트홀_균열양
+	 */
+	@XmlElement
+	private String PTPO_CR;
+
+
 
 
 
@@ -1373,32 +1401,51 @@ public class RpairTrgetVO extends RpairTrgetSlctnVO {
 		MSRC_CL_NM = mSRC_CL_NM;
 	}
 
-	@JsonProperty(value="CR_RT_AVRG")
-	public java.lang.String getCR_RT_AVRG() {
-		return CR_RT_AVRG;
+
+
+	@JsonProperty(value="IRI_VAL_AVRG")
+	public java.lang.String getIRI_VAL_AVRG() {
+		return IRI_VAL_AVRG;
 	}
 
-	public void setCR_RT_AVRG(java.lang.String cR_RT_AVRG) {
-		CR_RT_AVRG = cR_RT_AVRG;
+	public void setIRI_VAL_AVRG(java.lang.String iRI_VAL_AVRG) {
+		IRI_VAL_AVRG = iRI_VAL_AVRG;
 	}
 
-	@JsonProperty(value="RD_VAL_SM")
-	public java.lang.String getRD_VAL_SM() {
-		return RD_VAL_SM;
+	@JsonProperty(value="RD_VAL_AVRG")
+	public java.lang.String getRD_VAL_AVRG() {
+		return RD_VAL_AVRG;
 	}
 
-	public void setRD_VAL_SM(java.lang.String rD_VAL_SM) {
-		RD_VAL_SM = rD_VAL_SM;
+	public void setRD_VAL_SM(java.lang.String rD_VAL_AVRG) {
+		RD_VAL_AVRG = rD_VAL_AVRG;
 	}
 
-	@JsonProperty(value="IRI_VAL_SM")
-	public java.lang.String getIRI_VAL_SM() {
-		return IRI_VAL_SM;
+	@JsonProperty(value="VRHR_CR")
+	public java.lang.String getVRHR_CR() {
+		return VRHR_CR;
 	}
 
-	public void setIRI_VAL_SM(java.lang.String iRI_VAL_SM) {
-		IRI_VAL_SM = iRI_VAL_SM;
+	public void setVRHR_CR(java.lang.String vRHR_CR) {
+		VRHR_CR = vRHR_CR;
 	}
 
+	@JsonProperty(value="TRTS_BAC_CR_AVRG")
+	public java.lang.String getTRTS_BAC_CR_AVRG() {
+		return TRTS_BAC_CR_AVRG;
+	}
+
+	public void seTRTS_BAC_CR_AVRG(java.lang.String tRTS_BAC_CR_AVRG) {
+		TRTS_BAC_CR_AVRG = tRTS_BAC_CR_AVRG;
+	}
+
+	@JsonProperty(value="PTPO_CR")
+	public java.lang.String getPTPO_CR() {
+		return PTPO_CR;
+	}
+
+	public void setPTPO_CR(java.lang.String pTPO_CR) {
+		PTPO_CR = pTPO_CR;
+	}
 
 }
