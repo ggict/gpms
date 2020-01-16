@@ -15,9 +15,9 @@ var myChart;
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
 	$("#divStatChart").height($(parent.window).height() - 220);
-	
+
 	fnGpmsGradLenSearch();//GPMS 도로등급별 도로연장 통계 조회
-}); 
+});
 
 //창 조절시 차트 resize
 $(window).resize(function(){
@@ -67,14 +67,15 @@ require.config({
     }
 });
 function drawLenChart(dataList,rw){
-    var gDeptNm    = [];       
+    var gDeptNm    = [];
     var twoData     = [];
     var fourData      = [];
     var sixData      = [];
     var cntrwkData      = [];
     var unopnData = [];
+    var sidoData = [];
     var degree = (dataList.length > 10) ? 40 : 0;
-    
+
     for(var i=0; i<dataList.length; i++){
         gDeptNm.push(dataList[i].dept_nm);
         twoData.push(Number(dataList[i].track2_len));
@@ -82,12 +83,13 @@ function drawLenChart(dataList,rw){
         sixData.push(Number(dataList[i].track6_len));
         cntrwkData.push(Number(dataList[i].cntrwk_len));
         unopnData.push(Number(dataList[i].unopn_len));
+        sidoData.push(Number(dataList[i].sido_len));
     }
     require([   'echarts','echarts/chart/bar'   ],
             function (ec) {
         myChart = ec.init(document.getElementById('lenBarChart'));
         myChart.setOption({
-            //color: ['#003366', '#4cabce'], 
+            //color: ['#003366', '#4cabce'],
             title  : { text: '총연장(km)' },
             tooltip : { trigger: 'axis'             },
             toolbox : { show: true,
@@ -95,17 +97,17 @@ function drawLenChart(dataList,rw){
                        //dataView : {show: true, readOnly: false},     // 상세조회
                        //saveAsExcel : {show: true},                   // 엑셀저장
                        saveAsImage: {show: true}                   // 이미지저장
-                   }   
+                   }
             },
             legend: {
-                data: ['2차로', '4차로', '6차로', '공사구간', '미개통구간']
+                data: ['2차로', '4차로', '6차로', '공사구간', '미개통구간','시도구간']
             },
             grid :{
                 /* width : rw+'px',
                 x : 50, */
                 y2 : 100
             },
-            xAxis : [{  
+            xAxis : [{
                         type : 'category',
                         axisLabel : {
                             show:true,
@@ -146,14 +148,21 @@ function drawLenChart(dataList,rw){
                 },
                 {
                     name: '미개통구간',
-                    type: 'bar',    
+                    type: 'bar',
                     stack: '합계',
                     itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
                     data: unopnData
+                },
+                {
+                    name: '시도구간',
+                    type: 'bar',
+                    stack: '합계',
+                    itemStyle: { normal: {label : {show: true, position: 'insideRight'}}},
+                    data: sidoData
                 }
             ]
         });
-        
+
    });
  }
 
@@ -185,11 +194,11 @@ function drawLenChart(dataList,rw){
 	<div class="container2">
 		<div class="tab">
 				<a href="#div_grid" onclick="location.replace('<c:url value="viewDeptLenStats.do"/>');">상세보기</a>
-				<a class="on" href="#divStatChart" onclick="location.replace('<c:url value="viewDeptLenStatsChart.do"/>');">그래프보기</a>	
+				<a class="on" href="#divStatChart" onclick="location.replace('<c:url value="viewDeptLenStatsChart.do"/>');">그래프보기</a>
 		</div>
 		<div id="lenBarChart" class="cont_ConBx2" style="width: 800px; height: 500px; margin:30px 0 auto;"></div>
 
-        <!-- 
+        <!--
 		<div class="cont_ListBx">
 	        <div id="divStatChart" style="overflow-y:auto;">
 				<ul class="statsbx">
@@ -199,7 +208,7 @@ function drawLenChart(dataList,rw){
 	                    </div>
 	                </li>
 				</ul>
-			</div>	
+			</div>
 		</div>
 		 -->
 	</div>

@@ -13,13 +13,13 @@ var chkcell={cellId:undefined, chkval:undefined};
 var chkcell2={cellId:undefined, chkval:undefined};
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	
+
 	//검색조건초기화
 	parent.$("#SCH_STATS_YEAR option:eq(0)").attr("selected", "selected");
 	nYear = parent.$("#SCH_STATS_YEAR option:selected").val();
-	
+
 	var postData = {"USE_AT":"Y"};
-	
+
 	// 검색 목록 그리드 구성
 	$("#gridArea").jqGrid({
 		url: '<c:url value="/"/>'+'api/stats/selectAdmStatsPageList.do'
@@ -30,18 +30,20 @@ $( document ).ready(function() {
 		,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
 		,postData: $("#frm").cmSerializeObject()
 		,ignoreCase: true
-		,colNames:["시·군구별","도로등급","노선명","총연장(km)","계","소계","2차로","4차로","공사구간","미개통구간"]
+		,colNames:["시·군구별","도로등급","노선명","총연장(km)","계","소계","2차로","4차로","6차로","공사구간","미개통구간","시도구간"]
 	   	,colModel:[
-			{name:'adm_nm',index:'adm_nm', align:'center', width:60, sortable:false, cellattr: jsFormatterCell}
-			,{name:'road_grad',index:'road_grad', align:'center', width:60, sortable:false, cellattr: jsFormatterCell2}
-			,{name:'route_code',index:'route_code', align:'center', width:60, sortable:false}
+			{name:'adm_name',index:'adm_name', align:'center', width:60, sortable:false, cellattr: jsFormatterCell}
+			,{name:'road_grad_nm',index:'road_grad_nm', align:'center', width:60, sortable:false, cellattr: jsFormatterCell2}
+			,{name:'route_nm',index:'route_nm', align:'center', width:60, sortable:false}
 			,{name:'total_l',index:'total_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 			,{name:'sum_l',index:'sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 			,{name:'sub_sum_l',index:'sub_sum_l', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 			,{name:'track2_len',index:'track2_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 			,{name:'track4_len',index:'track4_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'track6_len',index:'track6_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 			,{name:'cntrwk_len',index:'cntrwk_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 			,{name:'unopn_len',index:'unopn_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
+			,{name:'sido_len',index:'sido_len', align:'center', width:50, sortable:false,formatter:'number',formatoptions:{decimalPlaces: 3}}
 	   	]
 		,async : false
 	   	,sortname: 'adm_nm'
@@ -77,38 +79,38 @@ $( document ).ready(function() {
 		,multiboxonly: false
 		//,scroll: true
 	}).navGrid('#gridPager',{edit:false,add:false,del:false,search:false,refresh:false});
-	
+
     $("#gridArea").jqGrid('setGroupHeaders', {
         useColSpanStyle: true,
                 groupHeaders:[
-                    {startColumnName: 'adm_nm', numberOfColumns: 3, titleText: ''},
-                    {startColumnName: 'total_l', numberOfColumns: 7, titleText: '도 관리구간(km)'}
-                ]   
+                    {startColumnName: 'adm_name', numberOfColumns: 4, titleText: ''},
+                    {startColumnName: 'sum_l', numberOfColumns: 7, titleText: '도 관리구간(km)'}
+                ]
             }).jqGrid('setGroupHeaders', {
         useColSpanStyle: true,
                 groupHeaders:[
-                    {startColumnName: 'sub_sum_l', numberOfColumns: 3, titleText: '포장구간'}
-                ]   
+                    {startColumnName: 'sub_sum_l', numberOfColumns: 4, titleText: '포장구간'}
+                ]
             })
-	
-	
+
+
 	var height = $(parent.window).height() - 280;
-	
+
 	COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
-	
+
 	fnSearch();
-	
+
 	$(window).resize(function(){
 		var height = $(parent.window).height() - 280;
-		
+
 		COMMON_UTIL.cmInitGridSize('gridArea','div_grid', height);
 	});
-	
-}); 
+
+});
 
 //검색 처리
 function fnSearch() {
-	
+
 	var postData = {"USE_AT":"Y"};
 	$("#gridArea").jqGrid("setGridParam",{
 		datatype: "json"
@@ -131,8 +133,8 @@ function fnSearch() {
                  $(this).attr('rowspan',spans);
                 }
             });
-            
-	   		
+
+
 	   		COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
 	   	}
 	}).trigger("reloadGrid");
@@ -141,19 +143,19 @@ function fnSearch() {
 
 function changRoutCol(yy){
 	nYear = yy;
-	var colModel = $("#gridArea").jqGrid('getGridParam', 'colModel'); 
+	var colModel = $("#gridArea").jqGrid('getGridParam', 'colModel');
     $("#gridArea").jqGrid('destroyGroupHeader'); //헤더 삭제(초기화 같은..)
-                
+
 	$("#gridArea").jqGrid('setGroupHeaders', {
-		useColSpanStyle: true, 
+		useColSpanStyle: true,
 		  groupHeaders:[
 			{startColumnName: 'SUM_L',
 			 numberOfColumns: 3,
 			 titleText: '<table style="width:100%;">'
 			 			 +'<tr><td id="h0" colspan="3">국토부('+ nYear +')</td></tr>'
 			 			 +'<tr><td> </td></tr></table>'}
-			,{startColumnName: 'SUM_LEN', 
-			 numberOfColumns: 4, 
+			,{startColumnName: 'SUM_LEN',
+			 numberOfColumns: 4,
 			 titleText: '<table style="width:100%;">'
 			 			 +'<tr><td id="h0" colspan="3">GPMS(당해년도)</td></tr>'
 			 			 +'<tr><td></td><td id="h1" >중용구간(m)</td><td></td><td></td></tr></table>'
@@ -171,7 +173,7 @@ function fnAdmStatsSearch(sYear){
 function jsFormatterCell(rowid, val, rowObject, cm, rdata){
 
 	var result = "";
-	    
+
    if(chkcell.chkval != val){ //check 값이랑 비교값이 다른 경우
        var cellId = this.id + '_row_'+rowid+'-'+cm.name;
        result = ' rowspan="1" id ="'+cellId+'" + name="cellRowspan"';
@@ -181,11 +183,11 @@ function jsFormatterCell(rowid, val, rowObject, cm, rdata){
    }
    return result;
 }
-	
+
 function jsFormatterCell2(rowid, val, rowObject, cm, rdata){
     var result = "";
     var concatValue = Object.entries(rdata).reduce(function(a,b) { return a+b[1]; }, '');
-        
+
    if(chkcell2.chkval != concatValue){ //check 값이랑 비교값이 다른 경우
        var cellId = this.id + '_row_'+rowid+'-'+cm.name;
        result = ' rowspan="1" id ="'+cellId+'" + name="cellRowspan2"';
@@ -229,22 +231,22 @@ function fnExcel() {
 	            </span>
 	        </div>
 	</header>
-	
+
 	<div class="container2">
-	    
+
 		<div class="tab">
 				<a class="on" href="#div_grid" onclick="location.replace('<c:url value="viewAdmLenStats.do"/>');">상세보기</a>
-				<a href="#divStatChart" onclick="location.replace('<c:url value="viewAdmLenStatsChart.do"/>');">그래프보기</a>	
+				<a href="#divStatChart" onclick="location.replace('<c:url value="viewAdmLenStatsChart.do"/>');">그래프보기</a>
 		</div>
-		<div class="btnArea_top tabR">	          	
+		<div class="btnArea_top tabR">
 				<a href="#" class="schbtn" onclick="fnExcel();">엑셀저장</a>
 		</div>
 		<div id="div_grid" >
 			<table class="adminlist" id="gridArea"></table>
 		</div>
 	</div>
-		
-		
+
+
 <%-- 	<div id="sch_cnt01" class="tabcont">
 		<h3>시군구별 도로연장 통계</h3>
 		<p class="location">

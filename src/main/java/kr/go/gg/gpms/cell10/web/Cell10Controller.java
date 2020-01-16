@@ -11,21 +11,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.cell10.service.Cell10Service;
-import kr.go.gg.gpms.cell10.service.model.Cell10VO;
-import kr.go.gg.gpms.cmmn.service.CmmnService;
-import kr.go.gg.gpms.code.service.model.CodeVO;
-import kr.go.gg.gpms.dept.service.DeptService;
-import kr.go.gg.gpms.dept.service.model.DeptVO;
-import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
-import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -53,6 +44,15 @@ import egovframework.cmmn.util.ExcelView;
 import egovframework.cmmn.util.NumberUtil;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.cell10.service.Cell10Service;
+import kr.go.gg.gpms.cell10.service.model.Cell10VO;
+import kr.go.gg.gpms.cmmn.service.CmmnService;
+import kr.go.gg.gpms.code.service.model.CodeVO;
+import kr.go.gg.gpms.dept.service.DeptService;
+import kr.go.gg.gpms.dept.service.model.DeptVO;
+import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
+import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
 
 /**
  * @Class Name : Cell10Controller.java
@@ -185,7 +185,7 @@ public class Cell10Controller extends BaseController {
 		List<Cell10VO> items = cell10Service.selectRouteInfoByCellID(cell10VO);
 		return items;
 	}
-	
+
 	/**
 	 * 통계 > 포장상태 조사구간 > 노선별/관리기관별/도로등급별 통계 테이블 목록을 조회한다.
 	 * @return "/stats/srvy/surveyAllLenStatsTable"
@@ -777,6 +777,12 @@ public class Cell10Controller extends BaseController {
          objSheet.setColumnWidth(6, objSheet.getColumnWidth(6)+4096);
          objCell.setCellStyle(styleHd1);
 
+         objCell = objRow.createCell(10);
+         objCell.setCellValue("시도구간");
+         objSheet.addMergedRegion(new Region(0,(short)10,2,(short)10));
+         objSheet.setColumnWidth(10, objSheet.getColumnWidth(10)+4096);
+         objCell.setCellStyle(styleHd1);
+
          objRow = objSheet.createRow(1);
          objCell = objRow.createCell(4);
          objCell.setCellValue("계");
@@ -812,7 +818,7 @@ public class Cell10Controller extends BaseController {
          objCell.setCellValue("2차로");
          objSheet.setColumnWidth(6, objSheet.getColumnWidth(6)+4096);
          objCell.setCellStyle(styleHd1);
-         
+
          objCell = objRow.createCell(7);
          objCell.setCellValue("4차로");
          objSheet.setColumnWidth(7, objSheet.getColumnWidth(7)+4096);
@@ -870,6 +876,10 @@ public class Cell10Controller extends BaseController {
              objCell = objRow.createCell(9);
              objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("unopn_len")));
              objCell.setCellStyle(styleHd);
+
+             objCell = objRow.createCell(10);
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sido_len")));
+             objCell.setCellStyle(styleHd);
          }
 
          resultNjrA = cell10Service.selectRoutNjrAllStatsExcelResult(cell10VO);//국지도 노선별 전체 연장
@@ -914,6 +924,10 @@ public class Cell10Controller extends BaseController {
 
              objCell = objRow.createCell(9);
              objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("unopn_len")));
+             objCell.setCellStyle(styleHd1);
+
+             objCell = objRow.createCell(10);
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sido_len")));
              objCell.setCellStyle(styleHd1);
          }
 
@@ -967,6 +981,10 @@ public class Cell10Controller extends BaseController {
              objCell = objRow.createCell(9);
              objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("unopn_len")));
              objCell.setCellStyle(styleHd);
+
+             objCell = objRow.createCell(10);
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sido_len")));
+             objCell.setCellStyle(styleHd);
          }
 
          resultJbA = cell10Service.selectRoutJbAllStatsExcelResult(cell10VO);//지방도 노선별 전체 연장
@@ -1009,6 +1027,10 @@ public class Cell10Controller extends BaseController {
 
              objCell = objRow.createCell(9);
              objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("unopn_len")));
+             objCell.setCellStyle(styleHd1);
+
+             objCell = objRow.createCell(10);
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sido_len")));
              objCell.setCellStyle(styleHd1);
          }
 
@@ -1131,6 +1153,12 @@ public class Cell10Controller extends BaseController {
          objSheet.setColumnWidth(2, objSheet.getColumnWidth(7)+4096);
          objCell.setCellStyle(styleHd1);
 
+         objCell = objRow.createCell(9);
+         objCell.setCellValue("시도구간(km)");
+         objSheet.addMergedRegion(new Region(0,(short)9,2,(short)9));
+         objSheet.setColumnWidth(9, objSheet.getColumnWidth(9)+4096);
+         objCell.setCellStyle(styleHd1);
+
          objRow = objSheet.createRow(1);
          objCell = objRow.createCell(2);
          objCell.setCellValue("계");
@@ -1166,12 +1194,12 @@ public class Cell10Controller extends BaseController {
          objCell.setCellValue("2차로");
          objSheet.setColumnWidth(4, objSheet.getColumnWidth(1)+4096);
          objCell.setCellStyle(styleHd1);
-         
+
          objCell = objRow.createCell(5);
          objCell.setCellValue("4차로");
          objSheet.setColumnWidth(5, objSheet.getColumnWidth(1)+4096);
          objCell.setCellStyle(styleHd1);
-         
+
          objCell = objRow.createCell(6);
          objCell.setCellValue("6차로");
          objSheet.setColumnWidth(6, objSheet.getColumnWidth(1)+4096);
@@ -1185,7 +1213,7 @@ public class Cell10Controller extends BaseController {
         	 tempMap = (HashMap) result.get(i);
 
         	 objRow = objSheet.createRow(iRow++);
-        	 
+
     		 objCell = objRow.createCell(0);
     		 if (i == result.size()-1) {
     			 objCell.setCellValue("경기도 건설 본부 전체");
@@ -1221,9 +1249,13 @@ public class Cell10Controller extends BaseController {
              objCell = objRow.createCell(7);
              objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("cntrwk_len")));
              objCell.setCellStyle(styleHd);
-             
+
              objCell = objRow.createCell(8);
              objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("unopn_len")));
+             objCell.setCellStyle(styleHd);
+
+             objCell = objRow.createCell(9);
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sido_len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -1261,8 +1293,10 @@ public class Cell10Controller extends BaseController {
 
 		// 행정구역(시군구)
 		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());
+		allAdmList = allAdmList.stream().filter(e->e.getCODE_VAL().matches("^\\d{1,4}0$")).collect(Collectors.toList());
+//	    allAdmList = allAdmList.stream().filter(e->e.getADM_CODE().matches("^\\d{1,4}0$")).collect(Collectors.toList());
 		model.addAttribute("admList", allAdmList);
-		
+
 		return "/stats/route/trackLenStatsChart" ;
 	}
 
@@ -1378,161 +1412,125 @@ public class Cell10Controller extends BaseController {
          objRow = objSheet.createRow(0);
          objCell = objRow.createCell(0);
          objCell.setCellValue("시군구");
-         objSheet.addMergedRegion(new Region(0,(short)0,1,(short)0));
+         objSheet.addMergedRegion(new Region(0,(short)0,2,(short)0));
          objSheet.setColumnWidth(0, objSheet.getColumnWidth(0)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(1);
-         objCell.setCellValue("도로등급");
-         objSheet.addMergedRegion(new Region(0,(short)1,1,(short)1));
-         objSheet.setColumnWidth(1, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("총연장(km)");
+         objSheet.addMergedRegion(new Region(0,(short)1,2,(short)1));
+         objSheet.setColumnWidth(1, objSheet.getColumnWidth(1)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(2);
-         objCell.setCellValue("국토부(2016)");
-         objSheet.addMergedRegion(new Region(0,(short)2,0,(short)7));
-         objSheet.setColumnWidth(2, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("도 관리구간");
+         objSheet.addMergedRegion(new Region(0,(short)2,0,(short)8));
+         objSheet.setColumnWidth(2, objSheet.getColumnWidth(2)+4096);
          objCell.setCellStyle(styleHd1);
 
-         objCell = objRow.createCell(8);
-         objCell.setCellValue("GPMS("+calendar.get(calendar.YEAR)+")");
-         objSheet.addMergedRegion(new Region(0,(short)8,0,(short)14));
-         objSheet.setColumnWidth(8, objSheet.getColumnWidth(0)+4096);
+         objCell = objRow.createCell(9);
+         objCell.setCellValue("시도구간");
+         objSheet.addMergedRegion(new Region(0,(short)9,2,(short)9));
+         objSheet.setColumnWidth(9, objSheet.getColumnWidth(9)+4096);
          objCell.setCellStyle(styleHd1);
 
          objRow = objSheet.createRow(1);
          objCell = objRow.createCell(2);
-         objCell.setCellValue("총연장(m)");
-         objSheet.setColumnWidth(2, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("계");
+         objSheet.addMergedRegion(new Region(1,(short)2,2,(short)2));
+         objSheet.setColumnWidth(2, objSheet.getColumnWidth(2)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(3);
-         objCell.setCellValue("2차로");
-         objSheet.setColumnWidth(3, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(4);
-         objCell.setCellValue("4차로");
-         objSheet.setColumnWidth(4, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(5);
-         objCell.setCellValue("6차로");
-         objSheet.setColumnWidth(5, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(6);
-         objCell.setCellValue("8차로");
-         objSheet.setColumnWidth(6, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("포장구간");
+         objSheet.addMergedRegion(new Region(1,(short)3,1,(short)6));
+         objSheet.setColumnWidth(2, objSheet.getColumnWidth(3)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(7);
-         objCell.setCellValue("10차로");
-         objSheet.setColumnWidth(7, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("공사구간");
+         objSheet.addMergedRegion(new Region(1,(short)7,2,(short)7));
+         objSheet.setColumnWidth(7, objSheet.getColumnWidth(7)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(8);
-         objCell.setCellValue("총연장(m)");
-         objSheet.setColumnWidth(8, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("미개통구간");
+         objSheet.addMergedRegion(new Region(1,(short)8,2,(short)8));
+         objSheet.setColumnWidth(8, objSheet.getColumnWidth(8)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objRow = objSheet.createRow(2);
+         objCell = objRow.createCell(3);
+         objCell.setCellValue("소계");
+         objSheet.setColumnWidth(3, objSheet.getColumnWidth(3)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objCell = objRow.createCell(4);
+         objCell.setCellValue("2차로");
+         objSheet.setColumnWidth(4, objSheet.getColumnWidth(4)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objCell = objRow.createCell(5);
+         objCell.setCellValue("4차로");
+         objSheet.setColumnWidth(5, objSheet.getColumnWidth(5)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objCell = objRow.createCell(6);
+         objCell.setCellValue("6차로");
+         objSheet.setColumnWidth(6, objSheet.getColumnWidth(6)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(9);
-         objCell.setCellValue("2차로");
-         objSheet.setColumnWidth(9, objSheet.getColumnWidth(0)+4096);
+         objCell.setCellValue("시도구간");
+         objSheet.setColumnWidth(9, objSheet.getColumnWidth(9)+4096);
          objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(10);
-         objCell.setCellValue("4차로");
-         objSheet.setColumnWidth(10, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(11);
-         objCell.setCellValue("6차로");
-         objSheet.setColumnWidth(11, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(12);
-         objCell.setCellValue("8차로");
-         objSheet.setColumnWidth(12, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(13);
-         objCell.setCellValue("10차로");
-         objSheet.setColumnWidth(13, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(14);
-         objCell.setCellValue("중용구간(m)");
-         objSheet.setColumnWidth(14, objSheet.getColumnWidth(0)+4096);
-         objCell.setCellStyle(styleHd1);
-
 
          result = cell10Service.selectTrakStatsPageListExcel(cell10VO);//차로별 연장 목록
 
-         int iRow = 2;
+         int iRow = 3;
 
          for(int i=0; i<result.size(); i++){
         	 tempMap = (HashMap) result.get(i);
 
         	 objRow = objSheet.createRow(iRow++);
     		 objCell = objRow.createCell(0);
-			 objCell.setCellValue(tempMap.get("adm_nm").toString());
+			 objCell.setCellValue(tempMap.get("adm_name").toString());
     		 objCell.setCellStyle(styleHd);
 
-             objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("road_grad").toString());
-             objCell.setCellStyle(styleHd);
+    		 objCell = objRow.createCell(1);
+    		 objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("total_l")));
+    		 objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(2);
              objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(3);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track2_l")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sub_sum_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(4);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track4_l")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track2_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(5);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track6_l")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track4_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(6);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track8_l")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track6_l")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(7);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track10_l")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("cntrwk_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(8);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sum_len")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("unopn_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(9);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track2")));
-             objCell.setCellStyle(styleHd);
-
-             objCell = objRow.createCell(10);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track4")));
-             objCell.setCellStyle(styleHd);
-
-             objCell = objRow.createCell(11);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track6")));
-             objCell.setCellStyle(styleHd);
-
-             objCell = objRow.createCell(12);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track8")));
-             objCell.setCellStyle(styleHd);
-
-             objCell = objRow.createCell(13);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track10")));
-             objCell.setCellStyle(styleHd);
-
-             objCell = objRow.createCell(14);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("jr_len")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sido_len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -1565,9 +1563,10 @@ public class Cell10Controller extends BaseController {
 	 */
 	@RequestMapping(value = { "/stats/viewAdmLenStatsChart.do" })
 	public String viewAdmLenStatsChart(Cell10VO cell10VO, ModelMap model,HttpServletRequest request) throws Exception {
-		
+
 		// 행정구역(시군구)
 		List<CodeVO> allAdmList = cmmnService.selectAllAdmCodeList(new CodeVO());
+		allAdmList = allAdmList.stream().filter(e->e.getCODE_VAL().matches("^\\d{1,4}0$")).collect(Collectors.toList());
 		model.addAttribute("admList", allAdmList);
 
 		return "/stats/route/admLenStatsChart";
@@ -1595,7 +1594,7 @@ public class Cell10Controller extends BaseController {
 
 		return map;
 	}
-	
+
 	/**
 	 * 통계 > 노선현황 > 시군구별 통계 - 차트를 조회한다.
 	 * @return "/stats/route/selectAdmStats"
@@ -1686,6 +1685,7 @@ public class Cell10Controller extends BaseController {
 	@RequestMapping(value = { "/stats/selectAdmStatsPageListExcel.do" })
 	public void selectAdmStatsPageListExcel(Cell10VO cell10VO, ModelMap model,HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+	    try {
 		 //***************************** 데이터값 호출을 위한 기본 셋팅
 	   	 HashMap<String,Object> paraMap = new HashMap<String,Object>();
     	 HashMap<String,Object> resultMap = new HashMap<String,Object>();
@@ -1749,8 +1749,14 @@ public class Cell10Controller extends BaseController {
 
          objCell = objRow.createCell(4);
          objCell.setCellValue("도 관리구간(km)");
-         objSheet.addMergedRegion(new Region(0,(short)4,0,(short)9));
-         objSheet.setColumnWidth(6, objSheet.getColumnWidth(6)+4096);
+         objSheet.addMergedRegion(new Region(0,(short)4,0,(short)10));
+//         objSheet.setColumnWidth(7, objSheet.getColumnWidth(7)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objCell = objRow.createCell(11);
+         objCell.setCellValue("시도구간(km)");
+         objSheet.addMergedRegion(new Region(0,(short)11,2,(short)11));
+         objSheet.setColumnWidth(11, objSheet.getColumnWidth(11)+4096);
          objCell.setCellStyle(styleHd1);
 
          objRow = objSheet.createRow(1);
@@ -1762,20 +1768,20 @@ public class Cell10Controller extends BaseController {
 
          objCell = objRow.createCell(5);
          objCell.setCellValue("포장구간");
-         objSheet.addMergedRegion(new Region(1,(short)5,1,(short)7));
-         objSheet.setColumnWidth(5, objSheet.getColumnWidth(5)+4096);
-         objCell.setCellStyle(styleHd1);
-
-         objCell = objRow.createCell(8);
-         objCell.setCellValue("공사구간");
-         objSheet.addMergedRegion(new Region(1,(short)8,2,(short)8));
-         objSheet.setColumnWidth(8, objSheet.getColumnWidth(8)+4096);
+         objSheet.addMergedRegion(new Region(1,(short)5,1,(short)8));
+//         objSheet.setColumnWidth(6, objSheet.getColumnWidth(6)+4096);
          objCell.setCellStyle(styleHd1);
 
          objCell = objRow.createCell(9);
-         objCell.setCellValue("미개통구간");
+         objCell.setCellValue("공사구간");
          objSheet.addMergedRegion(new Region(1,(short)9,2,(short)9));
          objSheet.setColumnWidth(9, objSheet.getColumnWidth(9)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objCell = objRow.createCell(10);
+         objCell.setCellValue("미개통구간");
+         objSheet.addMergedRegion(new Region(1,(short)10,2,(short)10));
+         objSheet.setColumnWidth(10, objSheet.getColumnWidth(10)+4096);
          objCell.setCellStyle(styleHd1);
 
          objRow = objSheet.createRow(2);
@@ -1788,10 +1794,15 @@ public class Cell10Controller extends BaseController {
          objCell.setCellValue("2차로");
          objSheet.setColumnWidth(6, objSheet.getColumnWidth(6)+4096);
          objCell.setCellStyle(styleHd1);
-         
+
          objCell = objRow.createCell(7);
          objCell.setCellValue("4차로");
          objSheet.setColumnWidth(7, objSheet.getColumnWidth(7)+4096);
+         objCell.setCellStyle(styleHd1);
+
+         objCell = objRow.createCell(8);
+         objCell.setCellValue("6차로");
+         objSheet.setColumnWidth(8, objSheet.getColumnWidth(8)+4096);
          objCell.setCellStyle(styleHd1);
 
          result = cell10Service.selectAdmStatsPageListExcel(cell10VO);//시군구별 연장 목록
@@ -1803,15 +1814,15 @@ public class Cell10Controller extends BaseController {
 
         	 objRow = objSheet.createRow(iRow++);
              objCell = objRow.createCell(0);
-             objCell.setCellValue(tempMap.get("adm_nm").toString());
+             objCell.setCellValue(tempMap.get("adm_name").toString());
              objCell.setCellStyle(styleHd);
-             
+
              objCell = objRow.createCell(1);
-             objCell.setCellValue(tempMap.get("road_grad").toString());
+             objCell.setCellValue((String)tempMap.get("road_grad_nm"));
              objCell.setCellStyle(styleHd);
-             
+
              objCell = objRow.createCell(2);
-             objCell.setCellValue(tempMap.get("route_code").toString());
+             objCell.setCellValue((String)tempMap.get("route_nm"));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(3);
@@ -1835,11 +1846,19 @@ public class Cell10Controller extends BaseController {
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(8);
-             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("cntrwk_len")));
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("track6_len")));
              objCell.setCellStyle(styleHd);
 
              objCell = objRow.createCell(9);
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("cntrwk_len")));
+             objCell.setCellStyle(styleHd);
+
+             objCell = objRow.createCell(10);
              objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("unopn_len")));
+             objCell.setCellStyle(styleHd);
+
+             objCell = objRow.createCell(11);
+             objCell.setCellValue(NumberUtil.stripTrailingZeros(tempMap.get("sido_len")));
              objCell.setCellStyle(styleHd);
          }
 
@@ -1852,6 +1871,9 @@ public class Cell10Controller extends BaseController {
 
          response.getOutputStream().flush();
          response.getOutputStream().close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 
 	/**
@@ -1942,8 +1964,8 @@ public class Cell10Controller extends BaseController {
 
         return map;
     }
-	
-	
+
+
 	/**
 	 * 통계 > 노선현황 > 노선별 통계 목록을 조회한다.
 	 * @return "/stats/route/selectRoutStatsPageList"
