@@ -611,8 +611,6 @@
 			FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
 		   WHERE 1=1
 			 AND SRVY_NO = #SRVY_NO#::int
-		   	 AND USE_AT = 'Y'
-		   	 AND DELETE_AT = 'N'
              ORDER BY STRTPT
 		) tb) resultlist  WHERE 1=1
 ]]>
@@ -631,8 +629,6 @@
 			FROM TN_MUMM_SCTN_SRVY_DTA
 		   WHERE 1=1
 		   	 AND SRVY_NO = #SRVY_NO#::int
-		   	 AND USE_AT = 'Y'
-		   	 AND DELETE_AT = 'N'
 ]]>
 	</select>
 
