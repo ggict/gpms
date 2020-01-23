@@ -123,7 +123,7 @@ $( document ).ready(function() {
         //,postData: JSON.stringify( $("#frm").cmSerializeObject())
         ,postData: postData
         ,ignoreCase: true
-        ,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)</br>(구간 전체차로수)","도</br>관리구간(km)","시도구간","위치보기"]
+        ,colNames:["ROAD_NO","노선 번호","노선 명","시점 명","종점 명","총연장(km)","도</br>관리구간(km)","시도구간","위치보기"]
         ,colModel:[
             {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
             ,{name:'ROAD_NO_VAL',index:'ROAD_NO_VAL', align:'center', width:50, sortable:true}

@@ -298,7 +298,8 @@ GGetFeature = OpenLayers.Class(OpenLayers.Control, {
 					values : [geometry],
 					sortFields : this.sortFields,
 					sortOrders : this.sortOrders,
-					useDomain : this.useDomain
+					useDomain : this.useDomain,
+					geoColumn: this.geoColumn || 'geom'
 				},
 				function(res) {
 					control.result = res;

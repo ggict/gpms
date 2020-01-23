@@ -120,7 +120,7 @@ $( document ).ready(function() {
         //,postData: JSON.stringify( $("#frm").cmSerializeObject())
         ,postData: postData
         ,ignoreCase: true
-        ,colNames:["ROAD_NO","SRVY_YEAR","노선 번호","노선 명","시점 명","종점 명",/* "총연장(km)", */"도관리구간연장(km)","조사구간(km)","조사비율","조사위치보기","미조사구간위치보기"]
+        ,colNames:["ROAD_NO","SRVY_YEAR","노선 번호","노선 명","시점 명","종점 명",/* "총연장(km)", */"도관리구간연장(km)<br>(구간 전체차로수)","조사구간(km)","조사비율","조사위치보기","미조사구간위치보기"]
         ,colModel:[
             {name:'ROAD_NO',index:'ROAD_NO', hidden: true}
             ,{name:'SRVY_YEAR',index:'SRVY_YEAR', hidden: true}

@@ -1,5 +1,5 @@
 MAP.CONTROL = (function($, undefined) {
-	
+
 	//속성 컨트롤 Tool
     var attrControls = null;
 
@@ -43,7 +43,7 @@ MAP.CONTROL = (function($, undefined) {
         $("#mCtrlLocSearch").bind("click", function() {
             COMMON_UTIL.cmWindowOpen('위치 통합검색(키워드검색)', contextPath + 'gmap/selectLocation.do', 322, 100, false, null, 'locsearch');
         });
-        
+
         // 경위도 위치 이동
         $("#mCtrlLonLatMove").bind("click", function() {
             COMMON_UTIL.cmWindowOpen('경위도 좌표 이동', contextPath + 'selectLonLatMoveView.do', 590, 100, false, null, 'mvLonlan');
@@ -218,7 +218,7 @@ MAP.CONTROL = (function($, undefined) {
         $(".mt2Btn").bind("click", function() {
             $(".mtBtn").parent("li").removeClass("active");
             $("#mCtrlPan").parent("li").addClass("active");
-            
+
             var wndpop = $.window.getAll();
             var len = wndpop.length;
             for (var i = len - 1; i >= 0; i--) {
@@ -232,7 +232,7 @@ MAP.CONTROL = (function($, undefined) {
             				bottomClose();
             			}
             			wndpop[i].close();
-            			
+
             			//right-tool 팝업창이 보여지고 있는 상태이면 이벤트 활성화에 문제가 발생하여 조치
             			var id = $(this).attr("id");
             			if(id == 'researchInfo'){
@@ -281,7 +281,7 @@ MAP.CONTROL = (function($, undefined) {
             }
             $("#dv_multiSelectPoly").find("li").removeClass("sel");
         });
-        
+
         /*
         //노선입력 Open
         $("#btn_cellSelectWithInput").on("click", function(e) {
@@ -978,7 +978,7 @@ MAP.CONTROL = (function($, undefined) {
     }
 
 
-    //포장셀 컨트롤 
+    //포장셀 컨트롤
     var init_cellSel = function() {
         //181123 wijy 다중컨트롤 활성화를 위해 handler변경
         var selControls = {
@@ -1234,7 +1234,7 @@ MAP.CONTROL = (function($, undefined) {
             alert(err);
         }
     };
-    
+
     //선택된 셀 중 교차로 여부를 체크한다.
     var check_intersection = function(_oResList) {
         var routeCodeList = [];
@@ -1342,7 +1342,7 @@ MAP.CONTROL = (function($, undefined) {
 
 
     /*============ YYK 20180219 ============*/
-    
+
     //section marker를 vector layer에 등록한다.
     var add_sttemnt_feature = function(_oFeature, _oEvt) {
 
@@ -1397,7 +1397,7 @@ MAP.CONTROL = (function($, undefined) {
 
 
     /*============ YYK. 2018.02.27 ============*/
-    
+
     //section Feature를 vector layer에 등록한다.
     var add_dmgt_feature = function(_oFeature, _oEvt) {
 
@@ -1983,7 +1983,53 @@ MAP.CONTROL = (function($, undefined) {
             // 속성 조회 컨트롤 추가
             gMap.addControl(selPthEditControls[i]);
         }
+
+        // 도로대장(점) 선택팝업
+        var selStaTotPopControls = {
+            point: new GGetFeature(GPoint, {
+                persist: true,
+                serviceUrl: CONFIG.fn_get_wfsServiceUrl(),
+                prefix: CONFIG.fn_get_dataHouseName(),
+                tables: ["STA_TOT_GRS80_50"],
+                excepts: ["boundedby", "objectid", "shape_area", "shape_len"],
+                id: "selStaTotPopEdit",
+                geoColumn: 'the_geom',
+                distance: 10
+            })
+        };
+
+        for (var i in selStaTotPopControls) {
+        	selStaTotPopControls[i].events.on({
+                "callback": event_selFeatureStatotpopup,
+                "mousemove": function() {}
+            });
+            // 속성 조회 컨트롤 추가
+            gMap.addControl(selStaTotPopControls[i]);
+        }
     };
+
+    var event_selFeatureStatotpopup = function(res) {
+    	if ($("#STA_TOT_GRS80_50").parent().hasClass("on")) {
+    		var zoom = parent.gMap.getZoom();
+            if (zoom < 2) {
+                alert('지도를 확대 해주십시오.');
+                $("#dvMapLoading").hide();
+                gMap.activeControls("drag");
+                return;
+            }
+
+    		if (res.data.length == 1) {
+    			$("#dvMapLoading").hide();
+        		gMap.activeControls("drag");
+        		COMMON_UTIL.cmWindowOpen('도로대장(점)', contextPath + 'cellsect/selectStaTotPop.do', 623, 270, false, null, 'updCell');
+            } else {
+            	$("#dvMapLoading").hide();
+            	gMap.activeControls("drag");
+            	alert('현재 검색된 도로대장(점)이 없습니다.');
+            	return;
+            }
+        }
+    }
 
     //신고정보 공간검색 컨트롤 event
     var event_selFeatureSttemnt = function(res) {
@@ -2279,7 +2325,7 @@ MAP.CONTROL = (function($, undefined) {
             gMap.cleanMap();
             var idx = $(this).find("td:eq(0)").text();
             var feats = get_multiCellFeat(idx);
-            
+
             for (var i = 0; i < feats.length; i++) {
                 add_feature_multi(feats[i]);
                 option.callback = "fnCheckFeatures";
@@ -2411,7 +2457,7 @@ MAP.CONTROL = (function($, undefined) {
 
             if (oTempLyr.features.length == 0) { //처음 클릭인 경우
                 oTempLyr.addFeatures(oData.feature);
-                
+
             } else if (oTempLyr.features.length > 0) {//두번째 클릭인 경우
                 //기존 데이터의 노선, 방향, 차로값 검색
                 var o1stData = oTempLyr.features[0];
@@ -2420,7 +2466,7 @@ MAP.CONTROL = (function($, undefined) {
                 //동일값이 선택된 경우
                 if (o1stAttr.ROUTE_CODE == oAttr.ROUTE_CODE && o1stAttr.DIRECT_CODE == oAttr.DIRECT_CODE && o1stAttr.TRACK == oAttr.TRACK) {
                     oTempLyr.addFeatures(oData.feature);
-                //노선, 방향, 차로가 다름    
+                //노선, 방향, 차로가 다름
                 } else {
                     alert("처음 선택한 노선과 노선, 방향, 차로 정보가 다릅니다.\r\n노선선택은 동일노선, 동일방향, 동일차로만 선택 가능합니다.\r\n기존에 선택된 노선 : [" +
                         o1stAttr.ROUTE_CODE + "] " + (o1stAttr.DIRECT_CODE == "S" ? "상행" : "하행") + " " + o1stAttr.TRACK + "차로");
@@ -3301,7 +3347,7 @@ MAP.CONTROL = (function($, undefined) {
         event_selFeature: event_selFeature,
         add_feature: add_feature,
         remove_feature: remove_feature,
-        
+
         check_intersection: check_intersection,
         check_routeInfo: check_routeInfo,
         check_routeInfo_new: check_routeInfo_new,

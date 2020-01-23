@@ -39,7 +39,7 @@ import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
  * @since 2017-07-13
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 
@@ -48,13 +48,13 @@ public class CellSectController extends BaseController {
 
 	@Resource(name = "cellSectService")
 	private CellSectService cellSectService;
-	
+
 	@Resource(name = "cell10Service")
 	private Cell10Service cell10Service;
 
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService egovPropertyService;
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(CellSectController.class);
 
 	/**
@@ -65,10 +65,10 @@ public class CellSectController extends BaseController {
 	 */
 	@RequestMapping(value = { "/cellsect/selectCellSectUpdate.do" })
 	public String selectCellSectUpdate(@ModelAttribute("searchVO") CellSectVO cellSectVO,  ModelMap model) throws Exception {
-		
+
 		return "/cellsect/cellSectUpdate" ;
 	}
-	
+
 	/**
 	 * CELL_SECT(CELL_SECT) 목록을 조회한다. (pageing)
 	 * @param cellSectVO - 조회할 정보가 담긴 cellSectVO
@@ -108,7 +108,7 @@ public class CellSectController extends BaseController {
 
 		return map;
 	}
-	
+
 	/**
 	 * CELL_SECT(CELL_SECT) 섹션구분을 수정한다.
 	 * @param cellSectVO - 조회할 정보가 담긴 cellSectVO
@@ -125,5 +125,17 @@ public class CellSectController extends BaseController {
 		cellSectVO.setResultMSG("정상 수정되었습니다.");
 		return cellSectVO;
 	}
-	
+
+	/**
+	 * 도로대장(점) 목록을 조회한다.
+	 * @param
+	 * @return "/cellsect/staTotPop"
+	 * @exception Exception
+	 */
+	@RequestMapping(value = { "/cellsect/selectStaTotPop.do" })
+	public String selectStaTotPop(@ModelAttribute("searchVO") CellSectVO cellSectVO,  ModelMap model) throws Exception {
+
+		return "/cellsect/staTotPop" ;
+	}
+
 }

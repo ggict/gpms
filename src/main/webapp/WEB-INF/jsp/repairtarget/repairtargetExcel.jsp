@@ -182,14 +182,15 @@
    <Column ss:StyleID="s62" ss:Width="135"/>
    <Column ss:StyleID="s62" ss:Width="57.75"/>
    <Column ss:StyleID="s62" ss:Width="81.75"/>
+   <<!-- Column ss:StyleID="s62" ss:Width="135"/> -->
    <Column ss:StyleID="s62" ss:Width="135"/>
-   <Column ss:StyleID="s62" ss:Width="90.75"/>
-   <Column ss:StyleID="s62" ss:Width="90.75"/>
-   <Column ss:StyleID="s62" ss:Width="90.75"/>
-   <Column ss:StyleID="s62" ss:Width="90.75"/>
-   <Column ss:StyleID="s62" ss:Width="90.75"/>
+   <Column ss:StyleID="s62" ss:Width="135"/>
+   <Column ss:StyleID="s62" ss:Width="100"/>
+   <Column ss:StyleID="s62" ss:Width="100"/>
+   <Column ss:StyleID="s62" ss:Width="100"/>
+   <Column ss:StyleID="s62" ss:Width="135"/>
    <Column ss:StyleID="s62" ss:Width="53.25"/>
-   <Column ss:StyleID="s62" ss:Width="53.25"/>
+   <!-- <Column ss:StyleID="s62" ss:Width="53.25"/> -->
    <Row ss:AutoFitHeight="0" ss:StyleID="s64">
     <Cell><Data ss:Type="String">순번</Data></Cell>
     <Cell><Data ss:Type="String">관리기관</Data></Cell>
@@ -209,16 +210,16 @@
     <Cell><Data ss:Type="String">보수공법</Data></Cell>
     <Cell><Data ss:Type="String">단가(원/㎡)</Data></Cell>
     <Cell><Data ss:Type="String">금액산정 (원)</Data></Cell>
-    <Cell><Data ss:Type="String">예산금액산정 (원)</Data></Cell>
-    <Cell><Data ss:Type="String">종단평탄성 값 평균</Data></Cell>
-    <Cell><Data ss:Type="String">소성변형 값 평균</Data></Cell>
-    <Cell><Data ss:Type="String">선형 균열양</Data></Cell>
-    <Cell><Data ss:Type="String">면형 균열양</Data></Cell>
-    <Cell><Data ss:Type="String">패칭/포트홀 균열양</Data></Cell>
+    <!-- <Cell><Data ss:Type="String">예산금액산정 (원)</Data></Cell> -->
+    <Cell><Data ss:Type="String">종단평탄성 값 평균(m/km)</Data></Cell>
+    <Cell><Data ss:Type="String">소성변형 값 평균(mm/M)</Data></Cell>
+    <Cell><Data ss:Type="String">선형 균열양(m)</Data></Cell>
+    <Cell><Data ss:Type="String">면형 균열양(㎡)</Data></Cell>
+    <Cell><Data ss:Type="String">패칭/포트홀 균열양(㎡)</Data></Cell>
     <Cell><Data ss:Type="String">GPCI</Data></Cell>
-    <Cell><Data ss:Type="String">DMG_VAL</Data></Cell>
+    <!-- <Cell><Data ss:Type="String">DMG_VAL</Data></Cell> -->
    </Row>
-   <Row ss:AutoFitHeight="0" ss:StyleID="s64">
+   <!-- <Row ss:AutoFitHeight="0" ss:StyleID="s64">
     <Cell><Data ss:Type="String">RN</Data></Cell>
     <Cell><Data ss:Type="String">DEPT_NM</Data></Cell>
     <Cell><Data ss:Type="String">ROAD_GRAD_NM</Data></Cell>
@@ -245,7 +246,7 @@
     <Cell><Data ss:Type="String">PTPO_CR</Data></Cell>
     <Cell><Data ss:Type="String">CALC_GPCI</Data></Cell>
     <Cell><Data ss:Type="String">DMG_VAL</Data></Cell>
-   </Row>
+   </Row> -->
 <c:forEach items="${rpairTrgetItems}" var="item" varStatus="i">
 <Row>
 <c:if test="${item.SLCTN_AT=='Y'}"><!-- inbuget -->
@@ -267,14 +268,14 @@
 <Cell ss:StyleID="s109"><Data ss:Type="String">${item.MSRC_CL_NM}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.RPAIR_FEE}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.AMOUNT_CALC}" type="number"/></Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.BUDGET_ASIGN}" type="number"/></Data></Cell>
+<%-- <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.BUDGET_ASIGN}" type="number"/></Data></Cell> --%>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.IRI_VAL_AVRG}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.RD_VAL_AVRG}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.VRHR_CR}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.TRTS_BAC_CR_AVRG}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.PTPO_CR}</Data></Cell>
 <Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.CALC_GPCI}" type="number"/></Data></Cell>
-<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.DMG_VAL}" type="number"/></Data></Cell>
+<%-- <Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.DMG_VAL}" type="number"/></Data></Cell> --%>
 </c:if>
 <c:if test="${item.SLCTN_AT=='N'}"><!-- overbuget -->
 <Cell ss:StyleID="s113"><Data ss:Type="Number">${item.RN}</Data></Cell>
@@ -295,14 +296,14 @@
 <Cell ss:StyleID="s114"><Data ss:Type="String">${item.MSRC_CL_NM}</Data></Cell>
 <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.RPAIR_FEE}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.AMOUNT_CALC}" type="number"/></Data></Cell>
-<Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.BUDGET_ASIGN}" type="number"/></Data></Cell>
+<%-- <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.BUDGET_ASIGN}" type="number"/></Data></Cell> --%>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.IRI_VAL_AVRG}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.RD_VAL_AVRG}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.VRHR_CR}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.TRTS_BAC_CR_AVRG}</Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="String">${item.PTPO_CR}</Data></Cell>
 <Cell ss:StyleID="s113"><Data ss:Type="Number"><fmt:formatNumber value="${item.CALC_GPCI}" type="number"/></Data></Cell>
-<Cell ss:StyleID="s113"><Data ss:Type="Number"><fmt:formatNumber value="${item.DMG_VAL}" type="number"/></Data></Cell>
+<%-- <Cell ss:StyleID="s113"><Data ss:Type="Number"><fmt:formatNumber value="${item.DMG_VAL}" type="number"/></Data></Cell> --%>
 </c:if>
    </Row>
 </c:forEach>
@@ -325,14 +326,14 @@
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${total_amount}" type="number"/></Data></Cell>
-    <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${total_fix_budget_asign}" type="number"/></Data></Cell>
+    <%-- <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${total_fix_budget_asign}" type="number"/></Data></Cell> --%>
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s114"/>
-    <Cell ss:StyleID="s114"/>
+    <!-- <Cell ss:StyleID="s114"/> -->
    </Row>
   </Table>
   <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">

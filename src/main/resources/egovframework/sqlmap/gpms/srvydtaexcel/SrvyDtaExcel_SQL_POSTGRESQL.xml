@@ -1074,8 +1074,7 @@
 		SELECT  tb.*
 		FROM (
             SELECT
-				tnsmdtagnlsttus.SRVY_NO /* 최소_구간_조사_자료.조사번호 */
-				, concat(tnsmdtagnlsttus.SRVY_YEAR, '.', tnsmdtagnlsttus.SRVY_MT) AS		SRVY_DE /* 최소_구간_조사_자료.조사월 */
+				concat(tnsmdtagnlsttus.SRVY_YEAR, '.', tnsmdtagnlsttus.SRVY_MT) AS		SRVY_DE /* 최소_구간_조사_자료.조사월 */
 				, ( SELECT tcdept.LOWEST_DEPT_NM
 	                FROM TC_DEPT tcdept
 	                WHERE tcdept.DEPT_CODE = sect.DEPT_CODE::text ) AS DEPT_CODE /* 셀.부서코드 */
@@ -1120,9 +1119,14 @@
 						ELSE ''
 	               END AS DIRECT_CODE /* 최소_구간_조사_자료.행선 */
 				, tnsmdtagnlsttus.TRACK /* 최소_구간_조사_자료.차로 */
-				, tnsmdtagnlsttus.STRTPT/1000 AS STRTPT /* 최소_구간_조사_자료.시점 */
-				, tnsmdtagnlsttus.ENDPT/1000 AS ENDPT/* 최소_구간_조사_자료.종점 */
+				, ROUND(tnsmdtagnlsttus.STRTPT/1000,1) AS STRTPT /* 최소_구간_조사_자료.시점 */
+				, ROUND(tnsmdtagnlsttus.ENDPT/1000,1) AS ENDPT/* 최소_구간_조사_자료.종점 */
 				, ROUND(tnsmdtagnlsttus.GPCI, 2) AS GPCI /* 최소_구간_조사_자료.GPCI */
+			    , tnsmdtagnlsttus.IRI_VAL   /* 보수_대상_항목_그룹.종단평탄성_값_합계 */
+			    , tnsmdtagnlsttus.RD_VAL   /* 보수_대상_항목_그룹.소성변형_값_합계 */
+			    , tnsmdtagnlsttus.VRTCAL_CR + tnsmdtagnlsttus.HRZNTAL_CR AS VRHR_CR   /* 보수_대상_항목_그룹.선형_균열양*/
+			    , tnsmdtagnlsttus.TRTS_BAC_CR   /* 보수_대상_항목_그룹.면형_균열양 */
+			    , tnsmdtagnlsttus.PTCHG_CR + tnsmdtagnlsttus.POTHOLE_CR AS PTPO_CR   /* 보수_대상_항목_그룹.패칭_포트홀_균열양 */
             FROM TN_SM_DTA_GNL_STTUS tnsmdtagnlsttus
 				INNER JOIN CELL_SECT sect ON sect.ROUTE_CODE = tnsmdtagnlsttus.ROUTE_CODE
 				AND sect.DIRECT_CODE = tnsmdtagnlsttus.DIRECT_CODE

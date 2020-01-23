@@ -336,11 +336,12 @@ var layersMngObj = {
 	,template : function() {
 		var template = ''
 				+ '<li class="{class}">'
-				+ '<a href="#"><p data-layer="{layernm}">{title}</p></a>'
+				+ '<a href="#"><p data-layer="{layernm}" id="{layernm}">{title}</p></a>'
 				+ '</li>';
 		return template;
 	}
 	,clickevt: function(){
+
 		var fnCall = function(){
 			var obj = $(this);
 			var layernm = obj.find('p').attr('data-layer');
@@ -359,6 +360,9 @@ var layersMngObj = {
 				if(layers.indexOf(layernm) == -1){
 					layers.push(layernm);
 				}
+				if(layernm == 'STA_TOT_GRS80_50'){
+					fn_staTotSelect();
+				}
 			}
 
 			if(layers.length == 0) baseLayer.setVisibility(false);
@@ -374,6 +378,23 @@ var layersMngObj = {
 };
 layersMngObj.init();
 
+function fn_staTotSelect(){
+
+    gMap.getLayerByName('GPthEditLayer').removeAllFeatures();
+    gMap.getLayerByName('GOverlapLayer').removeAllFeatures();
+
+    option = {};
+    option = {
+                iframe : window,
+                callback : "fnCheckFeatures",
+                clearMap : false
+    };
+    MAP.CONTROL.set_option(option);
+
+    $("#STA_TOT_GRS80_50").parent().addClass("on");
+
+    gMap.activeControls("selStaTotPopEdit");
+}
 
 </script>
 </html>
