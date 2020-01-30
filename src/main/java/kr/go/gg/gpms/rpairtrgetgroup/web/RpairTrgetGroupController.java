@@ -1,5 +1,6 @@
 package kr.go.gg.gpms.rpairtrgetgroup.web;
 
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -889,7 +890,7 @@ public class RpairTrgetGroupController  extends BaseController {
 	 */
 	@RequestMapping(value = "/rpairtrgetgroup/rpairRoutLenStats.do")
 	public String viewRpairRoutLenStats(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
-		
+
 		// 선정년도 (2017 ~ 현재연도)
 		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
 
@@ -942,7 +943,7 @@ public class RpairTrgetGroupController  extends BaseController {
 	 */
 	@RequestMapping(value = "/rpairtrgetgroup/rpairDeptLenStats.do")
 	public String rpairDeptLenStats(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
-		
+
 		// 선정년도 (2017 ~ 현재연도)
 		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
 
@@ -989,5 +990,25 @@ public class RpairTrgetGroupController  extends BaseController {
 
 		return new ExcelView();
 	}
+
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 공용성 예측 모델 목록을 조회한다.
+     * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+     * @param model
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = { "/api/rpairtrgetgroup/selectRpairTrgetPredctStatistics.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody Map<String, Object> selectRpairTrgetPredctStatistics(@RequestBody RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model, HttpSession session) throws Exception {
+        rpairTrgetGroupVO.setUsePage(false);
+
+        Map<String, BigDecimal[]> data = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("data", data);
+
+        return map;
+    }
 
 }

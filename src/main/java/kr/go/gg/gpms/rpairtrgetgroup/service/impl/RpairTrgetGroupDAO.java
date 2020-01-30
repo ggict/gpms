@@ -3,7 +3,9 @@
 
 package kr.go.gg.gpms.rpairtrgetgroup.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -173,4 +175,13 @@ public class RpairTrgetGroupDAO extends BaseDAO {
 		return (List<RpairTrgetGroupVO>)list("rpairTrgetGroupDAO.selectRpairDeptLenStatsExcel", rpairTrgetGroupVO);
 	}
 
+	/**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 공용성 예측 모델 목록을 조회한다.
+     * @param rpairTrgetGroupVO
+     * @return
+     * @throws Exception
+     */
+    public Map<String, BigDecimal> selectRpairTrgetPredctStatistics(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+        return (Map<String, BigDecimal>)select("rpairTrgetGroupDAO.selectRpairTrgetPredctStatistics", rpairTrgetGroupVO);
+    }
 }

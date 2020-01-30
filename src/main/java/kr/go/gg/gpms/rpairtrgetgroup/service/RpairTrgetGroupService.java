@@ -1,6 +1,8 @@
 package kr.go.gg.gpms.rpairtrgetgroup.service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import kr.go.gg.gpms.rpairtrgetgroup.service.model.RpairTrgetGroupVO;
 
@@ -157,7 +159,7 @@ public interface RpairTrgetGroupService {
 	 * @exception Exception
 	 */
 	RpairTrgetGroupVO selectRpairTrgetGroupListTotalSummary(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
-	
+
 	/**
 	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 목록을 조회한다. (2019 신규)
 	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
@@ -165,7 +167,7 @@ public interface RpairTrgetGroupService {
 	 * @exception Exception
 	 */
 	List<RpairTrgetGroupVO> selectRpairRoutLenStats(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
-	
+
 	/**
 	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 노선별 통계 엑셀 다운로드 (2019 신규)
 	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
@@ -181,7 +183,7 @@ public interface RpairTrgetGroupService {
 	 * @exception Exception
 	 */
 	List<RpairTrgetGroupVO> selectRpairDeptLenStats(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
-	
+
 	/**
 	 * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 관리기관별 통계 엑셀 다운로드 (2019 신규)
 	 * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
@@ -189,7 +191,14 @@ public interface RpairTrgetGroupService {
 	 * @exception Exception
 	 */
 	List<RpairTrgetGroupVO> selectRpairDeptLenStatsExcel(RpairTrgetGroupVO rpairTrgetGroupVO)throws Exception ;
-	
+
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 공용성 예측 모델 목록을 조회한다.
+     * @param rpairTrgetGroupVO
+     * @return
+     * @throws Exception
+     */
+	Map<String, BigDecimal[]> selectRpairTrgetPredctStatistics(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception ;
 
 }
 
