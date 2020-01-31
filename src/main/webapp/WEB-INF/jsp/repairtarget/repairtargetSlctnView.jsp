@@ -1895,17 +1895,14 @@ function fn_showChartPredct(slctn_year){
         success: function (datas) {
         	hideRTProgress();
 
-        	if ( !datas.data ) {
+        	if ( !datas.lcData && !datas.acData && !datas.rdData && !datas.iriData && !datas.gpciData ) {
         		fnShowMsgDialog("예측모델 조회", '데이터가 충분하지 차트가 표시되지 않습니다.', function() {
                 });
-        	}
-
-            if ( datas.data && datas.data.x && datas.data.x.length != 0 ) {
-                drawChartPredct(datas.data);
-                showGridPredct(datas.data);
-            } else {
                 ntcNo += 1;
-            }
+        	} else {
+                drawChartPredct(datas);
+                showGridPredct(datas);
+        	}
         },
         error: function () {
             errNo += 1;
@@ -1925,11 +1922,27 @@ function drawChartPredct(dataList){
     	myChartPredct.dispose();
     	myChartPredct = null;
     }
+
+    var dataX = (dataList.lcData ? dataList.lcData.x : (dataList.acData ? dataList.acData.x : (dataList.rdData ? dataList.rdData.x : (dataList.iriData ? dataList.iriData.x : dataList.gpciData.x))));
+    var series = [];
+    $.each(dataList, function() {
+    	if ( this ) {
+        	var yData = {
+    			name: this.predctModelKndSe,
+                type: 'line',
+                smooth: true,
+                data: this.y
+            }
+            series.push(yData);
+    	}
+    });
+
     require(['echarts', 'echarts/chart/line' ], function(ec) {
         var option2 = {
     		title   : { text: '예측모델'   },
     		tooltip : {
-                trigger : 'item', formatter : "경과년도 : {b}<br/>예측 ACI : {c}"
+//                 trigger : 'item', formatter : "경과년도 : {b}<br/>예측 ACI : {c}"
+                trigger : 'axis'
             },
             toolbox : {
                 show : true, feature : {
@@ -1939,6 +1952,7 @@ function drawChartPredct(dataList){
                 // 이미지저장
                 }
             },
+            legend: { data: ["LC", "AC", "RD", "IRI", "GPCI"] },
             grid :{
                 x : 50,
                 y2 : 80
@@ -1946,20 +1960,12 @@ function drawChartPredct(dataList){
             xAxis : {
                         name: '경과년도',
                         type : 'category',
-                        data : dataList.x
+                        data : dataX
                     },
             yAxis :
-                { name: '예측 ACI', type: 'value', min: 0, max: 1 }
+                { name: '예측수치', type: 'value', min: 0, max: 1 }
             ,
-            series : [
-                {
-//                     name: '예측 ACI',
-                    type: 'line',
-                    smooth: true,
-//                     yAxisIndex: 1,
-                    data: dataList.y
-                }
-            ]
+            series : series
         }
 
         myChartPredct = ec.init(document.getElementById('rtChartPredct'));
@@ -1977,9 +1983,10 @@ function showGridPredct(dataList){
         , ignoreCase: true
         , height : 139
         , width : 400
-        , colNames:['경과년도','예측ACI']
+        , colNames:['종류','경과년도','예측수치']
         , colModel:[
-            {name:'x',index:'x', width:200, align: "center", hidden: false, sortable:false}
+            {name:'predctModelKndSe',index:'predctModelKndSe', width:200, align: "center", hidden: false, sortable:false}
+            ,{name:'x',index:'x', width:200, align: "center", hidden: false, sortable:false}
             ,{name:'y',index:'y',  width: 200,align: "right", hidden: false, sortable :false,  formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2 }}
         ]
         , loadtext: "검색 중입니다."
@@ -1991,8 +1998,20 @@ function showGridPredct(dataList){
     });
     $('#rtGridPredctArea').jqGrid('clearGridData');
     var i = 0;
-    for (i = 0; i < dataList.x.length; i++){
-        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {x: dataList.x[i], y: dataList.y[i]});
+    for (i = 0; dataList.lcData && i < dataList.lcData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "LC", x: dataList.lcData.x[i], y: dataList.lcData.y[i]});
+    }
+    for (i = 0; dataList.acData && i < dataList.acData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "AC", x: dataList.acData.x[i], y: dataList.acData.y[i]});
+    }
+    for (i = 0; dataList.rdData && i < dataList.rdData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "RD", x: dataList.rdData.x[i], y: dataList.rdData.y[i]});
+    }
+    for (i = 0; dataList.iriData && i < dataList.iriData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "IRI", x: dataList.iriData.x[i], y: dataList.iriData.y[i]});
+    }
+    for (i = 0; dataList.gpciData && i < dataList.gpciData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "GPCI", x: dataList.gpciData.x[i], y: dataList.gpciData.y[i]});
     }
 }
 </script>

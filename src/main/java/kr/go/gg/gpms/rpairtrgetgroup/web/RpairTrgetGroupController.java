@@ -1003,10 +1003,32 @@ public class RpairTrgetGroupController  extends BaseController {
     public @ResponseBody Map<String, Object> selectRpairTrgetPredctStatistics(@RequestBody RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model, HttpSession session) throws Exception {
         rpairTrgetGroupVO.setUsePage(false);
 
-        Map<String, BigDecimal[]> data = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+        // 선형
+        rpairTrgetGroupVO.setPredctModelKndSe("LC");
+        Map<String, Object> lcData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        // 면형
+        rpairTrgetGroupVO.setPredctModelKndSe("AC");
+        Map<String, Object> acData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        // 소성변형
+        rpairTrgetGroupVO.setPredctModelKndSe("RD");
+        Map<String, Object> rdData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        // 종단평탄성
+        rpairTrgetGroupVO.setPredctModelKndSe("IRI");
+        Map<String, Object> iriData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        // GPCI
+        rpairTrgetGroupVO.setPredctModelKndSe("GPCI");
+        Map<String, Object> gpciData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("data", data);
+        map.put("lcData", lcData);
+        map.put("acData", acData);
+        map.put("rdData", rdData);
+        map.put("iriData", iriData);
+        map.put("gpciData", gpciData);
 
         return map;
     }

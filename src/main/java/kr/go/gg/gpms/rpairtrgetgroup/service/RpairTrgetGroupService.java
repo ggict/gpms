@@ -198,7 +198,7 @@ public interface RpairTrgetGroupService {
      * @return
      * @throws Exception
      */
-	Map<String, BigDecimal[]> selectRpairTrgetPredctStatistics(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception ;
+	Map<String, Object> selectRpairTrgetPredctStatistics(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception ;
 
 }
 

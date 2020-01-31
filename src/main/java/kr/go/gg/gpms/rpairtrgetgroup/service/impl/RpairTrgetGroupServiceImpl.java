@@ -212,7 +212,7 @@ public class RpairTrgetGroupServiceImpl extends AbstractServiceImpl implements R
      * @throws Exception
      */
 	@Override
-    public Map<String, BigDecimal[]> selectRpairTrgetPredctStatistics(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
+    public Map<String, Object> selectRpairTrgetPredctStatistics(RpairTrgetGroupVO rpairTrgetGroupVO) throws Exception {
 	    Map<String, BigDecimal> map = rpairTrgetGroupDAO.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
 
 	    // 현재년도
@@ -390,9 +390,10 @@ public class RpairTrgetGroupServiceImpl extends AbstractServiceImpl implements R
             predctY[i] = ((new BigDecimal(Math.pow(elapseYyCnt[i].doubleValue(), a1.doubleValue()))).multiply(new BigDecimal(Math.pow(10, a0.doubleValue())))).setScale(2, BigDecimal.ROUND_HALF_UP);
         }
 
-        Map<String, BigDecimal[]> dataMap = new HashMap<String, BigDecimal[]>();
+        Map<String, Object> dataMap = new HashMap<String, Object>();
         dataMap.put("x", elapseYyCnt);
         dataMap.put("y", predctY);
+        dataMap.put("predctModelKndSe", rpairTrgetGroupVO.getPredctModelKndSe());
 
 	    return dataMap;
 	}

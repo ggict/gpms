@@ -1476,6 +1476,21 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                     , A.TRACK
                     , A.STRTPT
                     , A.ENDPT
+        ]]>
+        <isEqual property="predctModelKndSe" compareValue="LC">
+        <![CDATA[
+                    , CASE
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <isEqual property="predctModelKndSe" compareValue="AC">
+        <![CDATA[
                     , CASE
                         WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 THEN 'A'
                         WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 * 2 THEN 'B'
@@ -1484,6 +1499,45 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                         ELSE 'E'
                     END GRADE
                     , CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <isEqual property="predctModelKndSe" compareValue="RD">
+        <![CDATA[
+                    , CASE
+                        WHEN A.RD_VAL < (CEIL(MAX(A.RD_VAL) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN A.RD_VAL < (CEIL(MAX(A.RD_VAL) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN A.RD_VAL < (CEIL(MAX(A.RD_VAL) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN A.RD_VAL < (CEIL(MAX(A.RD_VAL) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.RD_VAL) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <isEqual property="predctModelKndSe" compareValue="IRI">
+        <![CDATA[
+                    , CASE
+                        WHEN A.IRI_VAL < (CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN A.IRI_VAL < (CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN A.IRI_VAL < (CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN A.IRI_VAL < (CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <isEqual property="predctModelKndSe" compareValue="GPCI">
+        <![CDATA[
+                    , CASE
+                        WHEN A.GPCI < (CEIL(MAX(A.GPCI) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN A.GPCI < (CEIL(MAX(A.GPCI) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN A.GPCI < (CEIL(MAX(A.GPCI) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN A.GPCI < (CEIL(MAX(A.GPCI) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.GPCI) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <![CDATA[
                 FROM TN_MUMM_SCTN_SRVY_DTA A
                 WHERE
                     A.SRVY_YEAR IN (
