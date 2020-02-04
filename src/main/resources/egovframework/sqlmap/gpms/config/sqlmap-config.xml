@@ -131,4 +131,7 @@
 
 <!--    조사자료 이미지    -->
 <sqlMap resource="egovframework/sqlmap/cmmn/EgovFile_SQL_POSTGRESQL.xml"/>
+
+<!--    조TN_SPECL_MANAGE_SCTN_DETAIL	특별관리구간상세    -->
+<sqlMap resource="egovframework/sqlmap/gpms/mvroad/MvRoad_SQL_POSTGRESQL.xml"/>
 </sqlMapConfig>
