@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="mvRoadDAO">
+
+	<typeAlias alias="egovMap"
+		type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="mvRoadVO"
+		type="kr.go.gg.gpms.mvroad.service.model.MvRoadVO" />
+
+	<resultMap id="mvRoad.resultMap" class="MvRoadVO">
+    	<result property="SPCL_NO" column="SPCL_NO" columnIndex="1" /> <!-- 조사_자료_엑셀.조사_번호 -->
+		<result property="BSNS_NM" column="BSNS_NM" columnIndex="2" /> <!-- 조사_자료_엑셀.파일_번호 -->
+		<result property="ROUTE_CODE" column="ROUTE_CODE" columnIndex="3" /> <!-- 조사_자료_엑셀.데이터_건수 -->
+		<result property="CNTRWK_SCTN" column="CNTRWK_SCTN" columnIndex="4" /> <!-- 조사_자료_엑셀.노선_코드 -->
+		<result property="TRACK_CO" column="TRACK_CO" columnIndex="5" /> <!-- 조사_자료_엑셀.행선_코드 -->
+		<result property="BSNS_QY" column="BSNS_QY" columnIndex="6" /> <!-- 조사_자료_엑셀.차로 -->
+		<result property="TOT_WCT" column="TOT_WCT" columnIndex="7" /> <!-- 조사_자료_엑셀.시점 -->
+		<result property="BSNS_BEGIN_YEAR" column="BSNS_BEGIN_YEAR" columnIndex="8" /> <!-- 조사_자료_엑셀.종점 -->
+		<result property="BSNS_END_YEAR" column="BSNS_END_YEAR" columnIndex="9" /> <!-- 조사_자료_엑셀.조사_일자 -->
+		<result property="COMPET_DE" column="COMPET_DE" columnIndex="10" /> <!-- 조사_자료_엑셀.조사_명 -->
+		<result property="BSNS_OPERTN_MAN" column="BSNS_OPERTN_MAN" columnIndex="11" /> <!-- 조사_자료_엑셀.조사자_명 -->
+		<result property="STRTPT_NM" column="STRTPT_NM" columnIndex="12" /> <!-- 조사_자료_엑셀.평가_처리_여부 -->
+		<result property="ENDPT_NM" column="ENDPT_NM" columnIndex="14" /> <!-- 조사_자료_엑셀.집계_처리_여부 -->
+		<result property="MAJOR_PASAGEPAPR" column="MAJOR_PASAGEPAPR" columnIndex="16" /> <!-- 조사_자료_엑셀.유효성_평가_여부 -->
+		<result property="PAV_MTRQLT" column="PAV_MTRQLT" columnIndex="17" /> <!-- 조사_자료_엑셀.삭제_여부 -->
+		<result property="PAV_THICK_ASCON" column="PAV_THICK_ASCON" columnIndex="18" /> <!-- 조사_자료_엑셀.사용_여부 -->
+		<result property="PAV_THICK_BASE" column="PAV_THICK_BASE" columnIndex="19" /> <!-- 조사_자료_엑셀.생성자_번호 -->
+		<result property="PAV_THICK_ASSTNBASE" column="PAV_THICK_ASSTNBASE" columnIndex="20" /> <!-- 조사_자료_엑셀.생성_일시 -->
+		<result property="TUNNEL_KND" column="TUNNEL_KND" columnIndex="21" /> <!-- 조사_자료_엑셀.수정자_번호 -->
+		<result property="TUNNEL_CO" column="TUNNEL_CO" columnIndex="22" /> <!-- 조사_자료_엑셀.수정_일시 -->
+    	<result property="TUNNEL_LEN" column="TUNNEL_LEN" columnIndex="23" /> <!-- 조사_자료_엑셀.생성자_번호 -->
+		<result property="BRIDGE_KND" column="BRIDGE_KND" columnIndex="24" /> <!-- 조사_자료_엑셀.생성_일시 -->
+		<result property="BRIDGE_CO" column="BRIDGE_CO" columnIndex="25" /> <!-- 조사_자료_엑셀.수정자_번호 -->
+		<result property="BRIDGE_LEN" column="BRIDGE_LEN" columnIndex="26" /> <!-- 조사_자료_엑셀.수정_일시 -->
+	</resultMap>
+
+	<insert id="mvRoadDAO.insertMvRoad">
+	<![CDATA[
+		/* mvRoadDAO.insertMvRoad */
+		/* 특별관리구간 상세정보 등록 */
+		INSERT INTO TN_SPECL_MANAGE_SCTN_DETAIL (
+			SPCL_NO
+			,BSNS_NM
+			,ROUTE_CODE
+			,CNTRWK_SCTN
+			,TRACK_CO
+			,BSNS_QY
+			,TOT_WCT
+			,BSNS_BEGIN_YEAR
+			,BSNS_END_YEAR
+			,COMPET_DE
+			,BSNS_OPERTN_MAN
+			,STRTPT_NM
+			,ENDPT_NM
+			,MAJOR_PASAGEPAPR
+			,PAV_MTRQLT
+			,PAV_THICK_ASCON
+			,PAV_THICK_BASE
+			,PAV_THICK_ASSTNBASE
+			,TUNNEL_KND
+			,TUNNEL_CO
+			,TUNNEL_LEN
+			,BRIDGE_KND
+			,BRIDGE_CO
+			,BRIDGE_LEN
+		) VALUES (
+			 #SPCL_NO#::numeric
+			,#BSNS_NM#
+			,#ROUTE_CODE#
+			,#CNTRWK_SCTN#
+			,#TRACK_CO#::numeric
+			,#BSNS_QY#::numeric
+			,#TOT_WCT#::numeric
+			,#BSNS_BEGIN_YEAR#
+			,#BSNS_END_YEAR#
+			,#COMPET_DE#
+			,#BSNS_OPERTN_MAN#
+			,#STRTPT_NM#
+			,#ENDPT_NM#
+			,#MAJOR_PASAGEPAPR#
+			,#PAV_MTRQLT#
+			,#PAV_THICK_ASCON#::numeric
+			,#PAV_THICK_BASE#::numeric
+			,#PAV_THICK_ASSTNBASE#::numeric
+			,#TUNNEL_KND#
+			,#TUNNEL_CO#::numeric
+			,#TUNNEL_LEN#::numeric
+			,#BRIDGE_KND#
+			,#BRIDGE_CO#::numeric
+			,#BRIDGE_LEN#::numeric
+		)
+]]>
+	</insert>
+
+	<select id="mvRoadDAO.selectMvRoad" parameterClass="MvRoadVO" resultClass="MvRoadVO">
+        <![CDATA[
+            /* mvRoadDAO.selectMvRoad */
+            /* 특별관리구간 상세정보 조회 */
+            SELECT
+		            BSNS_NM
+					,ROUTE_CODE
+					,CNTRWK_SCTN
+					,TRACK_CO::numeric
+					,BSNS_QY::numeric
+					,TOT_WCT::numeric
+					,BSNS_BEGIN_YEAR
+					,BSNS_END_YEAR
+					,COMPET_DE
+					,BSNS_OPERTN_MAN
+					,STRTPT_NM
+					,ENDPT_NM
+					,MAJOR_PASAGEPAPR
+					,PAV_MTRQLT
+					,PAV_THICK_ASCON::numeric
+					,PAV_THICK_BASE::numeric
+					,PAV_THICK_ASSTNBASE::numeric
+					,TUNNEL_KND
+					,TUNNEL_CO::numeric
+					,TUNNEL_LEN::numeric
+					,BRIDGE_KND
+					,BRIDGE_CO::numeric
+					,BRIDGE_LEN::numeric
+              FROM TN_SPECL_MANAGE_SCTN_DETAIL
+             WHERE spcl_no = #SPCL_NO#::numeric
+        ]]>
+    </select>
+
+    <delete id="mvRoadDAO.deleteMvRoad">
+	<![CDATA[
+		/* mvRoadDAO.deleteMvRoad */
+		/* 특별관리구간 상세정보 삭제 */
+		DELETE
+		  FROM TN_SPECL_MANAGE_SCTN_DETAIL
+		 WHERE spcl_no = #SPCL_NO#::numeric
+	]]>
+	</delete>
+
+	<insert id="mvRoadDAO.updateMvRoad">
+	<![CDATA[
+		/* mvRoadDAO.updateMvRoad */
+		/* 특별관리구간 상세정보 수정 */
+		UPDATE TN_SPECL_MANAGE_SCTN_DETAIL SET
+			BSNS_NM = #BSNS_NM#
+			,ROUTE_CODE = #ROUTE_CODE#
+			,CNTRWK_SCTN = #CNTRWK_SCTN#
+			,TRACK_CO = #TRACK_CO#::numeric
+			,BSNS_QY = #BSNS_QY#::numeric
+			,TOT_WCT = #TOT_WCT#::numeric
+			,BSNS_BEGIN_YEAR = #BSNS_BEGIN_YEAR#
+			,BSNS_END_YEAR = #BSNS_END_YEAR#
+			,COMPET_DE = #COMPET_DE#
+			,BSNS_OPERTN_MAN = #BSNS_OPERTN_MAN#
+			,STRTPT_NM = #STRTPT_NM#
+			,ENDPT_NM = #ENDPT_NM#
+			,MAJOR_PASAGEPAPR = #MAJOR_PASAGEPAPR#
+			,PAV_MTRQLT = #PAV_MTRQLT#
+			,PAV_THICK_ASCON = #PAV_THICK_ASCON#::numeric
+			,PAV_THICK_BASE = #PAV_THICK_BASE#::numeric
+			,PAV_THICK_ASSTNBASE = #PAV_THICK_ASSTNBASE#::numeric
+			,TUNNEL_KND = #TUNNEL_KND#
+			,TUNNEL_CO = #TUNNEL_CO#::numeric
+			,TUNNEL_LEN = #TUNNEL_LEN#::numeric
+			,BRIDGE_KND = #BRIDGE_KND#
+			,BRIDGE_CO = #BRIDGE_CO#::numeric
+			,BRIDGE_LEN = #BRIDGE_LEN#::numeric
+		 WHERE 1 = 1
+		   AND spcl_no = #SPCL_NO#::numeric
+
+]]>
+	</insert>
+
+
+
+</sqlMap>

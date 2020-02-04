@@ -148,7 +148,7 @@ $( document ).ready(function() {
         ,async : false
         ,sortname: 'ROAD_NO'
         ,sortorder: "asc"
-        ,rowNum: 50
+        ,rowNum: 1000
         ,rowList: [20,50,100,500]
         ,viewrecords: true
         ,pager: '#gridPager'

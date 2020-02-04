@@ -2006,6 +2006,29 @@ MAP.CONTROL = (function($, undefined) {
             // 속성 조회 컨트롤 추가
             gMap.addControl(selStaTotPopControls[i]);
         }
+
+
+        // 특별관리구간
+        var selMvRoadPopControls = {
+            point: new GGetFeature(GPoint, {
+                persist: true,
+                serviceUrl: CONFIG.fn_get_wfsServiceUrl(),
+                prefix: CONFIG.fn_get_dataHouseName(),
+                tables: ["MV_ROAD_CELT0012"],
+                excepts: ["boundedby", "objectid", "shape_area", "shape_len"],
+                id: "selMyRoadPopSelect",
+                distance: 10
+            })
+        };
+
+        for (var i in selMvRoadPopControls) {
+        	selMvRoadPopControls[i].events.on({
+                "callback": event_selFeatureMvRoadtpopup,
+                "mousemove": function() {}
+            });
+            // 속성 조회 컨트롤 추가
+            gMap.addControl(selMvRoadPopControls[i]);
+        }
     };
 
     var event_selFeatureStatotpopup = function(res) {
@@ -2026,6 +2049,30 @@ MAP.CONTROL = (function($, undefined) {
             	$("#dvMapLoading").hide();
             	gMap.activeControls("drag");
             	alert('현재 검색된 도로대장(점)이 없습니다.');
+            	return;
+            }
+        }
+    }
+
+    var event_selFeatureMvRoadtpopup = function(res) {
+    	if ($("#MV_ROAD_CELT0012").parent().hasClass("on")) {
+    		var zoom = parent.gMap.getZoom();
+            if (zoom < 2) {
+                alert('지도를 확대 해주십시오.');
+                $("#dvMapLoading").hide();
+                gMap.activeControls("drag");
+                return;
+            }
+
+    		if (res.data.length == 1) {
+    			var spcl_no = res.data[0].results[0].fields.spcl_no;
+    			$("#dvMapLoading").hide();
+        		gMap.activeControls("drag");
+        		COMMON_UTIL.cmWindowOpen('특별관리구간', contextPath + 'mvroad/selectMvRoadPop.do?spcl_no='+spcl_no, 900, 480, false, null, '');
+            } else {
+            	$("#dvMapLoading").hide();
+            	gMap.activeControls("drag");
+            	alert('현재 검색된 특별관리구간이 없습니다.');
             	return;
             }
         }
