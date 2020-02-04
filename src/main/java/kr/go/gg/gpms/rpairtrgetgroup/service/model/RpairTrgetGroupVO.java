@@ -78,18 +78,23 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 	 */
 	@XmlElement
 	private String CELL_ID;
-	
+
 	/**
 	 * PAV_CELL_LEN
 	 */
 	@XmlElement
 	private String PAV_CELL_LEN;
-	
+
 	/**
 	 * PAV_CELL_IDS
 	 */
 	@XmlElement
 	private String PAV_CELL_IDS;
+
+	/**
+	 * 균열_종류_구분(LC: 선형, AC: 면형, RD: 소성변형, IRI: 종단평탄성, GPCI: GPCI)
+	 */
+	private String predctModelKndSe;
 
 	/**
 	 * TN_RPAIR_TRGET_GROUP.GROUP_ITEM_NO,
@@ -182,8 +187,14 @@ public class RpairTrgetGroupVO extends RpairTrgetVO {
 	public void setPAV_CELL_IDS(String pAV_CELL_IDS) {
 		PAV_CELL_IDS = pAV_CELL_IDS;
 	}
-	
-	
+
+    public String getPredctModelKndSe() {
+        return predctModelKndSe;
+    }
+
+    public void setPredctModelKndSe(String predctModelKndSe) {
+        this.predctModelKndSe = predctModelKndSe;
+    }
 
 
 }

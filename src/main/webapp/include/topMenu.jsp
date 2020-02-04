@@ -96,7 +96,7 @@
                         <a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="routeinfo/selectRouteInfoList.do"/>');return false;"><span>노선검색</span></a>
                         <ul>
                             <li class="s10"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="routeinfo/selectRouteInfoList.do"/>');return false;">데이터로검색</a></li>
-                            <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cell10/selectCell10List.do"/>');return false;">셀단위로검색</a></li>
+<%--                             <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cell10/selectCell10List.do"/>');return false;">셀단위로검색</a></li> --%>
                         </ul>
                     </li>
                     <li class="b00">
@@ -120,7 +120,7 @@
                         <a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/selectCntrwkList.do"/>');return false;"><span>포장공사이력관리</span></a>
                         <ul>
                             <li class="s10"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/selectCntrwkList.do"/>');return false;">포장공사이력관리</a></li>
-                            <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/cntrwkProgressList.do"/>');return false;">포장공사진행현황</a></li>
+<%--                             <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="cntrwk/cntrwkProgressList.do"/>');return false;">포장공사진행현황</a></li> --%>
                         </ul>
                     </li>
                     <li class="d00">

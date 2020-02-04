@@ -233,7 +233,7 @@ width:100% !important;
                 <div class="fl">
 <!--                     <a href="#" class="schbtn" onclick="javascript:fnInitRangeSelection(true);">상태 초기화</a> -->
                     <a href="#" class="schbtn" onclick="javascript:fn_select_cellSectFilter();" >선정구간 지도위치보기</a>
-                    <a href="#" class="schbtn" onclick="javascript:fn_showChart_RepairTarget();">차트 조회</a>
+                    <a href="#" class="schbtn" onclick="javascript:fn_showChart_RepairTarget();">예측모델 조회</a>
 <%--                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS ne 'RTSS0010'}"><a href="#" class="graybtn"  disabled >엑셀 저장</a></c:if> --%>
 <%--                     <c:if test = "${rpairTrgetSlctnVO.SLCTN_STTUS eq 'RTSS0010'}"><a href="#" class="schbtn"  onclick="javascript:fndownload_RepairTarget();"  >엑셀 저장</a></c:if> --%>
                     <a href="#" class="schbtn"  onclick="dofndownloadAll();"  >엑셀 저장</a>
@@ -247,32 +247,50 @@ width:100% !important;
 </div>
 <div id="repairtargetStats">
 <div class="fr"><a href="#" class="schbtn" onclick="javascript:fnToggleChart();" id="btnToggleChart">표로 보기</a>&nbsp;<a href="#" class="schbtn" onclick="javascript:fn_closeChart_RepairTarget();" >닫기</a></div><br/>
-		<ul><li></li></ul>
+		<ul>
+            <li>
+                대상년도 :
+                <select id="SLCTN_YEAR" name="SLCTN_YEAR" onchange="fn_showChartPredct(this.value)">
+                    <c:forEach var="slctnYear" items="${slctnYearList}">
+                        <option value="${slctnYear}">${slctnYear}년</option>
+                    </c:forEach>
+                </select>
+            </li>
+        </ul>
 		<ul class="statsbx" style="width:100%;">
-			<li  style="width:50%;">
-				<h4>예산 집행기관별 유지보수 집행 현황</h4>
-				<div class="graylinebx p10">
-					<div id="rtChartDeptCode" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div>
-					<div id="rtGridDeptCode" class="cont_ConBx2 rtGridDept" style=" margin:30px auto ;width:60%;display:none;">
-					<table id="rtGridDeptCodeArea" class="" style="width:60%;" ></table>
-					</div>
-				</div>
-			</li>
-			<li  style="width:50%;">
-				<h4>보수공법별 유지보수비 집행 현황</h4>
-				<div class="graylinebx p10">
-					<div id="rtChartMethodCode" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div>
-					<div id="rtGridMethodCode" class="cont_ConBx2 rtGridMethod" style=" margin:30px auto;width:60%;display:none;">
-					<table id="rtGridMethodCodeArea"  class="" style="width:60%;" ></table>
-					</div>
-				</div>
-			</li>
+<!-- 			<li  style="width:50%;"> -->
+<!-- 				<h4>예산 집행기관별 유지보수 집행 현황</h4> -->
+<!-- 				<div class="graylinebx p10"> -->
+<!-- 					<div id="rtChartDeptCode" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div> -->
+<!-- 					<div id="rtGridDeptCode" class="cont_ConBx2 rtGridDept" style=" margin:30px auto ;width:60%;display:none;"> -->
+<!-- 					<table id="rtGridDeptCodeArea" class="" style="width:60%;" ></table> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</li> -->
+<!-- 			<li  style="width:50%;"> -->
+<!-- 				<h4>보수공법별 유지보수비 집행 현황</h4> -->
+<!-- 				<div class="graylinebx p10"> -->
+<!-- 					<div id="rtChartMethodCode" class="cont_ConBx2" style="height: 300px; margin-left:20px;"></div> -->
+<!-- 					<div id="rtGridMethodCode" class="cont_ConBx2 rtGridMethod" style=" margin:30px auto;width:60%;display:none;"> -->
+<!-- 					<table id="rtGridMethodCodeArea"  class="" style="width:60%;" ></table> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</li> -->
+<!-- 			<li style="width:100%;"> -->
+<!-- 				<h4>단위행정구역별 유지보수비 집행 현황</h4> -->
+<!-- 				<div class="graylinebx p10"> -->
+<!-- 					<div id="rtChartAdminCode" class="cont_ConBx2"  style="height: 300px; margin-left:20px;"></div> -->
+<!-- 					<div id="rtGridAdminCode" class="cont_ConBx2 rtGridAdmin"  style=" margin:30px auto;width:80%;display:none;"> -->
+<!-- 					<table id="rtGridAdminCodeArea"  class="" style="width:80%;" ></table> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</li> -->
 			<li style="width:100%;">
-				<h4>단위행정구역별 유지보수비 집행 현황</h4>
+				<h4>공용성 예측 모델</h4>
 				<div class="graylinebx p10">
-					<div id="rtChartAdminCode" class="cont_ConBx2"  style="height: 300px; margin-left:20px;"></div>
-					<div id="rtGridAdminCode" class="cont_ConBx2 rtGridAdmin"  style=" margin:30px auto;width:80%;display:none;">
-					<table id="rtGridAdminCodeArea"  class="" style="width:80%;" ></table>
+					<div id="rtChartPredct" class="cont_ConBx2"  style="height: 300px; margin-left:20px;"></div>
+					<div id="rtGridPredct" class="cont_ConBx2 rtGridPredct"  style=" margin:30px auto;width:80%;display:none;">
+					<table id="rtGridPredctArea"  class="" style="width:80%;" ></table>
 					</div>
 				</div>
 			</li>
@@ -310,6 +328,7 @@ var isChart = true;
 var myChartDept = null;
 var myChartMethod = null;
 var myChartAdmin = null;
+var myChartPredct = null;
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
@@ -321,7 +340,7 @@ $( document ).ready(function() {
 		autoOpen : false,
 		height : $(window).height() - 150, // 850,
 		width : minChartWidth, // 1024,
-		modal : true, title : "[챠트 조회] 예산에 근거한 유지보수 구간 선정 과정을 진행합니다."
+		modal : true, title : "[챠트 조회] 공용성 예측 모델"
 
 	});
 
@@ -1085,14 +1104,15 @@ function fn_showChart_RepairTarget() {
 	$("#repairtargetStats").dialog("open");
 	var vForm = $("#frmRpairTrgetGroup");
 	var vPostData = {
-		"TRGET_SLCTN_NO" : vForm.find("#TRGET_SLCTN_NO").val()
+		"SLCTN_YEAR" : $("#SLCTN_YEAR").val()
 	};
 	showRTProgress("차트를 조회합니다.");
 	isChart = true;
 	fnShowChart();
-	fn_showChartDepts(vPostData.TRGET_SLCTN_NO);
-	fn_showChartMethods(vPostData.TRGET_SLCTN_NO);
-	fn_showChartAdmins(vPostData.TRGET_SLCTN_NO);
+// 	fn_showChartDepts(vPostData.TRGET_SLCTN_NO);
+// 	fn_showChartMethods(vPostData.TRGET_SLCTN_NO);
+// 	fn_showChartAdmins(vPostData.TRGET_SLCTN_NO);
+	fn_showChartPredct(vPostData.SLCTN_YEAR);
 
 }
 function fn_closeChart_RepairTarget() {
@@ -1734,20 +1754,24 @@ function fnToggleChart() {
 function fnShowChart(){
 
 	if (isChart==false) {
-		$('#rtGridDeptCode').show();
-		$('#rtGridMethodCode').show();
-		$('#rtGridAdminCode').show();
-		$('#rtChartDeptCode').hide();
-		$('#rtChartMethodCode').hide();
-		$('#rtChartAdminCode').hide();
+// 		$('#rtGridDeptCode').show();
+// 		$('#rtGridMethodCode').show();
+// 		$('#rtGridAdminCode').show();
+// 		$('#rtChartDeptCode').hide();
+// 		$('#rtChartMethodCode').hide();
+// 		$('#rtChartAdminCode').hide();
+        $('#rtGridPredct').show();
+        $('#rtChartPredct').hide();
 		$('#btnToggleChart').html("차트로 보기");
 	} else {
-		$('#rtGridDeptCode').hide();
-		$('#rtGridMethodCode').hide();
-		$('#rtGridAdminCode').hide();
-		$('#rtChartDeptCode').show();
-		$('#rtChartMethodCode').show();
-		$('#rtChartAdminCode').show();
+// 		$('#rtGridDeptCode').hide();
+// 		$('#rtGridMethodCode').hide();
+// 		$('#rtGridAdminCode').hide();
+// 		$('#rtChartDeptCode').show();
+// 		$('#rtChartMethodCode').show();
+// 		$('#rtChartAdminCode').show();
+        $('#rtGridPredct').hide();
+        $('#rtChartPredct').show();
 		$('#btnToggleChart').html("표로 보기");
 	}
 }
@@ -1849,6 +1873,146 @@ function fnShowMsgDialog(confirmTitle, msgContents, callback) {
 	$("#divConfirmButtns").html(buttonTags);
 	$("#txtConfirmContents").html(msgContents);
 	$("#divConfirmDialog").dialog("open");
+}
+
+/**
+ * 공용성 예측 모델 차트/표 조회
+ */
+function fn_showChartPredct(slctn_year){
+    var postData = {
+        "SLCTN_YEAR" : slctn_year
+    };
+
+    var actionUrl = '<c:url value="/api/rpairtrgetgroup/selectRpairTrgetPredctStatistics.do"  />';
+    $.ajax({
+        url: actionUrl,
+        data: JSON.stringify(postData),
+        contentType: 'application/json',
+        dataType: "json",
+        cache: false,
+        type: 'POST',
+        processData: false,
+        success: function (datas) {
+        	hideRTProgress();
+
+        	if ( !datas.lcData && !datas.acData && !datas.rdData && !datas.iriData && !datas.gpciData ) {
+        		fnShowMsgDialog("예측모델 조회", '데이터가 충분하지 차트가 표시되지 않습니다.', function() {
+                });
+                ntcNo += 1;
+        	} else {
+                drawChartPredct(datas);
+                showGridPredct(datas);
+        	}
+        },
+        error: function () {
+            errNo += 1;
+        }
+    });
+}
+
+/**
+ * 공용성 예측 모델 차트 조회
+ */
+
+function drawChartPredct(dataList){
+    var rw = $(window).width() / 3;
+
+    if ( myChartPredct != null ) {
+    	myChartPredct.clear();
+    	myChartPredct.dispose();
+    	myChartPredct = null;
+    }
+
+    var dataX = (dataList.lcData ? dataList.lcData.x : (dataList.acData ? dataList.acData.x : (dataList.rdData ? dataList.rdData.x : (dataList.iriData ? dataList.iriData.x : dataList.gpciData.x))));
+    var series = [];
+    $.each(dataList, function() {
+    	if ( this ) {
+        	var yData = {
+    			name: this.predctModelKndSe,
+                type: 'line',
+                smooth: true,
+                data: this.y
+            }
+            series.push(yData);
+    	}
+    });
+
+    require(['echarts', 'echarts/chart/line' ], function(ec) {
+        var option2 = {
+    		title   : { text: '예측모델'   },
+    		tooltip : {
+//                 trigger : 'item', formatter : "경과년도 : {b}<br/>예측 ACI : {c}"
+                trigger : 'axis'
+            },
+            toolbox : {
+                show : true, feature : {
+                    saveAsImage : {
+                        show : true
+                    }
+                // 이미지저장
+                }
+            },
+            legend: { data: ["LC", "AC", "RD", "IRI", "GPCI"] },
+            grid :{
+                x : 50,
+                y2 : 80
+            },
+            xAxis : {
+                        name: '경과년도',
+                        type : 'category',
+                        data : dataX
+                    },
+            yAxis :
+                { name: '예측수치', type: 'value', min: 0, max: 1 }
+            ,
+            series : series
+        }
+
+        myChartPredct = ec.init(document.getElementById('rtChartPredct'));
+        myChartPredct.setOption(option2);
+    });
+}
+
+/**
+ * 공용성 예측 모델 표 조회
+ */
+function showGridPredct(dataList){
+    //rtGridDeptCode
+    $("#rtGridPredctArea").jqGrid({
+        datatype: "local"
+        , ignoreCase: true
+        , height : 139
+        , width : 400
+        , colNames:['종류','경과년도','예측수치']
+        , colModel:[
+            {name:'predctModelKndSe',index:'predctModelKndSe', width:200, align: "center", hidden: false, sortable:false}
+            ,{name:'x',index:'x', width:200, align: "center", hidden: false, sortable:false}
+            ,{name:'y',index:'y',  width: 200,align: "right", hidden: false, sortable :false,  formatter: 'number', formatoptions: { decimalSeparator: ".", thousandsSeparator: ",", decimalPlaces: 2 }}
+        ]
+        , loadtext: "검색 중입니다."
+        , footerrow: false
+        , userDataOnFooter : false
+        //,emptyrecords: "검색된 데이터가 없습니다."
+        , multiselect: false
+        , multiboxonly: false
+    });
+    $('#rtGridPredctArea').jqGrid('clearGridData');
+    var i = 0;
+    for (i = 0; dataList.lcData && i < dataList.lcData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "LC", x: dataList.lcData.x[i], y: dataList.lcData.y[i]});
+    }
+    for (i = 0; dataList.acData && i < dataList.acData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "AC", x: dataList.acData.x[i], y: dataList.acData.y[i]});
+    }
+    for (i = 0; dataList.rdData && i < dataList.rdData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "RD", x: dataList.rdData.x[i], y: dataList.rdData.y[i]});
+    }
+    for (i = 0; dataList.iriData && i < dataList.iriData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "IRI", x: dataList.iriData.x[i], y: dataList.iriData.y[i]});
+    }
+    for (i = 0; dataList.gpciData && i < dataList.gpciData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "GPCI", x: dataList.gpciData.x[i], y: dataList.gpciData.y[i]});
+    }
 }
 </script>
 <div id="divConfirmDialog" class="content " style="display:none;z-index:9999;">

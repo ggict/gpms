@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -163,6 +162,15 @@ public class RpairTrgetSlctnController  extends BaseController {
     public String selectRpairTrgetSlctn(@ModelAttribute("frmRpairTrgetSlctn") RpairTrgetSlctnVO rpairTrgetSlctnVO,  ModelMap model) throws Exception {
         //도로 등급
         addCodeToModel("RDGD","roadGradList", model);
+
+        // 선정년도
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        String year = dateFormat.format(new Date());
+        List<Integer> slctnYearList = new ArrayList<Integer>();
+        for ( int i = Integer.valueOf(year); i >= 2018; i-- ) {
+            slctnYearList.add(i);
+        }
+        model.addAttribute("slctnYearList", slctnYearList);
 
         //노선 번호
         RouteInfoVO routeInfoVO = new RouteInfoVO();

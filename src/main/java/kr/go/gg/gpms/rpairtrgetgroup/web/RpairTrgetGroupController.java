@@ -1,5 +1,6 @@
 package kr.go.gg.gpms.rpairtrgetgroup.web;
 
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -889,7 +890,7 @@ public class RpairTrgetGroupController  extends BaseController {
 	 */
 	@RequestMapping(value = "/rpairtrgetgroup/rpairRoutLenStats.do")
 	public String viewRpairRoutLenStats(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
-		
+
 		// 선정년도 (2017 ~ 현재연도)
 		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
 
@@ -942,7 +943,7 @@ public class RpairTrgetGroupController  extends BaseController {
 	 */
 	@RequestMapping(value = "/rpairtrgetgroup/rpairDeptLenStats.do")
 	public String rpairDeptLenStats(@ModelAttribute RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model) throws Exception {
-		
+
 		// 선정년도 (2017 ~ 현재연도)
 		model.addAttribute("slctnYearList", DateUtil.getSlctnYearList());
 
@@ -989,5 +990,47 @@ public class RpairTrgetGroupController  extends BaseController {
 
 		return new ExcelView();
 	}
+
+    /**
+     * 보수_대상_항목_그룹(TN_RPAIR_TRGET_GROUP) 공용성 예측 모델 목록을 조회한다.
+     * @param rpairTrgetGroupVO - 조회할 정보가 담긴 RpairTrgetGroupVO
+     * @param model
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = { "/api/rpairtrgetgroup/selectRpairTrgetPredctStatistics.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public @ResponseBody Map<String, Object> selectRpairTrgetPredctStatistics(@RequestBody RpairTrgetGroupVO rpairTrgetGroupVO, ModelMap model, HttpSession session) throws Exception {
+        rpairTrgetGroupVO.setUsePage(false);
+
+        // 선형
+        rpairTrgetGroupVO.setPredctModelKndSe("LC");
+        Map<String, Object> lcData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        // 면형
+        rpairTrgetGroupVO.setPredctModelKndSe("AC");
+        Map<String, Object> acData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        // 소성변형
+        rpairTrgetGroupVO.setPredctModelKndSe("RD");
+        Map<String, Object> rdData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        // 종단평탄성
+        rpairTrgetGroupVO.setPredctModelKndSe("IRI");
+        Map<String, Object> iriData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        // GPCI
+        rpairTrgetGroupVO.setPredctModelKndSe("GPCI");
+        Map<String, Object> gpciData = rpairTrgetGroupService.selectRpairTrgetPredctStatistics(rpairTrgetGroupVO);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("lcData", lcData);
+        map.put("acData", acData);
+        map.put("rdData", rdData);
+        map.put("iriData", iriData);
+        map.put("gpciData", gpciData);
+
+        return map;
+    }
 
 }
