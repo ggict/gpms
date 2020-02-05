@@ -16,29 +16,35 @@ var total = ${result.PAV_THICK_ASCON} + ${result.PAV_THICK_BASE} + ${result.PAV_
 $( document ).ready(function() {
 	$('#PAV_TOTAL').text(total);
 
-	$(".togglebtn").click(function () {
+	$(".selbtn").click(function () {
+        //
+        // Button Toggle
+        $(this).parent().siblings('li').removeClass('on');
 
-        var wndId = $("#wnd_id").val();
+        // $(this) id, class, num of class
+        var id = $(this).attr("id");
+        var classArr = $(this).parent().attr("class");
 
-        if ( $(this).hasClass("on") ) {
+        // 2단계 버튼 점형 선택
+        if ( id == "BTN_SECT_POINT") {
 
-            if ( $("#gridArea").html() != "" ) {
+        	//gMap.getLayerByName('GPthEditLayer').removeAllFeatures();
+            //gMap.getLayerByName('GOverlapLayer').removeAllFeatures();
 
-                fnPopupResize(250);
-                $(this).removeClass("on");
-                $(this).attr("title", "열기");
+            option = {};
+            option = {
+                        iframe : window,
+                        callback : "fnCheckFeatures",
+                        clearMap : false
+            };
+            MAP.CONTROL.set_option(option);
 
-            }
+            parent.$("#MV_ROAD_CELT0012").parent().addClass("on");
 
-        } else {
-
-            fnPopupResize(630);
-            $(this).addClass("on");
-            $(this).attr("title", "닫기");
+            parent.gMap.activeControls("selMyRoadPopSelect");
 
         }
 
-        $("#result").slideToggle("slow");
     });
 });
 
