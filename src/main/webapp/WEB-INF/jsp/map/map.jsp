@@ -361,9 +361,11 @@ var layersMngObj = {
 					layers.push(layernm);
 				}
 				if(layernm == 'STA_TOT_GRS80_50'){
-					fn_staTotSelect();
+					//fn_staTotSelect();
+					COMMON_UTIL.cmWindowOpen('도로대장(점)', contextPath + 'cellsect/selectStaTotPop.do', 623, 270, false, null, 'updCell');
 				} else if (layernm == 'MV_ROAD_CELT0012') {
-					fn_myRoadSelect();
+					//fn_myRoadSelect();
+					COMMON_UTIL.cmWindowOpen('특별관리구간', contextPath + 'mvroad/MvRoadPop.do', 900, 200, false, 'aaa', '');
 				}
 			}
 
@@ -396,24 +398,6 @@ function fn_staTotSelect(){
     $("#STA_TOT_GRS80_50").parent().addClass("on");
 
     gMap.activeControls("selStaTotPopEdit");
-}
-
-function fn_myRoadSelect(){
-
-    gMap.getLayerByName('GPthEditLayer').removeAllFeatures();
-    gMap.getLayerByName('GOverlapLayer').removeAllFeatures();
-
-    option = {};
-    option = {
-                iframe : window,
-                callback : "fnCheckFeatures",
-                clearMap : false
-    };
-    MAP.CONTROL.set_option(option);
-
-    $("#MV_ROAD_CELT0012").parent().addClass("on");
-
-    gMap.activeControls("selMyRoadPopSelect");
 }
 
 

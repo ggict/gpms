@@ -2042,9 +2042,10 @@ MAP.CONTROL = (function($, undefined) {
             }
 
     		if (res.data.length == 1) {
+    			var data = res.data[0].results[0].fields;
     			$("#dvMapLoading").hide();
         		gMap.activeControls("drag");
-        		COMMON_UTIL.cmWindowOpen('도로대장(점)', contextPath + 'cellsect/selectStaTotPop.do', 623, 270, false, null, 'updCell');
+        		//COMMON_UTIL.cmWindowOpen('도로대장(점)', contextPath + 'cellsect/selectStaTotPop.do', 623, 270, false, null, 'updCell');
             } else {
             	$("#dvMapLoading").hide();
             	gMap.activeControls("drag");
@@ -2068,7 +2069,7 @@ MAP.CONTROL = (function($, undefined) {
     			var spcl_no = res.data[0].results[0].fields.spcl_no;
     			$("#dvMapLoading").hide();
         		gMap.activeControls("drag");
-        		COMMON_UTIL.cmWindowOpen('특별관리구간', contextPath + 'mvroad/selectMvRoadPop.do?spcl_no='+spcl_no, 900, 480, false, null, '');
+        		COMMON_UTIL.cmWindowOpen('특별관리구간', contextPath + 'mvroad/selectMvRoadPop.do?spcl_no='+spcl_no, 900, 640, false, null, '');
             } else {
             	$("#dvMapLoading").hide();
             	gMap.activeControls("drag");

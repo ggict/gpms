@@ -118,6 +118,58 @@ public class FileUploadUtils {
 		return fileInfo;
 	}
 
+	public static List<AttachFileVO> saveOriginFile(String uploadPath, String kind
+			, List<MultipartFile> file) throws Exception {
+
+		// 파일 리스트
+		List<AttachFileVO> fileList = new ArrayList<AttachFileVO>();
+
+		//Date currentDate = new Date();
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		//String date = sdf.format(currentDate);
+		uploadPath = uploadPath + kind;
+
+		// 폴더 경로
+		File uploadFolder =  new File(checkFilePath(uploadPath, "path"));
+
+		if(!uploadFolder.exists() || !uploadFolder.isFile()){
+			uploadFolder.mkdirs();
+		}
+
+		//if(uploadFolder.exists()){
+
+			// 파일명을 변경
+			String transFileNm = "";
+			String orginlFileNm = "";
+
+			for(MultipartFile file1 : file) {
+				transFileNm = UUID.randomUUID().toString();
+				orginlFileNm = file1.getOriginalFilename();
+				if (!"".equals(orginlFileNm)) {
+
+					if(orginlFileNm.contains(".")){
+						transFileNm += orginlFileNm.substring(orginlFileNm.lastIndexOf("."));
+					}
+
+					String filePath =  checkFilePath(uploadPath,"path") + File.separator
+							+ checkFilePath(orginlFileNm, "name");
+					file1.transferTo(new File(filePath));
+
+					AttachFileVO attachFileVO = new AttachFileVO();
+
+					attachFileVO.setFILE_NM(orginlFileNm);
+					attachFileVO.setORGINL_FILE_NM(orginlFileNm);
+					attachFileVO.setFILE_COURS(uploadPath);
+					attachFileVO.setFILE_SIZE(Integer.toString((int)file1.getSize()));
+					fileList.add(attachFileVO);
+				}
+			}
+
+		//}
+
+		return fileList;
+	}
+
 	//dwg Zip File
 	public static File createDwgZipFile(String[] FileNmList, String uploadPath,
 			String kind, String roadNo, String dwgPath) throws Exception {

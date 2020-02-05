@@ -7,8 +7,37 @@
 <head>
 <title>특별구간 관리 </title>
 
+<%@ include file="/include/common_head.jsp" %>
+
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
+$( document ).ready(function() {
+	$(".togglebtn").click(function () {
+
+        var wndId = $("#wnd_id").val();
+
+        if ( $(this).hasClass("on") ) {
+
+            if ( $("#gridArea").html() != "" ) {
+
+                fnPopupResize(250);
+                $(this).removeClass("on");
+                $(this).attr("title", "열기");
+
+            }
+
+        } else {
+
+            fnPopupResize(630);
+            $(this).addClass("on");
+            $(this).attr("title", "닫기");
+
+        }
+
+        $("#result").slideToggle("slow");
+    });
+});
+
 function fn_insert(){
 	if($('#BSNS_NM').val() == '' ) {
         alert("사업명을 입력해주세요.");
@@ -135,6 +164,7 @@ function fn_plus(){
       background: #fafafa;
       color: #777;
       font-size: 13px;
+      text-align: center;
    }
 
    .tableH td {
@@ -160,6 +190,7 @@ function fn_plus(){
       background: #fafafa;
       color: #777;
       font-size: 13px;
+      text-align: center;
    }
 
    .tableh td {
@@ -190,6 +221,30 @@ function fn_plus(){
 	    display: inline-block;
 	}
 </style>
+
+<div class="content">
+        <div style="width:99%">
+            <ul class="stepbx af">
+                <li style="width:33%">
+                    <div class="stbx">
+                    	<h4><span class="step">단계1</span>특별관리 구간 선택</h4>
+                        <div style="height:100px">
+                            <ul class="tblst selbx">
+                                <li style="width:100%" class="tc">
+                                    <a class="selbtn btncursor" id="BTN_SECT_POINT">
+                                        <span class="roundbx"><img src="../images/ic_shape1.png" alt="점" /></span>
+                                        <span class="dpb">선택 </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="stepbx mt10">
+                <li class="wid100">
+                    <div class="stbx" id="step3">
+                        <h4><span class="step">단계2</span>조회결과</h4>
 
 <form id="insertfrm" name="insertfrm" method="post" action="<c:url value="/mvroad/insertMvRoad.do"/>">
 	<input type="hidden" id="SPCL_NO" name="SPCL_NO" value="${mvroadVO.SPCL_NO}">
@@ -332,7 +387,11 @@ function fn_plus(){
 </div>
 
 </form>
-
+</div>
+        </li>
+    </ul>
+</div>
+</div>
 
 </body>
 </html>

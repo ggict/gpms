@@ -376,7 +376,6 @@ $( document ).ready(function() {
 });
 //Check
 $('#CNTRWK_AT').click(function(){
-	debugger;
 	if($('#CNTRWK_AT').prop("checked")){
 		$('#CNTRWK_AT').val("O");
 	}else{

@@ -180,7 +180,7 @@ public class SrvyDtaController extends BaseController {
 		int totCount = 0;
 
 		String userNo = sessionManager.getUserNo();
-		String funCallback = srvyDtaVO.getCallBackFunction() == null ? "" : srvyDtaVO.getCallBackFunction();
+		//String funCallback = srvyDtaVO.getCallBackFunction() == null ? "" : srvyDtaVO.getCallBackFunction();
 
 		/** validate request type */
 		Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
@@ -200,7 +200,8 @@ public class SrvyDtaController extends BaseController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String date = sdf.format(currentDate);
 
-		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "srvy", files, date);
+		//List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "srvy", files, date);
+		List<AttachFileVO> fileList = FileUploadUtils.saveOriginFile(filePath, "srvy_org", files);
 		// ###################################################
 
 		if (fileList.size() < 1 || userNo == null || userNo.equals("")) {
@@ -208,7 +209,7 @@ public class SrvyDtaController extends BaseController {
 			resultMsg = "등록오류발생";
 		} else {
 
-		try {
+		/*try {
 			for (AttachFileVO file : fileList) {
 			    // ###################################################
 		        // ## 2. zip 파일 정보 DB 저장
@@ -601,7 +602,7 @@ public class SrvyDtaController extends BaseController {
 
 			}
 				isResult = true;
-				/*
+
 				 * [2019-12-16 yslee]
 				 * 트랜잭션 처리가 되어있지 않은 상태
 				 * 개발서버에서 확인 결과 Controller에서는 트랜잭션이 안걸려있기때문에
@@ -609,28 +610,85 @@ public class SrvyDtaController extends BaseController {
 				 * 최종 프로시저(prc_aggregate_general) 까지 다 돌아버림.
 				 * 그 후에 API가 차례대로 돌아간다.
 				 * PNG파일은 차례대로 정상적으로 "균열분석이미지" 폴더에 다운로드 됨
-				 */
+
 				//this.transactionManager.commit(status);// 트랜잭션 커밋
 			} catch (Exception e) {
 			    e.printStackTrace();
 				isResult = false;
 				//this.transactionManager.rollback(status);// 트랜잭션 롤백
-			}
+			}*/
 		}
 
-		model.addAttribute("result", isResult);
+		/*model.addAttribute("result", isResult);
 		model.addAttribute("resultCode", resultCode);
 		model.addAttribute("resultMsg", resultMsg);
 		model.addAttribute("totCount", totCount);
-		model.addAttribute("callBackFunction", funCallback); // 처리후 호출 함수
+		model.addAttribute("callBackFunction", funCallback); // 처리후 호출 함수 */
 
-		return "jsonView";
+		return "redirect:/srvy/excel/srvyDtaExcelUploadList.do";
 	}
 
-	@RequestMapping(value = "/srvyDtaUploadResultList.do")
-	public String srvyDtaUploadResultList(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+	/**
+	 * 엑셀 조사자료 파일을 서버로 전송한다
+	 *
+	 * @param srvyDtaExcelVO
+	 * @param model
+	 * @param request
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/srvyDtaFileUpload2.do")
+	public String fileUpload2(@ModelAttribute SrvyDtaVO srvyDtaVO, SrvyDtaLogVO srvyDtaLogVO, PavFrmulaVO pavFrmulaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
 
-		return "/srvy/srvyDtaUploadResultList";
+		//TransactionStatus status = this.transactionManager.getTransaction(new DefaultTransactionDefinition());
+		boolean isResult = false;
+		String resultCode = "";
+		String resultMsg = "";
+		String srvyNo = "";
+		String excelFileNm = "";
+		int totCount = 0;
+
+		String userNo = sessionManager.getUserNo();
+		//String funCallback = srvyDtaVO.getCallBackFunction() == null ? "" : srvyDtaVO.getCallBackFunction();
+
+		/** validate request type */
+		Assert.state(request instanceof MultipartHttpServletRequest, "request !instanceof MultipartHttpServletRequest");
+		final MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+		String origin_filenm = request.getParameter("fileNm");
+
+		// ###################################################
+		// ## 1. zip 파일 저장
+		// ###################################################
+		/** extract files */
+		final List<MultipartFile> files = multiRequest.getFiles("files");
+		Assert.notNull(files, "files is null");
+		Assert.state(files.size() > 0, "0 files exist");
+
+		String filePath = pathInfoProperties.getProperty("file.upload.path");
+
+		Date currentDate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String date = sdf.format(currentDate);
+
+		// 기존의 파일 srvy폴더에 새로 저장
+		List<AttachFileVO> fileList = FileUploadUtils.saveFileList(filePath, "srvy", files, date);
+		//List<AttachFileVO> fileList = FileUploadUtils.saveOriginFile(filePath, "srvy_org", files);
+		// ###################################################
+
+		if (fileList.size() < 1 || userNo == null || userNo.equals("")) {
+			resultCode = "ERROR";
+			resultMsg = "등록오류발생";
+		} else {
+
+			// 기존파일 삭제
+			File origin_file = new File(filePath + "/srvy_org/" + origin_filenm);
+			origin_file.delete();
+
+			//DB저장
+		}
+
+		return "redirect:/srvydtaexcel/selectSrvyDtaExcelList.do";
 	}
 
 	/**

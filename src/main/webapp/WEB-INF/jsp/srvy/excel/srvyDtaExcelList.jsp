@@ -23,11 +23,6 @@ $( document ).ready(function() {
 
     COMMON_FILE.clearMultiFile('#file_list', '#files');
 
-    $("#files").change(function(){
-        var extn = ["zip"];
-        COMMON_FILE.setMultiFiles('#file_list', this, extn, 'N', 1);
-    });
-
     // 검색 목록 그리드 구성
     $("#gridArea").jqGrid({
         url: contextPath + 'srvy/api/srvyDtaUploadResultList.do'
@@ -40,7 +35,7 @@ $( document ).ready(function() {
         ,postData: $("#frm").cmSerializeObject()
         ,ignoreCase: true
         //,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
-        ,colNames:["노선번호","노선명","행선","차로","성공여부","진행률","조사일자","등록자","분석자료","등록번호","조사번호"]
+        ,colNames:["노선번호","노선명","행선","차로","성공여부","분석진행률","조사일자","등록자","분석자료","등록번호","조사번호"]
         ,colModel:[
              {name:'route_CODE',index:'route_CODE', align:'center', width:70}
             ,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
@@ -140,19 +135,26 @@ $( document ).ready(function() {
     // #####################################
 });
 
+function file_change(files){
+	//var extn = ["zip"];
+    //COMMON_FILE.setMultiFiles('#file_list', files, extn, 'N', 1);
+
+	 var fileData = '<li id="file">'
+ 	 + '    <input id="fileNm" name="fileNm" class="filename" value="' + files + '" style="border: 0;background: 0;">'
+ 	 + '	<a href="#" class="delbtn" id="fileDel_1" onclick="COMMON_FILE.delMultiFile(this)"><img src="/gpms/images/ic_del.png" alt="삭제" /></a>'
+ 	 + '</li>';
+
+	$('#file_list').find("ul[id=fileSet]").append(fileData);
+
+}
+
 //파일 전송
 function fn_file_upload(){
-    var files = COMMON_FILE.getMultiFileIns();
 
     var form = $('#filefrm')[0];
     var formData = new FormData(form);
 
-    var len = 0;
-    for(var i in files){
-        if(files[i] == i){continue;}
-        formData.append("files", files[i]);
-        len ++;
-    }
+	var fileSet = $('#fileSet').html();
 
     if($('#SRVY_DE').val() == '' ) {
         alert("조사일자를 선택하세요");
@@ -181,11 +183,10 @@ function fn_file_upload(){
     formData.append("DIRECT_CODE", $('#DIRECT_CODE').val());
     formData.append("TRACK", $('#TRACK').val());
 
-    if(len < 1){
+    if(fileSet == null){
         alert("조사자료 파일을 선택해주세요.");
         return;
     }
-
 
     parent.$("#dvProgress").dialog("open");
     parent.$("#t_progress").text("파일 전송 중 입니다.");
@@ -337,6 +338,11 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
     });
 };
 
+//엑셀업로드
+function fnFileSave() {
+	COMMON_UTIL.cmWindowOpen('포장공사 이력 엑셀 업로드', "<c:url value='/srvy/excel/srvyDtaExcelUploadList.do'/>", 290, 380, true, $("#wnd_id").val(), 'center');
+}
+
 </script>
 </head>
 <body style="height:326px;">
@@ -373,12 +379,12 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
 
         <div class="contents container">
           <article class="div3">
-            <form id="searchForm" name="searchForm" action="<c:url value="/srvy/srvyDtaFileUpload.do" />" method="post" enctype="multipart/form-data">
+            <form id="searchForm" name="searchForm" action="<c:url value="/srvy/srvyDtaFileUpload2.do" />" method="post" enctype="multipart/form-data">
                 <h3 class="h3">파일첨부</h3>
                 <span class="haderBtn">
-                    <a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#files', 1);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
+                	<a href="#" class="whitebtn fr mt10" onclick="fnFileSave();" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a>
+                    <%--<a href="#" class="whitebtn fr mt10" onclick="COMMON_FILE.addMultiFile('#file_list', '#files', 1);" ><img src="<c:url value='/images/ic_folder.png'/>" alt="" /> 파일선택</a> --%>
                     <!-- <input type="button" class="btn pri btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 1);"  value="파일선택"> -->
-                    <input id="files" name="files" multiple="multiple" type="file" accept=".zip" style="display:none;" class="whitebtn fr mt10" style="width:80px;"/>
                 </span>
 
                 <div class="table">
@@ -424,16 +430,16 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
                         </tbody>
                     </table>
                     <div class="btfilebx" id="file_list">
-                        <ul name="fileSet"></ul>
+                        <ul id="fileSet"></ul>
                         <input type="button" class="btn pri" onclick="fn_file_upload()" value="전송" />
                     </div>
 
                     <p>※ 첨부 파일은 압축(zip) 파일만 업로드 가능합니다.</p>
 
-                    <div class="progress">
+                    <!-- <div class="progress">
                         <div class="bar"></div >
                         <div class="percent">0%</div >
-                    </div>
+                    </div> -->
 
                     <div id="status"></div>
 

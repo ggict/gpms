@@ -60,6 +60,18 @@ public class MvRoadController extends BaseController {
 	 * @return "/mvroad/mvRoadPop"
 	 * @exception Exception
 	 */
+	@RequestMapping(value = { "/mvroad/MvRoadPop.do" })
+	public String MvRoadPop(@ModelAttribute MvRoadVO mvroadVO,  ModelMap model, HttpServletRequest request) throws Exception {
+
+		return "/mvroad/mvRoadPop" ;
+	}
+
+	/**
+	 * 특별관리구간 상세정보를 조회한다.
+	 * @param
+	 * @return "/mvroad/mvRoadPop"
+	 * @exception Exception
+	 */
 	@RequestMapping(value = { "/mvroad/selectMvRoadPop.do" })
 	public String selectMvRoadPop(@ModelAttribute MvRoadVO mvroadVO,  ModelMap model, HttpServletRequest request) throws Exception {
 
