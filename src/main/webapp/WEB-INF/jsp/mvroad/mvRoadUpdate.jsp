@@ -8,12 +8,15 @@
 
 <%@ include file="/include/common_head.jsp" %>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 
 var total = ${result.PAV_THICK_ASCON} + ${result.PAV_THICK_BASE} + ${result.PAV_THICK_ASSTNBASE};
 
 $( document ).ready(function() {
+	cmCreateDatepicker('BSNS_BEGIN_YEAR', 10, "/images/btn_calendar.gif", "yy");
+    cmCreateDatepicker('BSNS_END_YEAR', 10, "/images/btn_calendar.gif", "yy");
+    cmCreateDatepicker('COMPET_DE', 15, "/images/btn_calendar.gif", "yy-mm-dd");
+
 	$('#PAV_TOTAL').text(total);
 
 	$(".selbtn").click(function () {
@@ -152,9 +155,39 @@ function fn_delete(spcl_no){
 }
 
 function fn_plus(){
-	var total = parseInt($('#PAV_THICK_ASCON').val()) + parseInt($('#PAV_THICK_BASE').val()) + parseInt($('#PAV_THICK_ASSTNBASE').val());
+	var total = (parseFloat($('#PAV_THICK_ASCON').val())||0) + (parseFloat($('#PAV_THICK_BASE').val())||0) + (parseFloat($('#PAV_THICK_ASSTNBASE').val())||0);
 	$('#PAV_TOTAL').text(total);
 }
+
+//노선 번호 변경 시 노선명 자동 조회
+function fn_change_roadNm() {
+    var roadName = $("#ROUTE_CODE option:selected").data("roadname");
+    $("#ROAD_NAME").val(roadName);
+}
+
+var cmCreateDatepicker = function(_oId, _oSize, imgPath, dateFormat){
+    var vbtnImg = contextPath+ "/images/ico_date.png";
+    if(imgPath!=null && imgPath!=undefined  && imgPath!=""){
+        vbtnImg = contextPath+ imgPath;
+    }
+
+    // 년도만 출력할 경우
+    if ( dateFormat == "yy" ) {
+        $("table.ui-datepicker-calendar").hide();
+    } else {
+        $("table.ui-datepicker-calendar").show();
+    }
+
+    $( "#"+_oId ).width(_oSize*8).datepicker({
+         changeMonth: true
+        ,changeYear: true
+        ,numberOfMonths: 1
+        ,showOn: "button"
+        ,buttonImage: vbtnImg
+        ,buttonImageOnly: true
+        ,dateFormat:dateFormat
+    });
+};
 </script>
 
 </head>
@@ -180,12 +213,18 @@ function fn_plus(){
 
    .tableH td {
       color: #333;
-      text-align: center;
+      text-align: left;
       vertical-align: middle;
       width: 33%;
       font-size: 12px;
       border: #e1e1e0 solid 1px;
       padding: 6px 6px;
+      line-height: 1.3em;
+   }
+
+   .tableH td div {
+      color: #333;
+      font-size: 12px;
       line-height: 1.3em;
    }
 
@@ -206,7 +245,7 @@ function fn_plus(){
 
    .tableh td {
       color: #333;
-      text-align: center;
+      text-align: left;
       vertical-align: middle;
       font-size: 12px;
       border: #e1e1e0 solid 1px;
@@ -214,9 +253,10 @@ function fn_plus(){
       line-height: 1.3em;
    }
 
-   .input {
-   	    border: 0;
-    	width: 100%;
+   .tableh td span {
+      color: #333;
+      font-size: 12px;
+      line-height: 1.3em;
    }
 
 	.pri {
@@ -262,62 +302,71 @@ function fn_plus(){
 	   <tr>
 	      <th colspan="2">사업명</th>
 	      <td>
-	      		<input type="text" id="BSNS_NM" name="BSNS_NM" value="${result.BSNS_NM}" class="input">
+	      		<input type="text" id="BSNS_NM" name="BSNS_NM" value="${result.BSNS_NM}" class="input" maxlength="200">
 	      </td>
 	      <th>공사구간</th>
 	      <td>
-	            <input type="text" id="CNTRWK_SCTN" name="CNTRWK_SCTN" value="${result.CNTRWK_SCTN}" class="input">
+	            <input type="text" id="CNTRWK_SCTN" name="CNTRWK_SCTN" value="${result.CNTRWK_SCTN}" class="input" maxlength="1000">
 	      </td>
 	   </tr>
 	   <tr>
 	      <th colspan="2">노선명</th>
 	      <td>
-	      		<input type="text" id="ROUTE_CODE" name="ROUTE_CODE" value="${result.ROUTE_CODE}" class="input">
+	      		<select id="ROUTE_CODE" name="ROUTE_CODE" alt="노선번호" onchange="fn_change_roadNm();" class="input" style="width:100px;">
+                    <option value="">선택</option>
+                    <c:forEach items="${roadNoList}" var="roadNo">
+                        <option value="${roadNo.ROAD_NO }" data-roadname="<c:out value="${roadNo.ROAD_NAME}"/>" <c:if test="${ roadNo.ROAD_NO eq result.ROUTE_CODE }">selected="selected"</c:if>>${roadNo.ROAD_NO_VAL }</option>
+                        <c:if test="${ roadNo.ROAD_NO eq result.ROUTE_CODE }">
+                            <c:set var="ROAD_NAME" value="${roadNo.ROAD_NAME }" />
+                        </c:if>
+                    </c:forEach>
+                 </select>
+                 <input type="text" name="ROAD_NAME" id="ROAD_NAME" readonly="readonly" value="${ROAD_NAME }" style="width: 50%">
 	      </td>
 	      <th>차로수</th>
 	      <td>
-	      		<input type="text" id="TRACK_CO" name="TRACK_CO" value="${result.TRACK_CO}" class="input">
+	      		<input type="number" id="TRACK_CO" name="TRACK_CO" value="${result.TRACK_CO}" class="input" maxlength="2">
 	      </td>
 	   </tr>
 	   <tr>
 	      <th colspan="2">사업량<br>(km)</th>
 	      <td>
-	      		<input type="text" id="BSNS_QY" name="BSNS_QY" value="${result.BSNS_QY}" class="input">
+	      		<input type="number" id="BSNS_QY" name="BSNS_QY" value="${result.BSNS_QY}" class="input" step="0.01">
 	      </td>
 	      <th>총사업비<br>(백만원)</th>
 	      <td>
-	      		<input type="text" id="TOT_WCT" name="TOT_WCT" value="${result.TOT_WCT}" class="input">
+	      		<input type="number" id="TOT_WCT" name="TOT_WCT" value="${result.TOT_WCT}" class="input" maxlength="10">
 	      </td>
 	   </tr>
 	   <tr>
 	      <th colspan="2">사업기간<br>(준공년월일)</th>
 	      <td>
 	      		<div>
-		      		<input type="text" id="BSNS_BEGIN_YEAR" name="BSNS_BEGIN_YEAR" value="${result.BSNS_BEGIN_YEAR}" class="input" style="width: 40%;"> ~
-		      		<input type="text" id="BSNS_END_YEAR" name="BSNS_END_YEAR" value="${result.BSNS_END_YEAR}" class="input" style="width: 40%;">
+		      		<input type="text" id="BSNS_BEGIN_YEAR" name="BSNS_BEGIN_YEAR" value="${result.BSNS_BEGIN_YEAR}" class="input" maxlength="4"> ~
+		      		<input type="text" id="BSNS_END_YEAR" name="BSNS_END_YEAR" value="${result.BSNS_END_YEAR}" class="input" maxlength="4">
 	      		</div>
-	      		<input type="text" id="COMPET_DE" name="COMPET_DE" value="${result.COMPET_DE}" class="input">
+	      		(<input type="text" id="COMPET_DE" name="COMPET_DE" value="${result.COMPET_DE}" class="input" maxlength="10">)
 	      </td>
 	      <th>사업시행자</th>
 	      <td>
-	      		<input type="text" id="BSNS_OPERTN_MAN" name="BSNS_OPERTN_MAN" value="${result.BSNS_OPERTN_MAN}" class="input">
+	      		<input type="text" id="BSNS_OPERTN_MAN" name="BSNS_OPERTN_MAN" value="${result.BSNS_OPERTN_MAN}" class="input" maxlength="100">
 	      </td>
 	   </tr>
 	   <tr>
 	      <th rowspan="2">위치</th>
 	      <th>시점</th>
 	      <td>
-	      		<input type="text" id="STRTPT_NM" name="STRTPT_NM" value="${result.STRTPT_NM}" class="input">
+	      		<input type="text" id="STRTPT_NM" name="STRTPT_NM" value="${result.STRTPT_NM}" class="input" maxlength="100">
 	      </td>
 	      <th rowspan="2">주요 통과지</th>
 	      <td rowspan="2">
-	      		<input type="text" id="MAJOR_PASAGEPAPR" name="MAJOR_PASAGEPAPR" value="${result.MAJOR_PASAGEPAPR}" class="input">
+	      		<input type="text" id="MAJOR_PASAGEPAPR" name="MAJOR_PASAGEPAPR" value="${result.MAJOR_PASAGEPAPR}" class="input" maxlength="100">
 	      </td>
 	   </tr>
 	   <tr>
 	      <th>종점</th>
 	      <td>
-	      		<input type="text" id="ENDPT_NM" name="ENDPT_NM" value="${result.ENDPT_NM}" class="input">
+	      		<input type="text" id="ENDPT_NM" name="ENDPT_NM" value="${result.ENDPT_NM}" class="input" maxlength="100">
 	      </td>
 	   </tr>
 	</table>
@@ -345,54 +394,42 @@ function fn_plus(){
 	   </tr>
 	   <tr>
 	      <td>
-	      		<input type="text" id="PAV_MTRQLT" name="PAV_MTRQLT" value="${result.PAV_MTRQLT}" class="input">
+	      		<input type="text" id="PAV_MTRQLT" name="PAV_MTRQLT" value="${result.PAV_MTRQLT}" class="input" maxlength="100">
 	      </td>
 	      <td>
 				<span id="PAV_TOTAL"></span>
 	      </td>
 	      <td>
-	      		<input type="text" id="PAV_THICK_ASCON" name="PAV_THICK_ASCON" value="${result.PAV_THICK_ASCON}" class="input" onchange="fn_plus();">
+	      		<input type="number" id="PAV_THICK_ASCON" name="PAV_THICK_ASCON" value="${result.PAV_THICK_ASCON}" class="input" onchange="fn_plus();" maxlength="6" step="0.01">
 	      </td>
 	      <td>
-	      		<input type="text" id="PAV_THICK_BASE" name="PAV_THICK_BASE" value="${result.PAV_THICK_BASE}" class="input" onchange="fn_plus();">
+	      		<input type="number" id="PAV_THICK_BASE" name="PAV_THICK_BASE" value="${result.PAV_THICK_BASE}" class="input" onchange="fn_plus();" maxlength="6" step="0.01">
 	      </td>
 	      <td>
-	      		<input type="text" id="PAV_THICK_ASSTNBASE" name="PAV_THICK_ASSTNBASE" value="${result.PAV_THICK_ASSTNBASE}" class="input" onchange="fn_plus();">
+	      		<input type="number" id="PAV_THICK_ASSTNBASE" name="PAV_THICK_ASSTNBASE" value="${result.PAV_THICK_ASSTNBASE}" class="input" onchange="fn_plus();" maxlength="6" step="0.01">
 	      </td>
 	      <td>
-	      		<select id="TUNNEL_KND" name="TUNNEL_KND">
-	      			<option <c:if test="${result.TUNNEL_KND eq '2차로'}">selected</c:if>>2차로</option>
-					<option <c:if test="${result.TUNNEL_KND eq '3차로'}">selected</c:if>>3차로</option>
-					<option <c:if test="${result.TUNNEL_KND eq '4차로'}">selected</c:if>>4차로</option>
-					<option <c:if test="${result.TUNNEL_KND eq '5차로'}">selected</c:if>>5차로</option>
-					<option <c:if test="${result.TUNNEL_KND eq '이상'}">selected</c:if>>이상</option>
-	      		</select>
+                <input type="text" id="TUNNEL_KND" name="TUNNEL_KND" value="${result.TUNNEL_KND}" class="input" maxlength="100">
 	      </td>
 	      <td>
-	      		<input type="text" id="TUNNEL_CO" name="TUNNEL_CO" value="${result.TUNNEL_CO}" class="input">
+	      		<input type="number" id="TUNNEL_CO" name="TUNNEL_CO" value="${result.TUNNEL_CO}" class="input" maxlength="2">
 	      </td>
 	      <td>
-	      		<input type="text" id="TUNNEL_LEN" name="TUNNEL_LEN" value="${result.TUNNEL_LEN}" class="input">
+	      		<input type="number" id="TUNNEL_LEN" name="TUNNEL_LEN" value="${result.TUNNEL_LEN}" class="input" maxlength="8" step="0.01">
 	      </td>
 	      <td>
-	      		<select id="BRIDGE_KND" name="BRIDGE_KND">
-	      			<option <c:if test="${result.BRIDGE_KND eq '강교'}">selected</c:if>>강교</option>
-					<option <c:if test="${result.BRIDGE_KND eq '철근'}">selected</c:if>>철근</option>
-					<option <c:if test="${result.BRIDGE_KND eq '콘크리트교'}">selected</c:if>>콘크리트교</option>
-					<option <c:if test="${result.BRIDGE_KND eq '합성교'}">selected</c:if>>합성교</option>
-					<option value="etc" <c:if test="${result.BRIDGE_KND eq 'etc'}">selected</c:if>>그 밖의 교량</option>
-	      		</select>
+	      		<input type="text" id="BRIDGE_KND" name="BRIDGE_KND" value="${result.BRIDGE_KND}" class="input" maxlength="100">
 	      </td>
 	      <td>
-	      		<input type="text" id="BRIDGE_CO" name="BRIDGE_CO" value="${result.BRIDGE_CO}" class="input">
+	      		<input type="number" id="BRIDGE_CO" name="BRIDGE_CO" value="${result.BRIDGE_CO}" class="input" maxlength="2">
 	      </td>
 	      <td>
-	      		<input type="text" id="BRIDGE_LEN" name="BRIDGE_LEN" value="${result.BRIDGE_LEN}" class="input">
+	      		<input type="number" id="BRIDGE_LEN" name="BRIDGE_LEN" value="${result.BRIDGE_LEN}" class="input" maxlength="8" step="0.01">
 	      </td>
 	   </tr>
 	</table>
 
-<div style="margin-top: 20px;text-align: right;" class="btfilebx">
+<div style="margin-top: 20px;margin-bottom: 20px;text-align: right;" class="btfilebx">
 	<input type="submit" class="btn pri" value="수정">
 </div>
 

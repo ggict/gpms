@@ -509,6 +509,9 @@ $( document ).ready(function() {
 	COMMON_UTIL.cmInitGridSize('gridArea', 'div_grid', $("#div_grid").height());
 
 	fnSearch();
+
+	// 선정구간 지도위치보기
+	fn_select_cellSectFilter();
 });
 
 //도면 다운로드, 위치이동 버튼 생성

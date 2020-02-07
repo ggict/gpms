@@ -284,6 +284,10 @@ public class RpairTrgetSlctnVO extends BaseVO {
 	@XmlElement
     private java.lang.String ANALS_UNIT_CODE;
 
+	/** 분석_단위_명 */
+	@XmlElement
+	private java.lang.String ANALS_UNIT_NM;
+
 	/** 선정_년도 */
 	@XmlElement
 	private java.lang.String SLCTN_YEAR;
@@ -872,6 +876,15 @@ public class RpairTrgetSlctnVO extends BaseVO {
 
     public void setANALS_UNIT_CODE(java.lang.String aNALS_UNIT_CODE) {
         ANALS_UNIT_CODE = aNALS_UNIT_CODE;
+    }
+
+    @JsonProperty(value="ANALS_UNIT_NM")
+    public java.lang.String getANALS_UNIT_NM() {
+        return ANALS_UNIT_NM;
+    }
+
+    public void setANALS_UNIT_NM(java.lang.String aNALS_UNIT_NM) {
+        ANALS_UNIT_NM = aNALS_UNIT_NM;
     }
 
     @JsonProperty(value="SLCTN_YEAR")

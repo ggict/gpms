@@ -305,6 +305,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 
 	        fos.close();
 		} catch (Exception e) {
+		    e.printStackTrace();
 			fos.close();
 		}
 	}

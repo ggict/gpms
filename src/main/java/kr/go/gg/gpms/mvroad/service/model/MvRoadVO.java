@@ -7,8 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import kr.go.gg.gpms.base.model.BaseVO;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * CELL_SECT
  *
@@ -81,6 +79,8 @@ public class MvRoadVO extends BaseVO {
 		private java.lang.String BRIDGE_CO;
 	@XmlElement
 		private java.lang.String BRIDGE_LEN;
+	@XmlElement
+	    private java.lang.String ROUTE_NM;
 
 	public java.lang.String getSPCL_NO() {
 		return SPCL_NO;
@@ -226,6 +226,12 @@ public class MvRoadVO extends BaseVO {
 	public void setBRIDGE_LEN(java.lang.String bRIDGE_LEN) {
 		BRIDGE_LEN = bRIDGE_LEN;
 	}
+    public java.lang.String getROUTE_NM() {
+        return ROUTE_NM;
+    }
+    public void setROUTE_NM(java.lang.String rOUTE_NM) {
+        ROUTE_NM = rOUTE_NM;
+    }
 
 
 

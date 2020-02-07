@@ -8,7 +8,6 @@
 
 <%@ include file="/include/common_head.jsp" %>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 var total = ${result.PAV_THICK_ASCON} + ${result.PAV_THICK_BASE} + ${result.PAV_THICK_ASSTNBASE};
 
@@ -93,6 +92,12 @@ function fn_update(spcl_no){
       line-height: 1.3em;
    }
 
+   .tableH td div {
+      color: #333;
+      font-size: 12px;
+      line-height: 1.3em;
+   }
+
    .tableh {
       width: 100%;
       border-collapse: collapse;
@@ -118,9 +123,10 @@ function fn_update(spcl_no){
       line-height: 1.3em;
    }
 
-   .input {
-   	    border: 0;
-    	width: 100%;
+   .tableh td span {
+      color: #333;
+      font-size: 12px;
+      line-height: 1.3em;
    }
 
 	.pri {
@@ -176,7 +182,7 @@ function fn_update(spcl_no){
 						   <tr>
 						      <th colspan="2">노선명</th>
 						      <td>
-									${result.ROUTE_CODE}
+									${result.ROUTE_NM}
 						      </td>
 						      <th>차로수</th>
 						      <td>
@@ -288,7 +294,7 @@ function fn_update(spcl_no){
             </ul>
         </div>
 
-	<div style="margin-top: 20px;text-align: right;" class="btfilebx">
+	<div style="margin-top: 20px;margin-bottom: 20px;text-align: right;" class="btfilebx">
 		<input type="button" class="btn pri" value="삭제" onclick="fn_delete(${result.SPCL_NO});" style="margin-left:10px;">
 		<input type="button" class="btn pri" value="수정" onclick="fn_update(${result.SPCL_NO});">
 	</div>

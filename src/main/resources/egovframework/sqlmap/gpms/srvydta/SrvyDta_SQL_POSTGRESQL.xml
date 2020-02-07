@@ -366,6 +366,7 @@
                         AA.SRVY_NO = tnsrvydta.SRVY_NO
                         AND AA.MSG_CODE != 'I'
                 ) DATA_PROGRS_CNT
+                , tnsrvydta.SRVY_NM
 			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
 		   WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
 		   	 AND tnsrvydta.CRTR_NO = tlsrvydtalog.CRTR_NO

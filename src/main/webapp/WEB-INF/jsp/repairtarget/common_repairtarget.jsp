@@ -22,7 +22,7 @@
 			                <input type="hidden" id="TRGET_SLCTN_NO" name="TRGET_SLCTN_NO" value=""/>
 
 			            <c:forEach var="anun" items="${anunList}" varStatus="status">
-			                <input type="radio" id="ANALS_UNIT_CODE<c:out value="${status.index}" />" name="ANALS_UNIT_CODE" value="<c:out value="${anun.CODE_VAL}" />" /><label for="ANALS_UNIT_CODE<c:out value="${status.index}" />" class="wid30" ><c:out value="${anun.CODE_NM}" /></label>
+			                <input type="radio" id="ANALS_UNIT_CODE<c:out value="${status.index}" />" name="ANALS_UNIT_CODE" value="<c:out value="${anun.CODE_VAL}" />" data-anals_unit_nm="<c:out value="${anun.CODE_NM}" />" /><label for="ANALS_UNIT_CODE<c:out value="${status.index}" />" class="wid30" ><c:out value="${anun.CODE_NM}" /></label>
 			            </c:forEach>
                         </td>
     				</tr>
@@ -34,7 +34,6 @@
 			                        <option value="${slctnYear}">${slctnYear}년</option>
 			                    </c:forEach>
 			                </select>
-
                         </td>
     				</tr>
     				</tbody>
@@ -99,7 +98,7 @@ function fnRefreshRepairTarget(){
         	// 년도이력 출력
         	$.each(data, function() {
 //         	    var yearHis = '<h5 class="pt10 pb10"><a href="javascript:loadRepairTargets(' + this.SLCTN_YEAR + ', ' + this.TRGET_SLCTN_NO + ')"><img src="images/ic_date.png" alt="날짜선택" class="vm" style="padding-left: 15px;" />&nbsp;&nbsp;'+ this.SLCTN_YEAR +'년</a></h5>';
-        	    var yearHis = '<h5 class="pt10 pb10"><a href="javascript:fnRepairTargetLoad(' + this.TRGET_SLCTN_NO + ')"><img src="images/ic_date.png" alt="날짜선택" class="vm" style="padding-left: 15px;" />&nbsp;&nbsp;'+ this.SLCTN_YEAR +'년</a></h5>';
+        	    var yearHis = '<h5 class="pt10 pb10"><a href="javascript:fnRepairTargetLoad(' + this.TRGET_SLCTN_NO + ')"><img src="images/ic_date.png" alt="날짜선택" class="vm" style="padding-left: 15px;" />&nbsp;&nbsp;'+ this.SLCTN_YEAR +'년 '+ this.ANALS_UNIT_NM + '</a></h5>';
                 $("#repairTargetList").append(yearHis);
         	});
 
@@ -133,7 +132,8 @@ function loadRepairTargets(slctn_opert_nm, trget_slctn_no){
  */
 function fnRepairTargetStart(){
 	var slctnYear = $("#SLCTN_YEAR").val();
-    var msgContents = "보수대상 선정작업을 시작하시겠습니까?<br/>" + slctnYear + "년 선정된 데이터가 존재한다면 초기화됩니다.<br />";
+	var analsUnitNm = $("input[name='ANALS_UNIT_CODE']:checked").data("anals_unit_nm");
+    var msgContents = "보수대상 선정작업을 시작하시겠습니까?<br/>" + slctnYear + "년 " + analsUnitNm + "로 선정된 데이터가 존재한다면 초기화됩니다.<br />";
     $("#divRTDialog").dialog({title : "보수대상 선정 - 선정 시작" , width: "380px" });
     var buttonTags = '<a href="#" class="schbtn" onclick="repairTargetStart();" style="width:70px" >선정 시작</a>&nbsp;&nbsp;';
     buttonTags += '<a href="#" class="graybtn" onclick="closeRTDialog();" style="width:70px" >취소</a>';

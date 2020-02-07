@@ -130,13 +130,17 @@
                  , tnrpairtrgetslctn.SLCTN_BUDGET_3    /* 보수_대상_선정.선정_예산_3_BF_2 */
                  , tnrpairtrgetslctn.SLCTN_BUDGET_4    /* 보수_대상_선정.선정_예산_4 */
                  , tnrpairtrgetslctn.SLCTN_BUDGET_5    /* 보수_대상_선정.선정_예산_5 */
-                 , tnrpairtrgetslctn.SLCTN_YEAR    /* 보수_대상_선정.선정_년도 */
+                 , tnrpairtrgetslctn.SLCTN_YEAR        /* 보수_대상_선정.선정_년도 */
+                 , tnrpairtrgetslctn.ANALS_UNIT_CODE   /* 보수_대상_선정.분석_단위_코드 */
+                 , B.CODE_NM         ANALS_UNIT_NM     /* 보수_대상_선정.분석_단위_명 */
                 FROM TN_RPAIR_TRGET_SLCTN tnrpairtrgetslctn
+                INNER JOIN TC_CODE B
+                    ON B.CODE_VAL = tnrpairtrgetslctn.ANALS_UNIT_CODE
         ]]>
         <include refid="rpairTrgetSlctnDAO.selectRpairTrgetSlctnList.where" />
             <![CDATA[
                 ORDER BY
-                        tnrpairtrgetslctn.SLCTN_DT DESC, tnrpairtrgetslctn.TRGET_SLCTN_NO DESC /* 보수_대상_선정.대상_선정_번호 */
+                        tnrpairtrgetslctn.SLCTN_YEAR DESC, tnrpairtrgetslctn.ANALS_UNIT_CODE
                 ) tb) tnrpairtrgetslctn  WHERE 1=1
             ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
@@ -159,6 +163,7 @@
             WHERE
                 1 = 1
                 AND SLCTN_YEAR               = #SLCTN_YEAR#                /* 보수_대상_선정.선정_년도 */
+                AND ANALS_UNIT_CODE          = #ANALS_UNIT_CODE#           /* 보수_대상_선정.분석_단위_코드 */
         ]]>
     </delete>
 

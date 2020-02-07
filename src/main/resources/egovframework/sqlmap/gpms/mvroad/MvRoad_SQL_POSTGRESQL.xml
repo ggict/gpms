@@ -98,30 +98,31 @@
             /* mvRoadDAO.selectMvRoad */
             /* 특별관리구간 상세정보 조회 */
             SELECT
-		            BSNS_NM
-					,ROUTE_CODE
-					,CNTRWK_SCTN
-					,TRACK_CO::numeric
-					,BSNS_QY::numeric
-					,TOT_WCT::numeric
-					,BSNS_BEGIN_YEAR
-					,BSNS_END_YEAR
-					,COMPET_DE
-					,BSNS_OPERTN_MAN
-					,STRTPT_NM
-					,ENDPT_NM
-					,MAJOR_PASAGEPAPR
-					,PAV_MTRQLT
-					,PAV_THICK_ASCON::numeric
-					,PAV_THICK_BASE::numeric
-					,PAV_THICK_ASSTNBASE::numeric
-					,TUNNEL_KND
-					,TUNNEL_CO::numeric
-					,TUNNEL_LEN::numeric
-					,BRIDGE_KND
-					,BRIDGE_CO::numeric
-					,BRIDGE_LEN::numeric
-              FROM TN_SPECL_MANAGE_SCTN_DETAIL
+		            A.BSNS_NM
+					,A.ROUTE_CODE
+					,(A.ROUTE_CODE::NUMERIC::VARCHAR) || '호선' ROUTE_NM
+					,A.CNTRWK_SCTN
+					,A.TRACK_CO::numeric
+					,A.BSNS_QY::numeric
+					,A.TOT_WCT::numeric
+					,A.BSNS_BEGIN_YEAR
+					,A.BSNS_END_YEAR
+					,A.COMPET_DE
+					,A.BSNS_OPERTN_MAN
+					,A.STRTPT_NM
+					,A.ENDPT_NM
+					,A.MAJOR_PASAGEPAPR
+					,A.PAV_MTRQLT
+					,A.PAV_THICK_ASCON::numeric
+					,A.PAV_THICK_BASE::numeric
+					,A.PAV_THICK_ASSTNBASE::numeric
+					,A.TUNNEL_KND
+					,A.TUNNEL_CO::numeric
+					,A.TUNNEL_LEN::numeric
+					,A.BRIDGE_KND
+					,A.BRIDGE_CO::numeric
+					,A.BRIDGE_LEN::numeric
+              FROM TN_SPECL_MANAGE_SCTN_DETAIL A
              WHERE spcl_no = #SPCL_NO#::numeric
         ]]>
     </select>

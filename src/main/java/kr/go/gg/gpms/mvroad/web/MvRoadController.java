@@ -3,35 +3,23 @@
 
 package kr.go.gg.gpms.mvroad.web;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.cell10.service.Cell10Service;
-import kr.go.gg.gpms.cellsect.service.CellSectService;
-import kr.go.gg.gpms.mvroad.service.MvRoadService;
-import kr.go.gg.gpms.mvroad.service.model.MvRoadVO;
-import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
-import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import egovframework.rte.fdl.property.EgovPropertyService;
-import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
+import kr.go.gg.gpms.base.web.BaseController;
+import kr.go.gg.gpms.mvroad.service.MvRoadService;
+import kr.go.gg.gpms.mvroad.service.model.MvRoadVO;
+import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
+import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
 
 /**
  * @Class Name : Cell10Controller.java
@@ -51,6 +39,9 @@ public class MvRoadController extends BaseController {
 
 	@Resource(name = "mvRoadService")
 	private MvRoadService mvroadService;
+
+    @Resource(name = "routeInfoService")
+    private RouteInfoService routeInfoService;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MvRoadController.class);
 
@@ -81,6 +72,12 @@ public class MvRoadController extends BaseController {
 		MvRoadVO result = mvroadService.selectMvRoad(mvroadVO);
 
 		if(result == null){
+		    RouteInfoVO routeInfoVO = new RouteInfoVO();
+	        routeInfoVO.setUsePage(false);
+	        routeInfoVO.setSidx("ROAD_NO");
+		    List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+		    model.addAttribute("roadNoList", roadNoList);
+
 			model.addAttribute("mvroadVO", mvroadVO);
 			return "/mvroad/mvRoadInsert" ;
 		}else{
@@ -130,6 +127,12 @@ public class MvRoadController extends BaseController {
 	 */
 	@RequestMapping(value = { "/mvroad/updatePgMvRoad.do" })
 	public String updatePgMvRoad(@ModelAttribute MvRoadVO mvroadVO,  ModelMap model, HttpServletRequest request) throws Exception {
+
+	    RouteInfoVO routeInfoVO = new RouteInfoVO();
+        routeInfoVO.setUsePage(false);
+        routeInfoVO.setSidx("ROAD_NO");
+        List<RouteInfoVO> roadNoList = routeInfoService.selectRouteInfoList(routeInfoVO);
+        model.addAttribute("roadNoList", roadNoList);
 
 		String spcl_no = request.getParameter("spcl_no");
 		mvroadVO.setSPCL_NO(spcl_no);
