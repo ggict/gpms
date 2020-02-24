@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="predctModelDAO">
+
+    <!-- 예측 모델 그룹 목록 -->
+    <select id="predctModelDAO.selectPredctModelList" resultClass="hashmap">
+        <![CDATA[
+            WITH PREDCT AS (
+                SELECT
+                    A.SRVY_YEAR
+                    , A.ROUTE_CODE
+                    , A.DIRECT_CODE
+                    , A.TRACK
+                    , A.STRTPT
+                    , A.ENDPT
+        ]]>
+        <isEqual property="predctModelKndSe" compareValue="LC">
+        <![CDATA[
+                    , CASE
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <isEqual property="predctModelKndSe" compareValue="AC">
+        <![CDATA[
+                    , CASE
+                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <isEqual property="predctModelKndSe" compareValue="RD">
+        <![CDATA[
+                    , CASE
+                        WHEN A.RD_VAL < (CEIL(MAX(A.RD_VAL) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN A.RD_VAL < (CEIL(MAX(A.RD_VAL) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN A.RD_VAL < (CEIL(MAX(A.RD_VAL) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN A.RD_VAL < (CEIL(MAX(A.RD_VAL) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.RD_VAL) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <isEqual property="predctModelKndSe" compareValue="IRI">
+        <![CDATA[
+                    , CASE
+                        WHEN A.IRI_VAL < (CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN A.IRI_VAL < (CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN A.IRI_VAL < (CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN A.IRI_VAL < (CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.IRI_VAL) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <isEqual property="predctModelKndSe" compareValue="GPCI">
+        <![CDATA[
+                    , CASE
+                        WHEN A.GPCI < (CEIL(MAX(A.GPCI) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN A.GPCI < (CEIL(MAX(A.GPCI) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN A.GPCI < (CEIL(MAX(A.GPCI) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN A.GPCI < (CEIL(MAX(A.GPCI) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        ELSE 'E'
+                    END GRADE
+                    , CEIL(MAX(A.GPCI) OVER() / 10) * 10 MAX
+        ]]>
+        </isEqual>
+        <![CDATA[
+                FROM TN_MUMM_SCTN_SRVY_DTA A
+                WHERE
+                    A.SRVY_YEAR IN (
+                        #SLCTN_YEAR#
+                        , (#SLCTN_YEAR#::INT - 1)::VARCHAR
+                    )
+                    AND A.DELETE_AT = 'N'
+                    AND A.USE_AT = 'Y'
+                    AND NOT EXISTS (
+                        SELECT *
+                        FROM TN_CNTRWK_CELL_INFO AA
+                        INNER JOIN CELL_10 BB
+                            ON BB.CELL_ID = AA.PAV_CELL_ID
+                            AND BB.ROUTE_CODE = A.ROUTE_CODE
+                            AND BB.DIRECT_CODE = A.DIRECT_CODE
+                            AND BB.TRACK = A.TRACK
+                            AND BB.STRTPT = A.STRTPT
+                            AND BB.ENDPT = A.ENDPT
+                        WHERE
+                            AA.PAV_YEAR = A.SRVY_YEAR
+                    )
+            )
+            SELECT
+                (SUM(CASE WHEN A.GRADE = 'A' AND B.GRADE = 'A' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) AA
+                , (SUM(CASE WHEN A.GRADE = 'A' AND B.GRADE = 'B' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) AB
+                , (SUM(CASE WHEN A.GRADE = 'A' AND B.GRADE = 'C' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) AC
+                , (SUM(CASE WHEN A.GRADE = 'A' AND B.GRADE = 'D' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) AD
+                , (SUM(CASE WHEN A.GRADE = 'A' AND B.GRADE = 'E' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) AE
+                , (SUM(CASE WHEN A.GRADE = 'B' AND B.GRADE = 'A' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) BA
+                , (SUM(CASE WHEN (A.GRADE = 'B' AND B.GRADE = 'A') OR (A.GRADE = 'B' AND B.GRADE = 'B') THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) BB
+                , (SUM(CASE WHEN A.GRADE = 'B' AND B.GRADE = 'C' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) BC
+                , (SUM(CASE WHEN A.GRADE = 'B' AND B.GRADE = 'D' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) BD
+                , (SUM(CASE WHEN A.GRADE = 'B' AND B.GRADE = 'E' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) BE
+                , (SUM(CASE WHEN A.GRADE = 'C' AND B.GRADE = 'A' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) CA
+                , (SUM(CASE WHEN A.GRADE = 'C' AND B.GRADE = 'B' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) CB
+                , (SUM(CASE WHEN (A.GRADE = 'C' AND B.GRADE = 'A') OR (A.GRADE = 'C' AND B.GRADE = 'B') OR (A.GRADE = 'C' AND B.GRADE = 'C') THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) CC
+                , (SUM(CASE WHEN A.GRADE = 'C' AND B.GRADE = 'D' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) CD
+                , (SUM(CASE WHEN A.GRADE = 'C' AND B.GRADE = 'E' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) CE
+                , (SUM(CASE WHEN A.GRADE = 'D' AND B.GRADE = 'A' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) DA
+                , (SUM(CASE WHEN A.GRADE = 'D' AND B.GRADE = 'B' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) DB
+                , (SUM(CASE WHEN A.GRADE = 'D' AND B.GRADE = 'C' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) DC
+                , (SUM(CASE WHEN (A.GRADE = 'D' AND B.GRADE = 'A') OR (A.GRADE = 'D' AND B.GRADE = 'B') OR (A.GRADE = 'D' AND B.GRADE = 'C') OR (A.GRADE = 'D' AND B.GRADE = 'D') THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) DD
+                , (SUM(CASE WHEN A.GRADE = 'D' AND B.GRADE = 'E' THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) DE
+                , (SUM(CASE WHEN A.GRADE = 'E' AND B.GRADE = 'A' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) EA
+                , (SUM(CASE WHEN A.GRADE = 'E' AND B.GRADE = 'B' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) EB
+                , (SUM(CASE WHEN A.GRADE = 'E' AND B.GRADE = 'C' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) EC
+                , (SUM(CASE WHEN A.GRADE = 'E' AND B.GRADE = 'D' THEN 0 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) ED
+                , (SUM(CASE WHEN (A.GRADE = 'E' AND B.GRADE = 'A') OR (A.GRADE = 'D' AND B.GRADE = 'B') OR (A.GRADE = 'D' AND B.GRADE = 'C') OR (A.GRADE = 'D' AND B.GRADE = 'D') OR (A.GRADE = 'E' AND B.GRADE = 'E') THEN 1 ELSE 0 END) / COUNT(*))::NUMERIC(6,5) EE
+                , (MAX(A.MAX))::NUMERIC(8,5) MAX
+            FROM PREDCT A
+            INNER JOIN PREDCT B
+                ON B.SRVY_YEAR = (#SLCTN_YEAR#::INT - 1)::VARCHAR
+                AND B.ROUTE_CODE = A.ROUTE_CODE
+                AND B.DIRECT_CODE = A.DIRECT_CODE
+                AND B.TRACK = A.TRACK
+                AND B.STRTPT = A.STRTPT
+                AND B.ENDPT = A.ENDPT
+            WHERE
+                A.SRVY_YEAR = #SLCTN_YEAR#
+        ]]>
+    </select>
+</sqlMap>
