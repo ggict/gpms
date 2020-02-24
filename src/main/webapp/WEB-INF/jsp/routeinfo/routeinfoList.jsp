@@ -177,6 +177,8 @@ $( document ).ready(function() {
     setTimeout(function() {
          fn_search();
     }, 500);
+
+    fn_select_route();
 });
 
 //검색 처리
@@ -348,6 +350,12 @@ function fn_select_route(route_no){
     var tables = ["DORO_TOT_GRS80_50"];
     var fields = ["ROAD_NO"];
     var values = [route_no];
+
+    // 노선번호 미존재시 조건 없음.
+    if ( !route_no ) {
+        fields = [[]];
+        values = [[]];
+    }
 
     // 모든 팝업창 최소화
     //parent.wWindowHideAll();

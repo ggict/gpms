@@ -70,6 +70,7 @@
             		<select style="width:200px; margin:3px;" class="sel_routeInfo" id="selRoute_MV_SRVYDTA_10"></select>
             	</div>
 
+                <%--
 	            <!-- 2017년도 평가정보 10m셀 START -->
 				<div class="titbx pt5 pl5 pr5" id="MV_SRVYDTA_10_2017">
 					<h4>
@@ -107,6 +108,7 @@
 	                </div>
 	            </div>
 	            <!-- 2018년도 평가정보 10m셀 END -->
+                --%>
 
 				<!-- 2019년도 평가정보 10m셀 START -->
 	            <div class="titbx pt5 pl5 pr5 pb5" id="MV_SRVYDTA_10_2019">
@@ -138,6 +140,7 @@
             		<label for="">노선명</label>
             		<select style="width:200px; margin:3px;" class="sel_routeInfo" id="selRoute_MV_GNLSTTUS_SECT"></select>
             	</div>
+                <%--
                 <!-- 2017년도 평가정보 섹션셀 START -->
                 <div class="titbx pt5 pl5 pr5" id="MV_GNLSTTUS_SECT_2017">
                     <h4>
@@ -175,7 +178,8 @@
                     </div>
                 </div>
                 <!-- 2018년도 평가정보 섹션셀 END -->
-                
+                --%>
+
                 <!-- 2019년도 평가정보 섹션셀 START -->
                 <div class="titbx pt5 pl5 pr5 pb5" id="MV_GNLSTTUS_SECT_2019">
                     <h4>
@@ -198,6 +202,7 @@
         </div>
         <!-- SECTION END -->
         <!-- 포장상태 평가정보 지도 조회 END -->
+
 
     </div>
 
@@ -601,11 +606,11 @@
 												}];
 											}
 										}
-										
+
 										isPropertyIsLike = true;
 									}
 								}
-								
+
 								if(!isPropertyIsLike){
 									arrQ.push({
 										elements : [{

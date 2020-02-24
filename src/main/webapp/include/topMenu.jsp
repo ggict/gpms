@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -113,6 +117,23 @@
                         <a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>');return false;"><span>포장상태평가</span></a>
                         <ul>
                             <li class="s10"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlInfoList.do"/>');return false;">평가정보조회</a></li>
+                            <li class="s10"><a href="#none" onclick="fn_evlStats('2019');return false;">평가상태도</a>
+                                <ul>
+                                    <%
+                                        // 선정년도
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+                                        String year = dateFormat.format(new Date());
+                                        List<Integer> slctnYearList = new ArrayList<Integer>();
+                                        for ( int i = Integer.valueOf(year); i >= 2019; i-- ) {
+                                            slctnYearList.add(i);
+                                        }
+                                    %>
+                                    <c:set var="slctnYearList" value="<%=slctnYearList%>" />
+                                    <c:forEach var="slctnYear" items="${slctnYearList}">
+                                        <li><a href="#none" onclick="fn_evlStats('<c:out value="${slctnYear}" />');return false;"><c:out value="${slctnYear}" />년도</a></li>
+                                    </c:forEach>
+                                </ul>
+                            </li>
                             <%-- <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="srvy/selectSrvyDtaEvlList.do"/>');return false;">포장상태 평가</a></li> --%>
                         </ul>
                     </li>
@@ -129,6 +150,9 @@
                             <li class="s10"><a href="#none" onclick="COMMON_UTIL.fn_set_subMenu('sub_repairtargets','<c:url value="rpairtrgetslctn/intro.do"/>');return false;">보수대상선정</a></li>
                             <li class="s20"><a href="#none" onclick="COMMON_UTIL.cmWindowOpen('유지보수 실적집계 엑셀출력', contextPath +'/cntrwk/setDownloadReport.do', 390, 220, true, null, 'center');return false;">유지보수 실적집계</a></li>
                         </ul>
+                    </li>
+                    <li class="d00">
+                        <a href="#none" onclick="COMMON_UTIL.cmMenuUrlContent('<c:url value="predctModel/predctModelList.do"/>');return false;"><span>예측모델</span></a>
                     </li>
                     <li class="f00">
                         <a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewRoutLenStats.do"/>');return false;"><span>통계</span></a>
@@ -471,6 +495,40 @@ function fnLogout() {
         COMMON_UTIL.cmMoveUrl('<c:url value="/logout.do"/>');
 
     }
+
+}
+
+// 평가상태도 선택시
+function fn_evlStats(year) {
+	// 레이어 초기화
+    gMap.getLayerByName('GAttrLayer').removeFeatures(gMap.getLayerByName('GAttrLayer').features);
+
+	var baseLayer = gMap.getLayerByName("baseLayer");
+	baseLayer.setVisibility(true);
+	baseLayer.mergeNewParams({
+        LAYERS: "MV_GNLSTTUS_SECT"   // CELL_SECT
+        ,STYLES: "MV_GNLSTTUS_SECT"  // CELL_SECT
+    	,CQL_FILTER: " gpci <> '999' and srvy_year =" + year    // gpci가 존재하는 데이터만 출력
+    });
+
+
+// 	var tables = ["MV_GNLSTTUS_SECT_2019"];
+//     var fields = [[]];
+//     var values = [[]];
+
+//     // 모든 팝업창 최소화
+//     //parent.wWindowHideAll();
+//     // 하단 목록 창 내리기
+//     parent.bottomClose();
+
+//     var attribute = {
+//             attributes : {
+//                 fillColor : '#0033ff',
+//                 strokeColor : '#0033ff'
+//             }
+//     };
+
+//     MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, fields, values, null, null, attribute);
 
 }
 

@@ -144,13 +144,13 @@ public interface SrvyDtaService {
 	 */
 	int selectAnalDataPopupResultCount(SrvyDtaVO srvyDtaVO);
 
-	/**
-	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
-	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
-	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
-	 * @exception Exception
-	 */
-	SrvyDtaVO selectTmpExcelData() throws Exception;
+//	/**
+//	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
+//	 * @param srvyDtaVO - 조회할 정보가 담긴 SrvyDtaVO
+//	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
+//	 * @exception Exception
+//	 */
+//	SrvyDtaVO selectTmpExcelData() throws Exception;
 
 	/**
 	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
@@ -211,7 +211,7 @@ public interface SrvyDtaService {
 	void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO, SrvyDtaVO srvyDtaOne, String fileName) throws Exception;
 
 
-	void deleteTmpMummSctnSrvyDta() throws Exception;
+//	void deleteTmpMummSctnSrvyDta() throws Exception;
 
 }
 

@@ -31,7 +31,7 @@
 				<c:forEach items="${files}" var="files">
 					<li style="list-style:none;">
 		           	    <span class="filename">
-						        <p id="testId<c:set var="cnt" value="${cnt + 1}"/>${cnt}" style="cursor:pointer;" onclick="fn_fileclick(${cnt});">${files}</p>
+						        <a href="#" onclick="fn_fileclick(this);return false;" data-filename="${files}">${files}</a>
 		           	    </span>
 		           	</li>
 		        </c:forEach>
@@ -52,7 +52,7 @@
 		    <p class="note">※ 첨부 파일은 압축(zip)파일만 업로드 가능합니다.</p>
 
 		    <div class="btnArea">
-		    	<input type="button" class="btn pri btnFile" onclick="COMMON_FILE.addMultiFile('#file_list', '#addFile', 1);" value="파일선택">
+		    	<input type="button" class="btn pri btnFile" onclick="fn_file_select();" value="파일선택">
 		    	<input type="button" class="btn" onclick="fn_file_upload();" value="파일업로드">
 			</div>
 
@@ -63,17 +63,20 @@
 <script src="<c:url value='/js/common/cu_alert.js'/>"></script>
 <script type="text/javaScript" language="javascript" defer="defer">
 $( document ).ready(function() {
-
-	COMMON_FILE.clearMultiFile('#file_list', '#addFile');
-
-    $("#addFile").change(function(){
-        var extn = ["zip"];
-        COMMON_FILE.setMultiFiles('#file_list', this, extn, 'N', 50);
-    });
 });
 
-function fn_fileclick(cnt){
-	parent.content_area.file_change($('#testId'+cnt).html());
+function fn_fileclick(target){
+	COMMON_FILE.clearMultiFile($("#file_list", parent.content_area.document), $("#files", parent.content_area.document));
+
+	parent.content_area.file_change($(target).data("filename"));
+	$("#fileMode", parent.content_area.document).val("SERVER");
+	$("#fileName", parent.content_area.document).val($(target).data("filename"));
+	fn_close_dialog();
+}
+
+function fn_file_select() {
+	COMMON_FILE.addMultiFile($("#file_list", parent.content_area.document), $("#files", parent.content_area.document), 1);
+	$("#fileMode", parent.content_area.document).val("LOCAL");
 	fn_close_dialog();
 }
 

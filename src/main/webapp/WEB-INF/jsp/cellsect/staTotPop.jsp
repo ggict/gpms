@@ -70,6 +70,16 @@ $( document ).ready(function() {
     });
 });
 
+/**
+ * DWG 파일 다운로드
+ * dwg_type - 01: 단위도, 02: 지하시설물, 03: 용지도, 04: 구간도, 05: 지형고시도
+ */
+function fn_road_dwg_down(dwg_type) {
+	$("#DWG_TYPE").val(dwg_type);
+
+    COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/srvy/srvyDtaExcelListExcel.do'/>", "");
+}
+
 </script>
 </head>
 <body id="wrap" class="right-tool">
@@ -77,6 +87,14 @@ $( document ).ready(function() {
 <input type="hidden" id="callBackFunction" name="callBackFunction" value=""/>
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
+
+<form id="frm" name="frm">
+    <input type="hidden" id="ROAD_NO" name="ROAD_NO" value=""/>
+    <input type="hidden" id="SECT" name="SECT" value=""/>
+    <input type="hidden" id="SECT_ST" name="SECT_ST" value=""/>
+    <input type="hidden" id="DWG_TYPE" name="DWG_TYPE" value=""/>
+</form>
+
 <!-- 필수 파라메터(END) -->
 <%-- <form id="frm" name="frm" method="post" action=""> --%>
     <div class="content">
@@ -95,6 +113,15 @@ $( document ).ready(function() {
                                 </li>
                             </ul>
                         </div>
+                    </div>
+                </li>
+                <li>
+                    <div id="staTotDiv">
+                        <a href="#" onclick="fn_road_dwg_down('01');" class="btn pri tc">단위도<br/>(P)</a>
+                        <a href="#" onclick="fn_road_dwg_down('02');" class="btn pri tc">지하시설물<br/>(U)</a>
+                        <a href="#" onclick="fn_road_dwg_down('03');" class="btn pri tc">용지도<br/>(Y)</a>
+                        <a href="#" onclick="fn_road_dwg_down('04');" class="btn pri tc">구간도<br/>(CONT)</a>
+                        <a href="#" onclick="fn_road_dwg_down('05');" class="btn pri tc">지형고시도<br/>(TOP)</a>
                     </div>
                 </li>
             </ul>

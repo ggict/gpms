@@ -12,10 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
 import egovframework.example.cmmn.impl.BaseDAO;
-import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
 import kr.go.gg.gpms.cmmn.service.impl.CmmnDAO;
-import kr.go.gg.gpms.mummsctnsrvydta.service.model.MummSctnSrvyDtaVO;
-import kr.go.gg.gpms.pavfrmula.service.model.PavFrmulaVO;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
 import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
 
@@ -201,8 +198,8 @@ public class SrvyDtaDAO extends BaseDAO {
 	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
 	 * @exception Exception
 	 */
-	public SrvyDtaVO selectTmpExcelData() throws Exception {
-		return (SrvyDtaVO) select("srvyDtaDAO.selectTmpExcelData");
+	public SrvyDtaVO selectTmpExcelData(SrvyDtaVO srvyDtaOne) throws Exception {
+		return (SrvyDtaVO) select("srvyDtaDAO.selectTmpExcelData", srvyDtaOne);
 	}
 
 	/**
@@ -296,8 +293,8 @@ public class SrvyDtaDAO extends BaseDAO {
 	 * @return 삭제 결과
 	 * @exception Exception
 	 */
-	public int deleteTmpMummSctnSrvyDta() throws Exception {
-	    return delete("srvyDtaDAO.deleteTmpMummSctnSrvyDta");
+	public int deleteTmpMummSctnSrvyDta(SrvyDtaVO srvyDtaOne) throws Exception {
+	    return delete("srvyDtaDAO.deleteTmpMummSctnSrvyDta", srvyDtaOne);
 	}
 
 	/**

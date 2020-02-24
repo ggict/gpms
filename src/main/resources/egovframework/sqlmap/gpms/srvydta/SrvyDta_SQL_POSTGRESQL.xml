@@ -359,12 +359,17 @@
                             WHERE
                                 AAA.SRVY_NO = tnsrvydta.SRVY_NO
                                 AND (AC_LOW + AC_MED + AC_HI + LC_LOW + LC_MED + LC_HI + TC_LOW + TC_MED + TC_HI + PTCHG_CR + POTHOLE_CR) > 0)
-                        ELSE COUNT(*)
+                        ELSE (
+                            SELECT
+                                COUNT(*)
+                            FROM TMP_MUMM_SCTN_SRVY_DTA AAA
+                            WHERE
+                                AAA.SRVY_NO = tnsrvydta.SRVY_NO
+                        )
                         END CNT
                     FROM TN_MUMM_SCTN_SRVY_DTA AA
                     WHERE
                         AA.SRVY_NO = tnsrvydta.SRVY_NO
-                        AND AA.MSG_CODE != 'I'
                 ) DATA_PROGRS_CNT
                 , tnsrvydta.SRVY_NM
 			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
@@ -435,6 +440,8 @@
                 SUM(COALESCE(POTHOLE_CR,0))
              as sumChk
 	        FROM TMP_MUMM_SCTN_SRVY_DTA
+            WHERE
+                SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
 	    ) as tb
 ]]>
 	</select>
@@ -612,6 +619,10 @@
 			FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
 		   WHERE 1=1
 			 AND SRVY_NO = #SRVY_NO#::int
+             AND (
+                MSG_CODE != 'I'
+                OR MSG_CODE IS NULL
+            )
              ORDER BY STRTPT
 		) tb) resultlist  WHERE 1=1
 ]]>
@@ -630,6 +641,10 @@
 			FROM TN_MUMM_SCTN_SRVY_DTA
 		   WHERE 1=1
 		   	 AND SRVY_NO = #SRVY_NO#::int
+             AND (
+                MSG_CODE != 'I'
+                OR MSG_CODE IS NULL
+            )
 ]]>
 	</select>
 
@@ -688,6 +703,8 @@
 	<![CDATA[
 		/* srvyDtaDAO.deleteTmpMummSctnSrvyDta */
 		DELETE FROM TMP_MUMM_SCTN_SRVY_DTA
+        WHERE
+            SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
 ]]>
 	</delete>
 

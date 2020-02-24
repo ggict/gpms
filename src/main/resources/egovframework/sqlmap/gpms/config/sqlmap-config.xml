@@ -134,4 +134,7 @@
 
 <!--    조TN_SPECL_MANAGE_SCTN_DETAIL	특별관리구간상세    -->
 <sqlMap resource="egovframework/sqlmap/gpms/mvroad/MvRoad_SQL_POSTGRESQL.xml"/>
+
+<!--    예측 모델    -->
+<sqlMap resource="egovframework/sqlmap/gpms/predctmodel/PredctModel_SQL_POSTGRESQL.xml"/>
 </sqlMapConfig>

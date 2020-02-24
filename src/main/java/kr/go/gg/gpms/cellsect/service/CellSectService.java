@@ -1,6 +1,7 @@
 package kr.go.gg.gpms.cellsect.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.go.gg.gpms.cellsect.service.model.CellSectVO;
 
@@ -16,7 +17,7 @@ import kr.go.gg.gpms.cellsect.service.model.CellSectVO;
  * @since 2017-07-13
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 public interface CellSectService {
@@ -40,7 +41,7 @@ public interface CellSectService {
 	/**
 	 * CELL_SECT(CELL_SECT)을 삭제한다.
 	 * @param cellSectVO - 삭제할 정보가 담긴 cellSectVO
-	 * @return int형 
+	 * @return int형
 	 * @exception Exception
 	 */
 	int deleteCellSect(CellSectVO cellSectVO) throws Exception;
@@ -76,7 +77,7 @@ public interface CellSectService {
 	 * @exception Exception
 	 */
 	int updateSectSe(CellSectVO cellSectVO) throws Exception;
-	
+
 	/**
 	 * 총 노선 연장 및 면적을 조회한다.
 	 * @param cellSectVO - 조회할 정보가 담긴 cellSectVO
@@ -84,5 +85,13 @@ public interface CellSectService {
 	 * @exception Exception
 	 */
 	CellSectVO selectCellSectLenArea(CellSectVO cellSectVO) throws Exception;
+
+	/**
+	 * 도로대장 DWG 파일 정보
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
+	Map<String, String> selectStaTotDwgFileInfo(Map<String, String> paramMap) throws Exception;
 }
 

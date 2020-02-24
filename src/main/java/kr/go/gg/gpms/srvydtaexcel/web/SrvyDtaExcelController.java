@@ -20,7 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,10 +30,8 @@ import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 //import org.springframework.security.core.context.SecurityContextHolder;
 import kr.go.gg.gpms.base.web.BaseController;
-import kr.go.gg.gpms.cntrwkdtl.service.model.CntrwkDtlVO;
 import kr.go.gg.gpms.routeinfo.service.RouteInfoService;
 import kr.go.gg.gpms.routeinfo.service.model.RouteInfoVO;
-import kr.go.gg.gpms.srvy.service.SrvyDtaService;
 import kr.go.gg.gpms.srvydta.service.model.SrvyDtaVO;
 import kr.go.gg.gpms.srvydtaexcel.service.SrvyDtaExcelService;
 import kr.go.gg.gpms.srvydtaexcel.service.model.SrvyDtaExcelVO;
@@ -337,15 +334,8 @@ public class SrvyDtaExcelController extends BaseController {
 
 	@RequestMapping(value = { "/srvy/excel/srvyDtaExcelUploadList.do" })
 	public String selectsrvyDtaExcelUploadList(@ModelAttribute SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
-		File path = new File("D:/wasfs/PMS_UploadFile/srvy_org");
+		File path = new File(pathInfoProperties.getProperty("file.upload.srvyOrgPath"));
 		String files[] = path.list();
-
-		if(files.length > 0){
-		    for(int i=0; i < files.length; i++){
-		  		System.out.println(files[i]) ;
-		    }
-		}
-
 		model.addAttribute("files", files);
 
 		return "/srvy/excel/srvyDtaExcelUploadList" ;

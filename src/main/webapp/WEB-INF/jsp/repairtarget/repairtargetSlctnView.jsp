@@ -1036,8 +1036,15 @@ function fn_select_cellSectIDS(cell_ids){
 	var attrLayer = parent.gMap.getLayerByName('GAttrLayer');
 	var multiLayer = parent.gMap.getLayerByName('GAttrLayerMulti');
 
+	// 레이어 초기화
+	attrLayer.removeFeatures(attrLayer.features);
+	var baseLayer = parent.gMap.getLayerByName('baseLayer');
+    baseLayer.setVisibility(false);
+
 	parent.gMap.setLayerIndex(attrLayer, 1);
 	parent.gMap.setLayerIndex(multiLayer, 0);
+
+
 	//
 	MAP.fn_get_selectFeatureByAttr(parent.gMap, tables, [ fields ], [ values ], null, operator, attribute, true, 1, 0);
 }

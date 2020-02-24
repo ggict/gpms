@@ -4,12 +4,12 @@
 package kr.go.gg.gpms.cellsect.service.impl;
 
 import java.util.List;
-
-import kr.go.gg.gpms.cellsect.service.model.CellSectVO;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import egovframework.example.cmmn.impl.BaseDAO;
+import kr.go.gg.gpms.cellsect.service.model.CellSectVO;
 
 /**
  * CELL_SECT
@@ -22,7 +22,7 @@ import egovframework.example.cmmn.impl.BaseDAO;
  * @since 2017-08-22
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 
@@ -52,7 +52,7 @@ public class CellSectDAO extends BaseDAO {
 	/**
 	 * CELL_SECT(CELL_SECT)을 삭제한다.
 	 * @param cellSectVO - 삭제할 정보가 담긴 CellSectVO
-	 * @return 삭제 결과 
+	 * @return 삭제 결과
 	 * @exception Exception
 	 */
 	public int deleteCellSect(CellSectVO cellSectVO) throws Exception {
@@ -89,7 +89,7 @@ public class CellSectDAO extends BaseDAO {
 	public int selectCellSectListTotalCount(CellSectVO cellSectVO) {
 		return (Integer) select("cellSectDAO.selectCellSectListTotalCount", cellSectVO);
 	}
-	
+
 	/**
 	 * CELL_SECT(CELL_SECT) 섹션구분을 수정한다.
 	 * @param cellSectVO - 조회할 정보가 담긴 cellSectVO
@@ -99,7 +99,7 @@ public class CellSectDAO extends BaseDAO {
 	public int updateSectSe(CellSectVO cellSectVO) throws Exception {
 		return update("cellSectDAO.updateSectSe", cellSectVO);
 	}
-	
+
 	/**
 	 * 총 노선 연장 및 면적을 조회한다.
 	 * @param cellSectVO - 조회할 정보가 담긴 CellSectVO
@@ -109,6 +109,14 @@ public class CellSectDAO extends BaseDAO {
 	public CellSectVO selectCellSectLenArea(CellSectVO cellSectVO) throws Exception {
 		return (CellSectVO) select("cellSectDAO.selectCellSectLenArea", cellSectVO);
 	}
-	
 
+	/**
+     * 도로대장 DWG 파일 정보
+     * @param paramMap
+     * @return
+     * @throws Exception
+     */
+    public Map<String, String> selectStaTotDwgFileInfo(Map<String, String> paramMap) throws Exception {
+        return (Map<String, String>)select("cellSectDAO.selectStaTotDwgFileInfo", paramMap);
+    }
 }

@@ -549,16 +549,16 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 		return srvyDtaDAO.selectAnalDataPopupResultCount(srvyDtaVO);
 	}
 
-	/**
-	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
-	 * @param
-	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
-	 * @exception Exception
-	 */
-	public SrvyDtaVO selectTmpExcelData() throws Exception {
-		SrvyDtaVO resultVO = srvyDtaDAO.selectTmpExcelData();
-		return resultVO;
-	}
+//	/**
+//	 * 임시_최소_구간_조사_자료(TMP_MUMM_SCTN_SRVY_DTA)을 조회한다.
+//	 * @param
+//	 * @return 조회한 TMP_MUMM_SCTN_SRVY_DTA
+//	 * @exception Exception
+//	 */
+//	public SrvyDtaVO selectTmpExcelData() throws Exception {
+//		SrvyDtaVO resultVO = srvyDtaDAO.selectTmpExcelData();
+//		return resultVO;
+//	}
 
 	/**
 	 * 최소구간 조사 자료를 이용하여 집계구간 조사자료 데이터를 산출한다.
@@ -642,7 +642,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
             // ## 12. 임시 테이블에 엑셀 조사자료 삭제
             // ###################################################
             //TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
-            srvyDtaDAO.deleteTmpMummSctnSrvyDta();
+//            srvyDtaDAO.deleteTmpMummSctnSrvyDta(srvyDtaOne);
             // ###################################################
 
             // ###################################################
@@ -653,7 +653,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
             // ###################################################
 
             //TMP_MUMM_SCTN_SRVY_DTA 조회
-            srvyDtaVO = srvyDtaDAO.selectTmpExcelData();
+            srvyDtaVO = srvyDtaDAO.selectTmpExcelData(srvyDtaOne);
 
             //srvyDtaVO.setSE_CD("N");
             //seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
@@ -667,7 +667,9 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                 List<AttachFileVO> imgList = attachFileDAO.selectAttachDetailFileImgList(attachFileParam);
 
         		for(int k=0; k<imgList.size(); k++) {
-        		    LOGGER.debug("순서 : " + srvyDtaVO.getSRVY_NO() + "_" + k);
+
+        		    LOGGER.debug("AI_순서 : " + srvyDtaOne.getSRVY_NO() + "_" + k);
+
         			String imgFilePath = imgList.get(k).getFILE_COURS() + File.separator + imgList.get(k).getORGINL_FILE_NM();
         			String imgFileNm = imgList.get(k).getORGINL_FILE_NM();
 
@@ -828,6 +830,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
             if (srvyDtaOne3.getSM_PROCESS_AT().equals("N")) {
                 srvyDtaDAO.procAggregateGeneral(srvyDtaOne3);
             }
+
         }
 
 	    DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
@@ -837,8 +840,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 //        TransactionSynchronizationManager.clearSynchronization();
 	}
 
-	public void deleteTmpMummSctnSrvyDta() throws Exception {
-	    srvyDtaDAO.deleteTmpMummSctnSrvyDta();
-	}
+//	public void deleteTmpMummSctnSrvyDta() throws Exception {
+//	    srvyDtaDAO.deleteTmpMummSctnSrvyDta();
+//	}
 
 }

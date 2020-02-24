@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="cellSectDAO">
- 
+
     <typeAlias alias="egovMap"  type="egovframework.rte.psl.dataaccess.util.EgovMap" />
     <typeAlias alias="cellSectVO"   type="kr.go.gg.gpms.cellsect.service.model.CellSectVO" />
 
@@ -14,15 +14,15 @@
                 AND cellsect.GID = #searchKeyword#
             ]]>
         </isEqual>
-        
-        <!-- 추후수정_sdh 
+
+        <!-- 추후수정_sdh
         <isEqual property="searchCondition" compareValue="1">
             <![CDATA[
                 AND cellsect.G2_DATASETID LIKE '%' || #searchKeyword# || '%'
             ]]>
         </isEqual>
          -->
-         
+
         <isNotEmpty property="GID"><![CDATA[ /* CELL_SECT.GID */ AND cellsect.GID = #GID#::int ]]></isNotEmpty>
         <isNotEmpty property="OBJECT_ID"><![CDATA[ /* CELL_SECT.OBJECT_ID */ AND cellsect.OBJECT_ID = #OBJECT_ID# ]]></isNotEmpty>
         <isNotEmpty property="ROUTE_CODE"><![CDATA[ /* CELL_SECT.ROUTE_CODE */ AND cellsect.ROUTE_CODE = #ROUTE_CODE# ]]></isNotEmpty>
@@ -39,13 +39,13 @@
         <isNotEmpty property="UPDUSR_NO"><![CDATA[ /* CELL_SECT.UPDUSR_NO */ AND cellsect.UPDUSR_NO = #UPDUSR_NO# ]]></isNotEmpty>
         <isNotEmpty property="UPDT_DT"><![CDATA[ /* CELL_SECT.UPDT_DT */ AND cellsect.UPDT_DT = #UPDT_DT# ]]></isNotEmpty>
     </sql>
-    
-    
+
+
     <update id="cellSectDAO.updateCellSect">
-    <![CDATA[ 
+    <![CDATA[
         /* cellSectDAO.updateCellSect */
         /* CELL_SECT 수정 */
-        UPDATE CELL_SECT 
+        UPDATE CELL_SECT
            SET  CELL_TYPE = #CELL_TYPE# /* CELL_SECT.섹션구분 */
             , VMTC_GRAD = #VMTC_GRAD# /* CELL_SECT.교통용량 */
         WHERE 1 = 1
@@ -65,21 +65,21 @@
                 , cellsect.ROUTE_CODE::int AS ROUTE_CODE /* CELL_SECT.노선번호 */
                 , (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = cellsect.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_코드 */
                 , cellsect.DIRECT_CODE /* CELL_SECT.행선 */
-                , cellsect.CELL_TYPE/* CELL_SECT.섹션구분 */ 
-                , (SELECT tccode.CODE_NM FROM TC_CODE tccode 
-                    WHERE tccode.CODE_VAL = cellsect.CELL_TYPE AND tccode.CL_CODE = 'CELT' 
+                , cellsect.CELL_TYPE/* CELL_SECT.섹션구분 */
+                , (SELECT tccode.CODE_NM FROM TC_CODE tccode
+                    WHERE tccode.CODE_VAL = cellsect.CELL_TYPE AND tccode.CL_CODE = 'CELT'
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') CELL_TYPE_NM  /*섹션구분명 */
                 , cellsect.TRACK /* CELL_SECT.차로 */
                 , cellsect.STRTPT /* CELL_SECT.시점 */
                 , cellsect.ENDPT /* CELL_SECT.종점 */
-                , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept 
+                , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
                     WHERE tcdept.DEPT_CODE = cellsect.DEPT_CODE::text
                       AND tcdept.DELETE_AT='N' AND tcdept.USE_AT='Y') DEPT_CODE /* CELL_SECT.관리기관 */
-                , (SELECT tccode.CODE_NM FROM TC_CODE tccode 
-                    WHERE tccode.CODE_VAL = cellsect.VMTC_GRAD AND tccode.CL_CODE = 'VNTC' 
+                , (SELECT tccode.CODE_NM FROM TC_CODE tccode
+                    WHERE tccode.CODE_VAL = cellsect.VMTC_GRAD AND tccode.CL_CODE = 'VNTC'
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') VMTC_GRAD /* CELL_SECT.교통용량 */
-                , (SELECT tccode.CODE_NM FROM TC_CODE tccode 
-                    WHERE tccode.CODE_VAL = cellsect.ROAD_GRAD AND tccode.CL_CODE = 'RDGD' 
+                , (SELECT tccode.CODE_NM FROM TC_CODE tccode
+                    WHERE tccode.CODE_VAL = cellsect.ROAD_GRAD AND tccode.CL_CODE = 'RDGD'
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') ROAD_GRAD /* CELL_SECT.도로등급 */
                 , (SELECT  n3ag.NAME FROM  N3A_G0100000 n3ag
                     WHERE n3ag.BJCD =  concat(cellsect.ADM_CODE , '00000') ) ADM_CODE /* CELL_SECT.행정구역 */
@@ -88,7 +88,7 @@
                 , cellsect.UPDT_DT /* CELL_SECT.수정일 */
                 , '' as VNTC_GR/*교통량_임의컬럼명*/
             FROM CELL_SECT cellsect
-        ]]>         
+        ]]>
             <!-- <include refid="cellSectDAO.selectCellSectList.where" /> -->
             WHERE 1=1
         <isNotEmpty property="OBJECT_ID"><![CDATA[ /* CELL_SECT.OBJECT_ID */ AND cellsect.OBJECT_ID IN( $OBJECT_ID$ )]]></isNotEmpty>
@@ -97,15 +97,15 @@
             ORDER BY $orderByColumn$ $orderByType$
         </isNotEmpty>
         <![CDATA[
-                ) tb)as sub_CellSect WHERE 1=1 
+                ) tb)as sub_CellSect WHERE 1=1
         ]]>
         <isEqual prepend=" " property="usePage" compareValue="true">
         <![CDATA[
             AND rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
         ]]>
         </isEqual>
-    </select>       
- 
+    </select>
+
     <select id="cellSectDAO.selectCellSectListTotalCount" parameterClass="cellSectVO" resultClass="int">
 <![CDATA[
         /* cellSectDAO.selectCellSectListTotalCount */
@@ -117,20 +117,20 @@
                 , cellsect.ROUTE_CODE::int AS ROUTE_CODE /* CELL_SECT.노선번호 */
                 , (SELECT ROAD_NAME FROM TN_ROUTE_INFO WHERE ROAD_NO = cellsect.ROUTE_CODE )  ROUTE_NM/* 공사상세정보.노선_코드 */
                 , cellsect.DIRECT_CODE /* CELL_SECT.행선 */
-                , (SELECT tccode.CODE_NM FROM TC_CODE tccode 
-                    WHERE tccode.CODE_VAL = cellsect.CELL_TYPE AND tccode.CL_CODE = 'SECT' 
+                , (SELECT tccode.CODE_NM FROM TC_CODE tccode
+                    WHERE tccode.CODE_VAL = cellsect.CELL_TYPE AND tccode.CL_CODE = 'SECT'
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') CELL_TYPE  /* CELL_SECT.섹션구분 */
                 , cellsect.TRACK /* CELL_SECT.차로 */
                 , cellsect.STRTPT /* CELL_SECT.시점 */
                 , cellsect.ENDPT /* CELL_SECT.종점 */
-                , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept 
-                    WHERE tcdept.DEPT_CODE = cellsect.DEPT_CODE::text 
+                , (SELECT tcdept.LOWEST_DEPT_NM FROM TC_DEPT tcdept
+                    WHERE tcdept.DEPT_CODE = cellsect.DEPT_CODE::text
                       AND tcdept.DELETE_AT='N' AND tcdept.USE_AT='Y') DEPT_CODE /* CELL_SECT.관리기관 */
-                , (SELECT tccode.CODE_NM FROM TC_CODE tccode 
-                    WHERE tccode.CODE_VAL = cellsect.VMTC_GRAD AND tccode.CL_CODE = 'VNTC' 
+                , (SELECT tccode.CODE_NM FROM TC_CODE tccode
+                    WHERE tccode.CODE_VAL = cellsect.VMTC_GRAD AND tccode.CL_CODE = 'VNTC'
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') VMTC_GRAD /* CELL_SECT.교통용량 */
-                , (SELECT tccode.CODE_NM FROM TC_CODE tccode 
-                    WHERE tccode.CODE_VAL = cellsect.ROAD_GRAD AND tccode.CL_CODE = 'RDGD' 
+                , (SELECT tccode.CODE_NM FROM TC_CODE tccode
+                    WHERE tccode.CODE_VAL = cellsect.ROAD_GRAD AND tccode.CL_CODE = 'RDGD'
                       AND tccode.DELETE_AT='N' AND tccode.USE_AT='Y') ROAD_GRAD /* CELL_SECT.도로등급 */
                 , (SELECT  n3ag.NAME FROM  N3A_G0100000 n3ag
                     WHERE n3ag.BJCD =  concat(cellsect.ADM_CODE , '00000') ) ADM_CODE /* CELL_SECT.행정구역 */
@@ -138,7 +138,7 @@
                 , cellsect.UPDUSR_NO /* CELL_SECT.수정자번호 */
                 , cellsect.UPDT_DT /* CELL_SECT.수정일 */
             FROM CELL_SECT cellsect
-        ]]>         
+        ]]>
             <!-- <include refid="cellSectDAO.selectCellSectList.where" /> -->
             WHERE 1=1
             <isNotEmpty property="OBJECT_ID"><![CDATA[ /* CELL_SECT.OBJECT_ID */ AND cellsect.OBJECT_ID IN( $OBJECT_ID$ )]]></isNotEmpty>
@@ -149,9 +149,9 @@
                 ) tb
         ]]>
     </select>
-    
+
     <update id="cellSectDAO.updateSectSe">
-    <![CDATA[ 
+    <![CDATA[
         /* cellSectDAO.updateSectSe */
         /* 섹션구분 수정 */
         UPDATE CELL_SECT
@@ -159,7 +159,7 @@
         WHERE GID = #GID#::int /* GID */
     ]]>
     </update>
-    
+
     <select id="cellSectDAO.selectCellSectLenArea" parameterClass="cellSectVO" resultClass="cellSectVO">
 <![CDATA[
         /* cellSectDAO.selectCellSectLenArea */
@@ -168,6 +168,15 @@
              , ROUND(SUM(ROAD_A), 0) ROAD_A
           FROM CELL_SECT
 ]]>
+    </select>
+
+    <!-- 도로대장 DWG 파일 정보 -->
+    <select id="cellSectDAO.selectStaTotDwgFileInfo" resultClass="hashMap">
+    <![CDATA[
+        /* cellSectDAO.selectStaTotDwgFileInfo */
+        /* 도로대장 DWG 파일 정보 */
+        SELECT DBLINK('msSqlConn', 'SELECT ''/RUMAP/'' || A.ROAD_NO || ''/'' FROM DWG_INFO A WHERE ') AS T1 (PRONAME NAME, PROSRC TEXT)
+    ]]>
     </select>
 
 </sqlMap>

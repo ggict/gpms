@@ -1,15 +1,15 @@
 package kr.go.gg.gpms.cellsect.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
-
-import kr.go.gg.gpms.cellsect.service.CellSectService;
-import kr.go.gg.gpms.cellsect.service.model.CellSectVO;
 
 import org.springframework.stereotype.Service;
 
 import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
+import kr.go.gg.gpms.cellsect.service.CellSectService;
+import kr.go.gg.gpms.cellsect.service.model.CellSectVO;
 
 /**
  * CELL_SECT
@@ -22,7 +22,7 @@ import egovframework.rte.fdl.cmmn.AbstractServiceImpl;
  * @since 2017-07-13
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 
@@ -32,7 +32,7 @@ public class CellSectServiceImpl extends AbstractServiceImpl implements CellSect
 	@Resource(name = "cellSectDAO")
 	private CellSectDAO cellSectDAO;
 
-	//@Resource(name="Cell10IdGnrService")	
+	//@Resource(name="Cell10IdGnrService")
 	//private EgovIdGnrService egovIdGnrService;
 
 	/**
@@ -61,7 +61,7 @@ public class CellSectServiceImpl extends AbstractServiceImpl implements CellSect
 	/**
 	 * CELL_SECT(CELL_SECT)을 삭제한다.
 	 * @param cellSectVO - 삭제할 정보가 담긴 cellSectVO
-	 * @return int형 
+	 * @return int형
 	 * @exception Exception
 	 */
 	public int deleteCellSect(CellSectVO cellSectVO) throws Exception {
@@ -107,7 +107,7 @@ public class CellSectServiceImpl extends AbstractServiceImpl implements CellSect
 	public int updateSectSe(CellSectVO cellSectVO) throws Exception {
 		return cellSectDAO.updateSectSe( cellSectVO);
 	}
-	
+
 	/**
 	 * 총 노선 연장 및 면적을 조회한다.
 	 * @param cellSectVO - 조회할 정보가 담긴 cellSectVO
@@ -117,4 +117,14 @@ public class CellSectServiceImpl extends AbstractServiceImpl implements CellSect
 	public CellSectVO selectCellSectLenArea(CellSectVO cellSectVO) throws Exception {
 		return cellSectDAO.selectCellSectLenArea(cellSectVO);
 	}
+
+	/**
+     * 도로대장 DWG 파일 정보
+     * @param paramMap
+     * @return
+     * @throws Exception
+     */
+    public Map<String, String> selectStaTotDwgFileInfo(Map<String, String> paramMap) throws Exception {
+        return cellSectDAO.selectStaTotDwgFileInfo(paramMap);
+    }
 }
