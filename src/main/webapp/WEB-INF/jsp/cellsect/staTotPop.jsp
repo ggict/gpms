@@ -77,7 +77,7 @@ $( document ).ready(function() {
 function fn_road_dwg_down(dwg_type) {
 	$("#DWG_TYPE").val(dwg_type);
 
-    COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/srvy/srvyDtaExcelListExcel.do'/>", "");
+    COMMON_UTIL.cmFormSubmit("frm", "proc_frm", "<c:url value='/cellsect/staTotDwgDownloadFile.do'/>", "");
 }
 
 </script>
@@ -88,7 +88,7 @@ function fn_road_dwg_down(dwg_type) {
 <input type="hidden" id="opener_id" name="opener_id" value=""/>
 <input type="hidden" id="wnd_id" name="wnd_id" value=""/>
 
-<form id="frm" name="frm">
+<form id="frm" name="frm" style="display: none;">
     <input type="hidden" id="ROAD_NO" name="ROAD_NO" value=""/>
     <input type="hidden" id="SECT" name="SECT" value=""/>
     <input type="hidden" id="SECT_ST" name="SECT_ST" value=""/>

@@ -2046,9 +2046,9 @@ MAP.CONTROL = (function($, undefined) {
     			$("#dvMapLoading").hide();
         		gMap.activeControls("drag");
         		//COMMON_UTIL.cmWindowOpen('도로대장(점)', contextPath + 'cellsect/selectStaTotPop.do', 623, 270, false, null, 'updCell');
-        		$("iframe").contents().find("#ROAD_NO").html(data.ROAD_NO);
-        		$("iframe").contents().find("#SECT").html(data.SECT);
-        		$("iframe").contents().find("#SECT_ST").html(data.SECT_ST);
+        		$("iframe").contents().find("#ROAD_NO").val(data.ROAD_NO);
+        		$("iframe").contents().find("#SECT").val(data.SECT);
+        		$("iframe").contents().find("#SECT_ST").val(data.SECT_ST);
             } else {
             	$("#dvMapLoading").hide();
             	gMap.activeControls("drag");

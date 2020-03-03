@@ -1040,6 +1040,8 @@ function fn_select_cellSectIDS(cell_ids){
 	attrLayer.removeFeatures(attrLayer.features);
 	var baseLayer = parent.gMap.getLayerByName('baseLayer');
     baseLayer.setVisibility(false);
+	var themeLayer = parent.gMap.getLayerByName('themeLayer');
+	themeLayer.setVisibility(false);
 
 	parent.gMap.setLayerIndex(attrLayer, 1);
 	parent.gMap.setLayerIndex(multiLayer, 0);

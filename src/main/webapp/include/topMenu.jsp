@@ -501,7 +501,14 @@ function fnLogout() {
 // 평가상태도 선택시
 function fn_evlStats(year) {
 	// 레이어 초기화
-    gMap.getLayerByName('GAttrLayer').removeFeatures(gMap.getLayerByName('GAttrLayer').features);
+//     gMap.getLayerByName('GAttrLayer').removeFeatures(gMap.getLayerByName('GAttrLayer').features);
+    var oLayer = gMap.getLayerByName('GAttrLayer');
+    oLayer.removeAllFeatures();
+    oLayer.removeFeatures(oLayer.features);
+    var baseLayer = parent.gMap.getLayerByName('baseLayer');
+    baseLayer.setVisibility(false);
+    var themeLayer = parent.gMap.getLayerByName('themeLayer');
+    themeLayer.setVisibility(false);
 
 	var baseLayer = gMap.getLayerByName("baseLayer");
 	baseLayer.setVisibility(true);
@@ -510,6 +517,10 @@ function fn_evlStats(year) {
         ,STYLES: "MV_GNLSTTUS_SECT"  // CELL_SECT
     	,CQL_FILTER: " gpci <> '999' and srvy_year =" + year    // gpci가 존재하는 데이터만 출력
     });
+
+	$.each($("#divLayerTool ul li.active"), function() {
+        $(this).removeClass('active');
+	});
 
 
 // 	var tables = ["MV_GNLSTTUS_SECT_2019"];

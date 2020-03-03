@@ -343,11 +343,23 @@ var layersMngObj = {
 	,clickevt: function(){
 
 		var fnCall = function(){
-			var obj = $(this);
+		    var obj = $(this);
 			var layernm = obj.find('p').attr('data-layer');
 			var baseLayer = gMap.getLayerByName("baseLayer");
 			var params = baseLayer.getParams();
 			var layers = (params.LAYERS) ? params.LAYERS.split(',') : [];
+
+			var attrLayer = parent.gMap.getLayerByName('GAttrLayer');
+            attrLayer.removeFeatures(attrLayer.features);
+
+            // 레이어 초기화
+            var baseLayer = parent.gMap.getLayerByName('baseLayer');
+            baseLayer.setVisibility(false);
+
+			// 포장상태평가 및 보수대상선정 초기화
+// 			if ( layers.indexOf("MV_GNLSTTUS_SECT") > -1 ) {
+// 			    layers.splice(layers.indexOf("MV_GNLSTTUS_SECT"), 1);
+// 			}
 
 			if(obj.hasClass('active')){
 				obj.removeClass('active');
@@ -371,9 +383,11 @@ var layersMngObj = {
 
 			if(layers.length == 0) baseLayer.setVisibility(false);
 			else baseLayer.setVisibility(true);
+			// 레이어 초기화
 			baseLayer.mergeNewParams({
 				LAYERS: layers.join()
 				,STYLES: ''
+				,CQL_FILTER: null
 			});
 
 		};

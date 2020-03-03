@@ -237,6 +237,12 @@
 	    //--- 지도세팅 ----
 	    fn_showMapLoading(true);
 
+	    // 레이어 초기화
+        var attrLayer = parent.gMap.getLayerByName('GAttrLayer');
+        attrLayer.removeFeatures(attrLayer.features);
+        var baseLayer = parent.gMap.getLayerByName('baseLayer');
+        baseLayer.setVisibility(false);
+
 	    if ( parent.themeFlag == 0 ) {
 	        // 테마지도 최초 로딩 시 themeLayer off 처리
 	        parent.gMap.getLayerByName("themeLayer").setVisibility(true);
@@ -316,6 +322,12 @@
 		$(".tLayer").on("click", function(e) {
 			fn_showMapLoading(true);
 
+			// 레이어 초기화
+			var attrLayer = parent.gMap.getLayerByName('GAttrLayer');
+            attrLayer.removeFeatures(attrLayer.features);
+            var baseLayer = parent.gMap.getLayerByName('baseLayer');
+            baseLayer.setVisibility(false);
+
 			var id = $(this).parent().parent().attr("id");
 	        var bOff = $(this).find("img").hasClass("off");
 
@@ -334,6 +346,12 @@
 		//레이어 Rule On/Off
 		$("li.tRule").on("click", function(e) {
 			fn_showMapLoading(true);
+
+			// 레이어 초기화
+            var attrLayer = parent.gMap.getLayerByName('GAttrLayer');
+            attrLayer.removeFeatures(attrLayer.features);
+            var baseLayer = parent.gMap.getLayerByName('baseLayer');
+            baseLayer.setVisibility(false);
 
 			var id = $(this).parent().parent().parent().attr("id");
 	        var sRuleName = "";

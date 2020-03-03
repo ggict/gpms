@@ -40,7 +40,7 @@ $( document ).ready(function() {
         ,postData: $("#frm").cmSerializeObject()
         ,ignoreCase: true
         //,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
-        ,colNames:["노선번호","노선명","행선","차로","조사명","성공여부","진행률","조사일자","등록자","분석자료","등록번호","조사번호"]
+        ,colNames:["노선번호","노선명","행선","차로","조사명","성공여부","분석진행률","조사일자","등록자","분석자료","등록번호","조사번호"]
         ,colModel:[
              {name:'route_CODE',index:'route_CODE', align:'center', width:70}
             ,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
