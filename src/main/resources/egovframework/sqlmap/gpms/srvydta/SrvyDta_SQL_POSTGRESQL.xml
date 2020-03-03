@@ -539,8 +539,8 @@
 		/* srvyDtaDAO.selectAnalDataPopupResultList */
 
 		SELECT * FROM (SELECT ROW_NUMBER() OVER( ORDER BY $sidx$ $sord$  ) rn, tb.* FROM (
-			SELECT  LTRIM(tnmummsctnsrvydta.ROUTE_CODE,'0') AS ROUTE_CODE
-                 , (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tnmummsctnsrvydta.ROUTE_CODE) AS ROAD_NAME
+			SELECT  LTRIM(tmpmummsctnsrvydta.ROUTE_CODE,'0') AS ROUTE_CODE
+                 , (SELECT tnrouteinfo.ROAD_NAME FROM TN_ROUTE_INFO tnrouteinfo WHERE tnrouteinfo.ROAD_NO = tmpmummsctnsrvydta.ROUTE_CODE) AS ROAD_NAME
                  , CASE WHEN DIRECT_CODE = 'S' THEN '상행' ELSE '하행' END DIRECT_CODE
                  , TRACK
                  , STRTPT
@@ -616,13 +616,9 @@
                  , (AC_LOW + AC_MED + AC_HI) AC_TOT
                  , (LC_LOW + LC_MED + LC_HI) LC_TOT
                  , (TC_LOW + TC_MED + TC_HI) TC_TOT
-			FROM TN_MUMM_SCTN_SRVY_DTA tnmummsctnsrvydta
+			FROM TMP_MUMM_SCTN_SRVY_DTA tmpmummsctnsrvydta
 		   WHERE 1=1
 			 AND SRVY_NO = #SRVY_NO#::int
-             AND (
-                MSG_CODE != 'I'
-                OR MSG_CODE IS NULL
-            )
              ORDER BY STRTPT
 		) tb) resultlist  WHERE 1=1
 ]]>
@@ -638,13 +634,9 @@
 <![CDATA[
 		/* srvyDtaDAO.selectAnalDataPopupResultCount */
 		SELECT COUNT(*)
-			FROM TN_MUMM_SCTN_SRVY_DTA
+			FROM TMP_MUMM_SCTN_SRVY_DTA
 		   WHERE 1=1
 		   	 AND SRVY_NO = #SRVY_NO#::int
-             AND (
-                MSG_CODE != 'I'
-                OR MSG_CODE IS NULL
-            )
 ]]>
 	</select>
 

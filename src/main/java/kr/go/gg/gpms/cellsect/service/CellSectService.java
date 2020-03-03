@@ -85,13 +85,5 @@ public interface CellSectService {
 	 * @exception Exception
 	 */
 	CellSectVO selectCellSectLenArea(CellSectVO cellSectVO) throws Exception;
-
-	/**
-	 * 도로대장 DWG 파일 정보
-	 * @param paramMap
-	 * @return
-	 * @throws Exception
-	 */
-	Map<String, String> selectStaTotDwgFileInfo(Map<String, String> paramMap) throws Exception;
 }
 

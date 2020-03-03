@@ -170,13 +170,4 @@
 ]]>
     </select>
 
-    <!-- 도로대장 DWG 파일 정보 -->
-    <select id="cellSectDAO.selectStaTotDwgFileInfo" resultClass="hashMap">
-    <![CDATA[
-        /* cellSectDAO.selectStaTotDwgFileInfo */
-        /* 도로대장 DWG 파일 정보 */
-        SELECT DBLINK('msSqlConn', 'SELECT ''/RUMAP/'' || A.ROAD_NO || ''/'' FROM DWG_INFO A WHERE ') AS T1 (PRONAME NAME, PROSRC TEXT)
-    ]]>
-    </select>
-
 </sqlMap>

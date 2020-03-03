@@ -28,6 +28,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -676,6 +677,10 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
         		    File aiFileNm = new File(imgFilePath);
 
         		    HttpClient client = new DefaultHttpClient();
+        		    client.getParams().setParameter("http.protocol.expect-continue", false);  // HttpClient POST 요청시 Expect 헤더정보 사용 x
+        		    client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 60 * 1000);  // 원격 호스트와 연결을 설정하는 시간
+        		    client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10 * 60 * 1000);  // 데이터를 기다리는 시간
+
         		    HttpPost post = new HttpPost(EgovProperties.getProperty("Globals.AI.URL"));
 
         		    MultipartEntityBuilder builder = MultipartEntityBuilder.create();

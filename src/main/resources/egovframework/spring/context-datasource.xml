@@ -51,4 +51,11 @@
 	    <property name="defaultAutoCommit" value="true" /> -->
 	</bean>
 
+    <bean id="dataSourceSQLServer" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${Globals.SQLServer.DriverClassName}" />
+        <property name="url" value="${Globals.SQLServer.Url}" />
+        <property name="username" value="${Globals.SQLServer.UserName}" />
+        <property name="password" value="${Globals.SQLServer.Password}" />
+    </bean>
+
 </beans>

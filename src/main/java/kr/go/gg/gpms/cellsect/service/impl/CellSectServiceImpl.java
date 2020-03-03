@@ -118,13 +118,4 @@ public class CellSectServiceImpl extends AbstractServiceImpl implements CellSect
 		return cellSectDAO.selectCellSectLenArea(cellSectVO);
 	}
 
-	/**
-     * 도로대장 DWG 파일 정보
-     * @param paramMap
-     * @return
-     * @throws Exception
-     */
-    public Map<String, String> selectStaTotDwgFileInfo(Map<String, String> paramMap) throws Exception {
-        return cellSectDAO.selectStaTotDwgFileInfo(paramMap);
-    }
 }

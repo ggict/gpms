@@ -29,12 +29,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import egovframework.cmmn.util.EgovProperties;
+import egovframework.cmmn.util.FtpUtil;
 import egovframework.rte.fdl.property.EgovPropertyService;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import kr.go.gg.gpms.base.web.BaseController;
 import kr.go.gg.gpms.cell10.service.Cell10Service;
 import kr.go.gg.gpms.cellsect.service.CellSectService;
 import kr.go.gg.gpms.cellsect.service.model.CellSectVO;
+import kr.go.gg.gpms.dwginfo.service.DwgInfo2Service;
+import kr.go.gg.gpms.dwginfo.service.model.DwgInfoVO;
 
 /**
  * @Class Name : Cell10Controller.java
@@ -57,6 +61,9 @@ public class CellSectController extends BaseController {
 
 	@Resource(name = "cell10Service")
 	private Cell10Service cell10Service;
+
+	@Resource(name = "dwgInfo2Service")
+	private DwgInfo2Service dwgInfo2Service;
 
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService egovPropertyService;
@@ -151,82 +158,85 @@ public class CellSectController extends BaseController {
      * @exception Exception
      */
 	@RequestMapping(value = "/cellsect/staTotDwgDownloadFile.do")
-    public String staTotDwgDownloadFile(@ModelAttribute Map<String, String> paramMap, HttpServletResponse response, Model model) throws Exception {
-	    Map<String, String> dataMap = cellSectService.selectStaTotDwgFileInfo(paramMap);
+    public String staTotDwgDownloadFile(@ModelAttribute DwgInfoVO dwgInfoVO, HttpServletResponse response, Model model) throws Exception {
+	    String resultCode = "";
+	    String resultMsg = "";
 
+	    Map<String, String> paramMap = dwgInfo2Service.selectDwgInfo(dwgInfoVO);
 
+	    if ( paramMap != null ) {
+	        paramMap.put("DWG_TYPE", dwgInfoVO.getDWG_TYPE());
+    	    // FTP로 데이터 가져오기.
+    	    FtpUtil ftpUtil = new FtpUtil();
+    	    ftpUtil.ftpDownload(paramMap);
 
-        BufferedInputStream in = null;
-        String resultCode = "";
-        String resultMsg = "";
-        try {
-            String fileNo = attachFileVO.getFILE_NO();
-            String fileName = "";
-            String fileOriName = "";
-            String subPath = "";
+    	    // 파일 다운로드
+    	    BufferedInputStream in = null;
+    	    try {
+    	        // 로컬 DWG파일 다운로드 디렉토리 경로
+                String localPath = EgovProperties.getProperty("ftp.kggis.local-dwg-download-directory-path");
 
-            // 공통파일 키에 의해 DB에서 가져와야 하는 경우
-            if( fileNo!=null && !fileNo.equals("") ) {
-                attachFileVO = attachFileService.selectAttachFile(attachFileVO);
+    	        String filePath = checkFilePath(localPath, "path");
 
-                if( attachFileVO !=null ) {
-                    fileName = attachFileVO.getFILE_NM();
-                    fileOriName = attachFileVO.getORGINL_FILE_NM();
-                    subPath = attachFileVO.getFILE_COURS();
+    	        String dwgType = paramMap.get("DWG_TYPE");
+    	        String dwgName = "";
+    	        if ( "01".equals(dwgType) ) {
+                    dwgName = paramMap.get("DWG_NAME") + ".DWG";
+                } else if ( "02".equals(dwgType) ) {
+                    dwgName = paramMap.get("DWG_NAME") + ".DWG";
+                } else if ( "03".equals(dwgType) ) {
+                    dwgName = paramMap.get("DWG_NAME") + ".DWG";
+                } else if ( "04".equals(dwgType) ) {
+                    dwgName = paramMap.get("CON_NAME") + ".DWG";
+                } else if ( "05".equals(dwgType) ) {
+                    dwgName = paramMap.get("DWG_NAME") + ".DWG";
                 }
-            }
 
-            String filePath = checkFilePath(subPath, "path");
+    	        File uFile = new File(filePath, checkFilePath(dwgName, "name"));
+    	        int fSize = (int) uFile.length();
 
-            File uFile = new File(filePath, checkFilePath(fileName, "name"));
-            int fSize = (int) uFile.length();
+    	        if (fSize > 0) {
+    	            in = new BufferedInputStream(new FileInputStream(uFile));
+    	            // String mimetype = servletContext.getMimeType(requestedFile);
+    	            String mimetype = "text/html";
 
-            if (fSize > 0) {
-                in = new BufferedInputStream(new FileInputStream(uFile));
-                // String mimetype = servletContext.getMimeType(requestedFile);
-                String mimetype = "text/html";
+    	            response.setBufferSize(fSize);
+    	            response.setContentType(mimetype);
+    	            response.setHeader("Content-Disposition", "attachment; filename=\""
+    	                    + URLEncoder.encode(dwgName,"UTF-8") + "\"");
+    	            response.setContentLength(fSize);
 
-                response.setBufferSize(fSize);
-                response.setContentType(mimetype);
-                response.setHeader("Content-Disposition", "attachment; filename=\""
-                        + URLEncoder.encode(fileOriName,"UTF-8") + "\"");
-                response.setContentLength(fSize);
+    	            FileCopyUtils.copy(in, response.getOutputStream());
+    	            in.close();
+    	            in = null;
+    	            response.getOutputStream().flush();
+    	            response.getOutputStream().close();
+    	        } else {
+    	            resultCode = "ERROR";
+    	            resultMsg = "파일이 서버에 존재하지 않습니다.";
+    	            model.addAttribute("resultCode", resultCode);
+    	            model.addAttribute("resultMsg", resultMsg);
 
-                FileCopyUtils.copy(in, response.getOutputStream());
-                in.close();
-                in = null;
-                response.getOutputStream().flush();
-                response.getOutputStream().close();
-            }
-            else {
-                /*//setContentType을 프로젝트 환경에 맞추어 변경
-                response.setContentType("application/x-msdownload");
-                PrintWriter printwriter = response.getWriter();
-                printwriter.println("<html>");
-                printwriter.println("<br><br><br><h2>파일이 손상되었습니다.</h2>");
-                printwriter.println("<br><br><br><center><h3><a href='javascript: history.go(-1)'>Back</a></h3></center>");
-                printwriter.println("<br><br><br>&copy; webAccess");
-                printwriter.println("</html>");
-                printwriter.flush();
-                printwriter.close();*/
+    	            return "/cmmn/commonMsg";
+    	        }
+    	    } catch(Exception e) {
+    	        resultCode = "ERROR";
+    	        resultMsg = "파일이 서버에 존재하지 않습니다.";
 
-                resultCode = "ERROR";
-                resultMsg = "파일이 서버에 존재하지 않습니다.";
-                model.addAttribute("resultCode", resultCode);
-                model.addAttribute("resultMsg", resultMsg);
-
-                return "/cmmn/commonMsg";
-            }
-        } catch(Exception e) {
-            resultCode = "ERROR";
+    	        model.addAttribute("resultCode", resultCode);
+    	        model.addAttribute("resultMsg", resultMsg);
+    	        return "/cmmn/commonMsg";
+    	    } finally {
+    	        if (in != null) in.close();
+    	    }
+	    } else {
+	        resultCode = "ERROR";
             resultMsg = "파일이 서버에 존재하지 않습니다.";
 
             model.addAttribute("resultCode", resultCode);
             model.addAttribute("resultMsg", resultMsg);
             return "/cmmn/commonMsg";
-        } finally {
-            if (in != null) in.close();
-        }
+	    }
 
         return null;
     }
