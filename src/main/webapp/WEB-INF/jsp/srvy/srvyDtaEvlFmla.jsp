@@ -39,12 +39,12 @@
 				                <td class="center">거북등균열<br/>(ACI)</td>
 				                <td>
 				                    = <input class="ac_var1" idxNm='지수1'  > - AC <br/>
-				                    = <input class="ac_var1" idxNm='지수1'  > - <input class="ac_var2" idxNm='지수2'  > * 망상균열량(㎡)/<input class="ac_var3" idxNm='지수3'  >(㎡) <br/>
+				                    = <input class="ac_var1" idxNm='지수1'  > - <input class="ac_var2" idxNm='지수2'  > * 면적균열량(㎡)/<input class="ac_var3" idxNm='지수3'  >(㎡) <br/>
 				                    = <input id="AC_VAR1" name="AC_VAR1" class="ac_var1" idxNm='지수1'  >
 				                        - <input id="AC_VAR2" name="AC_VAR2" class="ac_var2" idxNm='지수2'  >
-				                        * ( Low거북등균열량(㎡)/<input id="AC_VAR3" name="AC_VAR3" class="ac_var3" >(㎡)
-				                        + Med거북등균열량(㎡)/<input id="AC_VAR4" name="AC_VAR4" class="ac_var3" idxNm='지수3'  >(㎡)
-				                        + Hi거북등균열량(㎡)/<input id="AC_VAR5" name="AC_VAR5" class="ac_var3" >(㎡) )
+				                        * <br/>( Low거북등균열량(㎡) * <input id="AC_VAR7" name="AC_VAR7" class="ac_var7" idxNm='지수7' > / <input id="AC_VAR3" name="AC_VAR3" class="ac_var3" idxNm='지수3' >(㎡)
+				                        + Med거북등균열량(㎡) * <input id="AC_VAR8" name="AC_VAR8" class="ac_var8" idxNm='지수8' > / <input id="AC_VAR4" name="AC_VAR4" class="ac_var3" idxNm='지수3'  >(㎡)
+				                        + Hi거북등균열량(㎡) * <input id="AC_VAR9" name="AC_VAR9" class="ac_var9" idxNm='지수9' > / <input id="AC_VAR5" name="AC_VAR5" class="ac_var3" idxNm='지수3' >(㎡) )
 				                </td>
 				                <td class="center">0</td>
 				                <td class="center">10</td>
@@ -53,12 +53,12 @@
                                 <td class="center">블럭균열<br/>(BCI)</td>
                                 <td>
                                     = <input class="bc_var1" idxNm='지수1' > - BC <br/>
-                                    = <input class="bc_var1" idxNm='지수1' > - <input class="bc_var2" idxNm='지수2' > * 망상균열량(㎡)/<input class="bc_var3" idxNm='지수3' >(㎡) <br/>
+                                    = <input class="bc_var1" idxNm='지수1' > - <input class="bc_var2" idxNm='지수2' > * 면적균열량(㎡)/<input class="bc_var3" idxNm='지수3' >(㎡) <br/>
                                     = <input id="BC_VAR1" name="BC_VAR1" class="bc_var1" idxNm='지수1' >
                                         - <input id="BC_VAR2" name="BC_VAR2" class="bc_var2" idxNm='지수2' >
-                                        * ( Low블럭균열량(㎡)/<input id="BC_VAR3" name="BC_VAR3" class="bc_var3" >(㎡)
-                                        + Med블럭균열량(㎡)/<input id="BC_VAR4" name="BC_VAR4" class="bc_var3" idxNm='지수3' >(㎡)
-                                        + Hi블럭균열량(㎡)/<input id="BC_VAR5" name="BC_VAR5" class="bc_var3" >(㎡) )
+                                        * <br/>( Low블럭균열량(㎡) * <input id="BC_VAR7" name="BC_VAR7" class="bc_var7" idxNm='지수7' > / <input id="BC_VAR3" name="BC_VAR3" class="bc_var3" idxNm='지수3' >(㎡)
+                                        + Med블럭균열량(㎡) * <input id="BC_VAR8" name="BC_VAR8" class="bc_var8" idxNm='지수8' > / <input id="BC_VAR4" name="BC_VAR4" class="bc_var3" idxNm='지수3' >(㎡)
+                                        + Hi블럭균열량(㎡) * <input id="BC_VAR9" name="BC_VAR9" class="bc_var9" idxNm='지수9' > / <input id="BC_VAR5" name="BC_VAR5" class="bc_var3" idxNm='지수3' >(㎡) )
                                 </td>
                                 <td class="center">0</td>
                                 <td class="center">10</td>
@@ -70,9 +70,9 @@
                                     = <input class="lc_var1" idxNm='지수1' > - <input class="lc_var2" idxNm='지수2' > * 선형균열량(m)/<input class="lc_var3" idxNm='지수3' >(m) <br/>
                                     = <input id="LC_VAR1" name="LC_VAR1" class="lc_var1" idxNm='지수1' >
                                         - <input id="LC_VAR2" name="LC_VAR2" class="lc_var2" idxNm='지수2' >
-                                        * ( Low선형균열량(m)/<input id="LC_VAR3" name="LC_VAR3" class="lc_var3" >(m)
-                                        + Med선형균열량(m)/<input id="LC_VAR4" name="LC_VAR4" class="lc_var3" idxNm='지수3' >(m)
-                                        + Hi선형균열량(m)/<input id="LC_VAR5" name="LC_VAR5" class="lc_var3" >(m) )
+                                        * <br/>( Low선형균열량(m) * <input id="LC_VAR7" name="LC_VAR7" class="lc_var7" idxNm='지수7' > / <input id="LC_VAR3" name="LC_VAR3" class="lc_var3" idxNm='지수3' >(m)
+                                        + Med선형균열량(m) * <input id="LC_VAR8" name="LC_VAR8" class="lc_var8" idxNm='지수8' > / <input id="LC_VAR4" name="LC_VAR4" class="lc_var3" idxNm='지수3' >(m)
+                                        + Hi선형균열량(m) * <input id="LC_VAR9" name="LC_VAR9" class="lc_var9" idxNm='지수9' > / <input id="LC_VAR5" name="LC_VAR5" class="lc_var3" idxNm='지수3' >(m) )
                                 </td>
                                 <td class="center">0</td>
                                 <td class="center">10</td>
@@ -84,9 +84,9 @@
                                     = <input class="tc_var1" idxNm='지수1' > - <input class="tc_var2" idxNm='지수2' > * 선형균열량(m)/<input class="tc_var3" idxNm='지수3' >(m) <br/>
                                     = <input id="TC_VAR1" name="TC_VAR1" class="tc_var1" idxNm='지수1' >
                                         - <input id="TC_VAR2" name="TC_VAR2" class="tc_var2" idxNm='지수2' >
-                                        * ( Low선형균열량(m)/<input id="TC_VAR3" name="TC_VAR3" class="tc_var3" >(m)
-                                        + Med선형균열량(m)/<input id="TC_VAR4" name="TC_VAR4" class="tc_var3" idxNm='지수3' >(m)
-                                        + Hi선형균열량(m)/<input id="TC_VAR5" name="TC_VAR5" class="tc_var3" >(m) )
+                                        * <br/>( Low선형균열량(m) * <input id="TC_VAR7" name="TC_VAR7" class="tc_var7" idxNm='지수7' > / <input id="TC_VAR3" name="TC_VAR3" class="tc_var3" idxNm='지수3' >(m)
+                                        + Med선형균열량(m) * <input id="TC_VAR8" name="TC_VAR8" class="tc_var8" idxNm='지수8' > / <input id="TC_VAR4" name="TC_VAR4" class="tc_var3" idxNm='지수3' >(m)
+                                        + Hi선형균열량(m) * <input id="TC_VAR9" name="TC_VAR9" class="tc_var9" idxNm='지수9' > / <input id="TC_VAR5" name="TC_VAR5" class="tc_var3" idxNm='지수3' >(m) )
                                 </td>
                                 <td class="center">0</td>
                                 <td class="center">10</td>

@@ -306,4 +306,24 @@ public class SrvyDtaDAO extends BaseDAO {
 	public int updateImgInfoOfTmpExcelData(SrvyDtaVO srvyDtaVO) throws Exception {
 		return update("srvyDtaDAO.updateImgInfoOfTmpExcelData", srvyDtaVO);
 	}
+
+    /**
+     * 최소_구간_조사_자료 (TN_MUMM_SCTN_SRVY_DTA)을 삭제한다.
+     * @param
+     * @return 삭제 결과
+     * @exception Exception
+     */
+    public int deleteTnMummSctnSrvyDta(SrvyDtaVO srvyDtaOne) throws Exception {
+        return delete("srvyDtaDAO.deleteTnMummSctnSrvyDta", srvyDtaOne);
+    }
+
+    /**
+     * 집계_자료_일반_현황 (TN_SM_DTA_GNL_STTUS)을 삭제한다.
+     * @param
+     * @return 삭제 결과
+     * @exception Exception
+     */
+    public int deleteTnSmDtaGnlSttus(SrvyDtaVO srvyDtaOne) throws Exception {
+        return delete("srvyDtaDAO.deleteTnSmDtaGnlSttus", srvyDtaOne);
+    }
 }

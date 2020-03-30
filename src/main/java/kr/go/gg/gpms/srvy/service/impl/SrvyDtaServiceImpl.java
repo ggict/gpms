@@ -676,24 +676,43 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 
         		    File aiFileNm = new File(imgFilePath);
 
-        		    HttpClient client = new DefaultHttpClient();
-        		    client.getParams().setParameter("http.protocol.expect-continue", false);  // HttpClient POST 요청시 Expect 헤더정보 사용 x
-        		    client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 10 * 60 * 1000);  // 원격 호스트와 연결을 설정하는 시간
-        		    client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 10 * 60 * 1000);  // 데이터를 기다리는 시간
+        		    String responseString = "";
+        		    int loopIdx = 0;  // 반복 횟수
+        		    while ( loopIdx < 3 ) {
+        		        try {
+        		            HttpClient client = new DefaultHttpClient();
+        		            client.getParams().setParameter("http.protocol.expect-continue", false);  // HttpClient POST 요청시 Expect 헤더정보 사용 x
+        		            client.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, 20 * 60 * 1000);  // 원격 호스트와 연결을 설정하는 시간
+        		            client.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, 20 * 60 * 1000);  // 데이터를 기다리는 시간
 
-        		    HttpPost post = new HttpPost(EgovProperties.getProperty("Globals.AI.URL"));
+        		            HttpPost post = new HttpPost(EgovProperties.getProperty("Globals.AI.URL"));
 
-        		    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-        		    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-        		    builder.addBinaryBody("image", aiFileNm);
-        		    builder.addTextBody("modules", EgovProperties.getProperty("Globals.AI.MODULES"));
-        		    HttpEntity entity = builder.build();
-        		    //
-        		    post.setEntity(entity);
-        		    HttpResponse responseTmp = client.execute(post);
+                		    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+                		    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+                		    builder.addBinaryBody("image", aiFileNm);
+                		    builder.addTextBody("modules", EgovProperties.getProperty("Globals.AI.MODULES"));
+                		    HttpEntity entity = builder.build();
+                		    //
+                		    post.setEntity(entity);
+                		    HttpResponse responseTmp = client.execute(post);
 
-        		    HttpEntity entity2 = responseTmp.getEntity();
-        		    String responseString = EntityUtils.toString(entity2, "UTF-8");
+                		    if ( responseTmp.getStatusLine().getStatusCode() != 201 ) {  // 정상처리 이외에 에러 처리.
+                		        throw new Exception("Error Status Code : " + responseTmp.getStatusLine().getStatusCode());
+                		    }
+
+                		    HttpEntity entity2 = responseTmp.getEntity();
+                		    responseString = EntityUtils.toString(entity2, "UTF-8");
+                		    loopIdx = 3;  // 종료시점으로 변경
+        		        } catch (Exception e) {
+        		            e.printStackTrace();
+        		            loopIdx++;  // 반복 순번 증가 3번까지 재시도
+        		            if ( loopIdx == 3 ) {  // 3회 반복 오류 진행시 해당 조사구간 종료
+        		                throw e;
+        		            }
+        		            Thread.sleep(60 * 1000);
+        		        }
+        		    }
+
 
         		    LOGGER.debug("responseString : " + responseString);
         		    //=======================================================================================
@@ -845,8 +864,45 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 //        TransactionSynchronizationManager.clearSynchronization();
 	}
 
-//	public void deleteTmpMummSctnSrvyDta() throws Exception {
-//	    srvyDtaDAO.deleteTmpMummSctnSrvyDta();
+//	public void deleteTmpMummSctnSrvyDta(SrvyDtaVO srvyDtaOne) throws Exception {
+//	    srvyDtaDAO.deleteTmpMummSctnSrvyDta(srvyDtaOne);
 //	}
+
+	// 재분석
+	public void deleteAnalReset(SrvyDtaVO srvyDtaOne) throws Exception {
+	    srvyDtaDAO.deleteTnSmDtaGnlSttus(srvyDtaOne);
+	    srvyDtaDAO.deleteTnMummSctnSrvyDta(srvyDtaOne);
+	    srvyDtaDAO.deleteTmpMummSctnSrvyDta(srvyDtaOne);
+
+	}
+
+	// 재평가
+	public void evalReset(SrvyDtaVO srvyDtaOne) throws Exception {
+	    srvyDtaDAO.deleteTnSmDtaGnlSttus(srvyDtaOne);
+        srvyDtaDAO.deleteTnMummSctnSrvyDta(srvyDtaOne);
+
+        // 집계
+        srvyDtaDAO.procSaveSurveyData(srvyDtaOne);
+
+        SrvyDtaVO srvyDtaOne2 = srvyDtaDAO.selectSrvyDta(srvyDtaOne);
+        srvyDtaOne2.setCRTR_NO(srvyDtaOne.getCRTR_NO());
+        srvyDtaOne2.setUPDUSR_NO(srvyDtaOne.getUPDUSR_NO());
+
+        // 공간 보정
+        SrvyDtaVO srvyDtaOne3 = new SrvyDtaVO();
+        if (srvyDtaOne2.getGPS_CORTN_PROCESS_AT().equals("N")) {
+
+            srvyDtaDAO.procSrvyDtaSysReflct(srvyDtaOne2);
+
+            srvyDtaOne3 = srvyDtaDAO.selectSrvyDta(srvyDtaOne2);
+            srvyDtaOne3.setCRTR_NO(srvyDtaOne2.getCRTR_NO());
+            srvyDtaOne3.setUPDUSR_NO(srvyDtaOne2.getUPDUSR_NO());
+        }
+
+        // 집계 처리
+        if (srvyDtaOne3.getSM_PROCESS_AT().equals("N")) {
+            srvyDtaDAO.procAggregateGeneral(srvyDtaOne3);
+        }
+	}
 
 }

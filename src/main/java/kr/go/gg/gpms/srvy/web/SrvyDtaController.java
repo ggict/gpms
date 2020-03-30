@@ -1244,6 +1244,14 @@ public class SrvyDtaController extends BaseController {
 						continue;
 					}
 
+					if ( val.equals("0.0") && (j == 22 || j == 23) ) {
+					    map.put("result", result);
+                        map.put("errorCol", colName);
+                        map.put("rowIndex", i);
+                        map.put("resultMsg", "위·경도 값이 존재하지 않습니다.(줄 : " + i + ")");
+                        return map;
+					}
+
 					if (val.contains(".") && val.split("[.]")[1].equals("0")) {
 						val = val.split("[.]")[0];
 					}
@@ -1904,6 +1912,81 @@ public class SrvyDtaController extends BaseController {
 		map.put("rows", items);
 
 		return map;
+	}
+
+
+	@RequestMapping(value = "/api/analReset.do", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public String analReset(@RequestBody SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+	    boolean isResult = false;
+
+	    try {
+    	    List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
+
+            if (excelList == null || excelList.size() == 0) {
+                model.addAttribute("resultCode", "noData");
+                model.addAttribute("resultMsg", "엑셀 데이터가 없습니다.");
+                return "jsonView";
+            }
+
+            // 기존 데이터 삭제
+            srvyDtaService.deleteAnalReset(srvyDtaVO);
+
+            // 데이터(list) 수 만큼 for문 실행
+            String fileName = "";
+            for (SrvyDtaVO srvyDtaOne : excelList) {
+                BindBeansToActiveUser(srvyDtaOne);
+
+                AttachFileVO attachFileParam = new AttachFileVO();
+                attachFileParam.setFILE_NO(srvyDtaOne.getFILE_NO());
+                attachFileParam.setUSE_AT("Y");
+                attachFileParam.setDELETE_AT("N");
+                AttachFileVO attachFileOne = attachFileService.selectAttachDetailFile(attachFileParam);
+                if (attachFileOne == null || StringUtils.isEmpty(attachFileOne.getFILE_COURS())) {
+                    model.addAttribute("resultCode", "noExcel");
+                    model.addAttribute("resultMsg", "엑셀 파일이 없습니다.");
+                    return "jsonView";
+                }
+
+                //엑셀파일
+                fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
+
+                // AI분석
+                srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO, srvyDtaOne, fileName);
+            }
+            isResult = true;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        isResult = false;
+	    }
+
+	    model.addAttribute("result", isResult);
+	    model.addAttribute("resultCode", "analReset");
+	    model.addAttribute("resultMsg", "재분석을 실행하였습니다.");
+
+        return "jsonView";
+    }
+
+	@RequestMapping(value = "/api/evalReset.do", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+	public String evalReset(@RequestBody SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+	    boolean isResult = false;
+
+	    try {
+	        List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
+	        for (SrvyDtaVO srvyDtaOne : excelList) {
+    	        // 재평가
+                srvyDtaService.evalReset(srvyDtaOne);
+	        }
+	        isResult = true;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        isResult = false;
+	    }
+
+	    model.addAttribute("result", isResult);
+	    model.addAttribute("resultCode", "analReset");
+	    model.addAttribute("resultMsg", "재평가를 실행하였습니다.");
+
+	    return "jsonView";
 	}
 
 }

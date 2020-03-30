@@ -40,7 +40,7 @@ $( document ).ready(function() {
         ,postData: $("#frm").cmSerializeObject()
         ,ignoreCase: true
         //,colNames:["작업일자","성공 건수","실패 건수", "등록자", "CRTR_NO"]
-        ,colNames:["노선번호","노선명","행선","차로","조사명","성공여부","분석진행률","조사일자","등록자","분석자료","등록번호","조사번호"]
+        ,colNames:["노선번호","노선명","행선","차로","조사명","성공여부","분석진행률","조사일자","등록자","분석자료","재분석","포장상태<br/>재평가","등록번호","조사번호"]
         ,colModel:[
              {name:'route_CODE',index:'route_CODE', align:'center', width:70}
             ,{name:'road_NAME',index:'road_NAME', align:'center', width:70}
@@ -52,6 +52,8 @@ $( document ).ready(function() {
             ,{name:'srvy_DE',index:'srvy_DE', align:'center', width:70}
             ,{name:'crtr_NM',index:'crtr_NM', align:'center', width:50}
             ,{name:'분석자료',index:'분석자료', align:'center', width:50, formatter:fn_btn_anal_data}
+            ,{name:'재분석',index:'재분석', align:'center', width:50, formatter:fn_btn_anal_reset}
+            ,{name:'포장상태 재평가',index:'포장상태 재평가', align:'center', width:50, formatter:fn_btn_eval_reset}
             ,{name:'CRTR_NO',index:'CRTR_NO', hidden: true}
             ,{name:'SRVY_NO',index:'SRVY_NO', hidden: true}
         ]
@@ -266,6 +268,67 @@ function fn_btn_anal_data(cellValue, options, rowObject){
 function fn_anal_data_popup(srvyNo){
     $("#SRVY_NO").val(srvyNo);
     COMMON_UTIL.cmWindowOpen('분석자료 조회', "<c:url value='/analDataPopupList.do'/>?SRVY_NO="+srvyNo, 1500, 1200, false, null, 'center');
+}
+
+function fn_btn_anal_reset(cellValue, options, rowObject){
+    var btn ="";
+    if(rowObject.success_KND == 'S') {
+        btn += "<a href='#' class='schbtn' onclick=\"fn_anal_reset('" + rowObject.SRVY_NO + "');\"><font color=white>재분석</font></a>";
+    }
+    return btn;
+}
+
+function fn_anal_reset(srvyNo) {
+	if ( confirm("재분석을 진행하시겠습니까?") ) {
+    	$.ajax({
+            url: contextPath + 'srvy/api/analReset.do'
+            ,type: 'post'
+            ,dataType: 'json'
+            ,contentType : 'application/json'
+            ,data : JSON.stringify({SRVY_NO : srvyNo})
+            ,success: function(data){
+                if ( data ) {
+                	alert(data.resultMsg);
+                }
+            }
+            ,error: function(a,b,msg){
+                alert("오류가 발생하였습니다.");
+            }
+        });
+	}
+}
+
+function fn_btn_eval_reset(cellValue, options, rowObject){
+    var btn ="";
+    if(rowObject.success_KND == 'S') {
+        btn += "<a href='#' class='schbtn' onclick=\"fn_eval_reset('" + rowObject.SRVY_NO + "');\"><font color=white>재평가</font></a>";
+    }
+    return btn;
+}
+
+function fn_eval_reset(srvyNo) {
+	if ( confirm("재평가를 진행하시겠습니까?") ) {
+		parent.$("#dvProgress").dialog("open");
+	    parent.$("#t_progress").text("재평가 중입니다.");
+
+        $.ajax({
+            url: contextPath + 'srvy/api/evalReset.do'
+            ,type: 'post'
+            ,dataType: 'json'
+            ,contentType : 'application/json'
+            ,data : JSON.stringify({SRVY_NO : srvyNo})
+            ,success: function(data){
+                parent.$("#dvProgress").dialog("close");
+            	if ( data ) {
+                    alert(data.resultMsg);
+                }
+            }
+            ,error: function(a,b,msg){
+                parent.$("#dvProgress").dialog("close");
+            	alert("오류가 발생하였습니다.");
+            }
+        });
+	}
 }
 
 //버튼생성

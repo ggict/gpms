@@ -700,6 +700,24 @@
 ]]>
 	</delete>
 
+	<delete id="srvyDtaDAO.deleteTnMummSctnSrvyDta">
+	<![CDATA[
+		/* srvyDtaDAO.deleteTnMummSctnSrvyDta */
+		DELETE FROM TN_MUMM_SCTN_SRVY_DTA
+        WHERE
+            SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
+]]>
+	</delete>
+
+	<delete id="srvyDtaDAO.deleteTnSmDtaGnlSttus">
+	<![CDATA[
+		/* srvyDtaDAO.deleteTnSmDtaGnlSttus */
+		DELETE FROM TN_SM_DTA_GNL_STTUS
+        WHERE
+            SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
+]]>
+	</delete>
+
 	<update id="srvyDtaDAO.updateImgInfoOfTmpExcelData">
 <![CDATA[
 		/* srvyDtaDAO.updateImgInfoOfTmpExcelData */

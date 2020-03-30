@@ -128,10 +128,10 @@ public class RpairTrgetSlctnController  extends BaseController {
 
         try {
             // 보수대상선정 선정년도 존재여부
-            if ( rpairTrgetSlctnService.selectRpairTrgetSlctnSlctnYearListCnt(rpairTrgetSlctnVO) > 0 ) {
-                rpairTrgetSlctnVO.setResultSuccess("false");
-                rpairTrgetSlctnVO.setResultMSG("보수대상선정 작업중입니다.");
-            } else {
+//            if ( rpairTrgetSlctnService.selectRpairTrgetSlctnSlctnYearListCnt(rpairTrgetSlctnVO) > 0 ) {
+//                rpairTrgetSlctnVO.setResultSuccess("false");
+//                rpairTrgetSlctnVO.setResultMSG("보수대상선정 작업중입니다.");
+//            } else {
                 // 보수대상선정시작(보수_대상_선정 삭제/등록)
                 rpairTrgetSlctnService.addRpairTrgetSlctn(rpairTrgetSlctnVO);
 
@@ -145,7 +145,7 @@ public class RpairTrgetSlctnController  extends BaseController {
 
                 rpairTrgetSlctnVO.setResultSuccess("true");
                 rpairTrgetSlctnVO.setResultMSG("정상 등록되었습니다.");
-            }
+//            }
         } catch (Exception e) {
             e.printStackTrace();
             rpairTrgetSlctnVO.setResultSuccess("false");

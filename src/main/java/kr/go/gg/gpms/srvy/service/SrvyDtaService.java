@@ -211,7 +211,11 @@ public interface SrvyDtaService {
 	void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO, SrvyDtaVO srvyDtaOne, String fileName) throws Exception;
 
 
-//	void deleteTmpMummSctnSrvyDta() throws Exception;
+//	void deleteTmpMummSctnSrvyDta(SrvyDtaVO srvyDtaVO) throws Exception;
+
+	void deleteAnalReset(SrvyDtaVO srvyDtaVO) throws Exception;
+
+	void evalReset(SrvyDtaVO srvyDtaVO) throws Exception;
 
 }
 

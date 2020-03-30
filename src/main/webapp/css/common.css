@@ -9,7 +9,7 @@
 {display:block; font-size:1.3em; font-weight:bold; padding:15px; background-color:#fff; border: 3px solid #ededed; position:absolute; top:0px; left:45%;}
 
 table.fmla { line-height: 15px; }
-table.fmla input { width: 60px; text-align: center; }
+table.fmla input { width: 50px; text-align: center; }
 table.fmla .inner tr td { padding: 0px; border: 0px; line-height: normal; }
 
 form {height:100%;}

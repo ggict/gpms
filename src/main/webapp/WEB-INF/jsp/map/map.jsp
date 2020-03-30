@@ -348,6 +348,10 @@ var layersMngObj = {
 			var baseLayer = gMap.getLayerByName("baseLayer");
 			var params = baseLayer.getParams();
 			var layers = (params.LAYERS) ? params.LAYERS.split(',') : [];
+			// 평가상태도 삭제
+			if ( layers.indexOf("MV_GNLSTTUS_SECT") > -1 ) {
+			    layers.splice(layers.indexOf("MV_GNLSTTUS_SECT"));
+			}
 
 			var attrLayer = parent.gMap.getLayerByName('GAttrLayer');
             attrLayer.removeFeatures(attrLayer.features);
