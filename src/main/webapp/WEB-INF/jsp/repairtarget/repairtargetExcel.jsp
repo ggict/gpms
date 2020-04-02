@@ -177,6 +177,14 @@
    <Column ss:Index="11" ss:StyleID="s62" ss:Width="90"/>
    <Column ss:StyleID="s62" ss:Width="52.5"/>
    <Column ss:StyleID="s62" ss:Width="78"/>
+   <Column ss:StyleID="s62" ss:Width="135"/>
+   <Column ss:StyleID="s62" ss:Width="100"/>
+   <Column ss:StyleID="s62" ss:Width="100"/>
+   <Column ss:StyleID="s62" ss:Width="100"/>
+   <Column ss:StyleID="s62" ss:Width="135"/>
+   <Column ss:StyleID="s62" ss:Width="53.25"/>
+   <Column ss:StyleID="s62" ss:Width="53.25"/>
+   <Column ss:StyleID="s62" ss:Width="53.25"/>
    <Column ss:StyleID="s62" ss:Width="56.25"/>
    <Column ss:StyleID="s62" ss:Width="44.25"/>
    <Column ss:StyleID="s62" ss:Width="135"/>
@@ -184,12 +192,6 @@
    <Column ss:StyleID="s62" ss:Width="81.75"/>
    <<!-- Column ss:StyleID="s62" ss:Width="135"/> -->
    <Column ss:StyleID="s62" ss:Width="135"/>
-   <Column ss:StyleID="s62" ss:Width="135"/>
-   <Column ss:StyleID="s62" ss:Width="100"/>
-   <Column ss:StyleID="s62" ss:Width="100"/>
-   <Column ss:StyleID="s62" ss:Width="100"/>
-   <Column ss:StyleID="s62" ss:Width="135"/>
-   <Column ss:StyleID="s62" ss:Width="53.25"/>
    <!-- <Column ss:StyleID="s62" ss:Width="53.25"/> -->
    <Row ss:AutoFitHeight="0" ss:StyleID="s64">
     <Cell><Data ss:Type="String">순번</Data></Cell>
@@ -204,6 +206,14 @@
     <Cell><Data ss:Type="String">종점(m)</Data></Cell>
     <Cell><Data ss:Type="String">교통량등급</Data></Cell>
     <Cell><Data ss:Type="String">행정구역</Data></Cell>
+    <Cell><Data ss:Type="String">종단평탄성 값 평균(m/km)</Data></Cell>
+    <Cell><Data ss:Type="String">소성변형 값 평균(mm/M)</Data></Cell>
+    <Cell><Data ss:Type="String">선형 균열양(m)</Data></Cell>
+    <Cell><Data ss:Type="String">면형 균열양(㎡)</Data></Cell>
+    <Cell><Data ss:Type="String">패칭/포트홀 균열양(㎡)</Data></Cell>
+    <Cell><Data ss:Type="String">GPCI</Data></Cell>
+    <Cell><Data ss:Type="String">교통량</Data></Cell>
+    <Cell><Data ss:Type="String">포트홀</Data></Cell>
     <Cell><Data ss:Type="String">최근공사년도</Data></Cell>
     <Cell><Data ss:Type="String">연장(㎞)</Data></Cell>
     <Cell><Data ss:Type="String">면적(㎡)</Data></Cell>
@@ -211,12 +221,6 @@
     <Cell><Data ss:Type="String">단가(원/㎡)</Data></Cell>
     <Cell><Data ss:Type="String">금액산정 (원)</Data></Cell>
     <!-- <Cell><Data ss:Type="String">예산금액산정 (원)</Data></Cell> -->
-    <Cell><Data ss:Type="String">종단평탄성 값 평균(m/km)</Data></Cell>
-    <Cell><Data ss:Type="String">소성변형 값 평균(mm/M)</Data></Cell>
-    <Cell><Data ss:Type="String">선형 균열양(m)</Data></Cell>
-    <Cell><Data ss:Type="String">면형 균열양(㎡)</Data></Cell>
-    <Cell><Data ss:Type="String">패칭/포트홀 균열양(㎡)</Data></Cell>
-    <Cell><Data ss:Type="String">GPCI</Data></Cell>
     <!-- <Cell><Data ss:Type="String">DMG_VAL</Data></Cell> -->
    </Row>
    <!-- <Row ss:AutoFitHeight="0" ss:StyleID="s64">
@@ -262,6 +266,14 @@
 <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.ENDPT}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s109"><Data ss:Type="String">${item.VMTC_GRAD_NM}</Data></Cell>
 <Cell ss:StyleID="s109"><Data ss:Type="String">${item.ADM_NM}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.IRI_VAL_AVRG}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.RD_VAL_AVRG}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.VRHR_CR}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.TRTS_BAC_CR_AVRG}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.PTPO_CR}</Data></Cell>
+<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.CALC_GPCI}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s109"><Data ss:Type="Number"><fmt:formatNumber value="${item.TRNSPORT_QY}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s109"><Data ss:Type="Number"><fmt:formatNumber value="${item.POTHOLE_QY}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s109"><Data ss:Type="String">${item.CNTRWK_YEAR}</Data></Cell>
 <Cell ss:StyleID="s111"><Data ss:Type="Number"><fmt:formatNumber value="${item.KILLO_LEN}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s111"><Data ss:Type="Number"><fmt:formatNumber value="${item.AR}" type="number"/></Data></Cell>
@@ -269,12 +281,6 @@
 <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.RPAIR_FEE}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.AMOUNT_CALC}" type="number"/></Data></Cell>
 <%-- <Cell ss:StyleID="s112"><Data ss:Type="Number"><fmt:formatNumber value="${item.BUDGET_ASIGN}" type="number"/></Data></Cell> --%>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.IRI_VAL_AVRG}</Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.RD_VAL_AVRG}</Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.VRHR_CR}</Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.TRTS_BAC_CR_AVRG}</Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.PTPO_CR}</Data></Cell>
-<Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.CALC_GPCI}" type="number"/></Data></Cell>
 <%-- <Cell ss:StyleID="s108"><Data ss:Type="Number"><fmt:formatNumber value="${item.DMG_VAL}" type="number"/></Data></Cell> --%>
 </c:if>
 <c:if test="${item.SLCTN_AT=='N'}"><!-- overbuget -->
@@ -290,6 +296,14 @@
 <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.ENDPT}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s114"><Data ss:Type="String">${item.VMTC_GRAD_NM}</Data></Cell>
 <Cell ss:StyleID="s114"><Data ss:Type="String">${item.ADM_NM}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.IRI_VAL_AVRG}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.RD_VAL_AVRG}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.VRHR_CR}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.TRTS_BAC_CR_AVRG}</Data></Cell>
+<Cell ss:StyleID="s112"><Data ss:Type="String">${item.PTPO_CR}</Data></Cell>
+<Cell ss:StyleID="s113"><Data ss:Type="Number"><fmt:formatNumber value="${item.CALC_GPCI}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s109"><Data ss:Type="Number"><fmt:formatNumber value="${item.TRNSPORT_QY}" type="number"/></Data></Cell>
+<Cell ss:StyleID="s109"><Data ss:Type="Number"><fmt:formatNumber value="${item.POTHOLE_QY}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s114"><Data ss:Type="String">${item.CNTRWK_YEAR}</Data></Cell>
 <Cell ss:StyleID="s116"><Data ss:Type="Number"><fmt:formatNumber value="${item.KILLO_LEN}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s116"><Data ss:Type="Number"><fmt:formatNumber value="${item.AR}" type="number"/></Data></Cell>
@@ -297,12 +311,6 @@
 <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.RPAIR_FEE}" type="number"/></Data></Cell>
 <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.AMOUNT_CALC}" type="number"/></Data></Cell>
 <%-- <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${item.BUDGET_ASIGN}" type="number"/></Data></Cell> --%>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.IRI_VAL_AVRG}</Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.RD_VAL_AVRG}</Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.VRHR_CR}</Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.TRTS_BAC_CR_AVRG}</Data></Cell>
-<Cell ss:StyleID="s112"><Data ss:Type="String">${item.PTPO_CR}</Data></Cell>
-<Cell ss:StyleID="s113"><Data ss:Type="Number"><fmt:formatNumber value="${item.CALC_GPCI}" type="number"/></Data></Cell>
 <%-- <Cell ss:StyleID="s113"><Data ss:Type="Number"><fmt:formatNumber value="${item.DMG_VAL}" type="number"/></Data></Cell> --%>
 </c:if>
    </Row>
@@ -325,14 +333,14 @@
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s114"/>
+    <Cell ss:StyleID="s114"/>
+    <Cell ss:StyleID="s114"/>
+    <Cell ss:StyleID="s114"/>
+    <Cell ss:StyleID="s114"/>
+    <Cell ss:StyleID="s114"/>
+    <Cell ss:StyleID="s114"/>
     <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${total_amount}" type="number"/></Data></Cell>
     <%-- <Cell ss:StyleID="s117"><Data ss:Type="Number"><fmt:formatNumber value="${total_fix_budget_asign}" type="number"/></Data></Cell> --%>
-    <Cell ss:StyleID="s114"/>
-    <Cell ss:StyleID="s114"/>
-    <Cell ss:StyleID="s114"/>
-    <Cell ss:StyleID="s114"/>
-    <Cell ss:StyleID="s114"/>
-    <Cell ss:StyleID="s114"/>
     <!-- <Cell ss:StyleID="s114"/> -->
    </Row>
   </Table>

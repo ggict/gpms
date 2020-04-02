@@ -30,7 +30,7 @@
             WHERE
                 A.ROAD_NO                 = #ROAD_NO#
                 AND A.SECT                = #SECT#
-                AND A.SECT_ST             <= #SECT_ST#
+                AND A.SECT_ST             <= CONVERT(NUMBERIC, #SECT_ST#) * 1000
         ]]>
             <isEqual property="DWG_TYPE" compareValue="01">
                 <![CDATA[
