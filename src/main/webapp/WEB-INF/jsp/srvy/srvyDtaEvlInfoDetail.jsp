@@ -874,7 +874,7 @@ function fnSelectLoc(cellId, flag) {
     var sColor = '#ff0000' ;
 
     // 선택한 셀을 보여줌
-    var tables = ["CELL_10"];
+    var tables = ["CELL_SECT"];
     var fields = ["CELL_ID"];
     var values = [cellId];
 

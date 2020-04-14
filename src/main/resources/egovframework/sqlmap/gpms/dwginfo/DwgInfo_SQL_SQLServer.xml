@@ -3,34 +3,34 @@
 
 <sqlMap namespace="dwgInfo2DAO">
 
-	<select id="dwgInfo2DAO.selectDwgInfo" resultClass="hashMap">
+    <select id="dwgInfo2DAO.selectDwgInfo" resultClass="hashMap">
         <![CDATA[
-    		/* dwgInfoDAO.selectDwgInfo */
-    		/* DWG_INFO 조회 */
-    		SELECT
+            /* dwgInfoDAO.selectDwgInfo */
+            /* DWG_INFO 조회 */
+            SELECT
                 TOP 1
-    			A.MCO              /* DWG_INFO.관리기관 */
-    			, A.ROAD_NO        /* DWG_INFO.노선_번호 */
-    			, A.SECT           /* DWG_INFO.구간_번호 */
-    			, A.HCODE          /* DWG_INFO.이력_코드 */
-    			, A.SECT_ST        /* DWG_INFO.도면_시점 */
-    			, A.SECT_ED        /* DWG_INFO.도면_종점 */
-    			, A.DWG_LEN        /* DWG_INFO.도면_연장 */
-    			, A.DWG_NAME       /* DWG_INFO.도면_명 */
-    			, A.CON_NAME       /* DWG_INFO.구간_도면_명 */
-    			, A.LOCAT          /* DWG_INFO.법정동_위치 */
-    			, A.DIV_ROAD_NO    /* DWG_INFO.분기_도로_번호 */
-    			, A.BY_DWG_NAME    /* DWG_INFO.분기_도로_인접_도면_명 */
-    			, A.BYPASS         /* DWG_INFO.우회도로_유무 */
-    			, A.INPUT_DATE     /* DWG_INFO.입력일 */
-    			, A.DWG_GUBN       /* DWG_INFO.도면_구분 */
-    			, A.REM            /* DWG_INFO.비고 */
-    			, A.SEQID          /* DWG_INFO.SEQID */
-    		FROM DWG_INFO A
+                A.MCO              /* DWG_INFO.관리기관 */
+                , A.ROAD_NO        /* DWG_INFO.노선_번호 */
+                , A.SECT           /* DWG_INFO.구간_번호 */
+                , A.HCODE          /* DWG_INFO.이력_코드 */
+                , A.SECT_ST        /* DWG_INFO.도면_시점 */
+                , A.SECT_ED        /* DWG_INFO.도면_종점 */
+                , A.DWG_LEN        /* DWG_INFO.도면_연장 */
+                , A.DWG_NAME       /* DWG_INFO.도면_명 */
+                , A.CON_NAME       /* DWG_INFO.구간_도면_명 */
+                , A.LOCAT          /* DWG_INFO.법정동_위치 */
+                , A.DIV_ROAD_NO    /* DWG_INFO.분기_도로_번호 */
+                , A.BY_DWG_NAME    /* DWG_INFO.분기_도로_인접_도면_명 */
+                , A.BYPASS         /* DWG_INFO.우회도로_유무 */
+                , A.INPUT_DATE     /* DWG_INFO.입력일 */
+                , A.DWG_GUBN       /* DWG_INFO.도면_구분 */
+                , A.REM            /* DWG_INFO.비고 */
+                , A.SEQID          /* DWG_INFO.SEQID */
+            FROM DWG_INFO A
             WHERE
                 A.ROAD_NO                 = #ROAD_NO#
                 AND A.SECT                = #SECT#
-                AND A.SECT_ST             <= CONVERT(NUMBERIC, #SECT_ST#) * 1000
+                AND A.SECT_ST             <= CONVERT(NUMERIC, #SECT_ST#) * 1000
         ]]>
             <isEqual property="DWG_TYPE" compareValue="01">
                 <![CDATA[
@@ -61,6 +61,6 @@
             ORDER BY
                 A.SECT_ST DESC
         ]]>
-	</select>
+    </select>
 
 </sqlMap>

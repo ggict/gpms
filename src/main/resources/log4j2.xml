@@ -4,16 +4,16 @@
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d %5p [%c] %m%n" />
         </Console>
-        
-        <RollingRandomAccessFile name="RollingRandomAccessFile" 
+
+        <RollingRandomAccessFile name="RollingRandomAccessFile"
          fileName="/logs/app.log" filePattern="/logs/$${date:yyyy-MM}/app-%d{yyyy-MM-dd}-%i.log.zip">
-         <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n" />
+         <PatternLayout pattern="%d [%t] %-5level %logger{36} - %msg%n" charset="UTF-8" />
          <Policies>
             <TimeBasedTriggeringPolicy />
             <SizeBasedTriggeringPolicy size="50 MB" />
          </Policies>
       </RollingRandomAccessFile>
-      
+
     </Appenders>
     <Loggers>
     <!-- 
