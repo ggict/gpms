@@ -72,10 +72,10 @@
                 <span class="userArea">
                     <a id="userDept" href="#none" ></a><c:out value="" />
                     <span class="user-area">
-    				    <a href="#" onclick="COMMON_UTIL.cmWindowOpen('사용자 정보', contextPath +'/api/sysuser/updateUserView.do', 420, 350, true, null, 'center');"> 사용자 정보</a>
-    				    <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/applyUserList.do"/>');" style="display: none;">신청<span id="usrCnt"></span>건</a>
-    				   <a href="#" onclick="fnMap();">지도</a>
-    				</span>
+                        <a href="#" onclick="COMMON_UTIL.cmWindowOpen('사용자 정보', contextPath +'/api/sysuser/updateUserView.do', 420, 350, true, null, 'center');"> 사용자 정보</a>
+                        <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/applyUserList.do"/>');" style="display: none;">신청<span id="usrCnt"></span>건</a>
+                       <a href="#" onclick="fnMap();">지도</a>
+                    </span>
                 </span>
                 <button  class="btnLogout" onclick="fnLogout();">로그아웃</button>
             </span>
@@ -130,7 +130,7 @@
                                     %>
                                     <c:set var="slctnYearList" value="<%=slctnYearList%>" />
                                     <c:forEach var="slctnYear" items="${slctnYearList}">
-                                        <li><a href="#none" onclick="fn_evlStats('<c:out value="${slctnYear}" />');return false;"><c:out value="${slctnYear}" />년도</a></li>
+                                        <li><a href="#none" onclick="fn_evlStats('<c:out value="${slctnYear}" />');return false;"><c:out value="${slctnYear}" />년도<c:if test="${slctnYear eq 2019}">(샘플)</c:if></a></li>
                                     </c:forEach>
                                 </ul>
                             </li>
@@ -159,7 +159,7 @@
                         <ul>
                             <!-- sub_stat_route -->
                             <li class="s10"><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent( '<c:url value="stats/viewRoutLenStats.do"/>');return false;">노선별 현황</a>
-                            	<ul>
+                                <ul>
                                     <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewRoutLenStats.do"/>');return false;">노선별 통계</a></li>
                                     <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewDeptLenStats.do"/>');return false;">관리기관별 통계</a></li>
                                     <li><a href="#none" onclick="COMMON_UTIL.statsMenuUrlContent('<c:url value="stats/viewTrackLenStats.do"/>');return false;">차로별 통계</a></li>
@@ -199,10 +199,10 @@
                 <span class="userArea">
                     <a id="userDept" href="#none" ></a><c:out value="" />
                     <span class="user-area">
-    				    <a href="#" onclick="$('.userBx').hide(); COMMON_UTIL.cmWindowOpen('사용자 정보', contextPath +'/api/sysuser/updateUserView.do', 420, 350, true, null, 'center');"> 사용자 정보</a>
-    				    <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/applyUserList.do?sFlag=gpms"/>');" style="display: none;">신청<span id="usrCnt"></span>건</a>
-    				    <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/sysUserList.do?sFlag=gpms"/>');">관리자</a>
-    				</span>
+                        <a href="#" onclick="$('.userBx').hide(); COMMON_UTIL.cmWindowOpen('사용자 정보', contextPath +'/api/sysuser/updateUserView.do', 420, 350, true, null, 'center');"> 사용자 정보</a>
+                        <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/applyUserList.do?sFlag=gpms"/>');" style="display: none;">신청<span id="usrCnt"></span>건</a>
+                        <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="/mng/sysuser/sysUserList.do?sFlag=gpms"/>');">관리자</a>
+                    </span>
                 </span>
                 <button  class="btnLogout" onclick="fnLogout();">로그아웃</button>
             </span>
@@ -216,7 +216,7 @@
     <c:otherwise>
         <!-- GOODMORNING TOP MENU START -->
         <div id="header">
-			<img src="<c:url value='/images/logo3.png'/>" alt="경기도로 모니터링 시스템" class="logo" />
+            <img src="<c:url value='/images/logo3.png'/>" alt="경기도로 모니터링 시스템" class="logo" />
             <h2 class="hidden">메인메뉴</h2>
             <div id="gnb" class="good-header">
                 <ul>
@@ -288,7 +288,7 @@ $( document ).ready(function() {
     // YYK. setInterval ie9 에서 안먹히는 현상 해결
 /*
     setInterval(function(){
-    	COMMON_UTIL.fn_check_session()
+        COMMON_UTIL.fn_check_session()
     } , 1000);
  */
 
@@ -459,11 +459,11 @@ $( document ).ready(function() {
 // 상단 탭 클릭(이동)시 기능
 
     $("#gnb > ul > li").click(function() {
-    	// 2018.04.22. YYK. 관할구역 위치보기 초기화 기능
-    	gMap.getLayerByName('GAttrLayer').removeAllFeatures();
+        // 2018.04.22. YYK. 관할구역 위치보기 초기화 기능
+        gMap.getLayerByName('GAttrLayer').removeAllFeatures();
 
-    	// 컨트롤 초기화
-    	$('#mCtrlPan').trigger('click') ;
+        // 컨트롤 초기화
+        $('#mCtrlPan').trigger('click') ;
     });
 
 });
@@ -500,7 +500,7 @@ function fnLogout() {
 
 // 평가상태도 선택시
 function fn_evlStats(year) {
-	// 레이어 초기화
+    // 레이어 초기화
 //     gMap.getLayerByName('GAttrLayer').removeFeatures(gMap.getLayerByName('GAttrLayer').features);
     var oLayer = gMap.getLayerByName('GAttrLayer');
     oLayer.removeAllFeatures();
@@ -510,17 +510,17 @@ function fn_evlStats(year) {
     var themeLayer = parent.gMap.getLayerByName('themeLayer');
     themeLayer.setVisibility(false);
 
-	var baseLayer = gMap.getLayerByName("baseLayer");
-	baseLayer.setVisibility(true);
-	baseLayer.mergeNewParams({
+    var baseLayer = gMap.getLayerByName("baseLayer");
+    baseLayer.setVisibility(true);
+    baseLayer.mergeNewParams({
         LAYERS: "MV_GNLSTTUS_SECT"   // CELL_SECT
         ,STYLES: "MV_GNLSTTUS_SECT"  // CELL_SECT
-    	,CQL_FILTER: " gpci <> '999' and srvy_year =" + year    // gpci가 존재하는 데이터만 출력
+        ,CQL_FILTER: " gpci <> '999' and srvy_year =" + year    // gpci가 존재하는 데이터만 출력
     });
 
-	$.each($("#divLayerTool ul li.active"), function() {
+    $.each($("#divLayerTool ul li.active"), function() {
         $(this).removeClass('active');
-	});
+    });
 
 
 // 	var tables = ["MV_GNLSTTUS_SECT_2019"];
