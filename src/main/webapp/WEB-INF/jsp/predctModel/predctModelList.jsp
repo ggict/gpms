@@ -17,7 +17,7 @@
 <form id="frm" name="frm" method="post" action="">
 <div class="tabcont">
 
-	<header class="loc">
+    <header class="loc">
         <div class="container">
             <span class="locationHeader">
                 <h2 class="h2">예측모델</h2>
@@ -27,32 +27,32 @@
 
     <div class="contents container">
 
-    	<article class="div3">
-    		<h3 class="h3">검색조건</h3>
-    		<div class="table">
-    			<table>
-    				<tbody>
-    				<tr>
-    					<td class="th"><label for="">대상년도</labed></td>
-    					<td>
+        <article class="div3">
+            <h3 class="h3">검색조건</h3>
+            <div class="table">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="th"><label for="">대상년도</labed></td>
+                        <td>
                             <select id="SLCTN_YEAR" name="SLCTN_YEAR">
                                 <c:forEach var="slctnYear" items="${slctnYearList}">
                                     <option value="${slctnYear}">${slctnYear}년</option>
                                 </c:forEach>
                             </select>
                         </td>
-    				</tr>
-    				</tbody>
-    			</table>
+                    </tr>
+                    </tbody>
+                </table>
                 <div class="btnArea">
                     <button type="button" class="btn pri" onclick="javascript:fn_showChartPredct($('#SLCTN_YEAR').val());">검색</button>
                 </div>
-    		</div>
-    	</article>
+            </div>
+        </article>
 
-    	<article class="div9">
-    		<h3 class="h3">예측모델</h3>
-    		<div id="div_grid" class="table">
+        <article class="div9">
+            <h3 class="h3">예측모델</h3>
+            <div id="div_grid" class="table">
                 <a href="#" class="schbtn" onclick="javascript:fnToggleChart();" id="btnToggleChart" style="float: right;">표로 보기</a>
                 <div class="graylinebx p10">
                     <div id="rtChartPredct" class="cont_ConBx2"  style="height: 300px; margin-left:20px;"></div>
@@ -60,8 +60,8 @@
                     <table id="rtGridPredctArea"  class="" style="width:80%;" ></table>
                     </div>
                 </div>
-			</div>
-    	</article>
+            </div>
+        </article>
 
     </div>
 </form>
@@ -84,7 +84,7 @@ var ntcNo=0;
 
 //페이지 로딩 초기 설정
 $( document ).ready(function() {
-	fn_showChartPredct($("#SLCTN_YEAR").val());
+    fn_showChartPredct($("#SLCTN_YEAR").val());
 });
 
 /**
@@ -107,7 +107,7 @@ function fn_showChartPredct(slctn_year){
         success: function (datas) {
             hideRTProgress();
 
-            if ( !datas.lcData && !datas.acData && !datas.rdData && !datas.iriData && !datas.gpciData ) {
+            if ( !datas.lciData && !datas.aciData && !datas.patiData && !datas.rutiData && !datas.gpciData ) {
                 fnShowMsgDialog("예측모델 조회", '데이터가 충분하지 차트가 표시되지 않습니다.', function() {
                 });
                 ntcNo += 1;
@@ -135,7 +135,7 @@ function drawChartPredct(dataList){
         myChartPredct = null;
     }
 
-    var dataX = (dataList.lcData ? dataList.lcData.x : (dataList.acData ? dataList.acData.x : (dataList.rdData ? dataList.rdData.x : (dataList.iriData ? dataList.iriData.x : dataList.gpciData.x))));
+    var dataX = (dataList.lciData ? dataList.lciData.x : (dataList.aciData ? dataList.aciData.x : (dataList.patiData ? dataList.patiData.x : (dataList.rutiData ? dataList.rutiData.x : dataList.gpciData.x))));
     var series = [];
     $.each(dataList, function() {
         if ( this ) {
@@ -164,7 +164,7 @@ function drawChartPredct(dataList){
                 // 이미지저장
                 }
             },
-            legend: { data: ["LC", "AC", "RD", "IRI", "GPCI"] },
+            legend: { data: ["LCI", "ACI", "PATI", "RUTI", "GPCI"] },
             grid :{
                 x : 50,
                 y2 : 80
@@ -175,7 +175,7 @@ function drawChartPredct(dataList){
                         data : dataX
                     },
             yAxis :
-                { name: '예측수치', type: 'value', min: 0, max: 1 }
+                { name: '예측수치', type: 'value', min: 0, max: 10 }
             ,
             series : series
         }
@@ -210,17 +210,17 @@ function showGridPredct(dataList){
     });
     $('#rtGridPredctArea').jqGrid('clearGridData');
     var i = 0;
-    for (i = 0; dataList.lcData && i < dataList.lcData.x.length; i++){
-        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "LC", x: dataList.lcData.x[i], y: dataList.lcData.y[i]});
+    for (i = 0; dataList.lciData && i < dataList.lciData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "LCI", x: dataList.lciData.x[i], y: dataList.lciData.y[i]});
     }
-    for (i = 0; dataList.acData && i < dataList.acData.x.length; i++){
-        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "AC", x: dataList.acData.x[i], y: dataList.acData.y[i]});
+    for (i = 0; dataList.aciData && i < dataList.aciData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "ACI", x: dataList.aciData.x[i], y: dataList.aciData.y[i]});
     }
-    for (i = 0; dataList.rdData && i < dataList.rdData.x.length; i++){
-        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "RD", x: dataList.rdData.x[i], y: dataList.rdData.y[i]});
+    for (i = 0; dataList.patiData && i < dataList.patiData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "PATI", x: dataList.patiData.x[i], y: dataList.patiData.y[i]});
     }
-    for (i = 0; dataList.iriData && i < dataList.iriData.x.length; i++){
-        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "IRI", x: dataList.iriData.x[i], y: dataList.iriData.y[i]});
+    for (i = 0; dataList.rutiData && i < dataList.rutiData.x.length; i++){
+        $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "RUTI", x: dataList.rutiData.x[i], y: dataList.rutiData.y[i]});
     }
     for (i = 0; dataList.gpciData && i < dataList.gpciData.x.length; i++){
         $("#rtGridPredctArea").jqGrid('addRowData', i + 1, {predctModelKndSe: "GPCI", x: dataList.gpciData.x[i], y: dataList.gpciData.y[i]});

@@ -1,6 +1,7 @@
 package kr.go.gg.gpms.predctmodel.service.impl;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,8 @@ import kr.go.gg.gpms.predctmodel.service.model.PredctModelVO;
 @Service("predctModelService")
 public class PredctModelServiceImpl extends AbstractServiceImpl implements PredctModelService {
 
-	@Resource(name = "predctModelDAO")
-	private PredctModelDAO predctModelDAO;
+    @Resource(name = "predctModelDAO")
+    private PredctModelDAO predctModelDAO;
 
 
     /**
@@ -51,9 +52,9 @@ public class PredctModelServiceImpl extends AbstractServiceImpl implements Predc
         // 등급별 최소값
         BigDecimal[][] b = new BigDecimal[5][1];
 
-//      a[0][0] = new BigDecimal(0.87755);
-//      a[0][1] = new BigDecimal(0.02268);
-//      a[0][2] = new BigDecimal(0.00907);
+//        a[0][0] = new BigDecimal(0.87755);
+//        a[0][1] = new BigDecimal(0.02268);
+//        a[0][2] = new BigDecimal(0.00907);
 //        a[0][3] = new BigDecimal(0.00227);
 //        a[0][4] = new BigDecimal(0.00454);
 //
@@ -87,7 +88,6 @@ public class PredctModelServiceImpl extends AbstractServiceImpl implements Predc
 //        b[3][0] = new BigDecimal(24);
 //        b[4][0] = new BigDecimal(32);
 
-
         a[0][0] = map.get("aa");
         a[0][1] = map.get("ab");
         a[0][2] = map.get("ac");
@@ -120,14 +120,132 @@ public class PredctModelServiceImpl extends AbstractServiceImpl implements Predc
 
         // 데이터가 NULL일 경우 차트 표시 못함.
         if ( map.get("max") == null ) {
-            return null;
+            // 경과년수
+            BigDecimal[] elapseYyCnt = {
+                new BigDecimal(1)
+                , new BigDecimal(2)
+                , new BigDecimal(3)
+                , new BigDecimal(4)
+                , new BigDecimal(5)
+                , new BigDecimal(6)
+                , new BigDecimal(7)
+                , new BigDecimal(8)
+                , new BigDecimal(9)
+                , new BigDecimal(10)
+            };
+            // elapseYyCnt^(a1)*10^(a0)
+            BigDecimal[] predctY = new BigDecimal[10];
+
+            if ( "LCI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 테스트 데이터
+                BigDecimal[] c0 = {
+                    new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                };
+
+                for ( int i = 0; i < 10; i++ ) {
+                    // 10 - 4 * b0 / 36.0
+                    predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(c0[i]).divide(new BigDecimal(36.0), MathContext.DECIMAL32));
+                }
+            } else if ( "ACI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 테스트 데이터
+                BigDecimal[] c0 = {
+                    new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                };
+
+                for ( int i = 0; i < 10; i++ ) {
+                    // 10 - 4 * F2 / 10.5
+                    predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(c0[i]).divide(new BigDecimal(10.5), MathContext.DECIMAL32));
+                }
+            } else if ( "PATI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 테스트 데이터
+                BigDecimal[] c0 = {
+                    new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                };
+
+                for ( int i = 0; i < 10; i++ ) {
+                    // 10 - 4 * F2 / 10.5
+                    predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(c0[i]).divide(new BigDecimal(28.0), MathContext.DECIMAL32));
+                }
+            } else if ( "RUTI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 테스트 데이터
+                BigDecimal[] c0 = {
+                    new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                };
+
+                for ( int i = 0; i < 10; i++ ) {
+                    // 10 - 4 * F2 / 10.5
+                    predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(c0[i]).divide(new BigDecimal(15.0), MathContext.DECIMAL32));
+                }
+            } else if ( "GPCI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 테스트 데이터
+                BigDecimal[] c0 = {
+                    new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                    , new BigDecimal(0)
+                };
+
+                for ( int i = 0; i < 10; i++ ) {
+                    // 10 - 4 * F2 / 10.5
+                    predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(c0[i]).divide(new BigDecimal(10.5), MathContext.DECIMAL32));
+                }
+            }
+
+            Map<String, Object> dataMap = new HashMap<String, Object>();
+            dataMap.put("x", elapseYyCnt);
+            dataMap.put("y", predctY);
+            dataMap.put("predctModelKndSe", searchVO.getPredctModelKndSe());
+
+            return dataMap;
         }
 
         b[0][0] = BigDecimal.ZERO;
-        b[1][0] = map.get("max").divide(new BigDecimal(5));
-        b[2][0] = map.get("max").divide(new BigDecimal(5)).multiply(new BigDecimal(2));
-        b[3][0] = map.get("max").divide(new BigDecimal(5)).multiply(new BigDecimal(3));
-        b[4][0] = map.get("max").divide(new BigDecimal(5)).multiply(new BigDecimal(4));
+        b[1][0] = map.get("max").divide(new BigDecimal(5), MathContext.DECIMAL32);
+        b[2][0] = map.get("max").divide(new BigDecimal(5), MathContext.DECIMAL32).multiply(new BigDecimal(2));
+        b[3][0] = map.get("max").divide(new BigDecimal(5), MathContext.DECIMAL32).multiply(new BigDecimal(3));
+        b[4][0] = map.get("max").divide(new BigDecimal(5), MathContext.DECIMAL32).multiply(new BigDecimal(4));
 
         // 경과년수별 전이행렬
         List<BigDecimal[][]> list = new ArrayList<BigDecimal[][]>();
@@ -165,7 +283,7 @@ public class PredctModelServiceImpl extends AbstractServiceImpl implements Predc
             // 경과년수
             elapseYyCnt[i] = new BigDecimal(i + 1);
             // 증가량
-            incrsQy[i] = sum.divide(new BigDecimal(tranMtrix.length), 5);
+            incrsQy[i] = sum.divide(new BigDecimal(tranMtrix.length), MathContext.DECIMAL32);
             // 누적증가량
             accmltIncrsQy[i] = (i == 0 ? incrsQy[i] : incrsQy[i].add(accmltIncrsQy[i - 1]));
             // Log(경과년수)
@@ -211,14 +329,31 @@ public class PredctModelServiceImpl extends AbstractServiceImpl implements Predc
         }
 
         // ((10*sumXY-sumX*sumY)/(10*sumX2-sumX^2))
-        BigDecimal a1 = (sumXY.multiply(new BigDecimal(10)).subtract(sumX.multiply(sumY))).divide((sumX2.multiply(new BigDecimal(10)).subtract(new BigDecimal(Math.pow(sumX.doubleValue(), 2)))), 5);
+        BigDecimal a1 = (sumXY.multiply(new BigDecimal(10)).subtract(sumX.multiply(sumY))).divide((sumX2.multiply(new BigDecimal(10)).subtract(new BigDecimal(Math.pow(sumX.doubleValue(), 2)))), MathContext.DECIMAL32);
         // sumXY/10-((10*sumXY-sumX*sumY)/(10*sumX2-sumX^2))*(sumX/10)
-        BigDecimal a0 = sumY.divide(new BigDecimal(10)).subtract(a1.multiply((sumX.divide(new BigDecimal(10)))));
+        BigDecimal a0 = sumY.divide(new BigDecimal(10), MathContext.DECIMAL32).subtract(a1.multiply((sumX.divide(new BigDecimal(10), MathContext.DECIMAL32))));
 
-        // elapseYyCnt^(a1)*10(a0)
+        // elapseYyCnt^(a1)*10^(a0)
         BigDecimal[] predctY = new BigDecimal[x.length];
         for ( int i = 0; i < elapseYyCnt.length; i++ ) {
-            predctY[i] = ((new BigDecimal(Math.pow(elapseYyCnt[i].doubleValue(), a1.doubleValue()))).multiply(new BigDecimal(Math.pow(10, a0.doubleValue())))).setScale(2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal b0 = ((new BigDecimal(Math.pow(elapseYyCnt[i].doubleValue(), a1.doubleValue()))).multiply(new BigDecimal(Math.pow(10, a0.doubleValue())))).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+            if ( "LCI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 10 - 4 * b0 / 36.0
+                predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(b0).divide(new BigDecimal(36.0), MathContext.DECIMAL32));
+            } else if ( "ACI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 10 - 4 * F2 / 10.5
+                predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(b0).divide(new BigDecimal(10.5), MathContext.DECIMAL32));
+            } else if ( "PATI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 10 - 4 * F2 / 10.5
+                predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(b0).divide(new BigDecimal(28.0), MathContext.DECIMAL32));
+            } else if ( "RUTI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 10 - 4 * F2 / 10.5
+                predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(b0).divide(new BigDecimal(15.0), MathContext.DECIMAL32));
+            } else if ( "GPCI".equals(searchVO.getPredctModelKndSe()) ) {
+                // 10 - 4 * F2 / 10.5
+                predctY[i] = (new BigDecimal(10)).subtract((new BigDecimal(10)).multiply(b0).divide(new BigDecimal(10.5), MathContext.DECIMAL32));
+            }
         }
 
         Map<String, Object> dataMap = new HashMap<String, Object>();

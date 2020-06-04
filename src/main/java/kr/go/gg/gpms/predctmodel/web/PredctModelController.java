@@ -39,13 +39,13 @@ import kr.go.gg.gpms.predctmodel.service.model.PredctModelVO;
 @Controller("predctModelController")
 public class PredctModelController extends BaseController {
 
-	@Resource(name = "predctModelService")
-	private PredctModelService predctModelService;
+    @Resource(name = "predctModelService")
+    private PredctModelService predctModelService;
 
-	@Resource(name = "propertiesService")
-	protected EgovPropertyService egovPropertyService;
+    @Resource(name = "propertiesService")
+    protected EgovPropertyService egovPropertyService;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PredctModelController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PredctModelController.class);
 
 
     /**
@@ -73,31 +73,31 @@ public class PredctModelController extends BaseController {
     public @ResponseBody Map<String, Object> selectPredctModelList(@RequestBody PredctModelVO searchVO, ModelMap model, HttpSession session) throws Exception {
         searchVO.setUsePage(false);
 
-        // 선형
-        searchVO.setPredctModelKndSe("LC");
-        Map<String, Object> lcData = predctModelService.selectPredctModelList(searchVO);
+        // 선형균열지수
+        searchVO.setPredctModelKndSe("LCI");
+        Map<String, Object> lciData = predctModelService.selectPredctModelList(searchVO);
 
-        // 면형
-        searchVO.setPredctModelKndSe("AC");
-        Map<String, Object> acData = predctModelService.selectPredctModelList(searchVO);
+        // 면형균열지수
+        searchVO.setPredctModelKndSe("ACI");
+        Map<String, Object> aciData = predctModelService.selectPredctModelList(searchVO);
 
-        // 소성변형
-        searchVO.setPredctModelKndSe("RD");
-        Map<String, Object> rdData = predctModelService.selectPredctModelList(searchVO);
+        // 패칭 및 포트홀 지수
+        searchVO.setPredctModelKndSe("PATI");
+        Map<String, Object> patiData = predctModelService.selectPredctModelList(searchVO);
 
-        // 종단평탄성
-        searchVO.setPredctModelKndSe("IRI");
-        Map<String, Object> iriData = predctModelService.selectPredctModelList(searchVO);
+        // 소성변형지수
+        searchVO.setPredctModelKndSe("RUTI");
+        Map<String, Object> rutiData = predctModelService.selectPredctModelList(searchVO);
 
-        // GPCI
+        // 경기도 포장상태평가지수
         searchVO.setPredctModelKndSe("GPCI");
         Map<String, Object> gpciData = predctModelService.selectPredctModelList(searchVO);
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("lcData", lcData);
-        map.put("acData", acData);
-        map.put("rdData", rdData);
-        map.put("iriData", iriData);
+        map.put("lciData", lciData);
+        map.put("aciData", aciData);
+        map.put("patiData", patiData);
+        map.put("rutiData", rutiData);
         map.put("gpciData", gpciData);
 
         return map;
