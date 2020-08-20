@@ -644,6 +644,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
             // ###################################################
             //TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
 //            srvyDtaDAO.deleteTmpMummSctnSrvyDta(srvyDtaOne);
+            // 기존 데이터 삭제
+            deleteAnalReset(srvyDtaVO);
             // ###################################################
 
             // ###################################################
@@ -817,7 +819,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                         }
 
                         if("patch".equals(regionType)) {
-                            srvyDtaVO.setPTCHG_CR(val);
+//                            srvyDtaVO.setPTCHG_CR(val);  // 패칭이 아닌 곳이 패칭으로 나오고 있으며, 패칭은 거의 사용을 안하고 있어 수치를 초기화(0)시킴, 나중에 AI쪽에서 패칭 개선 후 재적용 필요.(2020.06.23. - 이민규)
+                            srvyDtaVO.setPTCHG_CR("0");
                         }
 
                         if("phothole".equals(regionType)) {

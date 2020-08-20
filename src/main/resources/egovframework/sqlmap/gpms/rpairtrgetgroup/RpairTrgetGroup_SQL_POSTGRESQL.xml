@@ -1480,25 +1480,25 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
         <isEqual property="predctModelKndSe" compareValue="LCI">
         <![CDATA[
                     , CASE
-                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 THEN 'A'
-                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 2 THEN 'B'
-                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 3 THEN 'C'
-                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) < (CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100 < (CEIL(MAX((A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100 < (CEIL(MAX((A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100 < (CEIL(MAX((A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN (A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100 < (CEIL(MAX((A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100) OVER() / 10) * 10) / 5 * 4 THEN 'D'
                         ELSE 'E'
                     END GRADE
-                    , CEIL(MAX(A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) OVER() / 10) * 10 MAX
+                    , CEIL(MAX((A.LC_LOW + A.LC_MED + A.LC_HI + A.TC_LOW + A.TC_MED + A.TC_HI) * 100) OVER() / 10) * 10 MAX
         ]]>
         </isEqual>
         <isEqual property="predctModelKndSe" compareValue="ACI">
         <![CDATA[
                     , CASE
-                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 THEN 'A'
-                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 * 2 THEN 'B'
-                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 * 3 THEN 'C'
-                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) < (CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10) / 5 * 4 THEN 'D'
+                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) * 100 < (CEIL(MAX((A.AC_LOW + A.AC_MED + A.AC_HI) * 100) OVER() / 10) * 10) / 5 THEN 'A'
+                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) * 100 < (CEIL(MAX((A.AC_LOW + A.AC_MED + A.AC_HI) * 100) OVER() / 10) * 10) / 5 * 2 THEN 'B'
+                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) * 100 < (CEIL(MAX((A.AC_LOW + A.AC_MED + A.AC_HI) * 100) OVER() / 10) * 10) / 5 * 3 THEN 'C'
+                        WHEN (A.AC_LOW + A.AC_MED + A.AC_HI) * 100 < (CEIL(MAX((A.AC_LOW + A.AC_MED + A.AC_HI) * 100) OVER() / 10) * 10) / 5 * 4 THEN 'D'
                         ELSE 'E'
                     END GRADE
-                    , CEIL(MAX(A.AC_LOW + A.AC_MED + A.AC_HI) OVER() / 10) * 10 MAX
+                    , CEIL(MAX((A.AC_LOW + A.AC_MED + A.AC_HI) * 100) OVER() / 10) * 10 MAX
         ]]>
         </isEqual>
         <isEqual property="predctModelKndSe" compareValue="PATI">
@@ -1586,7 +1586,7 @@ GROUP BY tnrpairtrgetgroup.ADM_CODE
                 , (SUM(CASE WHEN A.GRADE = 'E' AND B.GRADE = 'C' THEN 0.0 ELSE 0.0 END) / COUNT(*))::NUMERIC(6,5) EC
                 , (SUM(CASE WHEN A.GRADE = 'E' AND B.GRADE = 'D' THEN 0.0 ELSE 0.0 END) / COUNT(*))::NUMERIC(6,5) ED
                 , (SUM(CASE WHEN (A.GRADE = 'E' AND B.GRADE = 'A') OR (A.GRADE = 'D' AND B.GRADE = 'B') OR (A.GRADE = 'D' AND B.GRADE = 'C') OR (A.GRADE = 'D' AND B.GRADE = 'D') OR (A.GRADE = 'E' AND B.GRADE = 'E') THEN 1.0 ELSE 0.0 END) / COUNT(*))::NUMERIC(6,5) EE
-                , (MAX(A.MAX))::NUMERIC(8,5) MAX
+                , (MAX(A.MAX))::NUMERIC(15,5) MAX
             FROM PREDCT A
             INNER JOIN PREDCT B
                 ON B.SRVY_YEAR = (#SLCTN_YEAR#::INT - 1)::VARCHAR

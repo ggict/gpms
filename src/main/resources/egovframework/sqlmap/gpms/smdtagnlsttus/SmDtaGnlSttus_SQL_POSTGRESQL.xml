@@ -549,7 +549,8 @@ AND EXISTS (SELECT 't'
                    AND sub.direct_code = tnsmdtagnlsttus.direct_code
                    AND sub.track = tnsmdtagnlsttus.track
                    AND sub.strtpt = tnsmdtagnlsttus.strtpt
-                   AND sub.endpt = tnsmdtagnlsttus.endpt)),
+                   AND sub.endpt = tnsmdtagnlsttus.endpt
+                   AND sub.sm_no = tnsmdtagnlsttus.sm_no)),
      resultlist
      AS (SELECT tb.*,
                 CASE

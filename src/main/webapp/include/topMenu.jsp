@@ -26,7 +26,8 @@
                             <li class="s20">
                                 <a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/applyUserList.do"/>')">사용자 신청 관리</a>
                             </li>
-                            <li class="s30"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/selectSysUserLog.do"/>')">사용자 접속로그 조회</a></li>
+                            <li class="s30"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/company/companyList.do"/>')">공사 업체 관리</a></li>
+                            <li class="s40"><a href="#" onclick="COMMON_UTIL.cmMoveUrl('<c:url value="mng/sysuser/selectSysUserLog.do"/>')">사용자 접속로그 조회</a></li>
                         </ul>
                     </li>
                     <li class="b00">
@@ -124,7 +125,7 @@
                                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
                                         String year = dateFormat.format(new Date());
                                         List<Integer> slctnYearList = new ArrayList<Integer>();
-                                        for ( int i = Integer.valueOf(year); i >= 2019; i-- ) {
+                                        for ( int i = Integer.valueOf(year); i >= 2020; i-- ) {
                                             slctnYearList.add(i);
                                         }
                                     %>
