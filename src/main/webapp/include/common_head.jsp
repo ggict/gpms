@@ -45,7 +45,7 @@
 <script src="<c:url value='/extLib/window.util.js'/>" charset='utf-8'></script>
 <script src="<c:url value='/js/iasp.js'/>" charset='utf-8'></script>
 
-<!-- ì§ë ê´ë ¨ ì¤í¬ë¦½í¸ -->
+<!-- 지도 관련 스크립트 -->
 <script src="<c:url value='/js/map/config.js'/>" charset='utf-8'></script>
 
 <script type="text/javascript" src="<c:url value='/extLib/proj4js/proj4js.js'/>" charset='utf-8'></script>
@@ -92,7 +92,7 @@
 <!-- jstree -->
 <script src="<c:url value='/extLib/jstree/jquery.jstree.js'/>" charset='utf-8'></script>
 
-<!-- ì¬ì©ì ì ì ì¤í¬ë¦½í¸ -->
+<!-- 사용자 정의 스크립트 -->
 <script src="<c:url value='/js/common.js'/>" charset='utf-8'></script>
 <script src="<c:url value='/js/map/map.js'/>" charset='utf-8'></script>
 <script src="<c:url value='/js/map/layer.js'/>" charset='utf-8'></script>
