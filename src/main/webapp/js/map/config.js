@@ -18,8 +18,8 @@ var CONFIG = (function($, undefined){
     //var sServiceUrl = "http://192.168.0.205:8079/G2DataService/GService?";
     //var sServiceUrl   = "http://www.muhanit.kr:18079/G2DataService/GService?";
     // 개발 IP
-    var sServiceUrl   = "http://1.221.39.242:21525/geoserver/wms?";
-    var wfsServiceUrl   = "http://1.221.39.242:21525/geoserver/wfs?";
+    var sServiceUrl   = "http://test.muhanit.kr:13044/geoserver/wms?";
+    var wfsServiceUrl   = "http://test.muhanit.kr:13044/geoserver/wfs?";
     // 운영 IP
 //    var sServiceUrl   = "http://105.0.111.9:9900/geoserver/wms?";
 //    var wfsServiceUrl   = "http://105.0.111.9:9900/geoserver/wfs?";
