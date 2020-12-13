@@ -31,7 +31,7 @@
   ]]>
 		</selectKey>
 	<![CDATA[
-		/* srvyDtaExcelDAO.insertSrvyDtaExcel */
+		/* srvyDtaDAO.insertSrvyDta */
 		/* 조사_자료 등록 */
 		INSERT INTO TN_SRVY_DTA (
 			SRVY_NO /* 조사_자료_엑셀.조사_번호 */
@@ -351,26 +351,13 @@
 	     		 , tnsrvydta.SRVY_NO
 	     		 , TO_CHAR(DATE(tnsrvydta.SRVY_DE), 'YYYY-MM-DD') AS SRVY_DE
                  , (
-                    SELECT
-                        CASE COUNT(*) WHEN 0 THEN
-                            (SELECT
-                                COUNT(*)
-                            FROM TMP_MUMM_SCTN_SRVY_DTA AAA
-                            WHERE
-                                AAA.SRVY_NO = tnsrvydta.SRVY_NO
-                                AND (AC_LOW + AC_MED + AC_HI + LC_LOW + LC_MED + LC_HI + TC_LOW + TC_MED + TC_HI + PTCHG_CR + POTHOLE_CR) > 0)
-                        ELSE (
-                            SELECT
-                                COUNT(*)
-                            FROM TMP_MUMM_SCTN_SRVY_DTA AAA
-                            WHERE
-                                AAA.SRVY_NO = tnsrvydta.SRVY_NO
-                        )
-                        END CNT
-                    FROM TN_MUMM_SCTN_SRVY_DTA AA
-                    WHERE
-                        AA.SRVY_NO = tnsrvydta.SRVY_NO
-                ) DATA_PROGRS_CNT
+                    SELECT COUNT(*)
+                      FROM TMP_MUMM_SCTN_SRVY_DTA AA
+                     WHERE AA.SRVY_NO = tnsrvydta.SRVY_NO
+                       AND AA.RDSRFC_IMG_FILE_NM_2 IS NOT NULL
+                       AND AA.RDSRFC_IMG_FILE_NM_2 != ' '
+                       AND AA.RDSRFC_IMG_FILE_NM_2 != ''
+                   ) DATA_PROGRS_CNT
                 , tnsrvydta.SRVY_NM
 			FROM TN_SRVY_DTA tnsrvydta, TL_SRVY_DTA_LOG tlsrvydtalog
 		   WHERE tnsrvydta.SRVY_NO = tlsrvydtalog.SRVY_NO
@@ -379,6 +366,13 @@
 		   	 AND tnsrvydta.DELETE_AT = 'N'
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 		     AND tnsrvydta.SRVY_DE IS NOT NULL
+]]>
+			<isNotEmpty property="ROAD_NO">
+				<![CDATA[
+					AND tnsrvydta.ROUTE_CODE = #ROAD_NO#
+				]]>
+			</isNotEmpty>
+<![CDATA[
              ORDER BY tnsrvydta.SRVY_DE DESC nulls last
 		) tb) resultlist  WHERE 1=1
 ]]>
@@ -413,6 +407,13 @@
 		   	 AND tnsrvydta.DELETE_AT = 'N'
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 		     AND tnsrvydta.SRVY_DE IS NOT NULL
+]]>
+			<isNotEmpty property="ROAD_NO">
+				<![CDATA[
+					AND tnsrvydta.ROUTE_CODE = #ROAD_NO#
+				]]>
+			</isNotEmpty>
+<![CDATA[
 		)as sub_SrvyDtaExcel
 ]]>
 	</select>
@@ -478,8 +479,9 @@
 		    , TC_HI        = COALESCE(#TC_HI#::numeric/1000,0)
             , PTCHG_CR     = COALESCE(#PTCHG_CR#::numeric/1000000,0)
             , POTHOLE_CR   = COALESCE(#POTHOLE_CR#::numeric/1000000,0)
-		WHERE 1 = 1
-		AND RDSRFC_IMG_FILE_NM_1 = #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
+            , RDSRFC_IMG_FILE_NM_2 = #RDSRFC_IMG_FILE_NM_2#
+		WHERE SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
+		  AND RDSRFC_IMG_FILE_NM_1 = #RDSRFC_IMG_FILE_NM_1# /* 최소_구간_조사_자료.노면_이미지_파일_명_1 */
 ]]>
 	</update>
 
@@ -676,7 +678,7 @@
 		, SEVERITY
 		, CASE
 		    WHEN REGION_TYPE = 'lc' or REGION_TYPE = 'tc' THEN SUM(COALESCE(LEN,0))
-		    WHEN REGION_TYPE = 'ac' or REGION_TYPE = 'patch' or REGION_TYPE = 'phothole' THEN SUM(COALESCE(AREA,0))
+		    WHEN REGION_TYPE = 'ac' or REGION_TYPE = 'patch' or REGION_TYPE = 'pothole' THEN SUM(COALESCE(AREA,0))
 		  END AS AI_SUM_VALUE
 		FROM TMP_AI_DTA
 	GROUP BY REGION_TYPE, SEVERITY
@@ -704,6 +706,15 @@
 	<![CDATA[
 		/* srvyDtaDAO.deleteTnMummSctnSrvyDta */
 		DELETE FROM TN_MUMM_SCTN_SRVY_DTA
+        WHERE
+            SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
+]]>
+	</delete>
+
+	<delete id="srvyDtaDAO.deleteTnSrvyDtaSttus">
+	<![CDATA[
+		/* srvyDtaDAO.deleteTnSrvyDtaSttus */
+		DELETE FROM TN_SRVY_DTA_STTUS
         WHERE
             SRVY_NO = #SRVY_NO#::int /* 조사_자료.조사_번호 */
 ]]>

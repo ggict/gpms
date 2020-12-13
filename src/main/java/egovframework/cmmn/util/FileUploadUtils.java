@@ -44,15 +44,14 @@ public class FileUploadUtils {
 
 			for(MultipartFile file : files) {
 				transFileNm = UUID.randomUUID().toString();
-				orginlFileNm = file.getOriginalFilename();
+				orginlFileNm = file.getOriginalFilename().toLowerCase();
 				if (!"".equals(orginlFileNm)) {
 
 					if(orginlFileNm.contains(".")){
 						transFileNm += orginlFileNm.substring(orginlFileNm.lastIndexOf("."));
 					}
 
-					String filePath =  checkFilePath(uploadPath,"path") + File.separator
-							+ checkFilePath(transFileNm, "name");
+					String filePath = checkFilePath(uploadPath,"path") + File.separator + checkFilePath(transFileNm, "name");
 					file.transferTo(new File(filePath));
 
 					AttachFileVO attachFileVO = new AttachFileVO();

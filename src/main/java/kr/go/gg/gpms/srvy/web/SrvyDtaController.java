@@ -47,6 +47,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -159,6 +160,40 @@ public class SrvyDtaController extends BaseController {
     }
 
     /**
+     * 엑셀 조사자료 파일 중복 확인
+     *
+     * @param srvyDtaExcelVO
+     * @param model
+     * @param request
+     * @param session
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/srvyDtaFileCheck.do")
+    public @ResponseBody Map<String, Object> srvyDtaFileCheck(HttpServletRequest request, @RequestParam HashMap<String, Object> reqMap) throws Exception {
+    	Map<String, Object> resMap = new HashMap<String, Object>();
+
+        // 파일명 중복 업로드 확인
+        String orginlFileNm = (String) reqMap.get("srvyDtaFileName");
+        String existsAt = "N";
+		if (orginlFileNm != null && !"".equals(orginlFileNm)) {
+			AttachFileVO attachFileVO = new AttachFileVO();
+			attachFileVO.setORGINL_FILE_NM(orginlFileNm.toLowerCase());
+
+			AttachFileVO resultVO = attachFileService.selectAttachFile(attachFileVO);
+			if (resultVO != null && Integer.parseInt(resultVO.getFILE_NO()) >= 0) {
+				existsAt = "Y";
+			}
+		} else {
+			existsAt = "null";
+		}
+
+		resMap.put("existsAt", existsAt);
+
+    	return resMap;
+    }
+
+    /**
      * 엑셀 조사자료 파일을 서버로 전송한다
      *
      * @param srvyDtaExcelVO
@@ -205,401 +240,400 @@ public class SrvyDtaController extends BaseController {
 
         if (fileList.size() < 1 || userNo == null || userNo.equals("")) {
             resultCode = "ERROR";
-            resultMsg = "등록오류발생";
+            resultMsg = "조사자료 파일을 업로드하지 못했습니다.";
         } else {
 
-        try {
-            for (AttachFileVO file : fileList) {
-                // ###################################################
-                // ## 2. zip 파일 정보 DB 저장
-                // ###################################################
-                String logCode = "PCST0001"; // 진행
-                Date currentTime = new Date();
-                srvyDtaLogVO.setBEGIN_DT(new java.sql.Date(currentTime.getTime()));
+	        try {
+	            for (AttachFileVO file : fileList) {
+	                // ###################################################
+	                // ## 2. zip 파일 정보 DB 저장
+	                // ###################################################
+	                String logCode = "PCST0001"; // 진행
+	                Date currentTime = new Date();
+	                srvyDtaLogVO.setBEGIN_DT(new java.sql.Date(currentTime.getTime()));
 
-                file.setUSE_AT("Y");
-                file.setDELETE_AT("N");
-                file.setCRTR_NO(userNo);
-                file.setUPDUSR_NO(userNo);
+	                file.setUSE_AT("Y");
+	                file.setDELETE_AT("N");
+	                file.setCRTR_NO(userNo);
+	                file.setUPDUSR_NO(userNo);
 
-                // 파일 정보 DB 저장
-                String fileNo = attachFileService.insertAttachFile(file);
-                // ###################################################
+	                // 파일 정보 DB 저장
+	                String fileNo = attachFileService.insertAttachFile(file);
+	                // ###################################################
 
-                // ###################################################
-                // ## 3. zip 파일 압축 풀기
-                // ###################################################
-                String filePathName = file.getFILE_COURS() + File.separator + file.getFILE_NM();
-                //String bakFilePath = filePath + File.separator + "srvy" + File.separator + "bak" + File.separator + file.getFILE_NM();
+	                // ###################################################
+	                // ## 3. zip 파일 압축 풀기
+	                // ###################################################
+	                String filePathName = file.getFILE_COURS() + File.separator + file.getFILE_NM();
+	                //String bakFilePath = filePath + File.separator + "srvy" + File.separator + "bak" + File.separator + file.getFILE_NM();
 
-                //파일경로+파일명
-                String fileName = checkFilePath(filePathName, "path");
+	                //파일경로+파일명
+	                String fileName = checkFilePath(filePathName, "path");
 
-                filePath += File.separator + "srvy" + File.separator + date;
+	                filePath += File.separator + "srvy" + File.separator + date;
 
-                //업로드 폴더 경로
-                File uploadFolder =  new File(checkFilePath(filePath,"path"));
+	                //업로드 폴더 경로
+	                File uploadFolder =  new File(checkFilePath(filePath,"path"));
 
-                //압축풀기(파일경로+파일명, 업로드폴더)
-                srvyDtaService.decmprsFile(fileName, uploadFolder);
-                // ###################################################
+	                //압축풀기(파일경로+파일명, 업로드폴더)
+	                srvyDtaService.decmprsFile(fileName, uploadFolder);
+	                // ###################################################
 
-                //원본파일
-                //File orgnFile = new File(fileName);
+	                //원본파일
+	                //File orgnFile = new File(fileName);
 
-                //이동되는 파일
-                //File moveFile = new File(bakFilePath);
+	                //이동되는 파일
+	                //File moveFile = new File(bakFilePath);
 
-                //zip 파일이동
-                //FileUtils.moveFile(orgnFile, moveFile);
+	                //zip 파일이동
+	                //FileUtils.moveFile(orgnFile, moveFile);
 
-                String seDirNm = "";
-                String seFileNm = "";
-                int csvCount = 0;
-                String csvFileNm = "";
-                List<SrvyDtaVO> imageList = null;
+	                String seDirNm = "";
+	                String seFileNm = "";
+	                int csvCount = 0;
+	                String csvFileNm = "";
+	                List<SrvyDtaVO> imageList = null;
 
-                // ###########################################
-                // ## 디렉토리 이름으로 정렬
-                // ###########################################
-                Collection<File> subDirList = FileUtils.listFilesAndDirs(new File(filePath), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
-                File[] subDirArr = new File[subDirList.size()];
-                int idx = 0;
-                 for ( File subDir : subDirList ) {
-                    subDirArr[idx++] = subDir;
-                }
+	                // ###########################################
+	                // ## 디렉토리 이름으로 정렬
+	                // ###########################################
+	                Collection<File> subDirList = FileUtils.listFilesAndDirs(new File(filePath), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+	                File[] subDirArr = new File[subDirList.size()];
+	                int idx = 0;
+	                 for ( File subDir : subDirList ) {
+	                    subDirArr[idx++] = subDir;
+	                }
 
-                Comparator comp = new Comparator() {
-                    public int compare(Object o1, Object o2) {
-                        File f1 = (File) o1;
-                        File f2 = (File) o2;
-                        if (f1.isDirectory() && !f2.isDirectory()) {
-                            // Directory before non-directory
-                            return -1;
-                        } else if (!f1.isDirectory() && f2.isDirectory()) {
-                            // Non-directory after directory
-                            return 1;
-                        } else {
-                            // Alphabetic order otherwise
-                            return f1.compareTo(f2);
-                        }
-                    }
-                };
-                Arrays.sort(subDirArr, comp);
-                // ###########################################
+	                Comparator comp = new Comparator() {
+	                    public int compare(Object o1, Object o2) {
+	                        File f1 = (File) o1;
+	                        File f2 = (File) o2;
+	                        if (f1.isDirectory() && !f2.isDirectory()) {
+	                            // Directory before non-directory
+	                            return -1;
+	                        } else if (!f1.isDirectory() && f2.isDirectory()) {
+	                            // Non-directory after directory
+	                            return 1;
+	                        } else {
+	                            // Alphabetic order otherwise
+	                            return f1.compareTo(f2);
+	                        }
+	                    }
+	                };
+	                Arrays.sort(subDirArr, comp);
+	                // ###########################################
 
-                //하위의 모든 디렉토리
-//		        for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
-//		        				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                for (File seDirs : subDirArr) {
-                    seDirNm = seDirs.getName();
+	                //하위의 모든 디렉토리
+	                //for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
+	                // 				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                for (File seDirs : subDirArr) {
+	                    seDirNm = seDirs.getName();
 
-                    if(seDirs.isDirectory()) {
-                        // ###################################################
-                        // ## 4. 분석결과 폴더에서 분석_보고서(CSV 파일) 파일을 찾아 엑셀파일로 변환(DBLoading Sheet 생성)
-                        // ###################################################
-                        if("분석결과".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
-                            //하위의 모든 파일
-                            for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                    TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                seFileNm = seFiles.getName();
-                                //csv파일 갯수 체크
-                                if("csv".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
-                                    csvCount++;
-                                }
-                            }
-                            if(csvCount > 1 ) {
-                                model.addAttribute("resultCode", "multiCsv");
-                                model.addAttribute("resultMsg", "csv파일이 여러개 존재합니다.");
-                                return "jsonView";
-                            }
+	                    if(seDirs.isDirectory()) {
+	                        // ###################################################
+	                        // ## 4. 분석결과 폴더에서 분석_보고서(CSV 파일) 파일을 찾아 엑셀파일로 변환(DBLoading Sheet 생성)
+	                        // ###################################################
+	                        if("분석결과".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+	                            //하위의 모든 파일
+	                            for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                    TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                seFileNm = seFiles.getName();
+	                                //csv파일 갯수 체크
+	                                if("csv".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
+	                                    csvCount++;
+	                                }
+	                            }
+	                            if(csvCount > 1 ) {
+	                                model.addAttribute("resultCode", "multiCsv");
+	                                model.addAttribute("resultMsg", "csv파일이 여러개 존재합니다.");
+	                                return "jsonView";
+	                            }
 
-                            //_분석결과 폴더 하위 모든 파일
-                            for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                                TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                seFileNm = seFiles.getName();
-                                //_분석_보고서.csv 파일 찾기
-                                if("분석_보고서".equals(seFileNm.substring(seFileNm.lastIndexOf("_")-2,seFileNm.lastIndexOf(".")))) {
-                                    if("csv".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
-                                        csvFileNm = filePath + File.separator + seDirNm + File.separator + seFileNm;
-                                        String _csvFileNm = seFileNm.substring(0,seFileNm.lastIndexOf("."));
-                                        excelFileNm = filePath + File.separator + seDirNm + File.separator + _csvFileNm + ".xlsx";
+	                            //_분석결과 폴더 하위 모든 파일
+	                            for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                                TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                seFileNm = seFiles.getName();
+	                                //_분석_보고서.csv 파일 찾기
+	                                if("분석_보고서".equals(seFileNm.substring(seFileNm.lastIndexOf("_")-2,seFileNm.lastIndexOf(".")))) {
+	                                    if("csv".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
+	                                        csvFileNm = filePath + File.separator + seDirNm + File.separator + seFileNm;
+	                                        String _csvFileNm = seFileNm.substring(0,seFileNm.lastIndexOf("."));
+	                                        excelFileNm = filePath + File.separator + seDirNm + File.separator + _csvFileNm + ".xlsx";
 
-                                        //csv파일 -> xlsx 파일로 변환
-                                        srvyDtaService.convertExcel(csvFileNm, excelFileNm, srvyDtaVO);
-                                    }
-                                }
-                            }
-                        }//분석결과 폴더
-                        // ###################################################
+	                                        //csv파일 -> xlsx 파일로 변환
+	                                        srvyDtaService.convertExcel(csvFileNm, excelFileNm, srvyDtaVO);
+	                                    }
+	                                }
+	                            }
+	                        }//분석결과 폴더
+	                        // ###################################################
 
-                        // ###################################################
-                        // ## 5. 분석결과 폴더에서 분석_보고서(CSV 파일) 파일을 찾아 엑셀파일로 변환
-                        // ###################################################
-                        if("표면결함".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
-                            //엑셀파일 RDSRFC_IMG_FILE_NM_1 이미지 파일명 조회
-                            imageList = srvyDtaService.selectImageList(excelFileNm);
+	                        // ###################################################
+	                        // ## 5. 분석결과 폴더에서 분석_보고서(CSV 파일) 파일을 찾아 엑셀파일로 변환
+	                        // ###################################################
+	                        if("표면결함".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+	                            //엑셀파일 RDSRFC_IMG_FILE_NM_1 이미지 파일명 조회
+	                            imageList = srvyDtaService.selectImageList(excelFileNm);
 
-                            //하위의 모든 파일
-                            for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                    TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                seFileNm = seFiles.getName();
-                                //jpg 파일 검증
-                                if(!"jpg".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
-                                    model.addAttribute("resultCode", "noJpg");
-                                    model.addAttribute("resultMsg", "이미지 파일이 없습니다.");
-                                    return "jsonView";
-                                }
-                            }//표면결함 폴더 내 jpg 파일
-                        }//표면결함 폴더
-                        // ###################################################
+	                            //하위의 모든 파일
+	                            for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                    TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                seFileNm = seFiles.getName();
+	                                //jpg 파일 검증
+	                                if(!"jpg".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
+	                                    model.addAttribute("resultCode", "noJpg");
+	                                    model.addAttribute("resultMsg", "이미지 파일이 없습니다.");
+	                                    return "jsonView";
+	                                }
+	                            }//표면결함 폴더 내 jpg 파일
+	                        }//표면결함 폴더
+	                        // ###################################################
 
-                    }//디렉토리 확인
-                }//하위의 모든 디렉토리
+	                    }//디렉토리 확인
+	                }//하위의 모든 디렉토리
 
-                //파일상세정보 등록
-                String seCode = "";
+	                //파일상세정보 등록
+	                String seCode = "";
 
-                // ###################################################
-                // ## 6. 압축파일 해제된 데이터 DB저장
-                // ###################################################
-                for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
-                        TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                 seDirNm = seDirs.getName();
-                     if(seDirs.isDirectory()) {
-                         if("기하구조".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
-                             seCode = "FLSE0001";
-                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                 //파일 상세 정보 등록
-                                 attachDataSet(fileNo, seCode, seFiles, userNo);
-                             }
-                         } else if("도로현황".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
-                             seCode = "FLSE0002";
-                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                 attachDataSet(fileNo, seCode, seFiles, userNo);
-                             }
-                         } else if("분석결과".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
-                             seCode = "FLSE0003";
-                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                 attachDataSet(fileNo, seCode, seFiles, userNo);
-                             }
-                         } else if("소성변형".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
-                             seCode = "FLSE0004";
-                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                 attachDataSet(fileNo, seCode, seFiles, userNo);
-                             }
-                         } else if("종단평탄성".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
-                             seCode = "FLSE0005";
-                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                 attachDataSet(fileNo, seCode, seFiles, userNo);
-                             }
-                         } else if("표면결함".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
-                             seCode = "FLSE0006";
-                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
-                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
-                                 attachDataSet(fileNo, seCode, seFiles, userNo);
-                             }
-                         }
-                     }
-                }
-                // ###################################################
+	                // ###################################################
+	                // ## 6. 압축파일 해제된 데이터 DB저장
+	                // ###################################################
+	                for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                	 seDirNm = seDirs.getName();
+	                     if(seDirs.isDirectory()) {
+	                         if("기하구조".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+	                             seCode = "FLSE0001";
+	                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                 //파일 상세 정보 등록
+	                                 attachDataSet(fileNo, seCode, seFiles, userNo);
+	                             }
+	                         } else if("도로현황".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+	                             seCode = "FLSE0002";
+	                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                 attachDataSet(fileNo, seCode, seFiles, userNo);
+	                             }
+	                         } else if("분석결과".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+	                             seCode = "FLSE0003";
+	                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                 attachDataSet(fileNo, seCode, seFiles, userNo);
+	                             }
+	                         } else if("소성변형".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+	                             seCode = "FLSE0004";
+	                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                 attachDataSet(fileNo, seCode, seFiles, userNo);
+	                             }
+	                         } else if("종단평탄성".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+	                             seCode = "FLSE0005";
+	                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                 attachDataSet(fileNo, seCode, seFiles, userNo);
+	                             }
+	                         } else if("표면결함".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
+	                             seCode = "FLSE0006";
+	                             for (File seFiles : FileUtils.listFiles(new File(filePath + File.separator + seDirNm),
+	                                     TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
+	                                 attachDataSet(fileNo, seCode, seFiles, userNo);
+	                             }
+	                         }
+	                     }
+	                }
+	                // ###################################################
 
-                resultMsg = "파일전송이 성공하였습니다.";
-                logCode = "PCST0002";
+	                resultMsg = "파일전송이 성공하였습니다.";
+	                logCode = "PCST0002";
 
-                // ###################################################
-                // ## 7. 파일에서 엑셀정보 조사정보 가져오기
-                // ###################################################
-                //엑셀파일 데이터 조회하여 srvyDtaVO set
-                srvyDtaVO = srvyDtaService.readExcel(srvyDtaVO, excelFileNm);
-                // ###################################################
+	                // ###################################################
+	                // ## 7. 파일에서 엑셀정보 조사정보 가져오기
+	                // ###################################################
+	                //엑셀파일 데이터 조회하여 srvyDtaVO set
+	                srvyDtaVO = srvyDtaService.readExcel(srvyDtaVO, excelFileNm);
+	                // ###################################################
 
-                // 조사자료 엑셀 파일 저장
-                srvyDtaVO.setFILE_NO(fileNo);
-                srvyDtaVO.setEVL_PROCESS_AT("N");
-                srvyDtaVO.setGPS_CORTN_PROCESS_AT("N");
-                srvyDtaVO.setPRDTMDL_PROCESS_AT("N");
-                srvyDtaVO.setSM_PROCESS_AT("N");
-                srvyDtaVO.setCRTR_NO(userNo);
-                srvyDtaVO.setUPDUSR_NO(userNo);
-                srvyDtaVO.setVAL_EVL_AT("N");
-                srvyDtaVO.setUSE_AT("Y");
-                srvyDtaVO.setDELETE_AT("N");
+	                // 조사자료 엑셀 파일 저장
+	                srvyDtaVO.setFILE_NO(fileNo);
+	                srvyDtaVO.setEVL_PROCESS_AT("N");		// 평가 처리 여부
+	                srvyDtaVO.setGPS_CORTN_PROCESS_AT("N");	// GPS 보정 처리 여부
+	                srvyDtaVO.setPRDTMDL_PROCESS_AT("N");	// 예측모델 처리 여부
+	                srvyDtaVO.setSM_PROCESS_AT("N");		// 집계 처리 여부
+	                srvyDtaVO.setCRTR_NO(userNo);			// 생성 사용자
+	                srvyDtaVO.setUPDUSR_NO(userNo);			// 수정 사용자
+	                srvyDtaVO.setVAL_EVL_AT("N");			// 유효성 평가 여부
+	                srvyDtaVO.setUSE_AT("Y");				// 사용 여부
+	                srvyDtaVO.setDELETE_AT("N");			// 삭제 여부
 
-                // ###################################################
-                // ## 8. 조사자료 등록
-                // ###################################################
-                srvyNo = srvyDtaService.insertSrvyDta(srvyDtaVO);
-                // ###################################################
+	                // ###################################################
+	                // ## 8. 조사자료 등록
+	                // ###################################################
+	                srvyNo = srvyDtaService.insertSrvyDta(srvyDtaVO);
+	                // ###################################################
 
-                // ###################################################
-                // ## 9. 조사자료 로그 등록
-                // ###################################################
-                // 조사자료 엑셀 파일 업로드 로그 저장
-                srvyDtaLogVO.setSRVY_NO(srvyNo);
-                srvyDtaLogVO.setLOG_MSSAGE(resultMsg);
-                srvyDtaLogVO.setPROCESS_SE("PCSE0001");
-                srvyDtaLogVO.setPROCESS_STTUS(logCode);
-                srvyDtaLogVO.setEND_DT(new java.sql.Date(currentTime.getTime()));
-                srvyDtaLogVO.setCRTR_NO(userNo);
+	                // ###################################################
+	                // ## 9. 조사자료 등록 로그
+	                // ###################################################
+	                // 조사자료 엑셀 파일 업로드 로그 저장
+	                srvyDtaLogVO.setSRVY_NO(srvyNo);		// 조사 번호
+	                srvyDtaLogVO.setLOG_MSSAGE(resultMsg);
+	                srvyDtaLogVO.setPROCESS_SE("PCSE0001");	// 처리구분 : PCSE0001 등록
+	                srvyDtaLogVO.setPROCESS_STTUS(logCode);	// 처리상태 : PCST0002 완료
+	                srvyDtaLogVO.setEND_DT(new java.sql.Date(currentTime.getTime()));
+	                srvyDtaLogVO.setCRTR_NO(userNo);
 
-                srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
-                // ###################################################
+	                srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
+	                // ###################################################
 
-                // ###################################################
-                // ## 10. 유효성 검사
-                // ###################################################
-                String upLogCode = "PCST0001";
-                resultMsg = "자료조사 validation check를 진행중 입니다.";
+	                // ###################################################
+	                // ## 10. 유효성 검사
+	                // ###################################################
+	                String upLogCode = "PCST0001"; // 처리상태 : 진행
+	                resultMsg = "자료조사 validation check를 진행중 입니다.";
 
-                // validation check
-                Map<String, Object> validChkInfo = validReadXLData(excelFileNm);
-                boolean validChk = (Boolean) validChkInfo.get("result");
+	                // validation check
+	                Map<String, Object> validChkInfo = validReadXLData(excelFileNm);
+	                boolean validChk = (Boolean) validChkInfo.get("result");
 
-                if (validChk) {
-                    upLogCode = "PCST0002";
-                    resultMsg = validChkInfo.get("resultMsg").toString();
+	                if (validChk) {
+	                    upLogCode = "PCST0002"; // 처리상태 : 완료
+	                    resultMsg = validChkInfo.get("resultMsg").toString();
 
-                    srvyDtaVO.setSRVY_DE(validChkInfo.get("srvyDe").toString());
-                    srvyDtaVO.setVAL_EVL_AT("Y");
-                    srvyDtaVO.setSRVY_NO(srvyNo);
+	                    srvyDtaVO.setSRVY_DE(validChkInfo.get("srvyDe").toString()); // 조사 일자
+	                    srvyDtaVO.setVAL_EVL_AT("Y"); // 유효성 평가 여부
+	                    srvyDtaVO.setSRVY_NO(srvyNo);
 
-                    srvyDtaService.updateSrvyDta(srvyDtaVO);
-                    isResult = true;
-                } else {
-                    isResult = false;
-                    upLogCode = "PCST0003";
-                    if (validChkInfo.get("errorCol").toString().equals("")) {
-                        resultMsg = validChkInfo.get("resultMsg").toString();
-                    } else {
-                        String colName = validChkInfo.get("errorCol").toString();
-                        String rowIndex = validChkInfo.get("rowIndex").toString();
+	                    srvyDtaService.updateSrvyDta(srvyDtaVO);
+	                    isResult = true;
+	                } else {
+	                    isResult = false;
+	                    upLogCode = "PCST0003"; // 처리상태 : 오류
+	                    if (validChkInfo.get("errorCol").toString().equals("")) {
+	                        resultMsg = validChkInfo.get("resultMsg").toString();
+	                    } else {
+	                        String colName = validChkInfo.get("errorCol").toString();
+	                        String rowIndex = validChkInfo.get("rowIndex").toString();
 
-                        resultMsg = colName + "컬럼의 " + rowIndex + "줄에 validation 오류 발생 : " + validChkInfo.get("resultMsg").toString();
-                    }
+	                        resultMsg = colName + "컬럼의 " + rowIndex + "줄에 validation 오류 발생 : " + validChkInfo.get("resultMsg").toString();
+	                    }
 
-                    srvyDtaVO.setVAL_EVL_AT("N");
-                    srvyDtaVO.setSRVY_NO(srvyNo);
+	                    srvyDtaVO.setVAL_EVL_AT("N");
+	                    srvyDtaVO.setSRVY_NO(srvyNo);
 
-                    srvyDtaService.updateSrvyDta(srvyDtaVO);
-                }
-                // ###################################################
+	                    srvyDtaService.updateSrvyDta(srvyDtaVO);
+	                }
+	                // ###################################################
 
-                // ###################################################
-                // ## 11. 조사자료 로그 등록
-                // ###################################################
-                srvyDtaLogVO.setPROCESS_SE("PCSE0002");
-                srvyDtaLogVO.setPROCESS_STTUS(upLogCode);
-                srvyDtaLogVO.setLOG_MSSAGE(resultMsg);
+	                // ###################################################
+	                // ## 11. 조사자료 유효성 검사 로그
+	                // ###################################################
+	                srvyDtaLogVO.setPROCESS_SE("PCSE0002");	// 처리구분 : PCSE0002 유효성 검증 (조사 자료 엑셀 데이터 유효성 검증)
+	                srvyDtaLogVO.setPROCESS_STTUS(upLogCode); // 처리상태
+	                srvyDtaLogVO.setLOG_MSSAGE(resultMsg);
 
-                srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
-                // ###################################################
-            }
+	                srvyDtaLogService.insertSrvyDtaLog(srvyDtaLogVO);
+	                // ###################################################
+	            } // for filelist
 
-            srvyDtaVO.setSRVY_NO(srvyNo);
-            srvyDtaVO.setUSE_AT("Y");
-            srvyDtaVO.setDELETE_AT("N");
+	            srvyDtaVO.setSRVY_NO(srvyNo);
+	            srvyDtaVO.setUSE_AT("Y");
+	            srvyDtaVO.setDELETE_AT("N");
 
-            List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
+	            List<SrvyDtaVO> excelList = srvyDtaService.selectSrvyDtaList(srvyDtaVO);
 
-            if (excelList == null || excelList.size() == 0) {
-                model.addAttribute("resultCode", "noData");
-                model.addAttribute("resultMsg", "엑셀 데이터가 없습니다.");
-                return "jsonView";
-            }
+	            if (excelList == null || excelList.size() == 0) {
+	                model.addAttribute("resultCode", "noData");
+	                model.addAttribute("resultMsg", "엑셀 데이터가 없습니다.");
+	                return "jsonView";
+	            }
 
-            //frmula_nm = GPCI
-            String frmula_nm = egovPropertyService.getString("FRMULA_NM", "NHPCI");
+	            //frmula_nm = GPCI
+	            String frmula_nm = egovPropertyService.getString("FRMULA_NM", "NHPCI");
 
-            if (StringUtils.isEmpty(pavFrmulaVO.getFRMULA_NM())) {
-                pavFrmulaVO.setFRMULA_NM(frmula_nm);
-            }
-            pavFrmulaVO.setUSE_AT("Y");
-            pavFrmulaVO.setDELETE_AT("N");
+	            if (StringUtils.isEmpty(pavFrmulaVO.getFRMULA_NM())) {
+	                pavFrmulaVO.setFRMULA_NM(frmula_nm);
+	            }
+	            pavFrmulaVO.setUSE_AT("Y");
+	            pavFrmulaVO.setDELETE_AT("N");
 
-            PavFrmulaVO pavFrmulaOne = pavFrmulaService.selectPavFrmula(pavFrmulaVO);
-            totCount = excelList.size();
+	            PavFrmulaVO pavFrmulaOne = pavFrmulaService.selectPavFrmula(pavFrmulaVO);
+	            totCount = excelList.size();
 
-            // 데이터(list) 수 만큼 for문 실행
-            String fileName = "";
-            for (SrvyDtaVO srvyDtaOne : excelList) {
-                BindBeansToActiveUser(srvyDtaOne);
+	            // 데이터(list) 수 만큼 for문 실행
+	            String fileName = "";
+	            for (SrvyDtaVO srvyDtaOne : excelList) {
+	                BindBeansToActiveUser(srvyDtaOne); // 등록자, 수정자 정보를 현재 로그인한 사용자 값을 적용
 
-                // 조사자료 등록 및 수식 평가
-                if (srvyDtaOne.getEVL_PROCESS_AT().equals("N")) {
+	                // 조사자료 등록 및 수식 평가
+	                if (srvyDtaOne.getEVL_PROCESS_AT().equals("N")) {
 
-                    AttachFileVO attachFileParam = new AttachFileVO();
-                    attachFileParam.setFILE_NO(srvyDtaOne.getFILE_NO());
-                    attachFileParam.setUSE_AT("Y");
-                    attachFileParam.setDELETE_AT("N");
-                    AttachFileVO attachFileOne = attachFileService.selectAttachDetailFile(attachFileParam);
-                    if (attachFileOne == null || StringUtils.isEmpty(attachFileOne.getFILE_COURS())) {
-                        model.addAttribute("resultCode", "noExcel");
-                        model.addAttribute("resultMsg", "엑셀 파일이 없습니다.");
-                        return "jsonView";
-                    }
+	                    AttachFileVO attachFileParam = new AttachFileVO();
+	                    attachFileParam.setFILE_NO(srvyDtaOne.getFILE_NO());
+	                    attachFileParam.setUSE_AT("Y");
+	                    attachFileParam.setDELETE_AT("N");
+	                    AttachFileVO attachFileOne = attachFileService.selectAttachDetailFile(attachFileParam);
+	                    if (attachFileOne == null || StringUtils.isEmpty(attachFileOne.getFILE_COURS())) {
+	                        model.addAttribute("resultCode", "noExcel");
+	                        model.addAttribute("resultMsg", "엑셀 파일이 없습니다.");
+	                        return "jsonView";
+	                    }
 
-                    //엑셀파일
-                    fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
+	                    //엑셀파일
+	                    fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
 
-//					// ###################################################
-//					// ## 12. 임시 테이블에 엑셀 조사자료 삭제
-//					// ###################################################
-//					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
-//					srvyDtaService.deleteTmpMummSctnSrvyDta();
-//					// ###################################################
-//
-//					// ###################################################
-//	                // ## 13. 임시 테이블에 엑셀 조사자료 등록
-//	                // ###################################################
-//					//TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
-//					srvyDtaService.insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS(), srvyDtaOne);
-//					// ###################################################
-//
-//					//TMP_MUMM_SCTN_SRVY_DTA 조회
-//					srvyDtaVO = srvyDtaService.selectTmpExcelData();
+						//    // ###################################################
+						//    // ## 12. 임시 테이블에 엑셀 조사자료 삭제
+						//    // ###################################################
+						//    //TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
+						//    srvyDtaService.deleteTmpMummSctnSrvyDta();
+						//    // ###################################################
+						//
+						//    // ###################################################
+						//    // ## 13. 임시 테이블에 엑셀 조사자료 등록
+						//    // ###################################################
+						//    //TMP_MUMM_SCTN_SRVY_DTA 테이블 등록
+						//    srvyDtaService.insertTmpExcelData(fileName, srvyDtaOne.getFILE_COURS(), srvyDtaOne);
+						//    // ###################################################
+						//
+						//    //TMP_MUMM_SCTN_SRVY_DTA 조회
+						//    srvyDtaVO = srvyDtaService.selectTmpExcelData();
 
-                    // AI분석
-                    srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO, srvyDtaOne, fileName);
+	                    // AI분석
+	                    srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO, srvyDtaOne, fileName);
 
-//					HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
-//
-//					resultCode = prc_result.get("o_proccode").toString();
-//					resultMsg = prc_result.get("o_procmsg").toString();
-//
-//					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
-//					BindBeansToActiveUser(srvyDtaOne);
-                }
+						//    HashMap prc_result = srvyDtaService.procSaveSurveyData(srvyDtaOne);
+						//
+						//    resultCode = prc_result.get("o_proccode").toString();
+						//    resultMsg = prc_result.get("o_procmsg").toString();
+						//
+						//    srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
+						//    BindBeansToActiveUser(srvyDtaOne);
+	                }
 
-//				// 공간 보정
-//				if (srvyDtaOne.getGPS_CORTN_PROCESS_AT().equals("N")) {
-//
-//					HashMap prc_result = srvyDtaService.procSrvyDtaSysReflct(srvyDtaOne);
-//
-//					resultCode = prc_result.get("o_proccode").toString();
-//					resultMsg = prc_result.get("o_procmsg").toString();
-//
-//					srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
-//					BindBeansToActiveUser(srvyDtaOne);
-//				}
-//
-//				// 집계 처리
-//				if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
-//					srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
-//					srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
-//
-//					HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
-//
-//					resultCode = (String) prc_result.get("o_proccode");
-//					resultMsg = (String) prc_result.get("o_procmsg");
-//				}
+					//    // 공간 보정
+					//    if (srvyDtaOne.getGPS_CORTN_PROCESS_AT().equals("N")) {
+					//
+					//        HashMap prc_result = srvyDtaService.procSrvyDtaSysReflct(srvyDtaOne);
+					//
+					//        resultCode = prc_result.get("o_proccode").toString();
+					//        resultMsg = prc_result.get("o_procmsg").toString();
+					//
+					//        srvyDtaOne = srvyDtaService.selectSrvyDta(srvyDtaOne);
+					//        BindBeansToActiveUser(srvyDtaOne);
+					//    }
+					//
+					//    // 집계 처리
+					//    if (srvyDtaOne.getSM_PROCESS_AT().equals("N")) {
+					//        srvyDtaOne.setFRMULA_NO(pavFrmulaOne.getFRMULA_NO());
+					//        srvyDtaOne.setFRMULA_NM(pavFrmulaOne.getFRMULA_NM());
+					//
+					//        HashMap prc_result = srvyDtaService.procAggregateGeneral(srvyDtaOne);
+					//
+					//        resultCode = (String) prc_result.get("o_proccode");
+					//        resultMsg = (String) prc_result.get("o_procmsg");
+					//    }
+	            }
 
-            }
                 isResult = true;
                 /*
                  * [2019-12-16 yslee]
@@ -611,21 +645,21 @@ public class SrvyDtaController extends BaseController {
                  * PNG파일은 차례대로 정상적으로 "균열분석이미지" 폴더에 다운로드 됨
                  */
                 //this.transactionManager.commit(status);// 트랜잭션 커밋
-            } catch (Exception e) {
-                e.printStackTrace();
-                isResult = false;
-                //this.transactionManager.rollback(status);// 트랜잭션 롤백
-            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            isResult = false;
+	            //this.transactionManager.rollback(status);// 트랜잭션 롤백
+	        }
         }
 
-        model.addAttribute("result", isResult);
-        model.addAttribute("resultCode", resultCode);
-        model.addAttribute("resultMsg", resultMsg);
-        model.addAttribute("totCount", totCount);
-        model.addAttribute("callBackFunction", funCallback); // 처리후 호출 함수
+	    model.addAttribute("result", isResult);
+	    model.addAttribute("resultCode", resultCode);
+	    model.addAttribute("resultMsg", resultMsg);
+	    model.addAttribute("totCount", totCount);
+	    model.addAttribute("callBackFunction", funCallback); // 처리후 호출 함수
 
-        return "jsonView";
-    }
+	    return "jsonView";
+	}
 
     @RequestMapping(value = "/srvyDtaUploadResultList.do")
     public String srvyDtaUploadResultList(@ModelAttribute SrvyDtaExcelVO srvyDtaExcelVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
@@ -642,7 +676,7 @@ public class SrvyDtaController extends BaseController {
      * @exception Exception
      */
     @RequestMapping(value = { "/api/srvyDtaUploadResultList.do" }, method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public @ResponseBody Map<String, Object> srvyDtaUploadResultListRest(@RequestBody SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, HttpSession session) throws Exception {
+    public @ResponseBody Map<String, Object> srvyDtaUploadResultListRest(@RequestBody SrvyDtaVO srvyDtaVO, ModelMap model, HttpServletRequest request, @RequestParam HashMap<String, Object> reqMap, HttpSession session) throws Exception {
         PaginationInfo paginationInfo = new PaginationInfo();
         paginationInfo.setCurrentPageNo(srvyDtaVO.getPage());
         paginationInfo.setRecordCountPerPage(srvyDtaVO.getPageUnit());

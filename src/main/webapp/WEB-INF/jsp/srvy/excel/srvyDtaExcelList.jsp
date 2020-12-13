@@ -152,77 +152,103 @@ function fn_file_upload(){
 
     var len = 0;
     for(var i in files){
-        if(files[i] == i){continue;}
-        formData.append("files", files[i]);
+        if(!files[i].name || files[i].name == ''){ continue; }
+		// 조사파일 중복 업로드 확인
+		var isExists = false;
+        $.ajax({
+            type : 'POST',
+            url : contextPath + 'srvy/srvyDtaFileCheck.do',
+            data : {
+                'srvyDtaFileName' : files[i].name
+            },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            dataType : 'json',
+            async    : false,
+            cache    : false, /*ie11버전에선 이 설정이 없으면 ajax 파싱 안됨. ie버그*/
+            success : function(res) {
+            	if (res && res.existsAt == 'Y'){
+                	isExists = true;
+            	}
+            },
+
+            error: function(xhr) {
+                console.error(xhr + ' error!');
+            }
+        });
+
+        if (isExists){
+            alert('동일한 조사자료 파일이 존재합니다.');
+            //$('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
+            //COMMON_FILE.clearMultiFile('#file_list', '#addFile');
+            return;
+        }
+
+        formData.append('files', files[i]);
         len ++;
     }
 
     if($('#SRVY_DE').val() == '' ) {
-        alert("조사일자를 선택하세요");
+        alert('조사일자를 선택하세요');
         $('#SRVY_DE').focus();
         return;
     }
     if($('#ROAD_NO').val() == '' ) {
-        alert("노선번호를 선택하세요");
+        alert('노선번호를 선택하세요');
         $('#ROAD_NO').focus();
         return;
     }
     if($('#DIRECT_CODE').val() == '' ) {
-        alert("행선을 선택하세요");
+        alert('행선을 선택하세요');
         $('#DIRECT_CODE').focus();
         return;
     }
     if($('#TRACK').val() == '' ) {
-        alert("차로를 입력하세요");
+        alert('차로를 입력하세요');
         $('#TRACK').focus();
         return;
     }
 
-    formData.append("SRVY_DE", $('#SRVY_DE').val());
-    formData.append("ROAD_NO", $('#ROAD_NO').val());
-    formData.append("ROAD_NAME", $('#ROAD_NAME').val());
-    formData.append("DIRECT_CODE", $('#DIRECT_CODE').val());
-    formData.append("TRACK", $('#TRACK').val());
+    formData.append('SRVY_DE', $('#SRVY_DE').val());
+    formData.append('ROAD_NO', $('#ROAD_NO').val());
+    formData.append('ROAD_NAME', $('#ROAD_NAME').val());
+    formData.append('DIRECT_CODE', $('#DIRECT_CODE').val());
+    formData.append('TRACK', $('#TRACK').val());
 
     if(len < 1){
-        alert("조사자료 파일을 선택해주세요.");
+        alert('조사자료 파일을 선택해주세요.');
         return;
     }
 
+    parent.$('#dvProgress').dialog('open');
+    parent.$('#t_progress').text('파일 전송 중 입니다.');
 
-    parent.$("#dvProgress").dialog("open");
-    parent.$("#t_progress").text("파일 전송 중 입니다.");
+	//     $.ajax({
+	//        url: contextPath + "srvy/srvyDtaFileUpload.do",
+	//        processData: false,
+	//        contentType: false,
+	//        data: formData,
+	//        type: 'POST',
+	//        success: function(data){
+	//          $('#filefrm')[0].reset(); //폼 초기화(리셋);
+	//          $('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
+	//          COMMON_FILE.clearMultiFile('#file_list', '#addFile');
+	//          parent.$("#dvProgress").dialog("close");
 
+	//          //alert(data.resultCode);
+	//              alert(data.resultMsg);
+	//          if(!data.result) {
+	//              return;
+	//          } else {
+	//              fn_search();
+	//          }
 
-//     $.ajax({
-//        url: contextPath + "srvy/srvyDtaFileUpload.do",
-//        processData: false,
-//        contentType: false,
-//        data: formData,
-//        type: 'POST',
-//        success: function(data){
-//          $('#filefrm')[0].reset(); //폼 초기화(리셋);
-//          $('#filefrm input:file').MultiFile('reset'); //멀티파일 초기화
-//          COMMON_FILE.clearMultiFile('#file_list', '#addFile');
-//          parent.$("#dvProgress").dialog("close");
+	//        }
+	//          ,error: function(a,b,msg){
 
-//          //alert(data.resultCode);
-//              alert(data.resultMsg);
-//          if(!data.result) {
-//              return;
-//          } else {
-//              fn_search();
-//          }
+	//      }
+	//    });
 
-//        }
-//          ,error: function(a,b,msg){
-
-//      }
-//    });
-
-
-    $("#searchForm").submit();
-
+    $('#searchForm').submit();
 }
 
 /* //파일 전송 callback
@@ -237,12 +263,17 @@ function fn_file_upload_callback(){
  */
 //검색 처리
 function fn_search() {
+	var postData = $("#frm").cmSerializeObject();
+	var roadNo = $('#ROAD_NO').val();
+	if (roadNo != null && roadNo != ''){
+		postData["ROAD_NO"] = roadNo;
+	}
     $("#gridArea").jqGrid("setGridParam",{
         datatype: "json"
         ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
         ,contentType: "application/json"
         ,page: 1
-        ,postData:   $("#frm").cmSerializeObject()
+        ,postData: postData
         ,mtype: "POST"
         ,loadComplete: function(data) {
             COMMON_UTIL.fn_set_grid_noRowMsg('gridArea', $("#gridArea").jqGrid("getGridParam").emptyrecords, data.records);
@@ -279,7 +310,7 @@ function fn_btn_anal_reset(cellValue, options, rowObject){
 }
 
 function fn_anal_reset(srvyNo) {
-	if ( confirm("재분석을 진행하시겠습니까?") ) {
+	if ( confirm("기존 자료를 삭제하고 분석작업을 다시 진행합니다.\r분석작업은 많은 시간이 소요됩니다.\r분석작업을 다시 진행하시겠습니까?") ) {
     	$.ajax({
             url: contextPath + 'srvy/api/analReset.do'
             ,type: 'post'

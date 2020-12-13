@@ -291,14 +291,15 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                     else {
                         dbRow.createCell(j).setCellValue("");
                     }
+                }//for j
+
                 //파라미터 값 적용
                 dbRow.createCell(0).setCellValue(srvy_year);					//조사년도
                 dbRow.createCell(1).setCellValue(srvy_mt);						//조사월
                 dbRow.createCell(2).setCellValue(route_code);					//노선 4자수 가공
-                dbRow.createCell(3).setCellValue(srvyDtaVO.getDIRECT_CODE());	//행성
+                dbRow.createCell(3).setCellValue(srvyDtaVO.getDIRECT_CODE());	//행선
                 dbRow.createCell(4).setCellValue(srvyDtaVO.getTRACK());			//차선
-                dbRow.createCell(20).setCellValue(srvy_de);			//조사일자
-                }//for j
+                dbRow.createCell(20).setCellValue(srvy_de);						//조사일자
             }//for i
 
             fos = new FileOutputStream(excelFileNm);
@@ -463,7 +464,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                  */
                 //String imageFileCours = fileCoursParam.replace("_분석결과","_표면결함");
                 String pngFileName = jpgFileName.replace(".jpg", ".png");
-                params.put("RDSRFC_IMG_FILE_NM_2", pngFileName);
+                params.put("RDSRFC_IMG_FILE_NM_2", ""); // pngFileName AI분석 결과 수신 후 반영으로 변경 : png 파일명 유무로 분석 실행 건수 조회 처리 - msim 2020.11.18
                 params.put("FRNT_IMG_FILE_NM", jpgFileName);
                 // 파일 경로 프로시저에서 일괄 업데이트
 //				params.put("FRNT_IMG_FILE_COURS", rootFileCours);
@@ -632,13 +633,21 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
         return srvyDtaDAO.updateImgInfoOfTmpExcelData(srvyDtaVO);
     }
 
+    /**
+     * 조사 자료 AI 분석 처리
+     * @param attachFileParam : 조사자료 엑셀 파일 조회 정보 ( FILE_NO )
+     * @param srvyDtaVO : 조사자료 등록 정보
+     * @param srvyDtaOne : 조사자료 조회 정보
+     * @param fileName : 엑셀 파일 경로 및 이름
+     */
     @Async
     public void procSrvyDtaAi(AttachFileVO attachFileParam, SrvyDtaVO srvyDtaVO, SrvyDtaVO srvyDtaOne, String fileName) throws Exception {
-        // Connection 오브젝트 생성, 저장소 바인딩, 참조변수 값 리턴
-        Connection conn = DataSourceUtils.getConnection(dataSource);
-        conn.setAutoCommit(false); // 트랜잭션 시작
 
         synchronized (this) {
+            // Connection 오브젝트 생성, 저장소 바인딩, 참조변수 값 리턴
+            Connection conn = DataSourceUtils.getConnection(dataSource);
+            conn.setAutoCommit(false); // 트랜잭션 시작
+
             // ###################################################
             // ## 12. 임시 테이블에 엑셀 조사자료 삭제
             // ###################################################
@@ -646,6 +655,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 //            srvyDtaDAO.deleteTmpMummSctnSrvyDta(srvyDtaOne);
             // 기존 데이터 삭제
             deleteAnalReset(srvyDtaVO);
+            conn.commit(); // 분석 진행 건수 조회를 위해 커밋 처리
             // ###################################################
 
             // ###################################################
@@ -657,6 +667,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
 
             //TMP_MUMM_SCTN_SRVY_DTA 조회
             srvyDtaVO = srvyDtaDAO.selectTmpExcelData(srvyDtaOne);
+            srvyDtaVO.setSRVY_NO(srvyDtaOne.getSRVY_NO());
 
             //srvyDtaVO.setSE_CD("N");
             //seCd가 N 이면 AI 태움(조사자료 안끝난 자료-합계값이 0일때)
@@ -699,7 +710,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                             HttpResponse responseTmp = client.execute(post);
 
                             if ( responseTmp.getStatusLine().getStatusCode() != 201 ) {  // 정상처리 이외에 에러 처리.
-                                throw new Exception("Error Status Code : " + responseTmp.getStatusLine().getStatusCode());
+                                throw new Exception("AI Server Error Status Code : " + responseTmp.getStatusLine().getStatusCode());
                             }
 
                             HttpEntity entity2 = responseTmp.getEntity();
@@ -715,9 +726,11 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                         }
                     }
 
-
                     LOGGER.debug("responseString : " + responseString);
                     //=======================================================================================
+
+                    // AI 분석 결과 등록(TMP) 테이블 초기화
+                    srvyDtaDAO.deleteAiDta();
 
                     JSONParser paser = new JSONParser();
 
@@ -739,6 +752,9 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                         try (OutputStream stream = new FileOutputStream(pngFileFullPath)) {
                             stream.write(data);
                         }
+
+                        // AI 분석결과 png 파일명
+                        srvyDtaVO.setRDSRFC_IMG_FILE_NM_2(pngFileName);
 
                         // [results.ARRAYS[0].region_result] - 균열이 확인된 CELL에 대하여 정보를 가진 CELL배열
                         JSONArray region_result_list = (JSONArray)result_i.get("region_result");
@@ -774,15 +790,26 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                         }
                     }
 
-
-
                     //select
                     List<SrvyDtaVO> aiDtaList = srvyDtaDAO.selectAiDtaList();
 
                     String regionType = "";
                     String severity = "";
-                    String val = "";
+                    String val = null;
                     srvyDtaVO.setRDSRFC_IMG_FILE_NM_1(imgFileNm);
+                    //srvyDtaVO 분석결과값 항목 초기화
+                    srvyDtaVO.setTC_LOW(val);
+                    srvyDtaVO.setTC_MED(val);
+                    srvyDtaVO.setTC_HI(val);
+                    srvyDtaVO.setLC_LOW(val);
+                    srvyDtaVO.setLC_MED(val);
+                    srvyDtaVO.setLC_HI(val);
+                    srvyDtaVO.setAC_LOW(val);
+                    srvyDtaVO.setAC_MED(val);
+                    srvyDtaVO.setAC_HI(val);
+                    srvyDtaVO.setPTCHG_CR(val);
+                    srvyDtaVO.setPOTHOLE_CR(val);
+
                     for(int i=0; i<aiDtaList.size(); i++) {
                         regionType = aiDtaList.get(i).getREGION_TYPE();
                         severity = aiDtaList.get(i).getSEVERITY();
@@ -794,7 +821,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                         if("tc".equals(regionType) && "medium".equals(severity)) {
                             srvyDtaVO.setTC_MED(val);
                         }
-                        if("tc".equals(regionType) && "hi".equals(severity)) {
+                        if("tc".equals(regionType) && "high".equals(severity)) {
                             srvyDtaVO.setTC_HI(val);
                         }
 
@@ -804,17 +831,17 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                         if("lc".equals(regionType) && "medium".equals(severity)) {
                             srvyDtaVO.setLC_MED(val);
                         }
-                        if("lc".equals(regionType) && "hi".equals(severity)) {
+                        if("lc".equals(regionType) && "high".equals(severity)) {
                             srvyDtaVO.setLC_HI(val);
                         }
 
                         if("ac".equals(regionType) && "low".equals(severity)) {
                             srvyDtaVO.setAC_LOW(val);
                         }
-                        if("ac".equals(regionType) && "med".equals(severity)) {
+                        if("ac".equals(regionType) && "medium".equals(severity)) {
                             srvyDtaVO.setAC_MED(val);
                         }
-                        if("ac".equals(regionType) && "hi".equals(severity)) {
+                        if("ac".equals(regionType) && "high".equals(severity)) {
                             srvyDtaVO.setAC_HI(val);
                         }
 
@@ -823,16 +850,16 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                             srvyDtaVO.setPTCHG_CR("0");
                         }
 
-                        if("phothole".equals(regionType)) {
+                        if("pothole".equals(regionType)) {
                             srvyDtaVO.setPOTHOLE_CR(val);
                         }
 
-                        srvyDtaDAO.updateTmpExcelData(srvyDtaVO);
-                        conn.commit();
                     }
 
-                        srvyDtaDAO.deleteAiDta();
-                }
+                    srvyDtaDAO.updateTmpExcelData(srvyDtaVO);
+                    conn.commit(); // 분석 진행 건수 조회를 위해 커밋 처리
+
+                } // for image list
             }
 
             // 집계
@@ -858,9 +885,11 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
                 srvyDtaDAO.procAggregateGeneral(srvyDtaOne3);
             }
 
-        }
+            // AI 분석 결과 등록(TMP) 테이블 초기화
+            srvyDtaDAO.deleteAiDta();
 
-        DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
+            DataSourceUtils.releaseConnection(conn, dataSource); // 커넥션을 닫음
+        }
 
 //        // 동기화 작업을 종료하고 저장소를 비운다
 //        TransactionSynchronizationManager.unbindResource(this.dataSource);
@@ -874,6 +903,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
     // 재분석
     public void deleteAnalReset(SrvyDtaVO srvyDtaOne) throws Exception {
         srvyDtaDAO.deleteTnSmDtaGnlSttus(srvyDtaOne);
+        srvyDtaDAO.deleteTnSrvyDtaSttus(srvyDtaOne);
         srvyDtaDAO.deleteTnMummSctnSrvyDta(srvyDtaOne);
         srvyDtaDAO.deleteTmpMummSctnSrvyDta(srvyDtaOne);
 
@@ -882,6 +912,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
     // 재평가
     public void evalReset(SrvyDtaVO srvyDtaOne) throws Exception {
         srvyDtaDAO.deleteTnSmDtaGnlSttus(srvyDtaOne);
+        srvyDtaDAO.deleteTnSrvyDtaSttus(srvyDtaOne);
         srvyDtaDAO.deleteTnMummSctnSrvyDta(srvyDtaOne);
 
         // 집계

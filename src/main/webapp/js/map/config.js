@@ -17,12 +17,14 @@ var CONFIG = (function($, undefined){
     //지도서비스 URL Local server
     //var sServiceUrl = "http://192.168.0.205:8079/G2DataService/GService?";
     //var sServiceUrl   = "http://www.muhanit.kr:18079/G2DataService/GService?";
+
     // 개발 IP
-//    var sServiceUrl   = "http://test.muhanit.kr:13044/geoserver/wms?";
-//    var wfsServiceUrl   = "http://test.muhanit.kr:13044/geoserver/wfs?";
+    var sServiceUrl   = "http://test.muhanit.kr:13044/geoserver/wms?";
+    var wfsServiceUrl   = "http://test.muhanit.kr:13044/geoserver/wfs?";
+
     // 운영 IP
-    var sServiceUrl   = "http://105.0.111.9:9900/geoserver/wms?";
-    var wfsServiceUrl   = "http://105.0.111.9:9900/geoserver/wfs?";
+//    var sServiceUrl   = "http://105.0.111.9:9900/geoserver/wms?";
+//    var wfsServiceUrl   = "http://105.0.111.9:9900/geoserver/wfs?";
 
     //지도서비스 URL  Real server
     //var sServiceUrl   = "http://105.0.111.9:8089/G2DataService/GService?";

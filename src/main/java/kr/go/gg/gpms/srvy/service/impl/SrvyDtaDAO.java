@@ -318,6 +318,16 @@ public class SrvyDtaDAO extends BaseDAO {
     }
 
     /**
+     * 조사_자료_현황_자료 (TN_SRVY_DTA_STTUS)을 삭제한다.
+     * @param
+     * @return 삭제 결과
+     * @exception Exception
+     */
+    public int deleteTnSrvyDtaSttus(SrvyDtaVO srvyDtaOne) throws Exception {
+        return delete("srvyDtaDAO.deleteTnSrvyDtaSttus", srvyDtaOne);
+    }
+
+    /**
      * 집계_자료_일반_현황 (TN_SM_DTA_GNL_STTUS)을 삭제한다.
      * @param
      * @return 삭제 결과
