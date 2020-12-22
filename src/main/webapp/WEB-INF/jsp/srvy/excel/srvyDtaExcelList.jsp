@@ -264,10 +264,42 @@ function fn_file_upload_callback(){
 //검색 처리
 function fn_search() {
 	var postData = $("#frm").cmSerializeObject();
+
+	var srvyDe = $('#SRVY_DE').val().replace(/-/gi, "");
 	var roadNo = $('#ROAD_NO').val();
-	if (roadNo != null && roadNo != ''){
-		postData["ROAD_NO"] = roadNo;
+	var directCode = $('#DIRECT_CODE').val();
+	var track = $('#TRACK').val();
+
+	if (srvyDe != null && srvyDe != ''){
+		postData["SCH_SRVY_DE"] = srvyDe;
+	} else {
+		postData["SCH_SRVY_DE"] = '';
 	}
+
+	if (roadNo != null && roadNo != ''){
+		postData["SCH_ROAD_NO"] = roadNo;
+	} else {
+		postData["SCH_ROAD_NO"] = '';
+	}
+
+	if (directCode != null && directCode != ''){
+		postData["SCH_DIRECT_CODE"] = directCode;
+	} else {
+		postData["SCH_DIRECT_CODE"] = '';
+	}
+
+	if (track != null && track != ''){
+		postData["SCH_TRACK"] = track;
+	} else {
+		postData["SCH_TRACK"] = '';
+	}
+
+	if ($("input:checkbox[id='chkNotFinish']").is(':checked')){
+		postData["CHK_NOT_FINISH"] = 'Y';
+	} else {
+		postData["CHK_NOT_FINISH"] = 'N';
+	}
+
     $("#gridArea").jqGrid("setGridParam",{
         datatype: "json"
         ,ajaxGridOptions: { contentType: 'application/json; charset=utf-8' }
@@ -462,7 +494,7 @@ var cmCreateDatepicker = function(_oId, _oSize, imgPath, maxDate){
                     <h2 class="h2">조사자료 등록 대상목록</h2>
                 </span>
                 <a href="#" class="btnRefresh" onclick="fn_search();"><img src="/gpms/images/ic_reset.png" alt="새로고침"></a>
-
+                <label style="margin-left: 20px;">분석 완료 제외</label><input type="checkbox" id="chkNotFinish" style="-webkit-appearance: auto;">
             </div>
         </header>
 

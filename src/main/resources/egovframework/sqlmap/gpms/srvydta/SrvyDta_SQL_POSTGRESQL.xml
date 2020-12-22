@@ -367,11 +367,39 @@
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 		     AND tnsrvydta.SRVY_DE IS NOT NULL
 ]]>
-			<isNotEmpty property="ROAD_NO">
-				<![CDATA[
-					AND tnsrvydta.ROUTE_CODE = #ROAD_NO#
-				]]>
-			</isNotEmpty>
+            <isNotEmpty property="SCH_SRVY_DE">
+                <![CDATA[
+                    AND tnsrvydta.SRVY_DE = #SCH_SRVY_DE#
+                ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_ROAD_NO">
+                <![CDATA[
+                    AND tnsrvydta.ROUTE_CODE = #SCH_ROAD_NO#
+                ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_DIRECT_CODE">
+                <![CDATA[
+                    AND tnsrvydta.DIRECT_CODE = #SCH_DIRECT_CODE#
+                ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_TRACK">
+                <![CDATA[
+                    AND tnsrvydta.TRACK = #SCH_TRACK#
+                ]]>
+            </isNotEmpty>
+            <isNotEmpty property="CHK_NOT_FINISH">
+                <isEqual property="CHK_NOT_FINISH" compareValue="Y">
+                    <![CDATA[
+                        AND tnsrvydta.DATA_CO > ( SELECT COUNT(*)
+                                                    FROM TMP_MUMM_SCTN_SRVY_DTA AA
+                                                   WHERE AA.SRVY_NO = tnsrvydta.SRVY_NO
+                                                     AND AA.RDSRFC_IMG_FILE_NM_2 IS NOT NULL
+                                                     AND AA.RDSRFC_IMG_FILE_NM_2 != ' '
+                                                     AND AA.RDSRFC_IMG_FILE_NM_2 != ''
+                                                     )
+                    ]]>
+                </isEqual>
+            </isNotEmpty>
 <![CDATA[
              ORDER BY tnsrvydta.SRVY_DE DESC nulls last
 		) tb) resultlist  WHERE 1=1
@@ -408,11 +436,39 @@
 		     AND tlsrvydtalog.PROCESS_SE = (SELECT MAX(tlsrvydtalog.PROCESS_SE) FROM TL_SRVY_DTA_LOG tlsrvydtalog WHERE tlsrvydtalog.SRVY_NO = tnsrvydta.SRVY_NO AND tlsrvydtalog.PROCESS_SE IN ('PCSE0001', 'PCSE0002'))
 		     AND tnsrvydta.SRVY_DE IS NOT NULL
 ]]>
-			<isNotEmpty property="ROAD_NO">
-				<![CDATA[
-					AND tnsrvydta.ROUTE_CODE = #ROAD_NO#
-				]]>
-			</isNotEmpty>
+            <isNotEmpty property="SCH_SRVY_DE">
+                <![CDATA[
+                    AND tnsrvydta.SRVY_DE = #SCH_SRVY_DE#
+                ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_ROAD_NO">
+                <![CDATA[
+                    AND tnsrvydta.ROUTE_CODE = #SCH_ROAD_NO#
+                ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_DIRECT_CODE">
+                <![CDATA[
+                    AND tnsrvydta.DIRECT_CODE = #SCH_DIRECT_CODE#
+                ]]>
+            </isNotEmpty>
+            <isNotEmpty property="SCH_TRACK">
+                <![CDATA[
+                    AND tnsrvydta.TRACK = #SCH_TRACK#
+                ]]>
+            </isNotEmpty>
+            <isNotEmpty property="CHK_NOT_FINISH">
+                <isEqual property="CHK_NOT_FINISH" compareValue="Y">
+                    <![CDATA[
+                        AND tnsrvydta.DATA_CO > ( SELECT COUNT(*)
+                                                    FROM TMP_MUMM_SCTN_SRVY_DTA AA
+                                                   WHERE AA.SRVY_NO = tnsrvydta.SRVY_NO
+                                                     AND AA.RDSRFC_IMG_FILE_NM_2 IS NOT NULL
+                                                     AND AA.RDSRFC_IMG_FILE_NM_2 != ' '
+                                                     AND AA.RDSRFC_IMG_FILE_NM_2 != ''
+                                                     )
+                    ]]>
+                </isEqual>
+            </isNotEmpty>
 <![CDATA[
 		)as sub_SrvyDtaExcel
 ]]>

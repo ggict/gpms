@@ -1981,6 +1981,9 @@ public class SrvyDtaController extends BaseController {
                 //엑셀파일
                 fileName = attachFileOne.getFILE_COURS() + File.separator + attachFileOne.getORGINL_FILE_NM();
 
+                // 기존 분석 자료 삭제
+                srvyDtaService.deleteAnalReset(srvyDtaVO);
+
                 // AI분석
                 srvyDtaService.procSrvyDtaAi(attachFileParam, srvyDtaVO, srvyDtaOne, fileName);
             }

@@ -350,6 +350,21 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
 	@XmlElement
 	private String DATA_PROGRS_CNT;
 
+	@XmlElement
+	private String SCH_SRVY_DE;
+
+	@XmlElement
+	private String SCH_ROAD_NO;
+
+	@XmlElement
+	private String SCH_DIRECT_CODE;
+
+	@XmlElement
+	private String SCH_TRACK;
+
+	@XmlElement
+	private String CHK_NOT_FINISH;
+
 	public String getSRVY_YEAR() {
 		return SRVY_YEAR;
 	}
@@ -1191,5 +1206,49 @@ public class SrvyDtaVO extends SrvyDtaExcelDefaultVO {
         DATA_PROGRS_CNT = dATA_PROGRS_CNT;
     }
 
+    @JsonProperty(value="SCH_SRVY_DE")
+    public String getSCH_SRVY_DE() {
+        return SCH_SRVY_DE;
+    }
 
+    public void setSCH_SRVY_DE(String sCH_SRVY_DE) {
+    	SCH_SRVY_DE = sCH_SRVY_DE;
+    }
+
+    @JsonProperty(value="SCH_ROAD_NO")
+    public String getSCH_ROAD_NO() {
+        return SCH_ROAD_NO;
+    }
+
+    public void setSCH_ROAD_NO(String sCH_ROAD_NO) {
+    	SCH_ROAD_NO = sCH_ROAD_NO;
+    }
+
+    @JsonProperty(value="SCH_DIRECT_CODE")
+    public String getSCH_DIRECT_CODE() {
+        return SCH_DIRECT_CODE;
+    }
+
+    public void setSCH_DIRECT_CODE(String sCH_DIRECT_CODE) {
+    	SCH_DIRECT_CODE = sCH_DIRECT_CODE;
+    }
+
+    @JsonProperty(value="SCH_TRACK")
+    public String getSCH_TRACK() {
+        return SCH_TRACK;
+    }
+
+    public void setSCH_TRACK(String sCH_TRACK) {
+    	SCH_TRACK = sCH_TRACK;
+    }
+
+    @JsonProperty(value="CHK_NOT_FINISH")
+    public String getCHK_NOT_FINISH() {
+        return CHK_NOT_FINISH;
+    }
+
+    public void setCHK_NOT_FINISH(String cHK_NOT_FINISH) {
+    	CHK_NOT_FINISH = cHK_NOT_FINISH;
+    }
+    
 }
