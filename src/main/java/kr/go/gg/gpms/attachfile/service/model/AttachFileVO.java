@@ -19,7 +19,7 @@ import kr.go.gg.gpms.base.model.BaseVO;
  * @since 2017-03-29
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 @XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
@@ -30,109 +30,112 @@ public class AttachFileVO extends BaseVO {
 	public AttachFileVO() {
 		super();
 	}
-	
-	/** 
-	 * TN_ATTACH_FILE.FILE_NO, 
+
+	/**
+	 * TN_ATTACH_FILE.FILE_NO,
 	 * 공통첨부파일.파일_번호
 	 */
 	@XmlElement
 	private String FILE_NO;
 
-	/** 
-	 * TN_ATTACH_FILE.FILE_NM, 
+	/**
+	 * TN_ATTACH_FILE.FILE_NM,
 	 * 공통첨부파일.파일_명
 	 */
 	@XmlElement
 	private java.lang.String FILE_NM;
 
-	/** 
-	 * TN_ATTACH_FILE.ORGINL_FILE_NM, 
+	/**
+	 * TN_ATTACH_FILE.ORGINL_FILE_NM,
 	 * 공통첨부파일.원본_파일_명
 	 */
 	@XmlElement
 	private java.lang.String ORGINL_FILE_NM;
 
-	/** 
-	 * TN_ATTACH_FILE.FILE_COURS, 
+	/**
+	 * TN_ATTACH_FILE.FILE_COURS,
 	 * 공통첨부파일.파일_경로
 	 */
 	@XmlElement
 	private java.lang.String FILE_COURS;
 
-	/** 
-	 * TN_ATTACH_FILE.FILE_SIZE, 
+	/**
+	 * TN_ATTACH_FILE.FILE_SIZE,
 	 * 공통첨부파일.파일_크기
 	 */
 	@XmlElement
 	private String FILE_SIZE;
 
-	/** 
-	 * TN_ATTACH_FILE.USE_AT, 
+	/**
+	 * TN_ATTACH_FILE.USE_AT,
 	 * 공통첨부파일.사용_여부
 	 */
 	@XmlElement
 	private java.lang.String USE_AT;
 
-	/** 
-	 * TN_ATTACH_FILE.DELETE_AT, 
+	/**
+	 * TN_ATTACH_FILE.DELETE_AT,
 	 * 공통첨부파일.삭제_여부
 	 */
 	@XmlElement
 	private java.lang.String DELETE_AT;
 
-	/** 
-	 * TN_ATTACH_FILE.CRTR_NO, 
+	/**
+	 * TN_ATTACH_FILE.CRTR_NO,
 	 * 공통첨부파일.생성자_번호
 	 */
 	@XmlElement
 	private String CRTR_NO;
 
-	/** 
-	 * TN_ATTACH_FILE.CREAT_DT, 
+	/**
+	 * TN_ATTACH_FILE.CREAT_DT,
 	 * 공통첨부파일.생성_일시
 	 */
 	@XmlElement
 	private java.sql.Date CREAT_DT;
 
-	/** 
-	 * TN_ATTACH_FILE.UPDUSR_NO, 
+	/**
+	 * TN_ATTACH_FILE.UPDUSR_NO,
 	 * 공통첨부파일.수정자_번호
 	 */
 	@XmlElement
 	private String UPDUSR_NO;
 
-	/** 
-	 * TN_ATTACH_FILE.UPDT_DT, 
+	/**
+	 * TN_ATTACH_FILE.UPDT_DT,
 	 * 공통첨부파일.수정_일시
 	 */
 	@XmlElement
 	private java.sql.Date UPDT_DT;
-	
+
 	//파일번호
 	@XmlElement
 	private String FILE_NUM;
-	
+
 	@XmlElement
 	private String FILE_DETAIL_NO;
-	
+
 	@XmlElement
 	private String FILE_SE_CODE;
-	
+
 	@XmlElement
 	private String ROOT_FILE_COURS;
-	
+
+	@XmlElement
+	private String SRVY_YEAR;
+
 	/**
-	 * TN_ATTACH_FILE.FILE_NO, 
+	 * TN_ATTACH_FILE.FILE_NO,
 	 * 공통첨부파일.파일_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="FILE_NO") 
+	@JsonProperty(value="FILE_NO")
 	public String getFILE_NO() {
 		return this.FILE_NO;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.FILE_NO, 
+	 * TN_ATTACH_FILE.FILE_NO,
 	 * 공통첨부파일.파일_번호 값설정
 	 * @param fileNo
 	 */
@@ -141,17 +144,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.FILE_NM, 
+	 * TN_ATTACH_FILE.FILE_NM,
 	 * 공통첨부파일.파일_명 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="FILE_NM") 
+	@JsonProperty(value="FILE_NM")
 	public java.lang.String getFILE_NM() {
 		return this.FILE_NM;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.FILE_NM, 
+	 * TN_ATTACH_FILE.FILE_NM,
 	 * 공통첨부파일.파일_명 값설정
 	 * @param fileNm
 	 */
@@ -160,17 +163,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.ORGINL_FILE_NM, 
+	 * TN_ATTACH_FILE.ORGINL_FILE_NM,
 	 * 공통첨부파일.원본_파일_명 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="ORGINL_FILE_NM") 
+	@JsonProperty(value="ORGINL_FILE_NM")
 	public java.lang.String getORGINL_FILE_NM() {
 		return this.ORGINL_FILE_NM;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.ORGINL_FILE_NM, 
+	 * TN_ATTACH_FILE.ORGINL_FILE_NM,
 	 * 공통첨부파일.원본_파일_명 값설정
 	 * @param orginlFileNm
 	 */
@@ -179,17 +182,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.FILE_COURS, 
+	 * TN_ATTACH_FILE.FILE_COURS,
 	 * 공통첨부파일.파일_경로 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="FILE_COURS") 
+	@JsonProperty(value="FILE_COURS")
 	public java.lang.String getFILE_COURS() {
 		return this.FILE_COURS;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.FILE_COURS, 
+	 * TN_ATTACH_FILE.FILE_COURS,
 	 * 공통첨부파일.파일_경로 값설정
 	 * @param fileCours
 	 */
@@ -198,17 +201,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.FILE_SIZE, 
+	 * TN_ATTACH_FILE.FILE_SIZE,
 	 * 공통첨부파일.파일_크기 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="FILE_SIZE") 
+	@JsonProperty(value="FILE_SIZE")
 	public String getFILE_SIZE() {
 		return this.FILE_SIZE;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.FILE_SIZE, 
+	 * TN_ATTACH_FILE.FILE_SIZE,
 	 * 공통첨부파일.파일_크기 값설정
 	 * @param fileMg
 	 */
@@ -217,17 +220,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.USE_AT, 
+	 * TN_ATTACH_FILE.USE_AT,
 	 * 공통첨부파일.사용_여부 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="USE_AT") 
+	@JsonProperty(value="USE_AT")
 	public java.lang.String getUSE_AT() {
 		return this.USE_AT;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.USE_AT, 
+	 * TN_ATTACH_FILE.USE_AT,
 	 * 공통첨부파일.사용_여부 값설정
 	 * @param useAt
 	 */
@@ -236,17 +239,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.DELETE_AT, 
+	 * TN_ATTACH_FILE.DELETE_AT,
 	 * 공통첨부파일.삭제_여부 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="DELETE_AT") 
+	@JsonProperty(value="DELETE_AT")
 	public java.lang.String getDELETE_AT() {
 		return this.DELETE_AT;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.DELETE_AT, 
+	 * TN_ATTACH_FILE.DELETE_AT,
 	 * 공통첨부파일.삭제_여부 값설정
 	 * @param deleteAt
 	 */
@@ -255,17 +258,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.CRTR_NO, 
+	 * TN_ATTACH_FILE.CRTR_NO,
 	 * 공통첨부파일.생성자_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CRTR_NO") 
+	@JsonProperty(value="CRTR_NO")
 	public String getCRTR_NO() {
 		return this.CRTR_NO;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.CRTR_NO, 
+	 * TN_ATTACH_FILE.CRTR_NO,
 	 * 공통첨부파일.생성자_번호 값설정
 	 * @param crtrNo
 	 */
@@ -274,17 +277,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.CREAT_DT, 
+	 * TN_ATTACH_FILE.CREAT_DT,
 	 * 공통첨부파일.생성_일시 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="CREAT_DT") 
+	@JsonProperty(value="CREAT_DT")
 	public java.sql.Date getCREAT_DT() {
 		return this.CREAT_DT;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.CREAT_DT, 
+	 * TN_ATTACH_FILE.CREAT_DT,
 	 * 공통첨부파일.생성_일시 값설정
 	 * @param creatDt
 	 */
@@ -293,17 +296,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.UPDUSR_NO, 
+	 * TN_ATTACH_FILE.UPDUSR_NO,
 	 * 공통첨부파일.수정자_번호 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="UPDUSR_NO") 
+	@JsonProperty(value="UPDUSR_NO")
 	public String getUPDUSR_NO() {
 		return this.UPDUSR_NO;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.UPDUSR_NO, 
+	 * TN_ATTACH_FILE.UPDUSR_NO,
 	 * 공통첨부파일.수정자_번호 값설정
 	 * @param updusrNo
 	 */
@@ -312,17 +315,17 @@ public class AttachFileVO extends BaseVO {
 	}
 
 	/**
-	 * TN_ATTACH_FILE.UPDT_DT, 
+	 * TN_ATTACH_FILE.UPDT_DT,
 	 * 공통첨부파일.수정_일시 값읽기
 	 * @return
 	 */
-	@JsonProperty(value="UPDT_DT") 
+	@JsonProperty(value="UPDT_DT")
 	public java.sql.Date getUPDT_DT() {
 		return this.UPDT_DT;
 	}
- 
+
 	 /**
-	 * TN_ATTACH_FILE.UPDT_DT, 
+	 * TN_ATTACH_FILE.UPDT_DT,
 	 * 공통첨부파일.수정_일시 값설정
 	 * @param updtDt
 	 */
@@ -330,7 +333,7 @@ public class AttachFileVO extends BaseVO {
 		this.UPDT_DT = updtDt;
 	}
 
-	@JsonProperty(value="FILE_NUM") 
+	@JsonProperty(value="FILE_NUM")
 	public String getFILE_NUM() {
 		return this.FILE_NUM;
 	}
@@ -364,6 +367,13 @@ public class AttachFileVO extends BaseVO {
 	public void setROOT_FILE_COURS(String rOOT_FILE_COURS) {
 		ROOT_FILE_COURS = rOOT_FILE_COURS;
 	}
-	
-	
+
+	public String getSRVY_YEAR() {
+		return SRVY_YEAR;
+	}
+
+	public void setSRVY_YEAR(String sRVY_YEAR) {
+		SRVY_YEAR = sRVY_YEAR;
+	}
+
 }

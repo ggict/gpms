@@ -145,6 +145,13 @@ $( document ).ready(function() {
 
 //파일 전송
 function fn_file_upload(){
+
+    if($('#SRVY_DE').val() == '' ) {
+        alert('조사일자를 선택하세요');
+        $('#SRVY_DE').focus();
+        return;
+    }
+
     var files = COMMON_FILE.getMultiFileIns();
 
     var form = $('#filefrm')[0];
@@ -159,6 +166,7 @@ function fn_file_upload(){
             type : 'POST',
             url : contextPath + 'srvy/srvyDtaFileCheck.do',
             data : {
+            	'srvyDe' : $('#SRVY_DE').val(),
                 'srvyDtaFileName' : files[i].name
             },
             contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -187,11 +195,6 @@ function fn_file_upload(){
         len ++;
     }
 
-    if($('#SRVY_DE').val() == '' ) {
-        alert('조사일자를 선택하세요');
-        $('#SRVY_DE').focus();
-        return;
-    }
     if($('#ROAD_NO').val() == '' ) {
         alert('노선번호를 선택하세요');
         $('#ROAD_NO').focus();

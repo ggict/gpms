@@ -21,7 +21,7 @@ import kr.go.gg.gpms.attachfile.service.model.AttachFileVO;
  * @since 2017-03-29
  * @version 1.0
  * @see
- *  
+ *
  *  Copyright (C)  All right reserved.
  */
 
@@ -37,7 +37,7 @@ public class AttachFileDAO extends BaseDAO {
 	public String insertAttachFile(AttachFileVO attachFileVO) throws Exception {
 		return (String) insert("attachFileDAO.insertAttachFile", attachFileVO);
 	}
-	
+
 	/**
 	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 등록한다.
 	 * @param attachFileVO - 등록할 정보가 담긴 AttachFileVO
@@ -61,7 +61,7 @@ public class AttachFileDAO extends BaseDAO {
 	/**
 	 * 공통첨부파일(TN_ATTACH_FILE)을 삭제한다.
 	 * @param attachFileVO - 삭제할 정보가 담긴 AttachFileVO
-	 * @return 삭제 결과 
+	 * @return 삭제 결과
 	 * @exception Exception
 	 */
 	public int deleteAttachFile(AttachFileVO attachFileVO) throws Exception {
@@ -77,7 +77,17 @@ public class AttachFileDAO extends BaseDAO {
 	public AttachFileVO selectAttachFile(AttachFileVO attachFileVO) throws Exception {
 		return (AttachFileVO) select("attachFileDAO.selectAttachFile", attachFileVO);
 	}
-	
+
+	/**
+	 * 공통첨부파일(TN_ATTACH_FILE)을 조회한다. (중복등록확인용)
+	 * @param attachFileVO - 조회할 정보가 담긴 AttachFileVO
+	 * @return 조회한 TN_ATTACH_FILE
+	 * @exception Exception
+	 */
+	public AttachFileVO selectAttachFileDupCheck(AttachFileVO attachFileVO) throws Exception {
+		return (AttachFileVO) select("attachFileDAO.selectAttachFileDupCheck", attachFileVO);
+	}
+
 	/**
 	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE)을 조회한다.
 	 * @param attachFileVO - 조회할 정보가 담긴 AttachFileVO
@@ -108,7 +118,7 @@ public class AttachFileDAO extends BaseDAO {
 	public int selectAttachFileListTotalCount(AttachFileVO attachFileVO) {
 		return (Integer) select("attachFileDAO.selectAttachFileListTotalCount", attachFileVO);
 	}
-	
+
 	/**
 	 * 공통첨부상세파일(TN_ATTACH_DETAIL_FILE) 목록을 조회한다.
 	 * @param searchVO - 조회할 정보가 담긴 attachFileVO

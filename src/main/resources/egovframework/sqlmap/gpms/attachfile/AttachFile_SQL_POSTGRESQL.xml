@@ -212,6 +212,30 @@ FILE_NM = #FILE_NM# /* 공통첨부파일.파일_명 */
 			LIMIT 1
 	</select>
 
+	<select id="attachFileDAO.selectAttachFileDupCheck" resultMap="attachFile.resultMap">
+		<![CDATA[
+			/* attachFileDAO.selectAttachFileDupCheck */
+			/* 공통첨부파일 조회 */
+			SELECT
+					A.FILE_NO /* 공통첨부파일.파일_번호 */
+					, A.FILE_NM /* 공통첨부파일.파일_명 */
+					, A.ORGINL_FILE_NM /* 공통첨부파일.원본_파일_명 */
+					, A.FILE_COURS /* 공통첨부파일.파일_경로 */
+					, A.FILE_SIZE /* 공통첨부파일.파일_크기 */
+					, A.USE_AT /* 공통첨부파일.사용_여부 */
+					, A.DELETE_AT /* 공통첨부파일.삭제_여부 */
+					, A.CRTR_NO /* 공통첨부파일.생성자_번호 */
+					, A.CREAT_DT /* 공통첨부파일.생성_일시 */
+					, A.UPDUSR_NO /* 공통첨부파일.수정자_번호 */
+					, A.UPDT_DT /* 공통첨부파일.수정_일시 */
+			  FROM TN_ATTACH_FILE A
+			       INNER JOIN TN_SRVY_DTA B ON B.FILE_NO = A.FILE_NO
+			 WHERE A.ORGINL_FILE_NM = #ORGINL_FILE_NM# /* 공통첨부파일.원본_파일_명 */
+			   AND B.SRVY_DE LIKE #SRVY_YEAR# || '%'
+		]]>
+			LIMIT 1
+	</select>
+
 	<sql id="attachFileDAO.selectAttachFileList.where">
 		WHERE 1 = 1
 

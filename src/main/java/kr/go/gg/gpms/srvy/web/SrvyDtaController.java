@@ -174,13 +174,19 @@ public class SrvyDtaController extends BaseController {
     	Map<String, Object> resMap = new HashMap<String, Object>();
 
         // 파일명 중복 업로드 확인
+        String srvyDe = (String) reqMap.get("srvyDe"); // 2020-12-01
         String orginlFileNm = (String) reqMap.get("srvyDtaFileName");
         String existsAt = "N";
 		if (orginlFileNm != null && !"".equals(orginlFileNm)) {
 			AttachFileVO attachFileVO = new AttachFileVO();
 			attachFileVO.setORGINL_FILE_NM(orginlFileNm.toLowerCase());
+			String sRVY_YEAR = "";
+			if (srvyDe != null && srvyDe.length() > 4) {
+				sRVY_YEAR = srvyDe.substring(0, 4);
+			}
+			attachFileVO.setSRVY_YEAR(sRVY_YEAR);
 
-			AttachFileVO resultVO = attachFileService.selectAttachFile(attachFileVO);
+			AttachFileVO resultVO = attachFileService.selectAttachFileDupCheck(attachFileVO);
 			if (resultVO != null && Integer.parseInt(resultVO.getFILE_NO()) >= 0) {
 				existsAt = "Y";
 			}
