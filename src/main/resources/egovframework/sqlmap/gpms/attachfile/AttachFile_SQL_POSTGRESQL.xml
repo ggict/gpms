@@ -229,9 +229,14 @@ FILE_NM = #FILE_NM# /* 공통첨부파일.파일_명 */
 					, A.UPDUSR_NO /* 공통첨부파일.수정자_번호 */
 					, A.UPDT_DT /* 공통첨부파일.수정_일시 */
 			  FROM TN_ATTACH_FILE A
-			       INNER JOIN TN_SRVY_DTA B ON B.FILE_NO = A.FILE_NO
+			       INNER JOIN TN_SRVY_DTA B
+			          ON B.FILE_NO = A.FILE_NO
+			         AND B.SRVY_DE LIKE #SRVY_YEAR# || '%'
+			         AND B.USE_AT = 'Y' /* 공통첨부파일.사용_여부 */
+			         AND B.DELETE_AT = 'N' /* 공통첨부파일.삭제_여부 */
 			 WHERE A.ORGINL_FILE_NM = #ORGINL_FILE_NM# /* 공통첨부파일.원본_파일_명 */
-			   AND B.SRVY_DE LIKE #SRVY_YEAR# || '%'
+			   AND A.USE_AT = 'Y' /* 공통첨부파일.사용_여부 */
+			   AND A.DELETE_AT = 'N' /* 공통첨부파일.삭제_여부 */
 		]]>
 			LIMIT 1
 	</select>
