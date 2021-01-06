@@ -40,7 +40,7 @@ public interface SrvyDtaService {
 	 * @return void
 	 * @exception Exception
 	 */
-	void convertExcel(String csvFileNm, String excelFileNm, SrvyDtaVO srvyDtaVO) throws Exception;
+	String convertExcel(String csvFileNm, String excelFileNm, SrvyDtaVO srvyDtaVO) throws Exception;
 
 	/**
 	 * 엑셀파일 이미지명 조회

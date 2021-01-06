@@ -165,7 +165,7 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
      * @return void
      * @exception Exception
      */
-    public void convertExcel(String csvFileNm, String excelFileNm, SrvyDtaVO srvyDtaVO) throws Exception {
+    public String convertExcel(String csvFileNm, String excelFileNm, SrvyDtaVO srvyDtaVO) throws Exception {
         XSSFWorkbook wb = new XSSFWorkbook();
         FileOutputStream fos = null;
         try {
@@ -240,9 +240,16 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
             String newSeCode = "";
             String frmulaSeCode = "";
             String arithFrmla = "";
+            String imgNm = "";
 
             //row 반복
             for(int i=1; i<=rowNum; i++) {
+
+            	imgNm = sheet.getRow(i+12).getCell(2).toString();
+            	if (imgNm == null || imgNm.equals("")) {
+            		return "\n\n\n분석_보고서.csv 파일의 이미지 파일명을 확인하세요.\n\n\n";
+            	}
+
                 XSSFRow dbRow = dbSheet.createRow(i);
                 //cell 반복
                 for(int j=0; j<frmulaList.size(); j++) {
@@ -310,6 +317,8 @@ public class SrvyDtaServiceImpl extends AbstractServiceImpl implements SrvyDtaSe
             e.printStackTrace();
             fos.close();
         }
+
+        return "";
     }
 
     /**

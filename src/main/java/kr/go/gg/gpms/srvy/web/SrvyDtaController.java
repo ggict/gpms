@@ -246,7 +246,7 @@ public class SrvyDtaController extends BaseController {
 
         if (fileList.size() < 1 || userNo == null || userNo.equals("")) {
             resultCode = "ERROR";
-            resultMsg = "조사자료 파일을 업로드하지 못했습니다.";
+            resultMsg = "\n\n\n조사자료 파일을 업로드하지 못했습니다.\n\n\n";
         } else {
 
 	        try {
@@ -329,6 +329,8 @@ public class SrvyDtaController extends BaseController {
 	                Arrays.sort(subDirArr, comp);
 	                // ###########################################
 
+	                String resStr = "";
+
 	                //하위의 모든 디렉토리
 	                //for (File seDirs : FileUtils.listFilesAndDirs(new File(filePath),
 	                // 				   TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE)) {
@@ -351,7 +353,7 @@ public class SrvyDtaController extends BaseController {
 	                            }
 	                            if(csvCount > 1 ) {
 	                                model.addAttribute("resultCode", "multiCsv");
-	                                model.addAttribute("resultMsg", "csv파일이 여러개 존재합니다.");
+	                                model.addAttribute("resultMsg", "\n\n\ncsv파일이 여러개 존재합니다.\n\n\n");
 	                                return "jsonView";
 	                            }
 
@@ -367,7 +369,13 @@ public class SrvyDtaController extends BaseController {
 	                                        excelFileNm = filePath + File.separator + seDirNm + File.separator + _csvFileNm + ".xlsx";
 
 	                                        //csv파일 -> xlsx 파일로 변환
-	                                        srvyDtaService.convertExcel(csvFileNm, excelFileNm, srvyDtaVO);
+	                                        resStr = srvyDtaService.convertExcel(csvFileNm, excelFileNm, srvyDtaVO);
+
+	                                        if (resStr != null && !resStr.equals("")) {
+	        	                                model.addAttribute("resultCode", "errorCsv");
+	        	                                model.addAttribute("resultMsg", resStr);
+	        	                                return "jsonView";
+	                                        }
 	                                    }
 	                                }
 	                            }
@@ -375,7 +383,7 @@ public class SrvyDtaController extends BaseController {
 	                        // ###################################################
 
 	                        // ###################################################
-	                        // ## 5. 분석결과 폴더에서 분석_보고서(CSV 파일) 파일을 찾아 엑셀파일로 변환
+	                        // ## 5. 표면결함 폴더에서 분석_보고서(CSV 파일) 파일을 찾아 엑셀파일로 변환
 	                        // ###################################################
 	                        if("표면결함".equals(seDirNm.substring(seDirNm.lastIndexOf("_")+1))) {
 	                            //엑셀파일 RDSRFC_IMG_FILE_NM_1 이미지 파일명 조회
@@ -388,7 +396,7 @@ public class SrvyDtaController extends BaseController {
 	                                //jpg 파일 검증
 	                                if(!"jpg".equalsIgnoreCase(seFileNm.substring(seFileNm.lastIndexOf(".")+1))) {
 	                                    model.addAttribute("resultCode", "noJpg");
-	                                    model.addAttribute("resultMsg", "이미지 파일이 없습니다.");
+	                                    model.addAttribute("resultMsg", "\n\n\n이미지 파일이 없습니다.\n\n\n");
 	                                    return "jsonView";
 	                                }
 	                            }//표면결함 폴더 내 jpg 파일
@@ -520,7 +528,7 @@ public class SrvyDtaController extends BaseController {
 	                        String colName = validChkInfo.get("errorCol").toString();
 	                        String rowIndex = validChkInfo.get("rowIndex").toString();
 
-	                        resultMsg = colName + "컬럼의 " + rowIndex + "줄에 validation 오류 발생 : " + validChkInfo.get("resultMsg").toString();
+	                        resultMsg = "\n\n\n" + colName + "컬럼의 " + rowIndex + "줄에 validation 오류 발생 : " + validChkInfo.get("resultMsg").toString() + "\n\n\n";
 	                    }
 
 	                    srvyDtaVO.setVAL_EVL_AT("N");
@@ -549,7 +557,7 @@ public class SrvyDtaController extends BaseController {
 
 	            if (excelList == null || excelList.size() == 0) {
 	                model.addAttribute("resultCode", "noData");
-	                model.addAttribute("resultMsg", "엑셀 데이터가 없습니다.");
+	                model.addAttribute("resultMsg", "\n\n\n엑셀 데이터가 없습니다.\n\n\n");
 	                return "jsonView";
 	            }
 
@@ -580,7 +588,7 @@ public class SrvyDtaController extends BaseController {
 	                    AttachFileVO attachFileOne = attachFileService.selectAttachDetailFile(attachFileParam);
 	                    if (attachFileOne == null || StringUtils.isEmpty(attachFileOne.getFILE_COURS())) {
 	                        model.addAttribute("resultCode", "noExcel");
-	                        model.addAttribute("resultMsg", "엑셀 파일이 없습니다.");
+	                        model.addAttribute("resultMsg", "\n\n\n엑셀 파일이 없습니다.\n\n\n");
 	                        return "jsonView";
 	                    }
 
