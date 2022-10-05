@@ -42,7 +42,7 @@
 		<hibernate.version>4.2.1.Final</hibernate.version>
 
 		<!-- json -->
-		<jackson.databind-version>2.5.1</jackson.databind-version>
+		<jackson.databind-version>2.12.6.1</jackson.databind-version>
 		<!-- tiles -->
 		<org.apache.tiles-version>3.0.0</org.apache.tiles-version>
 		<!-- Logging -->
